@@ -1,10 +1,8 @@
 // ** Icon imports
-import HomeOutline from 'mdi-material-ui/HomeOutline'
-import EmailOutline from 'mdi-material-ui/EmailOutline'
-import AccountOutline from 'mdi-material-ui/AccountOutline'
-import MessageOutline from 'mdi-material-ui/MessageOutline'
-import FileDocumentOutline from 'mdi-material-ui/FileDocumentOutline'
-import CalendarBlankOutline from 'mdi-material-ui/CalendarBlankOutline'
+import CogOutline from 'mdi-material-ui/CogOutline'
+import HomeAnalytics from 'mdi-material-ui/HomeAnalytics'
+import Pin from 'mdi-material-ui/Pin'
+import Finance from 'mdi-material-ui/Finance'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -13,7 +11,7 @@ const navigation = (): VerticalNavItemsType => {
   return [
     {
       title: 'User Permission',
-      icon: AccountOutline,
+      icon: CogOutline,
       children: [
         {
           title: 'User MGT',
@@ -27,7 +25,7 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Organized MGT',
-      icon: AccountOutline,
+      icon: HomeAnalytics,
       children: [
         {
           title: 'Organized Group MGT',
@@ -45,7 +43,7 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Campaign MGT',
-      icon: AccountOutline,
+      icon: Pin,
       children: [
         {
           title: 'Source MGT',
@@ -63,7 +61,7 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Report',
-      icon: AccountOutline,
+      icon: Finance,
       children: [
         {
           title: 'Dashboard',

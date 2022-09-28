@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, useEffect, MouseEvent, useCallback, ReactElement } from 'react'
+import { useState, useEffect, MouseEvent, useCallback, ReactElement,forwardRef } from 'react'
 
 // ** Next Import
 import Link from 'next/link'
@@ -19,6 +19,14 @@ import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 import CardContent from '@mui/material/CardContent'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
+import DatePicker from '@mui/lab/DatePicker'
+import TextField from '@mui/material/TextField'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import MobileDatePicker from '@mui/lab/MobileDatePicker'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+
+// ** Third Party imports
+import { Locale } from 'date-fns'
 
 // ** Icons Imports
 import Laptop from 'mdi-material-ui/Laptop'
@@ -29,6 +37,7 @@ import DotsVertical from 'mdi-material-ui/DotsVertical'
 import PencilOutline from 'mdi-material-ui/PencilOutline'
 import DeleteOutline from 'mdi-material-ui/DeleteOutline'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
+import Button from '@mui/material/Button'
 
 // ** Store Imports
 import { useDispatch, useSelector } from 'react-redux'
@@ -47,10 +56,12 @@ import { fetchData, deleteUser } from 'src/store/apps/user'
 import { RootState, AppDispatch } from 'src/store'
 import { ThemeColor } from 'src/@core/layouts/types'
 import { UsersType } from 'src/types/apps/userTypes'
+import { DateType } from 'src/types/forms/reactDatepickerTypes'
 
 // ** Custom Components Imports
-import TableHeader from 'src/views/apps/user/list/TableHeader'
 import AddUserDrawer from 'src/views/apps/user/list/AddUserDrawer'
+import DialogEditUserInfo from './DialogUserInfo'
+import TableHeader from 'src/views/apps/user/list/TableHeader'
 
 interface UserRoleType {
   [key: string]: ReactElement
@@ -129,6 +140,7 @@ const RowOptions = ({ id }: { id: number | string }) => {
 
   // ** State
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [show, setShow] = useState<boolean>(false)
 
   const rowOptionsOpen = Boolean(anchorEl)
 
@@ -137,6 +149,7 @@ const RowOptions = ({ id }: { id: number | string }) => {
   }
   const handleRowOptionsClose = () => {
     setAnchorEl(null)
+    setShow(true);
   }
 
   const handleDelete = () => {
@@ -174,13 +187,15 @@ const RowOptions = ({ id }: { id: number | string }) => {
         </MenuItem>
         <MenuItem onClick={handleRowOptionsClose}>
           <PencilOutline fontSize='small' sx={{ mr: 2 }} />
-          Edit
+             Edit
         </MenuItem>
         <MenuItem onClick={handleDelete}>
           <DeleteOutline fontSize='small' sx={{ mr: 2 }} />
           Delete
         </MenuItem>
       </Menu>
+
+      <DialogEditUserInfo show = {show} setShow ={setShow} action="edit"/>
     </>
   )
 }
@@ -233,15 +248,15 @@ const columns = [
   },
   {
     flex: 0.15,
-    field: 'role',
+    field: 'company',
     minWidth: 150,
-    headerName: 'Role',
+    headerName: 'Organization',
     renderCell: ({ row }: CellType) => {
       return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {userRoleObj[row.role]}
+          {userRoleObj[row.company]}
           <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
-            {row.role}
+            {row.company}
           </Typography>
         </Box>
       )
@@ -250,7 +265,7 @@ const columns = [
   {
     flex: 0.15,
     minWidth: 120,
-    headerName: 'Plan',
+    headerName: 'Organization Group',
     field: 'currentPlan',
     renderCell: ({ row }: CellType) => {
       return (
@@ -290,12 +305,14 @@ const columns = [
 const UserList = () => {
   // ** State
   const [role, setRole] = useState<string>('')
-  const [plan, setPlan] = useState<string>('')
+  const [userName, setUserName] = useState<string>('')
+  const [organization, setOrganization] = useState<string>('')
   const [value, setValue] = useState<string>('')
   const [status, setStatus] = useState<string>('')
   const [pageSize, setPageSize] = useState<number>(10)
   const [addUserOpen, setAddUserOpen] = useState<boolean>(false)
-
+  const [date, setDate] = useState<Date | null>(new Date())
+  const [endDate, setEndDate] = useState<Date | null>(new Date())
   // ** Hooks
   const dispatch = useDispatch<AppDispatch>()
   const store = useSelector((state: RootState) => state.user)
@@ -306,21 +323,17 @@ const UserList = () => {
         role,
         status,
         q: value,
-        currentPlan: plan
+        currentPlan: organization
       })
     )
-  }, [dispatch, plan, role, status, value])
+  }, [dispatch, organization, role, status, value])
 
   const handleFilter = useCallback((val: string) => {
     setValue(val)
   }, [])
 
-  const handleRoleChange = useCallback((e: SelectChangeEvent) => {
-    setRole(e.target.value)
-  }, [])
-
-  const handlePlanChange = useCallback((e: SelectChangeEvent) => {
-    setPlan(e.target.value)
+  const handleOrganization = useCallback((e: SelectChangeEvent) => {
+    setOrganization(e.target.value)
   }, [])
 
   const handleStatusChange = useCallback((e: SelectChangeEvent) => {
@@ -330,50 +343,35 @@ const UserList = () => {
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
 
   return (
+    <>
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Card>
-          <CardHeader title='Search Filters' sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }} />
+          <CardHeader title='User Management' sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }} />
           <CardContent>
             <Grid container spacing={6}>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='role-select'>Select Role</InputLabel>
-                  <Select
-                    fullWidth
-                    value={role}
-                    id='select-role'
-                    label='Select Role'
-                    labelId='role-select'
-                    onChange={handleRoleChange}
-                    inputProps={{ placeholder: 'Select Role' }}
-                  >
-                    <MenuItem value=''>Select Role</MenuItem>
-                    <MenuItem value='admin'>Admin</MenuItem>
-                    <MenuItem value='author'>Author</MenuItem>
-                    <MenuItem value='editor'>Editor</MenuItem>
-                    <MenuItem value='maintainer'>Maintainer</MenuItem>
-                    <MenuItem value='subscriber'>Subscriber</MenuItem>
-                  </Select>
+                  <TextField id='userName' label='User Name' value={userName} />
                 </FormControl>
               </Grid>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='plan-select'>Select Plan</InputLabel>
+                  <InputLabel id='plan-select'>Select Organization</InputLabel>
                   <Select
                     fullWidth
-                    value={plan}
-                    id='select-plan'
-                    label='Select Plan'
-                    labelId='plan-select'
-                    onChange={handlePlanChange}
-                    inputProps={{ placeholder: 'Select Plan' }}
+                    value={organization}
+                    id='select-organization'
+                    label='Select Organization'
+                    labelId='organization-select'
+                    onChange={handleOrganization}
+                    inputProps={{ placeholder: 'Select Organization' }}
                   >
-                    <MenuItem value=''>Select Plan</MenuItem>
-                    <MenuItem value='basic'>Basic</MenuItem>
-                    <MenuItem value='company'>Company</MenuItem>
-                    <MenuItem value='enterprise'>Enterprise</MenuItem>
-                    <MenuItem value='team'>Team</MenuItem>
+                    <MenuItem value=''>Organization Name </MenuItem>
+                    <MenuItem value='1'>Oragnization 1</MenuItem>
+                    <MenuItem value='2'>Oragnization 2</MenuItem>
+                    <MenuItem value='3'>Oragnization 3</MenuItem>
+                    <MenuItem value='4'>Oragnization 4</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -387,9 +385,9 @@ const UserList = () => {
                     label='Select Status'
                     labelId='status-select'
                     onChange={handleStatusChange}
-                    inputProps={{ placeholder: 'Select Role' }}
+                    inputProps={{ placeholder: 'Select Status' }}
                   >
-                    <MenuItem value=''>Select Role</MenuItem>
+                    <MenuItem value=''>Select Status</MenuItem>
                     <MenuItem value='pending'>Pending</MenuItem>
                     <MenuItem value='active'>Active</MenuItem>
                     <MenuItem value='inactive'>Inactive</MenuItem>
@@ -397,6 +395,42 @@ const UserList = () => {
                 </FormControl>
               </Grid>
             </Grid>
+
+            <Grid container spacing={6} mt={2}>
+              <Grid item sm={4} xs={12}>
+                <FormControl fullWidth>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <DatePicker
+                        label='Start Date'
+                        value={date}
+                        onChange={newValue => setDate(newValue)}
+                        renderInput={params => <TextField {...params} />}
+                      />
+                    </LocalizationProvider>
+                </FormControl>
+              </Grid>
+              <Grid item sm={4} xs={12}>
+                <FormControl fullWidth>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <DatePicker
+                        label='End Date'
+                        value={endDate}
+                        onChange={newValue => setEndDate(newValue)}
+                        renderInput={params => <TextField {...params} />}
+                      />
+                    </LocalizationProvider>
+                </FormControl>
+              </Grid>
+              <Grid item sm={4} xs={12} mt={2}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+        
+                  <Button sx={{ mb: 2 }} onClick={()=>{console.log("search")}} variant='contained'>
+                    search
+                  </Button>
+                </Box>
+              </Grid>
+            </Grid>
+
           </CardContent>
         </Card>
       </Grid>
@@ -407,18 +441,16 @@ const UserList = () => {
             autoHeight
             rows={store.data}
             columns={columns}
-            checkboxSelection
             pageSize={pageSize}
-            disableSelectionOnClick
             rowsPerPageOptions={[10, 25, 50]}
             sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
             onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
           />
         </Card>
       </Grid>
-
-      <AddUserDrawer open={addUserOpen} toggle={toggleAddUserDrawer} />
+      <DialogEditUserInfo show = {addUserOpen} setShow ={setAddUserOpen} action="create"/>
     </Grid>
+    </>
   )
 }
 
