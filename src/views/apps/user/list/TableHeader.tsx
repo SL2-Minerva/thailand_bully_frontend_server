@@ -17,19 +17,9 @@ const TableHeader = (props: TableHeaderProps) => {
   const { handleFilter, toggle, value } = props
 
   return (
-    <Box sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
-      <Button sx={{ mr: 4, mb: 2 }} color='secondary' variant='outlined' startIcon={<ExportVariant fontSize='small' />}>
-        Export
-      </Button>
+    <Box sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-        <TextField
-          size='small'
-          value={value}
-          sx={{ mr: 6, mb: 2 }}
-          placeholder='Search User'
-          onChange={e => handleFilter(e.target.value)}
-        />
-
+      
         <Button sx={{ mb: 2 }} onClick={toggle} variant='contained'>
           Add User
         </Button>
