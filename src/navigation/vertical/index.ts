@@ -19,7 +19,7 @@ const navigation = (): VerticalNavItemsType => {
         },
         {
           title: 'User Role MGT',
-          path: '/apps/user/view'
+          path: '/apps/user/list/roleManagement'
         }
       ]
     },
