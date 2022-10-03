@@ -12,48 +12,46 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import Switch from '@mui/material/Switch'
 import { PencilOutline } from 'mdi-material-ui'
+import DialogRoleInfo from './DialogRoleInfo';
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import DialogOrganizationType from './typeDialog';
 
 const createData = (name: string, description: string, status : boolean) => {
   return { name, description, status }
 }
 
 const rows = [
-  createData('องค์กร Type1', "This is Desctiption 1", true),
-  createData('องค์กร Type2', "This is Desctiption 2", true),
-  createData('องค์กร Type3', "This is Desctiption 3", false),
-  createData('องค์กร Type4', "This is Desctiption 4", true),
+  createData('System Admin ', "This is Desctiption", true),
+  createData('System Operation ', "This is Desctiption", true),
+  createData('User Admin ', "This is Desctiption", false),
+  createData('User Operation ', "This is Desctiption", true),
 ]
 
 
-const OrganizationType = () => {
-
-  const [ showEdit , setShowEdit ] = useState<boolean>(false)
-  const [ showCreate, setShowCreate ] = useState<boolean>(false)
-  const toggleCreate = () => setShowCreate(!showCreate)
+const RoleManagement = () => {
+    const [ showDialog , setShowDialog ] = useState<boolean>(false)
+    const [ addRoleOpen, setAddRoleOpen ] = useState<boolean>(false)
+    const toggleAddRole = () => setAddRoleOpen(!addRoleOpen)
 
   return (
-    <Grid container spacing={6}>
-      <Grid item md={12} xs={12}>
-        <Card>
-          <CardHeader title='Organization Type Management' />
-          <CardContent>
-          <CardContent>
+    <Grid container>
+        <Grid item xs={12}>
+            <Card>
+                 <CardHeader title='Role Management' sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }} />
+                <CardContent>
                     <TableContainer component={Paper}>
                         <Box sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}>
                             <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
                             
-                                <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                                     Add
+                                <Button sx={{ mb: 2 }} onClick={toggleAddRole} variant='contained'>
+                                     Add Role
                                 </Button>
                             </Box>
                         </Box>
                         <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                             <TableHead>
                             <TableRow>
-                                <TableCell>Organizaton Type</TableCell>
+                                <TableCell>Role Name</TableCell>
                                 <TableCell align='center'>Description</TableCell>
                                 <TableCell align='center'>Status</TableCell>
                                 <TableCell align='center'>Action</TableCell>
@@ -77,22 +75,20 @@ const OrganizationType = () => {
                                     <Switch  checked={row.status}/>
                                 </TableCell>
                                 <TableCell align='center'>
-                                    <PencilOutline onClick={()=> { setShowEdit(true) }}/>
+                                    <PencilOutline onClick={()=> { setShowDialog(true) }}/>
                                 </TableCell>
                                 </TableRow>
                             ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <DialogOrganizationType show={showEdit} setShow={setShowEdit} action="edit" />
-                    <DialogOrganizationType show={showCreate} setShow={setShowCreate} action="create" />
-                    
+                    <DialogRoleInfo show={showDialog} setShow={setShowDialog} action="edit"/>
+                    <DialogRoleInfo show={addRoleOpen} setShow={setAddRoleOpen} action="create"/>
                 </CardContent>
-          </CardContent>
-        </Card>
-      </Grid>
+            </Card>
+        </Grid>
     </Grid>
   )
 }
 
-export default OrganizationType
+export default RoleManagement
