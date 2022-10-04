@@ -40,54 +40,54 @@ const OrganizationType = () => {
         <Card>
           <CardHeader title='Organization Type Management' />
           <CardContent>
-          <CardContent>
-                    <TableContainer component={Paper}>
-                        <Box sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}>
-                            <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-                            
-                                <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                                     Add
-                                </Button>
-                            </Box>
-                        </Box>
-                        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-                            <TableHead>
-                            <TableRow>
-                                <TableCell>Organizaton Type</TableCell>
-                                <TableCell align='center'>Description</TableCell>
-                                <TableCell align='center'>Status</TableCell>
-                                <TableCell align='center'>Action</TableCell>
-                            </TableRow>
-                            </TableHead>
-                            <TableBody>
-                            {rows.map(row => (
-                                <TableRow
-                                key={row.name}
-                                sx={{
-                                    '&:last-of-type td, &:last-of-type th': {
-                                    border: 0
-                                    }
-                                }}
-                                >
-                                <TableCell component='th' scope='row'>
-                                    {row.name}
-                                </TableCell>
-                                <TableCell align='center'>{row.description}</TableCell>
-                                <TableCell align='center'>
-                                    <Switch  checked={row.status}/>
-                                </TableCell>
-                                <TableCell align='center'>
-                                    <PencilOutline onClick={()=> { setShowEdit(true) }}/>
-                                </TableCell>
-                                </TableRow>
-                            ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <DialogOrganizationType show={showEdit} setShow={setShowEdit} action="edit" />
-                    <DialogOrganizationType show={showCreate} setShow={setShowCreate} action="create" />
-                    
-                </CardContent>
+            <CardContent>
+                      <TableContainer component={Paper}>
+                          <Box sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}>
+                              <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                              
+                                  <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
+                                      Add
+                                  </Button>
+                              </Box>
+                          </Box>
+                          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                              <TableHead>
+                              <TableRow>
+                                  <TableCell>Organizaton Type</TableCell>
+                                  <TableCell align='center'>Description</TableCell>
+                                  <TableCell align='center'>Status</TableCell>
+                                  <TableCell align='center'>Action</TableCell>
+                              </TableRow>
+                              </TableHead>
+                              <TableBody>
+                              {rows.map(row => (
+                                  <TableRow
+                                  key={row.name}
+                                  sx={{
+                                      '&:last-of-type td, &:last-of-type th': {
+                                      border: 0
+                                      }
+                                  }}
+                                  >
+                                  <TableCell component='th' scope='row'>
+                                      {row.name}
+                                  </TableCell>
+                                  <TableCell align='center'>{row.description}</TableCell>
+                                  <TableCell align='center'>
+                                      <Switch  checked={row.status}/>
+                                  </TableCell>
+                                  <TableCell align='center'>
+                                      <PencilOutline onClick={()=> { setShowEdit(true) }}/>
+                                  </TableCell>
+                                  </TableRow>
+                              ))}
+                              </TableBody>
+                          </Table>
+                      </TableContainer>
+                      <DialogOrganizationType show={showEdit} setShow={setShowEdit} action="edit" />
+                      <DialogOrganizationType show={showCreate} setShow={setShowCreate} action="create" />
+                      
+            </CardContent>
           </CardContent>
         </Card>
       </Grid>

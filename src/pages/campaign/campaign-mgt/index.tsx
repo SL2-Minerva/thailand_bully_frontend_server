@@ -1,20 +1,208 @@
+// ** React Imports
+import { useState, useCallback } from 'react'
+
 // ** MUI Imports
-import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
+import { Grid , Card, CardHeader, CardContent } from "@mui/material";
+import Paper from '@mui/material/Paper'
+import Table from '@mui/material/Table'
+import TableRow from '@mui/material/TableRow'
+import TableHead from '@mui/material/TableHead'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import Switch from '@mui/material/Switch'
+import { PencilOutline } from 'mdi-material-ui'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import TextField from '@mui/material/TextField'
+import Select, { SelectChangeEvent } from '@mui/material/Select'
+import DatePicker from '@mui/lab/DatePicker'
+import MenuItem from '@mui/material/MenuItem'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import DialogCampaign from './dialogCampaign';
+
+
+const createData = (name: string, keyword: string, domain: string, organization: string, status : boolean) => {
+  return { name, keyword, domain, organization, status }
+}
+
+const rows = [
+  createData('ความคิดเห็นในสังคม เกี่ยวกับกัญชา', "กัญชาเสรี, ปลดล็อคกัญชา", 'สังคม','กองทุนพัฒนาสื่อปลอดภัยและสร้างสรรค์', true),
+  createData('ความคิดเห็นในสังคม เกี่ยวกับราคาน้ำมัน', "น้ำมันแพง, น้ำมันขึ้นราคา", 'เศรษฐกิจ','หน่วยงาน (กระทรวงพลังงาน)', true),
+  createData('ความคิดเห็นในสังคม เกี่ยวกับรถ EV', "รถยนต์ไฟฟ้า, สถานีชาร์จรถไฟฟ้า", 'เทคโนโลยี, สังคม','บริษัท BBB', true),
+
+]
 
 const CampaignManagement = () => {
+  const [ showEdit , setShowEdit ] = useState<boolean>(false)
+  const [ showCreate, setShowCreate ] = useState<boolean>(false)
+  const [role, setRole] = useState<string>('')
+  const [campaignName, setCampaignName] = useState<string>('')
+  const [organization, setOrganization] = useState<string>('')
+  const [status, setStatus] = useState<string>('')
+  const [date, setDate] = useState<Date | null>(new Date())
+  const [endDate, setEndDate] = useState<Date | null>(new Date())
+
+  const toggleCreate = () => setShowCreate(!showCreate)
+
+  const handleOrganization = useCallback((e: SelectChangeEvent) => {
+    setOrganization(e.target.value)
+  }, [])
+
+  const handleStatusChange = useCallback((e: SelectChangeEvent) => {
+    setStatus(e.target.value)
+  }, [])
 
   return (
     <Grid container spacing={6}>
       <Grid item md={12} xs={12}>
         <Card>
-          <CardHeader title='Campaign Management' />
-          <CardContent>
+        <CardHeader title='Campaign Management' />
+        <CardContent>
+            <Grid container spacing={6}>
+              <Grid item sm={4} xs={12}>
+                <FormControl fullWidth>
+                  <TextField id='campaign' label='Campaign Name' value={campaignName} />
+                </FormControl>
+              </Grid>
+              <Grid item sm={4} xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id='plan-select'>Select Organization</InputLabel>
+                  <Select
+                    fullWidth
+                    value={organization}
+                    id='select-organization'
+                    label='Select Organization'
+                    labelId='organization-select'
+                    onChange={handleOrganization}
+                    inputProps={{ placeholder: 'Select Organization' }}
+                  >
+                    <MenuItem value=''>Organization Name </MenuItem>
+                    <MenuItem value='1'>Oragnization 1</MenuItem>
+                    <MenuItem value='2'>Oragnization 2</MenuItem>
+                    <MenuItem value='3'>Oragnization 3</MenuItem>
+                    <MenuItem value='4'>Oragnization 4</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item sm={4} xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id='status-select'>Select Status</InputLabel>
+                  <Select
+                    fullWidth
+                    value={status}
+                    id='select-status'
+                    label='Select Status'
+                    labelId='status-select'
+                    onChange={handleStatusChange}
+                    inputProps={{ placeholder: 'Select Status' }}
+                  >
+                    <MenuItem value=''>Select Status</MenuItem>
+                    <MenuItem value='pending'>Pending</MenuItem>
+                    <MenuItem value='active'>Active</MenuItem>
+                    <MenuItem value='inactive'>Inactive</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+
+            <Grid container spacing={6} mt={2}>
+              <Grid item sm={4} xs={12}>
+                <FormControl fullWidth>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <DatePicker
+                        label='Start Date'
+                        value={date}
+                        onChange={newValue => setDate(newValue)}
+                        renderInput={params => <TextField {...params} />}
+                      />
+                    </LocalizationProvider>
+                </FormControl>
+              </Grid>
+              <Grid item sm={4} xs={12}>
+                <FormControl fullWidth>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <DatePicker
+                        label='End Date'
+                        value={endDate}
+                        onChange={newValue => setEndDate(newValue)}
+                        renderInput={params => <TextField {...params} />}
+                      />
+                    </LocalizationProvider>
+                </FormControl>
+              </Grid>
+              <Grid item sm={4} xs={12} mt={2}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+        
+                  <Button sx={{ mb: 2 }} onClick={()=>{console.log("search")}} variant='contained'>
+                    search
+                  </Button>
+                </Box>
+              </Grid>
+            </Grid>
+
           </CardContent>
         </Card>
       </Grid>
+      <Grid item xs={12}>
+        <Card>
+          <CardContent>
+              <TableContainer component={Paper}>
+                  <Box sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}>
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                      
+                          <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
+                              Add
+                          </Button>
+                      </Box>
+                  </Box>
+                  <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                      <TableHead>
+                      <TableRow>
+                          <TableCell>Campaign Name</TableCell>
+                          <TableCell align='center'>Keyword</TableCell>
+                          <TableCell align='center'>Domain</TableCell>
+                          <TableCell align='center'>Organization</TableCell>
+                          <TableCell align='center'>Status</TableCell>
+                          <TableCell align='center'>Action</TableCell>
+                      </TableRow>
+                      </TableHead>
+                      <TableBody>
+                      {rows.map(row => (
+                          <TableRow
+                          key={row.name}
+                          sx={{
+                              '&:last-of-type td, &:last-of-type th': {
+                              border: 0
+                              }
+                          }}
+                          >
+                          <TableCell component='th' scope='row'>
+                              {row.name}
+                          </TableCell>
+                          <TableCell align='center'>{row.keyword}</TableCell>
+                          <TableCell align='center'>{row.domain}</TableCell>
+                          <TableCell align='center'>{row.organization}</TableCell>
+                          <TableCell align='center'>
+                              <Switch  checked={row.status}/>
+                          </TableCell>
+                          <TableCell align='center'>
+                              <PencilOutline onClick={()=> { setShowEdit(true) }}/>
+                          </TableCell>
+                          </TableRow>
+                      ))}
+                      </TableBody>
+                  </Table>
+              </TableContainer>
+              
+            </CardContent>
+        </Card>
+          <DialogCampaign show={showEdit} setShow={setShowEdit} action="edit"/>
+          <DialogCampaign show={showCreate} setShow={setShowCreate} action="create"/>                
+        </Grid>
     </Grid>
   )
 }
