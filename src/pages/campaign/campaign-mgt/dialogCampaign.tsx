@@ -190,7 +190,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                                   className='col-title'
                                   sx={{ mb: { md: 2, xs: 0 }, color: 'text.primary' }}
                                 >
-                                  Keyword
+                                  Keyword 
                                 </Typography>
             
                                 <TextField
