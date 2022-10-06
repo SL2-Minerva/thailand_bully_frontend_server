@@ -1,12 +1,10 @@
 // ** React Imports
-import { Ref, useState, forwardRef, ReactElement } from 'react'
+import { Ref, forwardRef, ReactElement } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Chip from '@mui/material/Chip'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
-import Switch from '@mui/material/Switch'
 import Dialog from '@mui/material/Dialog'
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
@@ -15,16 +13,13 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
-import CardContent from '@mui/material/CardContent'
 import Fade, { FadeProps } from '@mui/material/Fade'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
+import Select from '@mui/material/Select'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
-import AccountOutline from 'mdi-material-ui/AccountOutline'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -34,15 +29,6 @@ const Transition = forwardRef(function Transition(
 })
 
 const DialogEditUserInfo = ({show, setShow, action} : {show:boolean, setShow: any, action: string}) => {
-  // ** States
-  const [languages, setLanguages] = useState<string[]>([])
-
-  const handleChange = (event: SelectChangeEvent<typeof languages>) => {
-    const {
-      target: { value }
-    } = event
-    setLanguages(typeof value === 'string' ? value.split(',') : value)
-  }
 
   return (
     <Card>

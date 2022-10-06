@@ -18,13 +18,8 @@ import MenuItem from '@mui/material/MenuItem'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
-import DatePicker from '@mui/lab/DatePicker'
 import TextField from '@mui/material/TextField'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
 
-import { ThemeColor } from 'src/@core/layouts/types'
-import CustomChip from 'src/@core/components/mui/chip'
 
 import DialogOrganization from './dialogOrganization';
 
