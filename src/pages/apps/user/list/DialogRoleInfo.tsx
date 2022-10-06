@@ -1,26 +1,19 @@
 // ** React Imports
-import { Ref, useState, forwardRef, ReactElement } from 'react'
+import { Ref, forwardRef, ReactElement } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Chip from '@mui/material/Chip'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
-import Switch from '@mui/material/Switch'
 import Dialog from '@mui/material/Dialog'
 import Button from '@mui/material/Button'
-import MenuItem from '@mui/material/MenuItem'
 import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import InputLabel from '@mui/material/InputLabel'
-import FormControl from '@mui/material/FormControl'
-import CardContent from '@mui/material/CardContent'
 import Fade, { FadeProps } from '@mui/material/Fade'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Checkbox from '@mui/material/Checkbox'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
@@ -32,8 +25,6 @@ import TableContainer from '@mui/material/TableContainer'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
-import AccountOutline from 'mdi-material-ui/AccountOutline'
-import { boolean } from 'yup/lib/locale'
 
 interface DialogRoleInfoProps {
     show : boolean
@@ -61,6 +52,7 @@ const rows = [
 
 const DialogRoleInfo = (props: DialogRoleInfoProps) => {
     const { show, setShow, action } = props
+
   return (
     <Card>
       <Dialog

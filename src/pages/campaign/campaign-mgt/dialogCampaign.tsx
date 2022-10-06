@@ -1,5 +1,5 @@
 // ** React Imports
-import { Ref, useState, forwardRef, ReactElement, ChangeEvent, useCallback, SyntheticEvent, useEffect } from 'react'
+import { Ref, useState, forwardRef, ReactElement, useCallback, SyntheticEvent, useEffect } from 'react'
 
 // ** MUI Imports
 import Box, { BoxProps } from '@mui/material/Box'
@@ -20,7 +20,7 @@ import InputLabel from '@mui/material/InputLabel'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import CardContent, { CardContentProps } from '@mui/material/CardContent'
-import { styled, alpha, useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Repeater from 'src/@core/components/repeater'
 import Collapse from '@mui/material/Collapse'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
@@ -105,7 +105,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
   }
 
   useEffect(() => {
-    var timer = setInterval(()=>setUpdatedDate(new Date()), 1000 )
+    const timer = setInterval(()=>setUpdatedDate(new Date()), 1000 )
+    
     return function cleanup() {
         clearInterval(timer)
     }

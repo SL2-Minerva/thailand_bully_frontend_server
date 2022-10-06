@@ -24,7 +24,6 @@ import RadioGroup from '@mui/material/RadioGroup'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
-import AccountOutline from 'mdi-material-ui/AccountOutline'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },

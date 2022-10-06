@@ -11,7 +11,6 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import Switch from '@mui/material/Switch'
-import { PencilOutline } from 'mdi-material-ui'
 import DialogRoleInfo from './DialogRoleInfo';
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -53,7 +52,9 @@ const StatusObj: StatusType = {
 const RegisterManagement = () => {
     const [ showDialog , setShowDialog ] = useState<boolean>(false)
     const [ addRoleOpen, setAddRoleOpen ] = useState<boolean>(false)
-    const toggleAddRole = () => setAddRoleOpen(!addRoleOpen)
+    
+    // const toggleAddRole = () => setAddRoleOpen(!addRoleOpen)
+
     const [ date, setDate ] = useState<Date | null>(new Date())
     const [ endDate, setEndDate ] = useState<Date | null>(new Date())
     const [status, setStatus] = useState<string>('')
