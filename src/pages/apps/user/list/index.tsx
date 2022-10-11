@@ -57,6 +57,8 @@ import { UsersType } from 'src/types/apps/userTypes'
 import DialogEditUserInfo from './DialogUserInfo'
 import TableHeader from 'src/views/apps/user/list/TableHeader'
 
+import  GetShopDetail  from 'src/services/api/users/testingAPI' 
+
 interface UserRoleType {
   [key: string]: ReactElement
 }
@@ -316,6 +318,8 @@ const UserList = () => {
   const dispatch = useDispatch<AppDispatch>()
   const store = useSelector((state: RootState) => state.user)
 
+  const { result_shop_detail, loading_shop_detail } = GetShopDetail();
+
   useEffect(() => {
     dispatch(
       fetchData({
@@ -325,7 +329,8 @@ const UserList = () => {
         currentPlan: organization
       })
     )
-  }, [dispatch, organization, role, status, value])
+    console.log("testing api call",result_shop_detail , "loading api", loading_shop_detail)
+  }, [dispatch, organization, role, status, value, result_shop_detail, loading_shop_detail])
 
   const handleFilter = useCallback((val: string) => {
     setValue(val)
