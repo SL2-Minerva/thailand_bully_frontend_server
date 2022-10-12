@@ -59,17 +59,17 @@ const DonutChart = () => {
       />
       <CardContent>
         <Grid container spacing={3}>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                 <Doughnut data={data} options={options as any} height={320} />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                 <Doughnut data={data} options={options as any} height={320} />
             </Grid>  
-            <Grid item xs={6}>  
+            <Grid item xs={12} md={6}>  
                 <p style={{ fontSize:'10px' }}> Current Period :</p>  
                 <p style={{ fontSize:'10px' }}> 01/10/2022 - 10/10/2022 </p>                  
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                  <p style={{ fontSize:'10px' }}> Previous Period : </p>  
                  <p style={{ fontSize:'10px' }}>  01/09/2022 - 10/09/2022 </p>  
 
