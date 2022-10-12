@@ -106,12 +106,12 @@ const schema = yup.object().shape({
 })
 
 const defaultValues = {
-  password: '456123',
-  username: 'admin_007@test.com'
+  password: 'admin',
+  email: 'admin@materialize.com'
 }
 
 interface FormData {
-  username: string
+  email: string
   password: string
 }
 
@@ -140,9 +140,9 @@ const LoginPage = () => {
   })
 
   const onSubmit = (data: FormData) => {
-    const { username, password } = data
-    auth.login({ username, password }, () => {
-      setError('username', {
+    const { email, password } = data
+    auth.login({ email, password }, () => {
+      setError('email', {
         type: 'manual',
         message: 'Email or Password is invalid'
       })
@@ -275,7 +275,7 @@ const LoginPage = () => {
             <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
               <FormControl fullWidth sx={{ mb: 4 }}>
                 <Controller
-                  name='username'
+                  name='email'
                   control={control}
                   rules={{ required: true }}
                   render={({ field: { value, onChange, onBlur } }) => (
@@ -285,12 +285,12 @@ const LoginPage = () => {
                       value={value}
                       onBlur={onBlur}
                       onChange={onChange}
-                      error={Boolean(errors.username)}
+                      error={Boolean(errors.email)}
                       placeholder='admin@materialize.com'
                     />
                   )}
                 />
-                {errors.username && <FormHelperText sx={{ color: 'error.main' }}>{errors.username.message}</FormHelperText>}
+                {errors.email && <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>}
               </FormControl>
               <FormControl fullWidth>
                 <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.password)}>

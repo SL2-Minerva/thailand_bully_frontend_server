@@ -48,7 +48,7 @@ const AuthProvider = ({ children }: Props) => {
       if (storedToken) {
         setLoading(true)
         await axios
-          .get(authConfig.userInfo, {
+          .get(authConfig.meEndpoint, {
             headers: {
               Authorization: storedToken
             }
@@ -72,18 +72,14 @@ const AuthProvider = ({ children }: Props) => {
   }, [])
 
   const handleLogin = (params: LoginParams, errorCallback?: ErrCallbackType) => {
-
     axios
-      .post(authConfig.auth, params)
+      .post(authConfig.loginEndpoint, params)
       .then(async res => {
-        if (res.status === 200) {
-          window.localStorage.setItem(authConfig.storageTokenKeyName, res.data.access_token)
-        }
-
+        window.localStorage.setItem(authConfig.storageTokenKeyName, res.data.accessToken)
       })
       .then(() => {
         axios
-          .get(authConfig.userInfo, {
+          .get(authConfig.meEndpoint, {
             headers: {
               Authorization: window.localStorage.getItem(authConfig.storageTokenKeyName)!
             }
@@ -102,8 +98,6 @@ const AuthProvider = ({ children }: Props) => {
       .catch(err => {
         if (errorCallback) errorCallback(err)
       })
-
-    console.log(authConfig.auth);
   }
 
   const handleLogout = () => {
@@ -121,7 +115,7 @@ const AuthProvider = ({ children }: Props) => {
         if (res.data.error) {
           if (errorCallback) errorCallback(res.data.error)
         } else {
-          handleLogin({ username: params.email, password: params.password })
+          handleLogin({ email: params.email, password: params.password })
         }
       })
       .catch((err: { [key: string]: string }) => (errorCallback ? errorCallback(err) : null))
