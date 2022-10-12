@@ -3,9 +3,9 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { Grid } from "@mui/material"
+import { Table, TableRow, TableHead, TableCell } from "@mui/material"; 
 
 // ** Third Party Imports
-
 import { Bar } from 'react-chartjs-2'
 
 
@@ -53,9 +53,65 @@ const ShareOfVoice  = () => {
             <Grid item xs={5}>
                 <Bar data={data} options={{ indexAxis: 'y' }} height={300}/>
             </Grid>
-            <Grid item xs={7} mt={14}>
-                
-                
+            <Grid item xs={7} >
+                <Table>
+                    <TableHead>
+                        <TableCell variant="head">  
+                          <img
+                            width={34}
+                            height={34}
+                            src={`/images/logos/facebook-round.png`}
+                          />
+                        </TableCell>
+                        <TableCell variant="head">
+                          <img
+                              width={34}
+                              height={34}
+                              src={`/images/logos/instagram.png`}
+                            />
+                        </TableCell>
+                        <TableCell variant="head"> 
+                          <img
+                              width={34}
+                              height={34}
+                              src={`/images/logos/twitter.png`}
+                            />
+                        </TableCell>
+                        <TableCell variant="head"> 
+                          <img
+                              width={34}
+                              height={34}
+                              src={`/images/logos/youtube-text.png`}
+                            />
+                        </TableCell>
+
+                    </TableHead>
+                    <TableRow>
+                        <TableCell>30%</TableCell>
+                        <TableCell>30%</TableCell>
+                        <TableCell>10%</TableCell>
+                        <TableCell>30%</TableCell>
+
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>40%</TableCell>
+                        <TableCell>20%</TableCell>
+                        <TableCell>30%</TableCell>
+                        <TableCell>10%</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>40%</TableCell>
+                        <TableCell>40%</TableCell>
+                        <TableCell>10%</TableCell>
+                        <TableCell>10%</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>50%</TableCell>
+                        <TableCell>40%</TableCell>
+                        <TableCell>5%</TableCell>
+                        <TableCell>5%</TableCell>
+                    </TableRow>
+                </Table>
             </Grid>  
         </Grid>
         

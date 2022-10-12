@@ -12,7 +12,7 @@ const TopSiteList = () => {
                 titleTypographyProps={{ variant: 'h6' }}
             />
             <CardContent>
-            <Table>
+                <Table>
                     <TableHead sx={{ backgroundColor: "lightgrey !important" }}>
                         <TableCell variant="head" sx={{ backgroundColor: "white !important" }}>  </TableCell>
                         <TableCell variant="head"> No. of Messages </TableCell>

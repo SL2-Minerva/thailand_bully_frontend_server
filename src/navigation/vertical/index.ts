@@ -65,7 +65,20 @@ const navigation = (): VerticalNavItemsType => {
       children: [
         {
           title: 'Dashboard',
-          path: '/report/dashboard'
+          children: [
+            {
+              title: 'Overall Dashboard', 
+              path: '/dashboard/overall'
+            }, 
+            {
+              title: 'Voice Dashboard', 
+              path: '/VoiceDashboard'
+            }, 
+            {
+              title: 'Channel Dashboard', 
+              path: '/ChannelDashboard'
+            }
+          ]
         },
         {
           title: 'Report',
@@ -74,10 +87,6 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'System Log Report',
           path: '/report/system-log'
-        }, 
-        {
-          title: 'Overall Dashboard', 
-          path: '/dashboard/overall'
         }
       ]
     }

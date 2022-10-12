@@ -27,6 +27,7 @@ import TopSiteList from "./TopSiteList"
 import SentimentGaugeChart from "./SentimentGaugeChart"
 import CommentSentiment from "./CommentSentiment"
 import ShareOfVoice from "./ShareOfVoice"
+import SentimentLevelChart from "./SentimentLevelChart"
 
 const OverallDashboard = () => {
   const [date, setDate] = useState<Date | null>(new Date())
@@ -183,8 +184,12 @@ const OverallDashboard = () => {
             <CommentSentiment/>
         </Grid>
 
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12} md={8}>
             <ShareOfVoice />
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+            <SentimentLevelChart />
         </Grid>
 
     </Grid>
