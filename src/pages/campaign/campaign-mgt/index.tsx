@@ -39,8 +39,11 @@ const rows = [
 const CampaignManagement = () => {
   const [ showEdit , setShowEdit ] = useState<boolean>(false)
   const [ showCreate, setShowCreate ] = useState<boolean>(false)
-  const [role, setRole] = useState<string>('')
-  const [campaignName, setCampaignName] = useState<string>('')
+
+  // const [campaignName, setCampaignName] = useState<string>('')
+
+  const [campaignName] = useState<string>('')
+
   const [organization, setOrganization] = useState<string>('')
   const [status, setStatus] = useState<string>('')
   const [date, setDate] = useState<Date | null>(new Date())

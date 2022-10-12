@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, useEffect, MouseEvent, useCallback, ReactElement,forwardRef } from 'react'
+import { useState, useEffect, MouseEvent, useCallback, ReactElement } from 'react'
 
 // ** Next Import
 import Link from 'next/link'
@@ -22,11 +22,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import DatePicker from '@mui/lab/DatePicker'
 import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import MobileDatePicker from '@mui/lab/MobileDatePicker'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
-
-// ** Third Party imports
-import { Locale } from 'date-fns'
 
 // ** Icons Imports
 import Laptop from 'mdi-material-ui/Laptop'
@@ -56,12 +52,12 @@ import { fetchData, deleteUser } from 'src/store/apps/user'
 import { RootState, AppDispatch } from 'src/store'
 import { ThemeColor } from 'src/@core/layouts/types'
 import { UsersType } from 'src/types/apps/userTypes'
-import { DateType } from 'src/types/forms/reactDatepickerTypes'
 
 // ** Custom Components Imports
-import AddUserDrawer from 'src/views/apps/user/list/AddUserDrawer'
 import DialogEditUserInfo from './DialogUserInfo'
 import TableHeader from 'src/views/apps/user/list/TableHeader'
+
+import  GetShopDetail  from 'src/services/api/users/testingAPI' 
 
 interface UserRoleType {
   [key: string]: ReactElement
@@ -304,8 +300,12 @@ const columns = [
 
 const UserList = () => {
   // ** State
-  const [role, setRole] = useState<string>('')
-  const [userName, setUserName] = useState<string>('')
+  // const [role, setRole] = useState<string>('')
+  const [role] = useState<string>('')
+
+  // const [userName, setUserName] = useState<string>('')
+  const [userName] = useState<string>('')
+
   const [organization, setOrganization] = useState<string>('')
   const [value, setValue] = useState<string>('')
   const [status, setStatus] = useState<string>('')
@@ -313,9 +313,12 @@ const UserList = () => {
   const [addUserOpen, setAddUserOpen] = useState<boolean>(false)
   const [date, setDate] = useState<Date | null>(new Date())
   const [endDate, setEndDate] = useState<Date | null>(new Date())
+
   // ** Hooks
   const dispatch = useDispatch<AppDispatch>()
   const store = useSelector((state: RootState) => state.user)
+
+  const { result_shop_detail, loading_shop_detail } = GetShopDetail();
 
   useEffect(() => {
     dispatch(
@@ -326,7 +329,8 @@ const UserList = () => {
         currentPlan: organization
       })
     )
-  }, [dispatch, organization, role, status, value])
+    console.log("testing api call",result_shop_detail , "loading api", loading_shop_detail)
+  }, [dispatch, organization, role, status, value, result_shop_detail, loading_shop_detail])
 
   const handleFilter = useCallback((val: string) => {
     setValue(val)

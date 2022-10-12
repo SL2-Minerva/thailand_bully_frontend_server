@@ -74,6 +74,10 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'System Log Report',
           path: '/report/system-log'
+        }, 
+        {
+          title: 'Overall Dashboard', 
+          path: '/dashboard/overall'
         }
       ]
     }

@@ -28,6 +28,7 @@ const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
   ref: Ref<unknown>
 ) {
+
   return <Fade ref={ref} {...props} />
 })
 
@@ -50,6 +51,7 @@ const DialogOrganization = (props: DialogInfoProps) => {
       const handleOrganizationType = useCallback((e: SelectChangeEvent) => {
         setOrganizationType(e.target.value)
       }, [])
+      
   return (
     <Card>
       <Dialog
