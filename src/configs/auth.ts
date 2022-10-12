@@ -1,9 +1,11 @@
 console.log(process.env.APP_ENV);
 const BASE_URL = process.env.APP_ENV !== 'production' ? 'http://127.0.0.1:8000/api' : 'http://127.0.0.1:8000/api';
 
-console.log(`${BASE_URL}/auth`);
+
 export default {
-  auth: `${BASE_URL}/auth`
+    auth: `${BASE_URL}/auth`,
+    storageTokenKeyName: 'accessToken',
+    userInfo: '/auth/userInfo',
 }
 
 // export default {
