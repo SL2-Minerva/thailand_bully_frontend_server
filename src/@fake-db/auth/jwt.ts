@@ -7,24 +7,24 @@ import mock from 'src/@fake-db/mock'
 // ** Types
 import { UserDataType } from 'src/context/types'
 
-const users: UserDataType[] = [
-  {
-    id: 1,
-    role: 'admin',
-    password: 'admin',
-    fullName: 'John Doe',
-    username: 'johndoe',
-    email: 'admin@materialize.com'
-  },
-  {
-    id: 2,
-    role: 'client',
-    password: 'client',
-    fullName: 'Jane Doe',
-    username: 'janedoe',
-    email: 'client@materialize.com'
-  }
-]
+// const users: UserDataType[] = [
+//   {
+//     id: 1,
+//     role: 'admin',
+//     password: 'admin',
+//     fullName: 'John Doe',
+//     username: 'johndoe',
+//     email: 'admin@materialize.com'
+//   },
+//   {
+//     id: 2,
+//     role: 'client',
+//     password: 'client',
+//     fullName: 'Jane Doe',
+//     username: 'janedoe',
+//     email: 'client@materialize.com'
+//   }
+// ]
 
 // ! These two secrets should be in .env file and not in any other file
 const jwtConfig = {

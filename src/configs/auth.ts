@@ -4,6 +4,7 @@ const BASE_URL = process.env.APP_ENV !== 'production' ? 'http://127.0.0.1:8000/a
 
 export default {
     auth: `${BASE_URL}/auth`,
+    registerEndpoint: `${BASE_URL}/auth`,
     storageTokenKeyName: 'accessToken',
     userInfo: '/auth/userInfo',
 }

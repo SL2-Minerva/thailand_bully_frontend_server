@@ -48,7 +48,7 @@ const AuthProvider = ({ children }: Props) => {
       if (storedToken) {
         setLoading(true)
         await axios
-          .get(authConfig.meEndpoint, {
+          .get(authConfig.userInfo, {
             headers: {
               Authorization: storedToken
             }
@@ -121,7 +121,7 @@ const AuthProvider = ({ children }: Props) => {
         if (res.data.error) {
           if (errorCallback) errorCallback(res.data.error)
         } else {
-          handleLogin({ email: params.email, password: params.password })
+          handleLogin({ username: params.email, password: params.password })
         }
       })
       .catch((err: { [key: string]: string }) => (errorCallback ? errorCallback(err) : null))
