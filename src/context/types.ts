@@ -12,7 +12,7 @@ export type RegisterParams = {
 }
 
 export type UserDataType = {
-  // id: number
+  id: number
   name: string
   role: string
   role_id: number
