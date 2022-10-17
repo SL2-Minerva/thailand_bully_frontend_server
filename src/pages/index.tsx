@@ -20,14 +20,15 @@ export const getHomeRoute = (role: string) => {
 
 const Home = () => {
   // ** Hooks
+
   const auth = useAuth()
   const router = useRouter()
-
 
   useEffect(() => {
     if (auth.user && auth.user.role_id) {
 
       const homeRoute = getHomeRoute( auth.user.role_id === 1 ? 'admin' : auth.user.role)
+
       // Redirect user to Home URL
       router.replace(homeRoute)
     }
