@@ -17,4 +17,4 @@ import './pages/knowledge-base'
 import './server-side-menu/vertical'
 import './server-side-menu/horizontal'
 
-// mock.onAny().passThrough()
+mock.onAny().passThrough()

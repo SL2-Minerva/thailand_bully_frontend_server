@@ -11,7 +11,7 @@ import axios from 'axios'
 import authConfig from 'src/configs/auth'
 
 // ** Types
-import { AuthValuesType, RegisterParams, LoginParams, ErrCallbackType, UserDataType, RoleDataType } from './types'
+import { AuthValuesType, RegisterParams, LoginParams, ErrCallbackType, UserDataType } from './types'
 
 // ** Defaults
 const defaultProvider: AuthValuesType = {
@@ -47,7 +47,8 @@ const AuthProvider = ({ children }: Props) => {
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)!
 
       if (storedToken) {
-        // setLoading(true)
+
+        setLoading(true)
         await axios
           .get(authConfig.userInfo, {
             headers: {
@@ -55,7 +56,9 @@ const AuthProvider = ({ children }: Props) => {
             }
           })
           .then(async response => {
+
             setLoading(false)
+
             const { data } = response.data;
             setUser({ ...data.info })
           })
@@ -74,7 +77,6 @@ const AuthProvider = ({ children }: Props) => {
   }, [])
 
   const handleLogin = (params: LoginParams, errorCallback?: ErrCallbackType) => {
-
     axios
       .post(authConfig.loginEndpoint, params)
       .then(async res => {
@@ -82,7 +84,6 @@ const AuthProvider = ({ children }: Props) => {
         window.localStorage.setItem(authConfig.storageTokenKeyName, data.accessToken)
       })
       .then(() => {
-
         axios
           .get(authConfig.userInfo, {
             headers: {
