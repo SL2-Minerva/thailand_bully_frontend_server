@@ -60,18 +60,18 @@ const navigation = (): VerticalNavItemsType => {
       ]
     },
     {
-      title: 'Report',
+      title: 'Reports',
       icon: Finance,
       children: [
         {
-          title: 'Dashboard',
+          title: 'Dashboards',
           children: [
             {
-              title: 'Overall Dashboard', 
+              title: 'Overall Dashboard',
               path: '/dashboard/overall'
-            }, 
+            },
             {
-              title: 'Voice Dashboard', 
+              title: 'Voice Dashboard',
               path: '/VoiceDashboard'
             }, 
             {
