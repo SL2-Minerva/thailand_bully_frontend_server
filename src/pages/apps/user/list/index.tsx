@@ -57,7 +57,7 @@ import { UsersType } from 'src/types/apps/userTypes'
 import DialogEditUserInfo from './DialogUserInfo'
 import TableHeader from 'src/views/apps/user/list/TableHeader'
 
-import  GetShopDetail  from 'src/services/api/users/testingAPI' 
+import  GetShopDetail  from 'src/services/api/users/testingAPI'
 
 interface UserRoleType {
   [key: string]: ReactElement
@@ -427,7 +427,7 @@ const UserList = () => {
               </Grid>
               <Grid item sm={4} xs={12} mt={2}>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-        
+
                   <Button sx={{ mb: 2 }} onClick={()=>{console.log("search")}} variant='contained'>
                     search
                   </Button>

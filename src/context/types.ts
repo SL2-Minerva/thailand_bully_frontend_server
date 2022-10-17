@@ -1,7 +1,7 @@
 export type ErrCallbackType = (err: { [key: string]: string }) => void
 
 export type LoginParams = {
-  email: string
+  username: string
   password: string
 }
 
@@ -11,9 +11,29 @@ export type RegisterParams = {
   password: string
 }
 
+// export type UserDataType = {
+//   id: number
+//   role: string
+//   email: string
+//   fullName: string
+//   username: string
+//   password: string
+//   avatar?: string | null
+// }
+
+export type RoleDataType = {
+
+}
+
 export type UserDataType = {
   id: number
+  name: string
   role: string
+  role_id: number
+  organization_id: number
+  status: boolean
+  mobile: string
+  company:string
   email: string
   fullName: string
   username: string
@@ -21,21 +41,9 @@ export type UserDataType = {
   avatar?: string | null
 }
 
-// export type UserDataType = {
-//   id: number
-//   name: string
-//   role: string
-//   role_id: number
-//   organization_id: number
-//   status: boolean
-//   mobile: string
-//   company:string
-//   email: string
-//   fullName: string
-//   username: string
-//   password: string
-//   avatar?: string | null
-// }
+export type Permission = {
+
+}
 
 export type AuthValuesType = {
   loading: boolean

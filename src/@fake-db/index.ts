@@ -2,7 +2,7 @@ import mock from './mock'
 
 import './cards'
 import './table'
-import './auth/jwt'
+// import './auth/jwt'
 import './apps/chat'
 import './pages/faq'
 import './apps/email'
@@ -17,4 +17,4 @@ import './pages/knowledge-base'
 import './server-side-menu/vertical'
 import './server-side-menu/horizontal'
 
-mock.onAny().passThrough()
+// mock.onAny().passThrough()

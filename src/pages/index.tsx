@@ -24,8 +24,8 @@ const Home = () => {
   const router = useRouter()
 
   useEffect(() => {
-    if (auth.user && auth.user.role) {
-      const homeRoute = getHomeRoute(auth.user.role)
+    if (auth.user && auth.user.role_id) {
+      const homeRoute = getHomeRoute('admin')
 
       // Redirect user to Home URL
       router.replace(homeRoute)
