@@ -45,17 +45,22 @@ const AuthProvider = ({ children }: Props) => {
     const initAuth = async (): Promise<void> => {
       setIsInitialized(true)
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)!
+
       if (storedToken) {
+
         setLoading(true)
         await axios
-          .get(authConfig.meEndpoint, {
+          .get(authConfig.userInfo, {
             headers: {
-              Authorization: storedToken
+              Authorization: `Bearer ${storedToken}`
             }
           })
           .then(async response => {
+
             setLoading(false)
-            setUser({ ...response.data.userData })
+
+            const { data } = response.data;
+            setUser({ ...data.info })
           })
           .catch(() => {
             localStorage.removeItem('userData')
@@ -75,21 +80,21 @@ const AuthProvider = ({ children }: Props) => {
     axios
       .post(authConfig.loginEndpoint, params)
       .then(async res => {
-        window.localStorage.setItem(authConfig.storageTokenKeyName, res.data.accessToken)
+        const { data } = res.data;
+        window.localStorage.setItem(authConfig.storageTokenKeyName, data.accessToken)
       })
       .then(() => {
         axios
-          .get(authConfig.meEndpoint, {
+          .get(authConfig.userInfo, {
             headers: {
-              Authorization: window.localStorage.getItem(authConfig.storageTokenKeyName)!
+              Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
             }
           })
           .then(async response => {
             const returnUrl = router.query.returnUrl
-
-            setUser({ ...response.data.userData })
-            await window.localStorage.setItem('userData', JSON.stringify(response.data.userData))
-
+            const { data } = response.data;
+            setUser({ ...data.info })
+            await window.localStorage.setItem('userData', JSON.stringify(data.info));
             const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
 
             router.replace(redirectURL as string)
@@ -109,16 +114,16 @@ const AuthProvider = ({ children }: Props) => {
   }
 
   const handleRegister = (params: RegisterParams, errorCallback?: ErrCallbackType) => {
-    axios
-      .post(authConfig.registerEndpoint, params)
-      .then(res => {
-        if (res.data.error) {
-          if (errorCallback) errorCallback(res.data.error)
-        } else {
-          handleLogin({ email: params.email, password: params.password })
-        }
-      })
-      .catch((err: { [key: string]: string }) => (errorCallback ? errorCallback(err) : null))
+    // axios
+    //   .post(authConfig.registerEndpoint, params)
+    //   .then(res => {
+    //     if (res.data.error) {
+    //       if (errorCallback) errorCallback(res.data.error)
+    //     } else {
+    //       handleLogin({ email: params.email, password: params.password })
+    //     }
+    //   })
+    //   .catch((err: { [key: string]: string }) => (errorCallback ? errorCallback(err) : null))
   }
 
   const values = {

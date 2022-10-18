@@ -15,6 +15,8 @@ const ACLPage = () => {
   // ** Hooks
   const ability = useContext(AbilityContext)
 
+  console.log('ability', ability);
+
   return (
     <Grid container spacing={6}>
       <Grid item md={6} xs={12}>
