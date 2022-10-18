@@ -30,6 +30,8 @@ import DatePicker from '@mui/lab/DatePicker'
 // ** Icons Imports
 import Plus from 'mdi-material-ui/Plus'
 import Close from 'mdi-material-ui/Close'
+import DomainList from 'src/services/api/domains/DomainAPI'
+import CreateCampaign from 'src/services/api/campaign/CampaignAPI'
 
 // import KeywordRepeater from './KeywordRepeater'
 
@@ -95,14 +97,33 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
    //repeat input field
    const [keywords, setKeyword] = useState([{ value: null }]);
-   const [mustHaveKeywords, setMustHaveKeyword] = useState([{ value: null }]);
+   const [mustHaveKeywords, setMustHaveKeyword] = useState<string[]>(['']);
    const [excludeKeywords, setExcludeKeyword] = useState([{ value: null }]);
+
+   const [ campaign_name, set_campaign_name ] = useState<string>('');
+   const [ description, set_description ] = useState<string>('');
+  
+   //  const [ keyword_or, set_keyword_or] = useState([]);
+  //  const [ keyword_and, set_keyword_and] = useState([]);
+  //  const [ keyword_exclude, set_keyword_exclude] = useState([]);
+
+
+   const { result_domain_list } = DomainList();
+   const { create_campaign } = CreateCampaign();
 
   //  const [countKeyword, setCountKeyword ] = useState<number>(1)
 
    const handleDomain = useCallback((e: SelectChangeEvent) => {
         setDomain(e.target.value)
     }, [])
+
+    function handleCampaignName(event: any) {
+      set_campaign_name(event.target.value);
+    }
+
+    function handleDescription(event: any) {
+      set_description(event.target.value);
+    }
 
    // ** Deletes form
    const deleteForm = (e: SyntheticEvent) => {
@@ -112,11 +133,11 @@ const DialogCampaign = (props: DialogInfoProps) => {
     e.target.closest('.repeater-wrapper').remove()
   }
 
-  // function handleChangeKeyword(i: number, event: any) {
-  //   const values = [...keywords];
-  //   values[i].value = event.target.value;
-  //   setKeyword(values);
-  // }
+  function handleChangeKeyword(i: number, event: any) {
+    const values = [...keywords];
+    values[i].value = event.target.value;
+    setKeyword(values);
+  }
 
   function handleAddKeyword() {
     const values = [...keywords];
@@ -130,15 +151,15 @@ const DialogCampaign = (props: DialogInfoProps) => {
     setKeyword(values);
   }
 
-  // function handleChangeMustHaveKeyword(i: number, event: any) {
-  //   const values = [...mustHaveKeywords];
-  //   values[i].value = event.target.value;
-  //   setMustHaveKeyword(values);
-  // }
+  function handleChangeMustHaveKeyword(i: number, event: any) {
+    const values = [...mustHaveKeywords];
+    values[i] = event.target.value;
+    setMustHaveKeyword(values);
+  }
 
   function handleAddMustHaveKeyword() {
     const values = [...mustHaveKeywords];
-    values.push({ value: null });
+    values.push('');
     setMustHaveKeyword(values);
   }
 
@@ -148,11 +169,11 @@ const DialogCampaign = (props: DialogInfoProps) => {
     setMustHaveKeyword(values);
   }
   
-  // function handleChangeExcludeKeyword(i: number, event: any) {
-  //   const values = [...excludeKeywords];
-  //   values[i].value = event.target.value;
-  //   setExcludeKeyword(values);
-  // }
+  function handleChangeExcludeKeyword(i: number, event: any) {
+    const values = [...excludeKeywords];
+    values[i].value = event.target.value;
+    setExcludeKeyword(values);
+  }
 
   function handleAddExcludeKeyword() {
       const values = [...excludeKeywords];
@@ -165,6 +186,40 @@ const DialogCampaign = (props: DialogInfoProps) => {
     values.splice(i, 1);
     setExcludeKeyword(values);
   }
+
+  function closeDialogBox () {
+    setShow(false);
+    setDomain('');
+  }
+
+  const createNewCampaign = async () => {
+    
+    console.log('keyyyyyy',keywords, mustHaveKeywords, excludeKeywords)
+
+    let keywordArray = [];
+
+
+    
+    const input_data = {
+      "name" : campaign_name, 
+      "organization_id" : 1, 
+      "domain_id" : parseInt(domain), 
+      "status" : 1
+
+    }
+    // try {
+    //   create_campaign(input_data)
+    //     .then(() => {
+    //       console.log('create success');
+          
+    //     })
+    //     .catch((ex : any) => {
+    //       console.log(ex) 
+    //     });
+    // } catch (ex) {}
+
+  }
+  
 
   useEffect(() => {
     const timer = setInterval(()=>setUpdatedDate(new Date()), 1000 )
@@ -182,14 +237,14 @@ const DialogCampaign = (props: DialogInfoProps) => {
         open={show}
         maxWidth='md'
         scroll='body'
-        onClose={() => setShow(false)}
+        onClose={closeDialogBox}
         TransitionComponent={Transition}
-        onBackdropClick={() => setShow(false)}
+        onBackdropClick={closeDialogBox}
       >
         <DialogContent sx={{ pb: 6, px: { xs: 8, sm: 15 }, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
           <IconButton
             size='small'
-            onClick={() => setShow(false)}
+            onClick={closeDialogBox}
             sx={{ position: 'absolute', right: '1rem', top: '1rem' }}
           >
             <Close />
@@ -204,7 +259,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
           </Box>
           <Grid container spacing={6} style={{ paddingLeft: '1.5rem' }}>
             <Grid item sm={12} xs={12}>
-              <TextField fullWidth  label='Campaign Name' placeholder='' />
+              <TextField fullWidth  label='Campaign Name' value= {campaign_name}
+                    onChange = {handleCampaignName} placeholder='' />
             </Grid>
             <Grid item sm={12} xs={12}>
                 <TextField
@@ -212,6 +268,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
                     multiline
                     rows={3}
                     label='Description'
+                    value= {description}
+                    onChange = {handleDescription}
                     id='textarea-outlined-controlled'
                     />
             </Grid>
@@ -227,11 +285,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
                     onChange={handleDomain}
                     inputProps={{ placeholder: 'Select Domain' }}
                   >
-                    <MenuItem value=''>Domain</MenuItem>
-                    <MenuItem value='1'>Domain 1</MenuItem>
-                    <MenuItem value='2'>Domain 2</MenuItem>
-                    <MenuItem value='3'>Domain 3</MenuItem>
-                    <MenuItem value='4'>Domain 4</MenuItem>
+
+                  {
+                    (result_domain_list || []).map((domain : any, index : number) => (
+                      <MenuItem key={index} value={domain?.id?.toString()}>{domain.name}</MenuItem>
+                    ))
+                  }
+                  
                   </Select>
                 </FormControl>
             </Grid>
@@ -286,9 +346,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
                                           sx={{ mt: 3.5 }}
                                           placeholder='คำที่ควรมี'
                                           label = "คำที่ควรมี"
-                                          
-                                          // value={keyword.value || ""}
-                                          // onChange = {e => handleChangeKeyword(index, e)}
+                                          value={keyword.value || ""}
+                                          onChange = {e => handleChangeKeyword(index, e)}
                                         />
                                         <Close fontSize='small' sx={{ mt: 5.5}} onClick={() => handleRemoveKeyword(index)}/>
                                         <br/>
@@ -318,6 +377,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
                                           sx={{ mt: 3.5}}
                                           placeholder='คำที่ต้องมี'
                                           label = "คำที่ต้องมี"
+                                          value={keyword}
+                                          onChange = {e => handleChangeMustHaveKeyword(index, e)}
                                         />
                                         <Close fontSize='small' sx={{ mt: 5.5}} onClick={() => handleRemoveMustHaveKeyword(index)}/>
                                         <br/>
@@ -347,6 +408,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
                                           sx={{ mt: 3.5 }}
                                           placeholder='ที่ห้ามมี'
                                           label = "ที่ห้ามมี"
+                                          value={keyword.value || ""}
+                                          onChange = {e => handleChangeExcludeKeyword(index, e)}
                                         />
                                         <Close fontSize='small' sx={{ mt: 5.5}} onClick={() => handleRemoveExcludeKeyword(index)}/>
                                         <br/>
@@ -462,10 +525,10 @@ const DialogCampaign = (props: DialogInfoProps) => {
           </Grid>
         </DialogContent>
         <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
-          <Button variant='contained' sx={{ mr: 2 }} onClick={() => setShow(false)}>
+          <Button variant='contained' sx={{ mr: 2 }} onClick={createNewCampaign}>
             Submit
           </Button>
-          <Button variant='outlined' color='secondary' onClick={() => setShow(false)}>
+          <Button variant='outlined' color='secondary' onClick={closeDialogBox}>
             Discard
           </Button>
         </DialogActions>

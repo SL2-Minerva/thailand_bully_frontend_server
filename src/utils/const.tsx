@@ -1,1 +1,3 @@
-export const API_PATH = 'https://app.smeconnext.com/staging/api' 
+
+export const API_PATH = process.env.NEXT_PUBLIC_APP_ENV === 'production' ? 'http://127.0.0.1:8000/api' : 'http://cornea-analysis.com/api';
+
