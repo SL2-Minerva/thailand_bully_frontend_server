@@ -40,4 +40,16 @@ const CreateCampaign = () => {
     };
   };
 
+  export const CampaignList = () => {
+    const [{data: res, loading, error}, refetch ] = CallAPI<{data?: any;}>({
+      url: `/campaign/list`,
+      method: "GET"
+    });
+    return{
+      resultCampaiganList: res?.data ||  null,
+      loadingCampaiganList: loading,
+      errorCampaiganList: error,
+    }
+  }
+
 export default CreateCampaign
