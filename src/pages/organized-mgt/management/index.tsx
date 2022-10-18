@@ -43,7 +43,14 @@ const OrganizedManagement = () => {
 
   const [status, setStatus] = useState<string>('')
 
+  const [tableData, setTableData ] = useState(rows);
 
+  function handleChange(i: number, event: any ) {
+    const values = [...tableData];
+    values[i].status = event.target.checked;
+    setTableData(values);
+  }
+  
   const handleOrganization = useCallback((e: SelectChangeEvent) => {
     setOrganization(e.target.value)
   }, [])
@@ -166,7 +173,7 @@ const OrganizedManagement = () => {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {rows.map(row => (
+                    {tableData.map((row, index) => (
                         <TableRow
                         key={row.id}
                         sx={{
@@ -182,7 +189,7 @@ const OrganizedManagement = () => {
                         <TableCell align='center'>{row.group}</TableCell>
                         <TableCell align='center'>{row.type}</TableCell>
                         <TableCell align='center'>
-                            <Switch  checked={row.status}/>
+                            <Switch key={index} checked={row.status} onChange={ e => handleChange(index, e)}/>
                         </TableCell>
                         <TableCell align='center'>
                           <PencilOutline onClick={()=> {setShowEdit(true)}}/>

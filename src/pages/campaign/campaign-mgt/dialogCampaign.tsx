@@ -30,7 +30,8 @@ import DatePicker from '@mui/lab/DatePicker'
 // ** Icons Imports
 import Plus from 'mdi-material-ui/Plus'
 import Close from 'mdi-material-ui/Close'
-import KeywordRepeater from './KeywordRepeater'
+
+// import KeywordRepeater from './KeywordRepeater'
 
 
 const Transition = forwardRef(function Transition(
@@ -97,7 +98,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
    const [mustHaveKeywords, setMustHaveKeyword] = useState([{ value: null }]);
    const [excludeKeywords, setExcludeKeyword] = useState([{ value: null }]);
 
-   const [countKeyword, setCountKeyword ] = useState<number>(1)
+  //  const [countKeyword, setCountKeyword ] = useState<number>(1)
 
    const handleDomain = useCallback((e: SelectChangeEvent) => {
         setDomain(e.target.value)
@@ -111,11 +112,11 @@ const DialogCampaign = (props: DialogInfoProps) => {
     e.target.closest('.repeater-wrapper').remove()
   }
 
-  function handleChangeKeyword(i: number, event: any) {
-    const values = [...keywords];
-    values[i].value = event.target.value;
-    setKeyword(values);
-  }
+  // function handleChangeKeyword(i: number, event: any) {
+  //   const values = [...keywords];
+  //   values[i].value = event.target.value;
+  //   setKeyword(values);
+  // }
 
   function handleAddKeyword() {
     const values = [...keywords];
@@ -129,11 +130,11 @@ const DialogCampaign = (props: DialogInfoProps) => {
     setKeyword(values);
   }
 
-  function handleChangeMustHaveKeyword(i: number, event: any) {
-    const values = [...mustHaveKeywords];
-    values[i].value = event.target.value;
-    setMustHaveKeyword(values);
-  }
+  // function handleChangeMustHaveKeyword(i: number, event: any) {
+  //   const values = [...mustHaveKeywords];
+  //   values[i].value = event.target.value;
+  //   setMustHaveKeyword(values);
+  // }
 
   function handleAddMustHaveKeyword() {
     const values = [...mustHaveKeywords];
@@ -147,11 +148,11 @@ const DialogCampaign = (props: DialogInfoProps) => {
     setMustHaveKeyword(values);
   }
   
-  function handleChangeExcludeKeyword(i: number, event: any) {
-    const values = [...excludeKeywords];
-    values[i].value = event.target.value;
-    setExcludeKeyword(values);
-  }
+  // function handleChangeExcludeKeyword(i: number, event: any) {
+  //   const values = [...excludeKeywords];
+  //   values[i].value = event.target.value;
+  //   setExcludeKeyword(values);
+  // }
 
   function handleAddExcludeKeyword() {
       const values = [...excludeKeywords];
@@ -285,6 +286,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                                           sx={{ mt: 3.5 }}
                                           placeholder='คำที่ควรมี'
                                           label = "คำที่ควรมี"
+                                          
                                           // value={keyword.value || ""}
                                           // onChange = {e => handleChangeKeyword(index, e)}
                                         />

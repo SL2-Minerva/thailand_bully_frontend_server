@@ -33,6 +33,13 @@ const SourceManagement = () => {
   const [ showEdit , setShowEdit ] = useState<boolean>(false)
   const [ showCreate, setShowCreate ] = useState<boolean>(false)
   const toggleCreate = () => setShowCreate(!showCreate)
+  const [tableData, setTableData ] = useState(rows);
+
+  function handleChange(i: number, event: any) {
+    const values = [...tableData];
+    values[i].status = event.target.checked;
+    setTableData(values);
+  }
 
   return (
     <Grid container spacing={6}>
@@ -59,7 +66,7 @@ const SourceManagement = () => {
                       </TableRow>
                       </TableHead>
                       <TableBody>
-                      {rows.map(row => (
+                      {tableData.map((row, index) => (
                           <TableRow
                           key={row.name}
                           sx={{
@@ -73,7 +80,7 @@ const SourceManagement = () => {
                           </TableCell>
                           <TableCell align='center'>{row.description}</TableCell>
                           <TableCell align='center'>
-                              <Switch  checked={row.status}/>
+                              <Switch key={index} checked={row.status} onChange={ e => handleChange(index, e) }/>
                           </TableCell>
                           <TableCell align='center'>
                               <PencilOutline onClick={()=> { setShowEdit(true) }}/>

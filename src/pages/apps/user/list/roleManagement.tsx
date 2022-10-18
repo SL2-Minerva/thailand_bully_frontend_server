@@ -32,6 +32,13 @@ const RoleManagement = () => {
     const [ showDialog , setShowDialog ] = useState<boolean>(false)
     const [ addRoleOpen, setAddRoleOpen ] = useState<boolean>(false)
     const toggleAddRole = () => setAddRoleOpen(!addRoleOpen)
+    const [tableData, setTableData ] = useState(rows);
+
+    function handleChange(i: number, event: any) {
+    const values = [...tableData];
+    values[i].status = event.target.checked;
+    setTableData(values);
+    }
 
   return (
     <Grid container>
@@ -58,7 +65,7 @@ const RoleManagement = () => {
                             </TableRow>
                             </TableHead>
                             <TableBody>
-                            {rows.map(row => (
+                            {tableData.map((row, index) => (
                                 <TableRow
                                 key={row.name}
                                 sx={{
@@ -72,7 +79,7 @@ const RoleManagement = () => {
                                 </TableCell>
                                 <TableCell align='center'>{row.description}</TableCell>
                                 <TableCell align='center'>
-                                    <Switch  checked={row.status}/>
+                                    <Switch key={index} checked={row.status} onChange={ e => handleChange(index, e)}/>
                                 </TableCell>
                                 <TableCell align='center'>
                                     <PencilOutline onClick={()=> { setShowDialog(true) }}/>

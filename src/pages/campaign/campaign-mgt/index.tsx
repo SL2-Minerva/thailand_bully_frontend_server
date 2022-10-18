@@ -48,6 +48,7 @@ const CampaignManagement = () => {
   const [status, setStatus] = useState<string>('')
   const [date, setDate] = useState<Date | null>(new Date())
   const [endDate, setEndDate] = useState<Date | null>(new Date())
+  const [tableData, setTableData ] = useState(rows);
 
   const toggleCreate = () => setShowCreate(!showCreate)
 
@@ -58,6 +59,12 @@ const CampaignManagement = () => {
   const handleStatusChange = useCallback((e: SelectChangeEvent) => {
     setStatus(e.target.value)
   }, [])
+
+  function handleChange(i: number, event: any) {
+    const values = [...tableData];
+    values[i].status = event.target.checked;
+    setTableData(values);
+  }
 
   return (
     <Grid container spacing={6}>
@@ -174,7 +181,7 @@ const CampaignManagement = () => {
                       </TableRow>
                       </TableHead>
                       <TableBody>
-                      {rows.map(row => (
+                      {tableData.map((row, index) => (
                           <TableRow
                           key={row.name}
                           sx={{
@@ -190,7 +197,7 @@ const CampaignManagement = () => {
                           <TableCell align='center'>{row.domain}</TableCell>
                           <TableCell align='center'>{row.organization}</TableCell>
                           <TableCell align='center'>
-                              <Switch  checked={row.status}/>
+                              <Switch key={index} checked={row.status} onChange={ e =>handleChange(index, e) }/>
                           </TableCell>
                           <TableCell align='center'>
                               <PencilOutline onClick={()=> { setShowEdit(true) }}/>
