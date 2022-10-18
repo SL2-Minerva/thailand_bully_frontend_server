@@ -15,6 +15,7 @@ import { PencilOutline } from 'mdi-material-ui'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import DialogDomain from './dialogDomain';
+import DomainList from 'src/services/api/domains/DomainAPI';
 
 const createData = (name: string, description: string, status : boolean) => {
   return { name, description, status }
@@ -31,6 +32,14 @@ const DomainManagement = () => {
   const [ showEdit , setShowEdit ] = useState<boolean>(false)
   const [ showCreate, setShowCreate ] = useState<boolean>(false)
   const toggleCreate = () => setShowCreate(!showCreate)
+  const [tableData, setTableData ] = useState(rows);
+  const { result_domain_list, loading_domain_list } = DomainList();
+
+  function handleChange(i: number, event: any) {
+    const values = [...tableData];
+    values[i].status = event.target.checked;
+    setTableData(values);
+  }
 
   return (
     <Grid container spacing={6}>
@@ -57,27 +66,39 @@ const DomainManagement = () => {
                       </TableRow>
                       </TableHead>
                       <TableBody>
-                      {rows.map(row => (
-                          <TableRow
-                          key={row.name}
-                          sx={{
-                              '&:last-of-type td, &:last-of-type th': {
-                              border: 0
-                              }
-                          }}
-                          >
-                          <TableCell component='th' scope='row'>
-                              {row.name}
-                          </TableCell>
-                          <TableCell align='center'>{row.description}</TableCell>
-                          <TableCell align='center'>
-                              <Switch  checked={row.status}/>
-                          </TableCell>
-                          <TableCell align='center'>
-                              <PencilOutline onClick={()=> { setShowEdit(true) }}/>
-                          </TableCell>
+                      <>
+                        {
+                          loading_domain_list ? 
+                          <TableRow>
+                            <TableCell colSpan={4}>There is no data</TableCell>
                           </TableRow>
-                      ))}
+                          :
+                          <>
+                            {result_domain_list.map((row : any, index : number) => (
+                                <TableRow
+                                key={row.name}
+                                sx={{
+                                    '&:last-of-type td, &:last-of-type th': {
+                                    border: 0
+                                    }
+                                }}
+                                >
+                                <TableCell component='th' scope='row'>
+                                    {row.name}
+                                </TableCell>
+                                <TableCell align='center'>{row.description ?? "-"}</TableCell>
+                                <TableCell align='center'>
+                                    <Switch key={index} checked={true} onChange={ e => handleChange(index, e) }/>
+                                </TableCell>
+                                <TableCell align='center'>
+                                    <PencilOutline onClick={()=> { setShowEdit(true) }}/>
+                                </TableCell>
+                                </TableRow>
+                            ))}
+                          </>
+                        }
+                      </>
+                      
                       </TableBody>
                   </Table>
           </TableContainer>

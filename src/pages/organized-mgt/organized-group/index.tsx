@@ -33,6 +33,14 @@ const OrganizationGroup = () => {
   const [ showCreate, setShowCreate ] = useState<boolean>(false)
   const toggleShowCreate = () => setShowCreate(!showCreate)
 
+  const [tableData, setTableData ] = useState(rows);
+
+  function handleChange(i: number, event: any ) {
+    const values = [...tableData];
+    values[i].status = event.target.checked;
+    setTableData(values);
+  }
+
   return (
     <Grid container spacing={6}>
       <Grid item md={12} xs={12}>
@@ -58,7 +66,7 @@ const OrganizationGroup = () => {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {rows.map(row => (
+                    {tableData.map((row, index) => (
                         <TableRow
                         key={row.id}
                         sx={{
@@ -73,7 +81,7 @@ const OrganizationGroup = () => {
                         <TableCell align='center'>{row.organization_group}</TableCell>
                         <TableCell align='center'>{row.description}</TableCell>
                         <TableCell align='center'>
-                            <Switch  checked={row.status}/>
+                            <Switch key={index} checked={row.status}  onChange={event => handleChange(index, event)}/>
                         </TableCell>
                         <TableCell align='center'>
                             <PencilOutline onClick={()=> {setShowEdit(true)}}/>

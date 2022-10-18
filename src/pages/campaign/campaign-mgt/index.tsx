@@ -23,18 +23,8 @@ import MenuItem from '@mui/material/MenuItem'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DialogCampaign from './dialogCampaign';
-
-
-const createData = (name: string, keyword: string, domain: string, organization: string, status : boolean) => {
-  return { name, keyword, domain, organization, status }
-}
-
-const rows = [
-  createData('ความคิดเห็นในสังคม เกี่ยวกับกัญชา', "กัญชาเสรี, ปลดล็อคกัญชา", 'สังคม','กองทุนพัฒนาสื่อปลอดภัยและสร้างสรรค์', true),
-  createData('ความคิดเห็นในสังคม เกี่ยวกับราคาน้ำมัน', "น้ำมันแพง, น้ำมันขึ้นราคา", 'เศรษฐกิจ','หน่วยงาน (กระทรวงพลังงาน)', true),
-  createData('ความคิดเห็นในสังคม เกี่ยวกับรถ EV', "รถยนต์ไฟฟ้า, สถานีชาร์จรถไฟฟ้า", 'เทคโนโลยี, สังคม','บริษัท BBB', true),
-
-]
+import { CampaignList } from 'src/services/api/campaign/CampaignAPI';
+import DomainList from 'src/services/api/domains/DomainAPI';
 
 const CampaignManagement = () => {
   const [ showEdit , setShowEdit ] = useState<boolean>(false)
@@ -49,6 +39,11 @@ const CampaignManagement = () => {
   const [date, setDate] = useState<Date | null>(new Date())
   const [endDate, setEndDate] = useState<Date | null>(new Date())
 
+  // const [tableData, setTableData ] = useState(rows);
+
+  const {resultCampaiganList} = CampaignList();
+  const {result_domain_list} = DomainList();
+
   const toggleCreate = () => setShowCreate(!showCreate)
 
   const handleOrganization = useCallback((e: SelectChangeEvent) => {
@@ -58,6 +53,13 @@ const CampaignManagement = () => {
   const handleStatusChange = useCallback((e: SelectChangeEvent) => {
     setStatus(e.target.value)
   }, [])
+
+  // handle toggle status 
+  // function handleChange(i: number, event: any) {
+  //   const values = [...tableData];
+  //   values[i].status = event.target.checked;
+  //   setTableData(values);
+  // }
 
   return (
     <Grid container spacing={6}>
@@ -174,9 +176,9 @@ const CampaignManagement = () => {
                       </TableRow>
                       </TableHead>
                       <TableBody>
-                      {rows.map(row => (
+                      {(resultCampaiganList || []).map((campaignList : any, index : number) => (
                           <TableRow
-                          key={row.name}
+                          key={index}
                           sx={{
                               '&:last-of-type td, &:last-of-type th': {
                               border: 0
@@ -184,13 +186,41 @@ const CampaignManagement = () => {
                           }}
                           >
                           <TableCell component='th' scope='row'>
-                              {row.name}
+                              {campaignList.name}
                           </TableCell>
-                          <TableCell align='center'>{row.keyword}</TableCell>
-                          <TableCell align='center'>{row.domain}</TableCell>
-                          <TableCell align='center'>{row.organization}</TableCell>
                           <TableCell align='center'>
-                              <Switch  checked={row.status}/>
+                            {
+                              ((campaignList.keyword || []).map((keyword: any, i : number) => (
+                                <div key={i}>
+                                  <span>
+                                    <b>
+                                      {keyword.name} : 
+                                    </b> 
+                                    { " " + keyword.keyword_or + ", " + keyword.keyword_and + ", " + keyword.keyword_exclude }
+                                   </span>
+                                </div>
+                              )) )
+                            }
+                            
+                          </TableCell>
+                          <TableCell align='center'>
+                            {
+                              ((result_domain_list || []).map((domain: any, domainIndex : number) => (
+                                  <>
+                                    {
+                                      domain.id === campaignList.domain_id &&
+                                      <span key={domainIndex}>
+                                         {domain.name}
+                                      </span>
+                                    }
+                                  </>
+                              )))
+                            }
+                          </TableCell>
+                          <TableCell align='center'>{campaignList.organization}</TableCell>
+                          <TableCell align='center'>
+                              {/* <Switch key={index} checked={true} onChange={ e =>handleChange(index, e) }/> */}
+                              <Switch checked/>
                           </TableCell>
                           <TableCell align='center'>
                               <PencilOutline onClick={()=> { setShowEdit(true) }}/>
