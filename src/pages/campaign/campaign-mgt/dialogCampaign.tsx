@@ -97,11 +97,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
    //repeat input field
    const [keywords, setKeyword] = useState([{ value: null }]);
-   const [mustHaveKeywords, setMustHaveKeyword] = useState<string[]>(['']);
+   const [mustHaveKeywords, setMustHaveKeyword] = useState([{ value: null }]);
    const [excludeKeywords, setExcludeKeyword] = useState([{ value: null }]);
 
    const [ campaign_name, set_campaign_name ] = useState<string>('');
    const [ description, set_description ] = useState<string>('');
+
+   const [ input_keyword, set_input_keyword ] = useState([{label: null, keywords: ['']}])
   
    //  const [ keyword_or, set_keyword_or] = useState([]);
   //  const [ keyword_and, set_keyword_and] = useState([]);
@@ -153,13 +155,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
   function handleChangeMustHaveKeyword(i: number, event: any) {
     const values = [...mustHaveKeywords];
-    values[i] = event.target.value;
+    values[i].value = event.target.value;
     setMustHaveKeyword(values);
   }
 
   function handleAddMustHaveKeyword() {
     const values = [...mustHaveKeywords];
-    values.push('');
+    values.push({ value: null });
     setMustHaveKeyword(values);
   }
 
@@ -187,6 +189,42 @@ const DialogCampaign = (props: DialogInfoProps) => {
     setExcludeKeyword(values);
   }
 
+  function handleChangeLabel(i: number, event: any) {
+    const values = [...input_keyword];
+    values[i].label = event.target.value;
+    set_input_keyword(values);
+  }
+
+  function handleChangeKeywords(i: number, index: number, event: any) {
+    const values = [...input_keyword];
+    values[i].keywords[index] = event.target.value;
+    set_input_keyword(values);
+  }
+
+  function handleAddLabel() {
+    const values = [...input_keyword];
+    values.push({ label: null , keywords: ['']});
+    set_input_keyword(values);
+  }
+
+  function handleAddKeywords(i: number) {
+    const values = [...input_keyword];
+    values[i]?.keywords.push('');
+    set_input_keyword(values);
+  }
+
+  function handleRemoveLabel(i: number) {
+    const values = [...input_keyword];
+    values.splice(i, 1);
+    set_input_keyword(values);
+  }
+
+  function handleRemoveKeywords(i: number, index: number) {
+    const values = [...input_keyword];
+    values[i].keywords.splice(index, 1);
+    set_input_keyword(values);
+  }
+
   function closeDialogBox () {
     setShow(false);
     setDomain('');
@@ -194,11 +232,9 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
   const createNewCampaign = async () => {
     
-    console.log('keyyyyyy',keywords, mustHaveKeywords, excludeKeywords)
+    console.log('keyyyyyy',input_keyword, keywords, mustHaveKeywords, excludeKeywords, )
 
     let keywordArray = [];
-
-
     
     const input_data = {
       "name" : campaign_name, 
@@ -323,6 +359,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
                                   sx={{ mt: 3.5 }}
                                   placeholder='Enter Label'
                                   label = "Label"
+                                  value = {input_keyword[i]?.label || ""}
+                                  onChange ={e => handleChangeLabel(i, e)}
                                 />
                               </Grid>
 
@@ -336,7 +374,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                                 </Typography>
             
                                 
-                                {keywords.map((keyword, index) => {
+                                {input_keyword[i]?.keywords.map((keyword, index) => {
                                  return (
                                     <span key={`${keyword}-${index}`} style= {{display: 'flex'}}>
                                         <TextField
@@ -346,10 +384,10 @@ const DialogCampaign = (props: DialogInfoProps) => {
                                           sx={{ mt: 3.5 }}
                                           placeholder='คำที่ควรมี'
                                           label = "คำที่ควรมี"
-                                          value={keyword.value || ""}
-                                          onChange = {e => handleChangeKeyword(index, e)}
+                                          value={input_keyword[i]?.keywords[index] || ""}
+                                          onChange = {e => handleChangeKeywords(i, index, e)}
                                         />
-                                        <Close fontSize='small' sx={{ mt: 5.5}} onClick={() => handleRemoveKeyword(index)}/>
+                                        <Close fontSize='small' sx={{ mt: 5.5}} onClick={() => handleRemoveKeywords(i, index)}/>
                                         <br/>
                                     </span>
                                     
@@ -361,7 +399,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                                   size='small'
                                   variant='contained'
                                   startIcon={<Plus fontSize='small' />}
-                                  onClick={() => handleAddKeyword()}
+                                  onClick={() => handleAddKeywords(i)}
                                 >
                                 </Button>
                               </Grid>
@@ -377,7 +415,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                                           sx={{ mt: 3.5}}
                                           placeholder='คำที่ต้องมี'
                                           label = "คำที่ต้องมี"
-                                          value={keyword}
+                                          value={keyword.value || ""}
                                           onChange = {e => handleChangeMustHaveKeyword(index, e)}
                                         />
                                         <Close fontSize='small' sx={{ mt: 5.5}} onClick={() => handleRemoveMustHaveKeyword(index)}/>
@@ -450,7 +488,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                               
                             </Grid>
                             <KeyWordAction>
-                              <IconButton size='small' onClick={deleteForm}>
+                              <IconButton size='small' onClick={() => {handleRemoveLabel(i); deleteForm}} >
                                 <Close fontSize='small' />
                               </IconButton>
                             </KeyWordAction>
@@ -466,7 +504,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                       size='small'
                       variant='contained'
                       startIcon={<Plus fontSize='small' />}
-                      onClick={() => setCount(count + 1)}
+                      onClick={() => {setCount(count + 1); handleAddLabel()}}
                     >
                       Add Keyword
                     </Button>
