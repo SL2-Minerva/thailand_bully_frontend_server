@@ -30,7 +30,7 @@ import DatePicker from '@mui/lab/DatePicker'
 // ** Icons Imports
 import Plus from 'mdi-material-ui/Plus'
 import Close from 'mdi-material-ui/Close'
-
+import KeywordRepeater from './KeywordRepeater'
 
 
 const Transition = forwardRef(function Transition(
@@ -92,6 +92,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
    const [endDate, setEndDate] = useState<Date | null>(new Date())
    const [updateDate, setUpdatedDate ] = useState<Date>(new Date())
 
+   //repeat input field
+   const [keywords, setKeyword] = useState([{ value: null }]);
+   const [mustHaveKeywords, setMustHaveKeyword] = useState([{ value: null }]);
+   const [excludeKeywords, setExcludeKeyword] = useState([{ value: null }]);
+
+   const [countKeyword, setCountKeyword ] = useState<number>(1)
+
    const handleDomain = useCallback((e: SelectChangeEvent) => {
         setDomain(e.target.value)
     }, [])
@@ -102,6 +109,60 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
     // @ts-ignore
     e.target.closest('.repeater-wrapper').remove()
+  }
+
+  function handleChangeKeyword(i: number, event: any) {
+    const values = [...keywords];
+    values[i].value = event.target.value;
+    setKeyword(values);
+  }
+
+  function handleAddKeyword() {
+    const values = [...keywords];
+    values.push({ value: null });
+    setKeyword(values);
+  }
+
+  function handleRemoveKeyword(i: number) {
+    const values = [...keywords];
+    values.splice(i, 1);
+    setKeyword(values);
+  }
+
+  function handleChangeMustHaveKeyword(i: number, event: any) {
+    const values = [...mustHaveKeywords];
+    values[i].value = event.target.value;
+    setMustHaveKeyword(values);
+  }
+
+  function handleAddMustHaveKeyword() {
+    const values = [...mustHaveKeywords];
+    values.push({ value: null });
+    setMustHaveKeyword(values);
+  }
+
+  function handleRemoveMustHaveKeyword(i: number) {
+    const values = [...mustHaveKeywords];
+    values.splice(i, 1);
+    setMustHaveKeyword(values);
+  }
+  
+  function handleChangeExcludeKeyword(i: number, event: any) {
+    const values = [...excludeKeywords];
+    values[i].value = event.target.value;
+    setExcludeKeyword(values);
+  }
+
+  function handleAddExcludeKeyword() {
+      const values = [...excludeKeywords];
+      values.push({ value: null });
+      setExcludeKeyword(values);  
+  }
+
+  function handleRemoveExcludeKeyword(i: number) {
+    const values = [...excludeKeywords];
+    values.splice(i, 1);
+    setExcludeKeyword(values);
   }
 
   useEffect(() => {
@@ -185,7 +246,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                       <Tag key={i} className='repeater-wrapper' {...(i !== 0 ? { in: true } : {})}>
                         <RepeatingContent item xs={12}>
                             <Grid container sx={{ py: 4, width: '100%' }}>
-                              <Grid item sm={6} xs={12} sx={{ px: 4 }}>
+                             <Grid item xs={12} sx={{ px: 4 }}>
                                 <Typography
                                   variant='subtitle2'
                                   className='col-title'
@@ -199,19 +260,126 @@ const DialogCampaign = (props: DialogInfoProps) => {
                                   multiline
                                   size='small'
                                   sx={{ mt: 3.5 }}
-                                  placeholder='Enter included keyword'
-                                  label = "Include Keyword"
+                                  placeholder='Enter Label'
+                                  label = "Label"
                                 />
                               </Grid>
-                              <Grid item sm={6} xs={12} sx={{ px: 4 }}>
-                                <TextField
-                                  fullWidth
-                                  multiline
+
+                              <Grid item sm={4} xs={12} sx={{ px: 4 }}>
+                                <Typography
+                                  variant='subtitle2'
+                                  className='col-title'
+                                  sx={{ mb: { md: 2, xs: 0 }, color: 'text.primary' }}
+                                >
+                                  Keyword 
+                                </Typography>
+            
+                                
+                                {keywords.map((keyword, index) => {
+                                 return (
+                                    <span key={`${keyword}-${index}`} style= {{display: 'flex'}}>
+                                        <TextField
+                                          fullWidth
+                                          multiline
+                                          size='small'
+                                          sx={{ mt: 3.5 }}
+                                          placeholder='คำที่ควรมี'
+                                          label = "คำที่ควรมี"
+                                          // value={keyword.value || ""}
+                                          // onChange = {e => handleChangeKeyword(index, e)}
+                                        />
+                                        <Close fontSize='small' sx={{ mt: 5.5}} onClick={() => handleRemoveKeyword(index)}/>
+                                        <br/>
+                                    </span>
+                                    
+                                  );
+                                })}
+
+                                <Button
+                                  sx ={{ mt: '3%', p: '0px' }}
                                   size='small'
-                                  sx={{ mt: 3.5 }}
-                                  placeholder='Enter excluded keyword'
-                                  label = "Exclude Keyword"
-                                />
+                                  variant='contained'
+                                  startIcon={<Plus fontSize='small' />}
+                                  onClick={() => handleAddKeyword()}
+                                >
+                                </Button>
+                              </Grid>
+
+                              <Grid item sm={4} xs={12} sx={{ px: 4 }}>
+                              {mustHaveKeywords.map((keyword, index) => {
+                                 return (
+                                    <span key={`${keyword}-${index}`} style= {{display: 'flex'}}>
+                                        <TextField
+                                          fullWidth
+                                          multiline
+                                          size='small'
+                                          sx={{ mt: 3.5}}
+                                          placeholder='คำที่ต้องมี'
+                                          label = "คำที่ต้องมี"
+                                        />
+                                        <Close fontSize='small' sx={{ mt: 5.5}} onClick={() => handleRemoveMustHaveKeyword(index)}/>
+                                        <br/>
+                                    </span>
+                                    
+                                  );
+                                })}
+
+                                <Button
+                                  sx ={{ mt: '3%', p: '0px' }}
+                                  size='small'
+                                  variant='contained'
+                                  startIcon={<Plus fontSize='small' />}
+                                  onClick={() => handleAddMustHaveKeyword()}
+                                >
+                                </Button>
+                              </Grid>
+
+                              <Grid item sm={4} xs={12} sx={{ px: 4 }}>
+                                {excludeKeywords.map((keyword, index) => {
+                                 return (
+                                    <span key={`${keyword}-${index}`} style= {{display: 'flex'}}>
+                                        <TextField
+                                          fullWidth
+                                          multiline
+                                          size='small'
+                                          sx={{ mt: 3.5 }}
+                                          placeholder='ที่ห้ามมี'
+                                          label = "ที่ห้ามมี"
+                                        />
+                                        <Close fontSize='small' sx={{ mt: 5.5}} onClick={() => handleRemoveExcludeKeyword(index)}/>
+                                        <br/>
+                                    </span>
+                                    
+                                  );
+                                })}
+
+                                <Button
+                                  sx ={{ mt: '3%', p: '0px' }}
+                                  size='small'
+                                  variant='contained'
+                                  startIcon={<Plus fontSize='small' />}
+                                  onClick={() => handleAddExcludeKeyword()}
+                                >
+                                </Button>
+                              </Grid>
+
+                              <Grid item xs={12} sx={{ px: 4 }}>
+                              {/* <RepeaterWrapper>
+                                  <KeywordRepeater count={countKeyword}>
+                                    <Tag key={j} className='repeater-wrapper' {...(i !== 0 ? { in: true } : {})}>
+                                      <RepeatingContent item xs={12}>
+                                            <TextField
+                                                fullWidth
+                                                multiline
+                                                size='small'
+                                                sx={{ mt: 3.5 }}
+                                                placeholder='ที่ห้ามมี'
+                                                label = "ที่ห้ามมี"
+                                            />
+                                        </RepeatingContent>
+                                    </Tag>
+                                  </KeywordRepeater>
+                                </RepeaterWrapper> */}
                               </Grid>
                               
                               
