@@ -1,198 +1,291 @@
-
-// import {Ref, useState, forwardRef, ReactElement, useCallback, SyntheticEvent, useEffect} from 'react'
-
-// ** MUI Imports
-import Box, { BoxProps } from '@mui/material/Box'
+import { useState } from 'react'
 import Grid from '@mui/material/Grid'
-
-// import Card from '@mui/material/Card'
-// import Switch from '@mui/material/Switch'
-// import Dialog from '@mui/material/Dialog'
-// import Button from '@mui/material/Button'
-
+import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-
-// import FormControl from '@mui/material/FormControl'
-// import Fade, { FadeProps } from '@mui/material/Fade'
-// import DialogContent from '@mui/material/DialogContent'
-// import DialogActions from '@mui/material/DialogActions'
-// import FormControlLabel from '@mui/material/FormControlLabel'
-// import InputLabel from '@mui/material/InputLabel'
-// import Select, { SelectChangeEvent } from '@mui/material/Select'
-// import MenuItem from '@mui/material/MenuItem'
-// import CardContent, { CardContentProps } from '@mui/material/CardContent'
-
-import { styled } from '@mui/material/styles'
-
-// import Repeater from 'src/@core/components/repeater'
-// import Collapse from '@mui/material/Collapse'
-// import LocalizationProvider from '@mui/lab/LocalizationProvider'
-// import AdapterDateFns from '@mui/lab/AdapterDateFns'
-// import DatePicker from '@mui/lab/DatePicker'
-
-// ** Icons Imports
-// import Plus from 'mdi-material-ui/Plus'
-
+import Plus from 'mdi-material-ui/Plus'
 import Close from 'mdi-material-ui/Close'
 
-// import DomainList from 'src/services/api/domains/DomainAPI'
-// import CreateCampaign from 'src/services/api/campaign/CampaignAPI'
+// interface KeywordsProps {
+//   indexNumber: number
+//   keywords: any
+//   setKeywords: any
+//   handleKeyword: any
+//   handleChangeLabel: any
+//   removeKeyword: any
+//   value: any
+// }
 
-const KeyWordAction = styled(Box)<BoxProps>(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'flex-start',
-  padding: theme.spacing(2, 1),
-  borderLeft: `1px solid ${theme.palette.divider}`
-}))
-
-interface KeywordsProps {
-  indexNumber: number,
-  keywords: any, 
-  setKeywords: any,
-  handleKeyword: any
-}
-
-const KeywordForm = ( props: KeywordsProps ) => {
-
-  const { indexNumber, keywords, setKeywords,  handleKeyword } = props;
+const KeywordForm = (props: any) => {
+  const { indexNumber, keywords, setKeywords, removeKeyword, value } = props
+  const { keyword_and, keyword_or, keyword_ex } = value
 
   function handleChangeLabel(i: number, event: any) {
-    
+
+    const values = [...keywords]
+    console.log( values[i])
+    values[i].name = event.target.value
+    setKeywords(values)
+  }
+
+  function addMoreKeyword(i: number, list: any, current: any, type: any) {
+    // keywords
+
+    const newTextKeyword = [...list, '']
+
+    const values = [...keywords]
+
+    if (type === 'keyword_or') {
+      console.log(values, i, values[i])
+      values[i].keyword_or = newTextKeyword
+    }
+
+    if (type === 'keyword_and') {
+      values[i].keyword_and = [...list, '']
+    }
+
+    if (type === 'keyword_ex') {
+      values[i].keyword_ex = [...list, '']
+    }
+
+    setKeywords(values)
+  }
+
+  function removeTextKeyword(i: number, indexValue: number, list: any, type: any) {
+
     const values = [...keywords];
-    console.log("values", values);
-    values[i].label = event.target.value;
+    const news = list.filter((item:any, index:number) => index !== i);
+    if (type === 'keyword_or') {
+      values[indexValue].keyword_or = news
+    }
+
+    if (type === 'keyword_and') {
+      values[indexValue].keyword_and = news
+    }
+
+    if (type === 'keyword_ex') {
+      values[indexValue].keyword_ex = news
+    }
+
+
     setKeywords(values);
+  }
+
+  function handleTextKeyword(i: number, e: any, list: any, current: any, type: any, indexValue: number) {
+    let textKeywords
+    if (list.length <= 0) {
+      textKeywords = [...list, e.target.value]
+    } else {
+      textKeywords = [...list]
+      textKeywords[i] = e.target.value
+    }
+
+    const values = [...keywords]
+
+    if (type === 'keyword_or') {
+      values[indexValue].keyword_or = textKeywords
+    }
+
+    if (type === 'keyword_and') {
+      values[indexValue].keyword_and = textKeywords
+    }
+
+    if (type === 'keyword_ex') {
+      values[indexValue].keyword_ex = textKeywords
+    }
+
+    setKeywords(values)
   }
 
   return (
     <>
-        <Grid container sx={{ py: 4, width: '100%' }}>
-            <Grid item xs={12} sx={{ px: 4 }}>
-              <Typography
-                variant='subtitle2'
-                className='col-title'
-                sx={{ mb: { md: 2, xs: 0 }, color: 'text.primary' }}
-              >
-                Keyword 
-              </Typography>
+      <Grid container sx={{ py: 4, width: '100%' }}>
+        <Grid item xs={12} sx={{ px: 4 }}>
+          <Typography variant='subtitle2' className='col-title' sx={{ mb: { md: 2, xs: 0 }, color: 'text.primary' }}>
+            <Close
+              fontSize='small'
+              onClick={() => {
+                removeKeyword(value)
+              }}
+            />{' '}
+            Keyword
+          </Typography>
 
-              <TextField
-                fullWidth
-                multiline
-                size='small'
-                sx={{ mt: 3.5 }}
-                placeholder='Enter Label'
-                label = "Label"
-                value = {keywords[indexNumber]?.label || ""}
-                onChange ={e => handleChangeLabel(indexNumber, e)}
+          <TextField
+            fullWidth
+            multiline
+            size='small'
+            sx={{ mt: 3.5 }}
+            placeholder='Enter Label'
+            label='Label'
+            value={keywords[indexNumber]?.name || ''}
+            onChange={e => handleChangeLabel(indexNumber, e)}
+          />
+        </Grid>
+
+        <Grid item sm={4} xs={12} sx={{ px: 4 }}>
+          {keyword_or.length > 0 &&
+            keyword_or.map((text:any, index:number) => {
+              return (
+                <InputKeyword
+                  key={index}
+                  value={value}
+                  textValue={text}
+                  handleTextKeyword={handleTextKeyword}
+                  addMoreKeyword={addMoreKeyword}
+                  removeTextKeyword={removeTextKeyword}
+                  list={keyword_or}
+                  type={'keyword_or'}
+                  index={index}
+                  indexValue={indexNumber}
+                  label={'คำที่ควรมี'}
+                />
+              )
+            })}
+
+          {keyword_or.length <= 0 && (
+            <InputKeyword
+              value={value}
+              textValue={''}
+              handleTextKeyword={handleTextKeyword}
+              removeTextKeyword={removeTextKeyword}
+              addMoreKeyword={addMoreKeyword}
+              list={keyword_or}
+              type={'keyword_or'}
+              index={0}
+              indexValue={indexNumber}
+              label={'คำที่ควรมี'}
+            />
+          )}
+        </Grid>
+
+        <Grid item sm={4} xs={12} sx={{ px: 4 }}>
+
+          {keyword_and.length > 0 &&
+          keyword_and.map((text:any, index:number) => {
+            return (
+              <InputKeyword
+                value={value}
+                key={index}
+                textValue={text}
+                handleTextKeyword={handleTextKeyword}
+                addMoreKeyword={addMoreKeyword}
+                removeTextKeyword={removeTextKeyword}
+                list={keyword_and}
+                type={'keyword_and'}
+                index={index}
+                indexValue={indexNumber}
+                label={'คำที่ไม่ควรมี'}
               />
-            </Grid>
+            )
+          })}
 
-            <Grid item sm={4} xs={12} sx={{ px: 4 }}>
-              
-              {/* {input_keyword[i]?.keywords.map((keyword, index) => {
-                return (
-                  <span key={`${keyword}-${index}`} style= {{display: 'flex'}}>
-                      <TextField
-                        fullWidth
-                        multiline
-                        size='small'
-                        sx={{ mt: 3.5 }}
-                        placeholder='คำที่ควรมี'
-                        label = "คำที่ควรมี"
-                        value={input_keyword[i]?.keywords[index] || ""}
-                        onChange = {e => handleChangeKeywords(i, index, e)}
-                      />
-                      <Close fontSize='small' sx={{ mt: 5.5}} onClick={() => handleRemoveKeywords(i, index)}/>
-                      <br/>
-                  </span>
-                  
-                );
-              })}
+          {keyword_and.length <= 0 && (
+            <InputKeyword
+              value={value}
+              textValue={''}
+              handleTextKeyword={handleTextKeyword}
+              removeTextKeyword={removeTextKeyword}
+              addMoreKeyword={addMoreKeyword}
+              list={keyword_and}
+              type={'keyword_and'}
+              index={0}
+              indexValue={indexNumber}
+              label={'คำที่ไม่ควรมี'}
+            />
+          )}
 
-              <Button
-                sx ={{ mt: '3%', p: '0px' }}
-                size='small'
-                variant='contained'
-                startIcon={<Plus fontSize='small' />}
-                onClick={() => handleAddKeywords(i)}
-              >
-              </Button> */}
-            </Grid>
+        </Grid>
+        <Grid item sm={4} xs={12} sx={{ px: 4 }}>
 
-            {/* <Grid item sm={4} xs={12} sx={{ px: 4 }}>
-            {mustHaveKeywords.map((keyword, index) => {
-                return (
-                  <span key={`${keyword}-${index}`} style= {{display: 'flex'}}>
-                      <TextField
-                        fullWidth
-                        multiline
-                        size='small'
-                        sx={{ mt: 3.5}}
-                        placeholder='คำที่ต้องมี'
-                        label = "คำที่ต้องมี"
-                        value={keyword.value || ""}
-                        onChange = {e => handleChangeMustHaveKeyword(index, e)}
-                      />
-                      <Close fontSize='small' sx={{ mt: 5.5}} onClick={() => handleRemoveMustHaveKeyword(index)}/>
-                      <br/>
-                  </span>
-                  
-                );
-              })}
+          {keyword_ex.length > 0 &&
+          keyword_ex.map((text:any, index:number) => {
+            return (
+              <InputKeyword
+                value={value}
+                key={index}
+                textValue={text}
+                handleTextKeyword={handleTextKeyword}
+                addMoreKeyword={addMoreKeyword}
+                removeTextKeyword={removeTextKeyword}
+                list={keyword_ex}
+                type={'keyword_ex'}
+                index={index}
+                indexValue={indexNumber}
+                label={'คำที่ห้ามมี'}
+              />
+            )
+          })}
 
-              <Button
-                sx ={{ mt: '3%', p: '0px' }}
-                size='small'
-                variant='contained'
-                startIcon={<Plus fontSize='small' />}
-                onClick={() => handleAddMustHaveKeyword()}
-              >
-              </Button>
-            </Grid>
-
-            <Grid item sm={4} xs={12} sx={{ px: 4 }}>
-              {excludeKeywords.map((keyword, index) => {
-                return (
-                  <span key={`${keyword}-${index}`} style= {{display: 'flex'}}>
-                      <TextField
-                        fullWidth
-                        multiline
-                        size='small'
-                        sx={{ mt: 3.5 }}
-                        placeholder='ที่ห้ามมี'
-                        label = "ที่ห้ามมี"
-                        value={keyword.value || ""}
-                        onChange = {e => handleChangeExcludeKeyword(index, e)}
-                      />
-                      <Close fontSize='small' sx={{ mt: 5.5}} onClick={() => handleRemoveExcludeKeyword(index)}/>
-                      <br/>
-                  </span>
-                  
-                );
-              })}
-
-              <Button
-                sx ={{ mt: '3%', p: '0px' }}
-                size='small'
-                variant='contained'
-                startIcon={<Plus fontSize='small' />}
-                onClick={() => handleAddExcludeKeyword()}
-              >
-              </Button>
-            </Grid> */}
- 
-          </Grid>
-        <KeyWordAction>
-          <IconButton size='small'>
-            <Close fontSize='small' onClick={() => { handleKeyword('remove', indexNumber) }} />
-          </IconButton>
-        </KeyWordAction>
+          {keyword_ex.length <= 0 && (
+            <InputKeyword
+              value={value}
+              textValue={''}
+              handleTextKeyword={handleTextKeyword}
+              removeTextKeyword={removeTextKeyword}
+              addMoreKeyword={addMoreKeyword}
+              list={keyword_ex}
+              type={'keyword_ex'}
+              index={0}
+              indexValue={indexNumber}
+              label={'คำที่ห้ามมี'}
+            />
+          )}
+        </Grid>
+      </Grid>
     </>
-
   )
 }
-export default KeywordForm;
+
+const InputKeyword = (props: any) => {
+  const {
+    value,
+    textValue,
+    handleTextKeyword,
+    addMoreKeyword,
+    removeTextKeyword,
+    list,
+    indexValue,
+    type,
+    label,
+    index
+  } = props
+  const [text, setText] = useState(textValue)
+
+  function handleChangeText(e:any, index:any, indexValue:any) {
+    setText(e.target.value)
+    handleTextKeyword(index, e, list, value, type, indexValue)
+  }
+
+  return (
+    <>
+      <span style={{ display: 'flex' }}>
+        <TextField
+          fullWidth
+          multiline
+          size='small'
+          sx={{ mt: 3.5 }}
+          placeholder={label}
+          label={label}
+          value={text}
+          onChange={e => handleChangeText(e, index, indexValue)}
+        />
+        {list.length > 1 && (
+          <Close fontSize='small' sx={{ mt: 5.5 }} onClick={() => removeTextKeyword(index, indexValue, list, type)} />
+        )}
+        <br />
+      </span>
+      <Button
+        sx={{ mt: '3%', p: '0px' }}
+        size='small'
+        variant='contained'
+        startIcon={<Plus fontSize='small' />}
+        onClick={() => {
+          addMoreKeyword(indexValue, list, value, type)
+        }}
+      ></Button>
+    </>
+  )
+}
+
+export default KeywordForm

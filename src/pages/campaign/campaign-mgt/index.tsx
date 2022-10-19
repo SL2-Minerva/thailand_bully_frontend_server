@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, useCallback } from 'react'
+import {useState, useCallback, useEffect} from 'react'
 
 // ** MUI Imports
 import { Grid , Card, CardHeader, CardContent } from "@mui/material";
@@ -54,7 +54,11 @@ const CampaignManagement = () => {
     setStatus(e.target.value)
   }, [])
 
-  // handle toggle status 
+  useEffect ( () => {
+    console.log(resultCampaiganList)
+  }, [showCreate, showEdit])
+
+  // handle toggle status
   // function handleChange(i: number, event: any) {
   //   const values = [...tableData];
   //   values[i].status = event.target.checked;
@@ -141,7 +145,7 @@ const CampaignManagement = () => {
               </Grid>
               <Grid item sm={4} xs={12} mt={2}>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-        
+
                   <Button sx={{ mb: 2 }} onClick={()=>{console.log("search")}} variant='contained'>
                     search
                   </Button>
@@ -158,7 +162,7 @@ const CampaignManagement = () => {
               <TableContainer component={Paper}>
                   <Box sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}>
                       <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-                      
+
                           <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
                               Add
                           </Button>
@@ -194,14 +198,14 @@ const CampaignManagement = () => {
                                 <div key={i}>
                                   <span>
                                     <b>
-                                      {keyword.name} : 
-                                    </b> 
+                                      {keyword.name} :
+                                    </b>
                                     { " " + keyword.keyword_or + ", " + keyword.keyword_and + ", " + keyword.keyword_exclude }
                                    </span>
                                 </div>
                               )) )
                             }
-                            
+
                           </TableCell>
                           <TableCell align='center'>
                             {
@@ -230,11 +234,11 @@ const CampaignManagement = () => {
                       </TableBody>
                   </Table>
               </TableContainer>
-              
+
             </CardContent>
         </Card>
           <DialogCampaign show={showEdit} setShow={setShowEdit} action="edit"/>
-          <DialogCampaign show={showCreate} setShow={setShowCreate} action="create"/>                
+          <DialogCampaign show={showCreate} setShow={setShowCreate} action="create"/>
         </Grid>
     </Grid>
   )
