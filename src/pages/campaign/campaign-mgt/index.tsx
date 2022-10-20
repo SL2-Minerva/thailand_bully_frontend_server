@@ -38,10 +38,12 @@ const CampaignManagement = () => {
   const [status, setStatus] = useState<string>('')
   const [date, setDate] = useState<Date | null>(new Date())
   const [endDate, setEndDate] = useState<Date | null>(new Date())
+  const [ reload, setReload ] = useState<boolean>(false)
 
   // const [tableData, setTableData ] = useState(rows);
 
-  const {resultCampaiganList} = CampaignList();
+  const {resultCampaiganList} = CampaignList(reload);
+
   const {result_domain_list} = DomainList();
 
   const toggleCreate = () => setShowCreate(!showCreate)
@@ -55,6 +57,7 @@ const CampaignManagement = () => {
   }, [])
 
   useEffect ( () => {
+    setReload(!reload);
     console.log(resultCampaiganList)
   }, [showCreate, showEdit])
 

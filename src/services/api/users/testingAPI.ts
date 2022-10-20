@@ -5,7 +5,8 @@ const GetShopDetail = () => {
       url: `/shop-detail/256`,
       method: "GET"
     });
-    return{
+
+    return {
       result_shop_detail: res?.data ||  null,
       loading_shop_detail: loading,
       error_shop_detail: error,
