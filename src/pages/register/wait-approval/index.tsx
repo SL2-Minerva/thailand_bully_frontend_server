@@ -1,39 +1,13 @@
 // ** React Imports
-import { ReactNode, useState, Fragment, MouseEvent } from 'react'
+import { ReactNode } from 'react'
 
-// ** Next Imports
-import Link from 'next/link'
-
-// ** MUI Components
-import MuiLink from '@mui/material/Link'
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Checkbox from '@mui/material/Checkbox'
-import TextField from '@mui/material/TextField'
-import InputLabel from '@mui/material/InputLabel'
-import IconButton from '@mui/material/IconButton'
 import Box, { BoxProps } from '@mui/material/Box'
-import FormControl from '@mui/material/FormControl'
+
 import useMediaQuery from '@mui/material/useMediaQuery'
-import OutlinedInput from '@mui/material/OutlinedInput'
+
 import { styled, useTheme } from '@mui/material/styles'
-import FormHelperText from '@mui/material/FormHelperText'
-import InputAdornment from '@mui/material/InputAdornment'
 import Typography, { TypographyProps } from '@mui/material/Typography'
-import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
 
-// ** Icons Imports
-import Google from 'mdi-material-ui/Google'
-import Github from 'mdi-material-ui/Github'
-import Twitter from 'mdi-material-ui/Twitter'
-import Facebook from 'mdi-material-ui/Facebook'
-import EyeOutline from 'mdi-material-ui/EyeOutline'
-import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
-
-// ** Third Party Imports
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm, Controller } from 'react-hook-form'
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
@@ -42,28 +16,11 @@ import themeConfig from 'src/configs/themeConfig'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Hooks
-import { useAuth } from 'src/hooks/useAuth'
 import { useSettings } from 'src/@core/hooks/useSettings'
 
 // ** Demo Imports
 import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
 
-const defaultValues = {
-  email: '',
-  username: '',
-  password: '',
-  company: '',
-  mobile:  '' ,
-  terms: false
-}
-interface FormData {
-  email: string
-  terms: boolean
-  mobile: string
-  company: string
-  username: string
-  password: string
-}
 
 // ** Styled Components
 const RegisterIllustrationWrapper = styled(Box)<BoxProps>(({ theme }) => ({
@@ -108,83 +65,17 @@ const TypographyStyled = styled(Typography)<TypographyProps>(({ theme }) => ({
   [theme.breakpoints.down('md')]: { marginTop: theme.spacing(8) }
 }))
 
-const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ theme }) => ({
-  marginBottom: theme.spacing(4),
-  '& .MuiFormControlLabel-label': {
-    fontSize: '0.875rem',
-    color: theme.palette.text.secondary
-  }
-}))
 const Register = () => {
-  // ** States
-  const [showPassword, setShowPassword] = useState<boolean>(false)
+
 
   // ** Hooks
   const theme = useTheme()
-  const { register } = useAuth()
   const { settings } = useSettings()
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
 
   // ** Vars
   const { skin } = settings
-  const schema = yup.object().shape({
-    password: yup.string().min(5).required(),
-    username: yup.string().required(),
-    email: yup.string().email().required(),
-    mobile: yup.string().min(10).required(),
-    company: yup.string().required(),
-    terms: yup.bool().oneOf([true], 'You must accept the privacy policy & terms')
-  })
 
-  const {
-    control,
-    setError,
-    handleSubmit,
-    formState: { errors }
-  } = useForm({
-    defaultValues,
-    mode: 'onBlur',
-    resolver: yupResolver(schema)
-  })
-
-  const onSubmit = (data: FormData) => {
-    const { email, username, password, mobile, company } = data
-
-
-    register({ email, username, password , mobile, company}, err, status => {
-      if (err.email) {
-        setError('email', {
-          type: 'manual',
-          message: err.email
-        })
-      }
-
-      if (err.mobile) {
-        setError('mobile', {
-          type: 'manual',
-          message: err.mobile
-        })
-      }
-
-      if (err.company) {
-        setError('email', {
-          type: 'manual',
-          message: err.company
-        })
-      }
-
-      if (err.username) {
-        setError('username', {
-          type: 'manual',
-          message: err.username
-        })
-      }
-
-      if (!err && status === 'success') {
-        console.log('dsadada');
-      }
-    })
-  }
 
   const imageSource = skin === 'bordered' ? 'auth-v2-register-illustration-bordered' : 'auth-v2-register-illustration'
 
@@ -301,7 +192,6 @@ const Register = () => {
               <TypographyStyled variant='h5'>Thank you for register 🚀</TypographyStyled>
               <Typography variant='body2'>please wait for approve</Typography>
             </Box>
-
           </BoxWrapper>
         </Box>
       </RightWrapper>

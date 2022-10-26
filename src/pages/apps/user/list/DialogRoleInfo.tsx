@@ -52,7 +52,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
 
   const [roleName, setRoleName] = useState('')
   const [roleDescription, setDescription] = useState('');
-  const [permission, setPermission] = useState(
+  const [permission, setPermission] = useState<any>(
     {
       user: {
         authorized_create: true,
@@ -103,7 +103,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
 
   }
 
-  const handleChecked = (e, row, key) => {
+  const handleChecked = (e: any, row: any, key: any) => {
     let permissionNew = permission;
     permissionNew =  { ...permissionNew, [row.toLowerCase()]: { ...permissionNew[row.toLowerCase()], [`authorized_${key}`]: e.target.checked } }
     setPermission(permissionNew)

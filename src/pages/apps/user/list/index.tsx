@@ -57,7 +57,6 @@ import { UsersType } from 'src/types/apps/userTypes'
 import DialogEditUserInfo from './DialogUserInfo'
 import TableHeader from 'src/views/apps/user/list/TableHeader'
 
-import  GetShopDetail  from 'src/services/api/users/testingAPI'
 
 interface UserRoleType {
   [key: string]: ReactElement

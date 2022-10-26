@@ -26,27 +26,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import { ThemeColor } from 'src/@core/layouts/types'
 import CustomChip from 'src/@core/components/mui/chip'
 import UserService, {userlist} from "../../../../services/api/users/users";
-import axios from "axios";
 
-const createData = (
-  id: number,
-  name: string,
-  email: string,
-  phone_number: number,
-  company: string,
-  date: string,
-  approved: boolean,
-  expired_date: string,
-  status: string
-) => {
-  return { id, name, email, phone_number, company, date, approved, expired_date, status }
-}
-
-const rows = [
-  createData(1, 'บุญมา ศรีสุข', 'Boonma@gmail.com', 1, 'AAA', '25/09/2022', false, '25/10/2022', 'New'),
-  createData(2, 'บุญมี บัวงาม', 'Boonme@gmail.com', 3, 'BBB', '26/08/2022', true, '10/09/2022', 'Expired'),
-  createData(3, 'สมบูรณ์ วิไลโรชน์', 'Soboon@gmail.com', 2, 'CC', '03/09/2022', true, '19/09/2022', 'Expired')
-]
 
 interface StatusType {
   [key: string]: ThemeColor
@@ -178,7 +158,7 @@ const RegisterManagement = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {resultUserList && resultUserList.map(row => (
+                  {resultUserList && resultUserList.map( (row:any) => (
                     <TableRow
                       key={row.id}
                       sx={{

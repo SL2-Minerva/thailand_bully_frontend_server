@@ -17,24 +17,12 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { role_list } from '../../../../services/api/users/role'
 
-const createData = (name: string, description: string, status: boolean) => {
-  return { name, description, status }
-}
-
-const rows = [
-  createData('System Admin ', 'This is Desctiption', true),
-  createData('System Operation ', 'This is Desctiption', true),
-  createData('User Admin ', 'This is Desctiption', false),
-  createData('User Operation ', 'This is Desctiption', true)
-]
-
 const RoleManagement = () => {
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [addRoleOpen, setAddRoleOpen] = useState<boolean>(false)
   const toggleAddRole = () => setAddRoleOpen(!addRoleOpen)
 
-  const { resultRoleList } = role_list(showDialog);
-  function handleChange(i: number, event: any) {}
+  const { resultRoleList } = role_list(showDialog)
 
   return (
     <Grid container>
@@ -63,7 +51,7 @@ const RoleManagement = () => {
                 </TableHead>
                 <TableBody>
                   {resultRoleList &&
-                    resultRoleList.map((row, index) => (
+                    resultRoleList.map((row: any, index: number) => (
                       <TableRow
                         key={row.id}
                         sx={{
@@ -77,7 +65,7 @@ const RoleManagement = () => {
                         </TableCell>
                         <TableCell align='center'>{row.user_role_description}</TableCell>
                         <TableCell align='center'>
-                          <Switch key={index} checked={row.status} onChange={e => handleChange(index, e)} />
+                          <Switch key={index} checked={row.status}  />
                         </TableCell>
                         <TableCell align='center'>
                           <PencilOutline
