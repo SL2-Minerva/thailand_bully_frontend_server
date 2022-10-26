@@ -10,7 +10,7 @@ export const CallAPI = <T>(config: AxiosRequestConfig, options?: Options) =>
       method: "GET",
       ...config,
       headers: {
-        "Content-Type": "application/json",
+        // "Content-Type": "application/json",
         "Authorization":`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`,
         ...(config?.headers || {}),
       },

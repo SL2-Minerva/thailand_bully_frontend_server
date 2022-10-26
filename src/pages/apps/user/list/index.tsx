@@ -318,7 +318,6 @@ const UserList = () => {
   const dispatch = useDispatch<AppDispatch>()
   const store = useSelector((state: RootState) => state.user)
 
-  const { result_shop_detail, loading_shop_detail } = GetShopDetail();
 
   useEffect(() => {
     dispatch(
@@ -329,8 +328,7 @@ const UserList = () => {
         currentPlan: organization
       })
     )
-    console.log("testing api call",result_shop_detail , "loading api", loading_shop_detail)
-  }, [dispatch, organization, role, status, value, result_shop_detail, loading_shop_detail])
+  }, [dispatch, organization, role, status, value])
 
   const handleFilter = useCallback((val: string) => {
     setValue(val)

@@ -5,4 +5,5 @@ export default {
     registerEndpoint: `${BASE_URL}/auth/register`,
     storageTokenKeyName: 'accessToken',
     userInfo: `${BASE_URL}/user/info`,
+    createRole: `${BASE_URL}/role/create`
 }

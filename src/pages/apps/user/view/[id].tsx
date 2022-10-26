@@ -16,6 +16,7 @@ const UserView = ({ id, invoiceData }: InferGetStaticPropsType<typeof getStaticP
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await axios.get('/apps/users/list')
+  console.log('res', res);
   const userDate: InvoiceType[] = await res.data.allData
 
   const paths = userDate.map((item: InvoiceType) => ({
