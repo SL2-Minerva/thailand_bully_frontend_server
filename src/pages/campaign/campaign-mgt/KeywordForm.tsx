@@ -23,7 +23,6 @@ const KeywordForm = (props: any) => {
   function handleChangeLabel(i: number, event: any) {
 
     const values = [...keywords]
-    console.log( values[i])
     values[i].name = event.target.value
     setKeywords(values)
   }
@@ -124,42 +123,6 @@ const KeywordForm = (props: any) => {
         </Grid>
 
         <Grid item sm={4} xs={12} sx={{ px: 4 }}>
-          {keyword_or.length > 0 &&
-            keyword_or.map((text:any, index:number) => {
-              return (
-                <InputKeyword
-                  key={index}
-                  value={value}
-                  textValue={text}
-                  handleTextKeyword={handleTextKeyword}
-                  addMoreKeyword={addMoreKeyword}
-                  removeTextKeyword={removeTextKeyword}
-                  list={keyword_or}
-                  type={'keyword_or'}
-                  index={index}
-                  indexValue={indexNumber}
-                  label={'คำที่ควรมี'}
-                />
-              )
-            })}
-
-          {keyword_or.length <= 0 && (
-            <InputKeyword
-              value={value}
-              textValue={''}
-              handleTextKeyword={handleTextKeyword}
-              removeTextKeyword={removeTextKeyword}
-              addMoreKeyword={addMoreKeyword}
-              list={keyword_or}
-              type={'keyword_or'}
-              index={0}
-              indexValue={indexNumber}
-              label={'คำที่ควรมี'}
-            />
-          )}
-        </Grid>
-
-        <Grid item sm={4} xs={12} sx={{ px: 4 }}>
 
           {keyword_and.length > 0 &&
           keyword_and.map((text:any, index:number) => {
@@ -175,7 +138,7 @@ const KeywordForm = (props: any) => {
                 type={'keyword_and'}
                 index={index}
                 indexValue={indexNumber}
-                label={'คำที่ไม่ควรมี'}
+                label={'คำที่ต้องมี (AND)'}
               />
             )
           })}
@@ -191,11 +154,49 @@ const KeywordForm = (props: any) => {
               type={'keyword_and'}
               index={0}
               indexValue={indexNumber}
-              label={'คำที่ไม่ควรมี'}
+              label={'คำที่ต้องมี (AND)'}
             />
           )}
 
         </Grid>
+
+        <Grid item sm={4} xs={12} sx={{ px: 4 }}>
+          {keyword_or.length > 0 &&
+            keyword_or.map((text:any, index:number) => {
+              return (
+                <InputKeyword
+                  key={index}
+                  value={value}
+                  textValue={text}
+                  handleTextKeyword={handleTextKeyword}
+                  addMoreKeyword={addMoreKeyword}
+                  removeTextKeyword={removeTextKeyword}
+                  list={keyword_or}
+                  type={'keyword_or'}
+                  index={index}
+                  indexValue={indexNumber}
+                  label={'คำที่สนใจ (OR)'}
+                />
+              )
+            })}
+
+          {keyword_or.length <= 0 && (
+            <InputKeyword
+              value={value}
+              textValue={''}
+              handleTextKeyword={handleTextKeyword}
+              removeTextKeyword={removeTextKeyword}
+              addMoreKeyword={addMoreKeyword}
+              list={keyword_or}
+              type={'keyword_or'}
+              index={0}
+              indexValue={indexNumber}
+              label={'คำที่สนใจ (OR)'}
+            />
+          )}
+        </Grid>
+
+
         <Grid item sm={4} xs={12} sx={{ px: 4 }}>
 
           {keyword_ex.length > 0 &&
@@ -212,7 +213,7 @@ const KeywordForm = (props: any) => {
                 type={'keyword_ex'}
                 index={index}
                 indexValue={indexNumber}
-                label={'คำที่ห้ามมี'}
+                label={'คำที่ห้ามมี (Exclude)'}
               />
             )
           })}
@@ -228,7 +229,7 @@ const KeywordForm = (props: any) => {
               type={'keyword_ex'}
               index={0}
               indexValue={indexNumber}
-              label={'คำที่ห้ามมี'}
+              label={'คำที่ห้ามมี (Exclude)'}
             />
           )}
         </Grid>

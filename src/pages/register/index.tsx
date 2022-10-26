@@ -52,11 +52,15 @@ const defaultValues = {
   email: '',
   username: '',
   password: '',
+  company: '',
+  mobile:  '' ,
   terms: false
 }
 interface FormData {
   email: string
   terms: boolean
+  mobile: string
+  company: string
   username: string
   password: string
 }
@@ -125,8 +129,10 @@ const Register = () => {
   const { skin } = settings
   const schema = yup.object().shape({
     password: yup.string().min(5).required(),
-    username: yup.string().min(3).required(),
+    username: yup.string().required(),
     email: yup.string().email().required(),
+    mobile: yup.string().min(10).required(),
+    company: yup.string().required(),
     terms: yup.bool().oneOf([true], 'You must accept the privacy policy & terms')
   })
 
@@ -142,20 +148,38 @@ const Register = () => {
   })
 
   const onSubmit = (data: FormData) => {
-    const { email, username, password } = data
-    register({ email, username, password }, err => {
+    const { email, username, password, mobile, company } = data
+
+
+    register({ email, username, password , mobile, company}, err => {
       if (err.email) {
         setError('email', {
           type: 'manual',
           message: err.email
         })
       }
+
+      if (err.mobile) {
+        setError('mobile', {
+          type: 'manual',
+          message: err.mobile
+        })
+      }
+
+      if (err.company) {
+        setError('email', {
+          type: 'manual',
+          message: err.company
+        })
+      }
+
       if (err.username) {
         setError('username', {
           type: 'manual',
           message: err.username
         })
       }
+
     })
   }
 
@@ -285,7 +309,7 @@ const Register = () => {
                       autoFocus
                       value={value}
                       onBlur={onBlur}
-                      label='Username'
+                      label='name'
                       onChange={onChange}
                       placeholder='johndoe'
                       error={Boolean(errors.username)}
@@ -314,7 +338,8 @@ const Register = () => {
                 />
                 {errors.email && <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>}
               </FormControl>
-              <FormControl fullWidth>
+
+              <FormControl fullWidth sx={{ mb: 4 }}>
                 <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.password)}>
                   Password
                 </InputLabel>
@@ -347,6 +372,50 @@ const Register = () => {
                 />
                 {errors.password && (
                   <FormHelperText sx={{ color: 'error.main' }}>{errors.password.message}</FormHelperText>
+                )}
+              </FormControl>
+
+              <FormControl fullWidth sx={{ mb: 4 }}>
+                <Controller
+                  name='mobile'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange, onBlur } }) => (
+                    <TextField
+                      autoFocus
+                      value={value}
+                      onBlur={onBlur}
+                      label='mobile'
+                      onChange={onChange}
+                      placeholder='081xxxxxxxxx'
+                      error={Boolean(errors.mobile)}
+                    />
+                  )}
+                />
+                {errors.mobile && (
+                  <FormHelperText sx={{ color: 'error.main' }}>{errors.mobile.message}</FormHelperText>
+                )}
+              </FormControl>
+
+              <FormControl fullWidth sx={{ mb: 4 }}>
+                <Controller
+                  name='company'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange, onBlur } }) => (
+                    <TextField
+                      autoFocus
+                      value={value}
+                      onBlur={onBlur}
+                      label='Company'
+                      onChange={onChange}
+
+                      error={Boolean(errors.company)}
+                    />
+                  )}
+                />
+                {errors.company && (
+                  <FormHelperText sx={{ color: 'error.main' }}>{errors.company.message}</FormHelperText>
                 )}
               </FormControl>
 
@@ -398,7 +467,11 @@ const Register = () => {
                   <FormHelperText sx={{ mt: 0, color: 'error.main' }}>{errors.terms.message}</FormHelperText>
                 )}
               </FormControl>
-              <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
+              <Button
+                  fullWidth size='large'
+                  type='submit'
+                  onClick={handleSubmit(onSubmit)}
+                  variant='contained' sx={{ mb: 7 }}>
                 Sign up
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
