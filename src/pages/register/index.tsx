@@ -338,7 +338,6 @@ const Register = () => {
                 />
                 {errors.email && <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>}
               </FormControl>
-
               <FormControl fullWidth sx={{ mb: 4 }}>
                 <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.password)}>
                   Password
@@ -374,7 +373,6 @@ const Register = () => {
                   <FormHelperText sx={{ color: 'error.main' }}>{errors.password.message}</FormHelperText>
                 )}
               </FormControl>
-
               <FormControl fullWidth sx={{ mb: 4 }}>
                 <Controller
                   name='mobile'
@@ -396,7 +394,6 @@ const Register = () => {
                   <FormHelperText sx={{ color: 'error.main' }}>{errors.mobile.message}</FormHelperText>
                 )}
               </FormControl>
-
               <FormControl fullWidth sx={{ mb: 4 }}>
                 <Controller
                   name='company'
@@ -418,7 +415,6 @@ const Register = () => {
                   <FormHelperText sx={{ color: 'error.main' }}>{errors.company.message}</FormHelperText>
                 )}
               </FormControl>
-
               <FormControl sx={{ my: 0 }} error={Boolean(errors.terms)}>
                 <Controller
                   name='terms'
