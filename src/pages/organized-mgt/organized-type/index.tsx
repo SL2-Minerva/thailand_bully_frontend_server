@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // ** MUI Imports
 import { Grid , Card, CardHeader, CardContent } from "@mui/material";
@@ -15,32 +15,59 @@ import { PencilOutline } from 'mdi-material-ui'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import DialogOrganizationType from './typeDialog';
+import OrganizationTypeService from 'src/services/api/organization/OrganizationApi';
+import axios from 'axios';
+import authConfig from "../../../configs/auth";
 
 const createData = (name: string, description: string, status : boolean) => {
   return { name, description, status }
 }
 
-const rows = [
-  createData('องค์กร Type1', "This is Desctiption 1", true),
-  createData('องค์กร Type2', "This is Desctiption 2", true),
-  createData('องค์กร Type3', "This is Desctiption 3", false),
-  createData('องค์กร Type4', "This is Desctiption 4", true),
-]
-
-
 const OrganizationType = () => {
 
   const [ showEdit , setShowEdit ] = useState<boolean>(false)
   const [ showCreate, setShowCreate ] = useState<boolean>(false)
-  const toggleCreate = () => setShowCreate(!showCreate)
-
-  const [tableData, setTableData ] = useState(rows);
-
-  function handleChange(i: number, event: any ) {
-    const values = [...tableData];
-    values[i].status = event.target.checked;
-    setTableData(values);
+  const [ reload, setReload ] = useState<boolean>(false)
+  const [ current, setCurrent ] = useState<any>({})
+  const [ action, setAction ] = useState<string>('create')
+  const toggleCreate = () =>  {
+    setAction('create');
+    setShowCreate(!showCreate);
+    setCurrent({});
   }
+
+  const [tableData, setTableData ] = useState<any>([]);
+
+  const {result_organization_type_list} = OrganizationTypeService(reload);
+
+  useEffect ( () => {
+    setReload(!reload);
+  }, [showCreate, showEdit])
+  
+  function handleChange(index: number, i: number, event: any ) {
+
+    axios
+    .put(authConfig.updateOrgType, { id: i, status: event.target.checked},{
+      headers: {
+        Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+      }
+    })
+  
+    const values = [...result_organization_type_list];
+    values[index].status = event.target.checked;
+    setTableData(values);
+    
+  }
+
+  function handleEdit(i: number) {
+    setAction('edit');
+    setCurrent(result_organization_type_list[i]);
+    setShowEdit(true);
+  }
+
+  
+
+
   
   return (
     <Grid container spacing={6}>
@@ -68,32 +95,40 @@ const OrganizationType = () => {
                               </TableRow>
                               </TableHead>
                               <TableBody>
-                              {tableData.map((row, index) => (
-                                  <TableRow
-                                  key={row.name}
-                                  sx={{
-                                      '&:last-of-type td, &:last-of-type th': {
-                                      border: 0
-                                      }
-                                  }}
-                                  >
-                                  <TableCell component='th' scope='row'>
-                                      {row.name}
-                                  </TableCell>
-                                  <TableCell align='center'>{row.description}</TableCell>
-                                  <TableCell align='center'>
-                                      <Switch key={index} checked={row.status} onChange={ e => handleChange(index, e)}/>
-                                  </TableCell>
-                                  <TableCell align='center'>
-                                      <PencilOutline onClick={()=> { setShowEdit(true) }}/>
-                                  </TableCell>
-                                  </TableRow>
-                              ))}
+                              {
+                                result_organization_type_list && result_organization_type_list.map((row: any, index: number) => {
+                                
+                                  return (
+                                    <TableRow
+                                    key={row.organization_type_name}
+                                    sx={{
+                                        '&:last-of-type td, &:last-of-type th': {
+                                        border: 0
+                                        }
+                                    }}
+                                    >
+                                    <TableCell component='th' scope='row'>
+                                        {row.organization_type_name}
+                                    </TableCell>
+                                    <TableCell align='center'>{row.organization_type_description}</TableCell>
+                                    <TableCell align='center'>
+                                        <Switch key={index} checked={row.status} onChange={ e => handleChange(index,row.id, e)}/>
+                                    </TableCell>
+                                    <TableCell align='center'>
+                                        <PencilOutline onClick={()=> { 
+                                          handleEdit(index)
+                                          }}/>
+                                    </TableCell>
+                                    </TableRow>
+                                )
+                                })
+                              }
+                             
                               </TableBody>
                           </Table>
                       </TableContainer>
-                      <DialogOrganizationType show={showEdit} setShow={setShowEdit} action="edit" />
-                      <DialogOrganizationType show={showCreate} setShow={setShowCreate} action="create" />
+                      <DialogOrganizationType show={action === 'create' ? showCreate:showEdit} setShow={action === 'create' ? setShowCreate: setShowEdit} action={action} current={current} />
+                      
                       
             </CardContent>
           </CardContent>

@@ -1,5 +1,6 @@
 // ** React Imports
-import { Ref, forwardRef, ReactElement } from 'react'
+import { Ref, forwardRef, ReactElement, useState, useEffect } from 'react'
+
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -37,34 +38,55 @@ interface DialogInfoProps {
   show: boolean
   setShow: any
   action: string
+  current?: any
 }
 
 interface FormData {
   description: string
   status: boolean
   type: string
+  id?: number
 }
 
 const DialogOrganizationType = (props: DialogInfoProps) => {
-  const { show, setShow, action } = props
-
+  const { show, setShow, action, current } = props
+  
   const schema = yup.object().shape({
     description: yup.string().required(),
     type: yup.string().required()
   })
 
+  // const [type, setType] = useState(current?.organization_type_name || '')
+  // const [description, setDescription] = useState(current?.organization_type_description || '')
+  // const [status, setStatus] = useState(current?.status === 1 ? true : false || '')
+
+  // console.log('status', status, description, type)
+  
+
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors }
   } = useForm({
+    shouldUnregister: false,
     mode: 'onBlur',
     resolver: yupResolver(schema)
   })
 
-  const onSubmit = (data: FormData) => {
+  useEffect(() => {
+    console.log('status',  current?.status === 1 ? true : false || true)
+    setValue('description', current?.organization_type_description || '')
+    setValue('type', current?.organization_type_name || '')
+    setValue('status', current?.status === 1 ? true : false || true)
+    if (action === 'edit') {
+      setValue('id', current?.id)
+    }
+  }, [current])
 
-    axios
+  const onSubmit = (data: FormData) => {
+    if (action === 'create') { 
+      axios
       .post(authConfig.createOrgType,data,{
         headers: {
           Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
@@ -74,6 +96,26 @@ const DialogOrganizationType = (props: DialogInfoProps) => {
         console.log('res', res);
         setShow(false);
       });
+    }
+    else {
+      
+      axios
+      .put(authConfig.updateOrgType,data,{
+        headers: {
+          Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+        }
+      })
+      .then(res => {
+        console.log('res', res);
+        setShow(false);
+      });
+    }
+    
+  }
+
+  if (current) {
+    setValue('description', current?.organization_type_description)
+    // setValues('type', current?.organization_type_name);
   }
 
   return (
@@ -88,6 +130,17 @@ const DialogOrganizationType = (props: DialogInfoProps) => {
         onBackdropClick={() => setShow(false)}
       >
         <form  autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
+          {
+            action !== 'create' && 
+            <Controller
+            name='id'
+            control={control}
+            render={({ field: {value} }) => (
+              <TextField type='hidden' name='id' value={value} />
+            )}
+          />
+            
+          }
           <DialogContent sx={{ pb: 6, px: { xs: 8, sm: 15 }, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
             <IconButton
               size='small'
@@ -108,11 +161,10 @@ const DialogOrganizationType = (props: DialogInfoProps) => {
                   <Controller
                     name='type'
                     control={control}
-                    rules={{ required: true }}
-                    render={({ field: { value, onChange, onBlur } }) => (
+                    render={({ field: {value, onChange, onBlur } }) => (
                       <TextField
                         autoFocus
-                        value={value}
+                        value={ value}
                         onBlur={onBlur}
                         label='Organization Type'
                         onChange={onChange}
@@ -130,7 +182,6 @@ const DialogOrganizationType = (props: DialogInfoProps) => {
                   <Controller
                     name='description'
                     control={control}
-                    rules={{ required: true }}
                     render={({ field: { value, onChange, onBlur } }) => (
                       <TextField
                         autoFocus
@@ -155,11 +206,11 @@ const DialogOrganizationType = (props: DialogInfoProps) => {
                     name='status'
                     control={control}
                     render={({ field: { value, onChange } }) => (
-                      <FormControlLabel name={'status'} control={<Switch value={value} onChange={onChange} />} label='Status : ' labelPlacement='start' />
+                      <FormControlLabel name={'status'} control={<Switch checked={value} 
+                      onChange={onChange} />
+                      } label='Status : ' labelPlacement='start' />
                     )}
                   />
-
-
                 </FormControl>
               </Grid>
             </Grid>

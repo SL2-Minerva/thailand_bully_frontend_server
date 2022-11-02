@@ -6,5 +6,6 @@ export default {
     storageTokenKeyName: 'accessToken',
     userInfo: `${BASE_URL}/user/info`,
     createRole: `${BASE_URL}/role/create`,
-    createOrgType: `${BASE_URL}/organization-type/create`
+    createOrgType: `${BASE_URL}/organization-type/create`,
+    updateOrgType: `${BASE_URL}/organization-type/update`
 }
