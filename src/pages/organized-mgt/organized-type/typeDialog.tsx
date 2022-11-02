@@ -1,5 +1,5 @@
 // ** React Imports
-import { Ref, forwardRef, ReactElement, useState, useEffect } from 'react'
+import { Ref, forwardRef, ReactElement, useEffect } from 'react'
 
 
 // ** MUI Imports
@@ -115,7 +115,6 @@ const DialogOrganizationType = (props: DialogInfoProps) => {
 
   if (current) {
     setValue('description', current?.organization_type_description)
-    // setValues('type', current?.organization_type_name);
   }
 
   return (

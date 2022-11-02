@@ -19,10 +19,6 @@ import OrganizationTypeService from 'src/services/api/organization/OrganizationA
 import axios from 'axios';
 import authConfig from "../../../configs/auth";
 
-const createData = (name: string, description: string, status : boolean) => {
-  return { name, description, status }
-}
-
 const OrganizationType = () => {
 
   const [ showEdit , setShowEdit ] = useState<boolean>(false)
@@ -36,7 +32,6 @@ const OrganizationType = () => {
     setCurrent({});
   }
 
-  const [tableData, setTableData ] = useState<any>([]);
 
   const {result_organization_type_list} = OrganizationTypeService(reload);
 
@@ -55,7 +50,7 @@ const OrganizationType = () => {
   
     const values = [...result_organization_type_list];
     values[index].status = event.target.checked;
-    setTableData(values);
+  
     
   }
 
