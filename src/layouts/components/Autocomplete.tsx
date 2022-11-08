@@ -306,7 +306,7 @@ const NoResult = ({ value, setOpenDialog }: NoResultProps) => {
           </Link>
         </ListItem>
         <ListItem sx={{ py: 2 }} disablePadding onClick={() => setOpenDialog(false)}>
-          <Link passHref href='/apps/user/view/2/'>
+
             <Box
               component='a'
               sx={{
@@ -321,7 +321,7 @@ const NoResult = ({ value, setOpenDialog }: NoResultProps) => {
                 User View
               </Typography>
             </Box>
-          </Link>
+
         </ListItem>
         <ListItem sx={{ py: 2 }} disablePadding onClick={() => setOpenDialog(false)}>
           <Link passHref href='/pages/account-settings/'>

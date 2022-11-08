@@ -113,7 +113,7 @@ const columns = [
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           {renderClient(row)}
           <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
-            <Link href={`/apps/user/view/${id}`} passHref>
+
               <Typography
                 noWrap
                 component='a'
@@ -122,12 +122,12 @@ const columns = [
               >
                 {fullName}
               </Typography>
-            </Link>
-            <Link href={`/apps/user/view/${id}`} passHref>
+
+
               <Typography noWrap component='a' variant='caption' sx={{ textDecoration: 'none' }}>
                 @{username}
               </Typography>
-            </Link>
+
           </Box>
         </Box>
       )
@@ -199,11 +199,11 @@ const columns = [
     field: 'actions',
     headerName: 'Actions',
     renderCell: ({ row }: CellType) => (
-      <Link href={`/apps/user/view/${row.id}`} passHref>
+
         <IconButton>
           <EyeOutline />
         </IconButton>
-      </Link>
+
     )
   }
 ]

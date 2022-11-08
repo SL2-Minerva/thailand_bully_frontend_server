@@ -2,7 +2,7 @@
 import { useState, useEffect, MouseEvent, useCallback, ReactElement } from 'react'
 
 // ** Next Import
-import Link from 'next/link'
+// import Link from 'next/link'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -11,7 +11,8 @@ import Menu from '@mui/material/Menu'
 import Grid from '@mui/material/Grid'
 import { DataGrid } from '@mui/x-data-grid'
 import MenuItem from '@mui/material/MenuItem'
-import { styled } from '@mui/material/styles'
+
+// import { styled } from '@mui/material/styles'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CardHeader from '@mui/material/CardHeader'
@@ -86,28 +87,28 @@ const userStatusObj: UserStatusType = {
   inactive: 'secondary'
 }
 
-// ** Styled component for the link for the avatar with image
-const AvatarWithImageLink = styled(Link)(({ theme }) => ({
-  marginRight: theme.spacing(3)
-}))
-
-// ** Styled component for the link for the avatar without image
-const AvatarWithoutImageLink = styled(Link)(({ theme }) => ({
-  textDecoration: 'none',
-  marginRight: theme.spacing(3)
-}))
+// // ** Styled component for the link for the avatar with image
+// const AvatarWithImageLink = styled(Link)(({ theme }) => ({
+//   marginRight: theme.spacing(3)
+// }))
+//
+// // ** Styled component for the link for the avatar without image
+// const AvatarWithoutImageLink = styled(Link)(({ theme }) => ({
+//   textDecoration: 'none',
+//   marginRight: theme.spacing(3)
+// }))
 
 // ** renders client column
 const renderClient = (row: UsersType) => {
   if (row.avatar && row.avatar.length) {
     return (
-      <AvatarWithImageLink href={`/apps/user/view/${row.id}`}>
+
         <CustomAvatar src={row.avatar} sx={{ mr: 3, width: 34, height: 34 }} />
-      </AvatarWithImageLink>
+
     )
   } else {
     return (
-      <AvatarWithoutImageLink href={`/apps/user/view/${row.id}`}>
+
         <CustomAvatar
           skin='light'
           color={row.avatarColor || 'primary'}
@@ -115,7 +116,7 @@ const renderClient = (row: UsersType) => {
         >
           {getInitials(row.name ? row.name : 'John Doe')}
         </CustomAvatar>
-      </AvatarWithoutImageLink>
+
     )
   }
 }
@@ -186,13 +187,13 @@ const columns = [
     field: 'name',
     headerName: 'User',
     renderCell: ({ row }: CellType) => {
-      const { id, name } = row
+      const {  name } = row
 
       return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           {renderClient(row)}
           <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
-            <Link href={`/apps/user/view/${id}`} passHref>
+
               <Typography
                 noWrap
                 component='a'
@@ -201,7 +202,7 @@ const columns = [
               >
                 {name}
               </Typography>
-            </Link>
+
           </Box>
         </Box>
       )
@@ -300,9 +301,13 @@ const UserList = () => {
 
   useEffect(() => {
     handleList()
+    setReload(!reload)
+
+    setUsers([]);
   }, [organization, role, status, value])
 
   const handleList = () => {
+
     axios
       .get(`${API_PATH}/user/list-active`, {
         headers: {
