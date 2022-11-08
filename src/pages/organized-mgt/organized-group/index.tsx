@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // ** MUI Imports
 import { Grid , Card, CardHeader, CardContent } from "@mui/material";
@@ -7,6 +7,7 @@ import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
 import TableHead from '@mui/material/TableHead'
+import axios from 'axios'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
@@ -15,31 +16,51 @@ import { PencilOutline } from 'mdi-material-ui'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import DialogOrganizationInfo from './dialogOrganizationInfo'
+import { OrganzationGroupServiceList } from 'src/services/api/organization/OrganizationApi';
+import authConfig from '../../../configs/auth'
 
-
-const createData = (id: number, organization_group: string, description: string, status : boolean) => {
-  return {id, organization_group, description, status }
-}
-
-const rows = [
-  createData(1, 'กลุ่มองค์กร 1', "This is Desctiption", true),
-  createData(2, 'กลุ่มองค์กร 2', "This is Desctiption", true),
-  createData(3, 'กลุ่มองค์กร 3', "This is Desctiption", false),
-  createData(4, 'กลุ่มองค์กร 4', "This is Desctiption", true),
-]
 
 const OrganizationGroup = () => {
   const [ showEdit , setShowEdit ] = useState<boolean>(false)
   const [ showCreate, setShowCreate ] = useState<boolean>(false)
+  const [reload, setReload] = useState<boolean>(false)
+  const [current, setCurrent] = useState<any>({})
+  const [action, setAction] = useState<string>('create')
   const toggleShowCreate = () => setShowCreate(!showCreate)
 
-  const [tableData, setTableData ] = useState(rows);
 
-  function handleChange(i: number, event: any ) {
-    const values = [...tableData];
-    values[i].status = event.target.checked;
-    setTableData(values);
+  const { result_organization_group_list } = OrganzationGroupServiceList(reload);
+
+
+  useEffect(() => {
+    setReload(!reload)
+  }, [showCreate, showEdit])
+
+
+  function handleEdit(i: number) {
+    setAction('edit')
+    setCurrent(result_organization_group_list[i])
+    setShowEdit(true)
   }
+
+
+  function handleChange(index: number, i: number, event: any) {
+    axios.put(
+      authConfig.updateOrgGroup,
+      { id: i, status: event.target.checked },
+      {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+        }
+      }
+    )
+
+    setReload(!reload)
+
+    // const values = [...result_organization_group_list]
+    // values[index].status = event.target.checked
+  }
+
 
   return (
     <Grid container spacing={6}>
@@ -66,7 +87,7 @@ const OrganizationGroup = () => {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {tableData.map((row, index) => (
+                    {result_organization_group_list && result_organization_group_list.map((row: any, index: number) => (
                         <TableRow
                         key={row.id}
                         sx={{
@@ -78,21 +99,28 @@ const OrganizationGroup = () => {
                         <TableCell component='th' scope='row'>
                             {row.id}
                         </TableCell>
-                        <TableCell align='center'>{row.organization_group}</TableCell>
-                        <TableCell align='center'>{row.description}</TableCell>
+                        <TableCell align='center'>{row.organization_group_name}</TableCell>
+                        <TableCell align='center'>{row.organization_group_description}</TableCell>
                         <TableCell align='center'>
-                            <Switch key={index} checked={row.status}  onChange={event => handleChange(index, event)}/>
+                          <Switch key={index} checked={row.status} onChange={e => handleChange(index, row.id, e)} />
                         </TableCell>
                         <TableCell align='center'>
-                            <PencilOutline onClick={()=> {setShowEdit(true)}}/>
+                        <PencilOutline
+                                onClick={() => {
+                                  handleEdit(index)
+                                }}
+                              />
                         </TableCell>
                         </TableRow>
                     ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-            <DialogOrganizationInfo show={showEdit} setShow={setShowEdit} action="edit" />
-            <DialogOrganizationInfo show = {showCreate} setShow ={setShowCreate} action="create"/>
+            <DialogOrganizationInfo show={action === 'create' ? showCreate : showEdit}
+                setShow={action === 'create' ? setShowCreate : setShowEdit}
+                action={action}
+                current={current} />
+
 
           </CardContent>
         </Card>

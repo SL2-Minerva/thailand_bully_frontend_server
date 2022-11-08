@@ -47,7 +47,6 @@ const AuthProvider = ({ children }: Props) => {
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)!
 
       if (storedToken) {
-
         setLoading(true)
         await axios
           .get(authConfig.userInfo, {
@@ -56,14 +55,12 @@ const AuthProvider = ({ children }: Props) => {
             }
           })
           .then(async response => {
-
             setLoading(false)
 
-            const { data } = response.data;
+            const { data } = response.data
             setUser({ ...data.info })
           })
           .catch(() => {
-
             localStorage.removeItem('userData')
             localStorage.removeItem('refreshToken')
             localStorage.removeItem('accessToken')
@@ -83,21 +80,21 @@ const AuthProvider = ({ children }: Props) => {
     axios
       .post(authConfig.loginEndpoint, params)
       .then(async res => {
-        const { data } = res.data;
+        const { data } = res.data
         window.localStorage.setItem(authConfig.storageTokenKeyName, data.accessToken)
       })
       .then(() => {
         axios
           .get(authConfig.userInfo, {
             headers: {
-              Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+              Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
             }
           })
           .then(async response => {
             const returnUrl = router.query.returnUrl
-            const { data } = response.data;
+            const { data } = response.data
             setUser({ ...data.info })
-            await window.localStorage.setItem('userData', JSON.stringify(data.info));
+            await window.localStorage.setItem('userData', JSON.stringify(data.info))
             const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
 
             router.replace(redirectURL as string)
@@ -120,7 +117,6 @@ const AuthProvider = ({ children }: Props) => {
     axios
       .post(authConfig.registerEndpoint, params)
       .then(res => {
-
         if (res.data.error) {
           if (errorCallback) errorCallback(res.data.error)
         } else {

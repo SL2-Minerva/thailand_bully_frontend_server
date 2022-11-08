@@ -28,7 +28,6 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import Laptop from 'mdi-material-ui/Laptop'
 import ChartDonut from 'mdi-material-ui/ChartDonut'
 import CogOutline from 'mdi-material-ui/CogOutline'
-import EyeOutline from 'mdi-material-ui/EyeOutline'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
 import PencilOutline from 'mdi-material-ui/PencilOutline'
 import DeleteOutline from 'mdi-material-ui/DeleteOutline'
@@ -36,7 +35,6 @@ import AccountOutline from 'mdi-material-ui/AccountOutline'
 import Button from '@mui/material/Button'
 
 // ** Store Imports
-import { useDispatch, useSelector } from 'react-redux'
 
 // ** Custom Components Imports
 import CustomChip from 'src/@core/components/mui/chip'
@@ -45,17 +43,20 @@ import CustomAvatar from 'src/@core/components/mui/avatar'
 // ** Utils Import
 import { getInitials } from 'src/@core/utils/get-initials'
 
-// ** Actions Imports
-import { fetchData, deleteUser } from 'src/store/apps/user'
 
 // ** Types Imports
-import { RootState, AppDispatch } from 'src/store'
 import { ThemeColor } from 'src/@core/layouts/types'
 import { UsersType } from 'src/types/apps/userTypes'
 
 // ** Custom Components Imports
 import DialogEditUserInfo from './DialogUserInfo'
 import TableHeader from 'src/views/apps/user/list/TableHeader'
+import { Organization } from 'src/services/api/organization/organization'
+
+import axios from 'axios'
+import authConfig from '../../../../configs/auth'
+import { API_PATH } from 'src/utils/const'
+
 
 
 interface UserRoleType {
@@ -98,7 +99,7 @@ const AvatarWithoutImageLink = styled(Link)(({ theme }) => ({
 
 // ** renders client column
 const renderClient = (row: UsersType) => {
-  if (row.avatar.length) {
+  if (row.avatar && row.avatar.length) {
     return (
       <AvatarWithImageLink href={`/apps/user/view/${row.id}`}>
         <CustomAvatar src={row.avatar} sx={{ mr: 3, width: 34, height: 34 }} />
@@ -112,26 +113,17 @@ const renderClient = (row: UsersType) => {
           color={row.avatarColor || 'primary'}
           sx={{ mr: 3, width: 34, height: 34, fontSize: '1rem' }}
         >
-          {getInitials(row.fullName ? row.fullName : 'John Doe')}
+          {getInitials(row.name ? row.name : 'John Doe')}
         </CustomAvatar>
       </AvatarWithoutImageLink>
     )
   }
 }
 
-// ** Styled component for the link inside menu
-const MenuItemLink = styled('a')(({ theme }) => ({
-  width: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  textDecoration: 'none',
-  padding: theme.spacing(1.5, 4),
-  color: theme.palette.text.primary
-}))
-
 const RowOptions = ({ id }: { id: number | string }) => {
+  console.log(id,'id')
+
   // ** Hooks
-  const dispatch = useDispatch<AppDispatch>()
 
   // ** State
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -148,7 +140,7 @@ const RowOptions = ({ id }: { id: number | string }) => {
   }
 
   const handleDelete = () => {
-    dispatch(deleteUser(id))
+
     handleRowOptionsClose()
   }
 
@@ -172,14 +164,6 @@ const RowOptions = ({ id }: { id: number | string }) => {
         }}
         PaperProps={{ style: { minWidth: '8rem' } }}
       >
-        <MenuItem sx={{ p: 0 }}>
-          <Link href={`/apps/user/view/${id}`} passHref>
-            <MenuItemLink>
-              <EyeOutline fontSize='small' sx={{ mr: 2 }} />
-              View
-            </MenuItemLink>
-          </Link>
-        </MenuItem>
         <MenuItem onClick={handleRowOptionsClose}>
           <PencilOutline fontSize='small' sx={{ mr: 2 }} />
              Edit
@@ -199,10 +183,10 @@ const columns = [
   {
     flex: 0.2,
     minWidth: 230,
-    field: 'fullName',
+    field: 'name',
     headerName: 'User',
     renderCell: ({ row }: CellType) => {
-      const { id, fullName, username } = row
+      const { id, name } = row
 
       return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -215,12 +199,7 @@ const columns = [
                 variant='subtitle2'
                 sx={{ color: 'text.primary', textDecoration: 'none' }}
               >
-                {fullName}
-              </Typography>
-            </Link>
-            <Link href={`/apps/user/view/${id}`} passHref>
-              <Typography noWrap component='a' variant='caption' sx={{ textDecoration: 'none' }}>
-                @{username}
+                {name}
               </Typography>
             </Link>
           </Box>
@@ -243,7 +222,7 @@ const columns = [
   },
   {
     flex: 0.15,
-    field: 'company',
+    field: 'organization',
     minWidth: 150,
     headerName: 'Organization',
     renderCell: ({ row }: CellType) => {
@@ -261,11 +240,11 @@ const columns = [
     flex: 0.15,
     minWidth: 120,
     headerName: 'Organization Group',
-    field: 'currentPlan',
+    field: 'group',
     renderCell: ({ row }: CellType) => {
       return (
         <Typography variant='subtitle1' noWrap sx={{ textTransform: 'capitalize' }}>
-          {row.currentPlan}
+          {row.group}
         </Typography>
       )
     }
@@ -280,8 +259,8 @@ const columns = [
         <CustomChip
           skin='light'
           size='small'
-          label={row.status}
-          color={userStatusObj[row.status]}
+          label={row.status ? 'active' : 'inactive'}
+          color={userStatusObj[row.status ? 'active' : 'inactive']}
           sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
         />
       )
@@ -299,10 +278,10 @@ const columns = [
 
 const UserList = () => {
   // ** State
-  // const [role, setRole] = useState<string>('')
+
   const [role] = useState<string>('')
 
-  // const [userName, setUserName] = useState<string>('')
+
   const [userName] = useState<string>('')
 
   const [organization, setOrganization] = useState<string>('')
@@ -312,22 +291,36 @@ const UserList = () => {
   const [addUserOpen, setAddUserOpen] = useState<boolean>(false)
   const [date, setDate] = useState<Date | null>(new Date())
   const [endDate, setEndDate] = useState<Date | null>(new Date())
+  const [reload, setReload] = useState<boolean>(false)
+  const [users, setUsers] = useState<any[]>([]);
 
   // ** Hooks
-  const dispatch = useDispatch<AppDispatch>()
-  const store = useSelector((state: RootState) => state.user)
+  const { list } = Organization.getList(reload)
 
 
   useEffect(() => {
-    dispatch(
-      fetchData({
-        role,
-        status,
-        q: value,
-        currentPlan: organization
+    handleList()
+  }, [organization, role, status, value])
+
+  const handleList = () => {
+    axios
+      .get(`${API_PATH}/user/list-active`, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+        }
       })
-    )
-  }, [dispatch, organization, role, status, value])
+      .then(async response => {
+        const { data, status } = response.data
+        if (status === 200) {
+          setUsers(data)
+          setReload(!reload)
+        }
+
+      })
+      .catch((ex: any) => {
+        console.log(ex)
+      })
+  }
 
   const handleFilter = useCallback((val: string) => {
     setValue(val)
@@ -368,11 +361,15 @@ const UserList = () => {
                     onChange={handleOrganization}
                     inputProps={{ placeholder: 'Select Organization' }}
                   >
-                    <MenuItem value=''>Organization Name </MenuItem>
-                    <MenuItem value='1'>Oragnization 1</MenuItem>
-                    <MenuItem value='2'>Oragnization 2</MenuItem>
-                    <MenuItem value='3'>Oragnization 3</MenuItem>
-                    <MenuItem value='4'>Oragnization 4</MenuItem>
+                  {
+                      list && list.map((item: any, index: number) => {
+                        return (
+                          <MenuItem key={index} value={item.id}>
+                            {item.name}
+                          </MenuItem>
+                        )
+                      })
+                    }
                   </Select>
                 </FormControl>
               </Grid>
@@ -389,9 +386,9 @@ const UserList = () => {
                     inputProps={{ placeholder: 'Select Status' }}
                   >
                     <MenuItem value=''>Select Status</MenuItem>
-                    <MenuItem value='pending'>Pending</MenuItem>
-                    <MenuItem value='active'>Active</MenuItem>
-                    <MenuItem value='inactive'>Inactive</MenuItem>
+                    <MenuItem value='2'>Pending</MenuItem>
+                    <MenuItem value='1'>Active</MenuItem>
+                    <MenuItem value='0'>Inactive</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -440,7 +437,7 @@ const UserList = () => {
           <TableHeader value={value} handleFilter={handleFilter} toggle={toggleAddUserDrawer} />
           <DataGrid
             autoHeight
-            rows={store.data}
+            rows={users}
             columns={columns}
             pageSize={pageSize}
             rowsPerPageOptions={[10, 25, 50]}

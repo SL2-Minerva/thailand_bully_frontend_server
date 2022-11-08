@@ -1,18 +1,36 @@
-import { CallAPI } from "src/services/CallAPI";
+import { CallAPI } from 'src/services/CallAPI'
 
 const OrganizationTypeService = (reload?: boolean) => {
-    const [{data: res, loading, error}, refetch ] = CallAPI<{data?: any;}>({
-      url: `/organization-type/list`,
-      method: "GET",
-      data: {
-        reload: reload
-      }
-    });
-    return{
-      result_organization_type_list: res?.data ||  null,
-      result_organization_type_list_load: loading,
-      error_domain_list: error,
+  const [{ data: res, loading, error }, refetch] = CallAPI<{ data?: any }>({
+    url: `/organization-type/list`,
+    method: 'GET',
+    data: {
+      reload: reload
     }
+  })
+  return {
+    result_organization_type_list: res?.data || null,
+    result_organization_type_list_load: loading,
+    error_domain_list: error
   }
+}
+
+export const OrganzationGroupServiceList = (reload?: boolean) => {
+  const [{ data: res, loading, error }, refetch] = CallAPI<{ data?: any }>({
+    url: `/organization-group/list`,
+    method: 'GET',
+    data: {
+      reload: reload
+    }
+  })
+  return {
+    result_organization_group_list: res?.data || null,
+    result_organization_group_list_load: loading,
+    error_organization_group_list: error
+  }
+}
+
+
+
 
 export default OrganizationTypeService

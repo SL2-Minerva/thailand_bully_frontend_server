@@ -25,8 +25,8 @@ import TableContainer from '@mui/material/TableContainer'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
-import axios from "axios";
-import authConfig from "../../../../configs/auth";
+import axios from 'axios'
+import authConfig from '../../../../configs/auth'
 
 interface DialogRoleInfoProps {
   show: boolean
@@ -51,61 +51,65 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
   const { show, setShow, action } = props
 
   const [roleName, setRoleName] = useState('')
-  const [roleDescription, setDescription] = useState('');
-  const [permission, setPermission] = useState<any>(
-    {
-      user: {
-        authorized_create: true,
-        authorized_edit: true,
-        authorized_delete: true,
-        authorized_view: true,
-        authorized_export: true
-      },
-      campaign: {
-        authorized_create: true,
-        authorized_edit: true,
-        authorized_delete: true,
-        authorized_view: true,
-        authorized_export: true
-      },
-      dashboard: {
-        authorized_create: true,
-        authorized_edit: true,
-        authorized_delete: true,
-        authorized_view: true,
-        authorized_export: true
-      },
-      report: {
-        authorized_create: true,
-        authorized_edit: true,
-        authorized_delete: true,
-        authorized_view: true,
-        authorized_export: true
-      }
+  const [roleDescription, setDescription] = useState('')
+  const [permission, setPermission] = useState<any>({
+    user: {
+      authorized_create: true,
+      authorized_edit: true,
+      authorized_delete: true,
+      authorized_view: true,
+      authorized_export: true
+    },
+    campaign: {
+      authorized_create: true,
+      authorized_edit: true,
+      authorized_delete: true,
+      authorized_view: true,
+      authorized_export: true
+    },
+    dashboard: {
+      authorized_create: true,
+      authorized_edit: true,
+      authorized_delete: true,
+      authorized_view: true,
+      authorized_export: true
+    },
+    report: {
+      authorized_create: true,
+      authorized_edit: true,
+      authorized_delete: true,
+      authorized_view: true,
+      authorized_export: true
     }
-  );
+  })
 
   const handleSubmit = () => {
     axios
-      .post(authConfig.createRole,{
-        role_name: roleName,
-        role_description: roleDescription,
-        permission: permission
-      } ,{
-        headers: {
-          Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+      .post(
+        authConfig.createRole,
+        {
+          role_name: roleName,
+          role_description: roleDescription,
+          permission: permission
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+          }
         }
-      })
+      )
       .then(res => {
-        console.log('res', res);
-        setShow(false);
+        console.log('res', res)
+        setShow(false)
       })
-
   }
 
   const handleChecked = (e: any, row: any, key: any) => {
-    let permissionNew = permission;
-    permissionNew =  { ...permissionNew, [row.toLowerCase()]: { ...permissionNew[row.toLowerCase()], [`authorized_${key}`]: e.target.checked } }
+    let permissionNew = permission
+    permissionNew = {
+      ...permissionNew,
+      [row.toLowerCase()]: { ...permissionNew[row.toLowerCase()], [`authorized_${key}`]: e.target.checked }
+    }
     setPermission(permissionNew)
   }
 
@@ -180,16 +184,52 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                           {row.menu}
                         </TableCell>
                         <TableCell align='left'>
-                          <FormControlLabel label='' control={<Checkbox defaultChecked name='size-default' onChange={e => handleChecked(e, row.menu, 'create')} />} />
+                          <FormControlLabel
+                            label=''
+                            control={
+                              <Checkbox
+                                defaultChecked
+                                name='size-default'
+                                onChange={e => handleChecked(e, row.menu, 'create')}
+                              />
+                            }
+                          />
                         </TableCell>
                         <TableCell align='left'>
-                          <FormControlLabel label='' control={<Checkbox defaultChecked name='size-default'  onChange={e => handleChecked(e, row.menu, 'edit')} />} />
+                          <FormControlLabel
+                            label=''
+                            control={
+                              <Checkbox
+                                defaultChecked
+                                name='size-default'
+                                onChange={e => handleChecked(e, row.menu, 'edit')}
+                              />
+                            }
+                          />
                         </TableCell>
                         <TableCell align='left'>
-                          <FormControlLabel label='' control={<Checkbox defaultChecked name='size-default'  onChange={e => handleChecked(e, row.menu, 'view')} />} />
+                          <FormControlLabel
+                            label=''
+                            control={
+                              <Checkbox
+                                defaultChecked
+                                name='size-default'
+                                onChange={e => handleChecked(e, row.menu, 'view')}
+                              />
+                            }
+                          />
                         </TableCell>
                         <TableCell align='left'>
-                          <FormControlLabel label='' control={<Checkbox defaultChecked name='size-default'  onChange={e => handleChecked(e, row.menu, 'export')} />} />
+                          <FormControlLabel
+                            label=''
+                            control={
+                              <Checkbox
+                                defaultChecked
+                                name='size-default'
+                                onChange={e => handleChecked(e, row.menu, 'export')}
+                              />
+                            }
+                          />
                         </TableCell>
                       </TableRow>
                     ))}

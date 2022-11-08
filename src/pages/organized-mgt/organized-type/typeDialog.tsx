@@ -39,6 +39,7 @@ interface DialogInfoProps {
   setShow: any
   action: string
   current?: any
+  table: any
 }
 
 interface FormData {

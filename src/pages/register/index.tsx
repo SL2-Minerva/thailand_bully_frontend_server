@@ -53,7 +53,7 @@ const defaultValues = {
   username: '',
   password: '',
   company: '',
-  mobile:  '' ,
+  mobile: '',
   terms: false
 }
 interface FormData {
@@ -150,8 +150,7 @@ const Register = () => {
   const onSubmit = (data: FormData) => {
     const { email, username, password, mobile, company } = data
 
-
-    register({ email, username, password , mobile, company}, err => {
+    register({ email, username, password, mobile, company }, err => {
       if (err.email) {
         setError('email', {
           type: 'manual',
@@ -179,7 +178,6 @@ const Register = () => {
           message: err.username
         })
       }
-
     })
   }
 
@@ -390,9 +388,7 @@ const Register = () => {
                     />
                   )}
                 />
-                {errors.mobile && (
-                  <FormHelperText sx={{ color: 'error.main' }}>{errors.mobile.message}</FormHelperText>
-                )}
+                {errors.mobile && <FormHelperText sx={{ color: 'error.main' }}>{errors.mobile.message}</FormHelperText>}
               </FormControl>
               <FormControl fullWidth sx={{ mb: 4 }}>
                 <Controller
@@ -406,7 +402,6 @@ const Register = () => {
                       onBlur={onBlur}
                       label='Company'
                       onChange={onChange}
-
                       error={Boolean(errors.company)}
                     />
                   )}
@@ -464,10 +459,13 @@ const Register = () => {
                 )}
               </FormControl>
               <Button
-                  fullWidth size='large'
-                  type='submit'
-                  onClick={handleSubmit(onSubmit)}
-                  variant='contained' sx={{ mb: 7 }}>
+                fullWidth
+                size='large'
+                type='submit'
+                onClick={handleSubmit(onSubmit)}
+                variant='contained'
+                sx={{ mb: 7 }}
+              >
                 Sign up
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
