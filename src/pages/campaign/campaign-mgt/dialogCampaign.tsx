@@ -1,4 +1,4 @@
-import { Ref, useState, forwardRef, ReactElement, useCallback } from 'react'
+import { Ref, useState, forwardRef, ReactElement, useCallback, useEffect } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -35,7 +35,6 @@ import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { API_PATH } from 'src/utils/const'
 
-
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
   ref: Ref<unknown>
@@ -47,6 +46,8 @@ interface DialogInfoProps {
   show: boolean
   setShow: any
   action: string
+  current?: any
+  table: any
 }
 
 const RepeaterWrapper = styled(CardContent)<CardContentProps>(({ theme }) => ({
@@ -58,13 +59,15 @@ const RepeaterWrapper = styled(CardContent)<CardContentProps>(({ theme }) => ({
 }))
 
 const DialogCampaign = (props: DialogInfoProps) => {
-  const { show, setShow, action } = props
+  const { show, setShow, action, current } = props
+
+  // console.log('current', current)
+  
+
   const [domain, setDomain] = useState<string>('')
   const [date, setDate] = useState<Date | null>(new Date())
   const [endDate, setEndDate] = useState<Date | null>(new Date())
 
-  // const [updateDate, setUpdatedDate] = useState<Date>(new Date())
-  // handle form
   const [campaignName, setCampaignName] = useState<string>('')
   const [description, setDescription] = useState<string>('')
 
@@ -116,13 +119,14 @@ const DialogCampaign = (props: DialogInfoProps) => {
   }
 
   const createNewCampaign = async () => {
-    console.log('keyyyyyy', keywords)
+    console.log(action);
 
     // const startdate = new Date(date);
 
     // var formattedDate =
 
     const input_data = {
+    
       name: campaignName,
       organization_id: 1,
       domain_id: parseInt(domain),
@@ -130,12 +134,31 @@ const DialogCampaign = (props: DialogInfoProps) => {
       description: description,
       start_at: format(date ? date : new Date(), 'yyyy-MM-dd'),
       end_at: format(endDate ? endDate : new Date(), 'yyyy-MM-dd'),
-      keywords: keywords
+      keywords: keywords,
+      id: undefined
     }
 
-    console.log(input_data)
+    if (action === 'edit') {
+      input_data.id = current.id
 
-    axios
+      axios
+      .put(`${API_PATH}/campaign/update`, input_data, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+        }
+      })
+      .then(async response => {
+        const { data, status } = response.data
+        console.log(data, status)
+
+        closeDialogBox()
+      })
+      .catch((ex: any) => {
+        console.log(ex)
+      })
+      
+    } else {
+        axios
       .post(`${API_PATH}/campaign/create`, input_data, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
@@ -143,18 +166,42 @@ const DialogCampaign = (props: DialogInfoProps) => {
       })
       .then(async response => {
         const { data, status } = response.data
-        console.log(data, status )
-
+        console.log(data, status)
 
         closeDialogBox()
-
-
       })
       .catch((ex: any) => {
         console.log(ex)
       })
+    }
 
+    
   }
+
+  useEffect(() => {
+       setCampaignName(current.name)
+      setDescription(current.description)
+      setDomain(current.domain_id)
+      setDate(new Date(current.start_at))
+      setEndDate(new Date(current.end_at))
+      if (current.keyword && current.keyword.length > 0) {
+        setKeywords(current.keyword)
+      }
+      
+  }, [current])
+
+  // useEffect(() => {
+  //   if (current) {
+  //     console.log(current.keywords)
+  //     setCampaignName(current.name)
+  //     setDescription(current.description)
+  //     setDomain(current.domain_id)
+  //     setDate(new Date(current.start_at))
+  //     setEndDate(new Date(current.end_at))
+  //     // setKeywords(current.keywords)
+  //   }
+  // }, [current])
+
 
 
   return (

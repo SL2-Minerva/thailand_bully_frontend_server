@@ -25,10 +25,11 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DialogCampaign from './dialogCampaign'
 import { CampaignList } from 'src/services/api/campaign/CampaignAPI'
 import DomainList from 'src/services/api/domains/DomainAPI'
+import axios from 'axios'
+import authConfig from '../../../configs/auth'
 
 const CampaignManagement = () => {
-  const [showEdit, setShowEdit] = useState<boolean>(false)
-  const [showCreate, setShowCreate] = useState<boolean>(false)
+  
 
   // const [campaignName, setCampaignName] = useState<string>('')
 
@@ -38,7 +39,16 @@ const CampaignManagement = () => {
   const [status, setStatus] = useState<string>('')
   const [date, setDate] = useState<Date | null>(new Date())
   const [endDate, setEndDate] = useState<Date | null>(new Date())
+  const [showEdit, setShowEdit] = useState<boolean>(false)
+  const [showCreate, setShowCreate] = useState<boolean>(false)
   const [reload, setReload] = useState<boolean>(false)
+  const [current, setCurrent] = useState<any>({})
+  const [action, setAction] = useState<string>('create')
+  const toggleCreate = () => {
+    setAction('create')
+    setShowCreate(!showCreate)
+    setCurrent({})
+  }
 
   // const [tableData, setTableData ] = useState(rows);
 
@@ -46,7 +56,7 @@ const CampaignManagement = () => {
 
   const { result_domain_list } = DomainList()
 
-  const toggleCreate = () => setShowCreate(!showCreate)
+
 
   const handleOrganization = useCallback((e: SelectChangeEvent) => {
     setOrganization(e.target.value)
@@ -58,15 +68,31 @@ const CampaignManagement = () => {
 
   useEffect(() => {
     setReload(!reload)
-    console.log(resultCampaiganList)
   }, [showCreate, showEdit])
 
-  // handle toggle status
-  // function handleChange(i: number, event: any) {
-  //   const values = [...tableData];
-  //   values[i].status = event.target.checked;
-  //   setTableData(values);
-  // }
+  function handleChange(index: number, i: number, event: any) {
+    axios.put(
+      authConfig.updateCampaign,
+      { id: i, status: event.target.checked },
+      {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+        }
+      }
+    )
+
+    const values = [...resultCampaiganList]
+    values[index].status = event.target.checked
+    setTableData(values)
+    setReload(!reload)
+  }
+
+  function handleEdit(i: number) {
+    setAction('edit')
+    setCurrent(resultCampaiganList[i])
+    setShowEdit(true)
+  }
+  const [tableData, setTableData] = useState(resultCampaiganList)
 
   return (
     <Grid container spacing={6}>
@@ -217,15 +243,14 @@ const CampaignManagement = () => {
                       </TableCell>
                       <TableCell align='center'>{campaignList.organization}</TableCell>
                       <TableCell align='center'>
-                        {/* <Switch key={index} checked={true} onChange={ e =>handleChange(index, e) }/> */}
-                        <Switch checked />
+                      <Switch key={index} checked={campaignList.status} onChange={e => handleChange(index, campaignList.id, e)} />
                       </TableCell>
                       <TableCell align='center'>
-                        <PencilOutline
-                          onClick={() => {
-                            setShowEdit(true)
-                          }}
-                        />
+                      <PencilOutline
+                                onClick={() => {
+                                  handleEdit(index)
+                                }}
+                              />
                       </TableCell>
                     </TableRow>
                   ))}
@@ -234,8 +259,12 @@ const CampaignManagement = () => {
             </TableContainer>
           </CardContent>
         </Card>
-        <DialogCampaign show={showEdit} setShow={setShowEdit} action='edit' />
-        <DialogCampaign show={showCreate} setShow={setShowCreate} action='create' />
+        <DialogCampaign table={tableData}
+                show={action === 'create' ? showCreate : showEdit}
+                setShow={action === 'create' ? setShowCreate : setShowEdit}
+                action={action}
+                current={current} />
+        
       </Grid>
     </Grid>
   )

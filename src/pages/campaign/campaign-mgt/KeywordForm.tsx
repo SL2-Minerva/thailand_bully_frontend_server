@@ -18,7 +18,8 @@ import Close from 'mdi-material-ui/Close'
 
 const KeywordForm = (props: any) => {
   const { indexNumber, keywords, setKeywords, removeKeyword, value } = props
-  const { keyword_and, keyword_or, keyword_ex } = value
+  const { keyword_and, keyword_or, keyword_exclude } = value
+
 
   function handleChangeLabel(i: number, event: any) {
 
@@ -43,8 +44,8 @@ const KeywordForm = (props: any) => {
       values[i].keyword_and = [...list, '']
     }
 
-    if (type === 'keyword_ex') {
-      values[i].keyword_ex = [...list, '']
+    if (type === 'keyword_exclude') {
+      values[i].keyword_exclude = [...list, '']
     }
 
     setKeywords(values)
@@ -62,8 +63,8 @@ const KeywordForm = (props: any) => {
       values[indexValue].keyword_and = news
     }
 
-    if (type === 'keyword_ex') {
-      values[indexValue].keyword_ex = news
+    if (type === 'keyword_exclude') {
+      values[indexValue].keyword_exclude = news
     }
 
 
@@ -89,8 +90,8 @@ const KeywordForm = (props: any) => {
       values[indexValue].keyword_and = textKeywords
     }
 
-    if (type === 'keyword_ex') {
-      values[indexValue].keyword_ex = textKeywords
+    if (type === 'keyword_exclude') {
+      values[indexValue].keyword_exclude = textKeywords
     }
 
     setKeywords(values)
@@ -99,7 +100,7 @@ const KeywordForm = (props: any) => {
   return (
     <>
       <Grid container sx={{ py: 4, width: '100%' }}>
-        <Grid item xs={12} sx={{ px: 4 }}>
+        <Grid item xs={12} sx={{ px: 4 }} style={{marginBottom: '15px'}}>
           <Typography variant='subtitle2' className='col-title' sx={{ mb: { md: 2, xs: 0 }, color: 'text.primary' }}>
             <Close
               fontSize='small'
@@ -124,7 +125,7 @@ const KeywordForm = (props: any) => {
 
         <Grid item sm={4} xs={12} sx={{ px: 4 }}>
 
-          {keyword_and.length > 0 &&
+          {keyword_and && keyword_and.length > 0 &&
           keyword_and.map((text:any, index:number) => {
             return (
               <InputKeyword
@@ -143,7 +144,7 @@ const KeywordForm = (props: any) => {
             )
           })}
 
-          {keyword_and.length <= 0 && (
+          {!keyword_and || keyword_and.length <= 0 && (
             <InputKeyword
               value={value}
               textValue={''}
@@ -159,9 +160,9 @@ const KeywordForm = (props: any) => {
           )}
 
         </Grid>
-
-        <Grid item sm={4} xs={12} sx={{ px: 4 }}>
-          {keyword_or.length > 0 &&
+         
+        <Grid item sm={4} xs={12} sx={{ px: 4 }} style={{borderLeft: '1px solid #000', borderRight: '1px solid #000'}}>
+          {keyword_or && keyword_or.length > 0 &&
             keyword_or.map((text:any, index:number) => {
               return (
                 <InputKeyword
@@ -180,7 +181,7 @@ const KeywordForm = (props: any) => {
               )
             })}
 
-          {keyword_or.length <= 0 && (
+          {!keyword_or && keyword_or.length <= 0 && (
             <InputKeyword
               value={value}
               textValue={''}
@@ -195,12 +196,10 @@ const KeywordForm = (props: any) => {
             />
           )}
         </Grid>
-
-
         <Grid item sm={4} xs={12} sx={{ px: 4 }}>
 
-          {keyword_ex.length > 0 &&
-          keyword_ex.map((text:any, index:number) => {
+          {keyword_exclude && keyword_exclude.length > 0 &&
+          keyword_exclude.map((text:any, index:number) => {
             return (
               <InputKeyword
                 value={value}
@@ -209,8 +208,8 @@ const KeywordForm = (props: any) => {
                 handleTextKeyword={handleTextKeyword}
                 addMoreKeyword={addMoreKeyword}
                 removeTextKeyword={removeTextKeyword}
-                list={keyword_ex}
-                type={'keyword_ex'}
+                list={keyword_exclude}
+                type={'keyword_exclude'}
                 index={index}
                 indexValue={indexNumber}
                 label={'คำที่ห้ามมี (Exclude)'}
@@ -218,21 +217,22 @@ const KeywordForm = (props: any) => {
             )
           })}
 
-          {keyword_ex.length <= 0 && (
+          {!keyword_exclude || keyword_exclude.length <= 0 && (
             <InputKeyword
               value={value}
               textValue={''}
               handleTextKeyword={handleTextKeyword}
               removeTextKeyword={removeTextKeyword}
               addMoreKeyword={addMoreKeyword}
-              list={keyword_ex}
-              type={'keyword_ex'}
+              list={keyword_exclude}
+              type={'keyword_exclude'}
               index={0}
               indexValue={indexNumber}
               label={'คำที่ห้ามมี (Exclude)'}
             />
           )}
         </Grid>
+
       </Grid>
     </>
   )
@@ -276,7 +276,9 @@ const InputKeyword = (props: any) => {
         )}
         <br />
       </span>
-      <Button
+
+      {
+        list.length === index + 1 && <Button
         sx={{ mt: '3%', p: '0px' }}
         size='small'
         variant='contained'
@@ -285,6 +287,8 @@ const InputKeyword = (props: any) => {
           addMoreKeyword(indexValue, list, value, type)
         }}
       ></Button>
+      }
+      
     </>
   )
 }
