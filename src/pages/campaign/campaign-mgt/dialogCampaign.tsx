@@ -77,7 +77,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
       name: '',
       keyword_or: [''],
       keyword_and: [''],
-      keyword_ex: ['']
+      keyword_exclude: ['']
     }
   ])
 
@@ -87,9 +87,9 @@ const DialogCampaign = (props: DialogInfoProps) => {
       {
         id: keywords.length + 1,
         name: '',
-        keyword_or: [],
-        keyword_and: [],
-        keyword_ex: []
+        keyword_or: [''],
+        keyword_and: [''],
+        keyword_exclude: ['']
       }
     ]
     setKeywords(news)
