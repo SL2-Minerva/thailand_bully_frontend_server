@@ -51,7 +51,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
   const [name, setName] = useState<string>(current.name ?? '')
   const [email, setEmail] = useState<string>(current.email ?? '')
   const [company, setCompany] = useState<string>(current.company ?? '')
-  const [role, setRole] = useState<string>(current.role_id ?? '')
+  const [role_id, setRole] = useState<any>(current.role_id ?? '')
   const [status, setStatus] = useState<string>(current.status ?? '')
 
 
@@ -64,7 +64,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
     if (action === 'edit') {
 
       axios
-      .put(`${API_PATH}/user/update/${current.id}`, {  name, email,company, organization_id: organization, role_id:role, status }, {
+      .put(`${API_PATH}/user/update/${current.id}`, {  name, email,company, organization_id: organization, role_id, status }, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
         }
@@ -80,7 +80,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
       })
     } else {
       axios
-      .post(`${API_PATH}/user/create/`, {  name, email,company, organization_id: organization, role_id:role, status }, {
+      .post(`${API_PATH}/user/create/`, {  name, email,company, organization_id: organization, role_id, status }, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
         }
@@ -141,9 +141,10 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
               <TextField fullWidth label='Company' onChange={ (e) => setCompany(e.target.value)} value={company}  placeholder='' />
             </Grid>
             <Grid item sm={6} xs={12}>
+           
               <FormControl fullWidth>
                 <InputLabel id='role-select'>Role</InputLabel>
-                <Select fullWidth labelId='role-select' label='Role' value={role} onChange={(e) => setRole(e.target.value)}>
+                <Select fullWidth labelId='role-select' label='Role' value={role_id} onChange={(e) => setRole(e.target.value)}>
                 {
                       resultRoleList && resultRoleList.map((item: any, index: number) => {
                         return (

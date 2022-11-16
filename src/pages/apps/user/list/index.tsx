@@ -151,8 +151,8 @@ const RowOptions = ({id, current}: {id: any, current: any}) => {
       })
       .then(async response => {
         const { data, status } = response.data
-      
-        // handleRowOptionsClose()
+        console.log(data, status)
+        handleRowOptionsClose()
       })
       .catch((ex: any) => {
         console.log(ex)
@@ -318,12 +318,7 @@ const UserList = () => {
   const [endDate, setEndDate] = useState<Date | null>(new Date())
   const [reload, setReload] = useState<boolean>(false)
   const [users, setUsers] = useState<any[]>([]);
-
-  const [showEdit, setShowEdit] = useState<boolean>(false)
-  const [showCreate, setShowCreate] = useState<boolean>(false)
-  const [current, setCurrent] = useState<any>({})
-  const [action, setAction] = useState<string>('create')
-
+  const current = {}; 
 
   // ** Hooks
   const { list } = Organization.getList(reload)
@@ -371,7 +366,7 @@ const UserList = () => {
 
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
 
-  const [tableData, setTableData] = useState(list)
+  
   return (
     <>
     <Grid container spacing={6}>
