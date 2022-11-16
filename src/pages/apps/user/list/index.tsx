@@ -121,8 +121,8 @@ const renderClient = (row: UsersType) => {
   }
 }
 
-const RowOptions = ({ id }: { id: number | string }) => {
-  console.log(id,'id')
+const RowOptions = ({id, current}: {id: any, current: any}) => {
+  console.log(id,'id', current)
 
   // ** Hooks
 
@@ -142,7 +142,23 @@ const RowOptions = ({ id }: { id: number | string }) => {
 
   const handleDelete = () => {
 
-    handleRowOptionsClose()
+    
+    axios
+      .delete(`${API_PATH}/user/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+        }
+      })
+      .then(async response => {
+        const { data, status } = response.data
+      
+        // handleRowOptionsClose()
+      })
+      .catch((ex: any) => {
+        console.log(ex)
+      })
+
+    
   }
 
   return (
@@ -175,7 +191,12 @@ const RowOptions = ({ id }: { id: number | string }) => {
         </MenuItem>
       </Menu>
 
-      <DialogEditUserInfo show = {show} setShow ={setShow} action="edit"/>
+      {/* <DialogEditUserInfo show = {show} setShow ={setShow} action="edit"/> */}
+      <DialogEditUserInfo
+               show = {show} 
+               setShow ={setShow} 
+               action="edit"
+               current={current}></DialogEditUserInfo>
     </>
   )
 }
@@ -273,7 +294,10 @@ const columns = [
     sortable: false,
     field: 'actions',
     headerName: 'Actions',
-    renderCell: ({ row }: CellType) => <RowOptions id={row.id} />
+    renderCell: ({ row }: CellType) => {
+    
+      return <RowOptions id={row.id} current={row} />
+    }
   }
 ]
 
@@ -294,6 +318,12 @@ const UserList = () => {
   const [endDate, setEndDate] = useState<Date | null>(new Date())
   const [reload, setReload] = useState<boolean>(false)
   const [users, setUsers] = useState<any[]>([]);
+
+  const [showEdit, setShowEdit] = useState<boolean>(false)
+  const [showCreate, setShowCreate] = useState<boolean>(false)
+  const [current, setCurrent] = useState<any>({})
+  const [action, setAction] = useState<string>('create')
+
 
   // ** Hooks
   const { list } = Organization.getList(reload)
@@ -341,6 +371,7 @@ const UserList = () => {
 
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
 
+  const [tableData, setTableData] = useState(list)
   return (
     <>
     <Grid container spacing={6}>
@@ -451,7 +482,12 @@ const UserList = () => {
           />
         </Card>
       </Grid>
-      <DialogEditUserInfo show = {addUserOpen} setShow ={setAddUserOpen} action="create"/>
+      <DialogEditUserInfo  
+               show={addUserOpen}
+               setShow ={setAddUserOpen}
+               action={'create'}
+               current={current} />
+
     </Grid>
     </>
   )
