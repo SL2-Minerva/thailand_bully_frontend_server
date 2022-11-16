@@ -342,7 +342,12 @@ const DialogCampaign = (props: DialogInfoProps) => {
                     labelPlacement='start'
                   />
                 </FormControl>
+
+              
               </Grid>
+              <Grid item sm={6} xs={12}>
+                  <div> {` Last update: ${  new Date(current.updated_at).toLocaleString('th') }`} </div>
+                </Grid>
 
               <Grid item sm={6} xs={12} mt={4}>
                 {/*<b>Update Date:</b> {updateDate?.toDateString() + ' ' + updateDate?.toLocaleTimeString()}*/}
