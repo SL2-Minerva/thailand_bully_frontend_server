@@ -33,7 +33,7 @@ const CampaignManagement = () => {
 
   // const [campaignName, setCampaignName] = useState<string>('')
 
-  const [campaignName] = useState<string>('')
+  const [campaignName, setCampaignName] = useState<string>('')
 
   const [organization, setOrganization] = useState<string>('')
   const [status, setStatus] = useState<string>('')
@@ -50,9 +50,11 @@ const CampaignManagement = () => {
     setCurrent({})
   }
 
-  // const [tableData, setTableData ] = useState(rows);
+  const [fillter, setFillter] = useState<any>({name: '', organization_id: '', status: '', start_date: '', end_date: ''})
+  const [is_fillter, setIsFillter] = useState<boolean>(false);
+  
 
-  const { resultCampaiganList } = CampaignList(reload)
+  const { resultCampaiganList } = CampaignList(reload, is_fillter, fillter)
 
   const { result_domain_list } = DomainList()
 
@@ -94,6 +96,21 @@ const CampaignManagement = () => {
   }
   const [tableData, setTableData] = useState(resultCampaiganList)
 
+  function handleSubmitSearch ()  {
+    
+    const data = {
+      name: campaignName,
+      organization_id: organization,
+      status: status,
+      start_date: date,
+      end_date: endDate
+    }
+    setIsFillter(true);
+    setReload(!reload);
+    setFillter(data);
+
+  }
+
   return (
     <Grid container spacing={6}>
       <Grid item md={12} xs={12}>
@@ -103,7 +120,7 @@ const CampaignManagement = () => {
             <Grid container spacing={6}>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <TextField id='campaign' label='Campaign Name' value={campaignName} />
+                  <TextField id='campaign' onChange={(e) => setCampaignName(e.target.value )} label='Campaign Name' value={campaignName} />
                 </FormControl>
               </Grid>
               <Grid item sm={4} xs={12}>
@@ -177,7 +194,7 @@ const CampaignManagement = () => {
                   <Button
                     sx={{ mb: 2 }}
                     onClick={() => {
-                      console.log('search')
+                      handleSubmitSearch()
                     }}
                     variant='contained'
                   >

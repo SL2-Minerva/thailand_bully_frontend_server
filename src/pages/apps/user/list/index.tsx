@@ -44,7 +44,6 @@ import CustomAvatar from 'src/@core/components/mui/avatar'
 // ** Utils Import
 import { getInitials } from 'src/@core/utils/get-initials'
 
-
 // ** Types Imports
 import { ThemeColor } from 'src/@core/layouts/types'
 import { UsersType } from 'src/types/apps/userTypes'
@@ -57,8 +56,6 @@ import { Organization } from 'src/services/api/organization/organization'
 import axios from 'axios'
 import authConfig from '../../../../configs/auth'
 import { API_PATH } from 'src/utils/const'
-
-
 
 interface UserRoleType {
   [key: string]: ReactElement
@@ -101,28 +98,22 @@ const userStatusObj: UserStatusType = {
 // ** renders client column
 const renderClient = (row: UsersType) => {
   if (row.avatar && row.avatar.length) {
-    return (
-
-        <CustomAvatar src={row.avatar} sx={{ mr: 3, width: 34, height: 34 }} />
-
-    )
+    return <CustomAvatar src={row.avatar} sx={{ mr: 3, width: 34, height: 34 }} />
   } else {
     return (
-
-        <CustomAvatar
-          skin='light'
-          color={row.avatarColor || 'primary'}
-          sx={{ mr: 3, width: 34, height: 34, fontSize: '1rem' }}
-        >
-          {getInitials(row.name ? row.name : 'John Doe')}
-        </CustomAvatar>
-
+      <CustomAvatar
+        skin='light'
+        color={row.avatarColor || 'primary'}
+        sx={{ mr: 3, width: 34, height: 34, fontSize: '1rem' }}
+      >
+        {getInitials(row.name ? row.name : 'John Doe')}
+      </CustomAvatar>
     )
   }
 }
 
-const RowOptions = ({id, current}: {id: any, current: any}) => {
-  console.log(id,'id', current)
+const RowOptions = ({ id, current }: { id: any; current: any }) => {
+  console.log(id, 'id', current)
 
   // ** Hooks
 
@@ -137,12 +128,10 @@ const RowOptions = ({id, current}: {id: any, current: any}) => {
   }
   const handleRowOptionsClose = () => {
     setAnchorEl(null)
-    setShow(true);
+    setShow(true)
   }
 
   const handleDelete = () => {
-
-    
     axios
       .delete(`${API_PATH}/user/delete/${id}`, {
         headers: {
@@ -157,8 +146,6 @@ const RowOptions = ({id, current}: {id: any, current: any}) => {
       .catch((ex: any) => {
         console.log(ex)
       })
-
-    
   }
 
   return (
@@ -183,7 +170,7 @@ const RowOptions = ({id, current}: {id: any, current: any}) => {
       >
         <MenuItem onClick={handleRowOptionsClose}>
           <PencilOutline fontSize='small' sx={{ mr: 2 }} />
-             Edit
+          Edit
         </MenuItem>
         <MenuItem onClick={handleDelete}>
           <DeleteOutline fontSize='small' sx={{ mr: 2 }} />
@@ -192,11 +179,7 @@ const RowOptions = ({id, current}: {id: any, current: any}) => {
       </Menu>
 
       {/* <DialogEditUserInfo show = {show} setShow ={setShow} action="edit"/> */}
-      <DialogEditUserInfo
-               show = {show} 
-               setShow ={setShow} 
-               action="edit"
-               current={current}></DialogEditUserInfo>
+      <DialogEditUserInfo show={show} setShow={setShow} action='edit' current={current}></DialogEditUserInfo>
     </>
   )
 }
@@ -205,25 +188,29 @@ const columns = [
   {
     flex: 0.2,
     minWidth: 230,
+    field: 'id',
+    headerName: 'ID',
+    renderCell: ({ row }: CellType) => {
+      const { id } = row
+
+      return <Box sx={{ display: 'flex', alignItems: 'center' }}>{id}</Box>
+    }
+  },
+  {
+    flex: 0.2,
+    minWidth: 230,
     field: 'name',
     headerName: 'User',
     renderCell: ({ row }: CellType) => {
-      const {  name } = row
+      const { name } = row
 
       return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           {renderClient(row)}
           <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
-
-              <Typography
-                noWrap
-                component='a'
-                variant='subtitle2'
-                sx={{ color: 'text.primary', textDecoration: 'none' }}
-              >
-                {name}
-              </Typography>
-
+            <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
+              {name}
+            </Typography>
           </Box>
         </Box>
       )
@@ -295,7 +282,6 @@ const columns = [
     field: 'actions',
     headerName: 'Actions',
     renderCell: ({ row }: CellType) => {
-    
       return <RowOptions id={row.id} current={row} />
     }
   }
@@ -305,7 +291,6 @@ const UserList = () => {
   // ** State
 
   const [role] = useState<string>('')
-
 
   const [userName] = useState<string>('')
 
@@ -317,22 +302,20 @@ const UserList = () => {
   const [date, setDate] = useState<Date | null>(new Date())
   const [endDate, setEndDate] = useState<Date | null>(new Date())
   const [reload, setReload] = useState<boolean>(false)
-  const [users, setUsers] = useState<any[]>([]);
-  const current = {}; 
+  const [users, setUsers] = useState<any[]>([])
+  const current = {}
 
   // ** Hooks
   const { list } = Organization.getList(reload)
-
 
   useEffect(() => {
     handleList()
     setReload(!reload)
 
-    setUsers([]);
+    setUsers([])
   }, [organization, role, status, value])
 
   const handleList = () => {
-
     axios
       .get(`${API_PATH}/user/list-active`, {
         headers: {
@@ -345,7 +328,6 @@ const UserList = () => {
           setUsers(data)
           setReload(!reload)
         }
-
       })
       .catch((ex: any) => {
         console.log(ex)
@@ -366,68 +348,66 @@ const UserList = () => {
 
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
 
-  
   return (
     <>
-    <Grid container spacing={6}>
-      <Grid item xs={12}>
-        <Card>
-          <CardHeader title='User Management' sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }} />
-          <CardContent>
-            <Grid container spacing={6}>
-              <Grid item sm={4} xs={12}>
-                <FormControl fullWidth>
-                  <TextField id='userName' label='User Name' value={userName} />
-                </FormControl>
+      <Grid container spacing={6}>
+        <Grid item xs={12}>
+          <Card>
+            <CardHeader title='User Management' sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }} />
+            <CardContent>
+              <Grid container spacing={6}>
+                <Grid item sm={4} xs={12}>
+                  <FormControl fullWidth>
+                    <TextField id='userName' label='User Name' value={userName} />
+                  </FormControl>
+                </Grid>
+                <Grid item sm={4} xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel id='plan-select'>Select Organization</InputLabel>
+                    <Select
+                      fullWidth
+                      value={organization}
+                      id='select-organization'
+                      label='Select Organization'
+                      labelId='organization-select'
+                      onChange={handleOrganization}
+                      inputProps={{ placeholder: 'Select Organization' }}
+                    >
+                      {list &&
+                        list.map((item: any, index: number) => {
+                          return (
+                            <MenuItem key={index} value={item.id}>
+                              {item.name}
+                            </MenuItem>
+                          )
+                        })}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item sm={4} xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel id='status-select'>Select Status</InputLabel>
+                    <Select
+                      fullWidth
+                      value={status}
+                      id='select-status'
+                      label='Select Status'
+                      labelId='status-select'
+                      onChange={handleStatusChange}
+                      inputProps={{ placeholder: 'Select Status' }}
+                    >
+                      <MenuItem value=''>Select Status</MenuItem>
+                      <MenuItem value='2'>Pending</MenuItem>
+                      <MenuItem value='1'>Active</MenuItem>
+                      <MenuItem value='0'>Inactive</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
               </Grid>
-              <Grid item sm={4} xs={12}>
-                <FormControl fullWidth>
-                  <InputLabel id='plan-select'>Select Organization</InputLabel>
-                  <Select
-                    fullWidth
-                    value={organization}
-                    id='select-organization'
-                    label='Select Organization'
-                    labelId='organization-select'
-                    onChange={handleOrganization}
-                    inputProps={{ placeholder: 'Select Organization' }}
-                  >
-                  {
-                      list && list.map((item: any, index: number) => {
-                        return (
-                          <MenuItem key={index} value={item.id}>
-                            {item.name}
-                          </MenuItem>
-                        )
-                      })
-                    }
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item sm={4} xs={12}>
-                <FormControl fullWidth>
-                  <InputLabel id='status-select'>Select Status</InputLabel>
-                  <Select
-                    fullWidth
-                    value={status}
-                    id='select-status'
-                    label='Select Status'
-                    labelId='status-select'
-                    onChange={handleStatusChange}
-                    inputProps={{ placeholder: 'Select Status' }}
-                  >
-                    <MenuItem value=''>Select Status</MenuItem>
-                    <MenuItem value='2'>Pending</MenuItem>
-                    <MenuItem value='1'>Active</MenuItem>
-                    <MenuItem value='0'>Inactive</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-            </Grid>
 
-            <Grid container spacing={6} mt={2}>
-              <Grid item sm={4} xs={12}>
-                <FormControl fullWidth>
+              <Grid container spacing={6} mt={2}>
+                <Grid item sm={4} xs={12}>
+                  <FormControl fullWidth>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DatePicker
                         label='Start Date'
@@ -436,10 +416,10 @@ const UserList = () => {
                         renderInput={params => <TextField {...params} />}
                       />
                     </LocalizationProvider>
-                </FormControl>
-              </Grid>
-              <Grid item sm={4} xs={12}>
-                <FormControl fullWidth>
+                  </FormControl>
+                </Grid>
+                <Grid item sm={4} xs={12}>
+                  <FormControl fullWidth>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DatePicker
                         label='End Date'
@@ -448,42 +428,41 @@ const UserList = () => {
                         renderInput={params => <TextField {...params} />}
                       />
                     </LocalizationProvider>
-                </FormControl>
+                  </FormControl>
+                </Grid>
+                <Grid item sm={4} xs={12} mt={2}>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                    <Button
+                      sx={{ mb: 2 }}
+                      onClick={() => {
+                        console.log('search')
+                      }}
+                      variant='contained'
+                    >
+                      search
+                    </Button>
+                  </Box>
+                </Grid>
               </Grid>
-              <Grid item sm={4} xs={12} mt={2}>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-
-                  <Button sx={{ mb: 2 }} onClick={()=>{console.log("search")}} variant='contained'>
-                    search
-                  </Button>
-                </Box>
-              </Grid>
-            </Grid>
-
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12}>
+          <Card>
+            <TableHeader value={value} handleFilter={handleFilter} toggle={toggleAddUserDrawer} />
+            <DataGrid
+              autoHeight
+              rows={users}
+              columns={columns}
+              pageSize={pageSize}
+              rowsPerPageOptions={[10, 25, 50]}
+              sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
+              onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
+            />
+          </Card>
+        </Grid>
+        <DialogEditUserInfo show={addUserOpen} setShow={setAddUserOpen} action={'create'} current={current} />
       </Grid>
-      <Grid item xs={12}>
-        <Card>
-          <TableHeader value={value} handleFilter={handleFilter} toggle={toggleAddUserDrawer} />
-          <DataGrid
-            autoHeight
-            rows={users}
-            columns={columns}
-            pageSize={pageSize}
-            rowsPerPageOptions={[10, 25, 50]}
-            sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
-            onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
-          />
-        </Card>
-      </Grid>
-      <DialogEditUserInfo  
-               show={addUserOpen}
-               setShow ={setAddUserOpen}
-               action={'create'}
-               current={current} />
-
-    </Grid>
     </>
   )
 }

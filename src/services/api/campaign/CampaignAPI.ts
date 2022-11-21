@@ -1,4 +1,6 @@
+import { init } from 'i18next'
 import { CallAPI } from 'src/services/CallAPI'
+import { number } from 'yup'
 
 const CreateCampaign = () => {
   const [{ data, loading, error }, store] = CallAPI<{
@@ -38,9 +40,18 @@ const CreateCampaign = () => {
   }
 }
 
-export const CampaignList = (reload?: boolean) => {
+export const CampaignList = (reload?: boolean, is_fillter?: boolean, fillter?: any) => {
+  let query = ''
+  
+  if (is_fillter) {
+    query = `?${Object.keys(fillter)
+      .map(key => `${key}=${fillter[key]}`)
+      .join('&')}`
+  }
+
+  console.log(is_fillter, fillter, query)
   const [{ data: res, loading, error }, refetch] = CallAPI<{ data?: any }>({
-    url: `/campaign/list`,
+    url: `/campaign/list/${query}`,
     method: 'GET',
     data: {
       reload: reload
