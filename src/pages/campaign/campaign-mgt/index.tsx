@@ -24,6 +24,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DialogCampaign from './dialogCampaign'
 import { CampaignList } from 'src/services/api/campaign/CampaignAPI'
+import { Organization } from 'src/services/api/organization/organization'
 import DomainList from 'src/services/api/domains/DomainAPI'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
@@ -56,7 +57,10 @@ const CampaignManagement = () => {
 
   const { resultCampaiganList } = CampaignList(reload, is_fillter, fillter)
 
-  const { result_domain_list } = DomainList()
+  const { result_domain_list } = DomainList();
+
+  const { list } = Organization.getList(reload)
+
 
 
 
@@ -135,11 +139,15 @@ const CampaignManagement = () => {
                     onChange={handleOrganization}
                     inputProps={{ placeholder: 'Select Organization' }}
                   >
-                    <MenuItem value=''>Organization Name </MenuItem>
-                    <MenuItem value='1'>Oragnization 1</MenuItem>
-                    <MenuItem value='2'>Oragnization 2</MenuItem>
-                    <MenuItem value='3'>Oragnization 3</MenuItem>
-                    <MenuItem value='4'>Oragnization 4</MenuItem>
+                     {
+                      list && list.map((item: any, index: number) => {
+                        return (
+                          <MenuItem key={index} value={item.id}>
+                            {item.name}
+                          </MenuItem>
+                        )
+                      })
+                    }
                   </Select>
                 </FormControl>
               </Grid>
