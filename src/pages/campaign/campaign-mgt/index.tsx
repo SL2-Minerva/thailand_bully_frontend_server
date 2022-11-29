@@ -38,8 +38,8 @@ const CampaignManagement = () => {
 
   const [organization, setOrganization] = useState<string>('')
   const [status, setStatus] = useState<string>('')
-  const [date, setDate] = useState<Date | null>(new Date())
-  const [endDate, setEndDate] = useState<Date | null>(new Date())
+  const [date, setDate] = useState<Date | null>(null)
+  const [endDate, setEndDate] = useState<Date | null>(null)
   const [showEdit, setShowEdit] = useState<boolean>(false)
   const [showCreate, setShowCreate] = useState<boolean>(false)
   const [reload, setReload] = useState<boolean>(false)
@@ -56,6 +56,7 @@ const CampaignManagement = () => {
   
 
   const { resultCampaiganList } = CampaignList(reload, is_fillter, fillter)
+  console.log(resultCampaiganList)
 
   const { result_domain_list } = DomainList();
 
@@ -239,7 +240,7 @@ const CampaignManagement = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {(resultCampaiganList || []).map((campaignList: any, index: number) => (
+                  {resultCampaiganList && resultCampaiganList.map((campaignList: any, index: number) => (
                     <TableRow
                       key={index}
                       sx={{
