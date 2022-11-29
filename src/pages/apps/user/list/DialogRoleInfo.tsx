@@ -1,5 +1,5 @@
 // ** React Imports
-import { Ref, forwardRef, ReactElement, useState } from 'react'
+import { Ref, forwardRef, ReactElement, useState, useEffect } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -13,7 +13,6 @@ import Typography from '@mui/material/Typography'
 import Fade, { FadeProps } from '@mui/material/Fade'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
-import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
@@ -32,6 +31,9 @@ interface DialogRoleInfoProps {
   show: boolean
   setShow: any
   action: string
+  current?: any
+  tableData?: any
+  table?: any
 }
 
 const Transition = forwardRef(function Transition(
@@ -41,17 +43,17 @@ const Transition = forwardRef(function Transition(
   return <Fade ref={ref} {...props} />
 })
 
-const createData = (menu: string) => {
-  return { menu }
-}
-
-const rows = [createData('User'), createData('Campaign'), createData('Dashboard'), createData('Report')]
 
 const DialogRoleInfo = (props: DialogRoleInfoProps) => {
-  const { show, setShow, action } = props
+  const { show, setShow, action, current } = props
 
-  const [roleName, setRoleName] = useState('')
-  const [roleDescription, setDescription] = useState('')
+  const [roleName, setRoleName] = useState(current.user_role_name ?? '')
+  const [roleDescription, setDescription] = useState(current.user_role_description ?? '')
+
+  console.log(current)
+
+
+
   const [permission, setPermission] = useState<any>({
     user: {
       authorized_create: true,
@@ -81,13 +83,46 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
       authorized_view: true,
       authorized_export: true
     }
-  })
+  });
+
+
+  useEffect(() => {
+    setRoleName(current.user_role_name ?? '')
+    setDescription(current.user_role_description ?? '')
+
+
+    setPermission(current.permission )
+  }, [current]);
+
+  // const [permission, setPermission] = useState<any>(current.permission ?? [])
 
   const handleSubmit = () => {
-    axios
-      .post(
-        authConfig.createRole,
+    if (action === 'create') {
+      axios
+        .post(
+          authConfig.createRole,
+          {
+            
+            role_name: roleName,
+            role_description: roleDescription,
+            permission: permission
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+            }
+          }
+        )
+        .then(res => {
+          console.log('res', res)
+          setShow(false)
+        })
+    } else {
+      axios
+      .put(
+        authConfig.updateRole,
         {
+          id: current.id,
           role_name: roleName,
           role_description: roleDescription,
           permission: permission
@@ -102,10 +137,12 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
         console.log('res', res)
         setShow(false)
       })
+    }
   }
 
   const handleChecked = (e: any, row: any, key: any) => {
     let permissionNew = permission
+
     permissionNew = {
       ...permissionNew,
       [row.toLowerCase()]: { ...permissionNew[row.toLowerCase()], [`authorized_${key}`]: e.target.checked }
@@ -171,7 +208,48 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {rows.map(row => (
+                    {
+                      permission && Object.keys(permission).map((row, index) => ( 
+                        <TableRow
+                          key={index}
+                          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                          <TableCell component='th' scope='row'>
+                            {row}
+                          </TableCell>
+                          <TableCell align='left'>
+                            <Checkbox
+                              checked={permission[row].authorized_create}
+                              onChange={e => handleChecked(e, row, 'create')}
+                              inputProps={{ 'aria-label': 'controlled' }}
+                            />
+                          </TableCell>
+                          <TableCell align='left'>
+                            <Checkbox
+                              checked={permission[row].authorized_edit}
+                              onChange={e => handleChecked(e, row, 'edit')}
+                              inputProps={{ 'aria-label': 'controlled' }}
+                            />
+                          </TableCell>
+                          <TableCell align='left'>
+                            <Checkbox
+                              checked={permission[row].authorized_view}
+                              onChange={e => handleChecked(e, row, 'view')}
+                              inputProps={{ 'aria-label': 'controlled' }}
+                            />
+                          </TableCell>
+                          <TableCell align='left'>
+                            <Checkbox
+                              checked={permission[row].authorized_export}
+                              onChange={e => handleChecked(e, row, 'export')}
+                              inputProps={{ 'aria-label': 'controlled' }}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    }
+
+                    {/* {rows.map(row => (
                       <TableRow
                         key={row.menu}
                         sx={{
@@ -232,7 +310,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                           />
                         </TableCell>
                       </TableRow>
-                    ))}
+                    ))} */}
                   </TableBody>
                 </Table>
               </TableContainer>

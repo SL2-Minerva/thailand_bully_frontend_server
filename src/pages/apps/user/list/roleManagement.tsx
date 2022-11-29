@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // ** MUI Imports
 import { Grid, Card, CardHeader, CardContent } from '@mui/material'
@@ -16,13 +16,51 @@ import DialogRoleInfo from './DialogRoleInfo'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { role_list } from '../../../../services/api/users/role'
+import axios from 'axios'
+import authConfig from '../../../../configs/auth'
 
 const RoleManagement = () => {
   const [showDialog, setShowDialog] = useState<boolean>(false)
-  const [addRoleOpen, setAddRoleOpen] = useState<boolean>(false)
-  const toggleAddRole = () => setAddRoleOpen(!addRoleOpen)
+  const [current, setCurrent] = useState<any>({})
+  const [action, setAction] = useState<string>('create')
+  const [reload, setReload] = useState<boolean>(false)
+  
 
   const { resultRoleList } = role_list(showDialog)
+
+  useEffect(() => {
+    setReload(!reload)
+
+    setTableData(resultRoleList)
+  }, [showDialog])
+
+
+  function handleChange(index: number, i: number, event: any) {
+    axios.put(
+      authConfig.updateRole,
+      { id: i, status: event.target.checked },
+      {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+        }
+      }
+    )
+
+    const values = [...resultRoleList]
+    values[index].status = event.target.checked
+    setTableData(values)
+    setReload(!reload)
+  }
+  function handleEdit(i: number) {
+    setAction('edit')
+    setCurrent(resultRoleList[i])
+    setShowDialog(true);
+
+    // console.log(resultRoleList[i])
+
+  
+  }
+  const [tableData, setTableData] = useState(resultRoleList)
 
   return (
     <Grid container>
@@ -35,7 +73,7 @@ const RoleManagement = () => {
                 sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
               >
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-                  <Button sx={{ mb: 2 }} onClick={toggleAddRole} variant='contained'>
+                  <Button sx={{ mb: 2 }} onClick={() => { setAction('create'); setShowDialog(true)}} variant='contained'>
                     Add Role
                   </Button>
                 </Box>
@@ -65,12 +103,16 @@ const RoleManagement = () => {
                         </TableCell>
                         <TableCell align='center'>{row.user_role_description}</TableCell>
                         <TableCell align='center'>
-                          <Switch key={index} checked={row.status}  />
+                        <Switch
+                                  key={index}
+                                  checked={row.status}
+                                  onChange={e => handleChange(index, row.id, e)}
+                                />
                         </TableCell>
                         <TableCell align='center'>
-                          <PencilOutline
+                        <PencilOutline
                             onClick={() => {
-                              setShowDialog(true)
+                              handleEdit(index)
                             }}
                           />
                         </TableCell>
@@ -79,8 +121,19 @@ const RoleManagement = () => {
                 </TableBody>
               </Table>
             </TableContainer>
-            <DialogRoleInfo show={showDialog} setShow={setShowDialog} action='edit' />
-            <DialogRoleInfo show={addRoleOpen} setShow={setAddRoleOpen} action='create' />
+
+            {/* <DialogRoleInfo show={showDialog} setShow={setShowDialog} action='edit'  />
+            <DialogRoleInfo show={addRoleOpen} setShow={setAddRoleOpen} action='create' /> */}
+
+            <DialogRoleInfo 
+               show={showDialog}
+               action={action}
+               tableData={resultRoleList}
+               table={tableData}
+               current={current}
+               setShow={setShowDialog}
+            />
+        
           </CardContent>
         </Card>
       </Grid>

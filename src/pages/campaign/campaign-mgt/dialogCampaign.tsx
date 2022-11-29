@@ -61,10 +61,11 @@ const RepeaterWrapper = styled(CardContent)<CardContentProps>(({ theme }) => ({
 const DialogCampaign = (props: DialogInfoProps) => {
   const { show, setShow, action, current } = props
 
-  // console.log('current', current)
+   console.log('current', current)
   
 
   const [domain, setDomain] = useState<string>('')
+  const [frequency, setFrequency] = useState<string>('')
   const [date, setDate] = useState<Date | null>(new Date())
   const [endDate, setEndDate] = useState<Date | null>(new Date())
 
@@ -113,13 +114,16 @@ const DialogCampaign = (props: DialogInfoProps) => {
     setDescription(event.target.value)
   }
 
+  function handleFrequency(event: any) {
+    setFrequency(event.target.value)
+  }
+
   function closeDialogBox() {
     setShow(false)
-    setDomain('')
+
   }
 
   const createNewCampaign = async () => {
-    console.log(action);
 
     // const startdate = new Date(date);
 
@@ -135,7 +139,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
       start_at: format(date ? date : new Date(), 'yyyy-MM-dd'),
       end_at: format(endDate ? endDate : new Date(), 'yyyy-MM-dd'),
       keywords: keywords,
-      id: undefined
+      id: current.id ?? undefined
     }
 
     if (action === 'edit') {
@@ -149,7 +153,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
       })
       .then(async response => {
         const { data, status } = response.data
-        console.log(data, status)
+        console.log('response', status, data)
+
 
         closeDialogBox()
       })
@@ -179,16 +184,39 @@ const DialogCampaign = (props: DialogInfoProps) => {
   }
 
   useEffect(() => {
-       setCampaignName(current.name)
-      setDescription(current.description)
-      setDomain(current.domain_id)
-      setDate(new Date(current.start_at))
-      setEndDate(new Date(current.end_at))
-      if (current.keyword && current.keyword.length > 0) {
-        setKeywords(current.keyword)
-      }
-      
-  }, [current])
+    if (action === 'edit') {
+      if (current) {
+        
+        setCampaignName(current.name)
+        setDescription(current.description)
+        setDomain(current.domain_id)
+        setDate(new Date(current.start_at))
+        setEndDate(new Date(current.end_at))
+        setFrequency(current.frequency)
+        
+        if (current.keyword && current.keyword.length > 0) {
+          console.log('current.keyword', current.keyword)
+          setKeywords(current.keyword)
+        }
+      }  
+    } else { 
+      setCampaignName('');
+      setDescription('');
+      setDomain('');
+      setFrequency('');
+      setKeywords([
+        {
+          id: 1,
+          name: '',
+          keyword_or: [''],
+          keyword_and: [''],
+          keyword_exclude: ['']
+        }
+      ])
+      setDate(null);
+      setEndDate(null);
+    }
+  },[current, action])
 
   // useEffect(() => {
   //   if (current) {
@@ -198,10 +226,9 @@ const DialogCampaign = (props: DialogInfoProps) => {
   //     setDomain(current.domain_id)
   //     setDate(new Date(current.start_at))
   //     setEndDate(new Date(current.end_at))
-  //     // setKeywords(current.keywords)
+  //     setKeywords(current.keywords)
   //   }
   // }, [current])
-
 
 
   return (
@@ -266,6 +293,19 @@ const DialogCampaign = (props: DialogInfoProps) => {
                   </Select>
                 </FormControl>
               </Grid>
+
+              <Grid item sm={12} xs={12}>
+                <FormControl fullWidth>
+                
+                  <TextField
+                  fullWidth
+                  label='frequency'
+                  value={frequency}
+                  onChange={handleFrequency}
+                  placeholder=''
+                />
+                </FormControl>
+              </Grid>
             </Grid>
           </div>
 
@@ -274,8 +314,6 @@ const DialogCampaign = (props: DialogInfoProps) => {
               <RepeaterWrapper>
                 <Repeater count={keywords.length}>
                   {(i: number) => {
-                    // const Tag = i === 0 ? Box : Collapse
-
                     return (
                       <KeywordForm
                         key={i}
@@ -345,9 +383,12 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
               
               </Grid>
-              <Grid item sm={6} xs={12}>
+              {
+                action === 'edit' && (<Grid item sm={6} xs={12}>
                   <div> {` Last update: ${  new Date(current.updated_at).toLocaleString('th') }`} </div>
-                </Grid>
+                </Grid>)
+              }
+              
 
               <Grid item sm={6} xs={12} mt={4}>
                 {/*<b>Update Date:</b> {updateDate?.toDateString() + ' ' + updateDate?.toLocaleTimeString()}*/}

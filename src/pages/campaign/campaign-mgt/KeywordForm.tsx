@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -18,6 +18,7 @@ import Close from 'mdi-material-ui/Close'
 
 const KeywordForm = (props: any) => {
   const { indexNumber, keywords, setKeywords, removeKeyword, value } = props
+
   const { keyword_and, keyword_or, keyword_exclude } = value
 
 
@@ -36,7 +37,7 @@ const KeywordForm = (props: any) => {
     const values = [...keywords]
 
     if (type === 'keyword_or') {
-      console.log(values, i, values[i])
+      // console.log(values, i, values[i])
       values[i].keyword_or = newTextKeyword
     }
 
@@ -97,6 +98,7 @@ const KeywordForm = (props: any) => {
     setKeywords(values)
   }
 
+
   return (
     <>
       <Grid container sx={{ py: 4, width: '100%' }}>
@@ -128,6 +130,7 @@ const KeywordForm = (props: any) => {
           {keyword_and && keyword_and.length > 0 &&
           keyword_and.map((text:any, index:number) => {
             return (
+            
               <InputKeyword
                 value={value}
                 key={index}
@@ -164,6 +167,8 @@ const KeywordForm = (props: any) => {
         <Grid item sm={4} xs={12} sx={{ px: 4 }} style={{borderLeft: '1px solid #000', borderRight: '1px solid #000'}}>
           {keyword_or && keyword_or.length > 0 &&
             keyword_or.map((text:any, index:number) => {
+
+          
               return (
                 <InputKeyword
                   key={index}
@@ -201,6 +206,7 @@ const KeywordForm = (props: any) => {
           {keyword_exclude && keyword_exclude.length > 0 &&
           keyword_exclude.map((text:any, index:number) => {
             return (
+              
               <InputKeyword
                 value={value}
                 key={index}
@@ -252,6 +258,10 @@ const InputKeyword = (props: any) => {
     index
   } = props
   const [text, setText] = useState(textValue)
+
+  useEffect(() => {
+    setText(textValue)
+   }, [textValue])
 
   function handleChangeText(e:any, index:any, indexValue:any) {
     setText(e.target.value)

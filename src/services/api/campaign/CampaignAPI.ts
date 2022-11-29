@@ -49,7 +49,6 @@ export const CampaignList = (reload?: boolean, is_fillter?: boolean, fillter?: a
       .join('&')}`
   }
 
-  console.log(is_fillter, fillter, query)
   const [{ data: res, loading, error }, refetch] = CallAPI<{ data?: any }>({
     url: `/campaign/list/${query}`,
     method: 'GET',

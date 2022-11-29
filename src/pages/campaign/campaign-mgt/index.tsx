@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 
 // ** MUI Imports
 import { Grid, Card, CardHeader, CardContent } from '@mui/material'
@@ -72,9 +72,9 @@ const CampaignManagement = () => {
     setStatus(e.target.value)
   }, [])
 
-  useEffect(() => {
-    setReload(!reload)
-  }, [showCreate, showEdit])
+  // useEffect(() => {
+  //   setReload(!reload)
+  // }, [showCreate, showEdit])
 
   function handleChange(index: number, i: number, event: any) {
     axios.put(

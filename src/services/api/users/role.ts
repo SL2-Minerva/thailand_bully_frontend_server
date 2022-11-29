@@ -1,6 +1,6 @@
 import { CallAPI } from '../../CallAPI'
 
-export const role_list = (paged?: boolean, filter?: string, org_id?: number, reload?: boolean) => {
+export const role_list = (reload?: boolean, paged?: boolean, filter?: string, org_id?: number) => {
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/role/list`,
     method: 'GET',

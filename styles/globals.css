@@ -27,3 +27,8 @@ code[class*='language-'] {
 .logo-sidebar {
   margin: auto;
 }
+
+.logo-sidebar img{
+  width: 100%;
+  height: auto;
+}

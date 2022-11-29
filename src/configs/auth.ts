@@ -18,4 +18,5 @@ export default {
     createOrganization: `${BASE_URL}/organization/create`,
     updateOrganization: `${BASE_URL}/organization/update`,
     updateCampaign: `${BASE_URL}/campaign/update`,
+    updateRole: `${BASE_URL}/role/update`,
 }

@@ -139,7 +139,7 @@ const VerticalNavHeader = (props: Props) => {
           
             <HeaderTitle variant='h6' sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 2 }) }}>
             <div className={'logo-sidebar'}>
-            <img src='/images/Logo_Horizontal2.png' alt='logo' height='100' />
+            <img src='/images/Logo_Horizontal2.png' alt='logo'  />
             </div>
               {/*{themeConfig.templateName}*/}
             </HeaderTitle>
