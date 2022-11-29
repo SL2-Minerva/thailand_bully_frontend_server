@@ -56,7 +56,6 @@ const RoleManagement = () => {
     setCurrent(resultRoleList[i])
     setShowDialog(true);
 
-    // console.log(resultRoleList[i])
 
   
   }
@@ -73,7 +72,11 @@ const RoleManagement = () => {
                 sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
               >
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-                  <Button sx={{ mb: 2 }} onClick={() => { setAction('create'); setShowDialog(true)}} variant='contained'>
+                  <Button sx={{ mb: 2 }} onClick={() => {
+                    setCurrent({}); 
+                    setAction('create'); 
+                    setShowDialog(true)}
+                    } variant='contained'>
                     Add Role
                   </Button>
                 </Box>

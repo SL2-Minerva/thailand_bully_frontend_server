@@ -90,8 +90,77 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
     setRoleName(current.user_role_name ?? '')
     setDescription(current.user_role_description ?? '')
 
+    if (action === 'edit') {
+      if ( current.permission ) {
+        setPermission(current.permission ) 
+      } else {
 
-    setPermission(current.permission )
+        setPermission({
+          user: {
+            authorized_create: true,
+            authorized_edit: true,
+            authorized_delete: true,
+            authorized_view: true,
+            authorized_export: true
+          },
+          campaign: {
+            authorized_create: true,
+            authorized_edit: true,
+            authorized_delete: true,
+            authorized_view: true,
+            authorized_export: true
+          },
+          dashboard: {
+            authorized_create: true,
+            authorized_edit: true,
+            authorized_delete: true,
+            authorized_view: true,
+            authorized_export: true
+          },
+          report: {
+            authorized_create: true,
+            authorized_edit: true,
+            authorized_delete: true,
+            authorized_view: true,
+            authorized_export: true
+          }
+        }) 
+      }
+      
+    }
+
+    else {
+      setPermission({
+        user: {
+          authorized_create: true,
+          authorized_edit: true,
+          authorized_delete: true,
+          authorized_view: true,
+          authorized_export: true
+        },
+        campaign: {
+          authorized_create: true,
+          authorized_edit: true,
+          authorized_delete: true,
+          authorized_view: true,
+          authorized_export: true
+        },
+        dashboard: {
+          authorized_create: true,
+          authorized_edit: true,
+          authorized_delete: true,
+          authorized_view: true,
+          authorized_export: true
+        },
+        report: {
+          authorized_create: true,
+          authorized_edit: true,
+          authorized_delete: true,
+          authorized_view: true,
+          authorized_export: true
+        }
+      })
+    }
   }, [current]);
 
   // const [permission, setPermission] = useState<any>(current.permission ?? [])
