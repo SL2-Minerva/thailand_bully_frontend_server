@@ -84,7 +84,7 @@ const DonutChart = (props : MessageData) => {
 
       return chartData;
     }
-    let labels : string[] =[];
+    const labels : string[] =[];
     const percentage: number[] = [];
     for(let i =0; i<data?.length; i++ ) {
       labels.push(data[i].keyword_name);
