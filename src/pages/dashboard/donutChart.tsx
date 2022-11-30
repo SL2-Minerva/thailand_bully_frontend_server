@@ -8,8 +8,15 @@ import { Grid } from "@mui/material"
 // ** Third Party Imports
 
 import { Doughnut } from 'react-chartjs-2'
+import { useEffect } from 'react'
 
-const DonutChart = () => {
+interface MessageData {
+  filterData : any
+}
+
+const DonutChart = (props : MessageData) => {
+
+  const { filterData } = props;
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -48,6 +55,10 @@ const DonutChart = () => {
       hoverOffset: 4
     }]
   };
+
+  useEffect(() =>{
+    console.log("data");
+  }, [filterData]);
 
   return (
     <Card>
