@@ -8,7 +8,7 @@ import { Grid } from "@mui/material"
 // ** Third Party Imports
 
 import { Doughnut } from 'react-chartjs-2'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 interface MessageData {
   filterData : any
@@ -17,6 +17,33 @@ interface MessageData {
 const DonutChart = (props : MessageData) => {
 
   const { filterData } = props;
+
+  const [ previousData, setPreviousData ] = useState<any>({
+    labels: [],
+    datasets: [{
+      data: [],
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)'
+      ],
+      hoverOffset: 4
+    }]
+  });
+  const [ currentData, setCurrentData ] = useState<any>({
+    labels: [],
+    datasets: [{
+      data: [],
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)'
+      ],
+      hoverOffset: 4
+    }]
+  });
+  const [ currentPeriod, setCurrentPeriod ] = useState<string>('');
+  const [ previousPeriod, setPreviousPeriod ] = useState<string>('');
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -39,25 +66,66 @@ const DonutChart = (props : MessageData) => {
     }
   }
 
-  const data = {
-    labels: [
-      'Keyword1',
-      'Keyword2',
-      'Keyword3'
-    ],
-    datasets: [{
-      data: [300, 50, 100],
-      backgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)'
-      ],
-      hoverOffset: 4
-    }]
-  };
+  const chartDataset = (data:any, type: string) => {
+    if (!data) 
+    {
+      const chartData = {
+        labels: [],
+        datasets: [{
+          data: [],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+          ],
+          hoverOffset: 4
+        }]
+      };
+
+      return chartData;
+    }
+    let labels : string[] =[];
+    const percentage: number[] = [];
+    for(let i =0; i<data?.length; i++ ) {
+      labels.push(data[i].keyword_name);
+      percentage.push(data[i].data?.percentage);
+
+      if (type === 'current') {
+        setCurrentPeriod(data[i].date)
+      } else {
+        setPreviousPeriod(data[i].date);
+      }
+    }
+    const returnData = {
+      labels: labels,
+      datasets: [{
+        data: percentage,
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)'
+        ],
+        hoverOffset: 4
+      }]
+    };
+    
+    return returnData;
+  }
 
   useEffect(() =>{
-    console.log("data");
+    if (filterData) {
+      const currentMessageData = filterData?.prcentage_of_messages_current;
+      const previousMessageData = filterData?.prcentage_of_messages_previous;
+      
+      if(currentMessageData) {
+        const currentDataset = chartDataset(currentMessageData, 'current');
+        setCurrentData(currentDataset);
+
+        const previousDataset = chartDataset(previousMessageData, 'previous');
+        setPreviousData(previousDataset);
+
+      }
+    }
   }, [filterData]);
 
   return (
@@ -71,18 +139,18 @@ const DonutChart = (props : MessageData) => {
       <CardContent>
         <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-                <Doughnut data={data} options={options as any} height={320} />
+                <Doughnut data={currentData} options={options as any} height={320} />
             </Grid>
             <Grid item xs={12} md={6}>
-                <Doughnut data={data} options={options as any} height={320} />
+                <Doughnut data={previousData} options={options as any} height={320} />
             </Grid>  
             <Grid item xs={12} md={6}>  
                 <p style={{ fontSize:'10px' }}> Current Period :</p>  
-                <p style={{ fontSize:'10px' }}> 01/10/2022 - 10/10/2022 </p>                  
+                <p style={{ fontSize:'10px' }}> {currentPeriod} </p>                  
             </Grid>
             <Grid item xs={12} md={6}>
                  <p style={{ fontSize:'10px' }}> Previous Period : </p>  
-                 <p style={{ fontSize:'10px' }}>  01/09/2022 - 10/09/2022 </p>  
+                 <p style={{ fontSize:'10px' }}>  {previousPeriod} </p>  
 
             </Grid>  
         </Grid>
