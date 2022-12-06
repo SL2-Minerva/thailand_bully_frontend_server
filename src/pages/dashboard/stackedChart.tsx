@@ -4,10 +4,13 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
 // ** Third Party Imports
-import { Bar } from 'react-chartjs-2'
-import { useEffect, useState } from 'react'
+import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
+import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment';
+import DailyMessageDetail from './DailyMessageDetail'
+import { Button } from '@mui/material'
+import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
 
 interface LineProps {
   white: string
@@ -37,8 +40,24 @@ const StackedChart = (props: LineProps) => {
 
   // const [ chartData, setChartData ] = useState();
 
+
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
+  const [ showDetail , setShowDetail ] = useState<boolean>(false);
+
+  const chartRef = useRef();
+  const onClick = (event : any) => {
+    if(chartRef.current) {
+      console.log(getDatasetAtEvent(chartRef.current, event));
+      console.log(getElementAtEvent(chartRef.current, event));
+      console.log(getElementsAtEvent(chartRef.current, event));
+      setShowDetail(true);
+    }
+  }
+
+  const showMessageDetail = () => {
+    setShowDetail(false);
+  }
 
   const options = {
     responsive: true,
@@ -135,66 +154,36 @@ const StackedChart = (props: LineProps) => {
   const data = {
     labels: label || [],
     datasets: dataset
-
-    // datasets: [
-    //   {
-    //     fill: false,
-    //     tension: 0.5,
-    //     pointRadius: 1,
-    //     label: 'Keyword 1',
-    //     pointHoverRadius: 5,
-    //     pointStyle: 'circle',
-    //     borderColor: primary,
-    //     backgroundColor: primary,
-    //     pointHoverBorderWidth: 5,
-    //     pointHoverBorderColor: white,
-    //     pointBorderColor: 'transparent',
-    //     pointHoverBackgroundColor: primary,
-    //     data: [30, 50, 30, 150, 80, 100, 160, 202, 265, 210, 170, 150, 190, 260, 275]
-    //   },
-    //   {
-    //     fill: false,
-    //     tension: 0.5,
-    //     label: 'Keyword 2',
-    //     pointRadius: 1,
-    //     pointHoverRadius: 5,
-    //     pointStyle: 'circle',
-    //     borderColor: warning,
-    //     backgroundColor: warning,
-    //     pointHoverBorderWidth: 5,
-    //     pointHoverBorderColor: white,
-    //     pointBorderColor: 'transparent',
-    //     pointHoverBackgroundColor: warning,
-    //     data: [45, 60, 50, 200, 120, 195, 190, 230, 290, 300, 220, 170, 210, 280, 280]
-    //   },
-    //   {
-    //     fill: false,
-    //     tension: 0.5,
-    //     pointRadius: 1,
-    //     label: 'Keyword 3',
-    //     pointHoverRadius: 5,
-    //     pointStyle: 'circle',
-    //     borderColor: success,
-    //     backgroundColor: success,
-    //     pointHoverBorderWidth: 5,
-    //     pointHoverBorderColor: white,
-    //     pointBorderColor: 'transparent',
-    //     pointHoverBackgroundColor: success,
-    //     data: [80, 99, 82, 90, 230, 200, 250, 205, 240, 300, 350, 280, 190, 290, 300]
-    //   }
-    // ]
   }
 
   return (
     <Card>
-      <CardHeader
-        title='Daily Message'
-        titleTypographyProps={{ variant: 'h6' }}
-        subheader='KeyWords'
-        subheaderTypographyProps={{ variant: 'caption' }}
-      />
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+        <CardHeader
+          title='Daily Message'
+          titleTypographyProps={{ variant: 'h6' }}
+          subheader='KeyWords'
+          subheaderTypographyProps={{ variant: 'caption' }}
+        />
+        {
+          showDetail ? 
+          <Button style={{ marginTop: '20px', marginRight: '10px' }} 
+             color="primary" onClick={showMessageDetail} size="small">
+            <CloseCircleOutline fontSize='large'/>
+          </Button>
+          :
+          ""
+        }
+      </div>
+      
       <CardContent>
-        <Bar data={data} options={options as any} height={400} />
+        {
+          showDetail ? 
+          <DailyMessageDetail/>
+          :
+          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        }
+        
       </CardContent>
     </Card>
   )
