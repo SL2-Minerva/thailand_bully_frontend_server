@@ -1,44 +1,64 @@
-import { Table, TableRow, TableHead, TableCell } from "@mui/material"; 
+import { Table, TableRow, TableHead, TableCell, TableContainer, Button } from "@mui/material"; 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
+import { useState } from "react";
+import TopKeywordDetail from "./TopKeywordDetail";
+import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
 
-const MainKeyWordTable = () => {
+interface Props {
+    mainKeyword: any
+}
+
+const MainKeyWordTable = ({mainKeyword} : Props) => {
     
+    const [showDetail, setShowDetail] = useState<boolean>(false);
+
     return (
         <Card>
-            <CardHeader
-                title='Main Keyword'
-                titleTypographyProps={{ variant: 'h6' }}
-            />
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                <CardHeader
+                    title='Main Keyword'
+                    titleTypographyProps={{ variant: 'h6' }}
+                />
+                {
+                    showDetail ? 
+                    <Button style={{ marginTop: '20px', marginRight: '10px' }} 
+                        color="primary" onClick={()=>{setShowDetail(false)}} size="small">
+                        <CloseCircleOutline fontSize='large'/>
+                    </Button>
+                    :
+                    ""
+                }
+            </div>
+            
             <CardContent>
-            <Table>
-                    <TableHead sx={{ backgroundColor: "lightgrey !important" }}>
-                        <TableCell variant="head" sx={{ backgroundColor: "white !important" }}>  </TableCell>
-                        <TableCell variant="head"> No. of Messages </TableCell>
-                        <TableCell variant="head"> % </TableCell>
-                    </TableHead>
-                    <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: "lightslategrey !important", color:'white' }}>KeyWord 1</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>18%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: "lightslategrey !important", color:'white'  }}>KeyWord 2</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>18%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: "lightslategrey !important", color:'white'  }}>KeyWord 3</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>18%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: "lightslategrey !important", color:'white'  }}>KeyWord 4</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>18%</TableCell>
-                    </TableRow>
-                </Table>
+            {
+                showDetail ? 
+                <TopKeywordDetail/>
+                :
+                <TableContainer sx={{ maxHeight: 250 }}>
+                    <Table stickyHeader={true} size="small">
+                        <TableHead sx={{ backgroundColor: "lightgrey !important" }}>
+                            <TableCell variant="head" sx={{ backgroundColor: "white !important" }}>  </TableCell>
+                            <TableCell variant="head"> No. of Messages </TableCell>
+                            <TableCell variant="head"> % </TableCell>
+                        </TableHead>
+                        {
+                            (mainKeyword || [])?.map((keyword : any, index: any) => {
+                                return(
+                                    <TableRow key={index} onClick={()=>{setShowDetail(true)}}>
+                                        <TableCell sx={{ backgroundColor: "lightslategrey !important", color:'white' }}>{keyword?.keyword}</TableCell>
+                                        <TableCell>{keyword?.no_of_message}</TableCell>
+                                        <TableCell>{keyword?.percentage}</TableCell>
+                                    </TableRow>
+                                )
+                            })
+                        }
+                    </Table>
+                </TableContainer>
+            }
+           
             </CardContent>
         </Card>
         

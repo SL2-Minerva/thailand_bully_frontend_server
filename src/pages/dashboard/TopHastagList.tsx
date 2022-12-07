@@ -1,9 +1,13 @@
-import { Table, TableRow, TableHead, TableCell } from "@mui/material"; 
+import { Table, TableRow, TableHead, TableCell, TableContainer } from "@mui/material"; 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
-const TopHashtagList = () => {
+interface Props {
+    topHashtags : any
+}
+
+const TopHashtagList = ({topHashtags} : Props) => {
     
     return (
         <Card>
@@ -12,33 +16,27 @@ const TopHashtagList = () => {
                 titleTypographyProps={{ variant: 'h6' }}
             />
             <CardContent>
-            <Table>
+            <TableContainer sx={{ maxHeight: 250 }}>
+                <Table stickyHeader={true} size="small">
                     <TableHead sx={{ backgroundColor: "lightgrey !important" }}>
                         <TableCell variant="head" sx={{ backgroundColor: "white !important" }}>  </TableCell>
                         <TableCell variant="head"> No. of Messages </TableCell>
                         <TableCell variant="head"> % </TableCell>
                     </TableHead>
-                    <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: "lightslategrey !important", color:'white'  }}>#1</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>18%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: "lightslategrey !important", color:'white'  }}>#2</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>18%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: "lightslategrey !important", color:'white'  }}>#3</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>18%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: "lightslategrey !important", color:'white'  }}>#4</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>18%</TableCell>
-                    </TableRow>
+                    {
+                        (topHashtags || [])?.map((hashtag:any, index:any) => {
+                            return(
+                                <TableRow key={index}>
+                                    <TableCell sx={{ backgroundColor: "lightslategrey !important", color:'white'}}>{hashtag?.hashtag}</TableCell>
+                                    <TableCell>{hashtag?.no_of_message}</TableCell>
+                                    <TableCell>{hashtag?.percentage}</TableCell>
+                                </TableRow>
+                            )
+                        })
+                    }
                 </Table>
+            </TableContainer>
+            
             </CardContent>
         </Card>
         

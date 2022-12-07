@@ -2,24 +2,19 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { Grid } from "@mui/material";
+import dynamic from 'next/dynamic'
+import { GetSentimentScore } from 'src/services/api/dashboards/overall/overallDashboardApi';
 
-// import Speedometer, {
-//     Arc,
-//     Needle,
-//     Progress,
-//     Indicator,
-//   } from 'react-speedometer';
-// import { Text } from 'mdi-material-ui';
+// import GaugeChart from 'react-gauge-chart'
 
-import GaugeChart from 'react-gauge-chart'
+const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
 
 const SentimentGaugeChart = ({value} : {value:any}) => {
-
-    // const value = 30;
-    // const accentColor = value < 30 ? 'green' : value < 65 ? 'orange' : 'red' ;
+    
+    const {resultSentimentScore} = GetSentimentScore();
 
     return(
-        <Card>
+        <Card style={{ maxHeight: '330px' }}>
             <CardHeader
                 title='Sentiment Score'
                 titleTypographyProps={{ variant: 'h6' }}
@@ -31,48 +26,25 @@ const SentimentGaugeChart = ({value} : {value:any}) => {
                         <GaugeChart 
                             id="gauge-chart"
                              nrOfLevels={value}
-                             arcsLength={[0.3, 0.5, 0.2]}
+                             arcsLength={[0.5, 0.3, 0.2]}
                              colors={['#5BE12C', '#F5CD19', '#EA4228']}
-                             percent={value/10000}
-                             arcPadding={0.02}
-                             needleColor="#F35725"
+                             percent={resultSentimentScore?.sentiment_percentage/100 || 0}
+                             arcPadding={0.01}
+                             needleColor="#4c4e64de"
                              textColor={"grey"}
                             />
 
-                        {/* <Speedometer
-                            value={54}
-                            max={100}
-                            angle={160}
-                            fontFamily='squada-one'
-                            lineCap="round"
-                            accentColor={accentColor}
-                            >
-                            <Background angle={180} />
-                            <Arc arcWidth={40} />
-                            <Progress arcWidth={40} />
-                            <Needle color='orange'/>
-                            <Progress/>
-                            <Marks/> 
-                            <Indicator>
-                                {(value, textProps) => (
-                                <Text
-                                    {...textProps}
-                                    fontSize='large'
-                                    fill="#555"
-                                    x={250 / 2}
-                                    y={210}
-                                    textAnchor="middle"
-                                    fontFamily='squada-one'
-                                >
-                                    {value}k/m
-                                </Text>
-                                )}
-                            </Indicator>
-                        </Speedometer> */}
                     </Grid>
                     <Grid item xs={4}>
-                        <h1>3.20</h1>
+                        <h1>{resultSentimentScore.neutral_value}</h1>
                         <p>Neutral</p>
+                    </Grid>
+                </Grid>
+
+                <Grid container spacing={1}>
+                    <Grid item xs={12} sx={{ display:'flex', justifyContent: 'center' }}>
+                        <h2 style={{ marginTop: '1.8rem', marginRight: '1rem' }}>Previous Period Score</h2>
+                        <h1>{resultSentimentScore?.pervious_sentiment}</h1>
                     </Grid>
                 </Grid>
                 
