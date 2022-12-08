@@ -81,6 +81,19 @@ const navigation = (): VerticalNavItemsType => {
           ]
         },
         {
+          title: 'Content',
+          children: [
+            {
+              title: 'Contents',
+              path: '/content/homepage'
+            },
+            {
+              title: 'Content MGT',
+              path: '/content/content-mgt'
+            }
+          ]
+        },
+        {
           title: 'Report',
           path: '/report/report'
         },

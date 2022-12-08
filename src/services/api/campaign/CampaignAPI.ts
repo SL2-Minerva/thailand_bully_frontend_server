@@ -14,6 +14,7 @@ const CreateCampaign = () => {
     },
     { manual: true }
   )
+
   return {
     result_campaign_create: data?.data,
     loading_campaign_create: loading,
@@ -56,6 +57,7 @@ export const CampaignList = (reload?: boolean, is_fillter?: boolean, fillter?: a
       reload: reload
     }
   })
+  
   return {
     resultCampaiganList: res?.data || null,
     loadingCampaiganList: loading,
