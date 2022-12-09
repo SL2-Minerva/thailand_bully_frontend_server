@@ -9,8 +9,11 @@ import { Grid } from "@mui/material"
 
 import { Doughnut } from 'react-chartjs-2'
 import { ThumbUp, ThumbDown, ThumbsUpDown } from 'mdi-material-ui'
+import { GetSentimentType } from 'src/services/api/dashboards/overall/overallDashboardApi'
 
 const CommentSentiment  = () => {
+
+  const {resultSentimentType} = GetSentimentType();
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -35,12 +38,12 @@ const CommentSentiment  = () => {
 
   const data = {
     labels: [
-      'Neutral',
       'Negative',
+      'Neutral',
       'Positive'
     ],
     datasets: [{
-      data: [300, 50, 100],
+      data: [resultSentimentType?.negative_percentage || 0 , resultSentimentType?.neutral_percentage || 0, resultSentimentType?.positive_percentage||0],
       backgroundColor: [
         'rgb(255, 99, 132)',
         'rgb(54, 162, 235)',
@@ -51,7 +54,7 @@ const CommentSentiment  = () => {
   };
 
   return (
-    <Card>
+    <Card style={{ minHeight: '330px' }}>
       <CardHeader
         title='Comment Sentiment'
         titleTypographyProps={{ variant: 'h6' }}
@@ -62,11 +65,11 @@ const CommentSentiment  = () => {
                 <Doughnut data={data} options={options as any} height={194} />
             </Grid>
             <Grid item xs={4} mt={14}>
-                <span><ThumbUp/> Positive 10%</span>
+                <span><ThumbUp/> { "Positive " + resultSentimentType?.positive_percentage + "%"}</span>
                 <br/>
-                <span><ThumbsUpDown /> Neutral 70%</span>
+                <span><ThumbsUpDown />  {"Neutral " + resultSentimentType?.neutral_percentage + "%"}%</span>
                 <br/>
-                <span><ThumbDown /> Negative 20%</span>
+                <span><ThumbDown />  {"Negative " + resultSentimentType?.negative_percentage + "%"}%</span>
                 
             </Grid>  
         </Grid>

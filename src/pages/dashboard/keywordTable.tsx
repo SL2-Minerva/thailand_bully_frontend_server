@@ -1,9 +1,12 @@
-import { Table, TableRow, TableHead, TableCell } from "@mui/material"; 
+import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer } from "@mui/material"; 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
+import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
 
 const KeywordTable = () => {
+
+    const { resultKeywords } = GetKeyWords();
     
     return (
         <Card>
@@ -12,48 +15,35 @@ const KeywordTable = () => {
                 titleTypographyProps={{ variant: 'h6' }}
             />
             <CardContent>
-            <Table>
-                    <TableHead sx={{ backgroundColor: "lightgrey !important" }}>
-                        <TableCell variant="head" sx={{ backgroundColor: "white !important" }}>  </TableCell>
+            <TableContainer sx={{ maxHeight: 250 }}>
+            <Table size="small" stickyHeader={true}>
+                    <TableHead sx={{ backgroundColor: "lightgrey !important"}}>
+                        <TableCell variant="head" style={{ backgroundColor: 'white' }}> </TableCell>
                         <TableCell variant="head"> Message </TableCell>
                         <TableCell variant="head"> Engagement </TableCell>
                         <TableCell variant="head"> Accounts </TableCell>
                         <TableCell variant="head"> Average message per day </TableCell>
                         <TableCell variant="head"> Average Engagement per day </TableCell>
                     </TableHead>
-                    <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: "lightgrey !important" }}>KeyWord 1</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>20,000</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>9.5</TableCell>
-                        <TableCell>954.89</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: "lightgrey !important" }}>KeyWord 2</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>20,000</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>9.5</TableCell>
-                        <TableCell>954.89</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: "lightgrey !important" }}>KeyWord 3</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>20,000</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>9.5</TableCell>
-                        <TableCell>954.89</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell variant="head" sx={{ backgroundColor: "lightgrey !important" }}>KeyWord 4</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>20,000</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell>9.5</TableCell>
-                        <TableCell>954.89</TableCell>
-                    </TableRow>
-                </Table>
+                    <TableBody>
+                        {
+                            (resultKeywords||[])?.map((keyword, index) => {
+                                return(
+                                    <TableRow key={index}>
+                                        <TableCell sx={{ backgroundColor: "lightgrey !important" }}><b>Keyword {keyword.id}</b></TableCell>
+                                        <TableCell>{keyword.message}</TableCell>
+                                        <TableCell>{keyword.engagement}</TableCell>
+                                        <TableCell>{keyword.accounts}</TableCell>
+                                        <TableCell>{keyword.average_message}</TableCell>
+                                        <TableCell>{keyword.average_engagement}</TableCell>
+                                    </TableRow>
+                                )
+                            })
+                        }
+                    </TableBody>
+                    
+            </Table>
+            </TableContainer>
             </CardContent>
         </Card>
         
