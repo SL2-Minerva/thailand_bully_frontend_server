@@ -2,7 +2,7 @@ import { Grid, Card, CardHeader, CardContent, FormControl,
      TextField, InputLabel, Select, MenuItem, SelectChangeEvent, Box, 
      Button, TableContainer, Paper, Table, TableHead, TableRow,
      TableCell, TableBody } from '@mui/material'
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
@@ -10,6 +10,9 @@ import Switch from '@mui/material/Switch'
 import { ContentLists } from 'src/services/api/content/ContentAPI';
 import DialogContents from './DialogContents';
 import { PencilOutline } from 'mdi-material-ui';
+import { ContentList } from 'src/types/content/ContentType';
+import axios from 'axios';
+import authConfig from '../../../configs/auth'
 
 const ContentManagement = () => {
 
@@ -22,8 +25,10 @@ const ContentManagement = () => {
     const [showCreate, setShowCreate] = useState<boolean>(false)
     const [showEdit, setShowEdit] = useState<boolean>(false)
     const [current, setCurrent] = useState<any>({})
+    const [reload, setReload] = useState<boolean>(false);
+    const [ updateStatus, setUpdateStatus ] =  useState<boolean>(false);
 
-    const {resultContents} = ContentLists();
+    const {resultContents} = ContentLists(reload);
 
     const handleStatusChange = useCallback((e: SelectChangeEvent) => {
         setStatus(e.target.value)
@@ -37,9 +42,16 @@ const ContentManagement = () => {
         const values = [...resultContents]
         values[index].status = event.target.checked
 
-        //     setTableData(values)
-        //     setReload(!reload)
-
+        axios.post(
+            authConfig.updateContent,
+            { id: i, status: event.target.checked, title: values[index].title, content_text: values[index].content_text },
+            {
+                headers: {
+                Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+                }
+            }
+        )
+        setUpdateStatus(!updateStatus)
     };
 
     function handleEdit(i: number) {
@@ -52,6 +64,10 @@ const ContentManagement = () => {
         setAction('create')
         setShowCreate(!showCreate)
     }
+
+    useEffect(() => {
+        setReload(!reload);
+    },[showEdit, showCreate, updateStatus]);
 
     return(
         <Grid container spacing={6}>
@@ -103,7 +119,6 @@ const ContentManagement = () => {
                                 inputProps={{ placeholder: 'Select Status' }}
                                 >
                                 <MenuItem value=''>Select Status</MenuItem>
-                                <MenuItem value='2'>Pending</MenuItem>
                                 <MenuItem value='1'>Active</MenuItem>
                                 <MenuItem value='0'>Inactive</MenuItem>
                                 </Select>
@@ -172,7 +187,7 @@ const ContentManagement = () => {
                             <TableRow>
                                 <TableCell>ID</TableCell>
                                 <TableCell>Topic</TableCell>
-                                <TableCell>Content Name</TableCell>
+                                <TableCell>Content</TableCell>
                                 <TableCell>Picture</TableCell>
                                 <TableCell align='center'>Status</TableCell>
                                 <TableCell>Date</TableCell>
@@ -180,7 +195,7 @@ const ContentManagement = () => {
                             </TableRow>
                             </TableHead>
                             <TableBody>
-                            {resultContents && resultContents.map((contentList: any, index: number) => (
+                            {resultContents && resultContents.map((contentList: ContentList, index: number) => (
                                 <TableRow
                                 key={index}
                                 sx={{
@@ -193,17 +208,16 @@ const ContentManagement = () => {
                                         {contentList.id}
                                     </TableCell>
                                     <TableCell>
-                                        {contentList.topic}
+                                        <div dangerouslySetInnerHTML={ {__html: contentList.title} } />           
                                     </TableCell>
                                     <TableCell>
-                                        {contentList.content_name}
+                                        <div dangerouslySetInnerHTML={ {__html: contentList.content_text || '-'} } /> 
                                     </TableCell>
                                     <TableCell>
-                                        {contentList.picture}
+                                        {contentList.picture || "-"}
                                     </TableCell>
                                     <TableCell align='center'>
                                     <Switch key={index} 
-                                    
                                         checked={contentList.status}
                                         onChange={e => handleChange(index, contentList.id, e)}
                                     />

@@ -21,19 +21,20 @@ import { styled } from '@mui/material/styles'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DatePicker from '@mui/lab/DatePicker'
-import { EditorState } from 'draft-js'
-
-// ** Component Import
-import ReactDraftWysiwyg from 'src/@core/components/react-draft-wysiwyg'
 
 // ** Styles
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+import 'react-quill/dist/quill.snow.css';
 
 // ** Third Party Imports
 import { useDropzone } from 'react-dropzone'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
+import dynamic from 'next/dynamic'
+import { ContentList } from 'src/types/content/ContentType'
+import { CreateContent, UpdateContent } from 'src/services/api/content/ContentAPI'
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -73,21 +74,41 @@ interface DialogInfoProps {
   show: boolean
   setShow: any
   action: string
-  current?: any
+  current?: ContentList
   table?: any
 }
+
+const quillModules = {
+  toolbar: [
+
+      // [{ 'font': [] }],
+      [{ 'size': ['small', false, 'large', 'huge'] }],
+      ['bold', 'italic', 'underline'],
+      [{'list': 'ordered'}, {'list': 'bullet'}],
+      [{ 'align': [] }],
+      [{ 'color': [] }, { 'background': [] }],
+      ['clean']
+    ]
+};
 
 const DialogContents = (props: DialogInfoProps) => {
   const { show, setShow, action, current } = props
 
   const [date, setDate] = useState<Date | null>(new Date())
-
-  const [contentName, setContentName] = useState<string>('')
-  const [topic, setTopic] = useState<string>('')
-  const [description, setDescription] = useState(EditorState.createEmpty())
+  const [description, setDescription] = useState('')
+  const [topic, setTopic] = useState('');
+  const [imagePath, setImagePath] = useState(''); 
+  const [ contentId, setContentId ] = useState('')
+  const [ status, setStatus ] = useState<number>(0);
+  const [ id, setId ] = useState<number | null>(null);
+  const [ showErrorMessage, setShowErrorMessage ] = useState<boolean>(false);
+  const [ errorMessage, setErrorMessage ] = useState<any>('')
 
   // ** State
   const [files, setFiles] = useState<File[]>([])
+
+  const { fileUpload } = CreateContent();
+  const { updateContentData } = UpdateContent();
 
   // ** Hook
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
@@ -118,35 +139,83 @@ const DialogContents = (props: DialogInfoProps) => {
       </IconButton>
     </div>
   ))
-
-  function handleContentName(event: any) {
-    setContentName(event.target.value)
-  }
-
-  function handleTopic(event: any) {
-    setTopic(event.target.value)
-  }
-
+  
   function closeDialogBox() {
     setShow(false)
     setFiles([])
+    setDescription('');
     acceptedFiles.length = 0
   }
+
+  const submitData = () => {
+
+    const inputData = {
+      title: topic,
+      content_text : description,
+      date: date,
+      content_id : contentId ? contentId : "",
+      status: status,
+      id : id
+    }
+
+    if (id) {
+      updateContentData({file: files[0]}, inputData)
+      .then(() => {
+        setShow(false)
+        setFiles([])
+        setDescription('');
+        acceptedFiles.length = 0
+        setShowErrorMessage(false)
+      })
+      .catch((ex) => {
+          setErrorMessage("something went wrong!");
+          console.log("user import error!", ex);
+          setShowErrorMessage(true);
+      });
+    } else {
+      fileUpload({file: files[0]}, inputData)
+        .then(() => {
+          setShow(false)
+          setFiles([]);
+          setDescription('');
+          acceptedFiles.length = 0
+          setShowErrorMessage(false)
+        })
+        .catch((ex) => {
+            setErrorMessage("something went wrong!");
+            console.log("user import error!", ex);
+            setShowErrorMessage(true);
+        });
+    }
+    
+  }
+
+  const handleChangeStatus = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('status', event.target.checked);
+    setStatus(event.target.checked ?  1 : 0);
+  };
 
   useEffect(() => {
     if (action === 'edit') {
       if (current) {
-        
-        setContentName(current.content_name)
-        setDescription(current.description)
-        setDate(new Date(current.date))
-        setTopic(current.topic)
+        setDescription(current.content_text)
+        setDate(current.date ? new Date(current.date) : new Date())
+        setTopic(current.title);
+        setImagePath(current.picture);
+        setContentId(current.content_id);
+        setStatus(current.status);
+        setShowErrorMessage(false);
+        setId(current.id);
       }  
     } else { 
-      setContentName('');
-      setDescription(EditorState.createEmpty());
+      setDescription('');
       setTopic('');
-      setDate(null);
+      setDate(new Date());
+      setImagePath('');
+      setContentId('');
+      setStatus(0);
+      setShowErrorMessage(false)
+      setId(null);
     }
   },[current, action])
 
@@ -159,7 +228,6 @@ const DialogContents = (props: DialogInfoProps) => {
         scroll='body'
         onClose={closeDialogBox}
         TransitionComponent={Transition}
-        onBackdropClick={closeDialogBox}
       >
         <DialogContent sx={{ pb: 6, px: { xs: 8, sm: 15 }, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
           <IconButton size='small' onClick={closeDialogBox} sx={{ position: 'absolute', right: '1rem', top: '1rem' }}>
@@ -172,38 +240,41 @@ const DialogContents = (props: DialogInfoProps) => {
           </Box>
           <div id={`content-master`}>
             <Grid container spacing={6}>
-              <Grid item sm={12} xs={12}>
-                <TextField
-                  fullWidth
-                  label='Topic'
-                  value={topic}
-                  onChange={handleTopic}
-                  placeholder=''
+            <Grid item sm={12} xs={12}>
+                <InputLabel style={{ marginBottom: '10px' }}> Topic <b style={{ color: 'red' }}>*</b></InputLabel>
+                <ReactQuill theme="snow" value={topic} onChange={(e) => {setTopic(e)}}
+                  modules = {quillModules}
                 />
+            </Grid>
+
+              {/* <Grid item sm={12} xs={12}>
+                <InputLabel style={{ marginBottom: '10px' }}> Content Name <b style={{ color: 'red' }}>*</b> </InputLabel>
+                <ReactQuill theme="snow" value={contentName} onChange={(e) => {setContentName(e)}}
+                    modules = {quillModules}
+                  />
+              </Grid> */}
+
+              <Grid item sm={12} xs={12} >
+                <InputLabel style={{ marginBottom: '10px' }}> Content Details </InputLabel>
+                <ReactQuill theme="snow" value={description} onChange={(e) => {setDescription(e)}}
+                    modules = {quillModules}
+                  />
               </Grid>
 
-              <Grid item sm={12} xs={12}>
-                <TextField
-                  fullWidth
-                  label='Campaign Name'
-                  value={contentName}
-                  onChange={handleContentName}
-                  placeholder=''
-                />
-              </Grid>
-              <Grid item sm={12} xs={12} mt={4} style={{ border: '1px solid #4c4e6430', borderRadius: '1.3rem', marginLeft: '1.2rem' }}>
-                <InputLabel> Description </InputLabel>
-                <ReactDraftWysiwyg editorState={description} onEditorStateChange={data => setDescription(data)} />
-              </Grid>
-
-              <Grid item sm={12} xs={12}  mt={4} style={{ border: '1px solid #4c4e6430', borderRadius: '1.3rem', marginLeft: '1.2rem' }}>
+              <Grid item sm={12} xs={12} mt={5} style={{ border: '1px solid #4c4e6430', borderRadius: '1rem', marginLeft: '1.2rem' }}>
                 <Box {...getRootProps({ className: 'dropzone' })} sx={acceptedFiles.length ? { height: 320 } : {}}>
                     <input {...getInputProps()} />
                     {files.length ? (
                       img
                     ) : (
                     <Box sx={{ display: 'flex', flexDirection: ['column', 'column', 'row'], alignItems: 'center' }}>
-                      <Img width={200} alt='Upload img' src='/images/misc/upload.png' />
+                      {
+                        imagePath ?
+                        <Img width={200} alt="image" src={"http://cornea-analysis.com/storage/" +imagePath} />
+                        :
+                        <Img width={200} alt='Upload img' src='/images/misc/upload.png' />
+                      }
+                      
                       <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: ['center', 'center', 'inherit'] }}>
                         <HeadingTypography variant='h5'>Drop image file here or click to upload.</HeadingTypography>
                         <Typography color='textSecondary'>
@@ -219,11 +290,11 @@ const DialogContents = (props: DialogInfoProps) => {
                   )}
                 </Box>
               </Grid>
-              
+
               <Grid item sm={6} xs={12} mt={3}>
                 <FormControl>
                   <FormControlLabel
-                    control={<Switch defaultChecked />}
+                    control={<Switch checked={status == 1 ? true: false} onChange={handleChangeStatus} />}
                     label='Content Status : '
                     labelPlacement='start'
                   />
@@ -247,9 +318,21 @@ const DialogContents = (props: DialogInfoProps) => {
             </Grid>
           </div>
 
+          <div>
+            {
+              showErrorMessage ? 
+              <Typography variant='body1' sx={{mt: 5, mb: 3, lineHeight: '2rem', display: 'flex', justifyContent: 'center', color: 'red' }}>
+                  {errorMessage}
+              </Typography>
+              :
+              <></>
+            }
+          
+          </div>
+
         </DialogContent>
         <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
-          <Button variant='contained' sx={{ mr: 2 }} onClick={closeDialogBox}>
+          <Button variant='contained' sx={{ mr: 2 }} onClick={submitData}>
             Submit
           </Button>
           <Button variant='outlined' color='secondary' onClick={closeDialogBox}>
