@@ -6,19 +6,19 @@ import TextField from '@mui/material/TextField'
 import DatePicker from '@mui/lab/DatePicker'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import StackedChart from "./StackedChart"
-import DonutChart from "./DonutChart"
+import StackedChart from "./stackedChart"
+import DonutChart from "./donutChart"
 import { useTheme } from '@mui/material/styles'
 import MessageText  from 'mdi-material-ui/MessageText'
 import ThumbUp from 'mdi-material-ui/ThumbUp'
 import Person from 'mdi-material-ui/Account'
-import KeyStatusReport from "./KeyStatusReport"
+import KeyStatusReport from "./keyStatusReport"
 
 // ** Third Party Styles Imports
 
 import 'chart.js/auto'
 import 'react-datepicker/dist/react-datepicker.css'
-import KeywordTable from "./KeywordTable"
+import KeywordTable from "./keywordTable"
 import MainKeyWordTable from "./MainKeywordTable"
 
 // import SubKeywordList from "./SubKeyWordList"
