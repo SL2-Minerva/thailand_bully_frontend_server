@@ -6,13 +6,14 @@ export type FormInput = {
     file: File;
   };
 
-export const ContentLists = (reload?: boolean) => {
+export const ContentLists = (reload?: boolean, contentId?: string) => {
     
     const [{ data: response, loading, error }] = CallAPI<{ data?: ContentList[] }>({
-      url: `/organization-content/`,
+      url: `/organization-content`,
       method: 'GET',
-      data: {
-        reload: reload
+      params: {
+        reload: reload,
+        content_id: contentId
       }
     })
 
@@ -51,6 +52,11 @@ export const CreateContent = () => {
         if(FormInput?.file) {
             formData.append("picture", FormInput.file);
         }
+        
+        if (input.content_id) {
+          formData.append('content_id', input.content_id);
+      }
+
         formData.append('title', input.title);
         formData.append('content_text', input.content_text);
         formData.append('date',inputDate?.toString());
@@ -113,7 +119,6 @@ export const CreateContent = () => {
         formData.append('date',inputDate?.toString());
         formData.append('status', input.status);
         formData.append('id', input.id ? input.id : null);
-        console.log("status in api call", input.status);
 
         return new Promise((resolve, reject) => {
           fetch({

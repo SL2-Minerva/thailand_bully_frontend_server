@@ -3,6 +3,7 @@ import CogOutline from 'mdi-material-ui/CogOutline'
 import HomeAnalytics from 'mdi-material-ui/HomeAnalytics'
 import Pin from 'mdi-material-ui/Pin'
 import Finance from 'mdi-material-ui/Finance'
+import { NewspaperVariantMultiple } from 'mdi-material-ui' 
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -81,19 +82,6 @@ const navigation = (): VerticalNavItemsType => {
           ]
         },
         {
-          title: 'Content',
-          children: [
-            {
-              title: 'Contents',
-              path: '/content/homepage'
-            },
-            {
-              title: 'Content MGT',
-              path: '/content/content-mgt'
-            }
-          ]
-        },
-        {
           title: 'Report',
           path: '/report/report'
         },
@@ -102,7 +90,25 @@ const navigation = (): VerticalNavItemsType => {
           path: '/report/system-log'
         }
       ]
-    }
+    },
+    {
+      title: 'Content',
+      icon: NewspaperVariantMultiple,
+      children: [
+        {
+          title: 'Contents',
+          path: '/content/homepage'
+        },
+        {
+          title: 'Content MGT',
+          path: '/content/content-mgt'
+        },
+        {
+          title: 'Network Graph',
+          path: '/content/content-mgt/NetworkGraph'
+        }
+      ]
+    },
   ]
 }
 

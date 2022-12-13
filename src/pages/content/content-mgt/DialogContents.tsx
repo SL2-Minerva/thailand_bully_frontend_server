@@ -1,4 +1,4 @@
-import { Ref, useState, forwardRef, ReactElement,SyntheticEvent, useEffect  } from 'react'
+import { Ref, useState, forwardRef, ReactElement,SyntheticEvent, useEffect, useCallback  } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -33,8 +33,9 @@ import Close from 'mdi-material-ui/Close'
 import dynamic from 'next/dynamic'
 import { ContentList } from 'src/types/content/ContentType'
 import { CreateContent, UpdateContent } from 'src/services/api/content/ContentAPI'
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false, loading: () => <p>Loading ...</p> });
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -130,6 +131,10 @@ const DialogContents = (props: DialogInfoProps) => {
     const filtered = uploadedFiles.filter((i: FileProp) => i.name !== file.name)
     setFiles([...filtered])
   }
+
+  const handleContent = useCallback((e: SelectChangeEvent) => {
+    setContentId(e.target.value)
+  }, [])
 
   const img = files.map((file: FileProp) => (
     <div key={file.name} style={{ display: 'flex', justifyContent:'center' }}>
@@ -241,10 +246,33 @@ const DialogContents = (props: DialogInfoProps) => {
           <div id={`content-master`}>
             <Grid container spacing={6}>
             <Grid item sm={12} xs={12}>
+              <FormControl fullWidth>
+                  <InputLabel id='plan-select'>Content #ID </InputLabel>
+                  <Select
+                  fullWidth
+                  value={contentId}
+                  id='select-content'
+                  label='Select content'
+                  labelId='content-select'
+                  onChange={handleContent}
+                  inputProps={{ placeholder: 'Select content' }}
+                  >
+                      <MenuItem value="1">
+                          Content 1
+                      </MenuItem>
+                      <MenuItem value="2">
+                          Content 2
+                      </MenuItem>
+                      <MenuItem value="3">
+                          Content 3
+                      </MenuItem>
+                  </Select>
+              </FormControl>
+            </Grid>
+            <Grid item sm={12} xs={12}>
                 <InputLabel style={{ marginBottom: '10px' }}> Topic <b style={{ color: 'red' }}>*</b></InputLabel>
                 <ReactQuill theme="snow" value={topic} onChange={(e) => {setTopic(e)}}
-                  modules = {quillModules}
-                />
+                  modules = {quillModules}/>
             </Grid>
 
               {/* <Grid item sm={12} xs={12}>
