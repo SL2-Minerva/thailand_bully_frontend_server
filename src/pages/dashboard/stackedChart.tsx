@@ -28,7 +28,11 @@ const chartLabel = (data:any) => {
   
   const labels : string[] = [];
   for(let i = 0 ; i<data?.length; i++) {
-    labels.push(moment(data[i].date_m).format('DD/MM'));
+    const label = data[i]?.value;
+
+    for(let j=0; j<data[i]?.value?.length ; j++ ) {
+       labels.push(moment(label[j].date_m).format('DD/MM'));
+    } 
   }
 
   return labels;
@@ -112,7 +116,12 @@ const StackedChart = (props: LineProps) => {
     const returnData : StackChartDataset[] = [];
 
     for(let i = 0 ; i<data?.length; i++) {
-      totalAmount.push(data[i].total_at_date);
+      const total = data[i]?.value;
+    
+      for(let j=0; j<data[i]?.value?.length ; j++ ) {
+        totalAmount.push(total[j].total_at_date);
+      } 
+      
       keywordName = data[i].keyword_name;
     }
 
@@ -140,7 +149,7 @@ const StackedChart = (props: LineProps) => {
 
   useEffect(() => {
     if(filterData) {
-      const dailyMessageData = filterData?.daily_message?.data;
+      const dailyMessageData = filterData?.daily_message;
       if(dailyMessageData) {
         const labels = chartLabel(dailyMessageData);
         setLabel(labels);

@@ -28,7 +28,7 @@ const ContentManagement = () => {
     const [reload, setReload] = useState<boolean>(false);
     const [ updateStatus, setUpdateStatus ] =  useState<boolean>(false);
 
-    const {resultContents} = ContentLists(reload);
+    const {resultContents} = ContentLists(reload, content);
 
     const handleStatusChange = useCallback((e: SelectChangeEvent) => {
         setStatus(e.target.value)
@@ -88,16 +88,18 @@ const ContentManagement = () => {
                                     onChange={handleCotent}
                                     inputProps={{ placeholder: 'Select content' }}
                                     >
-                                    {/* {list &&
-                                        list.map((item: any, index: number) => {
-                                        return (
-                                            <MenuItem key={index} value={item.id}>
-                                            {item.name}
-                                            </MenuItem>
-                                        )
-                                        })} */}
-                                        <MenuItem value=""> ALL </MenuItem>
-                                        <MenuItem value="1"> content 1 </MenuItem>
+                                        <MenuItem value="">
+                                            <span>ALL</span>
+                                        </MenuItem>
+                                        <MenuItem value="1">
+                                            Content 1
+                                        </MenuItem>
+                                        <MenuItem value="2">
+                                            Content 2
+                                        </MenuItem>
+                                        <MenuItem value="3">
+                                            Content 3
+                                        </MenuItem>
                                     </Select>
                                 </FormControl>
                             </Grid>

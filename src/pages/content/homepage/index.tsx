@@ -1,5 +1,6 @@
-import { Grid, Card, CardHeader, CardContent, Typography, TypographyProps } from '@mui/material'
+import { Grid, Card, CardContent, Typography, CardHeader } from '@mui/material'
 import { styled } from '@mui/material/styles'
+import { ContentLists } from 'src/services/api/content/ContentAPI'
 
 const Img = styled('img')(({ theme }) => ({
     [theme.breakpoints.up('md')]: {
@@ -13,68 +14,158 @@ const Img = styled('img')(({ theme }) => ({
     }
   }))
 
-const HeadingTypography = styled(Typography)<TypographyProps>(({ theme }) => ({
-    marginBottom: theme.spacing(5),
-    [theme.breakpoints.down('sm')]: {
-        marginBottom: theme.spacing(4)
-    }
-}))
-
 const ContentPage = () => {
+
+    const {resultContents} = ContentLists();
+
+    console.log("result Contents", resultContents);
+
     return(
         <Grid container spacing={6}>
-            <Grid item md={6} xs={12}>
+            <Grid item xs={12} sm={12}>
                 <Card>
-                    <CardHeader title='Announcement' />
-                    <CardContent>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <Img width={300} alt='Image' src='/images/misc/upload.png' />
-                        </div>
-                        <Grid container spacing={2} mt={2} ml={2}>
-                            Date : 02/12/2022
-                        </Grid>
-                    </CardContent>
+                        <CardHeader title="Content 1"/> 
                 </Card>
             </Grid>
-            <Grid item md={6} xs={12}>
+            {
+                    (resultContents || []).map((contents, index) => {
+                        return(
+                            <>
+                            {
+                                contents.content_id == "1" ? 
+                                <>
+                                    <Grid item md={6} xs={12} key={index}>
+                                        <Card>
+                                            <h2 style={{ marginLeft: '2rem', marginBottom: '-2.6rem' }}> 
+                                                <div dangerouslySetInnerHTML={ {__html: contents.title} } /> 
+                                            </h2>
+                                            <CardContent>
+                                                <Grid>
+                                                    {
+                                                        contents?.picture ?
+                                                            <span style={{ display: 'flex', justifyContent: 'center' }}>
+                                                                <Img width={300} alt='Image' src={"http://cornea-analysis.com/storage/" + contents.picture} />
+                                                            </span>
+                                                        :   
+                                                            <></>
+                                                    }
+                                                    <Typography variant='h5' ml='1rem'>
+                                                        <div dangerouslySetInnerHTML={ {__html: contents.content_text} } /> 
+                                                    </Typography>
+                                                </Grid>
+                                                
+                                                <Grid container spacing={2} mt={2} ml={3}>
+                                                    Date : {contents.date}
+                                                </Grid>
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                </>
+                                :
+                                <></>
+                            }
+                            </>
+                        )
+                    })
+                    
+                }
+            
+            <Grid item xs={12} sm={12}>
                 <Card>
-                    <CardHeader title='News' />
-                    <CardContent>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <Img width={300} alt='Image' src='/images/misc/upload.png' />
-                        </div>
-                        <Grid container spacing={2} mt={2} ml={2}>
-                            Date : 08/12/2022
-                        </Grid>
-                    </CardContent>
+                        <CardHeader title="Content 2"/> 
                 </Card>
             </Grid>
-            <Grid item md={6} xs={12}>
+
+                {
+                    (resultContents || []).map((contents, index) => {
+                        return(
+                            <>
+                            {
+                                contents.content_id == "2" ? 
+                                <>
+                                    <Grid item md={6} xs={12} key={index}>
+                                        <Card>
+                                            <h2 style={{ marginLeft: '2rem', marginBottom: '-2.6rem' }}> 
+                                                <div dangerouslySetInnerHTML={ {__html: contents.title} } /> 
+                                            </h2>
+                                            <CardContent>
+                                                <Grid>
+                                                    {
+                                                        contents?.picture ?
+                                                            <span style={{ display: 'flex', justifyContent: 'center' }}>
+                                                                <Img width={300} alt='Image' src={"http://cornea-analysis.com/storage/" + contents.picture} />
+                                                            </span>
+                                                        :   
+                                                            <></>
+                                                    }
+                                                    <Typography variant='h5' ml='1rem'>
+                                                        <div dangerouslySetInnerHTML={ {__html: contents.content_text} } /> 
+                                                    </Typography>
+                                                </Grid>
+                                                
+                                                <Grid container spacing={2} mt={2} ml={3}>
+                                                    Date : {contents.date}
+                                                </Grid>
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                </>
+                                :
+                                <> </>
+                            }
+                            </>
+                        )
+                    })    
+                }      
+
+            <Grid item xs={12} sm={12}>
                 <Card>
-                    <CardContent>
-                        <HeadingTypography variant='h5'>Topic 1</HeadingTypography>
-                        <Typography color='textSecondary' variant='h5'>
-                          Aaaaaaaa aaaaaaa
-                        </Typography>
-                        <Grid container spacing={2} mt={3} ml={1}>
-                            Date : 08/12/2022
-                        </Grid>
-                    </CardContent>
+                        <CardHeader title="Content 3"/> 
                 </Card>
             </Grid>
-            <Grid item md={6} xs={12}>
-                <Card>
-                    <CardContent>
-                        <HeadingTypography variant='h5'>Topic 2</HeadingTypography>
-                        <Typography color='textSecondary' variant='h5'>
-                            Bbbbbbbbb bbbbbb
-                        </Typography>
-                        <Grid container spacing={2} mt={3} ml={1}>
-                            Date : 08/12/2022
-                        </Grid>
-                    </CardContent>
-                </Card>
-            </Grid>
+
+                {
+                    (resultContents || []).map((contents, index) => {
+                        return(
+                            <>
+                            {
+                                contents.content_id == "3" ? 
+                                <>
+                                    <Grid item md={6} xs={12} key={index}>
+                                        <Card>
+                                            <h2 style={{ marginLeft: '2rem', marginBottom: '-2.6rem' }}> 
+                                                <div dangerouslySetInnerHTML={ {__html: contents.title} } /> 
+                                            </h2>
+                                            <CardContent>
+                                                <Grid>
+                                                    {
+                                                        contents?.picture ?
+                                                            <span style={{ display: 'flex', justifyContent: 'center' }}>
+                                                                <Img width={300} alt='Image' src={"http://cornea-analysis.com/storage/" + contents.picture} />
+                                                            </span>
+                                                        :   
+                                                            <></>
+                                                    }
+                                                    <Typography variant='h5' ml='1rem'>
+                                                        <div dangerouslySetInnerHTML={ {__html: contents.content_text} } /> 
+                                                    </Typography>
+                                                </Grid>
+                                                
+                                                <Grid container spacing={2} mt={2} ml={3}>
+                                                    Date : {contents.date}
+                                                </Grid>
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                </>
+                                :
+                                <> </>
+                            }
+                            </>
+                        )
+                    })    
+                }       
+                
         </Grid>
     )
 }

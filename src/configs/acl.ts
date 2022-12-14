@@ -18,6 +18,7 @@ export type ACLObj = {
  */
 const defineRulesFor = (role: string, subject: string) => {
   const { can, rules } = new AbilityBuilder(AppAbility)
+  
  // todo something
   if (role === 'admin') {
     can('manage', 'all')

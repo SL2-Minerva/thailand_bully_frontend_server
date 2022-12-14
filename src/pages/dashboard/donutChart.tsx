@@ -88,12 +88,15 @@ const DonutChart = (props : MessageData) => {
     const percentage: number[] = [];
     for(let i =0; i<data?.length; i++ ) {
       labels.push(data[i].keyword_name);
-      percentage.push(data[i].data?.percentage);
 
-      if (type === 'current') {
-        setCurrentPeriod(data[i].date)
-      } else {
-        setPreviousPeriod(data[i].date);
+      const percentageValue = data[i]?.value;
+      for(let j = 0 ; j<percentageValue?.length; j++) {
+        percentage.push(data[i].value[j]?.percentage);
+        if (type === 'current') {
+          setCurrentPeriod(data[i].value[j]?.date)
+        } else {
+          setPreviousPeriod(data[i].value[j]?.date);
+        }
       }
     }
     const returnData = {
@@ -139,10 +142,10 @@ const DonutChart = (props : MessageData) => {
       <CardContent>
         <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-                <Doughnut data={currentData} options={options as any} height={320} />
+                <Doughnut data={currentData} options={options as any} height={343} />
             </Grid>
             <Grid item xs={12} md={6}>
-                <Doughnut data={previousData} options={options as any} height={320} />
+                <Doughnut data={previousData} options={options as any} height={343} />
             </Grid>  
             <Grid item xs={12} md={6}>  
                 <p style={{ fontSize:'10px' }}> Current Period :</p>  
