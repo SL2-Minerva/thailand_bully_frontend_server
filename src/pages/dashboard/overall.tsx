@@ -55,6 +55,7 @@ const OverallDashboard = () => {
     const [ dateSelect, setDateSelect ] = useState<string>("1")
     const [ disableSelectDate, setDisableSelectDate ] = useState<boolean>(true);
     const [ reload ] = useState<boolean>(false);
+    const [ period, setPeriod ] = useState<string>('daily')
     const theme = useTheme()
 
     const whiteColor = '#fff'
@@ -66,7 +67,7 @@ const OverallDashboard = () => {
     const gridLineColor = theme.palette.action.focus
 
     const { resultCampaiganList } = CampaignList();
-    const { resultFilterData } = FilterByCampaignId(campaign, reload);
+    const { resultFilterData } = FilterByCampaignId(campaign, reload, platformId, date, endDate, period);
     const { result_source_list  } = SourceService();
     const { resultTotalMessagePerDay } = TotalMessagePerDay();
     const { resultTotalEngagement } = GetTotalEngagement();
@@ -86,24 +87,28 @@ const OverallDashboard = () => {
         setDateSelect(value);
         setDisableSelectDate(true);
         if (value === '1') {
+            setPeriod('daily');
             setDate(new Date());
             setEndDate(new Date());
         } else if (value === '2') {
 
             // const yesterday = moment().add(-1, 'days');
-
+            setPeriod('yesterday');
             const yesterday = calculateDate(1);
             setDate(yesterday);
             setEndDate(yesterday);
         } else if (value === '3') {
+            setPeriod('last7days');
             const lastSevenDays = calculateDate(6);
             setDate(lastSevenDays);
             setEndDate(new Date());
         } else if (value === '4') {
+            setPeriod('last30days');
             const last30Days = calculateDate(29);
             setDate(last30Days);
             setEndDate(new Date());
         } else if (value === '5') {
+            setPeriod('thismonth');
             const date = new Date();
             const firstDayofMonth = get1stAndLastDayOfMonth(
                 date.getFullYear(),
@@ -113,6 +118,7 @@ const OverallDashboard = () => {
             setDate(firstDayofMonth);
             setEndDate(date);
         } else if (value === '6') {
+            setPeriod('lastmonth');
             const date = new Date();
             const firstDayofLastMonth = get1stAndLastDayOfMonth(
                 date.getFullYear(),
@@ -127,6 +133,7 @@ const OverallDashboard = () => {
             setDate(firstDayofLastMonth);
             setEndDate(lastDayofMonth);
         } else {
+            setPeriod('customrange');
             setDisableSelectDate(false);
         }
     }, [])

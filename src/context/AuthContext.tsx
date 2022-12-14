@@ -121,6 +121,7 @@ const AuthProvider = ({ children }: Props) => {
           if (errorCallback) errorCallback(res.data.error)
         } else {
           router.replace('/register/wait-approval')
+          
           // handleLogin({ username: params.email, password: params.password })
         }
       })

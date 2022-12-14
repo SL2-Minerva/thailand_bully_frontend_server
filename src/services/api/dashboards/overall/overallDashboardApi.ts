@@ -1,10 +1,17 @@
+import moment from 'moment'
 import { CallAPI } from 'src/services/CallAPI'
 
-export const FilterByCampaignId = (campaignId?: string, reload?: boolean) => {
+export const FilterByCampaignId = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard/overall?campaign_id=${campaignId}`,
       method: 'GET',
+      params :{
+        source: platformId || "",
+        start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+        end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+        period: period
+      },
       data: {
         reload: reload
       }
