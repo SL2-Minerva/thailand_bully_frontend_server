@@ -29,10 +29,11 @@ const chartLabel = (data:any) => {
   const labels : string[] = [];
   for(let i = 0 ; i<data?.length; i++) {
     const label = data[i]?.value;
+    labels.push(moment(label[0].date_m).format('DD/MM'));
 
-    for(let j=0; j<data[i]?.value?.length ; j++ ) {
-       labels.push(moment(label[j].date_m).format('DD/MM'));
-    } 
+    // for(let j=0; j<data[i]?.value?.length ; j++ ) {
+       
+    // } 
   }
 
   return labels;
@@ -40,7 +41,7 @@ const chartLabel = (data:any) => {
 
 const StackedChart = (props: LineProps) => {
   // ** Props
-  const { white, primary, labelColor, borderColor, gridLineColor, filterData } = props
+  const { white, labelColor,primary,  borderColor, gridLineColor, filterData } = props
 
   // const [ chartData, setChartData ] = useState();
 
@@ -111,11 +112,12 @@ const StackedChart = (props: LineProps) => {
 
   const chartDatasets = (data:any) => {
     if(!data) return [];
-    const totalAmount : number[] = [];
+    let totalAmount : number[] = [];
     let keywordName = "";
     const returnData : StackChartDataset[] = [];
-
+    const color = ['#FF80AA','#36a2eb','#7FFFD4', '#A52A2A', '#29A6A6', '#FFA500',primary]
     for(let i = 0 ; i<data?.length; i++) {
+      totalAmount = []
       const total = data[i]?.value;
     
       for(let j=0; j<data[i]?.value?.length ; j++ ) {
@@ -123,25 +125,25 @@ const StackedChart = (props: LineProps) => {
       } 
       
       keywordName = data[i].keyword_name;
-    }
 
-    const chartDataset : StackChartDataset  = {
-      fill: false,
-      tension: 0.5,
-      pointRadius: 1,
-      label: keywordName,
-      pointHoverRadius: 5,
-      pointStyle: 'circle',
-      borderColor: primary,
-      backgroundColor: primary,
-      pointHoverBorderWidth: 5,
-      pointHoverBorderColor: white,
-      pointBorderColor: 'transparent',
-      pointHoverBackgroundColor: primary,
-      data: totalAmount
+      const chartDataset : StackChartDataset  = {
+        fill: false,
+        tension: 0.5,
+        pointRadius: 1,
+        label: keywordName,
+        pointHoverRadius: 5,
+        pointStyle: 'circle',
+        borderColor: color[i],
+        backgroundColor: color[i],
+        pointHoverBorderWidth: 5,
+        pointHoverBorderColor: white,
+        pointBorderColor: 'transparent',
+        pointHoverBackgroundColor: color[i],
+        data: totalAmount
+      }
+  
+      returnData.push(chartDataset);
     }
-
-    returnData.push(chartDataset);
 
     return returnData;
   
