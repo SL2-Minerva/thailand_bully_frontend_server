@@ -32,7 +32,8 @@ interface KeyStatusProps {
     totalText: string,
     totalValue : string,
     averageText: string,
-    averageValue: string
+    averageValue: string,
+    type?: string
   }
 
 // Styled Grid component
@@ -47,9 +48,9 @@ interface KeyStatusProps {
 
 const KeyStatusReport = (props: KeyStatusProps) => {
   // ** Props
-  const { title, color, icon, stats, trend, trendNumber, totalText, totalValue, averageText, averageValue } = props
+  const { title, color, icon, stats, trendNumber, totalText, totalValue, averageText, averageValue, type } = props
 
-  const TrendIcon = trend === 'positive' ? ChevronUp : ChevronDown
+  const TrendIcon = type === 'plus' ? ChevronUp : ChevronDown
 
   return (
     <Card>
@@ -93,14 +94,14 @@ const KeyStatusReport = (props: KeyStatusProps) => {
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
             <Typography variant='h4' sx={{ mb: 1 }}>
-                {stats}
+                {type === 'plus' ? "+" : "-"}{stats}
             </Typography>
 
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant='h4' sx={{ color: trend === 'positive' ? 'success.main' : 'error.main' }}>
-                    {trendNumber}
+                <Typography variant='h4' sx={{ color: type == "plus"  ? 'success.main' : 'error.main' }}>
+                    {trendNumber+ "%"}
                 </Typography>
-                <TrendIcon fontSize='large' sx={{ color: trend === 'positive' ? 'success.main' : 'error.main' }} />
+                <TrendIcon fontSize='large' sx={{ color: type == "plus"  ? 'success.main' : 'error.main' }} />
             </Box>
         </Box>
       </CardContent>

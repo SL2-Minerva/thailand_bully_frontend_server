@@ -82,6 +82,10 @@ const navigation = (): VerticalNavItemsType => {
           ]
         },
         {
+          title: 'Network Graph',
+          path: '/content/content-mgt/NetworkGraph'
+        },
+        {
           title: 'Report',
           path: '/report/report'
         },
@@ -102,10 +106,6 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Content MGT',
           path: '/content/content-mgt'
-        },
-        {
-          title: 'Network Graph',
-          path: '/content/content-mgt/NetworkGraph'
         }
       ]
     },

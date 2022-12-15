@@ -8,17 +8,63 @@ import { ApexOptions } from 'apexcharts'
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 
-const SentimentLevelChart = () => {
-    
+
+const Labels = (data: any) => {
+  if(!data) {
+    return [];
+  }
+  const labels : any[] = []
+  if(data?.length > 0) {
+    for(let i=0; i<data?.length; i++) {
+      labels.push(data[i].keyword_name);
+    }
+  }
+
+  return labels;
+}
+
+const ChartDataPositive = (data: any, type : string) => {
+  if(!data) {
+    return [];
+  }
+  const value : any[] = []
+  if(data?.length > 0) {
+    if(type === 'positive') {
+      for(let i=0; i<data?.length; i++) {
+        value.push(data[i].positive);
+      }
+    } else if(type==='negative') {
+      for(let i=0; i<data?.length; i++) {
+        value.push(data[i].negative);
+      }
+    } else if (type === 'neutral') {
+      for(let i=0; i<data?.length; i++) {
+        value.push(data[i].neutral);
+      }
+    }
+
+  }
+
+  return value;
+}
+
+const SentimentLevelChart = ({sentimentLevel} : {sentimentLevel: any}) => {
+  
+  const chartLabels =  Labels(sentimentLevel);
+  const positiveData = ChartDataPositive(sentimentLevel, 'positive');
+  const neutralData = ChartDataPositive(sentimentLevel, 'neutral');
+  const negativeData = ChartDataPositive(sentimentLevel, 'negative');
+
+
   const series =  [{
     name: 'Negative',
-    data: [44, 55, 41, 37, 22, 43]
+    data: negativeData
   }, {
     name: 'Neutral',
-    data: [53, 32, 33, 52, 13, 43]
+    data: neutralData
   }, {
     name: 'Positive',
-    data: [12, 17, 11, 9, 15, 11]
+    data: positiveData
   }]
 
   const options: ApexOptions = {
@@ -38,11 +84,11 @@ const SentimentLevelChart = () => {
       colors: ['#fff']
     },
     title: {
-      text: '100% Stacked Bar'
+      text: ''
     },
     colors: ['#FF0000', '#F47B20', '#008000'],
     xaxis: {
-      categories: ["All", "keyword 1", "keyword 2", "keyword 3", "keyword 4", "keyword 5"],
+      categories: chartLabels,
     },
     tooltip: {
       y: {
@@ -69,7 +115,7 @@ const SentimentLevelChart = () => {
                 titleTypographyProps={{ variant: 'h6' }}
         />
         <CardContent>
-            <ReactApexcharts type="bar" height={294} series={series} options={options} />
+            <ReactApexcharts type="bar" height={274} series={series} options={options} />
         </CardContent>
     </Card>
   )

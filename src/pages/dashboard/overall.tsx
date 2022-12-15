@@ -32,8 +32,10 @@ import CommentSentiment from "./CommentSentiment"
 import ShareOfVoice from "./ShareOfVoice"
 import SentimentLevelChart from "./SentimentLevelChart"
 import { CampaignList } from "src/services/api/campaign/CampaignAPI"
-import { FilterByCampaignId, TotalMessagePerDay, GetTotalAccount, GetTotalEngagement, GetTopKeywords } from "src/services/api/dashboards/overall/overallDashboardApi"
+import { FilterByCampaignId, GetSentimentLevel, GetShareOfVoice, GetTopKeywords, TotalKeyStats } from "src/services/api/dashboards/overall/overallDashboardApi"
 import SourceService from "src/services/api/source/SourceApi"
+import { GetSentimentType } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
 
 export const calculateDate = (days: number) => {
     const today = new Date()
@@ -69,10 +71,12 @@ const OverallDashboard = () => {
     const { resultCampaiganList } = CampaignList();
     const { resultFilterData } = FilterByCampaignId(campaign, reload, platformId, date, endDate, period);
     const { result_source_list  } = SourceService();
-    const { resultTotalMessagePerDay } = TotalMessagePerDay();
-    const { resultTotalEngagement } = GetTotalEngagement();
-    const { resultTotalAccount } = GetTotalAccount();
     const { resultTopKeywords } = GetTopKeywords();
+    const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount } = TotalKeyStats(campaign, reload, platformId, date, endDate, period);
+    const { resultShareOfVoice } = GetShareOfVoice(campaign, reload, platformId, date, endDate, period);
+    const { resultSentimentLevel } = GetSentimentLevel(campaign, reload, platformId, date, endDate, period);
+    const {resultSentimentType} = GetSentimentType(campaign, reload, platformId, date, endDate, period);
+    const { resultKeywords } = GetKeyWords(campaign, reload, platformId, date, endDate, period);
 
     const handleSelectList = useCallback((e: SelectChangeEvent, type:string) => {
         if (type === 'campaign') {
@@ -277,6 +281,7 @@ const OverallDashboard = () => {
             <Grid item xs={12} md={4}>
                 <KeyStatusReport
                     stats= {resultTotalMessagePerDay?.comparison || '0'}
+                    type={resultTotalMessagePerDay?.type}
                     color='primary'
                     trendNumber={resultTotalMessagePerDay?.percentage || '0%'}
                     icon={<MessageText />}
@@ -292,6 +297,7 @@ const OverallDashboard = () => {
             <Grid item xs={12} md={4}>
                 <KeyStatusReport
                     stats={resultTotalEngagement?.comparison || '0'}
+                    type={resultTotalEngagement?.type}
                     color='primary'
                     trendNumber={resultTotalEngagement?.percentage || '0'}
                     icon={<ThumbUp />}
@@ -307,6 +313,7 @@ const OverallDashboard = () => {
             <Grid item xs={12} md={4}>
                 <KeyStatusReport
                     stats={resultTotalAccount?.comparison || '0'}
+                    type={resultTotalAccount?.type}
                     color='primary'
                     trendNumber={resultTotalAccount?.percentage || '0'}
                     icon={<Person />}
@@ -322,7 +329,7 @@ const OverallDashboard = () => {
         
         <Grid container spacing={3} mt={2}>
             <Grid item xs={12}>
-                <KeywordTable />
+                <KeywordTable resultKeywords={resultKeywords}/>
             </Grid>
         </Grid>
 
@@ -346,17 +353,17 @@ const OverallDashboard = () => {
             </Grid>
 
             <Grid item xs={12} md={6}>
-                <CommentSentiment/>
+                <CommentSentiment resultSentimentType={resultSentimentType}/>
             </Grid>
         </Grid>
 
         <Grid container spacing={3} mt={2}>
             <Grid item xs={12} md={8}>
-                <ShareOfVoice />
+                <ShareOfVoice resultShareOfVoice={resultShareOfVoice}/>
             </Grid>
 
             <Grid item xs={12} md={4}>
-                <SentimentLevelChart />
+                <SentimentLevelChart sentimentLevel={resultSentimentLevel}/>
             </Grid>
         </Grid>
     </>

@@ -2,11 +2,8 @@ import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer } from
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
 
-const KeywordTable = () => {
-
-    const { resultKeywords } = GetKeyWords();
+const KeywordTable = ({resultKeywords} : {resultKeywords: any}) => {
     
     return (
         <Card>
@@ -27,7 +24,7 @@ const KeywordTable = () => {
                     </TableHead>
                     <TableBody>
                         {
-                            (resultKeywords||[])?.map((keyword, index) => {
+                            (resultKeywords||[])?.map((keyword: any, index:any) => {
                                 return(
                                     <TableRow key={index}>
                                         <TableCell sx={{ backgroundColor: "lightgrey !important" }}><b>Keyword {keyword.id}</b></TableCell>

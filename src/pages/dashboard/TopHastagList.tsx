@@ -10,13 +10,13 @@ interface Props {
 const TopHashtagList = ({topHashtags} : Props) => {
     
     return (
-        <Card>
+        <Card sx={{ maxHeight: 360,minHeight: 360 }}>
             <CardHeader
                 title='Top Hashtag'
                 titleTypographyProps={{ variant: 'h6' }}
             />
             <CardContent>
-            <TableContainer sx={{ maxHeight: 250 }}>
+            <TableContainer sx={{ maxHeight: 250, minHeight: 250 }}>
                 <Table stickyHeader={true} size="small">
                     <TableHead sx={{ backgroundColor: "lightgrey !important" }}>
                         <TableCell variant="head" sx={{ backgroundColor: "white !important" }}>  </TableCell>

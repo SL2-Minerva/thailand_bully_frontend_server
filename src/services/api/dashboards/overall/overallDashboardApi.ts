@@ -23,220 +23,172 @@ export const FilterByCampaignId = (campaignId?: string, reload?: boolean, platfo
       errorFilterData: error
     }
 }
+export const TotalKeyStats = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
 
-export const TotalMessagePerDay = () => {
-
-  // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-  //   url: `/dashboard/totalMessage`,
-  //   method: 'GET',
-  //   data: {
-  //     reload: reload
-  //   }
-  // })
-
-  const response = {
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard/key-stats`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      source: platformId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period
+    },
     data: {
-      total_message : 40000,
-      average_message: 5600, 
-      comparison : '+5000',
-      percentage : '10%'
+      reload: reload
     }
-  }
+  })
 
   return {
-    resultTotalMessagePerDay: response?.data || null,
-
-    // loadingFilterData: loading,
-    // errorFilterData: error
+    resultTotalMessagePerDay: response?.data?.total_messages || null,
+    resultTotalEngagement: response?.data?.total_engagement || null,
+    resultTotalAccount: response?.data?.total_accounts || null,
+    loadingTotalKeystats: loading,
+    errorTotalKeystats: error
   }
 }
 
-export const GetTotalEngagement = () => {
+export const GetKeyWords = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
 
-  // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-  //   url: `/dashboard/totalMessage`,
-  //   method: 'GET',
-  //   data: {
-  //     reload: reload
-  //   }
-  // })
-
-  const response = {
+  const [{ data: response, loading, error }] = CallAPI<{ data: any }>({
+    url: `/dashboard/keyword-summary`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      source: platformId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period
+    },
     data: {
-      total_engagement : 35000,
-      average_engagement: 5500, 
-      comparison : '+3000',
-      percentage : '20%'
+      reload: reload
     }
-  }
+  })
 
-  return {
-    resultTotalEngagement: response?.data || null,
-
-    // loadingFilterData: loading,
-    // errorFilterData: error
-  }
-}
-
-export const GetTotalAccount = () => {
-
-  // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-  //   url: `/dashboard/totalMessage`,
-  //   method: 'GET',
-  //   data: {
-  //     reload: reload
-  //   }
-  // })
-
-  const response = {
-    data: {
-      total_account : 35000,
-      average_account : 5500, 
-      comparison : '+3000',
-      percentage : '20%'
-    }
-  }
-
-  return {
-    resultTotalAccount: response?.data || null,
-
-    // loadingFilterData: loading,
-    // errorFilterData: error
-  }
-}
-
-export const GetKeyWords = () => {
-
-  // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-  //   url: `/dashboard/totalMessage`,
-  //   method: 'GET',
-  //   data: {
-  //     reload: reload
-  //   }
-  // })
-
-  const response : any[] = [];
-
-  for (let i = 0; i<7; i++ ) {
-    response.push({
-      id: i + 1, 
-      keyword: 'keyword name',
-      message: 200,
-      engagement: 20000,
-      accounts: 200,
-      average_message: 93.2, 
-      average_engagement: 967.3
-    })
-  }
-  
   return {
     resultKeywords: response || null,
-
-    // loadingFilterData: loading,
-    // errorFilterData: error
+    loadingFilterData: loading,
+    errorFilterData: error
   }
 }
 
-export const GetTopKeywords = () => {
+export const GetTopKeywords = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
 
-  // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-  //   url: `/dashboard/totalMessage`,
-  //   method: 'GET',
-  //   data: {
-  //     reload: reload
-  //   }
-  // })
-
-  const main_keyword : any[] = [];
-  const top_sites : any[] = [];
-  const top_hastag : any[] = [];
-
-
-  for (let i = 0; i<7; i++ ) {
-    main_keyword.push({
-      id: i+1,
-      keyword: 'keywordName',
-      no_of_message: 200,
-      percentage: 18
-    });
-    top_sites.push({
-      id: i+1,
-      site_domain: 'www.google.com',
-      no_of_message: 4000,
-      percentage: 18
-    });
-    top_hastag.push({
-      id: i+1,
-      hashtag: '#hashtag2',
-      no_of_message: 400,
-      percentage: 8
-    })
-  };
-
-  const response = {
-    data : {
-      main_keyword: main_keyword, 
-      top_sites: top_sites,
-      top_hastag: top_hastag
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard/keyword-summary-top`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      source: platformId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period
+    },
+    data: {
+      reload: reload
     }
-  }
-  
+  })
+
   return {
     resultTopKeywords: response?.data || null,
-
-    // loadingFilterData: loading,
-    // errorFilterData: error
+    loadingFilterData: loading,
+    errorFilterData: error
   }
 }
 
-export const GetSentimentScore = () => {
+export const GetSentimentScore = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
 
-  // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-  //   url: `/dashboard/totalMessage`,
-  //   method: 'GET',
-  //   data: {
-  //     reload: reload
-  //   }
-  // })
-
-  const response = {
-    data:  {
-      neutral_value : 3.50,
-      sentiment_percentage : 65, 
-      pervious_sentiment: 2.3
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard/sentiment-score`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      source: platformId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period
+    },
+    data: {
+      reload: reload
     }
-  }
+  })
 
   return {
     resultSentimentScore: response?.data || null,
-
-    // loadingFilterData: loading,
-    // errorFilterData: error
+    loadingFilterData: loading,
+    errorFilterData: error
   }
 }
 
-export const GetSentimentType = () => {
+export const GetSentimentType = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
 
-  // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-  //   url: `/dashboard/totalMessage`,
-  //   method: 'GET',
-  //   data: {
-  //     reload: reload
-  //   }
-  // })
-
-  const response = {
-    data:  {
-      positive_percentage : 10,
-      neutral_percentage: 50,
-      negative_percentage: 40
-  }
-  }
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard/sentiment-type`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      source: platformId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period
+    },
+    data: {
+      reload: reload
+    }
+  })
 
   return {
     resultSentimentType: response?.data || null,
+    loadingFilterData: loading,
+    errorFilterData: error
+  }
+}
 
-    // loadingFilterData: loading,
-    // errorFilterData: error
+export const GetShareOfVoice = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
+
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard/share-of-voice`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      source: platformId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period
+    },
+    data: {
+      reload: reload
+    }
+  })
+
+  return {
+    resultShareOfVoice: response?.data || null,
+    loadingShareOfVoice: loading,
+    errorShareOfVoice: error
+  }
+}
+
+export const GetSentimentLevel = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
+
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard/sentiment-level`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      source: platformId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period
+    },
+    data: {
+      reload: reload
+    }
+  })
+
+  return {
+    resultSentimentLevel: response?.data || null,
+    loadingSentimentLevel: loading,
+    errorSentimentLevel: error
   }
 }
