@@ -5,23 +5,25 @@ import { useState, SyntheticEvent, Fragment } from 'react'
 import { useRouter } from 'next/router'
 
 // ** MUI Imports
-import Box from '@mui/material/Box'
+// import Box from '@mui/material/Box'
 import Menu from '@mui/material/Menu'
 import Badge from '@mui/material/Badge'
 import Avatar from '@mui/material/Avatar'
-import Divider from '@mui/material/Divider'
+
+// import Divider from '@mui/material/Divider'
 import MenuItem from '@mui/material/MenuItem'
 import { styled } from '@mui/material/styles'
-import Typography from '@mui/material/Typography'
+import LogoutVariant from 'mdi-material-ui/LogoutVariant'
+
+// import Typography from '@mui/material/Typography'
 
 // ** Icons Imports
-import CogOutline from 'mdi-material-ui/CogOutline'
-import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
-import EmailOutline from 'mdi-material-ui/EmailOutline'
-import LogoutVariant from 'mdi-material-ui/LogoutVariant'
-import AccountOutline from 'mdi-material-ui/AccountOutline'
-import MessageOutline from 'mdi-material-ui/MessageOutline'
-import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
+// import CogOutline from 'mdi-material-ui/CogOutline'
+// import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
+// import EmailOutline from 'mdi-material-ui/EmailOutline'
+// import AccountOutline from 'mdi-material-ui/AccountOutline'
+// import MessageOutline from 'mdi-material-ui/MessageOutline'
+// import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
 
 // ** Context
 import { useAuth } from 'src/hooks/useAuth'
@@ -67,19 +69,19 @@ const UserDropdown = (props: Props) => {
     setAnchorEl(null)
   }
 
-  const styles = {
-    py: 2,
-    px: 4,
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    color: 'text.primary',
-    textDecoration: 'none',
-    '& svg': {
-      fontSize: '1.375rem',
-      color: 'text.secondary'
-    }
-  }
+  // const styles = {
+  //   py: 2,
+  //   px: 4,
+  //   width: '100%',
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   color: 'text.primary',
+  //   textDecoration: 'none',
+  //   '& svg': {
+  //     fontSize: '1.375rem',
+  //     color: 'text.secondary'
+  //   }
+  // }
 
   const handleLogout = () => {
     logout()
@@ -113,7 +115,7 @@ const UserDropdown = (props: Props) => {
         anchorOrigin={{ vertical: 'bottom', horizontal: direction === 'ltr' ? 'right' : 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: direction === 'ltr' ? 'right' : 'left' }}
       >
-        <Box sx={{ pt: 2, pb: 3, px: 4 }}>
+        {/* <Box sx={{ pt: 2, pb: 3, px: 4 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Badge
               overlap='circular'
@@ -132,9 +134,9 @@ const UserDropdown = (props: Props) => {
               </Typography>
             </Box>
           </Box>
-        </Box>
-        <Divider sx={{ mt: 0, mb: 1 }} />
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/user/view/12')}>
+        </Box> */}
+        {/* <Divider sx={{ mt: 0, mb: 1 }} /> */}
+        {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/user/view/12')}>
           <Box sx={styles}>
             <AccountOutline sx={{ mr: 2 }} />
             Profile
@@ -171,7 +173,7 @@ const UserDropdown = (props: Props) => {
             FAQ
           </Box>
         </MenuItem>
-        <Divider />
+        <Divider /> */}
         <MenuItem sx={{ py: 2 }} onClick={handleLogout}>
           <LogoutVariant sx={{ mr: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
           Logout

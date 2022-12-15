@@ -36,7 +36,7 @@ const SentimentGaugeChart = ({value} : {value:any}) => {
 
                     </Grid>
                     <Grid item xs={4}>
-                        <h1>{resultSentimentScore.neutral_value}</h1>
+                        <h1>{resultSentimentScore?.neutral_value}</h1>
                         <p>Neutral</p>
                     </Grid>
                 </Grid>

@@ -15,7 +15,7 @@ const MainKeyWordTable = ({mainKeyword} : Props) => {
     const [showDetail, setShowDetail] = useState<boolean>(false);
 
     return (
-        <Card>
+        <Card sx={{ maxHeight: 360,minHeight: 360 }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                 <CardHeader
                     title='Main Keyword'
@@ -37,7 +37,7 @@ const MainKeyWordTable = ({mainKeyword} : Props) => {
                 showDetail ? 
                 <TopKeywordDetail/>
                 :
-                <TableContainer sx={{ maxHeight: 250 }}>
+                <TableContainer sx={{ maxHeight: 250, minHeight: 250 }}>
                     <Table stickyHeader={true} size="small">
                         <TableHead sx={{ backgroundColor: "lightgrey !important" }}>
                             <TableCell variant="head" sx={{ backgroundColor: "white !important" }}>  </TableCell>

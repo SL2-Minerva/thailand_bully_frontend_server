@@ -10,10 +10,12 @@ import { Settings } from 'src/@core/context/settingsContext'
 
 // ** Components
 import Autocomplete from 'src/layouts/components/Autocomplete'
-import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
 import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
-import LanguageDropdown from 'src/@core/layouts/components/shared-components/LanguageDropdown'
-import NotificationDropdown from 'src/@core/layouts/components/shared-components/NotificationDropdown'
+
+// import LanguageDropdown from 'src/@core/layouts/components/shared-components/LanguageDropdown'
+// import NotificationDropdown from 'src/@core/layouts/components/shared-components/NotificationDropdown'
+// import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
+
 
 interface Props {
   hidden: boolean
@@ -24,7 +26,7 @@ interface Props {
 
 const AppBarContent = (props: Props) => {
   // ** Props
-  const { hidden, settings, saveSettings, toggleNavVisibility } = props
+  const { hidden, settings, toggleNavVisibility } = props
   
   return (
     <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -37,9 +39,9 @@ const AppBarContent = (props: Props) => {
         <Autocomplete hidden={hidden} settings={settings} />
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
-        <LanguageDropdown settings={settings} saveSettings={saveSettings} />
+        {/* <LanguageDropdown settings={settings} saveSettings={saveSettings} />
         <ModeToggler settings={settings} saveSettings={saveSettings} />
-        <NotificationDropdown settings={settings} />
+        <NotificationDropdown settings={settings} /> */}
         <UserDropdown settings={settings} />
       </Box>
     </Box>
