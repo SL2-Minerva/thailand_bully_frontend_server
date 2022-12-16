@@ -65,34 +65,31 @@ const navigation = (): VerticalNavItemsType => {
       icon: Finance,
       children: [
         {
-          title: 'Dashboards',
-          children: [
-            {
-              title: 'Overall Dashboard',
-              path: '/dashboard/overall'
-            },
-            {
-              title: 'Voice Dashboard',
-              path: '/VoiceDashboard'
-            }, 
-            {
-              title: 'Channel Dashboard', 
-              path: '/ChannelDashboard'
-            }
-          ]
+          title: 'Overall Dashboard',
+          path: '/dashboard/overall'
+        },
+        {
+          title: 'Voice Dashboard',
+          path: '/VoiceDashboard'
+        }, 
+        {
+          title: 'Channel Dashboard', 
+          path: '/ChannelDashboard'
         },
         {
           title: 'Network Graph',
           path: '/content/content-mgt/NetworkGraph'
-        },
-        {
-          title: 'Report',
-          path: '/report/report'
-        },
-        {
-          title: 'System Log Report',
-          path: '/report/system-log'
         }
+        
+        // ,
+        // {
+        //   title: 'Report',
+        //   path: '/report/report'
+        // },
+        // {
+        //   title: 'System Log Report',
+        //   path: '/report/system-log'
+        // }
       ]
     },
     {

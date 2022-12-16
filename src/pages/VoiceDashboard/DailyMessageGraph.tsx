@@ -33,8 +33,10 @@ const DailyMessageGraph = () => {
           type: 'bar',
           height: 350,
           stacked: true,
-          stackType: '100%'
+          toolbar: { show: false }
         },
+        dataLabels: { enabled: false },
+
         responsive: [{
           breakpoint: 480,
           options: {

@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react"
-import { Grid , Card, CardHeader, CardContent, InputLabel, MenuItem } from "@mui/material"
+import { Grid , Card, CardHeader, CardContent, InputLabel, MenuItem, Button } from "@mui/material"
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
 import TextField from '@mui/material/TextField'
@@ -36,6 +36,11 @@ import { FilterByCampaignId, GetSentimentLevel, GetShareOfVoice, GetTopKeywords,
 import SourceService from "src/services/api/source/SourceApi"
 import { GetSentimentType } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
+import WordCloud from "./WordCloud"
+import TotalMessageLists from "./TotalMessageLists"
+import WordCloudChannel from "./WordCloudChannel"
+import AccountList from "./AccountList"
+import WordCloudSentiment from "./WordCloudSentiment"
 
 export const calculateDate = (days: number) => {
     const today = new Date()
@@ -58,6 +63,7 @@ const OverallDashboard = () => {
     const [ disableSelectDate, setDisableSelectDate ] = useState<boolean>(true);
     const [ reload ] = useState<boolean>(false);
     const [ period, setPeriod ] = useState<string>('daily')
+    const [ topKeyword, setTopKeyword ] = useState<string>('all');
     const theme = useTheme()
 
     const whiteColor = '#fff'
@@ -85,6 +91,10 @@ const OverallDashboard = () => {
             setPlatformId(e.target.value)
         }
     }, [])
+
+    const handleTopKeywords = (data: string) => {
+        setTopKeyword(data);
+    }
 
     const handleDateSelect = useCallback((e:SelectChangeEvent) => {
         const value = e.target.value; 
@@ -364,6 +374,45 @@ const OverallDashboard = () => {
 
             <Grid item xs={12} md={4}>
                 <SentimentLevelChart sentimentLevel={resultSentimentLevel}/>
+            </Grid>
+        </Grid>
+
+        <Grid container spacing={3} mt ={2}> 
+            <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
+                <span  style={{marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
+                <Button variant="contained" color={topKeyword === '10' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }}
+                 onClick={() => {handleTopKeywords("10")}}> Top 10</Button>
+                <Button variant="contained" color={topKeyword === '20' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("20")}}> Top 20</Button>
+                <Button variant="contained" color={topKeyword === '50' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("50")}}> Top 50</Button>
+                <Button variant="contained" color={topKeyword === '100' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("100")}}> Top 100</Button>
+                <Button variant="contained" color={topKeyword === 'all' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("all")}}> ALL </Button>
+            </Grid>
+        </Grid>
+
+        <Grid container spacing={3} mt ={2}> 
+            <Grid item xs={12} md={6}>
+                <WordCloud />
+            </Grid>
+            <Grid item xs={12} md={6}>
+                <TotalMessageLists resultKeywords={resultKeywords}/>
+            </Grid>
+        </Grid>
+
+        <Grid container spacing={3} mt ={2}> 
+            <Grid item xs={12} md={6}>
+                <WordCloudChannel />
+            </Grid>
+            <Grid item xs={12} md={6}>
+                <AccountList resultKeywords={resultKeywords}/>
+            </Grid>
+        </Grid>
+        
+        <Grid container spacing={3} mt ={2}> 
+            <Grid item xs={12} md={6}>
+                <WordCloudSentiment />
+            </Grid>
+            <Grid item xs={12} md={6}>
+                <AccountList resultKeywords={resultKeywords}/>
             </Grid>
         </Grid>
     </>

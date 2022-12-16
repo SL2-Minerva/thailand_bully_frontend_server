@@ -7,7 +7,6 @@ import DatePicker from '@mui/lab/DatePicker'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DailyMessageGraph from "./DailyMessageGraph"
-import DailyMessagePercentage from "./DailyMessagePercentage"
 import InfluencerGraph from "./InfluencerGraph"
 import InfluencerComparison from "./InfluencerComparison"
 import MessageText  from 'mdi-material-ui/MessageText'
@@ -17,13 +16,30 @@ import DayTimeSentiment from "./DayTimeSentiment"
 import DayTimeBullyLevel from "./DayTimeBullyLevel"
 import DayTimeBullyType from "./DayTimeBullyType"
 import { calculateDate, get1stAndLastDayOfMonth } from "../dashboard/overall"
+import DailyMessagePieChart from "./DailyMessagesPieChart"
+import MessagesByDay from "./MessagesByDay"
+import { FilterByCampaignId } from "src/services/api/dashboards/overall/overallDashboardApi"
+import { useTheme } from '@mui/material/styles'
+
+// import DailyMessagePercentage from "./DailyMessagePercentage"
 
 
 const VoiceDashboard = () => {
+    const theme = useTheme()
+
+    const whiteColor = '#fff'
+    const lineChartYellow = '#d4e157'
+    const lineChartPrimary = '#787EFF'
+    const lineChartWarning = '#ff9800'
+    const labelColor = theme.palette.text.primary
+    const borderColor = theme.palette.action.focus
+    const gridLineColor = theme.palette.action.focus
+
     const [date, setDate] = useState<Date | null>(new Date())
     const [endDate, setEndDate] = useState<Date | null>(new Date())
     const [ dateSelect, setDateSelect ] = useState<string>("1")
     const [ disableSelectDate, setDisableSelectDate ] = useState<boolean>(true);
+    const { resultFilterData } = FilterByCampaignId("2");
 
     const handleDateSelect = useCallback((e:SelectChangeEvent) => {
         const value = e.target.value; 
@@ -151,10 +167,22 @@ const VoiceDashboard = () => {
                 </Card>
             </Grid>
             <Grid item xs={12} md={6}>
-                <DailyMessageGraph/>
+                <DailyMessagePieChart />
             </Grid>
             <Grid item xs={12} md={6}>
-                <DailyMessagePercentage />
+                <DailyMessageGraph/>
+            </Grid>
+            <Grid item xs={12} md={12}>
+                <MessagesByDay 
+                    white={whiteColor}
+                    labelColor={labelColor}
+                    success={lineChartYellow}
+                    borderColor={borderColor}
+                    primary={lineChartPrimary}
+                    warning={lineChartWarning}
+                    gridLineColor={gridLineColor}
+                    filterData={resultFilterData}
+                />
             </Grid>
             <Grid item xs={12} md={8}>
                 <InfluencerGraph />
