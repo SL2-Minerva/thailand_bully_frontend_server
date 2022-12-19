@@ -8,43 +8,31 @@ import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import { useEffect, useState } from 'react'
 
-const DayTimeSentiment = () => {
-    const series_hour = [{
-        name: '',
-        data: [10,20,30,40,50,60,70,80,90,100,10,20,30,40,50,60,70,80,90,100,10,20,30,40]
-      },
-      {
-        name: '',
-        data: [10,20,30,20,60,100,70,40,90,140,20,20,100,70,40,90,140,80,10,20,30,20,60,100]
-      },
-      {
-        name: '',
-        data: [10,20,20,20,60,100,20,20,30,20,60,100,100,70,90,100,10,80,10,20,90,140,20,20]
-      }
-    ];
+interface Props{
+  hour : any[]
+  day : any[]
+}
 
-    const series_days = [{
-        name: 'Negative',
-        data: [10,20,30,40,50,60,70]
-      },
-      {
-        name: 'Neutral',
-        data: [10,20,30,20,60,100,70]
-      },
-      {
-        name: 'Positive',
-        data: [10,20,20,20,60,100,20]
-      }
-    ];
+const DayTimeSentiment = (props : Props) => {
+
+  const {day, hour } = props;
+
+  const [seriesHour, setSeriesHour ] = useState([{name: '', data:[]}]);
+  const [seriesDays, setSeriesDays ] = useState([{name: '', data:[]}]);
 
     const options_hours : ApexOptions = {
         chart: {
           height: 200,
           type: 'heatmap',
+          toolbar: { show: false }
         },
         dataLabels: {
           enabled: false
+        },
+        xaxis: {
+          categories: ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','00'],
         },
         colors: ["#548235"]
       };
@@ -53,12 +41,34 @@ const DayTimeSentiment = () => {
         chart: {
           height: 100,
           type: 'heatmap',
+          toolbar: { show: false }
         },
         dataLabels: {
           enabled: false
         },
+        xaxis: {
+          categories: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+        },
         colors: ["#548235"]
       };
+
+      useEffect(() =>{
+        if(day) {
+          setSeriesDays(day);
+        } 
+        if (hour) {
+          const hourValue:any[] = [];
+          if(hour?.length> 0) {
+            for(let i=0; i<hour?.length; i++ ) {
+              hourValue.push({
+                name: '',
+                data: hour[i]?.data
+              })
+            }
+          }
+          setSeriesHour(hourValue);
+        }
+      }, [day, hour])
 
       return (
         <Card>
@@ -66,10 +76,10 @@ const DayTimeSentiment = () => {
             <CardContent>
                 <Grid container spacing={3}>
                     <Grid item xs={4}>
-                        <ReactApexcharts options={options_days} series={series_days} type="heatmap" height={170} />  
+                        <ReactApexcharts options={options_days} series={seriesDays} type="heatmap" height={170} />  
                     </Grid>
                     <Grid item xs={8}>
-                        <ReactApexcharts options={options_hours} series={series_hour} type="heatmap" height={170} />  
+                        <ReactApexcharts options={options_hours} series={seriesHour} type="heatmap" height={170} />  
                     </Grid>
                 </Grid>  
             </CardContent>
