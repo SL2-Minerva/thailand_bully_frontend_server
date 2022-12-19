@@ -13,71 +13,8 @@ const NetworkGraph = () => {
   const { resultNetworkGraph } = GetNetworkGraph(campaign);
 
   const initialGraph = {
-    "nodes": [
-      {
-        "id": 1,
-        "label": "Word 1",
-        "title": "Word 1 change color,shape & size",
-        "color": "#f7f0c8",
-        "shape": "dot",
-        "size": 40
-      },
-      {
-        "id": 2,
-        "label": "Word 2",
-        "title": "Word 2 tootip text",
-        "shape": "dot",
-        "size": 50
-      },
-      {
-        "id": 3,
-        "label": "Word 3",
-        "title": "Word 3 tootip text",
-        "shape": "dot",
-        "size": 40,
-        "color": "#F7CACA"
-      },
-      {
-        "id": 4,
-        "label": "Word 4",
-        "title": "Word 4 tootip text",
-        "shape": "dot"
-      },
-      {
-        "id": 5,
-        "label": "Word 5",
-        "title": "Word 5 tootip text",
-        "shape": "dot"
-      }
-    ],
-    "edges": [
-      {
-        "from": 1,
-        "to": 2,
-        "length": 200,
-        "color": "red"
-      },
-      {
-        "from": 1,
-        "to": 3,
-        "length": 250,
-        "color": "blue"
-      },
-      {
-        "from": 2,
-        "to": 4,
-        "length": 150,
-        "color": "brown"
-      },
-      {
-        "from": 2,
-        "to": 5
-      },
-      {
-        "from": 6,
-        "to": 3
-      }
-    ]
+    "nodes": [],
+    "edges": []
   };
   const [ graph, setGraph ] = useState(initialGraph);
 
@@ -105,10 +42,19 @@ const NetworkGraph = () => {
 
   useEffect(() => {
     if (resultNetworkGraph) {
-      setGraph(resultNetworkGraph)
+      setGraph(resultNetworkGraph);
+
+      // const values = resultNetworkGraph?.nodes;
+      // const lookup = values.reduce((a :any, e :any) => {
+      //   a[e.id] = ++a[e.id] || 0;
+
+      //   return a;
+      // }, {});
+      
+      // console.log("filter duplicate ids", values.filter((e:any) => lookup[e.id]));
     }
   },[resultCampaiganList, resultNetworkGraph]);
-  
+
   return (
     <>
       <Grid container spacing={3}>

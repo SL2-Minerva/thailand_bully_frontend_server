@@ -1,5 +1,4 @@
 import { Button, Card, CardContent, CardHeader } from '@mui/material'
-import moment from 'moment'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -15,45 +14,53 @@ interface LineProps {
     borderColor: string
     gridLineColor: string
     filterData: any
+    type: string
   }
   
   const chartLabel = (data:any) => {
     if(!data) return [];
     
-    const labels : string[] = [];
-    for(let i = 0 ; i<data?.length; i++) {
-      const label = data[i]?.value;
-      labels.push(moment(label[0].date_m).format('DD/MM'));
-  
-      // for(let j=0; j<data[i]?.value?.length ; j++ ) {
-         
-      // } 
+    let labels : string[] = [];
+    if(data) {
+      labels = data.labels;
     }
   
     return labels;
   }
 
+  const getTitle = (title: string) => {
+    if(!title) return "";
+
+    let cardTitle = "";
+    if (title === "day") {
+      cardTitle = "Message by Day"
+    } else if (title === "time") {
+      cardTitle = "Message by Time"
+    } else if(title === "device") {
+      cardTitle = "Message by Devices"
+    } else if(title === "account") {
+      cardTitle = "Message by Account"
+    } else if(title === "channel") {
+      cardTitle = "Message by Channel"
+    } else if(title === "sentiment") {
+      cardTitle = "Message by Sentiment"
+    } else if(title === "bullyType") {
+      cardTitle = "Message by Bully Type"
+    } else if(title === "bullyLevel") {
+      cardTitle = "Message by Bully Level"
+    } else {
+      cardTitle = ""
+    }
+
+    return cardTitle;
+  }
+
 const MessagesByDay = (props: LineProps) => {
 
-  const { white, labelColor,primary,  borderColor, gridLineColor, filterData } = props
+  const { white, labelColor,primary,  borderColor, gridLineColor, filterData, type } = props
 
-    // const data = {
-    //     labels: ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"],
-    //     datasets: [{
-    //         axis: 'y',
-    //         label: 'Number of Messages',
-    //         data: [65, 59, 80, 81, 56, 55, 40],
-    //         fill: false,
-    //         backgroundColor: ['rgb(54, 162, 235)'],
-    //         borderColor: [
-    //         'rgb(54, 162, 235)'
-    //         ],
-    //         borderWidth: 1
-    //     }]
-    // };  
-
-    const [ label, setLabel ] = useState<string[]>([]);
-     const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
+  const [ label, setLabel ] = useState<string[]>([]);
+  const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
 
   const chartRef = useRef();
@@ -122,16 +129,15 @@ const MessagesByDay = (props: LineProps) => {
     let keywordName = "";
     const returnData : StackChartDataset[] = [];
     const color = ['#FF80AA','#36a2eb','#7FFFD4', '#A52A2A', '#29A6A6', '#FFA500',primary]
-    for(let i = 0 ; i<data?.length; i++) {
+    for(let i = 0 ; i<data?.value?.length; i++) {
       totalAmount = []
-      const total = data[i]?.value;
+      const total = data?.value;
     
-      for(let j=0; j<data[i]?.value?.length ; j++ ) {
-        totalAmount.push(total[j].total_at_date);
+      for(let j=0; j<total[i]?.data?.length ; j++ ) {
+        totalAmount.push(total[i]?.data[j]);
       } 
       
-      keywordName = data[i].keyword_name;
-
+      keywordName = data?.value[i]?.keyword_name;
       const chartDataset : StackChartDataset  = {
         fill: false,
         tension: 0.5,
@@ -157,7 +163,7 @@ const MessagesByDay = (props: LineProps) => {
 
     useEffect(() => {
         if(filterData) {
-        const dailyMessageData = filterData?.daily_message;
+        const dailyMessageData = filterData;
         if(dailyMessageData) {
             const labels = chartLabel(dailyMessageData);
             setLabel(labels);
@@ -177,9 +183,8 @@ const MessagesByDay = (props: LineProps) => {
         <Card>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <CardHeader
-          title='Daily Message'
+          title={getTitle(type)}
           titleTypographyProps={{ variant: 'h6' }}
-          subheader='KeyWords'
           subheaderTypographyProps={{ variant: 'caption' }}
         />
         {

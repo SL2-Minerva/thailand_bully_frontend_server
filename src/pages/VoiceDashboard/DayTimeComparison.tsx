@@ -7,52 +7,35 @@ import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import { useEffect, useState } from 'react'
 
-const DayTimeComparison = () => {
+const DayTimeComparison = ({dayTimeComparison} : {dayTimeComparison: any}) => {
 
-    const series = [{
-        name: 'Mon.',
-        data: [10,20,30,40,50,60,70,80,90,100,10,20,30,40,50,60,70,80,90,100,10,20,30,40]
-      },
-      {
-        name: 'Tue.',
-        data: [10,20,30,20,60,100,70,40,90,140,20,20,100,70,40,90,140,80,10,20,30,20,60,100]
-      },
-      {
-        name: 'Wed.',
-        data: [10,20,20,20,60,100,20,20,30,20,60,100,100,70,90,100,10,80,10,20,90,140,20,20]
-      },
-      {
-        name: 'Thu.',
-        data: [10,20,20,20,60,100,20,20,30,20,60,100,100,70,90,100,10,80,10,20,90,140,20,20]
-      },
-      {
-        name: 'Fri.',
-        data: [10,20,30,40,50,60,70,80,90,100,10,20,30,40,50,60,70,80,90,100,10,20,30,40]
-      },
-      {
-        name: 'Sat.',
-        data: [10,20,30,20,60,100,70,40,90,140,20,20,100,70,40,90,140,80,10,20,30,20,60,100]
-      },
-      {
-        name: 'Sun.',
-        data: [10,20,20,20,60,100,20,20,30,20,60,100,100,70,90,100,10,80,10,20,90,140,20,20]
-      }
-    ];
+    const [series, setSeries] = useState([]) ;
 
     const options : ApexOptions = {
         chart: {
           height: 350,
           type: 'heatmap',
+          toolbar: { show: false }
         },
         dataLabels: {
           enabled: false
         },
         colors: ["#548235"],
+        xaxis: {
+          categories: ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','00']
+        },
         title: {
           text: 'Day&Time'
         },
       };
+
+      useEffect(() => {
+        if(dayTimeComparison) {
+          setSeries(dayTimeComparison);
+        }
+      }, [dayTimeComparison])
 
       return (
         <Card>

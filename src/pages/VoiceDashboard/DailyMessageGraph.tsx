@@ -8,25 +8,36 @@ import { ApexOptions } from 'apexcharts'
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 
-const DailyMessageGraph = () => {
+export const getSeries = (seriesData: any) => {
+  if(!seriesData) return [];
+
+  const series : any[] = [];
+  if (seriesData && seriesData?.length>0) {
+    for(let i= 0 ; i<seriesData?.length; i++) {
+      series.push({
+        name: seriesData[i].name,
+        data: seriesData[i].data
+      })
+    }
+  }
+
+  return series;
+}
+
+export const getXaxisData = (seriesData: any) => {
+  if(!seriesData) return [];
+
+  let data : any[] = [];
+  if (seriesData && seriesData?.length>0) {
+      data = seriesData[0]?.date
+  }
+
+  return data;
+}
+
+const DailyMessageGraph = ({dailyMessages}: {dailyMessages: any}) => {
     
-    const series = [{
-        name: 'Keyword 1',
-        data: [44, 55, 41, 67, 22, 43, 21, 49]
-      }, {
-        name: 'Keyword 2',
-        data: [13, 23, 20, 8, 13, 27, 33, 12]
-      }, {
-        name: 'Keyword 3',
-        data: [11, 17, 15, 15, 21, 14, 15, 13]
-      }, {
-        name: 'Keyword 4',
-        data: [44, 55, 41, 67, 22, 43, 21, 49]
-      }, {
-        name: 'Keyword 5',
-        data: [13, 23, 20, 8, 13, 27, 33, 12]
-      }
-    ] ;
+    const series = getSeries(dailyMessages);
 
     const options : ApexOptions = {
         chart: {
@@ -48,9 +59,7 @@ const DailyMessageGraph = () => {
           }
         }],
         xaxis: {
-          categories: ['01/10/2022', '02/10/2022', '03/10/2022', '04/10/2022', '05/10/2022', '06/10/2022',
-            '07/10/2022', '08/10/2022'
-          ],
+          categories: getXaxisData(dailyMessages),
         },
         colors : ['#ed7d31', '#ffc000', '#5b9bd5', '#70ad47', '#c00000'],
         fill: {

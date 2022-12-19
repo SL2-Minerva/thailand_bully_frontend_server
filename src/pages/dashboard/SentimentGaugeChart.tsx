@@ -25,6 +25,7 @@ const SentimentGaugeChart = ({value} : {value:any}) => {
 
                         <GaugeChart 
                             id="gauge-chart"
+                            animate={false} 
                              nrOfLevels={value}
                              arcsLength={[0.5, 0.3, 0.2]}
                              colors={['#5BE12C', '#F5CD19', '#EA4228']}

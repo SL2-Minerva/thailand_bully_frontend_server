@@ -25,16 +25,16 @@ interface InfluencerComparisonProps {
     icon: ReactNode
     color?: ThemeColor
     trendNumber: string
-    trend?: 'positive' | 'negative'
+    trend?: string
     totalText: string,
-    totalValue : string
+    totalValue : number
   }
 
 const InfluencerComparison = (props: InfluencerComparisonProps) => {
   // ** Props
   const { color, icon, trend, trendNumber, totalText, totalValue } = props
 
-  const TrendIcon = trend === 'positive' ? ChevronUp : ChevronDown
+  const TrendIcon = trend === 'plus' ? ChevronUp : ChevronDown
 
   return (
     <Card>
@@ -49,7 +49,7 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
                 <Grid item xs={5}>
                     <Typography variant='body2' mt={4}>
                         <Typography variant='h4'>
-                            {totalValue}
+                            {trend === 'plus' ? "+" : "-"}{totalValue}
                         </Typography>
                         <h4> {totalText} </h4>
                     </Typography>
@@ -58,10 +58,10 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
                     <Typography variant='body2' mt={4}>
                         <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <Typography variant='h4' sx={{ color: trend === 'positive' ? 'success.main' : 'error.main' }}>
-                                    {trendNumber}
+                                <Typography variant='h4' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
+                                    {trendNumber + "%"}
                                 </Typography>
-                                <TrendIcon fontSize='large' sx={{ color: trend === 'positive' ? 'success.main' : 'error.main' }} />
+                                <TrendIcon fontSize='large' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }} />
                             </Box>
                         </Box>
                         
