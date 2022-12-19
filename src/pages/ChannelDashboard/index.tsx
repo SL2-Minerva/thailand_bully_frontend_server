@@ -5,7 +5,8 @@ import ChannelComparison from "./ChannelComparison"
 import ChannelVsDevice from "./ChannelVsDevice"
 import DeviceComparison from "./DeviceComparison"
 import EngagementTransaction from "./EngagementTransaction"
-import KeywordComparisonByChannel from "./KeywordComparison"
+
+// import KeywordComparisonByChannel from "./KeywordComparison"
 import KeywordComparisonByBullyLevel from "./KeywordComparisonByBullyLevel"
 import KeywordComparisonByBullyType from "./KeywordComparisonByBullyType"
 import KeywordComparisonBySentiment from "./KeywordComparisonBySentiment"
@@ -41,7 +42,7 @@ const ChannelDashboard = () => {
                     <BullyType />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <KeywordComparisonByChannel />
+                    {/* <KeywordComparisonByChannel /> */}
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <KeywordComparisonBySentiment />

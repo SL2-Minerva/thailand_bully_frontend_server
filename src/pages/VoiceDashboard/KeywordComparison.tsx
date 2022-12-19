@@ -23,7 +23,9 @@ const KeywordComparisonByChannel = ({resultKeywordComparisonByChannel} : {result
               blur: 1,
               left: 1,
               top: 1
-            }
+            },
+            toolbar: {show: false}
+
           },
           stroke: {
             width: 2
@@ -36,7 +38,8 @@ const KeywordComparisonByChannel = ({resultKeywordComparisonByChannel} : {result
           },
           xaxis: {
             categories: labels
-          }
+          },
+          colors: ["#787EFF", 'green', 'yellow', 'pink', 'purple', 'red']
         };
       
         useEffect(() => {

@@ -1,6 +1,46 @@
 import moment from 'moment'
 import { CallAPI } from 'src/services/CallAPI'
 
+export const GetPercentageMessage = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean) => {
+
+  // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+  //   url: `/dashboard/key-stats`,
+  //   method: 'GET',
+  //   params :{
+  //     campaign_id: campaignId || "",
+  //     source: platformId || "",
+  //     start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+  //     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+  //     period: period
+  //   },
+  //   data: {
+  //     reload: reload
+  //   }
+  // })
+
+  const response = {
+      data: {
+          previous_period: {
+            labels: ["keyword1", "keyword2", "keyword3"],
+            data: [395,285,484],
+            total: 57392
+          },
+          current_period: {
+            labels: ["keyword1", "keyword2", "keyword3"],
+            data: [623,384,282],
+            total: 38273
+          }
+      }
+  }
+
+  return {
+    resultPercentageMessage: response?.data || null,
+
+  //   loadingTotalKeystats: loading,
+  //   errorTotalKeystats: error
+  }
+}
+
 export const GetDailyMessages = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
 
     // const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
@@ -843,6 +883,323 @@ export const GetDayTimeByBullyType = (campaignId?: string, start_date?: any, end
     resultDayByBullyType: response?.data?.day_value || null,
     resultTimeByBullyType: response?.data?.time_value || null,
 
+
+  //   loadingTotalKeystats: loading,
+  //   errorTotalKeystats: error
+  }
+}
+
+export const GetPlatformsComparison = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean) => {
+
+  // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+  //   url: `/dashboard/key-stats`,
+  //   method: 'GET',
+  //   params :{
+  //     campaign_id: campaignId || "",
+  //     source: platformId || "",
+  //     start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+  //     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+  //     period: period
+  //   },
+  //   data: {
+  //     reload: reload
+  //   }
+  // })
+
+  const response = {
+      data: {
+          previous_period: {
+            labels: ["Facebook", "Instagram", "Pantip", "Twitter", "Youtube"],
+            data: [395,285,484, 291, 499],
+            total: 57392
+          },
+          current_period: {
+            labels: ["Facebook", "Instagram", "Pantip", "Twitter", "Youtube"],
+            data: [623,384,282, 483,823],
+            total: 38273
+          }
+      }
+  }
+
+  return {
+    resultPlatformComparison: response?.data || null,
+
+  //   loadingTotalKeystats: loading,
+  //   errorTotalKeystats: error
+  }
+}
+
+export const GetDevicesComparison = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean) => {
+
+  // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+  //   url: `/dashboard/key-stats`,
+  //   method: 'GET',
+  //   params :{
+  //     campaign_id: campaignId || "",
+  //     source: platformId || "",
+  //     start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+  //     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+  //     period: period
+  //   },
+  //   data: {
+  //     reload: reload
+  //   }
+  // })
+
+  const response = {
+      data: {
+          previous_period: {
+            labels: ["Andriod", "Iphone", "Web App"],
+            data: [395, 291, 499],
+            total: 7392
+          },
+          current_period: {
+            labels: ["Andriod", "Iphone", "Web App"],
+            data: [623, 483,823],
+            total: 3273
+          }
+      }
+  }
+
+  return {
+    resultDevicesComparison: response?.data || null,
+
+  //   loadingTotalKeystats: loading,
+  //   errorTotalKeystats: error
+  }
+}
+
+export const GetDeviceVsChannel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean) => {
+
+  // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+  //   url: `/dashboard/key-stats`,
+  //   method: 'GET',
+  //   params :{
+  //     campaign_id: campaignId || "",
+  //     source: platformId || "",
+  //     start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+  //     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+  //     period: period
+  //   },
+  //   data: {
+  //     reload: reload
+  //   }
+  // })
+
+  const response = {
+      data: {
+          labels: [
+            ['Andriod', 'Facebook'],
+            ['iPhone', 'Twitter'],
+            ['Web', 'Youtube']
+          ],
+          data: [ 44, 50, 6 ]
+      }
+  }
+
+  return {
+    resultDeviceVsChannel: response?.data || null,
+
+  //   loadingTotalKeystats: loading,
+  //   errorTotalKeystats: error
+  }
+}
+
+export const GetKeywordComparisonByChannel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean) => {
+
+  // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+  //   url: `/dashboard/key-stats`,
+  //   method: 'GET',
+  //   params :{
+  //     campaign_id: campaignId || "",
+  //     source: platformId || "",
+  //     start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+  //     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+  //     period: period
+  //   },
+  //   data: {
+  //     reload: reload
+  //   }
+  // })
+
+  const response = {
+      data: {
+          labels: ['Facebook', 'Pantip', 'Twitter', 'Youtube', 'Instagram' ],
+          data: [{
+            name: 'All',
+            data : [45,28,45,98,73]
+          }
+          ,{
+            name: 'Keyword 1',
+            data: [80, 50, 30, 40, 100],
+          }, {
+            name: 'Keyword 2',
+            data: [20, 30, 40, 80, 20],
+          }, {
+            name: 'Keyword 3',
+            data: [44, 76, 78, 13, 43],
+          }, {
+            name: 'Keyword 4',
+            data: [20, 30, 48, 23, 53],
+          }, {
+            name: 'Keyword 5',
+            data: [45, 26, 38, 53, 13],
+        }]
+      }
+  }
+
+  return {
+    resultKeywordComparisonByChannel: response?.data || null,
+
+  //   loadingTotalKeystats: loading,
+  //   errorTotalKeystats: error
+  }
+}
+
+export const GetKeywordComparisonBySentiment = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean) => {
+
+  // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+  //   url: `/dashboard/key-stats`,
+  //   method: 'GET',
+  //   params :{
+  //     campaign_id: campaignId || "",
+  //     source: platformId || "",
+  //     start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+  //     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+  //     period: period
+  //   },
+  //   data: {
+  //     reload: reload
+  //   }
+  // })
+
+  const response = {
+      data: {
+          labels: ['Positive', 'Negative', 'Neutral' ],
+          data: [{
+            name: 'All',
+            data: [100, 150, 200],
+          },{
+            name: 'Keyword 1',
+            data: [80, 50, 100],
+          }, {
+            name: 'Keyword 2',
+            data: [20, 40, 10]
+          }, {
+            name: 'Keyword 3',
+            data: [44, 76, 45],
+          }, {
+            name: 'Keyword 4',
+            data: [20, 30, 12],
+          }, {
+            name: 'Keyword 5',
+            data: [45, 26, 30],
+        }]
+      }
+  }
+
+  return {
+    resultKeywordComparisonBySentiment: response?.data || null,
+
+  //   loadingTotalKeystats: loading,
+  //   errorTotalKeystats: error
+  }
+}
+
+export const GetKeywordComparisonByBullyLevel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean) => {
+
+  // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+  //   url: `/dashboard/key-stats`,
+  //   method: 'GET',
+  //   params :{
+  //     campaign_id: campaignId || "",
+  //     source: platformId || "",
+  //     start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+  //     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+  //     period: period
+  //   },
+  //   data: {
+  //     reload: reload
+  //   }
+  // })
+
+  const response = {
+      data: {
+          labels: ['Level 0', 'Level 1', 'Level 2', 'Level 3'],
+          data: [{
+            name: 'All',
+            data: [100, 150, 200, 150],
+          },{
+            name: 'Keyword 1',
+            data: [80, 50, 100, 49],
+          }, {
+            name: 'Keyword 2',
+            data: [20, 40, 10, 19]
+          }, {
+            name: 'Keyword 3',
+            data: [44, 76, 45, 100],
+          }, {
+            name: 'Keyword 4',
+            data: [20, 30, 12, 30],
+          }, {
+            name: 'Keyword 5',
+            data: [45, 26, 30, 80]
+        }]
+      }
+  }
+
+  return {
+    resultKeywordComparisonByBullyLevel: response?.data || null,
+
+  //   loadingTotalKeystats: loading,
+  //   errorTotalKeystats: error
+  }
+}
+
+export const GetKeywordComparisonByBullyType = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean) => {
+
+  // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+  //   url: `/dashboard/key-stats`,
+  //   method: 'GET',
+  //   params :{
+  //     campaign_id: campaignId || "",
+  //     source: platformId || "",
+  //     start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+  //     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+  //     period: period
+  //   },
+  //   data: {
+  //     reload: reload
+  //   }
+  // })
+
+  const response = {
+      data: {
+          labels: ['No Bully', 'Gossip', 'Harassment', 'Exclusion', 'Hate Speech'],
+          data: [{
+            name: 'All',
+            data : [45,28,45,98,73]
+          },{
+            name: 'Keyword 1',
+            data: [80, 50, 100, 49, 60],
+          }, {
+            name: 'Keyword 2',
+            data: [20, 40, 10, 19, 100]
+          }, {
+            name: 'Keyword 3',
+            data: [44, 76, 45, 100, 30],
+          }, {
+            name: 'Keyword 4',
+            data: [20, 30, 12, 30, 80],
+          }, {
+            name: 'Keyword 5',
+            data: [45, 26, 30, 80, 100 ]
+        }]
+      }
+  }
+
+  return {
+    resultKeywordComparisonByBullyType: response?.data || null,
 
   //   loadingTotalKeystats: loading,
   //   errorTotalKeystats: error

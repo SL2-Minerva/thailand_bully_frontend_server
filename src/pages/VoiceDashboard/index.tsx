@@ -21,7 +21,14 @@ import MessagesByDay from "./MessagesByDay"
 import { CampaignList } from "src/services/api/campaign/CampaignAPI"
 import { useTheme } from '@mui/material/styles'
 import { GetDailyMessages, GetMessagesByDay, GetMessagesByTime,GetMessagesByDevice,
-    GetMessagesByChannel, GetMessagesBySentiment, GetMessagesByAccount, GetMessagesByBullyLevel, GetMessagesByBullyType, GetNumbersOfAccounts, GetComparison, GetDayTimeComparison, GetDayTimeBySentiment, GetDayTimeByBullyLevel, GetDayTimeByBullyType } from "src/services/api/dashboards/voice/VoiceDashboardAPIs"
+    GetMessagesByChannel, GetMessagesBySentiment, GetMessagesByAccount, GetMessagesByBullyLevel, GetMessagesByBullyType, GetNumbersOfAccounts, GetComparison, GetDayTimeComparison, GetDayTimeBySentiment, GetDayTimeByBullyLevel, GetDayTimeByBullyType, GetPlatformsComparison, GetDevicesComparison, GetDeviceVsChannel, GetKeywordComparisonByChannel, GetKeywordComparisonBySentiment, GetKeywordComparisonByBullyLevel, GetKeywordComparisonByBullyType, GetPercentageMessage } from "src/services/api/dashboards/voice/VoiceDashboardAPIs"
+import PlatformsComparison from "./PlatformsComparison"
+import DevicesComparison from "./DevicesComparison"
+import ChannelVsDevice from "./ChannelVsDevice"
+import KeywordComparisonByChannel from "./KeywordComparison"
+import KeywordComparisonBySentiment from "./KeywordComparisonBySentiment"
+import KeywordComparisonByBullyLevel from "./KeywordComparisonByBullyLevel"
+import KeywordComparisonByBullyType from "./KeywordComparisonByBullyType"
 
 // import DailyMessagePercentage from "./DailyMessagePercentage"
 
@@ -58,6 +65,14 @@ const VoiceDashboard = () => {
     const { resultDayBySentiment, resultTimeBySentiment } = GetDayTimeBySentiment(campaign, date, endDate, period);
     const { resultTimeByBullyLevel, resultDayByBullyLevel } = GetDayTimeByBullyLevel(campaign, date, endDate, period);
     const { resultDayByBullyType, resultTimeByBullyType } = GetDayTimeByBullyType(campaign, date, endDate, period);
+    const {  resultPlatformComparison } = GetPlatformsComparison(campaign, date, endDate, period);
+    const { resultDevicesComparison } = GetDevicesComparison(campaign, date, endDate, period);
+    const { resultDeviceVsChannel } = GetDeviceVsChannel(campaign, date, endDate, period);
+    const { resultKeywordComparisonByChannel } = GetKeywordComparisonByChannel(campaign, date, endDate, period);
+    const { resultKeywordComparisonBySentiment } = GetKeywordComparisonBySentiment(campaign, date, endDate, period);
+    const { resultKeywordComparisonByBullyType } = GetKeywordComparisonByBullyType(campaign, date, endDate, period);
+    const { resultKeywordComparisonByBullyLevel } = GetKeywordComparisonByBullyLevel(campaign, date, endDate, period);
+    const { resultPercentageMessage } = GetPercentageMessage(campaign, date, endDate, period);
     const { resultCampaiganList } = CampaignList();
 
     const handleDateSelect = useCallback((e:SelectChangeEvent) => {
@@ -207,7 +222,7 @@ const VoiceDashboard = () => {
                 </Card>
             </Grid>
             <Grid item xs={12} md={6}>
-                <DailyMessagePieChart />
+                <DailyMessagePieChart resultPercentageMessage={resultPercentageMessage}/>
             </Grid>
             <Grid item xs={12} md={6}>
                 <DailyMessageGraph dailyMessages={resultDailyMessage}/>
@@ -353,6 +368,28 @@ const VoiceDashboard = () => {
             <Grid item xs={12}>
                 <DayTimeBullyType day={resultDayByBullyType} hour={resultTimeByBullyType}/>
             </Grid>
+
+            <Grid item xs={4}>
+                <PlatformsComparison resultPlatformComparison={resultPlatformComparison} />
+            </Grid>
+            <Grid item xs={4}>
+                <DevicesComparison resultDevicesComparison={resultDevicesComparison} />
+            </Grid>
+            <Grid item xs={4}>
+                <ChannelVsDevice resultDeviceVsChannel={resultDeviceVsChannel} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+                    <KeywordComparisonByChannel resultKeywordComparisonByChannel={resultKeywordComparisonByChannel} />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    <KeywordComparisonBySentiment resultKeywordComparisonBySentiment={resultKeywordComparisonBySentiment} />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    <KeywordComparisonByBullyLevel resultKeywordComparisonByBullyLevel={resultKeywordComparisonByBullyLevel}/>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    <KeywordComparisonByBullyType resultKeywordComparisonByBullyType={resultKeywordComparisonByBullyType}/>
+                </Grid>
         </Grid>
     )
 

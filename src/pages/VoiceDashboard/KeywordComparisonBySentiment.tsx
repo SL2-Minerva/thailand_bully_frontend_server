@@ -9,10 +9,9 @@ import { ApexOptions } from 'apexcharts'
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { useEffect, useState } from 'react'
 
-const KeywordComparisonByChannel = ({resultKeywordComparisonByChannel} : {resultKeywordComparisonByChannel:any}) => {
-    
-    const [series, setSeries] = useState([]);
-    const [labels, setLabels] = useState([]);
+const KeywordComparisonBySentiment = ({resultKeywordComparisonBySentiment} : {resultKeywordComparisonBySentiment:any}) => {
+  const [series, setSeries] = useState([]);
+  const [labels, setLabels] = useState([]);
 
     const options: ApexOptions = {
         chart: {
@@ -23,7 +22,8 @@ const KeywordComparisonByChannel = ({resultKeywordComparisonByChannel} : {result
               blur: 1,
               left: 1,
               top: 1
-            }
+            },
+            toolbar: {show: false}
           },
           stroke: {
             width: 2
@@ -36,20 +36,20 @@ const KeywordComparisonByChannel = ({resultKeywordComparisonByChannel} : {result
           },
           xaxis: {
             categories: labels
-          }
+          },
+          colors: ["#787EFF", 'green', 'yellow', 'pink', 'purple', 'red']
         };
-      
         useEffect(() => {
-            if (resultKeywordComparisonByChannel) {
-              setLabels(resultKeywordComparisonByChannel?.labels);
-              setSeries(resultKeywordComparisonByChannel?.data);
-            }
-        },[resultKeywordComparisonByChannel]);
-    
+          if (resultKeywordComparisonBySentiment) {
+            setLabels(resultKeywordComparisonBySentiment?.labels);
+            setSeries(resultKeywordComparisonBySentiment?.data);
+          }
+      },[resultKeywordComparisonBySentiment]);
+
     return (
         <Card>
             <CardHeader 
-                title='Percentage of Keyword Comparison By Channel'
+                title='Percentage of Keyword Comparison By Sentiment'
                 titleTypographyProps={{ variant: 'h6' }}
             />
             <CardContent>
@@ -59,4 +59,4 @@ const KeywordComparisonByChannel = ({resultKeywordComparisonByChannel} : {result
     )
 }
 
-export default KeywordComparisonByChannel
+export default KeywordComparisonBySentiment

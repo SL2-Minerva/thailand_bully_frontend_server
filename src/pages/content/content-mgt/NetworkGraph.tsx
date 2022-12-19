@@ -26,7 +26,7 @@ const NetworkGraph = () => {
       color: "#000000",
       dashes: false
     },
-    height: "500px"
+    height: "700px"
   };
   
   // const events = {
@@ -43,6 +43,23 @@ const NetworkGraph = () => {
   useEffect(() => {
     if (resultNetworkGraph) {
       setGraph(resultNetworkGraph);
+
+      // const edges :any = [];
+      // for(let i = 0; i< resultNetworkGraph?.edges?.length; i++) {
+      //   edges.push({
+      //     color: resultNetworkGraph?.edges[i].color,
+      //     from:resultNetworkGraph?.edges[i].from,
+      //     length: resultNetworkGraph?.edges[i].length, 
+      //     to:resultNetworkGraph?.edges[i].to,
+      //     width: 5
+      //   })
+      // }
+
+      // const data = {
+      //   edges: edges,
+      //   nodes: resultNetworkGraph.nodes
+      // }
+      // setGraph(data);
 
       // const values = resultNetworkGraph?.nodes;
       // const lookup = values.reduce((a :any, e :any) => {
