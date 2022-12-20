@@ -94,7 +94,7 @@ const KeyStatusReport = (props: KeyStatusProps) => {
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
             <Typography variant='h4' sx={{ mb: 1 }}>
-                {type === 'plus' ? "+" : "-"}{stats}
+                {stats}
             </Typography>
 
             <Box sx={{ display: 'flex', alignItems: 'center' }}>

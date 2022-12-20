@@ -70,7 +70,7 @@ const LayoutAppBar = (props: Props) => {
   }
 
   return (
-    <AppBar elevation={0} color='default' className='layout-navbar' position={appBar === 'fixed' ? 'sticky' : 'static'}>
+    <AppBar elevation={0} color='default' className='layout-navbar' position={appBar === 'fixed' ? 'static' : 'sticky' }>
       <Toolbar
         className='navbar-content-container'
         sx={{

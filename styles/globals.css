@@ -33,6 +33,15 @@ code[class*='language-'] {
   height: auto;
 }
 
-.quill-height {
-  
+.vertical-text {
+	transform: rotate(90deg);
+	transform-origin: right top 0;
+  color: white;
+  right: 0;
+  top: 50%;
+  display: 'flex';
+  cursor: 'pointer';
+  position: 'fixed';
+  padding: 0;
+  transform: 'translateY(-50%)'
 }

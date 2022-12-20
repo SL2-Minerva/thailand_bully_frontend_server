@@ -72,8 +72,10 @@ const SentimentLevelChart = ({sentimentLevel} : {sentimentLevel: any}) => {
       type: 'bar',
       height: 350,
       stacked: true,
-      stackType: '100%'
+      stackType: '100%',
+      toolbar: {show: false}
     },
+    dataLabels: { enabled: false },
     plotOptions: {
       bar: {
         horizontal: true,

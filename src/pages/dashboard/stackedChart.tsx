@@ -9,8 +9,9 @@ import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment';
 import DailyMessageDetail from './DailyMessageDetail'
-import { Button } from '@mui/material'
-import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
+
+// import { Button } from '@mui/material'
+// import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
 
 interface LineProps {
   white: string
@@ -49,6 +50,7 @@ const StackedChart = (props: LineProps) => {
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
+  const [current, setCurrent] = useState<any>({})
 
   const chartRef = useRef();
   const onClick = (event : any) => {
@@ -57,12 +59,13 @@ const StackedChart = (props: LineProps) => {
       console.log(getElementAtEvent(chartRef.current, event));
       console.log(getElementsAtEvent(chartRef.current, event));
       setShowDetail(true);
+      setCurrent({})
     }
   }
 
-  const showMessageDetail = () => {
-    setShowDetail(false);
-  }
+  // const showMessageDetail = () => {
+  //   setShowDetail(false);
+  // }
 
   const options = {
     responsive: true,
@@ -176,25 +179,15 @@ const StackedChart = (props: LineProps) => {
           subheader='KeyWords'
           subheaderTypographyProps={{ variant: 'caption' }}
         />
-        {
-          showDetail ? 
-          <Button style={{ marginTop: '20px', marginRight: '10px' }} 
-             color="primary" onClick={showMessageDetail} size="small">
-            <CloseCircleOutline fontSize='large'/>
-          </Button>
-          :
-          ""
-        }
       </div>
       
       <CardContent>
-        {
-          showDetail ? 
-          <DailyMessageDetail/>
-          :
-          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
-        }
-        
+         <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+         <DailyMessageDetail 
+            show={showDetail}
+            setShow={setShowDetail}
+            current={current}
+         />
       </CardContent>
     </Card>
   )

@@ -9,12 +9,12 @@ import { GetSentimentScore } from 'src/services/api/dashboards/overall/overallDa
 
 const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
 
-const SentimentGaugeChart = ({value} : {value:any}) => {
+const SentimentGaugeChart = () => {
     
     const {resultSentimentScore} = GetSentimentScore();
 
     return(
-        <Card style={{ maxHeight: '330px' }}>
+        <Card style={{ maxHeight: '340px' }}>
             <CardHeader
                 title='Sentiment Score'
                 titleTypographyProps={{ variant: 'h6' }}
@@ -26,13 +26,13 @@ const SentimentGaugeChart = ({value} : {value:any}) => {
                         <GaugeChart 
                             id="gauge-chart"
                             animate={false} 
-                             nrOfLevels={value}
+                             nrOfLevels={3}
                              arcsLength={[0.5, 0.3, 0.2]}
                              colors={['#5BE12C', '#F5CD19', '#EA4228']}
                              percent={resultSentimentScore?.sentiment_percentage/100 || 0}
                              arcPadding={0.01}
                              needleColor="#4c4e64de"
-                             textColor={"grey"}
+                             hideText={true}
                             />
 
                     </Grid>

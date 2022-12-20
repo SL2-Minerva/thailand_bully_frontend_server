@@ -1,11 +1,8 @@
-import { useCallback, useState } from "react" 
-import { Grid, Card, CardHeader, CardContent, InputLabel, MenuItem } from "@mui/material"
+import { forwardRef, useCallback, useState } from "react" 
+import { Grid, Card, CardHeader, CardContent, InputLabel, MenuItem, Box } from "@mui/material"
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
 import TextField from '@mui/material/TextField'
-import DatePicker from '@mui/lab/DatePicker'
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DailyMessageGraph from "./DailyMessageGraph"
 import InfluencerGraph from "./InfluencerGraph"
 import InfluencerComparison from "./InfluencerComparison"
@@ -15,7 +12,7 @@ import DayTimeComparison from "./DayTimeComparison"
 import DayTimeSentiment from "./DayTimeSentiment"
 import DayTimeBullyLevel from "./DayTimeBullyLevel"
 import DayTimeBullyType from "./DayTimeBullyType"
-import { calculateDate, get1stAndLastDayOfMonth } from "../dashboard/overall"
+import { calculateDate, get1stAndLastDayOfMonth, PickerProps } from "../dashboard/overall"
 import DailyMessagePieChart from "./DailyMessagesPieChart"
 import MessagesByDay from "./MessagesByDay"
 import { CampaignList } from "src/services/api/campaign/CampaignAPI"
@@ -29,6 +26,13 @@ import KeywordComparisonByChannel from "./KeywordComparison"
 import KeywordComparisonBySentiment from "./KeywordComparisonBySentiment"
 import KeywordComparisonByBullyLevel from "./KeywordComparisonByBullyLevel"
 import KeywordComparisonByBullyType from "./KeywordComparisonByBullyType"
+
+// import DatePicker from '@mui/lab/DatePicker'
+// import LocalizationProvider from '@mui/lab/LocalizationProvider'
+// import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import DatePicker from 'react-datepicker'
+import format from 'date-fns/format'
+import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 
 // import DailyMessagePercentage from "./DailyMessagePercentage"
 
@@ -75,7 +79,7 @@ const VoiceDashboard = () => {
     const { resultPercentageMessage } = GetPercentageMessage(campaign, date, endDate, period);
     const { resultCampaiganList } = CampaignList();
 
-    const handleDateSelect = useCallback((e:SelectChangeEvent) => {
+    const handleDateSelect = (e:SelectChangeEvent) => {
         const value = e.target.value; 
         setDateSelect(value);
         setDisableSelectDate(true);
@@ -127,11 +131,26 @@ const VoiceDashboard = () => {
             setPeriod('customrange');
             setDisableSelectDate(false);
         }
-    }, [])
+    }
 
     const handleSelectList = useCallback((e: SelectChangeEvent) => {
         setCampaign(e.target.value)
     }, [])
+
+    const handleOnChangeDate = (dates: any) => {
+        const [start, end] = dates
+        setDate(start)
+        setEndDate(end)
+      }
+
+    const CustomInput = forwardRef((props: PickerProps, ref) => {
+        const startDate = format(props.start, 'dd/MM/yyyy')
+        const endDate = props.end !== null ? ` - ${format(props.end, 'dd/MM/yyyy')}` : null
+    
+        const value = `${startDate}${endDate !== null ? endDate : ''}`
+    
+        return <FormControl fullWidth><TextField inputRef={ref} label={props.label || ''} {...props} value={value} /></FormControl>
+    })
     
     return (
         <Grid container spacing={6}>
@@ -141,17 +160,17 @@ const VoiceDashboard = () => {
                     <CardContent>
 
                         <Grid container spacing={2} mt={2}>
-                        <Grid item sm={3} xs={12}>
+                        <Grid item sm={4} xs={12}>
                             <FormControl fullWidth>
-                            <InputLabel id='plan-select'>Select Date</InputLabel>
+                            <InputLabel id='plan-select'>Select Period</InputLabel>
                             <Select
                                 fullWidth
                                 value={dateSelect}
                                 id='select-date'
-                                label='Select Date'
+                                label='Select Period'
                                 labelId='date-select'
                                 onChange={handleDateSelect}
-                                inputProps={{ placeholder: 'Select Date' }}
+                                inputProps={{ placeholder: 'Select Period' }}
                             >
                                 <MenuItem value="1">Today</MenuItem>
                                 <MenuItem value="2">Yesterday</MenuItem>
@@ -164,34 +183,38 @@ const VoiceDashboard = () => {
                             </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item sm={3} xs={12}>
-                            <FormControl fullWidth>
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <DatePicker
-                                    readOnly = {disableSelectDate}
-                                    label='Start Date'
-                                    value={date}
-                                    onChange={newValue => setDate(newValue)}
-                                    renderInput={params => <TextField {...params} />}
-                                />
-                                </LocalizationProvider>
-                            </FormControl>
-                        </Grid>
-                        <Grid item sm={3} xs={12}>
-                            <FormControl fullWidth>
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <DatePicker
-                                    readOnly = {disableSelectDate}
-                                    label='End Date'
-                                    value={endDate}
-                                    onChange={newValue => setEndDate(newValue)}
-                                    renderInput={params => <TextField {...params} />}
-                                />
-                                </LocalizationProvider>
-                            </FormControl>
-                        </Grid>
 
-                        <Grid item sm={3} xs={12}>
+                        {
+                            disableSelectDate ?
+                            <></>
+                            :
+                            
+                                <Grid item sm={4} xs={12}>
+                                    <Box>
+                                    <DatePickerWrapper>
+                                        <DatePicker
+                                        selectsRange
+                                        monthsShown={2}
+                                        endDate={endDate}
+                                        selected={date}
+                                        startDate={date}
+                                        shouldCloseOnSelect={false}
+                                        id='date-range-picker-months'
+                                        onChange={handleOnChangeDate}
+                                        customInput={
+                                            <CustomInput
+                                            label='Period Range'
+                                            end={endDate as Date | number}
+                                            start={date as Date | number}
+                                            />
+                                        }
+                                        />
+                                     </DatePickerWrapper>
+                                    </Box>
+                                </Grid>
+                        }
+
+                        <Grid item sm={4} xs={12}>
                             <FormControl fullWidth>
                             <InputLabel id='plan-select'>Select Campaign</InputLabel>
                             <Select

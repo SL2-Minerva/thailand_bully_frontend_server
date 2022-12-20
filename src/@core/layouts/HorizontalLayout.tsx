@@ -79,7 +79,7 @@ const HorizontalLayout = (props: LayoutProps) => {
         color='default'
         elevation={skin === 'bordered' ? 0 : 3}
         className='layout-navbar-and-nav-container'
-        position={appBar === 'fixed' ? 'sticky' : 'static'}
+        position={appBar === 'fixed' ? 'static' : 'sticky' }
         sx={{
           alignItems: 'center',
           color: 'text.primary',

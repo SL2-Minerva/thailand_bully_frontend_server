@@ -77,11 +77,23 @@ const navigation = (): VerticalNavItemsType => {
           path: '/ChannelDashboard'
         },
         {
-          title: 'Network Graph',
-          path: '/content/content-mgt/NetworkGraph'
+          title: 'Engagement Dashboard', 
+          path: '/EngagementDashboard'
+        },
+        {
+          title: 'Sentiment Dashboard', 
+          path: '/SentimentDashboard'
+        },
+        {
+          title: 'Bully Dashboard', 
+          path: '/BullyDashboard'
         }
         
         // ,
+        // {
+        //   title: 'Network Graph',
+        //   path: '/content/content-mgt/NetworkGraph'
+        // },
         // {
         //   title: 'Report',
         //   path: '/report/report'
