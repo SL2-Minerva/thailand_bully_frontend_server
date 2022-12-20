@@ -49,7 +49,7 @@ const ShareOfVoice  = ({resultShareOfVoice} : {resultShareOfVoice: any}) => {
       <CardContent>
         <Grid container spacing={3}>
             <Grid item xs={5}>
-                <Bar data={data} options={{ indexAxis: 'y' }} height={280}/>
+                <Bar data={data} options={{ indexAxis: 'y' }} height={245}/>
             </Grid>
             <Grid item xs={7} >
                 <Table size="small">

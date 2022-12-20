@@ -60,10 +60,7 @@ const RepeaterWrapper = styled(CardContent)<CardContentProps>(({ theme }) => ({
 
 const DialogCampaign = (props: DialogInfoProps) => {
   const { show, setShow, action, current } = props
-
-   console.log('current', current)
   
-
   const [domain, setDomain] = useState<string>('')
   const [frequency, setFrequency] = useState<string>('')
   const [date, setDate] = useState<Date | null>(new Date())

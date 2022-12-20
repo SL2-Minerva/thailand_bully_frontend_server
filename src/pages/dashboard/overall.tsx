@@ -1,11 +1,12 @@
-import { useCallback, useState } from "react"
-import { Grid , Card, CardHeader, CardContent, InputLabel, MenuItem, Button } from "@mui/material"
+import { forwardRef, useCallback, useState } from "react"
+import { Grid , Card, CardHeader, CardContent, InputLabel, MenuItem, Button, Box, Tooltip, tooltipClasses, TooltipProps } from "@mui/material"
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
 import TextField from '@mui/material/TextField'
-import DatePicker from '@mui/lab/DatePicker'
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
+
+// import DatePicker from '@mui/lab/DatePicker'
+// import LocalizationProvider from '@mui/lab/LocalizationProvider'
+// import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import StackedChart from "./stackedChart"
 import DonutChart from "./donutChart"
 import { useTheme } from '@mui/material/styles'
@@ -14,7 +15,15 @@ import ThumbUp from 'mdi-material-ui/ThumbUp'
 import Person from 'mdi-material-ui/Account'
 import KeyStatusReport from "./keyStatusReport"
 
+import DatePicker from 'react-datepicker'
+import { DateType } from 'src/types/forms/reactDatepickerTypes'
+import format from 'date-fns/format'
+import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
+import { styled } from '@mui/material/styles';
+
+
 // ** Third Party Styles Imports
+// import addDays from 'date-fns/addDays'
 
 import 'chart.js/auto'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -41,6 +50,7 @@ import TotalMessageLists from "./TotalMessageLists"
 import WordCloudChannel from "./WordCloudChannel"
 import AccountList from "./AccountList"
 import WordCloudSentiment from "./WordCloudSentiment"
+import QuickView from "./QuickView"
 
 export const calculateDate = (days: number) => {
     const today = new Date()
@@ -54,9 +64,27 @@ export const get1stAndLastDayOfMonth = (year : number, month : number, type: num
     return new Date(year, month, type);
 }
 
+export interface PickerProps {
+    label?: string
+    end: Date | number
+    start: Date | number
+  }
+
+ export const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
+        <Tooltip {...props} classes={{ popper: className }} />
+    ))(({ theme }) => ({
+        [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: '#9e9e9e',
+        color: 'white',
+        maxWidth: 220,
+        fontSize: theme.typography.pxToRem(20),
+        border: '1px solid #9e9e9e',
+        },
+  }));
+
 const OverallDashboard = () => {
-    const [date, setDate] = useState<Date | null>(new Date())
-    const [endDate, setEndDate] = useState<Date | null>(new Date())
+    const [date, setDate] = useState<DateType>(new Date())
+    const [endDate, setEndDate] = useState<DateType>(new Date())
     const [ campaign, setCampaign ] = useState<string>("1")
     const [ platformId, setPlatformId ] = useState<string>("1")
     const [ dateSelect, setDateSelect ] = useState<string>("1")
@@ -152,6 +180,21 @@ const OverallDashboard = () => {
         }
     }, [])
 
+    const handleOnChangeDate = (dates: any) => {
+        const [start, end] = dates
+        setDate(start)
+        setEndDate(end)
+      }
+
+    const CustomInput = forwardRef((props: PickerProps, ref) => {
+        const startDate = format(props.start, 'dd/MM/yyyy')
+        const endDate = props.end !== null ? ` - ${format(props.end, 'dd/MM/yyyy')}` : null
+    
+        const value = `${startDate}${endDate !== null ? endDate : ''}`
+    
+        return <FormControl fullWidth><TextField inputRef={ref} label={props.label || ''} {...props} value={value} /></FormControl>
+    })
+
   return (
     <>
         <Grid container spacing={3}>
@@ -163,15 +206,15 @@ const OverallDashboard = () => {
                     <Grid container spacing={6} mt={2}>
                         <Grid item sm={4} xs={12}>
                             <FormControl fullWidth>
-                            <InputLabel id='plan-select'>Select Date</InputLabel>
+                            <InputLabel id='plan-select'>Select Period</InputLabel>
                             <Select
                                 fullWidth
                                 value={dateSelect}
                                 id='select-date'
-                                label='Select Date'
+                                label='Select Period'
                                 labelId='date-select'
                                 onChange={handleDateSelect}
-                                inputProps={{ placeholder: 'Select Date' }}
+                                inputProps={{ placeholder: 'Select Period' }}
                             >
                                 <MenuItem value="1">Today</MenuItem>
                                 <MenuItem value="2">Yesterday</MenuItem>
@@ -232,35 +275,35 @@ const OverallDashboard = () => {
                             </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item sm={4} xs={12}>
-                            <FormControl fullWidth>
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <DatePicker
-                                    readOnly = {disableSelectDate}
-                                    label='Start Date'
-                                    value={date}
-                                    onChange={newValue => setDate(newValue)}
-                                    renderInput={params => <TextField {...params} />}
-                                    inputFormat="dd/MM/yyyy"
-                                />
-                                </LocalizationProvider>
-                            </FormControl>
-                        </Grid>
-                        <Grid item sm={4} xs={12}>
-                            <FormControl fullWidth>
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <DatePicker
-                                    readOnly = {disableSelectDate}
-                                    label='End Date'
-                                    value={endDate}
-                                    onChange={newValue => setEndDate(newValue)}
-                                    renderInput={params => <TextField {...params} />}
-                                    inputFormat="dd/MM/yyyy"
-                                />
-                                </LocalizationProvider>
-                            </FormControl>
-                        </Grid>
-
+                        {
+                            disableSelectDate ?
+                            <></>
+                            :
+                            
+                                <Grid item sm={4} xs={12}>
+                                    <Box>
+                                    <DatePickerWrapper>
+                                        <DatePicker
+                                        selectsRange
+                                        monthsShown={2}
+                                        endDate={endDate}
+                                        selected={date}
+                                        startDate={date}
+                                        shouldCloseOnSelect={false}
+                                        id='date-range-picker-months'
+                                        onChange={handleOnChangeDate}
+                                        customInput={
+                                            <CustomInput
+                                            label='Period Range'
+                                            end={endDate as Date | number}
+                                            start={date as Date | number}
+                                            />
+                                        }
+                                        />
+                                     </DatePickerWrapper>
+                                    </Box>
+                                </Grid>
+                        }
                         </Grid>
 
                     </CardContent>
@@ -269,112 +312,131 @@ const OverallDashboard = () => {
         </Grid>
         
         <Grid container spacing={3} mt={2}>
-            <Grid item xs={12} md={8}>
-                <StackedChart
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultFilterData}
-                />
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-                <DonutChart filterData = {resultFilterData} />
-            </Grid>
+            <StyledTooltip arrow title="Chart 1">
+                <Grid id="chart1" item xs={12} md={4}>
+                    <DonutChart filterData = {resultFilterData} />
+                </Grid>
+            </StyledTooltip>
+            <StyledTooltip arrow title="Chart 2">
+                <Grid id="chart2" item xs={12} md={8}>
+                    <StackedChart
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultFilterData}
+                    />
+                </Grid>
+            </StyledTooltip>
         </Grid>
         
         <Grid container spacing={3} mt={2}>
-            <Grid item xs={12} md={4}>
-                <KeyStatusReport
-                    stats= {resultTotalMessagePerDay?.comparison || '0'}
-                    type={resultTotalMessagePerDay?.type}
-                    color='primary'
-                    trendNumber={resultTotalMessagePerDay?.percentage || '0%'}
-                    icon={<MessageText />}
-                    title='Period over Period Comparison'
-                    chipText='Last 1 Month'
-                    totalText = 'Total Message'
-                    totalValue = {resultTotalMessagePerDay?.total_message?.toString() || '0'}
-                    averageText="Average Message per Day"
-                    averageValue= {resultTotalMessagePerDay?.average_message?.toString() || '0'}
-                />
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-                <KeyStatusReport
-                    stats={resultTotalEngagement?.comparison || '0'}
-                    type={resultTotalEngagement?.type}
-                    color='primary'
-                    trendNumber={resultTotalEngagement?.percentage || '0'}
-                    icon={<ThumbUp />}
-                    title='Period over Period Comparison'
-                    chipText='Last 1 Month'
-                    totalText = 'Total Engagement'
-                    totalValue = {resultTotalEngagement?.total_engagement?.toString() || '0'}
-                    averageText="Avg. Engagement per Day"
-                    averageValue={resultTotalEngagement?.average_engagement?.toString() || '0'}
-                />
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-                <KeyStatusReport
-                    stats={resultTotalAccount?.comparison || '0'}
-                    type={resultTotalAccount?.type}
-                    color='primary'
-                    trendNumber={resultTotalAccount?.percentage || '0'}
-                    icon={<Person />}
-                    title='Period over Period Comparison'
-                    chipText='Last 1 Month'
-                    totalText = 'Total Account'
-                    totalValue = {resultTotalAccount?.total_account?.toString() || '0'}
-                    averageText="Average Account per Day"
-                    averageValue={resultTotalAccount?.average_account?.toString() || '0'}
-                />
-            </Grid>
+            <StyledTooltip arrow title="Chart 3">
+                <Grid id="chart3" item xs={12} md={4}>
+                    <KeyStatusReport
+                        stats= {resultTotalMessagePerDay?.comparison || '0'}
+                        type={resultTotalMessagePerDay?.type}
+                        color='primary'
+                        trendNumber={resultTotalMessagePerDay?.percentage || '0%'}
+                        icon={<MessageText />}
+                        title='Period over Period Comparison'
+                        chipText='Last 1 Month'
+                        totalText = 'Total Message'
+                        totalValue = {resultTotalMessagePerDay?.total_message?.toString() || '0'}
+                        averageText="Average Message per Day"
+                        averageValue= {resultTotalMessagePerDay?.average_message?.toString() || '0'}
+                    />
+                </Grid>
+            </StyledTooltip>
+            <StyledTooltip arrow title="Chart 4">
+                <Grid id="chart4" item xs={12} md={4}>
+                    <KeyStatusReport
+                        stats={resultTotalEngagement?.comparison || '0'}
+                        type={resultTotalEngagement?.type}
+                        color='primary'
+                        trendNumber={resultTotalEngagement?.percentage || '0'}
+                        icon={<ThumbUp />}
+                        title='Period over Period Comparison'
+                        chipText='Last 1 Month'
+                        totalText = 'Total Engagement'
+                        totalValue = {resultTotalEngagement?.total_engagement?.toString() || '0'}
+                        averageText="Avg. Engagement per Day"
+                        averageValue={resultTotalEngagement?.average_engagement?.toString() || '0'}
+                    />
+                </Grid>
+            </StyledTooltip>
+            <StyledTooltip arrow title="Chart 5">
+                <Grid id="chart5" item xs={12} md={4}>
+                    <KeyStatusReport
+                        stats={resultTotalAccount?.comparison || '0'}
+                        type={resultTotalAccount?.type}
+                        color='primary'
+                        trendNumber={resultTotalAccount?.percentage || '0'}
+                        icon={<Person />}
+                        title='Period over Period Comparison'
+                        chipText='Last 1 Month'
+                        totalText = 'Total Account'
+                        totalValue = {resultTotalAccount?.total_account?.toString() || '0'}
+                        averageText="Average Account per Day"
+                        averageValue={resultTotalAccount?.average_account?.toString() || '0'}
+                    />
+                </Grid>
+            </StyledTooltip>
         </Grid>
         
         <Grid container spacing={3} mt={2}>
-            <Grid item xs={12}>
-                <KeywordTable resultKeywords={resultKeywords}/>
-            </Grid>
+            <StyledTooltip arrow title="Chart 6">
+                <Grid id="chart6" item xs={12}>
+                    <KeywordTable resultKeywords={resultKeywords}/>
+                </Grid>
+            </StyledTooltip>
         </Grid>
 
         <Grid container spacing={3} mt={2}>
-            <Grid item xs={12} md={4}>
-                <MainKeyWordTable mainKeyword={resultTopKeywords?.main_keyword}/>
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-                <TopSiteList topsites={resultTopKeywords?.top_sites}/>
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-                <TopHashtagList topHashtags={resultTopKeywords?.top_hastag}/>
-            </Grid>
+            <StyledTooltip arrow title="Chart 7">
+                <Grid id="chart7" item xs={12} md={4}>
+                    <MainKeyWordTable mainKeyword={resultTopKeywords?.main_keyword}/>
+                </Grid>
+            </StyledTooltip>
+            <StyledTooltip arrow title="Chart 8">
+                <Grid id="chart8" item xs={12} md={4}>
+                    <TopSiteList topsites={resultTopKeywords?.top_sites}/>
+                </Grid>
+            </StyledTooltip>
+            <StyledTooltip arrow title="Chart 9">
+                <Grid id="chart9" item xs={12} md={4}>
+                    <TopHashtagList topHashtags={resultTopKeywords?.top_hastag}/>
+                </Grid>
+            </StyledTooltip>
         </Grid>
 
         <Grid container spacing={3} mt={2}>
-            <Grid item xs={12} md ={6}>
-                <SentimentGaugeChart value={resultFilterData?.prcentage_of_messages_current[0]?.data?.percentage}/>
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-                <CommentSentiment resultSentimentType={resultSentimentType}/>
-            </Grid>
+            <StyledTooltip arrow title="Chart 10">
+                <Grid id="chart10" item xs={12} md ={6}>
+                    <SentimentGaugeChart/>
+                </Grid>
+            </StyledTooltip>
+            <StyledTooltip arrow title="Chart 11">
+                <Grid id="chart11" item xs={12} md={6}>
+                    <CommentSentiment resultSentimentType={resultSentimentType}/>
+                </Grid>
+            </StyledTooltip>
         </Grid>
 
         <Grid container spacing={3} mt={2}>
-            <Grid item xs={12} md={8}>
-                <ShareOfVoice resultShareOfVoice={resultShareOfVoice}/>
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-                <SentimentLevelChart sentimentLevel={resultSentimentLevel}/>
-            </Grid>
+            <StyledTooltip arrow title="Chart 12">
+                <Grid id="chart12" item xs={12} md={8}>
+                    <ShareOfVoice resultShareOfVoice={resultShareOfVoice}/>
+                </Grid>
+            </StyledTooltip>
+            <StyledTooltip arrow title="Chart 13">
+                <Grid id="chart13" item xs={12} md={4}>
+                    <SentimentLevelChart sentimentLevel={resultSentimentLevel}/>
+                </Grid>
+            </StyledTooltip>
         </Grid>
 
         <Grid container spacing={3} mt ={2}> 
@@ -390,31 +452,44 @@ const OverallDashboard = () => {
         </Grid>
 
         <Grid container spacing={3} mt ={2}> 
-            <Grid item xs={12} md={6}>
-                <WordCloud />
-            </Grid>
-            <Grid item xs={12} md={6}>
-                <TotalMessageLists resultKeywords={resultKeywords}/>
-            </Grid>
+            <StyledTooltip arrow title="Chart 14">
+                <Grid id="chart14" item xs={12} md={6}>
+                    <WordCloud />
+                </Grid>
+            </StyledTooltip>
+            <StyledTooltip arrow title="Chart 15">
+                <Grid id="chart15" item xs={12} md={6}>
+                    <TotalMessageLists resultKeywords={resultKeywords}/>
+                </Grid>
+            </StyledTooltip>
         </Grid>
 
         <Grid container spacing={3} mt ={2}> 
-            <Grid item xs={12} md={6}>
-                <WordCloudChannel />
-            </Grid>
-            <Grid item xs={12} md={6}>
-                <AccountList resultKeywords={resultKeywords}/>
-            </Grid>
+            <StyledTooltip arrow title="Chart 16">
+                <Grid id="chart16" item xs={12} md={6}>
+                    <WordCloudChannel />
+                </Grid>
+            </StyledTooltip>
+            <StyledTooltip arrow title="Chart 17">
+                <Grid id="chart17" item xs={12} md={6}>
+                    <AccountList resultKeywords={resultKeywords}/>
+                </Grid>
+            </StyledTooltip>
         </Grid>
         
         <Grid container spacing={3} mt ={2}> 
-            <Grid item xs={12} md={6}>
-                <WordCloudSentiment />
-            </Grid>
-            <Grid item xs={12} md={6}>
-                <AccountList resultKeywords={resultKeywords}/>
-            </Grid>
+            <StyledTooltip arrow title="Chart 18">
+                <Grid id="chart18" item xs={12} md={6}>
+                    <WordCloudSentiment />
+                </Grid>
+            </StyledTooltip>
+            <StyledTooltip arrow title="Chart 19">
+                <Grid id="chart19" item xs={12} md={6}>
+                    <AccountList resultKeywords={resultKeywords}/>
+                </Grid>
+            </StyledTooltip>
         </Grid>
+        <QuickView />
     </>
   )
     

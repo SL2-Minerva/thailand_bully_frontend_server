@@ -8,14 +8,20 @@ import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import { useEffect, useState } from 'react'
 
-const ChannelVsDevice = () => {
+const ChannelVsDevice = ({resultDeviceVsChannel} : {resultDeviceVsChannel:any}) => {
+
+  const [seriesData, setSeriesData ] = useState([]);
+  const [labels, setLabels] = useState([]);
+
     const series = [{
-        data: [ 44, 50, 6 ]
+        data: seriesData
       }];
     const options: ApexOptions = {
         chart: {
         type: 'bar',
+        toolbar: { show: false }
         },
         
         // labels: ["Anriod", "Web", "iPhone"],
@@ -33,11 +39,7 @@ const ChannelVsDevice = () => {
             show: false
           },
         xaxis: {
-            categories: [
-              ['Andriod', 'Facebook'],
-              ['iPhone', 'Twitter'],
-              ['Web', 'Youtube'],
-            ],
+            categories: labels,
             labels: {
               style: {
                 colors: ['#3B5998', '#6aa84f', '#cc0000'],
@@ -47,10 +49,17 @@ const ChannelVsDevice = () => {
           }
         };
 
+    useEffect(() => {
+      if(resultDeviceVsChannel) {
+        setSeriesData(resultDeviceVsChannel?.data);
+        setLabels(resultDeviceVsChannel?.labels);
+      }
+    },[resultDeviceVsChannel])
+
     return ( 
         
-        <Card>
-            <CardHeader title="Devices" titleTypographyProps={{ varient:'h6' }}
+        <Card style={{ height: 455 }}>
+            <CardHeader title="Channel vs Devices" titleTypographyProps={{ varient:'h6' }}
                 subheader="Period over Period Comparison"
                 subheaderTypographyProps={{ varient: 'h6' }}
             />

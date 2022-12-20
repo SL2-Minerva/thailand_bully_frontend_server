@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react'
 
 
 Chart.register(DoughnutLabel );
-const DailyMessagePieChart  = ({resultPercentageMessage} : {resultPercentageMessage: any}) => {
+const DevicesComparison  = ({resultDevicesComparison} : {resultDevicesComparison:any}) => {
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -25,7 +25,7 @@ const DailyMessagePieChart  = ({resultPercentageMessage} : {resultPercentageMess
   }
   const [previousData, setPreviousData ] = useState(initValue);
   const [currentData, setCurrentData] = useState(initValue);
-  
+
   const currentPeriodOptions = {
     responsive: true,
     backgroundColor: false,
@@ -123,25 +123,25 @@ const DailyMessagePieChart  = ({resultPercentageMessage} : {resultPercentageMess
   };
 
   useEffect(()=>{
-    if(resultPercentageMessage) {
-        setCurrentData(resultPercentageMessage.current_period);
-        setPreviousData(resultPercentageMessage.previous_period);
+    if(resultDevicesComparison) {
+        setCurrentData(resultDevicesComparison.current_period);
+        setPreviousData(resultDevicesComparison.previous_period);
     }
-  },[resultPercentageMessage]);
+  },[resultDevicesComparison]);
 
   return (
     <Card style={{ minHeight: '330px' }}>
-      <CardHeader title="Percentage of Message" titleTypographyProps={{ varient:'h6' }}
+      <CardHeader title="Devices" titleTypographyProps={{ varient:'h6' }}
                 subheader="Period over Period Comparison"
                 subheaderTypographyProps={{ varient: 'h6' }}
             />
       <CardContent>
         <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-              <Doughnut data={currentPeriodData} options={currentPeriodOptions as any} height={290} />
+                <Doughnut data={currentPeriodData} options={currentPeriodOptions as any} height={290} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <Doughnut data={previousPeriodData} options={previousPeriodOptions as any} height={290} />
+                <Doughnut data={previousPeriodData} options={previousPeriodOptions as any} height={290} />
             </Grid>
         </Grid>
         <Grid container spacing={3} mt={3}>
@@ -158,4 +158,4 @@ const DailyMessagePieChart  = ({resultPercentageMessage} : {resultPercentageMess
   )
 }
 
-export default DailyMessagePieChart
+export default DevicesComparison

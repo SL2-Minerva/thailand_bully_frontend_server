@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {forwardRef, ReactElement, Ref, useEffect, useState} from "react";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,6 +7,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Fade, { FadeProps } from '@mui/material/Fade'
+import { Box, Card, Dialog, DialogContent, IconButton, Typography } from "@mui/material";
+import Close from 'mdi-material-ui/Close'
+import DialogNetworkGraph from "./DialogNetworkGraph";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -47,55 +51,98 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-// interface Props {
-//     setShowDetail : any
-// }
+const Transition = forwardRef(function Transition(
+  props: FadeProps & { children?: ReactElement<any, any> },
+  ref: Ref<unknown>
+) {
+  return <Fade ref={ref} {...props} />
+})
 
-const DailyMessageDetail = () => {
+interface DialogInfoProps {
+  show: boolean
+  setShow: any
+  action?: string
+  current?: any
+  table?: any
+}
 
+const DailyMessageDetail = (props: DialogInfoProps) => {
+    const { show, setShow, current } = props
+    const [ showDialog, setShowDialog ] = useState<boolean>(false);
     useEffect(() => {
         console.log("detail page loaded!");
-    }, [])
+    }, [current])
 
     return (
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>Message ID</StyledTableCell>
-                <StyledTableCell>Message Detail</StyledTableCell>
-                <StyledTableCell>Account Name</StyledTableCell>
-                <StyledTableCell>Post Date</StyledTableCell>
-                <StyledTableCell>Post Time</StyledTableCell>
-                <StyledTableCell>Day</StyledTableCell>
-                <StyledTableCell>Device</StyledTableCell>
-                <StyledTableCell>Channel</StyledTableCell>
-                <StyledTableCell>Bully Level</StyledTableCell>
-                <StyledTableCell>Bully Type</StyledTableCell>
+      <Card>
+        <Dialog
+          fullWidth
+          open={show}
+          maxWidth='md'
+          scroll='body'
+          onClose={() => setShow(false)}
+          TransitionComponent={Transition}
+        > 
+        <DialogContent sx={{ pb: 6, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
+            <IconButton
+              size='small'
+              onClick={() => setShow(false)}
+              sx={{ position: 'absolute', right: '1rem', top: '1rem' }}
+            >
+              <Close />
+            </IconButton>
+            <Box sx={{ mb: 8, textAlign: 'center' }}>
+              <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
+                 Daily Message Detail
+              </Typography>
+            </Box>
 
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <StyledTableRow key={row.name}>
-                  <StyledTableCell component="th" scope="row">
-                    {row.name}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                  <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                  <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                  <StyledTableCell align="right">{row.protein}</StyledTableCell>
-                  <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                  <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                  <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                  <StyledTableCell align="right">{row.protein}</StyledTableCell>
-                  <StyledTableCell align="right">{row.protein}</StyledTableCell>
+            <TableContainer component={Paper}>
+              <Table style={{ minWidth: '00px' }} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>Message ID</StyledTableCell>
+                    <StyledTableCell>Message Detail</StyledTableCell>
+                    <StyledTableCell>Account Name</StyledTableCell>
+                    <StyledTableCell>Post Date</StyledTableCell>
+                    <StyledTableCell>Post Time</StyledTableCell>
+                    <StyledTableCell>Day</StyledTableCell>
+                    <StyledTableCell>Device</StyledTableCell>
+                    <StyledTableCell>Channel</StyledTableCell>
+                    <StyledTableCell>Bully Level</StyledTableCell>
+                    <StyledTableCell>Bully Type</StyledTableCell>
 
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row) => (
+                    <StyledTableRow key={row.name} onClick={() => {setShowDialog(true)}}>
+                      <StyledTableCell align="center">{row.calories}</StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
+                        {row.name}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">{row.fat}</StyledTableCell>
+                      <StyledTableCell align="center">{row.carbs}</StyledTableCell>
+                      <StyledTableCell align="center">{row.protein}</StyledTableCell>
+                      <StyledTableCell align="center">{row.calories}</StyledTableCell>
+                      <StyledTableCell align="center">{row.fat}</StyledTableCell>
+                      <StyledTableCell align="center">{row.carbs}</StyledTableCell>
+                      <StyledTableCell align="center">{row.protein}</StyledTableCell>
+                      <StyledTableCell align="center">{row.protein}</StyledTableCell>
+
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </DialogContent>
+        </Dialog>
+        <DialogNetworkGraph
+          showDialog={showDialog}
+          setShowDialog={setShowDialog}
+          currentData={current}
+        />
+      </Card>
     );
 }
 

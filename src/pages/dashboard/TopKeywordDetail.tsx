@@ -58,7 +58,7 @@ const TopKeywordDetail = () => {
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>Level 3</StyledTableCell>
+                <StyledTableCell></StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>

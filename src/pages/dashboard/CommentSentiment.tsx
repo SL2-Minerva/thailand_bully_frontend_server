@@ -51,7 +51,7 @@ const CommentSentiment  = ({resultSentimentType} : {resultSentimentType:any}) =>
   };
 
   return (
-    <Card style={{ minHeight: '330px' }}>
+    <Card style={{ minHeight: '340px' }}>
       <CardHeader
         title='Comment Sentiment'
         titleTypographyProps={{ variant: 'h6' }}
