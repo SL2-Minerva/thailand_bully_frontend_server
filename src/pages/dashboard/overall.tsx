@@ -41,7 +41,7 @@ import CommentSentiment from "./CommentSentiment"
 import ShareOfVoice from "./ShareOfVoice"
 import SentimentLevelChart from "./SentimentLevelChart"
 import { CampaignList } from "src/services/api/campaign/CampaignAPI"
-import { FilterByCampaignId, GetSentimentLevel, GetShareOfVoice, GetTopKeywords, TotalKeyStats } from "src/services/api/dashboards/overall/overallDashboardApi"
+import { FilterByCampaignId, GetSentimentLevel, GetSentimentScore, GetShareOfVoice, GetTopKeywords, TotalKeyStats } from "src/services/api/dashboards/overall/overallDashboardApi"
 import SourceService from "src/services/api/source/SourceApi"
 import { GetSentimentType } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
@@ -88,7 +88,6 @@ const OverallDashboard = () => {
     const [ campaign, setCampaign ] = useState<string>("1")
     const [ platformId, setPlatformId ] = useState<string>("1")
     const [ dateSelect, setDateSelect ] = useState<string>("1")
-    const [ disableSelectDate, setDisableSelectDate ] = useState<boolean>(true);
     const [ reload ] = useState<boolean>(false);
     const [ period, setPeriod ] = useState<string>('daily')
     const [ topKeyword, setTopKeyword ] = useState<string>('all');
@@ -105,12 +104,13 @@ const OverallDashboard = () => {
     const { resultCampaiganList } = CampaignList();
     const { resultFilterData } = FilterByCampaignId(campaign, reload, platformId, date, endDate, period);
     const { result_source_list  } = SourceService();
-    const { resultTopKeywords } = GetTopKeywords();
+    const { resultTopKeywords } = GetTopKeywords(campaign, reload, platformId, date, endDate, period);
     const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount } = TotalKeyStats(campaign, reload, platformId, date, endDate, period);
     const { resultShareOfVoice } = GetShareOfVoice(campaign, reload, platformId, date, endDate, period);
     const { resultSentimentLevel } = GetSentimentLevel(campaign, reload, platformId, date, endDate, period);
     const {resultSentimentType} = GetSentimentType(campaign, reload, platformId, date, endDate, period);
     const { resultKeywords } = GetKeyWords(campaign, reload, platformId, date, endDate, period);
+    const {resultSentimentScore} = GetSentimentScore(campaign, reload, platformId, date, endDate, period);
 
     const handleSelectList = useCallback((e: SelectChangeEvent, type:string) => {
         if (type === 'campaign') {
@@ -124,10 +124,9 @@ const OverallDashboard = () => {
         setTopKeyword(data);
     }
 
-    const handleDateSelect = useCallback((e:SelectChangeEvent) => {
-        const value = e.target.value; 
+    const handleDateSelect = useCallback((e:any) => {
+        const value = e.target?.value ? e.target?.value : e; 
         setDateSelect(value);
-        setDisableSelectDate(true);
         if (value === '1') {
             setPeriod('daily');
             setDate(new Date());
@@ -176,11 +175,11 @@ const OverallDashboard = () => {
             setEndDate(lastDayofMonth);
         } else {
             setPeriod('customrange');
-            setDisableSelectDate(false);
         }
     }, [])
 
     const handleOnChangeDate = (dates: any) => {
+        handleDateSelect("7")
         const [start, end] = dates
         setDate(start)
         setEndDate(end)
@@ -204,7 +203,7 @@ const OverallDashboard = () => {
                     <CardContent>
 
                     <Grid container spacing={6} mt={2}>
-                        <Grid item sm={4} xs={12}>
+                        <Grid item sm={3} xs={12}>
                             <FormControl fullWidth>
                             <InputLabel id='plan-select'>Select Period</InputLabel>
                             <Select
@@ -213,7 +212,7 @@ const OverallDashboard = () => {
                                 id='select-date'
                                 label='Select Period'
                                 labelId='date-select'
-                                onChange={handleDateSelect}
+                                onChange={(e:SelectChangeEvent) => {handleDateSelect(e)}}
                                 inputProps={{ placeholder: 'Select Period' }}
                             >
                                 <MenuItem value="1">Today</MenuItem>
@@ -227,7 +226,30 @@ const OverallDashboard = () => {
                             </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item sm={4} xs={12}>
+                        <Grid item sm={3} xs={12}>
+                            <Box>
+                                <DatePickerWrapper>
+                                    <DatePicker
+                                    selectsRange
+                                    monthsShown={2}
+                                    endDate={endDate}
+                                    selected={date}
+                                    startDate={date}
+                                    shouldCloseOnSelect={false}
+                                    id='date-range-picker-months'
+                                    onChange={handleOnChangeDate}
+                                    customInput={
+                                        <CustomInput
+                                        label='Period Range'
+                                        end={endDate as Date | number}
+                                        start={date as Date | number}
+                                        />
+                                    }
+                                    />
+                                    </DatePickerWrapper>
+                            </Box>
+                        </Grid>
+                        <Grid item sm={3} xs={12}>
                             <FormControl fullWidth>
                             <InputLabel id='plan-select'>Select Campaign</InputLabel>
                             <Select
@@ -251,7 +273,7 @@ const OverallDashboard = () => {
                             </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item sm={4} xs={12}>
+                        <Grid item sm={3} xs={12}>
                             <FormControl fullWidth>
                             <InputLabel id='plan-select'>Select Platform</InputLabel>
                             <Select
@@ -275,37 +297,7 @@ const OverallDashboard = () => {
                             </Select>
                             </FormControl>
                         </Grid>
-                        {
-                            disableSelectDate ?
-                            <></>
-                            :
-                            
-                                <Grid item sm={4} xs={12}>
-                                    <Box>
-                                    <DatePickerWrapper>
-                                        <DatePicker
-                                        selectsRange
-                                        monthsShown={2}
-                                        endDate={endDate}
-                                        selected={date}
-                                        startDate={date}
-                                        shouldCloseOnSelect={false}
-                                        id='date-range-picker-months'
-                                        onChange={handleOnChangeDate}
-                                        customInput={
-                                            <CustomInput
-                                            label='Period Range'
-                                            end={endDate as Date | number}
-                                            start={date as Date | number}
-                                            />
-                                        }
-                                        />
-                                     </DatePickerWrapper>
-                                    </Box>
-                                </Grid>
-                        }
-                        </Grid>
-
+                    </Grid>
                     </CardContent>
                 </Card>
             </Grid>
@@ -416,7 +408,7 @@ const OverallDashboard = () => {
         <Grid container spacing={3} mt={2}>
             <StyledTooltip arrow title="Chart 10">
                 <Grid id="chart10" item xs={12} md ={6}>
-                    <SentimentGaugeChart/>
+                    <SentimentGaugeChart resultSentimentScore={resultSentimentScore}/>
                 </Grid>
             </StyledTooltip>
             <StyledTooltip arrow title="Chart 11">

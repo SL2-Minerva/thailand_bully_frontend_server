@@ -3,16 +3,13 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { Grid } from "@mui/material";
 import dynamic from 'next/dynamic'
-import { GetSentimentScore } from 'src/services/api/dashboards/overall/overallDashboardApi';
 
 // import GaugeChart from 'react-gauge-chart'
 
 const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
 
-const SentimentGaugeChart = () => {
+const SentimentGaugeChart = ({resultSentimentScore} : {resultSentimentScore:any}) => {
     
-    const {resultSentimentScore} = GetSentimentScore();
-
     return(
         <Card style={{ maxHeight: '340px' }}>
             <CardHeader

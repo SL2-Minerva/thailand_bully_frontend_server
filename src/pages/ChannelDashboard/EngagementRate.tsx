@@ -10,20 +10,25 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { GraphicColors } from 'src/utils/const' 
 
 interface Props {
-  dailyData: any
+  rateData: any
   type: string
 }
 export const getSeries = (seriesData: any) => {
   if(!seriesData) return [];
-
-  const series : any[] = [];
-  if (seriesData && seriesData?.length>0) {
-    for(let i= 0 ; i<seriesData?.length; i++) {
-      series.push({
-        name: seriesData[i].name,
-        data: seriesData[i].data
-      })
-    }
+console.log('seriesdata', seriesData);
+  let series : any[] = [];
+  if (seriesData?.data) {
+    const chartData = seriesData?.data;
+    series = [
+        {
+            name: "current period",
+            data: chartData?.current_period ? chartData?.current_period : []
+        },
+        {
+            name: "previous period",
+            data: chartData?.previous_period ? chartData?.previous_period : []
+        },
+    ]
   }
 
   return series;
@@ -33,16 +38,16 @@ export const getXaxisData = (seriesData: any) => {
   if(!seriesData) return [];
 
   let data : any[] = [];
-  if (seriesData && seriesData?.length>0) {
-      data = seriesData[0]?.date
+  if (seriesData) {
+      data = seriesData?.labels
   }
 
   return data;
 }
 
-const DailyMessageGraph = ( props : Props) => {
-    const {dailyData, type} = props;
-    const series = getSeries(dailyData);
+const EngagementRate = ( props : Props) => {
+    const {rateData, type} = props;
+    const series = getSeries(rateData);
 
     const options : ApexOptions = {
         chart: {
@@ -64,7 +69,7 @@ const DailyMessageGraph = ( props : Props) => {
           }
         }],
         xaxis: {
-          categories: getXaxisData(dailyData),
+          categories: getXaxisData(rateData),
         },
         colors : GraphicColors,
         fill: {
@@ -83,15 +88,15 @@ const DailyMessageGraph = ( props : Props) => {
       return (
         <Card>
           {
-            type === 'message' ?
+            type === 'engagement' ?
             <CardHeader 
-                title='Daily Messages'
+                title='Engagement Rate'
                 titleTypographyProps={{ variant: 'h6' }}
             />
             :
-            type === 'channel' ?
+            type === 'sentiment' ?
             <CardHeader 
-                title='Daily Channel'
+                title='Sentiment Score'
                 titleTypographyProps={{ variant: 'h6' }}
             />
             : ""
@@ -105,4 +110,4 @@ const DailyMessageGraph = ( props : Props) => {
       )
 }
 
-export default DailyMessageGraph
+export default EngagementRate
