@@ -62,6 +62,7 @@ const MessagesByDay = (props: LineProps) => {
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
+  const [current, setCurrent] = useState<any>({})
 
   const chartRef = useRef();
   const onClick = (event : any) => {
@@ -70,6 +71,8 @@ const MessagesByDay = (props: LineProps) => {
       console.log(getElementAtEvent(chartRef.current, event));
       console.log(getElementsAtEvent(chartRef.current, event));
       setShowDetail(true);
+      setCurrent({})
+
     }
   }
 
@@ -199,12 +202,12 @@ const MessagesByDay = (props: LineProps) => {
       </div>
       
       <CardContent>
-        {
-          showDetail ? 
-          <DailyMessageDetail/>
-          :
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
-        }
+          <DailyMessageDetail 
+            show={showDetail}
+            setShow={setShowDetail}
+            current={current}
+         />
         
       </CardContent>
     </Card>
