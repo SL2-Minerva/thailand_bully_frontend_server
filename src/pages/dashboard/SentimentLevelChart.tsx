@@ -117,7 +117,7 @@ const SentimentLevelChart = ({sentimentLevel} : {sentimentLevel: any}) => {
                 titleTypographyProps={{ variant: 'h6' }}
         />
         <CardContent>
-            <ReactApexcharts type="bar" height={274} series={series} options={options} />
+            <ReactApexcharts type="bar" height={276} series={series} options={options} />
         </CardContent>
     </Card>
   )

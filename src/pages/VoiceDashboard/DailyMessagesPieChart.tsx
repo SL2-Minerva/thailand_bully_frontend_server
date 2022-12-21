@@ -11,10 +11,15 @@ import { Doughnut } from 'react-chartjs-2'
 import { Chart} from "chart.js";
 import * as DoughnutLabel from "chartjs-plugin-doughnutlabel-rebourne";
 import { useEffect, useState } from 'react'
+import { GraphicColors } from 'src/utils/const' 
 
-
+interface Props {
+  percentData : any
+  type : string
+}
 Chart.register(DoughnutLabel );
-const DailyMessagePieChart  = ({resultPercentageMessage} : {resultPercentageMessage: any}) => {
+const DailyMessagePieChart  = ( props : Props) => {
+  const { percentData, type } = props;
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -62,14 +67,7 @@ const DailyMessagePieChart  = ({resultPercentageMessage} : {resultPercentageMess
     labels: currentData?.labels || [],
     datasets: [{
         data: currentData?.data || [],
-      backgroundColor: [
-        "#299b82",
-        "#1640a1c4",
-        "#d8df20",
-        "#e02916",
-        "#ffca25",
-        "#C0D3DF",
-      ],
+      backgroundColor: GraphicColors,
       hoverOffset: 3
     }]
   };
@@ -110,31 +108,33 @@ const DailyMessagePieChart  = ({resultPercentageMessage} : {resultPercentageMess
     labels: previousData?.labels || [],
     datasets: [{
         data: previousData?.data || [],
-      backgroundColor: [
-        "#299b82",
-        "#1640a1c4",
-        "#d8df20",
-        "#e02916",
-        "#ffca25",
-        "#C0D3DF",
-      ],
+      backgroundColor: GraphicColors,
       hoverOffset: 3
     }]
   };
 
   useEffect(()=>{
-    if(resultPercentageMessage) {
-        setCurrentData(resultPercentageMessage.current_period);
-        setPreviousData(resultPercentageMessage.previous_period);
+    if(percentData) {
+        setCurrentData(percentData.current_period);
+        setPreviousData(percentData.previous_period);
     }
-  },[resultPercentageMessage]);
+  },[percentData]);
 
   return (
     <Card style={{ minHeight: '330px' }}>
-      <CardHeader title="Percentage of Message" titleTypographyProps={{ varient:'h6' }}
+      {
+        type === "message" ?
+        <CardHeader title="Percentage of Message" titleTypographyProps={{ varient:'h6' }}
                 subheader="Period over Period Comparison"
                 subheaderTypographyProps={{ varient: 'h6' }}
             />
+        :
+        <CardHeader title="Percentage of Channel" titleTypographyProps={{ varient:'h6' }}
+                subheader="Period over Period Comparison"
+                subheaderTypographyProps={{ varient: 'h6' }}
+            />
+      }
+      
       <CardContent>
         <Grid container spacing={3}>
             <Grid item xs={12} md={6}>

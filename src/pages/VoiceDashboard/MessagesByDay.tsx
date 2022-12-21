@@ -4,6 +4,7 @@ import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'r
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail' 
 import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
+import { GraphicColors } from 'src/utils/const'
 
 interface LineProps {
     white: string
@@ -15,6 +16,7 @@ interface LineProps {
     gridLineColor: string
     filterData: any
     type: string
+    chartTitle: string
   }
   
   const chartLabel = (data:any) => {
@@ -28,28 +30,28 @@ interface LineProps {
     return labels;
   }
 
-  const getTitle = (title: string) => {
-    if(!title) return "";
+  const getTitle = (title: string, chartTitle: string) => {
+    if(!title && !chartTitle) return "";
 
     let cardTitle = "";
     if (title === "day") {
-      cardTitle = "Message by Day"
+      cardTitle = chartTitle +" by Day"
     } else if (title === "time") {
-      cardTitle = "Message by Time"
+      cardTitle = chartTitle +" by Time"
     } else if(title === "device") {
-      cardTitle = "Message by Devices"
+      cardTitle = chartTitle +" by Devices"
     } else if(title === "account") {
-      cardTitle = "Message by Account"
+      cardTitle = chartTitle +" by Account"
     } else if(title === "channel") {
-      cardTitle = "Message by Channel"
+      cardTitle = chartTitle +" by Channel"
     } else if(title === "sentiment") {
-      cardTitle = "Message by Sentiment"
+      cardTitle = chartTitle +" by Sentiment"
     } else if(title === "bullyType") {
-      cardTitle = "Message by Bully Type"
+      cardTitle = chartTitle +" by Bully Type"
     } else if(title === "bullyLevel") {
-      cardTitle = "Message by Bully Level"
+      cardTitle = chartTitle +" by Bully Level"
     } else {
-      cardTitle = ""
+      cardTitle = chartTitle
     }
 
     return cardTitle;
@@ -57,7 +59,7 @@ interface LineProps {
 
 const MessagesByDay = (props: LineProps) => {
 
-  const { white, labelColor,primary,  borderColor, gridLineColor, filterData, type } = props
+  const { white, labelColor, borderColor, gridLineColor, filterData, type, chartTitle } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -131,7 +133,7 @@ const MessagesByDay = (props: LineProps) => {
     let totalAmount : number[] = [];
     let keywordName = "";
     const returnData : StackChartDataset[] = [];
-    const color = ['#FF80AA','#36a2eb','#7FFFD4', '#A52A2A', '#29A6A6', '#FFA500',primary]
+    const color = GraphicColors
     for(let i = 0 ; i<data?.value?.length; i++) {
       totalAmount = []
       const total = data?.value;
@@ -186,7 +188,7 @@ const MessagesByDay = (props: LineProps) => {
         <Card>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <CardHeader
-          title={getTitle(type)}
+          title={getTitle(type, chartTitle)}
           titleTypographyProps={{ variant: 'h6' }}
           subheaderTypographyProps={{ variant: 'caption' }}
         />
