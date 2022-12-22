@@ -1,7 +1,7 @@
-import {forwardRef, ReactElement, Ref, useEffect, useCallback, useState} from "react";
+import {forwardRef, ReactElement, Ref, useEffect, useState} from "react";
 import Fade, { FadeProps } from '@mui/material/Fade'
 import { Box, Card, Dialog, DialogContent, IconButton, 
-    Typography, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+    Typography,  Grid } from "@mui/material";
 import Close from 'mdi-material-ui/Close'
 import Graph from 'react-graph-vis';
 import 'react-graph-vis/node_modules/vis-network/dist/dist/vis-network.css';
@@ -24,9 +24,8 @@ interface DialogInfoProps {
 
 const DialogNetworkGraph = (props: DialogInfoProps) => {
     const { showDialog, setShowDialog, currentData } = props
-    const [ campaign, setCampaign ] = useState<string>("1");
     const { resultCampaiganList } = CampaignList();
-    const { resultNetworkGraph } = GetNetworkGraph(campaign);
+    const { resultNetworkGraph } = GetNetworkGraph("1");
   
     const initialGraph = {
       "nodes": [],
@@ -44,11 +43,6 @@ const DialogNetworkGraph = (props: DialogInfoProps) => {
       },
       height: "500px"
     };
-
-  
-    const handleSelectList = useCallback((e: SelectChangeEvent) => {
-      setCampaign(e.target.value)
-    }, [])
   
     useEffect(() => {
       if (resultNetworkGraph) {
@@ -81,35 +75,6 @@ const DialogNetworkGraph = (props: DialogInfoProps) => {
             </Box>
 
             <Grid container spacing={3}>
-            <Grid item xs={12}>
-                <Grid container spacing={6} mt={2}>
-                        
-                        <Grid item sm={4} xs={12}>
-                            <FormControl fullWidth>
-                            <InputLabel id='plan-select'>Select Campaign</InputLabel>
-                            <Select
-                                fullWidth
-                                value={campaign}
-                                id='select-campaign'
-                                label='Select campaign'
-                                labelId='campaign-select'
-                                onChange={(e) => {handleSelectList(e)}}
-                                inputProps={{ placeholder: 'Select Campaign' }}
-                            >
-                                {
-                                  resultCampaiganList && resultCampaiganList.map((item: any, index: number) => {
-                                    return (
-                                    <MenuItem key={index} value={item.id}>
-                                        {item.name}
-                                    </MenuItem>
-                                    )
-                                })
-                                }
-                            </Select>
-                            </FormControl>
-                        </Grid>
-                </Grid>
-            </Grid>
             <Grid item xs={12}>
                 <Graph
                   graph={graph}

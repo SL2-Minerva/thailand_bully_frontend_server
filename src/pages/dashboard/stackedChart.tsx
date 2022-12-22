@@ -4,14 +4,17 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
 // ** Third Party Imports
-import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
+import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment';
 import DailyMessageDetail from './DailyMessageDetail'
+import { GraphicColors } from 'src/utils/const'
+import { InteractionItem } from 'chart.js'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
+// import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
 
 interface LineProps {
   white: string
@@ -42,7 +45,7 @@ const chartLabel = (data:any) => {
 
 const StackedChart = (props: LineProps) => {
   // ** Props
-  const { white, labelColor,primary,  borderColor, gridLineColor, filterData } = props
+  const { white, labelColor,  borderColor, gridLineColor, filterData } = props
 
   // const [ chartData, setChartData ] = useState();
 
@@ -53,11 +56,31 @@ const StackedChart = (props: LineProps) => {
   const [current, setCurrent] = useState<any>({})
 
   const chartRef = useRef();
+  const getKeywordId = (dataset: InteractionItem[]) => {
+    if (!dataset.length) return;
+
+    const datasetIndex = dataset[0].datasetIndex;
+    const keywordName = data.datasets[datasetIndex].label;
+    const dailyMessageData = filterData?.daily_message;
+    let keywordId : number | null= null;
+    if (dailyMessageData?.length > 0) {
+      for (let i =0; i<dailyMessageData?.length; i++) {
+          if(keywordName === dailyMessageData[i].keyword_name) {
+            keywordId = dailyMessageData[i].keyword_id;
+          }
+      }
+    }
+
+    return keywordId;
+  };
+
   const onClick = (event : any) => {
     if(chartRef.current) {
-      console.log(getDatasetAtEvent(chartRef.current, event));
-      console.log(getElementAtEvent(chartRef.current, event));
-      console.log(getElementsAtEvent(chartRef.current, event));
+      // console.log(getDatasetAtEvent(chartRef.current, event));
+      // console.log(getElementAtEvent(chartRef.current, event));
+      // console.log(getElementsAtEvent(chartRef.current, event));
+      const keywordId =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
+      console.log("keywordId", keywordId);
       setShowDetail(true);
       setCurrent({})
     }
@@ -118,7 +141,7 @@ const StackedChart = (props: LineProps) => {
     let totalAmount : number[] = [];
     let keywordName = "";
     const returnData : StackChartDataset[] = [];
-    const color = ['#FF80AA','#36a2eb','#7FFFD4', '#A52A2A', '#29A6A6', '#FFA500',primary]
+    const color = GraphicColors
     for(let i = 0 ; i<data?.length; i++) {
       totalAmount = []
       const total = data[i]?.value;

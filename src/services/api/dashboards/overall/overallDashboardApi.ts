@@ -4,7 +4,7 @@ import { CallAPI } from 'src/services/CallAPI'
 export const FilterByCampaignId = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
-      url: `/dashboard/overall?campaign_id=${campaignId}`,
+      url: `/dashboard-overall?campaign_id=${campaignId}`,
       method: 'GET',
       params :{
         source: platformId || "",
@@ -26,7 +26,7 @@ export const FilterByCampaignId = (campaignId?: string, reload?: boolean, platfo
 export const TotalKeyStats = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-    url: `/dashboard/key-stats`,
+    url: `/dashboard-overall/key-stats`,
     method: 'GET',
     params :{
       campaign_id: campaignId || "",
@@ -52,7 +52,7 @@ export const TotalKeyStats = (campaignId?: string, reload?: boolean, platformId?
 export const GetKeyWords = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
 
   const [{ data: response, loading, error }] = CallAPI<{ data: any }>({
-    url: `/dashboard/keyword-summary`,
+    url: `/dashboard-overall/keyword-summary`,
     method: 'GET',
     params :{
       campaign_id: campaignId || "",
@@ -76,7 +76,7 @@ export const GetKeyWords = (campaignId?: string, reload?: boolean, platformId?: 
 export const GetTopKeywords = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-    url: `/dashboard/keyword-summary-top`,
+    url: `/dashboard-overall/keyword-summary-top`,
     method: 'GET',
     params :{
       campaign_id: campaignId || "",
@@ -100,7 +100,7 @@ export const GetTopKeywords = (campaignId?: string, reload?: boolean, platformId
 export const GetSentimentScore = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-    url: `/dashboard/sentiment-score`,
+    url: `/dashboard-overall/sentiment-score`,
     method: 'GET',
     params :{
       campaign_id: campaignId || "",
@@ -124,7 +124,7 @@ export const GetSentimentScore = (campaignId?: string, reload?: boolean, platfor
 export const GetSentimentType = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-    url: `/dashboard/sentiment-type`,
+    url: `/dashboard-overall/sentiment-type`,
     method: 'GET',
     params :{
       campaign_id: campaignId || "",
@@ -148,7 +148,7 @@ export const GetSentimentType = (campaignId?: string, reload?: boolean, platform
 export const GetShareOfVoice = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-    url: `/dashboard/share-of-voice`,
+    url: `/dashboard-overall/share-of-voice`,
     method: 'GET',
     params :{
       campaign_id: campaignId || "",
@@ -172,7 +172,7 @@ export const GetShareOfVoice = (campaignId?: string, reload?: boolean, platformI
 export const GetSentimentLevel = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-    url: `/dashboard/sentiment-level`,
+    url: `/dashboard-overall/sentiment-level`,
     method: 'GET',
     params :{
       campaign_id: campaignId || "",
