@@ -292,3 +292,81 @@ export const GetWordClouds = (campaignId?: string, reload?: boolean, platformId?
     errorWordClouds: error
   }
 }
+
+export const GetDetailMessage = (campaignId?: string, platformId?: string, start_date?: any,
+  end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, keywordId?: any ) => {
+   let params = {};
+   const todayDate = new Date();
+   if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate ) {
+     params = {
+       campaign_id: campaignId || "",
+       source: platformId || "",
+       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+       period: period,
+       keyword_id: keywordId || "",
+       start_date_period : previousDate ? moment(previousDate).format('YYYY-MM-DD') : "",
+       end_date_period : previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : "",
+     }
+   } else  {
+     params = {
+       campaign_id: campaignId || "",
+       source: platformId || "",
+       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+       period: period,
+       keyword_id: keywordId || ""
+     }
+   }
+ const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+   url: `/dashboard-overall/daily-message/level-three/`,
+   method: 'GET',
+   params : params
+ })
+
+ return {
+   resultMessageDetail: response?.data || null,
+   loadingMessageDetail: loading,
+   errorMessageDetail: error
+ }
+}
+
+export const GetNetworkGraph = (campaignId?: string, platformId?: string, start_date?: any,
+  end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, keywordId?: any, messageId?: any ) => {
+   let params = {};
+   const todayDate = new Date();
+   if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate ) {
+     params = {
+       campaign_id: campaignId || "",
+       source: platformId || "",
+       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+       period: period,
+       keyword_id: keywordId || "",
+       message_id: messageId || "",
+       start_date_period : previousDate ? moment(previousDate).format('YYYY-MM-DD') : "",
+       end_date_period : previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : "",
+     }
+   } else  {
+     params = {
+       campaign_id: campaignId || "",
+       source: platformId || "",
+       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+       period: period,
+       message_id: messageId || "",
+       keyword_id: keywordId || ""
+     }
+   }
+ const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+   url: `/dashboard-overall/daily-message/level-four/`,
+   method: 'GET',
+   params : params
+ })
+
+ return {
+   resultNetworkGraph: response?.data || null,
+   loadingNetworkGraph: loading,
+   errorNetworkGraph: error
+ }
+}

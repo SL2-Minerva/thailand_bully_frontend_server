@@ -25,6 +25,7 @@ interface LineProps {
   borderColor: string
   gridLineColor: string
   filterData: any
+  params : any
 }
 
 const chartLabel = (data:any) => {
@@ -33,11 +34,18 @@ const chartLabel = (data:any) => {
   const labels : string[] = [];
   for(let i = 0 ; i<data?.length; i++) {
     const label = data[i]?.value;
-    labels.push(moment(label[0].date_m).format('DD/MM'));
+    
 
-    // for(let j=0; j<data[i]?.value?.length ; j++ ) {
-       
-    // } 
+    for(let j=0; j<label?.length ; j++ ) {
+      // if ( labels?.length > 0) {
+      //     if (!labels?.includes(moment(label[j]?.date_m).format('DD/MM'))) {
+      //       labels.push(moment(label[j]?.date_m).format('DD/MM'));
+      //     } 
+      // } else {
+      //   labels.push(moment(label[j]?.date_m).format('DD/MM'));
+      // }
+      labels.push(moment(label[j]?.date_m).format('DD/MM'));
+    } 
   }
 
   return labels;
@@ -45,7 +53,7 @@ const chartLabel = (data:any) => {
 
 const StackedChart = (props: LineProps) => {
   // ** Props
-  const { white, labelColor,  borderColor, gridLineColor, filterData } = props
+  const { white, labelColor,  borderColor, gridLineColor, filterData, params } = props
 
   // const [ chartData, setChartData ] = useState();
 
@@ -53,7 +61,7 @@ const StackedChart = (props: LineProps) => {
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const [current, setCurrent] = useState<any>({})
+  const [keywordId, setKeywordId] = useState<any>();
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -79,10 +87,10 @@ const StackedChart = (props: LineProps) => {
       // console.log(getDatasetAtEvent(chartRef.current, event));
       // console.log(getElementAtEvent(chartRef.current, event));
       // console.log(getElementsAtEvent(chartRef.current, event));
-      const keywordId =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
-      console.log("keywordId", keywordId);
+      const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
+      console.log("keywordId", keyword_id);
+      setKeywordId(keyword_id);
       setShowDetail(true);
-      setCurrent({})
     }
   }
 
@@ -118,7 +126,7 @@ const StackedChart = (props: LineProps) => {
           color: gridLineColor
         },
 
-        // stacked: true
+        stacked: true
         
       }
     },
@@ -209,7 +217,8 @@ const StackedChart = (props: LineProps) => {
          <DailyMessageDetail 
             show={showDetail}
             setShow={setShowDetail}
-            current={current}
+            params = {params}
+            keywordId = {keywordId}
          />
       </CardContent>
     </Card>

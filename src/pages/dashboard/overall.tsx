@@ -107,14 +107,24 @@ const OverallDashboard = () => {
     const { resultCampaiganList } = CampaignList();
     const { resultFilterData } = FilterByCampaignId(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
     const { result_source_list  } = SourceService();
-    const { resultTopKeywords } = GetTopKeywords(campaign, reload, platformId, date, endDate, period);
-    const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount } = TotalKeyStats(campaign, reload, platformId, date, endDate, period);
-    const { resultShareOfVoice } = GetShareOfVoice(campaign, reload, platformId, date, endDate, period);
-    const { resultSentimentLevel } = GetSentimentLevel(campaign, reload, platformId, date, endDate, period);
-    const {resultSentimentType} = GetSentimentType(campaign, reload, platformId, date, endDate, period);
-    const { resultKeywords } = GetKeyWords(campaign, reload, platformId, date, endDate, period);
-    const {resultSentimentScore} = GetSentimentScore(campaign, reload, platformId, date, endDate, period);
-    const { resultWordClouds } = GetWordClouds(campaign, reload, platformId, date, endDate, period, topKeyword)
+    const { resultTopKeywords } = GetTopKeywords(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
+    const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount } = TotalKeyStats(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
+    const { resultShareOfVoice } = GetShareOfVoice(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
+    const { resultSentimentLevel } = GetSentimentLevel(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
+    const {resultSentimentType} = GetSentimentType(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
+    const { resultKeywords } = GetKeyWords(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
+    const {resultSentimentScore} = GetSentimentScore(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
+    const { resultWordClouds } = GetWordClouds(campaign, reload, platformId, date, endDate, period, topKeyword, previousDate, previousEndDate);
+
+    const params = {
+        campaign: campaign,
+        platformId: platformId, 
+        date: date,
+        endDate: endDate, 
+        period: period, 
+        previousDate: previousDate, 
+        previousEndDate: previousEndDate,
+      }
 
     const handleSelectList = useCallback((e: SelectChangeEvent, type:string) => {
         if (type === 'campaign') {
@@ -360,6 +370,7 @@ const OverallDashboard = () => {
                         warning={lineChartWarning}
                         gridLineColor={gridLineColor}
                         filterData={resultFilterData}
+                        params= {params}
                     />
                 </Grid>
             </StyledTooltip>
@@ -430,17 +441,17 @@ const OverallDashboard = () => {
         <Grid container spacing={3} mt={2}>
             <StyledTooltip arrow placement="top-start" title="Chart 7">
                 <Grid id="chart7" item xs={12} md={4}>
-                    <MainKeyWordTable mainKeyword={resultTopKeywords?.main_keyword}/>
+                    <MainKeyWordTable mainKeyword={resultTopKeywords?.main_keyword} params={params}/>
                 </Grid>
             </StyledTooltip>
             <StyledTooltip arrow placement="top-end" title="Chart 8">
                 <Grid id="chart8" item xs={12} md={4}>
-                    <TopSiteList topsites={resultTopKeywords?.top_sites}/>
+                    <TopSiteList topsites={resultTopKeywords?.top_sites} params={params}/>
                 </Grid>
             </StyledTooltip>
             <StyledTooltip arrow placement="top-end" title="Chart 9">
                 <Grid id="chart9" item xs={12} md={4}>
-                    <TopHashtagList topHashtags={resultTopKeywords?.top_hastag}/>
+                    <TopHashtagList topHashtags={resultTopKeywords?.top_hastag} params={params}/>
                 </Grid>
             </StyledTooltip>
         </Grid>

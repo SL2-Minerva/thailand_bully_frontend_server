@@ -7,12 +7,13 @@ import { useState } from "react";
 import DailyMessageDetail from "./DailyMessageDetail";
 
 interface Props {
-    topHashtags : any
+    topHashtags : any,
+    params : any
 }
 
-const TopHashtagList = ({topHashtags} : Props) => {
+const TopHashtagList = ({topHashtags, params} : Props) => {
     const [showDetail, setShowDetail] = useState<boolean>(false);
-    const [current, setCurrent] = useState<any>({})
+    const [keywordId, setKeywordId] = useState<number>();
     
     return (
         <Card sx={{ maxHeight: 360,minHeight: 360 }}>
@@ -42,7 +43,7 @@ const TopHashtagList = ({topHashtags} : Props) => {
                         {
                             (topHashtags || [])?.map((hashtag:any, index:any) => {
                                 return(
-                                    <TableRow key={index} onClick={()=>{setShowDetail(true);setCurrent({})}}>
+                                    <TableRow key={index} onClick={()=>{setShowDetail(true);setKeywordId(hashtag?.keyword_id)}}>
                                         <TableCell sx={{ backgroundColor: "lightslategrey !important", color:'white'}}>{hashtag?.hashtag}</TableCell>
                                         <TableCell>{hashtag?.no_of_message}</TableCell>
                                         <TableCell>{hashtag?.percentage}</TableCell>
@@ -55,7 +56,8 @@ const TopHashtagList = ({topHashtags} : Props) => {
                     <DailyMessageDetail 
                     show={showDetail}
                     setShow={setShowDetail}
-                    current={current}
+                    params={params}
+                    keywordId={keywordId}
                 />
             </CardContent>
         </Card>
