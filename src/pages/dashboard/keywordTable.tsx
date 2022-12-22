@@ -27,7 +27,7 @@ const KeywordTable = ({resultKeywords} : {resultKeywords: any}) => {
                             (resultKeywords||[])?.map((keyword: any, index:any) => {
                                 return(
                                     <TableRow key={index}>
-                                        <TableCell sx={{ backgroundColor: "lightgrey !important" }}><b>Keyword {keyword.id}</b></TableCell>
+                                        <TableCell sx={{ backgroundColor: "lightgrey !important" }}><b>{keyword.keyword}</b></TableCell>
                                         <TableCell>{keyword.message}</TableCell>
                                         <TableCell>{keyword.engagement}</TableCell>
                                         <TableCell>{keyword.accounts}</TableCell>
