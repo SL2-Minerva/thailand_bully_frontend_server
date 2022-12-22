@@ -7,12 +7,13 @@ import { useState } from "react";
 import DailyMessageDetail from "./DailyMessageDetail";
 
 interface Props {
-    topsites: any
+    topsites: any,
+    params: any
 }
 
-const TopSiteList = ({topsites} : Props) => {
+const TopSiteList = ({topsites, params} : Props) => {
     const [showDetail, setShowDetail] = useState<boolean>(false);
-    const [current, setCurrent] = useState<any>({})
+    const [keywordId, setKeywordId] = useState<number>();
 
     return (
         <Card sx={{ maxHeight: 360,minHeight: 360 }}>
@@ -44,7 +45,7 @@ const TopSiteList = ({topsites} : Props) => {
                         {
                             (topsites || [])?.map((topsite :any, index:any) => {
                                 return(
-                                    <TableRow key={index} onClick={()=>{setShowDetail(true); setCurrent({})}}>
+                                    <TableRow key={index} onClick={()=>{setShowDetail(true); setKeywordId(topsite?.keyword_id)}}>
                                         <TableCell sx={{ backgroundColor: "lightslategrey !important", color:'white' }}>{topsite?.site_domain}</TableCell>
                                         <TableCell>{topsite?.no_of_message}</TableCell>
                                         <TableCell>{topsite?.percentage}</TableCell>
@@ -57,7 +58,8 @@ const TopSiteList = ({topsites} : Props) => {
                 <DailyMessageDetail 
                     show={showDetail}
                     setShow={setShowDetail}
-                    current={current}
+                    params={params}
+                    keywordId={keywordId}
                 />
             </CardContent>
         </Card>

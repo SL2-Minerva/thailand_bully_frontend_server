@@ -6,7 +6,7 @@ import Close from 'mdi-material-ui/Close'
 import Graph from 'react-graph-vis';
 import 'react-graph-vis/node_modules/vis-network/dist/dist/vis-network.css';
 import { CampaignList } from 'src/services/api/campaign/CampaignAPI';
-import { GetNetworkGraph } from 'src/services/api/networkGraph/networkGraphAPI';
+import { GetNetworkGraph } from "src/services/api/dashboards/overall/overallDashboardApi";
 
 
 const Transition = forwardRef(function Transition(
@@ -19,13 +19,17 @@ const Transition = forwardRef(function Transition(
 interface DialogInfoProps {
   showDialog: boolean
   setShowDialog: any
-  currentData?: any
+  currentData?: any,
+  params?: any
+  keywordId?: number | string,
+  messageId?: number | string
 }
 
 const DialogNetworkGraph = (props: DialogInfoProps) => {
-    const { showDialog, setShowDialog, currentData } = props
+    const { showDialog, setShowDialog, currentData, params, keywordId, messageId } = props
     const { resultCampaiganList } = CampaignList();
-    const { resultNetworkGraph } = GetNetworkGraph("1");
+    const { resultNetworkGraph } = GetNetworkGraph(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, keywordId, messageId);
+
   
     const initialGraph = {
       "nodes": [],

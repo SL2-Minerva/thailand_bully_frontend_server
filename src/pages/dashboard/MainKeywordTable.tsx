@@ -8,12 +8,13 @@ import DailyMessageDetail from "./DailyMessageDetail";
 
 interface Props {
     mainKeyword: any
+    params: any
 }
 
-const MainKeyWordTable = ({mainKeyword} : Props) => {
+const MainKeyWordTable = ({mainKeyword, params} : Props) => {
     
     const [showDetail, setShowDetail] = useState<boolean>(false);
-    const [current, setCurrent] = useState<any>({})
+    const [keywordId, setKeywordId] = useState<number>();
 
     return (
         <Card sx={{ maxHeight: 360,minHeight: 360 }}>
@@ -44,7 +45,7 @@ const MainKeyWordTable = ({mainKeyword} : Props) => {
                     {
                         (mainKeyword || [])?.map((keyword : any, index: any) => {
                             return(
-                                <TableRow key={index} onClick={()=>{setShowDetail(true); setCurrent({})}}>
+                                <TableRow key={index} onClick={()=>{setShowDetail(true); setKeywordId(keyword?.keyword_id)}}>
                                     <TableCell sx={{ backgroundColor: "lightslategrey !important", color:'white' }}>{keyword?.keyword}</TableCell>
                                     <TableCell>{keyword?.no_of_message}</TableCell>
                                     <TableCell>{keyword?.percentage}</TableCell>
@@ -57,7 +58,8 @@ const MainKeyWordTable = ({mainKeyword} : Props) => {
             <DailyMessageDetail 
                 show={showDetail}
                 setShow={setShowDetail}
-                current={current}
+                params={params}
+                keywordId={keywordId}
             />
            
             </CardContent>

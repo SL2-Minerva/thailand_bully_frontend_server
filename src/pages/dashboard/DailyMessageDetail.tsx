@@ -11,6 +11,7 @@ import Fade, { FadeProps } from '@mui/material/Fade'
 import { Box, Card, Dialog, DialogContent, IconButton, Typography } from "@mui/material";
 import Close from 'mdi-material-ui/Close'
 import DialogNetworkGraph from "./DialogNetworkGraph";
+import { GetDetailMessage } from "src/services/api/dashboards/overall/overallDashboardApi";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -33,24 +34,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Before putting each word on the canvas, it is drawn on a separate canvas to read back the pixels to record is drawn spaces. ', 159, 6.0, 24, 4.0),
-  createData('limbo', 237, 9.0, 37, 4.3),
-  createData('2minus1', 262, 16.0, 24, 6.0),
-  createData('911 calling', 305, 3.7, 67, 4.3),
-  createData('diving into the heat', 356, 16.0, 49, 3.9),
-];
-
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
   ref: Ref<unknown>
@@ -64,14 +47,19 @@ interface DialogInfoProps {
   action?: string
   current?: any
   table?: any
+  params?: any
+  keywordId?: number
 }
 
 const DailyMessageDetail = (props: DialogInfoProps) => {
-    const { show, setShow, current } = props
+    const { show, setShow, current, params, keywordId } = props
     const [ showDialog, setShowDialog ] = useState<boolean>(false);
+    const {resultMessageDetail} = GetDetailMessage(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, keywordId);
+    const [messageId, setMessageId ] = useState<number | string>();
+
     useEffect(() => {
-        console.log("detail page loaded!");
-    }, [current])
+        console.log("message detail page", resultMessageDetail);
+    }, [resultMessageDetail])
 
     return (
       <Card>
@@ -115,21 +103,20 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => (
-                    <StyledTableRow key={row.name} onClick={() => {setShowDialog(true)}}>
-                      <StyledTableCell align="center">{row.calories}</StyledTableCell>
+                  {(resultMessageDetail || []).map((messageDetail :any, index : number) => (
+                    <StyledTableRow key={index} onClick={() => {setShowDialog(true), setMessageId(messageDetail.message_id)}}>
+                      <StyledTableCell align="center">{messageDetail.message_id}</StyledTableCell>
                       <StyledTableCell component="th" scope="row">
-                        {row.name}
+                        {messageDetail.message_detail}
                       </StyledTableCell>
-                      <StyledTableCell align="center">{row.fat}</StyledTableCell>
-                      <StyledTableCell align="center">{row.carbs}</StyledTableCell>
-                      <StyledTableCell align="center">{row.protein}</StyledTableCell>
-                      <StyledTableCell align="center">{row.calories}</StyledTableCell>
-                      <StyledTableCell align="center">{row.fat}</StyledTableCell>
-                      <StyledTableCell align="center">{row.carbs}</StyledTableCell>
-                      <StyledTableCell align="center">{row.protein}</StyledTableCell>
-                      <StyledTableCell align="center">{row.protein}</StyledTableCell>
-
+                      <StyledTableCell align="center">{messageDetail.account_name}</StyledTableCell>
+                      <StyledTableCell align="center">{messageDetail.post_date}</StyledTableCell>
+                      <StyledTableCell align="center">{messageDetail.post_time}</StyledTableCell>
+                      <StyledTableCell align="center">{messageDetail.day}</StyledTableCell>
+                      <StyledTableCell align="center">{messageDetail.device}</StyledTableCell>
+                      <StyledTableCell align="center">{messageDetail.channel}</StyledTableCell>
+                      <StyledTableCell align="center">{messageDetail.bully_level}</StyledTableCell>
+                      <StyledTableCell align="center">{messageDetail.bully_type}</StyledTableCell>
                     </StyledTableRow>
                   ))}
                 </TableBody>
@@ -141,6 +128,9 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
           showDialog={showDialog}
           setShowDialog={setShowDialog}
           currentData={current}
+          params ={params}
+          keywordId = {keywordId}
+          messageId = {messageId}
         />
       </Card>
     );
