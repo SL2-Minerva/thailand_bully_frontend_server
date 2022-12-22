@@ -2,9 +2,9 @@ import { Table, TableRow, TableHead, TableCell, TableContainer, Button } from "@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import TopKeywordDetail from "./TopKeywordDetail";
 import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
 import { useState } from "react";
+import DailyMessageDetail from "./DailyMessageDetail";
 
 interface Props {
     topHashtags : any
@@ -12,6 +12,7 @@ interface Props {
 
 const TopHashtagList = ({topHashtags} : Props) => {
     const [showDetail, setShowDetail] = useState<boolean>(false);
+    const [current, setCurrent] = useState<any>({})
     
     return (
         <Card sx={{ maxHeight: 360,minHeight: 360 }}>
@@ -31,31 +32,31 @@ const TopHashtagList = ({topHashtags} : Props) => {
                 }
             </div>
             <CardContent>
-            {
-                    showDetail ? 
-                        <TopKeywordDetail/>
-                    :
-                        <TableContainer sx={{ maxHeight: 250, minHeight: 250 }}>
-                            <Table stickyHeader={true} size="small">
-                                <TableHead sx={{ backgroundColor: "lightgrey !important" }}>
-                                    <TableCell variant="head" sx={{ backgroundColor: "white !important" }}>  </TableCell>
-                                    <TableCell variant="head"> No. of Messages </TableCell>
-                                    <TableCell variant="head"> % </TableCell>
-                                </TableHead>
-                                {
-                                    (topHashtags || [])?.map((hashtag:any, index:any) => {
-                                        return(
-                                            <TableRow key={index} onClick={()=>{setShowDetail(true)}}>
-                                                <TableCell sx={{ backgroundColor: "lightslategrey !important", color:'white'}}>{hashtag?.hashtag}</TableCell>
-                                                <TableCell>{hashtag?.no_of_message}</TableCell>
-                                                <TableCell>{hashtag?.percentage}</TableCell>
-                                            </TableRow>
-                                        )
-                                    })
-                                }
-                            </Table>
-                         </TableContainer>
-                }
+                <TableContainer sx={{ maxHeight: 250, minHeight: 250 }}>
+                    <Table stickyHeader={true} size="small">
+                        <TableHead sx={{ backgroundColor: "lightgrey !important" }}>
+                            <TableCell variant="head" sx={{ backgroundColor: "white !important" }}>  </TableCell>
+                            <TableCell variant="head"> No. of Messages </TableCell>
+                            <TableCell variant="head"> % </TableCell>
+                        </TableHead>
+                        {
+                            (topHashtags || [])?.map((hashtag:any, index:any) => {
+                                return(
+                                    <TableRow key={index} onClick={()=>{setShowDetail(true);setCurrent({})}}>
+                                        <TableCell sx={{ backgroundColor: "lightslategrey !important", color:'white'}}>{hashtag?.hashtag}</TableCell>
+                                        <TableCell>{hashtag?.no_of_message}</TableCell>
+                                        <TableCell>{hashtag?.percentage}</TableCell>
+                                    </TableRow>
+                                )
+                            })
+                        }
+                    </Table>
+                    </TableContainer>
+                    <DailyMessageDetail 
+                    show={showDetail}
+                    setShow={setShowDetail}
+                    current={current}
+                />
             </CardContent>
         </Card>
         

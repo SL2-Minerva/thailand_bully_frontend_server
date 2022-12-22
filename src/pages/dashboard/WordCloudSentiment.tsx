@@ -1,10 +1,15 @@
 import ReactWordcloud from "react-wordcloud";
-import Words from "src/types/dashboard/words";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import { Button, Card, CardHeader, Grid } from "@mui/material";
+import { useState } from "react";
 
-const WordCloudSentiment = () => {
+const WordCloudSentiment = ({resultWordClouds} : {resultWordClouds: any}) => {
+    const [ sentiment, setSentiment ] = useState('');
+
+    const chooseSentiment = (value: string) =>{ 
+        setSentiment(value);
+    } 
 
     return (
         <Card sx={{ maxHeight: 500,minHeight: 500 }}>
@@ -14,13 +19,19 @@ const WordCloudSentiment = () => {
             />
             <Grid container spacing={2}>
                 <Grid item sm={8} xs={8} ml={4}>
-                    <Button variant="contained" color="inherit" size="medium" style={{ marginRight: '6px' }}> Positive </Button>
-                    <Button variant="contained" color="error" size="medium" > Negative </Button>
+                    <Button variant="contained" color={sentiment ==='positive' ? 'warning' : 'inherit'} size="medium" 
+                    style={{ marginRight: '6px' }} onClick={() => {chooseSentiment('positive')}}> 
+                        Positive 
+                    </Button>
+                    <Button variant="contained" color={sentiment ==='negative' ? 'error' : 'inherit'}
+                     size="medium" onClick={() => {chooseSentiment('negative')}}>
+                         Negative
+                    </Button>
 
                 </Grid>
             </Grid>
             <div style={{ height: 400, width: 600 }}>
-                <ReactWordcloud words={Words} />
+                <ReactWordcloud words={resultWordClouds?.word_clouds_position || [] } />
             </div>
         </Card>
     )

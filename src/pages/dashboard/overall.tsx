@@ -41,7 +41,7 @@ import CommentSentiment from "./CommentSentiment"
 import ShareOfVoice from "./ShareOfVoice"
 import SentimentLevelChart from "./SentimentLevelChart"
 import { CampaignList } from "src/services/api/campaign/CampaignAPI"
-import { FilterByCampaignId, GetSentimentLevel, GetSentimentScore, GetShareOfVoice, GetTopKeywords, TotalKeyStats } from "src/services/api/dashboards/overall/overallDashboardApi"
+import { FilterByCampaignId, GetSentimentLevel, GetSentimentScore, GetShareOfVoice, GetTopKeywords, GetWordClouds, TotalKeyStats } from "src/services/api/dashboards/overall/overallDashboardApi"
 import SourceService from "src/services/api/source/SourceApi"
 import { GetSentimentType } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
@@ -85,12 +85,15 @@ export interface PickerProps {
 const OverallDashboard = () => {
     const [date, setDate] = useState<DateType>(new Date())
     const [endDate, setEndDate] = useState<DateType>(new Date())
+    const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
+    const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
     const [ campaign, setCampaign ] = useState<string>("1")
     const [ platformId, setPlatformId ] = useState<string>("1")
     const [ dateSelect, setDateSelect ] = useState<string>("1")
     const [ reload ] = useState<boolean>(false);
     const [ period, setPeriod ] = useState<string>('daily')
     const [ topKeyword, setTopKeyword ] = useState<string>('all');
+    const [ showPreviousDatepicker, setShowPreviousDatepicker ] = useState<boolean>(false);
     const theme = useTheme()
 
     const whiteColor = '#fff'
@@ -102,7 +105,7 @@ const OverallDashboard = () => {
     const gridLineColor = theme.palette.action.focus
 
     const { resultCampaiganList } = CampaignList();
-    const { resultFilterData } = FilterByCampaignId(campaign, reload, platformId, date, endDate, period);
+    const { resultFilterData } = FilterByCampaignId(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
     const { result_source_list  } = SourceService();
     const { resultTopKeywords } = GetTopKeywords(campaign, reload, platformId, date, endDate, period);
     const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount } = TotalKeyStats(campaign, reload, platformId, date, endDate, period);
@@ -111,6 +114,7 @@ const OverallDashboard = () => {
     const {resultSentimentType} = GetSentimentType(campaign, reload, platformId, date, endDate, period);
     const { resultKeywords } = GetKeyWords(campaign, reload, platformId, date, endDate, period);
     const {resultSentimentScore} = GetSentimentScore(campaign, reload, platformId, date, endDate, period);
+    const { resultWordClouds } = GetWordClouds(campaign, reload, platformId, date, endDate, period, topKeyword)
 
     const handleSelectList = useCallback((e: SelectChangeEvent, type:string) => {
         if (type === 'campaign') {
@@ -127,6 +131,7 @@ const OverallDashboard = () => {
     const handleDateSelect = useCallback((e:any) => {
         const value = e.target?.value ? e.target?.value : e; 
         setDateSelect(value);
+        setShowPreviousDatepicker(false);
         if (value === '1') {
             setPeriod('daily');
             setDate(new Date());
@@ -175,6 +180,7 @@ const OverallDashboard = () => {
             setEndDate(lastDayofMonth);
         } else {
             setPeriod('customrange');
+            setShowPreviousDatepicker(true);
         }
     }, [])
 
@@ -183,7 +189,13 @@ const OverallDashboard = () => {
         const [start, end] = dates
         setDate(start)
         setEndDate(end)
-      }
+    }
+
+    const handleOnChangePreviousDate = (dates: any) => {
+        const [start, end] = dates
+        setPreviousDate(start)
+        setPreviousEndDate(end)
+    }
 
     const CustomInput = forwardRef((props: PickerProps, ref) => {
         const startDate = format(props.start, 'dd/MM/yyyy')
@@ -203,7 +215,7 @@ const OverallDashboard = () => {
                     <CardContent>
 
                     <Grid container spacing={6} mt={2}>
-                        <Grid item sm={3} xs={12}>
+                        <Grid item sm={4} xs={12}>
                             <FormControl fullWidth>
                             <InputLabel id='plan-select'>Select Period</InputLabel>
                             <Select
@@ -226,30 +238,7 @@ const OverallDashboard = () => {
                             </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item sm={3} xs={12}>
-                            <Box>
-                                <DatePickerWrapper>
-                                    <DatePicker
-                                    selectsRange
-                                    monthsShown={2}
-                                    endDate={endDate}
-                                    selected={date}
-                                    startDate={date}
-                                    shouldCloseOnSelect={false}
-                                    id='date-range-picker-months'
-                                    onChange={handleOnChangeDate}
-                                    customInput={
-                                        <CustomInput
-                                        label='Period Range'
-                                        end={endDate as Date | number}
-                                        start={date as Date | number}
-                                        />
-                                    }
-                                    />
-                                    </DatePickerWrapper>
-                            </Box>
-                        </Grid>
-                        <Grid item sm={3} xs={12}>
+                        <Grid item sm={4} xs={12}>
                             <FormControl fullWidth>
                             <InputLabel id='plan-select'>Select Campaign</InputLabel>
                             <Select
@@ -273,7 +262,7 @@ const OverallDashboard = () => {
                             </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item sm={3} xs={12}>
+                        <Grid item sm={4} xs={12}>
                             <FormControl fullWidth>
                             <InputLabel id='plan-select'>Select Platform</InputLabel>
                             <Select
@@ -297,6 +286,57 @@ const OverallDashboard = () => {
                             </Select>
                             </FormControl>
                         </Grid>
+                        <Grid item sm={4} xs={12}>
+                            <Box>
+                                <DatePickerWrapper>
+                                    <DatePicker
+                                    selectsRange
+                                    monthsShown={2}
+                                    endDate={endDate}
+                                    selected={date}
+                                    startDate={date}
+                                    shouldCloseOnSelect={false}
+                                    id='date-range-picker-months'
+                                    onChange={handleOnChangeDate}
+                                    customInput={
+                                        <CustomInput
+                                        label='Current Period'
+                                        end={endDate as Date | number}
+                                        start={date as Date | number}
+                                        />
+                                    }
+                                    />
+                                    </DatePickerWrapper>
+                            </Box>
+                        </Grid>
+                        {
+                            showPreviousDatepicker ?
+                                <Grid item sm={4} xs={12}>
+                                    <Box>
+                                        <DatePickerWrapper>
+                                            <DatePicker
+                                            selectsRange
+                                            monthsShown={2}
+                                            endDate={previousEndDate}
+                                            selected={previousDate}
+                                            startDate={previousDate}
+                                            shouldCloseOnSelect={false}
+                                            id='date-range-picker-months'
+                                            onChange={handleOnChangePreviousDate}
+                                            customInput={
+                                                <CustomInput
+                                                label='Previous Period'
+                                                end={previousEndDate as Date | number}
+                                                start={previousDate as Date | number}
+                                                />
+                                            }
+                                            />
+                                            </DatePickerWrapper>
+                                    </Box>
+                                </Grid>
+                            :""
+                        }
+                        
                     </Grid>
                     </CardContent>
                 </Card>
@@ -309,7 +349,7 @@ const OverallDashboard = () => {
                     <DonutChart filterData = {resultFilterData} />
                 </Grid>
             </StyledTooltip>
-            <StyledTooltip arrow title="Chart 2">
+            <StyledTooltip arrow placement="top-end" title="Chart 2">
                 <Grid id="chart2" item xs={12} md={8}>
                     <StackedChart
                         white={whiteColor}
@@ -388,17 +428,17 @@ const OverallDashboard = () => {
         </Grid>
 
         <Grid container spacing={3} mt={2}>
-            <StyledTooltip arrow title="Chart 7">
+            <StyledTooltip arrow placement="top-start" title="Chart 7">
                 <Grid id="chart7" item xs={12} md={4}>
                     <MainKeyWordTable mainKeyword={resultTopKeywords?.main_keyword}/>
                 </Grid>
             </StyledTooltip>
-            <StyledTooltip arrow title="Chart 8">
+            <StyledTooltip arrow placement="top-end" title="Chart 8">
                 <Grid id="chart8" item xs={12} md={4}>
                     <TopSiteList topsites={resultTopKeywords?.top_sites}/>
                 </Grid>
             </StyledTooltip>
-            <StyledTooltip arrow title="Chart 9">
+            <StyledTooltip arrow placement="top-end" title="Chart 9">
                 <Grid id="chart9" item xs={12} md={4}>
                     <TopHashtagList topHashtags={resultTopKeywords?.top_hastag}/>
                 </Grid>
@@ -434,11 +474,11 @@ const OverallDashboard = () => {
         <Grid container spacing={3} mt ={2}> 
             <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
                 <span  style={{marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
-                <Button variant="contained" color={topKeyword === '10' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }}
-                 onClick={() => {handleTopKeywords("10")}}> Top 10</Button>
-                <Button variant="contained" color={topKeyword === '20' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("20")}}> Top 20</Button>
-                <Button variant="contained" color={topKeyword === '50' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("50")}}> Top 50</Button>
-                <Button variant="contained" color={topKeyword === '100' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("100")}}> Top 100</Button>
+                <Button variant="contained" color={topKeyword === 'top10' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }}
+                 onClick={() => {handleTopKeywords("top10")}}> Top 10</Button>
+                <Button variant="contained" color={topKeyword === 'top20' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top20")}}> Top 20</Button>
+                <Button variant="contained" color={topKeyword === 'top50' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top50")}}> Top 50</Button>
+                <Button variant="contained" color={topKeyword === 'top100' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top100")}}> Top 100</Button>
                 <Button variant="contained" color={topKeyword === 'all' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("all")}}> ALL </Button>
             </Grid>
         </Grid>
@@ -446,7 +486,7 @@ const OverallDashboard = () => {
         <Grid container spacing={3} mt ={2}> 
             <StyledTooltip arrow title="Chart 14">
                 <Grid id="chart14" item xs={12} md={6}>
-                    <WordCloud />
+                    <WordCloud resultWordClouds={resultWordClouds}/>
                 </Grid>
             </StyledTooltip>
             <StyledTooltip arrow title="Chart 15">
@@ -459,10 +499,10 @@ const OverallDashboard = () => {
         <Grid container spacing={3} mt ={2}> 
             <StyledTooltip arrow title="Chart 16">
                 <Grid id="chart16" item xs={12} md={6}>
-                    <WordCloudChannel />
+                    <WordCloudChannel resultWordClouds={resultWordClouds}/>
                 </Grid>
             </StyledTooltip>
-            <StyledTooltip arrow title="Chart 17">
+            <StyledTooltip arrow placement="top-end" title="Chart 17">
                 <Grid id="chart17" item xs={12} md={6}>
                     <AccountList resultKeywords={resultKeywords}/>
                 </Grid>
@@ -472,10 +512,10 @@ const OverallDashboard = () => {
         <Grid container spacing={3} mt ={2}> 
             <StyledTooltip arrow title="Chart 18">
                 <Grid id="chart18" item xs={12} md={6}>
-                    <WordCloudSentiment />
+                    <WordCloudSentiment resultWordClouds={resultWordClouds}/>
                 </Grid>
             </StyledTooltip>
-            <StyledTooltip arrow title="Chart 19">
+            <StyledTooltip arrow placement="top-end"  title="Chart 19">
                 <Grid id="chart19" item xs={12} md={6}>
                     <AccountList resultKeywords={resultKeywords}/>
                 </Grid>

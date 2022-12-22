@@ -9,6 +9,7 @@ import { Grid } from "@mui/material"
 
 import { Doughnut } from 'react-chartjs-2'
 import { useEffect, useState } from 'react'
+import { GraphicColors } from 'src/utils/const'
 
 interface MessageData {
   filterData : any
@@ -22,11 +23,7 @@ const DonutChart = (props : MessageData) => {
     labels: [],
     datasets: [{
       data: [],
-      backgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)'
-      ],
+      backgroundColor: GraphicColors,
       hoverOffset: 4
     }]
   });
@@ -34,11 +31,7 @@ const DonutChart = (props : MessageData) => {
     labels: [],
     datasets: [{
       data: [],
-      backgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)'
-      ],
+      backgroundColor: GraphicColors,
       hoverOffset: 4
     }]
   });
@@ -73,11 +66,7 @@ const DonutChart = (props : MessageData) => {
         labels: [],
         datasets: [{
           data: [],
-          backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
-          ],
+          backgroundColor: GraphicColors,
           hoverOffset: 4
         }]
       };
@@ -103,11 +92,7 @@ const DonutChart = (props : MessageData) => {
       labels: labels,
       datasets: [{
         data: percentage,
-        backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 205, 86)'
-        ],
+        backgroundColor: GraphicColors,
         hoverOffset: 4
       }]
     };

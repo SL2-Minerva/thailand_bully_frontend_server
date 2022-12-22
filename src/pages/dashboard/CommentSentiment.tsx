@@ -41,11 +41,7 @@ const CommentSentiment  = ({resultSentimentType} : {resultSentimentType:any}) =>
     ],
     datasets: [{
       data: [resultSentimentType?.negative_percentage || 0 , resultSentimentType?.neutral_percentage || 0, resultSentimentType?.positive_percentage||0],
-      backgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)'
-      ],
+      backgroundColor: ['#ea4228','#f5cd19', '#5be12c'],
       hoverOffset: 3
     }]
   };
