@@ -4,7 +4,7 @@ import { CallAPI } from 'src/services/CallAPI'
 export const FilterByCampaignId = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any, end_date?: any, period?: any ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
-      url: `/dashboard-overall/overall?campaign_id=${campaignId}`,
+      url: `/dashboard-overall?campaign_id=${campaignId}`,
       method: 'GET',
       params :{
         source: platformId || "",
