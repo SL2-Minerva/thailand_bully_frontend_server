@@ -1,12 +1,11 @@
 import ReactWordcloud from "react-wordcloud";
-import Words from "src/types/dashboard/words";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import { Card, CardHeader, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useCallback, useState } from "react";
 import SourceService from "src/services/api/source/SourceApi";
 
-const WordCloudChannel = () => {
+const WordCloudChannel = ({resultWordClouds} : {resultWordClouds: any}) => {
     const [ platformId, setPlatformId ] = useState<string>("1")
     const { result_source_list  } = SourceService();
 
@@ -47,7 +46,7 @@ const WordCloudChannel = () => {
                 </Grid>
             </Grid>
             <div style={{ height: 400, width: 600 }}>
-                <ReactWordcloud words={Words} />
+                <ReactWordcloud words={resultWordClouds?.word_clouds_platform || []} />
             </div>
         </Card>
     )

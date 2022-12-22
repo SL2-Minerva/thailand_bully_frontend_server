@@ -1,10 +1,9 @@
 import ReactWordcloud from "react-wordcloud";
-import Words from "src/types/dashboard/words";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import { Card, CardHeader } from "@mui/material";
 
-const WordCloud = () => {
+const WordCloud = ({resultWordClouds} : {resultWordClouds: any} ) => {
 
     return (
         <Card sx={{ maxHeight: 450,minHeight: 450 }}>
@@ -13,7 +12,7 @@ const WordCloud = () => {
                 titleTypographyProps={{ variant: 'h6' }}
             />
             <div style={{ height: 400, width: 600 }}>
-                <ReactWordcloud words={Words} />
+                <ReactWordcloud words={resultWordClouds?.word_clouds || []} />
             </div>
         </Card>
     )
