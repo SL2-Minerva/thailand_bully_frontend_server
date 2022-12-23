@@ -1,4 +1,4 @@
-import {forwardRef, ReactElement, Ref, useEffect, useState} from "react";
+import {forwardRef, ReactElement, Ref, useState} from "react";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -56,10 +56,6 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
     const [ showDialog, setShowDialog ] = useState<boolean>(false);
     const {resultMessageDetail} = GetDetailMessage(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, keywordId);
     const [messageId, setMessageId ] = useState<number | string>();
-
-    useEffect(() => {
-        console.log("message detail page", resultMessageDetail);
-    }, [resultMessageDetail])
 
     return (
       <Card>

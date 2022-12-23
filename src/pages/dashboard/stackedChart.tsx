@@ -85,12 +85,16 @@ const StackedChart = (props: LineProps) => {
   const onClick = (event : any) => {
     if(chartRef.current) {
       // console.log(getDatasetAtEvent(chartRef.current, event));
-      // console.log(getElementAtEvent(chartRef.current, event));
       // console.log(getElementsAtEvent(chartRef.current, event));
+      // console.log(getElementAtEvent(chartRef.current, event));
+
       const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
-      console.log("keywordId", keyword_id);
-      setKeywordId(keyword_id);
-      setShowDetail(true);
+
+      if(keyword_id) {
+        setKeywordId(keyword_id);
+        setShowDetail(true);
+      }
+      
     }
   }
 
