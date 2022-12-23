@@ -12,6 +12,7 @@ import { GetComparison } from "src/services/api/dashboards/channel/ChannelDashbo
 import ChannelBySentiment from "./ChannelBySentiment"
 import SentimentLevelChart from "../dashboard/SentimentLevelChart"
 import QuickView from "./QuickView"
+import { DateType } from "src/types/forms/reactDatepickerTypes"
 
 const ChannelDashboard = () => {
     const theme = useTheme()
@@ -24,12 +25,14 @@ const ChannelDashboard = () => {
     const borderColor = theme.palette.action.focus
     const gridLineColor = theme.palette.action.focus
 
-    const [date, setDate] = useState<Date | null>(new Date())
-    const [endDate, setEndDate] = useState<Date | null>(new Date())
+    const [date, setDate] = useState<DateType>(new Date())
+    const [endDate, setEndDate] = useState<DateType>(new Date())
     const [ period, setPeriod ] = useState<string>('daily')
     const [ dateSelect, setDateSelect ] = useState<string>("1")
     const [ campaign, setCampaign ] = useState<string>("1")
-    
+    const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
+    const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
+
     //api call
     const { resultPercentageChannel } = GetPercentageChannel(campaign, date, endDate, period);
     const { resultDailyChannel } = GetDailyChannel(campaign, date, endDate, period);
@@ -54,6 +57,10 @@ const ChannelDashboard = () => {
                 setDate ={setDate}
                 endDate ={endDate}
                 setEndDate = {setEndDate}
+                previousDate = {previousDate}
+                setPreviousDate = {setPreviousDate}
+                previousEndDate = {previousEndDate}
+                setPreviousEndDate = {setPreviousEndDate}
                 period ={period}
                 setPeriod ={setPeriod}
                 dateSelect= {dateSelect}

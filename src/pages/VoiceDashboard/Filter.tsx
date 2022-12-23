@@ -5,13 +5,18 @@ import { calculateDate, get1stAndLastDayOfMonth, PickerProps } from "../dashboar
 import DatePicker from 'react-datepicker'
 import format from 'date-fns/format'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
-import { forwardRef, useCallback } from "react";
+import { forwardRef, useCallback, useState } from "react";
+import { DateType } from "src/types/forms/reactDatepickerTypes";
 
 interface Props {
-    date : Date | null
+    date : DateType
     setDate: any
-    endDate : Date | null
+    endDate : DateType
     setEndDate : any
+    previousDate : DateType
+    setPreviousDate : any
+    previousEndDate : DateType
+    setPreviousEndDate : any
     period : string
     setPeriod: any
     dateSelect : string
@@ -22,12 +27,15 @@ interface Props {
 }
 
 const Filter = (props : Props) => {
-    const { date, setDate, endDate, setEndDate, setPeriod, dateSelect, setDateSelect, campaign, setCampaign, tilte } = props;
+    const { date, setDate, endDate, setEndDate, previousDate, setPreviousDate, previousEndDate, setPreviousEndDate, setPeriod, dateSelect, setDateSelect, campaign, setCampaign, tilte } = props;
     const { resultCampaiganList } = CampaignList();
+    const [ showPreviousDatepicker, setShowPreviousDatepicker ] = useState<boolean>(false);
 
     const handleDateSelect = (e:any) => {
         const value = e.target?.value ? e.target?.value : e; 
         setDateSelect(value);
+        setShowPreviousDatepicker(false);
+
         if (value === '1') {
             setPeriod('daily');
             setDate(new Date());
@@ -74,6 +82,7 @@ const Filter = (props : Props) => {
             setEndDate(lastDayofMonth);
         } else {
             setPeriod('customrange');
+            setShowPreviousDatepicker(true);
         }
     }
 
@@ -86,7 +95,13 @@ const Filter = (props : Props) => {
         const [start, end] = dates
         setDate(start)
         setEndDate(end)
-      }
+    }
+
+    const handleOnChangePreviousDate = (dates: any) => {
+        const [start, end] = dates
+        setPreviousDate(start)
+        setPreviousEndDate(end)
+    }
 
     const CustomInput = forwardRef((props: PickerProps, ref) => {
         const startDate = format(props.start, 'dd/MM/yyyy')
@@ -104,7 +119,7 @@ const Filter = (props : Props) => {
                 <CardContent>
 
                     <Grid container spacing={2} mt={2}>
-                    <Grid item sm={4} xs={12}>
+                    <Grid item sm={4} xs={12} mb={3}>
                         <FormControl fullWidth>
                         <InputLabel id='plan-select'>Select Period</InputLabel>
                         <Select
@@ -151,6 +166,33 @@ const Filter = (props : Props) => {
                             </DatePickerWrapper>
                         </Box>
                     </Grid>
+                    {
+                            showPreviousDatepicker ?
+                                <Grid item sm={4} xs={12}>
+                                    <Box>
+                                        <DatePickerWrapper>
+                                            <DatePicker
+                                            selectsRange
+                                            monthsShown={2}
+                                            endDate={previousEndDate}
+                                            selected={previousDate}
+                                            startDate={previousDate}
+                                            shouldCloseOnSelect={false}
+                                            id='date-range-picker-months'
+                                            onChange={handleOnChangePreviousDate}
+                                            customInput={
+                                                <CustomInput
+                                                label='Previous Period'
+                                                end={previousEndDate as Date | number}
+                                                start={previousDate as Date | number}
+                                                />
+                                            }
+                                            />
+                                            </DatePickerWrapper>
+                                    </Box>
+                                </Grid>
+                            :""
+                    }
                     <Grid item sm={4} xs={12}>
                         <FormControl fullWidth>
                         <InputLabel id='plan-select'>Select Campaign</InputLabel>

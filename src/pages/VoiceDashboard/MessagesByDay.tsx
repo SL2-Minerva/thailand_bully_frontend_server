@@ -4,7 +4,7 @@ import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'r
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail' 
 import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
-import { GraphicColors } from 'src/utils/const'
+import { EngagementTypeColors, GraphicColors } from 'src/utils/const'
 
 interface LineProps {
     white: string
@@ -17,6 +17,7 @@ interface LineProps {
     filterData: any
     type: string
     chartTitle: string
+    colorType?: string
   }
   
   const chartLabel = (data:any) => {
@@ -59,7 +60,7 @@ interface LineProps {
 
 const MessagesByDay = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, filterData, type, chartTitle } = props
+  const { white, labelColor, borderColor, gridLineColor, filterData, type, chartTitle, colorType } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -133,7 +134,7 @@ const MessagesByDay = (props: LineProps) => {
     let totalAmount : number[] = [];
     let keywordName = "";
     const returnData : StackChartDataset[] = [];
-    const color = GraphicColors
+    const color = colorType === "engagementType" ? EngagementTypeColors :GraphicColors
     for(let i = 0 ; i<data?.value?.length; i++) {
       totalAmount = []
       const total = data?.value;
