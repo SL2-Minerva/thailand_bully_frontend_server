@@ -15,7 +15,7 @@ interface Props {
 }
 export const getSeries = (seriesData: any) => {
   if(!seriesData) return [];
-console.log('seriesdata', seriesData);
+
   let series : any[] = [];
   if (seriesData?.data) {
     const chartData = seriesData?.data;

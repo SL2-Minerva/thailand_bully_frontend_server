@@ -337,7 +337,7 @@ export const GetChannelByAccount = (campaignId?: string, start_date?: any, end_d
   // })
   const res = {
       data: {
-          labels: ["Post Owner", "Follower"],
+          labels: ["Infulencer", "Follower"],
           value: [
               {
                   id: 1, 

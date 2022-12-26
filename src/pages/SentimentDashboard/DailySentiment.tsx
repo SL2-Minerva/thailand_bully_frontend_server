@@ -8,8 +8,7 @@ import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment';
-import DailyMessageDetail from './DailyMessageDetail'
-import { GraphicColors } from 'src/utils/const'
+import DailyMessageDetail from '../dashboard/DailyMessageDetail' 
 import { InteractionItem } from 'chart.js'
 
 // import { Button } from '@mui/material'
@@ -26,6 +25,7 @@ interface LineProps {
   gridLineColor: string
   filterData: any
   params : any
+  type: string
 }
 
 const chartLabel = (data:any) => {
@@ -45,10 +45,10 @@ const chartLabel = (data:any) => {
             labels = data[labelsArrayLength]?.value
         }
     } else {
-      labels = label;
+        labels = label;
     }
     
-  }
+  } 
 
   if (labels?.length > 0) {
     for (let i =0; i<labels?.length; i++) {
@@ -60,12 +60,12 @@ const chartLabel = (data:any) => {
   return labelValue;
 }
 
-const StackedChart = (props: LineProps) => {
+const DailySenitment = (props: LineProps) => {
   // ** Props
   const { white, labelColor,  borderColor, gridLineColor, filterData, params } = props
 
   // const [ chartData, setChartData ] = useState();
-
+  const colors = [ '#5be12c','#f5cd19','#ea4228'];
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -73,17 +73,17 @@ const StackedChart = (props: LineProps) => {
   const [keywordId, setKeywordId] = useState<any>();
 
   const chartRef = useRef();
-  const getKeywordId = (dataset: InteractionItem[]) => {
+  const getKeywordId = (dataset: InteractionItem[]) => { 
     if (!dataset.length) return;
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = filterData?.daily_message;
+    const sentimentData = filterData?.sentiment;
     let keywordId : number | null= null;
-    if (dailyMessageData?.length > 0) {
-      for (let i =0; i<dailyMessageData?.length; i++) {
-          if(keywordName === dailyMessageData[i].keyword_name) {
-            keywordId = dailyMessageData[i].keyword_id;
+    if (sentimentData?.length > 0) {
+      for (let i =0; i<sentimentData?.length; i++) {
+          if(keywordName === sentimentData[i].keyword_name) {
+            keywordId = sentimentData[i].keyword_id;
           }
       }
     }
@@ -93,12 +93,7 @@ const StackedChart = (props: LineProps) => {
 
   const onClick = (event : any) => {
     if(chartRef.current) {
-      // console.log(getDatasetAtEvent(chartRef.current, event));
-      // console.log(getElementsAtEvent(chartRef.current, event));
-      // console.log(getElementAtEvent(chartRef.current, event));
-
       const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
-
       if(keyword_id) {
         setKeywordId(keyword_id);
         setShowDetail(true);
@@ -106,10 +101,6 @@ const StackedChart = (props: LineProps) => {
       
     }
   }
-
-  // const showMessageDetail = () => {
-  //   setShowDetail(false);
-  // }
 
   const options = {
     responsive: true,
@@ -162,7 +153,7 @@ const StackedChart = (props: LineProps) => {
     let totalAmount : number[] = [];
     let keywordName = "";
     const returnData : StackChartDataset[] = [];
-    const color = GraphicColors
+    const color = colors
     for(let i = 0 ; i<data?.length; i++) {
       totalAmount = []
       const total = data[i]?.value;
@@ -198,12 +189,12 @@ const StackedChart = (props: LineProps) => {
 
   useEffect(() => {
     if(filterData) {
-      const dailyMessageData = filterData?.daily_message;
-      if(dailyMessageData) {
-        const labels = chartLabel(dailyMessageData);
+      const sentimentData = filterData?.sentiment;
+      if(sentimentData) {
+        const labels = chartLabel(sentimentData);
         setLabel(labels);
         
-        const dataSets = chartDatasets(dailyMessageData);
+        const dataSets = chartDatasets(sentimentData);
         setDataset(dataSets);
       }
     }
@@ -218,10 +209,8 @@ const StackedChart = (props: LineProps) => {
     <Card>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <CardHeader
-          title='Daily Message'
+          title='Daily Sentiment'
           titleTypographyProps={{ variant: 'h6' }}
-          subheader='KeyWords'
-          subheaderTypographyProps={{ variant: 'caption' }}
         />
       </div>
       
@@ -238,4 +227,4 @@ const StackedChart = (props: LineProps) => {
   )
 }
 
-export default StackedChart
+export default DailySenitment

@@ -1,10 +1,9 @@
-import { Button, Card, CardContent, CardHeader } from '@mui/material'
+import { Button, Card, CardContent, CardHeader, Grid, Paper, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import DailyMessageDetail from '../dashboard/DailyMessageDetail' 
 import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
-import { EngagementTypeColors, GraphicColors } from 'src/utils/const'
+import { PeriodComparisonChannel, sentimentComparison, SentimentComparisonEngagment } from 'src/utils/const'
 
 interface LineProps {
     white: string
@@ -35,22 +34,12 @@ interface LineProps {
     if(!title && !chartTitle) return "";
 
     let cardTitle = "";
-    if (title === "day") {
-      cardTitle = chartTitle +" by Day"
-    } else if (title === "time") {
-      cardTitle = chartTitle +" by Time"
-    } else if(title === "device") {
-      cardTitle = chartTitle +" by Devices"
-    } else if(title === "account") {
-      cardTitle = chartTitle +" by Account"
-    } else if(title === "channel") {
+    if (title === "channel") {
       cardTitle = chartTitle +" by Channel"
-    } else if(title === "sentiment") {
+    } else if (title === "sentiment") {
       cardTitle = chartTitle +" by Sentiment"
-    } else if(title === "bullyType") {
-      cardTitle = chartTitle +" by Bully Type"
-    } else if(title === "bullyLevel") {
-      cardTitle = chartTitle +" by Bully Level"
+    } else if (title === "engagementType") {
+      cardTitle = chartTitle +" by Engagement Type"
     } else {
       cardTitle = chartTitle
     }
@@ -58,14 +47,13 @@ interface LineProps {
     return cardTitle;
   }
 
-const MessagesByDay = (props: LineProps) => {
+const PeriodComparisonChart = (props: LineProps) => {
 
   const { white, labelColor, borderColor, gridLineColor, filterData, type, chartTitle, colorType } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const [current, setCurrent] = useState<any>({})
 
   const chartRef = useRef();
   const onClick = (event : any) => {
@@ -74,8 +62,6 @@ const MessagesByDay = (props: LineProps) => {
       console.log(getElementAtEvent(chartRef.current, event));
       console.log(getElementsAtEvent(chartRef.current, event));
       setShowDetail(true);
-      setCurrent({})
-
     }
   }
 
@@ -134,7 +120,7 @@ const MessagesByDay = (props: LineProps) => {
     let totalAmount : number[] = [];
     let keywordName = "";
     const returnData : StackChartDataset[] = [];
-    const color = colorType === "engagementType" ? EngagementTypeColors :GraphicColors
+    const color = colorType === "SentimentComparisonEngagment" ? SentimentComparisonEngagment : colorType === "sentimentComparison" ? sentimentComparison :PeriodComparisonChannel
     for(let i = 0 ; i<data?.value?.length; i++) {
       totalAmount = []
       const total = data?.value;
@@ -205,16 +191,66 @@ const MessagesByDay = (props: LineProps) => {
       </div>
       
       <CardContent>
-          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
-          <DailyMessageDetail 
-            show={showDetail}
-            setShow={setShowDetail}
-            current={current}
-         />
-        
+        <Grid container spacing={2} >
+            <Grid item xs={12}> 
+                <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+            </Grid>
+            <Grid item xs={12}>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                    <TableHead>
+                        
+                        <TableRow>
+                            <TableCell width={30}>
+                              {
+                                filterData?.share ? "Share" : "Positive"
+                              }
+                            </TableCell>
+                            {
+                                (filterData?.share || filterData?.positive || [])?.map((share : any, index : number) => {
+                                    return(
+                                        <TableCell align='left' key={index}>{share}</TableCell>
+                                    )
+                                })
+                            }
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>
+                              {
+                                filterData?.comment ? "Comment" : "Neutral"
+                              }
+                            </TableCell>
+                            {
+                                (filterData?.comment || filterData?.neutral ||  [])?.map((comment : any, index : number) => {
+                                    return(
+                                        <TableCell align='left' key={index}>{comment}</TableCell>
+                                    )
+                                })
+                            }
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>
+                              {
+                                filterData?.comment ? "Reaction" : "Negative"
+                              }
+                            </TableCell>
+                            {
+                                (filterData?.reaction || filterData?.negative || [])?.map((reaction : any, index : number) => {
+                                    return(
+                                        <TableCell align='left' key={index}>{reaction}</TableCell>
+                                    )
+                                })
+                            }
+                        </TableRow>
+                    </TableHead>
+                    </Table>
+              </TableContainer>
+            </Grid>
+        </Grid>
+          
       </CardContent>
     </Card>
     )
 }
 
-export default MessagesByDay
+export default PeriodComparisonChart

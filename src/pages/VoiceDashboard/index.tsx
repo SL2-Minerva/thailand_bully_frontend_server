@@ -24,6 +24,7 @@ import KeywordComparisonByBullyType from "./KeywordComparisonByBullyType"
 import Filter from "./Filter"
 import { StyledTooltip } from "../dashboard/overall"
 import QuickView from "./QuickView"
+import { DateType } from "src/types/forms/reactDatepickerTypes"
 
 const VoiceDashboard = () => {
     const theme = useTheme()
@@ -36,11 +37,13 @@ const VoiceDashboard = () => {
     const borderColor = theme.palette.action.focus
     const gridLineColor = theme.palette.action.focus
 
-    const [date, setDate] = useState<Date | null>(new Date())
-    const [endDate, setEndDate] = useState<Date | null>(new Date())
+    const [date, setDate] = useState<DateType>(new Date())
+    const [endDate, setEndDate] = useState<DateType>(new Date())
     const [ period, setPeriod ] = useState<string>('daily')
     const [ dateSelect, setDateSelect ] = useState<string>("1")
     const [ campaign, setCampaign ] = useState<string>("1")
+    const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
+    const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
 
     const { resultMessagesByDay } = GetMessagesByDay(campaign, date, endDate, period);
     const { resultDailyMessage } = GetDailyMessages(campaign, date, endDate, period);
@@ -74,6 +77,10 @@ const VoiceDashboard = () => {
                 setDate ={setDate}
                 endDate ={endDate}
                 setEndDate = {setEndDate}
+                previousDate = {previousDate}
+                setPreviousDate = {setPreviousDate}
+                previousEndDate = {previousEndDate}
+                setPreviousEndDate = {setPreviousEndDate}
                 period ={period}
                 setPeriod ={setPeriod}
                 dateSelect= {dateSelect}
