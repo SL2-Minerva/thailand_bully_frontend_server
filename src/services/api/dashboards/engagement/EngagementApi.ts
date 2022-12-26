@@ -988,3 +988,452 @@ export const GetEngagementTypeByChannel = (campaignId?: string, start_date?: any
   //   errorMessagesByDay: error
   }
 }
+
+export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+
+    // const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    //   url: `/dashboard/overall`,
+    //   method: 'GET',
+    //   params :{
+    //     campaign_id: campaignId || "",
+    //     start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+    //     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+    //     period: period
+    //   },
+    //   data: {
+    //     reload: reload
+    //   }
+    // })
+    const res = {
+      data: {
+          totalEngagement : {
+            totalValue : "1.2M", 
+            comparison: '-1%',
+            type: "minus",
+          },
+          share : {
+            totalValue : "800K", 
+            comparison: '3%',
+            type: "plus",
+          }, 
+          comment : {
+            totalValue : "20K", 
+            comparison: '-3%',
+            type: "minus",
+          }, 
+          reaction : {
+            totalValue : "1.45M", 
+            comparison: '-1%',
+            type: "minus",
+          }
+    } 
+}
+  
+    return {
+      resultTotalEngagement: res?.data || null,
+    
+      //   loadingMessagesByDay : loading,
+    //   errorMessagesByDay: error
+    }
+  }
+
+  export const GetPeriodComparisonByChannel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+
+    // const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    //   url: `/dashboard/overall`,
+    //   method: 'GET',
+    //   params :{
+    //     campaign_id: campaignId || "",
+    //     start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+    //     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+    //     period: period
+    //   },
+    //   data: {
+    //     reload: reload
+    //   }
+    // })
+    const res = {
+      data: {
+            labels: ["Facebook", "Twitter", "Instagram", "Youtube", "Pantip"],
+            value: [
+                {
+                    id: 1, 
+                    keyword_name : "Previous",
+                    data: [19, 38, 47, 16, 30]
+                },
+                {
+                        id: 2, 
+                        keyword_name : "Current",
+                        data: [15, 45, 65, 23, 53]
+                    },
+            ],
+          share: ['-30%','-30%','-30%','-30%','-30%'],
+          comment: ['-23%','-23%','-23%','-23%','-23%'],
+          reaction: ['-56%','-56%','-56%','-56%','-56%']
+      }      
+    } 
+  
+    return {
+      resultPeriodComparisonByChannel: res?.data || null,
+    
+      //   loadingMessagesByDay : loading,
+    //   errorMessagesByDay: error
+    }
+  }
+
+  export const GetPeriodComparisonBySenitment = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+
+    // const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    //   url: `/dashboard/overall`,
+    //   method: 'GET',
+    //   params :{
+    //     campaign_id: campaignId || "",
+    //     start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+    //     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+    //     period: period
+    //   },
+    //   data: {
+    //     reload: reload
+    //   }
+    // })
+    const res = {
+      data: {
+          labels: ["Positive", 'Neutral', 'Negative'],
+          value: [
+              {
+                  id: 1, 
+                  keyword_name : "Previous",
+                  data: [ 47, 16, 30]
+              },
+              {
+                  id: 2, 
+                  keyword_name : "Current",
+                  data: [12, 16,  78]
+              }
+          ],
+          share: ['-30%','-30%','-30%'],
+          comment: ['-23%','-23%','-23%'],
+          reaction: ['-56%','-56%','-56%']
+      }      
+    } 
+  
+    return {
+      resultPeriodComparisonBySenitment: res?.data || null,
+    
+      //   loadingMessagesByDay : loading,
+    //   errorMessagesByDay: error
+    }
+  }
+
+  export const GetEngagementComparison = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+
+    // const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    //   url: `/dashboard/overall`,
+    //   method: 'GET',
+    //   params :{
+    //     campaign_id: campaignId || "",
+    //     start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+    //     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+    //     period: period
+    //   },
+    //   data: {
+    //     reload: reload
+    //   }
+    // })
+    const res = {
+      data: [
+        {
+            keyword_name: "keyword 1",
+            total: {
+                value: '-500',
+                percentage : '-20',
+                type: 'minus'
+            },
+            share: {
+                value: '80',
+                percentage : '5',
+                type: 'plus'
+            },
+            comment: {
+                value: '-200',
+                percentage : '-10',
+                type: 'minus'
+            },
+            reaction: {
+                value: '-380',
+                percentage : '-2',
+                type: 'minus'
+            }
+        },
+        {
+            keyword_name: "keyword 2",
+            total: {
+                value: '-500',
+                percentage : '-20',
+                type: 'minus'
+            },
+            share: {
+                value: '80',
+                percentage : '5',
+                type: 'plus'
+            },
+            comment: {
+                value: '-200',
+                percentage : '-10',
+                type: 'minus'
+            },
+            reaction: {
+                value: '-380',
+                percentage : '-2',
+                type: 'minus'
+            }
+        },
+        {
+            keyword_name: "keyword 3",
+            total: {
+                value: '-500',
+                percentage : '-20',
+                type: 'minus'
+            },
+            share: {
+                value: '80',
+                percentage : '5',
+                type: 'plus'
+            },
+            comment: {
+                value: '-200',
+                percentage : '-10',
+                type: 'minus'
+            },
+            reaction: {
+                value: '-380',
+                percentage : '-2',
+                type: 'minus'
+            }
+        },
+        {
+            keyword_name: "keyword 4",
+            total: {
+                value: '-500',
+                percentage : '-20',
+                type: 'minus'
+            },
+            share: {
+                value: '80',
+                percentage : '5',
+                type: 'plus'
+            },
+            comment: {
+                value: '-200',
+                percentage : '-10',
+                type: 'minus'
+            },
+            reaction: {
+                value: '-380',
+                percentage : '-2',
+                type: 'minus'
+            }
+        },
+        {
+            keyword_name: "keyword 5",
+            total: {
+                value: '-500',
+                percentage : '-20',
+                type: 'minus'
+            },
+            share: {
+                value: '80',
+                percentage : '5',
+                type: 'plus'
+            },
+            comment: {
+                value: '-200',
+                percentage : '-10',
+                type: 'minus'
+            },
+            reaction: {
+                value: '-380',
+                percentage : '-2',
+                type: 'minus'
+            }
+        }
+      ]
+    }
+  
+    return {
+      resultEngagementComparison: res?.data || null,
+    
+      //   loadingMessagesByDay : loading,
+    //   errorMessagesByDay: error
+    }
+  }
+
+  export const GetComparison = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+    //   const params = {
+    //     campaignId: campaignId,
+    //     platformId: platformId, 
+    //     start_date: start_date,
+    //     end_date: end_date, 
+    //     period: period, 
+    //     previousDate: previousDate, 
+    //     previousEndDate: previousEndDate
+    //   };
+  
+    // const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    //   url: `/dashboard-overall/sentiment-level`,
+    //   method: 'GET',
+    //   params : GetParams(params),
+    //   data: {
+    //     reload: reload
+    //   }
+    // })
+
+    const response = {
+        data: [
+            {
+                "keyword_id": 1,
+                "keyword_name": "keyword_name 1",
+                "campaign_id": 1,
+                "campaign_name": "campaign_name 1",
+                "organization_id": 1,
+                "organizations_name": "organizations_name 1",
+                "share": 10,
+                "reaction": 30,
+                "comment": 60
+            },
+            {
+                "keyword_id": 2,
+                "keyword_name": "keyword_name 1",
+                "campaign_id": 2,
+                "campaign_name": "campaign_name 1",
+                "organization_id": 2,
+                "organizations_name": "organizations_name 1",
+                "share": 10,
+                "comment": 30,
+                "reaction": 60
+            },
+            {
+                "keyword_id": 3,
+                "keyword_name": "keyword_name 1",
+                "campaign_id": 3,
+                "campaign_name": "campaign_name 1",
+                "organization_id": 3,
+                "organizations_name": "organizations_name 1",
+                "share": 10,
+                "comment": 30,
+                "reaction": 60
+            },
+            {
+                "keyword_id": 4,
+                "keyword_name": "keyword_name 1",
+                "campaign_id": 4,
+                "campaign_name": "campaign_name 1",
+                "organization_id": 4,
+                "organizations_name": "organizations_name 1",
+                "share": 10,
+                "comment": 30,
+                "reaction": 60
+            },
+            {
+                "keyword_id": 5,
+                "keyword_name": "keyword_name 1",
+                "campaign_id": 5,
+                "campaign_name": "campaign_name 1",
+                "organization_id": 5,
+                "organizations_name": "organizations_name 1",
+                "share": 10,
+                "comment": 30,
+                "reaction": 60
+            }
+        ]
+    }
+  
+    return {
+      resultComparison: response?.data || null,
+
+    //   loadingSentimentLevel: loading,
+    //   errorSentimentLevel: error
+    }
+  }
+
+  export const GetSummary = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+
+    // const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    //   url: `/dashboard/overall`,
+    //   method: 'GET',
+    //   params :{
+    //     campaign_id: campaignId || "",
+    //     start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+    //     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+    //     period: period
+    //   },
+    //   data: {
+    //     reload: reload
+    //   }
+    // })
+    const res = {
+      data: [
+        {
+            infulencer: "User 1",
+            total : 39, 
+            share : 29, 
+            comment : 0,
+            reaction : 10,
+            period_over_preiod : '-10',
+            period_over_period_percentage: '-1'
+        },
+        {
+            infulencer: "User 2",
+            total : 25, 
+            share : 25, 
+            comment : 0,
+            reaction : 0,
+            period_over_preiod : '+10',
+            period_over_period_percentage: '+2'
+        },
+        {
+            infulencer: "User 3",
+            total : 29, 
+            share : 29, 
+            comment : 0,
+            reaction : 10,
+            period_over_preiod : '-10',
+            period_over_period_percentage: '-1'
+        },
+        {
+            infulencer: "User 4",
+            total : 95, 
+            share : 90, 
+            comment : 0,
+            reaction : 5,
+            period_over_preiod : '-10',
+            period_over_period_percentage: '-1'
+        },
+        {
+            infulencer: "User 5",
+            total : 29, 
+            share : 29, 
+            comment : 0,
+            reaction : 10,
+            period_over_preiod : '-10',
+            period_over_period_percentage: '-1'
+        },
+        {
+            infulencer: "User 6",
+            total : 32, 
+            share : 32, 
+            comment : 0,
+            reaction : 10,
+            period_over_preiod : '+20',
+            period_over_period_percentage: '+30'
+        }
+      ]
+    }
+  
+    return {
+      resultSummary: res?.data || null,
+    
+      //   loadingMessagesByDay : loading,
+    //   errorMessagesByDay: error
+    }
+  }

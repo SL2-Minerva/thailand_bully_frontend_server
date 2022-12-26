@@ -38,6 +38,21 @@ export const EngagementTypeColors = [
   '#f4b9a4'
 ]
 
+export const PeriodComparisonChannel = [
+  '#4472c4',
+  '#8fa2d4'
+]
+
+export const SentimentComparisonEngagment = [
+  '#e2aa00',
+  '#ffd184'
+]
+
+export const sentimentComparison = [
+  '#62993e',
+  '#a1c490'
+]
+
 export const FacebookIcon = '/images/logos/facebook-round.png';
 export const TwitterIcon = '/images/logos/twitter.png';
 export const YoutubeIcon = '/images/logos/youtube-text.png';

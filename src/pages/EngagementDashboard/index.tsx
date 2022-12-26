@@ -1,10 +1,10 @@
-import { Card, CardContent, CardHeader, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material"
+import { Button, Card, CardContent, CardHeader, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material"
 import { useCallback, useState } from "react";
 import { CampaignList } from "src/services/api/campaign/CampaignAPI";
-import { EngagementTypePercetage, FilterByCampaignId,GetEngagementTypeByAccount,
+import { EngagementTypePercetage, FilterByCampaignId,GetComparison,GetEngagementComparison,GetEngagementTypeByAccount,
     GetEngagementTypeByChannel,GetEngagementTypeByDay,GetEngagementTypeByDevice
     ,GetEngagementTypeByTime,GetMessagesByAccount, 
-    GetMessagesByChannel, GetMessagesByDay, GetMessagesByDevice, GetMessagesByTime } from "src/services/api/dashboards/engagement/EngagementApi";
+    GetMessagesByChannel, GetMessagesByDay, GetMessagesByDevice, GetMessagesByTime, GetPeriodComparisonByChannel, GetPeriodComparisonBySenitment, GetSummary, GetTotalEngagment } from "src/services/api/dashboards/engagement/EngagementApi";
 import { StyledTooltip } from "../dashboard/overall";
 import DailyEngagement from "./DailyEngagement";
 import PercentageOfEngangement from "./PercentageOfEngagement";
@@ -12,6 +12,12 @@ import { useTheme } from '@mui/material/styles'
 import MessagesByDay from "../VoiceDashboard/MessagesByDay";
 import Filter from "../VoiceDashboard/Filter";
 import { DateType } from "src/types/forms/reactDatepickerTypes";
+import TotalEngagement from "./TotalEngagement";
+import PeriodComparisonChart from "./PeriodComparisonChart";
+import EngagementTypeComparison from "./EngagementTypeComparison";
+import EngagmentComparisonChart from "./EngagmentComparisonChart";
+import EngagementSummary from "./EngagementSummary";
+import QuickView from "./QuickView";
 
 const EngagementDashboard = () => {
     const theme = useTheme()
@@ -31,6 +37,7 @@ const EngagementDashboard = () => {
     const [ period, setPeriod ] = useState<string>('daily')
     const [ dateSelect, setDateSelect ] = useState<string>("1")
     const [ campaignType, setCampaignType ] = useState<string>("1")
+    const [ topKeyword, setTopKeyword ] = useState<string>('all');
 
     const { resultCampaiganList } = CampaignList();
     const { resultFilterData } = FilterByCampaignId(campaign);
@@ -45,6 +52,13 @@ const EngagementDashboard = () => {
     const { resultEngagementTypeByDevice } = GetEngagementTypeByDevice(campaignType, date, endDate, period);
     const { resultEngagementTypeByAccount } = GetEngagementTypeByAccount(campaignType, date, endDate, period);
     const { resultEngagementTypeByChannel } =  GetEngagementTypeByChannel(campaignType, date, endDate, period);
+    const { resultTotalEngagement } = GetTotalEngagment(campaignType, date, endDate, period);
+    const { resultPeriodComparisonBySenitment }  =GetPeriodComparisonBySenitment(campaignType, date, endDate, period); 
+    const { resultPeriodComparisonByChannel } = GetPeriodComparisonByChannel(campaignType, date, endDate, period);
+    const { resultEngagementComparison } = GetEngagementComparison(campaignType, date, endDate, period); 
+    const { resultComparison }  = GetComparison(campaignType, date, endDate, period); 
+    const { resultSummary } = GetSummary(campaignType, date, endDate, period); 
+
     const params = {
         campaign: campaign,
         campaignType : campaignType,
@@ -56,6 +70,10 @@ const EngagementDashboard = () => {
     const handleSelectList = useCallback((e: SelectChangeEvent) => {
         setCampaign(e.target.value)
     }, [])
+
+    const handleTopKeywords = (data: string) => {
+        setTopKeyword(data);
+    }
 
     return (
         <>
@@ -326,7 +344,78 @@ const EngagementDashboard = () => {
                             />
                         </Grid>
                     </StyledTooltip>
+                    <StyledTooltip arrow placement="top-end" title="Chart 15">
+                        <Grid item xs={12} md={12} id="chart15">
+                            <TotalEngagement
+                               totalEngagement={ resultTotalEngagement}
+                            />
+                        </Grid>
+                    </StyledTooltip>
+                    <StyledTooltip arrow placement="top-start" title="Chart 16">
+                        <Grid item xs={12} md={6} id="chart16">
+                            <PeriodComparisonChart
+                                    white={whiteColor}
+                                    labelColor={labelColor}
+                                    success={lineChartYellow}
+                                    borderColor={borderColor}
+                                    primary={lineChartPrimary}
+                                    warning={lineChartWarning}
+                                    gridLineColor={gridLineColor}
+                                    filterData={resultPeriodComparisonByChannel}
+                                    type = "channel"
+                                    chartTitle="Engagement"
+                                    colorType="engagementDefault"
+                                />
+                        </Grid>
+                    </StyledTooltip>
+                    <StyledTooltip arrow placement="top-start" title="Chart 17">
+                        <Grid item xs={12} md={6} id="chart17">
+                            <PeriodComparisonChart
+                                    white={whiteColor}
+                                    labelColor={labelColor}
+                                    success={lineChartYellow}
+                                    borderColor={borderColor}
+                                    primary={lineChartPrimary}
+                                    warning={lineChartWarning}
+                                    gridLineColor={gridLineColor}
+                                    filterData={resultPeriodComparisonBySenitment}
+                                    type = "sentiment"
+                                    chartTitle="Engagement"
+                                    colorType="SentimentComparisonEngagment"
+                                />
+                        </Grid>
+                    </StyledTooltip>
+                    <StyledTooltip arrow placement="top-start" title="Chart 18">
+                        <Grid item xs={12} md={7} id="chart18">
+                            <EngagementTypeComparison
+                                    engagementComparison={resultEngagementComparison}
+                                />
+                        </Grid>
+                    </StyledTooltip>
+                    <StyledTooltip arrow placement="top-start" title="Chart 19">
+                        <Grid item xs={12} md={5} id="chart19">
+                                <EngagmentComparisonChart sentimentLevel={resultComparison}/>
+                        </Grid>
+                    </StyledTooltip>
+                    <Grid container spacing={3} mt ={2}> 
+                        <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
+                            <span  style={{marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
+                            <Button variant="contained" color={topKeyword === 'top10' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }}
+                            onClick={() => {handleTopKeywords("top10")}}> Top 10</Button>
+                            <Button variant="contained" color={topKeyword === 'top20' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top20")}}> Top 20</Button>
+                            <Button variant="contained" color={topKeyword === 'top50' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top50")}}> Top 50</Button>
+                            <Button variant="contained" color={topKeyword === 'top100' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top100")}}> Top 100</Button>
+                            <Button variant="contained" color={topKeyword === 'all' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("all")}}> ALL </Button>
+                        </Grid>
+                    </Grid>
+                    <StyledTooltip arrow placement="top-start" title="Chart 20">
+                        <Grid item xs={12} id="chart20">
+                                <EngagementSummary resultSummary={resultSummary}/>
+                        </Grid>
+                    </StyledTooltip>
+                    
                 </Grid>
+                <QuickView/>
             </Grid>
         </>
         
