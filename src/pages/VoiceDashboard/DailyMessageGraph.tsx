@@ -8,10 +8,13 @@ import { ApexOptions } from 'apexcharts'
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { GraphicColors } from 'src/utils/const' 
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
 
 interface Props {
   dailyData: any
   type: string
+  chartId : string
 }
 export const getSeries = (seriesData: any) => {
   if(!seriesData) return [];
@@ -41,7 +44,7 @@ export const getXaxisData = (seriesData: any) => {
 }
 
 const DailyMessageGraph = ( props : Props) => {
-    const {dailyData, type} = props;
+    const {dailyData, type, chartId} = props;
     const series = getSeries(dailyData);
 
     const options : ApexOptions = {
@@ -82,24 +85,28 @@ const DailyMessageGraph = ( props : Props) => {
 
       return (
         <Card>
-          {
-            type === 'message' ?
-            <CardHeader 
-                title='Daily Messages'
-                titleTypographyProps={{ variant: 'h6' }}
-            />
-            :
-            type === 'channel' ?
-            <CardHeader 
-                title='Daily Channel'
-                titleTypographyProps={{ variant: 'h6' }}
-            />
-            : ""
-          }
-            
-            <CardContent>
-                <ReactApexcharts type='bar' options={options} series={series} height={350}/>
-            </CardContent>
+          <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            {
+              type === 'message' ?
+              <CardHeader 
+                  title='Daily Messages'
+                  titleTypographyProps={{ variant: 'h6' }}
+              />
+              :
+              type === 'channel' ?
+              <CardHeader 
+                  title='Daily Channel'
+                  titleTypographyProps={{ variant: 'h6' }}
+              />
+              : ""
+            }
+            <StyledTooltip arrow title={chartId}>
+                <Information  style={{marginTop: '22px', fontSize: '29px'}} />
+            </StyledTooltip>
+        </span>  
+          <CardContent>
+              <ReactApexcharts type='bar' options={options} series={series} height={350}/>
+          </CardContent>
         </Card>
         
       )

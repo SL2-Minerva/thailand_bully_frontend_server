@@ -9,23 +9,26 @@ import { Grid } from "@mui/material"
 
 import { Doughnut } from 'react-chartjs-2'
 import { useEffect, useState } from 'react'
-import { GraphicColors } from 'src/utils/const'
+import { BullyDashboardColors } from 'src/utils/const'
+import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { StyledTooltip } from './overall'
 
 interface MessageData {
-  filterData : any
+  filterData : any,
+  type: string,
+  chartId: string 
 }
 
-const DonutChart = (props : MessageData) => {
+const PercentageOfBully = (props : MessageData) => {
 
-  const { filterData } = props;
+  const { filterData, type, chartId } = props;
+  const colors = BullyDashboardColors;
 
   const [ previousData, setPreviousData ] = useState<any>({
     labels: [],
     datasets: [{
       data: [],
-      backgroundColor: GraphicColors,
+      backgroundColor: colors,
       hoverOffset: 4
     }]
   });
@@ -33,7 +36,7 @@ const DonutChart = (props : MessageData) => {
     labels: [],
     datasets: [{
       data: [],
-      backgroundColor: GraphicColors,
+      backgroundColor: colors,
       hoverOffset: 4
     }]
   });
@@ -68,7 +71,7 @@ const DonutChart = (props : MessageData) => {
         labels: [],
         datasets: [{
           data: [],
-          backgroundColor: GraphicColors,
+          backgroundColor: colors,
           hoverOffset: 4
         }]
       };
@@ -78,7 +81,11 @@ const DonutChart = (props : MessageData) => {
     const labels : string[] =[];
     const percentage: number[] = [];
     for(let i =0; i<data?.length; i++ ) {
-      labels.push(data[i].keyword_name);
+        if(data[i].bully_level) {
+            labels.push(data[i].bully_level);  
+        } else  if (data[i].bully_type) {
+             labels.push(data[i].bully_type);
+        }
 
       const percentageValue = data[i]?.value;
       for(let j = 0 ; j<percentageValue?.length; j++) {
@@ -94,7 +101,7 @@ const DonutChart = (props : MessageData) => {
       labels: labels,
       datasets: [{
         data: percentage,
-        backgroundColor: GraphicColors,
+        backgroundColor: colors,
         hoverOffset: 4
       }]
     };
@@ -102,10 +109,12 @@ const DonutChart = (props : MessageData) => {
     return returnData;
   }
 
+  const title =  type === 'level' ? 'Percentage of Bully Level' : "Percentage of Bully Type";
+
   useEffect(() =>{
     if (filterData) {
-      const currentMessageData = filterData?.prcentage_of_messages_current;
-      const previousMessageData = filterData?.prcentage_of_messages_previous;
+      const currentMessageData = filterData?.percentage_of_bully_current;
+      const previousMessageData = filterData?.percentage_of_bully_previous;
       
       if(currentMessageData) {
         const currentDataset = chartDataset(currentMessageData, 'current');
@@ -121,24 +130,23 @@ const DonutChart = (props : MessageData) => {
   return (
     <Card>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <CardHeader
-            title='Percentage of Messages'
+        <CardHeader
+            title= {title}
             titleTypographyProps={{ variant: 'h6' }}
             subheader='Period over Period Comparison'
             subheaderTypographyProps={{ variant: 'caption' }}
-          />
-          <StyledTooltip arrow title="Chart 1">
-              <Information fontSize='large' style={{marginTop: '23px'}} />
-          </StyledTooltip>
+        />
+        <StyledTooltip arrow title={chartId}>
+            <Information style={{marginTop: '22px', fontSize: '29px'}} />
+        </StyledTooltip>
       </span>
-      
       <CardContent>
         <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-                <Doughnut data={currentData} options={options as any} height={343} />
+                <Doughnut data={currentData} options={options as any} height={330} />
             </Grid>
             <Grid item xs={12} md={6}>
-                <Doughnut data={previousData} options={options as any} height={343} />
+                <Doughnut data={previousData} options={options as any} height={330} />
             </Grid>  
             <Grid item xs={12} md={6}>  
                 <p style={{ fontSize:'10px' }}> Current Period :</p>  
@@ -156,4 +164,4 @@ const DonutChart = (props : MessageData) => {
   )
 }
 
-export default DonutChart
+export default PercentageOfBully

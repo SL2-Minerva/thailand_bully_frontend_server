@@ -117,7 +117,7 @@ const EngagmentComparisonChart = ({sentimentLevel} : {sentimentLevel: any}) => {
                 titleTypographyProps={{ variant: 'h6' }}
         />
         <CardContent>
-            <ReactApexcharts type="bar" height={468} series={series} options={options} />
+            <ReactApexcharts type="bar" height={486} series={series} options={options} />
         </CardContent>
     </Card>
   )

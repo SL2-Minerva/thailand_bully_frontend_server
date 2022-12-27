@@ -18,6 +18,7 @@ import EngagementTypeComparison from "./EngagementTypeComparison";
 import EngagmentComparisonChart from "./EngagmentComparisonChart";
 import EngagementSummary from "./EngagementSummary";
 import QuickView from "./QuickView";
+import { Information } from "mdi-material-ui";
 
 const EngagementDashboard = () => {
     const theme = useTheme()
@@ -115,107 +116,99 @@ const EngagementDashboard = () => {
             </Grid> 
 
             <Grid container spacing={3} mt={2}>
-                <StyledTooltip arrow title="Chart 1">
-                    <Grid id="chart1" item xs={12} md={4}>
-                        <PercentageOfEngangement filterData={resultFilterData} type="transaction"/>
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end" title="Chart 2">
-                    <Grid id="chart2" item xs={12} md={8}>
-                        <DailyEngagement
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultFilterData}
-                            params= {params}
-                            type="transaction"
-                        />
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end"  title="Chart 3">
-                    <Grid item xs={12} md={12} id="chart3">
-                        <MessagesByDay 
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultMessagesByDay}
-                            type="day"
-                            chartTitle="Engagement"
-                        />
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end" title="Chart 4">
-                    <Grid item xs={12} md={12} id="chart4">
-                        <MessagesByDay
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultMessagesByTime}
-                            type="time"
-                            chartTitle="Engagement"
-                        />
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end" title="Chart 5">
-                    <Grid item xs={12} md={12} id="chart5">
-                        <MessagesByDay
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultMessagesByDevice}
-                            type = "device"
-                            chartTitle="Engagement"
-                        />
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end" title="Chart 6">
-                    <Grid item xs={12} md={12} id="chart6">
-                        <MessagesByDay
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultMessagesByAccount}
-                            type = "account"
-                            chartTitle="Engagement"
-                        />
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end" title="Chart 7">
-                    <Grid item xs={12} md={12} id="chart7">
-                        <MessagesByDay
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultMessagesByChannel}
-                            type = "channel"
-                            chartTitle="Engagement"
-                        />
-                    </Grid>
-                </StyledTooltip>
+                <Grid id="chart1" item xs={12} md={4}>
+                    <PercentageOfEngangement filterData={resultFilterData} type="transaction" chartId="Chart 1"/>
+                </Grid>
+                <Grid id="chart2" item xs={12} md={8}>
+                    <DailyEngagement
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultFilterData}
+                        params= {params}
+                        type="transaction"
+                        chartId="Chart 2"
+                    />
+                </Grid>
+                <Grid item xs={12} md={12} id="chart3">
+                    <MessagesByDay 
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultMessagesByDay}
+                        type="day"
+                        chartTitle="Engagement"
+                        chartId="Chart 3"
+                    />
+                </Grid>
+                <Grid item xs={12} md={12} id="chart4">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultMessagesByTime}
+                        type="time"
+                        chartTitle="Engagement"
+                        chartId="Chart 4"
+                    />
+                </Grid>
+                <Grid item xs={12} md={12} id="chart5">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultMessagesByDevice}
+                        type = "device"
+                        chartTitle="Engagement"
+                        chartId="Chart 5"
+                    />
+                </Grid>
+                <Grid item xs={12} md={12} id="chart6">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultMessagesByAccount}
+                        type = "account"
+                        chartTitle="Engagement"
+                        chartId="Chart 6"
+                    />
+                </Grid>
+                <Grid item xs={12} md={12} id="chart7">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultMessagesByChannel}
+                        type = "channel"
+                        chartTitle="Engagement"
+                        chartId="Chart 7"
+                    />
+                </Grid>
             </Grid>
 
             <Grid container spacing={3} mt={2}>
@@ -238,14 +231,124 @@ const EngagementDashboard = () => {
                 />
 
                 <Grid container spacing={3} mt={2}>
-                    <StyledTooltip arrow title="Chart 8">
-                        <Grid id="chart8" item xs={12} md={4}>
-                            <PercentageOfEngangement filterData={resultEngagementType} type="type"/>
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-end" title="Chart 9">
-                        <Grid id="chart9" item xs={12} md={8}>
-                            <DailyEngagement
+                    <Grid id="chart8" item xs={12} md={4}>
+                        <PercentageOfEngangement filterData={resultEngagementType} type="type" chartId="Chart 8"/>
+                    </Grid>
+                    <Grid id="chart9" item xs={12} md={8}>
+                        <DailyEngagement
+                            white={whiteColor}
+                            labelColor={labelColor}
+                            success={lineChartYellow}
+                            borderColor={borderColor}
+                            primary={lineChartPrimary}
+                            warning={lineChartWarning}
+                            gridLineColor={gridLineColor}
+                            filterData={resultEngagementType}
+                            params= {params}
+                            type="type"
+                            chartId="Chart 9"
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={12} id="chart10">
+                        <MessagesByDay 
+                            white={whiteColor}
+                            labelColor={labelColor}
+                            success={lineChartYellow}
+                            borderColor={borderColor}
+                            primary={lineChartPrimary}
+                            warning={lineChartWarning}
+                            gridLineColor={gridLineColor}
+                            filterData={resultEngagementTypeByDay}
+                            type="day"
+                            chartTitle="Engagement"
+                            colorType="engagementType"
+                            chartId="Chart 10"
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={12} id="chart11">
+                        <MessagesByDay
+                            white={whiteColor}
+                            labelColor={labelColor}
+                            success={lineChartYellow}
+                            borderColor={borderColor}
+                            primary={lineChartPrimary}
+                            warning={lineChartWarning}
+                            gridLineColor={gridLineColor}
+                            filterData={resultEngagementTypeByTime}
+                            type="time"
+                            chartTitle="Engagement"
+                            colorType="engagementType"
+                            chartId="Chart 11"
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={12} id="chart12">
+                        <MessagesByDay
+                            white={whiteColor}
+                            labelColor={labelColor}
+                            success={lineChartYellow}
+                            borderColor={borderColor}
+                            primary={lineChartPrimary}
+                            warning={lineChartWarning}
+                            gridLineColor={gridLineColor}
+                            filterData={resultEngagementTypeByDevice}
+                            type = "device"
+                            chartTitle="Engagement"
+                            colorType="engagementType"
+                            chartId="Chart 12"
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={12} id="chart13">
+                        <MessagesByDay
+                            white={whiteColor}
+                            labelColor={labelColor}
+                            success={lineChartYellow}
+                            borderColor={borderColor}
+                            primary={lineChartPrimary}
+                            warning={lineChartWarning}
+                            gridLineColor={gridLineColor}
+                            filterData={resultEngagementTypeByAccount}
+                            type = "account"
+                            chartTitle="Engagement"
+                            colorType="engagementType"
+                            chartId="Chart 13"
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={12} id="chart14">
+                        <MessagesByDay
+                            white={whiteColor}
+                            labelColor={labelColor}
+                            success={lineChartYellow}
+                            borderColor={borderColor}
+                            primary={lineChartPrimary}
+                            warning={lineChartWarning}
+                            gridLineColor={gridLineColor}
+                            filterData={resultEngagementTypeByChannel}
+                            type = "channel"
+                            chartTitle="Engagement"
+                            colorType="engagementType"
+                            chartId="Chart 14"
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Card>
+                            <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                                <CardHeader 
+                                    title='Period over Period Comparison'
+                                    titleTypographyProps={{ variant: 'h6' }}
+                                />
+                                <StyledTooltip arrow title="Chart 15">
+                                    <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                                </StyledTooltip>
+                            </span>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} md={12} id="chart15">
+                        <TotalEngagement
+                            totalEngagement={ resultTotalEngagement}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6} id="chart16">
+                        <PeriodComparisonChart
                                 white={whiteColor}
                                 labelColor={labelColor}
                                 success={lineChartYellow}
@@ -253,150 +356,37 @@ const EngagementDashboard = () => {
                                 primary={lineChartPrimary}
                                 warning={lineChartWarning}
                                 gridLineColor={gridLineColor}
-                                filterData={resultEngagementType}
-                                params= {params}
-                                type="type"
-                            />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-end"  title="Chart 10">
-                        <Grid item xs={12} md={12} id="chart10">
-                            <MessagesByDay 
-                                white={whiteColor}
-                                labelColor={labelColor}
-                                success={lineChartYellow}
-                                borderColor={borderColor}
-                                primary={lineChartPrimary}
-                                warning={lineChartWarning}
-                                gridLineColor={gridLineColor}
-                                filterData={resultEngagementTypeByDay}
-                                type="day"
-                                chartTitle="Engagement"
-                                colorType="engagementType"
-                            />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-end" title="Chart 11">
-                        <Grid item xs={12} md={12} id="chart11">
-                            <MessagesByDay
-                                white={whiteColor}
-                                labelColor={labelColor}
-                                success={lineChartYellow}
-                                borderColor={borderColor}
-                                primary={lineChartPrimary}
-                                warning={lineChartWarning}
-                                gridLineColor={gridLineColor}
-                                filterData={resultEngagementTypeByTime}
-                                type="time"
-                                chartTitle="Engagement"
-                                colorType="engagementType"
-                            />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-end" title="Chart 12">
-                        <Grid item xs={12} md={12} id="chart12">
-                            <MessagesByDay
-                                white={whiteColor}
-                                labelColor={labelColor}
-                                success={lineChartYellow}
-                                borderColor={borderColor}
-                                primary={lineChartPrimary}
-                                warning={lineChartWarning}
-                                gridLineColor={gridLineColor}
-                                filterData={resultEngagementTypeByDevice}
-                                type = "device"
-                                chartTitle="Engagement"
-                                colorType="engagementType"
-                            />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-end" title="Chart 13">
-                        <Grid item xs={12} md={12} id="chart13">
-                            <MessagesByDay
-                                white={whiteColor}
-                                labelColor={labelColor}
-                                success={lineChartYellow}
-                                borderColor={borderColor}
-                                primary={lineChartPrimary}
-                                warning={lineChartWarning}
-                                gridLineColor={gridLineColor}
-                                filterData={resultEngagementTypeByAccount}
-                                type = "account"
-                                chartTitle="Engagement"
-                                colorType="engagementType"
-                            />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-end" title="Chart 14">
-                        <Grid item xs={12} md={12} id="chart14">
-                            <MessagesByDay
-                                white={whiteColor}
-                                labelColor={labelColor}
-                                success={lineChartYellow}
-                                borderColor={borderColor}
-                                primary={lineChartPrimary}
-                                warning={lineChartWarning}
-                                gridLineColor={gridLineColor}
-                                filterData={resultEngagementTypeByChannel}
+                                filterData={resultPeriodComparisonByChannel}
                                 type = "channel"
                                 chartTitle="Engagement"
-                                colorType="engagementType"
+                                colorType="engagementDefault"
+                                chartId="Chart 16"
                             />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-end" title="Chart 15">
-                        <Grid item xs={12} md={12} id="chart15">
-                            <TotalEngagement
-                               totalEngagement={ resultTotalEngagement}
+                    </Grid>
+                    <Grid item xs={12} md={6} id="chart17">
+                        <PeriodComparisonChart
+                                white={whiteColor}
+                                labelColor={labelColor}
+                                success={lineChartYellow}
+                                borderColor={borderColor}
+                                primary={lineChartPrimary}
+                                warning={lineChartWarning}
+                                gridLineColor={gridLineColor}
+                                filterData={resultPeriodComparisonBySenitment}
+                                type = "sentiment"
+                                chartTitle="Engagement"
+                                colorType="SentimentComparisonEngagment"
+                                chartId="Chart 17"
                             />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-start" title="Chart 16">
-                        <Grid item xs={12} md={6} id="chart16">
-                            <PeriodComparisonChart
-                                    white={whiteColor}
-                                    labelColor={labelColor}
-                                    success={lineChartYellow}
-                                    borderColor={borderColor}
-                                    primary={lineChartPrimary}
-                                    warning={lineChartWarning}
-                                    gridLineColor={gridLineColor}
-                                    filterData={resultPeriodComparisonByChannel}
-                                    type = "channel"
-                                    chartTitle="Engagement"
-                                    colorType="engagementDefault"
-                                />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-start" title="Chart 17">
-                        <Grid item xs={12} md={6} id="chart17">
-                            <PeriodComparisonChart
-                                    white={whiteColor}
-                                    labelColor={labelColor}
-                                    success={lineChartYellow}
-                                    borderColor={borderColor}
-                                    primary={lineChartPrimary}
-                                    warning={lineChartWarning}
-                                    gridLineColor={gridLineColor}
-                                    filterData={resultPeriodComparisonBySenitment}
-                                    type = "sentiment"
-                                    chartTitle="Engagement"
-                                    colorType="SentimentComparisonEngagment"
-                                />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-start" title="Chart 18">
-                        <Grid item xs={12} md={7} id="chart18">
-                            <EngagementTypeComparison
-                                    engagementComparison={resultEngagementComparison}
-                                />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-start" title="Chart 19">
-                        <Grid item xs={12} md={5} id="chart19">
-                                <EngagmentComparisonChart sentimentLevel={resultComparison}/>
-                        </Grid>
-                    </StyledTooltip>
+                    </Grid>
+                    <Grid item xs={12} md={7} id="chart18">
+                        <EngagementTypeComparison
+                                engagementComparison={resultEngagementComparison} chartId="Chart 18"
+                            />
+                    </Grid>
+                    <Grid item xs={12} md={5} id="chart19">
+                            <EngagmentComparisonChart sentimentLevel={resultComparison}/>
+                    </Grid>
                     <Grid container spacing={3} mt ={2}> 
                         <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
                             <span  style={{marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
@@ -408,11 +398,9 @@ const EngagementDashboard = () => {
                             <Button variant="contained" color={topKeyword === 'all' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("all")}}> ALL </Button>
                         </Grid>
                     </Grid>
-                    <StyledTooltip arrow placement="top-start" title="Chart 20">
-                        <Grid item xs={12} id="chart20">
-                                <EngagementSummary resultSummary={resultSummary}/>
-                        </Grid>
-                    </StyledTooltip>
+                    <Grid item xs={12} id="chart20">
+                            <EngagementSummary resultSummary={resultSummary} chartId="Chart 20"/>
+                    </Grid>
                     
                 </Grid>
                 <QuickView/>

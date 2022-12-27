@@ -8,16 +8,24 @@ import { Table, TableRow, TableHead, TableCell } from "@mui/material";
 // ** Icons Imports
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
+import { StyledTooltip } from '../dashboard/overall';
+import { Information } from 'mdi-material-ui';
 
-const SentimentComparison  = ({sentimentComparison} : {sentimentComparison: any}) => {
+const SentimentComparison  = ({sentimentComparison, chartId} : {sentimentComparison: any, chartId: string}) => {
 
   return (
     <Card>
-      <CardHeader
-        title='Engagement Type Comparison'
-        titleTypographyProps={{ variant: 'h6' }}
-        subheader="Period over Period"
-      />
+      
+      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title='Engagement Type Comparison'
+            titleTypographyProps={{ variant: 'h6' }}
+            subheader="Period over Period"
+          />
+          <StyledTooltip arrow title={chartId}>
+              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+          </StyledTooltip>
+      </span>
 
       <CardContent>
         <Grid container spacing={3}>

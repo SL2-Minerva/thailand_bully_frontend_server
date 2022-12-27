@@ -12,6 +12,9 @@ import DailyMessageDetail from './DailyMessageDetail'
 import { GraphicColors } from 'src/utils/const'
 import { InteractionItem } from 'chart.js'
 
+import { Information } from 'mdi-material-ui'
+import { StyledTooltip } from './overall'
+
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
 // import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
@@ -217,12 +220,17 @@ const StackedChart = (props: LineProps) => {
   return (
     <Card>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-        <CardHeader
-          title='Daily Message'
-          titleTypographyProps={{ variant: 'h6' }}
-          subheader='KeyWords'
-          subheaderTypographyProps={{ variant: 'caption' }}
-        />
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title='Daily Message'
+            titleTypographyProps={{ variant: 'h6' }}
+            subheader='KeyWords'
+            subheaderTypographyProps={{ variant: 'caption' }}
+          />
+          <StyledTooltip arrow title="Chart 2">
+              <Information fontSize='large' style={{marginTop: '23px'}} />
+          </StyledTooltip>
+      </span>
       </div>
       
       <CardContent>

@@ -8,15 +8,22 @@ import { Table, TableRow, TableHead, TableCell } from "@mui/material";
 // ** Icons Imports
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
+import { StyledTooltip } from '../dashboard/overall';
+import { Information } from 'mdi-material-ui';
 
-const SentimentScore  = ({sentimentScore} : {sentimentScore: any}) => {
+const SentimentScore  = ({sentimentScore, chartId} : {sentimentScore: any, chartId: string}) => {
 
   return (
     <Card>
-      <CardHeader
-        title='Sentiment Score'
-        titleTypographyProps={{ variant: 'h6' }}
-      />
+      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title='Sentiment Score'
+            titleTypographyProps={{ variant: 'h6' }}
+          />
+          <StyledTooltip arrow title={chartId}>
+              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+          </StyledTooltip>
+      </span>
 
       <CardContent>
         <Grid container spacing={3}>

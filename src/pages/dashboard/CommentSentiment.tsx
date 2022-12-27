@@ -8,9 +8,10 @@ import { Grid } from "@mui/material"
 // ** Third Party Imports
 
 import { Doughnut } from 'react-chartjs-2'
-import { ThumbUp, ThumbDown, ThumbsUpDown } from 'mdi-material-ui'
+import { ThumbUp, ThumbDown, ThumbsUpDown, Information } from 'mdi-material-ui'
+import { StyledTooltip } from './overall'
 
-const CommentSentiment  = ({resultSentimentType} : {resultSentimentType:any}) => {
+const CommentSentiment  = ({resultSentimentType, chartId} : {resultSentimentType:any, chartId: string}) => {
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -48,10 +49,15 @@ const CommentSentiment  = ({resultSentimentType} : {resultSentimentType:any}) =>
 
   return (
     <Card style={{ minHeight: '340px' }}>
-      <CardHeader
-        title='Comment Sentiment'
-        titleTypographyProps={{ variant: 'h6' }}
-      />
+      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title='Comment Sentiment'
+            titleTypographyProps={{ variant: 'h6' }}
+          />
+          <StyledTooltip arrow title={chartId}>
+              <Information  style={{marginTop: '22px', fontSize: '29px'}} />
+          </StyledTooltip>
+      </span>
       <CardContent>
         <Grid container spacing={3}>
             <Grid item xs={8}>

@@ -1,19 +1,24 @@
 import { Avatar, Card, CardHeader, Grid, Typography } from "@mui/material";
+import { Information } from "mdi-material-ui";
 import { useState } from "react";
 import AccountDetail from "./AccountDetail";
+import { StyledTooltip } from "./overall";
 
-const AccountList = ({resultKeywords} : {resultKeywords: any}) => {
+const AccountList = ({resultKeywords, chartId} : {resultKeywords: any, chartId : string}) => {
     const [showDetail, setShowDetail] = useState<boolean>(false);
     const [current, setCurrent] = useState<any>({})
 
     return (
         <Card sx={{ maxHeight: 500,minHeight: 500, overflow: 'auto' }}>
-            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+            <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title='Accounts'
                     titleTypographyProps={{ variant: 'h6' }}
                 />
-            </div>
+                <StyledTooltip arrow title={chartId}>
+                    <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                </StyledTooltip>
+            </span>
                 {
                     (resultKeywords||[])?.map((keyword: any, index:any) => {
 

@@ -21,11 +21,15 @@ import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
+import Autocomplete from '@mui/material/Autocomplete'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
 import axios from 'axios'
 import authConfig from '../../../../configs/auth'
+
+import { top100Films } from 'src/@fake-db/autocomplete'
+import { ReportOptions } from 'src/utils/const'
 
 interface DialogRoleInfoProps {
   show: boolean
@@ -50,8 +54,17 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
   const [roleName, setRoleName] = useState(current.user_role_name ?? '')
   const [roleDescription, setDescription] = useState(current.user_role_description ?? '')
 
-  console.log(current)
+  const options = top100Films.map(option => {
 
+  const firstLetter = option.title[0].toUpperCase()
+
+    return {
+      firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
+      ...option
+    }
+  })
+
+  console.log('options', options);
 
 
   const [permission, setPermission] = useState<any>({
@@ -317,72 +330,19 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                         </TableRow>
                       ))
                     }
-
-                    {/* {rows.map(row => (
-                      <TableRow
-                        key={row.menu}
-                        sx={{
-                          '&:last-of-type td, &:last-of-type th': {
-                            border: 0
-                          }
-                        }}
-                      >
-                        <TableCell component='th' scope='row'>
-                          {row.menu}
-                        </TableCell>
-                        <TableCell align='left'>
-                          <FormControlLabel
-                            label=''
-                            control={
-                              <Checkbox
-                                defaultChecked
-                                name='size-default'
-                                onChange={e => handleChecked(e, row.menu, 'create')}
-                              />
-                            }
-                          />
-                        </TableCell>
-                        <TableCell align='left'>
-                          <FormControlLabel
-                            label=''
-                            control={
-                              <Checkbox
-                                defaultChecked
-                                name='size-default'
-                                onChange={e => handleChecked(e, row.menu, 'edit')}
-                              />
-                            }
-                          />
-                        </TableCell>
-                        <TableCell align='left'>
-                          <FormControlLabel
-                            label=''
-                            control={
-                              <Checkbox
-                                defaultChecked
-                                name='size-default'
-                                onChange={e => handleChecked(e, row.menu, 'view')}
-                              />
-                            }
-                          />
-                        </TableCell>
-                        <TableCell align='left'>
-                          <FormControlLabel
-                            label=''
-                            control={
-                              <Checkbox
-                                defaultChecked
-                                name='size-default'
-                                onChange={e => handleChecked(e, row.menu, 'export')}
-                              />
-                            }
-                          />
-                        </TableCell>
-                      </TableRow>
-                    ))} */}
                   </TableBody>
                 </Table>
               </TableContainer>
+            </Grid>
+            <Grid item xs={12}>
+              <Autocomplete
+                multiple
+                id='autocomplete-grouped'
+                groupBy={ReportOptions => ReportOptions.groupName}
+                getOptionLabel={ReportOptions => ReportOptions.title}
+                renderInput={params => <TextField {...params} label='Reports' />}
+                options={ReportOptions}
+              />
             </Grid>
           </Grid>
         </DialogContent>

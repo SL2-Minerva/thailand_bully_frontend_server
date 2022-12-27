@@ -3,8 +3,10 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import { Button, Card, CardHeader, Grid } from "@mui/material";
 import { useState } from "react";
+import { StyledTooltip } from "./overall";
+import { Information } from "mdi-material-ui";
 
-const WordCloudSentiment = ({resultWordClouds} : {resultWordClouds: any}) => {
+const WordCloudSentiment = ({resultWordClouds, chartId} : {resultWordClouds: any, chartId: string}) => {
     const [ sentiment, setSentiment ] = useState('');
 
     const chooseSentiment = (value: string) =>{ 
@@ -13,10 +15,15 @@ const WordCloudSentiment = ({resultWordClouds} : {resultWordClouds: any}) => {
 
     return (
         <Card sx={{ maxHeight: 500,minHeight: 500 }}>
-            <CardHeader
-                title='Word Clouds'
-                titleTypographyProps={{ variant: 'h6' }}
-            />
+            <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <CardHeader
+                    title='Word Clouds'
+                    titleTypographyProps={{ variant: 'h6' }}
+                />
+                <StyledTooltip arrow title={chartId}>
+                    <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                </StyledTooltip>
+            </span>
             <Grid container spacing={2}>
                 <Grid item sm={8} xs={8} ml={4}>
                     <Button variant="contained" color={sentiment ==='positive' ? 'warning' : 'inherit'} size="medium" 

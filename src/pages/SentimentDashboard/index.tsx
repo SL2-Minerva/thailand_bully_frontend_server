@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material"
+import { Card, CardHeader, Grid } from "@mui/material"
 import { useTheme } from '@mui/material/styles'
 import { useState } from "react"
 import Filter from "../VoiceDashboard/Filter"
@@ -20,6 +20,7 @@ import SummaryByAccount from "./SummaryByAccount"
 import SummaryByChannel from "./SummaryByChannel"
 import SummaryByKeywords from "./SummaryByKeywords"
 import QuickView from "./QuickView"
+import { Information } from "mdi-material-ui"
 
 const SentimentDashboard = () => {
     const theme = useTheme()
@@ -86,9 +87,149 @@ const SentimentDashboard = () => {
                 setCampaign={setCampaign}
             />
             <Grid container spacing={3} mt={2}>
-                <StyledTooltip arrow title="Chart 1">
-                    <Grid id="chart1" item xs={12} md={8}>
-                        <DailySenitment
+                <Grid id="chart1" item xs={12} md={8}>
+                    <DailySenitment
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultFilterData}
+                        params= {params}
+                        type="transaction"
+                        chartId="Chart 1"
+                    />
+                </Grid>
+                <Grid id="chart2" item xs={12} md={4}>
+                    <PercentageOfSentiment filterData={resultFilterData} type="transaction" chartId="Chart 2"/>
+                </Grid>
+                <Grid item xs={12} md={12} id="chart3">
+                    <MessagesByDay 
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultSentimentByDay}
+                        type="day"
+                        chartTitle="Sentiment"
+                        chartId="Chart 3"
+                    />
+                </Grid>
+                <Grid item xs={12} md={12} id="chart4">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultSentimentByTime}
+                        type="time"
+                        chartTitle="Sentiment"
+                        chartId="Chart 4"
+                    />
+                </Grid>
+                <Grid item xs={12} md={12} id="chart5">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultSentimentByDevice}
+                        type = "device"
+                        chartTitle="Sentiment"
+                        chartId="Chart 5"
+                    />
+                </Grid>
+                <Grid item xs={12} md={12} id="chart6">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultSentimentByAccount}
+                        type = "account"
+                        chartTitle="Sentiment"
+                        chartId="Chart 6"
+                    />
+                </Grid>
+                <Grid item xs={12} md={12} id="chart7">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultSentimentByChannel}
+                        type = "channel"
+                        chartTitle="Sentiment"
+                        chartId="Chart 7"
+                    />
+                </Grid>
+                <Grid item xs={12} md={12} id="chart8">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultSentimentByBullyLevel}
+                        type = "bullyLevel"
+                        chartTitle="Sentiment"
+                        chartId="Chart 8"
+                    />
+                </Grid>
+                <Grid item xs={12} md={12} id="chart9">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultSentimentByBullyType}
+                        type = "bullyType"
+                        chartTitle="Sentiment"
+                        chartId="Chart 9"
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Card>
+                        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                            <CardHeader 
+                                title='Period over Period Comparison'
+                                titleTypographyProps={{ variant: 'h6' }}
+                            />
+                            <StyledTooltip arrow title="Chart 10">
+                                <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                            </StyledTooltip>
+                        </span>
+                    </Card>
+                </Grid>
+                <Grid item xs={12} md={12} id="chart10">
+                    <TotalMessage
+                        totalMessage={resultTotalSentiment}
+                    />
+                </Grid>
+                <Grid item xs={12} md={6} id="chart11">
+                    <PeriodComparisonChart
                             white={whiteColor}
                             labelColor={labelColor}
                             success={lineChartYellow}
@@ -96,100 +237,15 @@ const SentimentDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultFilterData}
-                            params= {params}
-                            type="transaction"
-                        />
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end" title="Chart 2">
-                    <Grid id="chart2" item xs={12} md={4}>
-                        <PercentageOfSentiment filterData={resultFilterData} type="transaction"/>
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end"  title="Chart 3">
-                    <Grid item xs={12} md={12} id="chart3">
-                        <MessagesByDay 
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultSentimentByDay}
-                            type="day"
-                            chartTitle="Sentiment"
-                        />
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end" title="Chart 4">
-                    <Grid item xs={12} md={12} id="chart4">
-                        <MessagesByDay
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultSentimentByTime}
-                            type="time"
-                            chartTitle="Sentiment"
-                        />
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end" title="Chart 5">
-                    <Grid item xs={12} md={12} id="chart5">
-                        <MessagesByDay
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultSentimentByDevice}
-                            type = "device"
-                            chartTitle="Sentiment"
-                        />
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end" title="Chart 6">
-                    <Grid item xs={12} md={12} id="chart6">
-                        <MessagesByDay
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultSentimentByAccount}
-                            type = "account"
-                            chartTitle="Sentiment"
-                        />
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end" title="Chart 7">
-                    <Grid item xs={12} md={12} id="chart7">
-                        <MessagesByDay
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultSentimentByChannel}
+                            filterData={resultSenitmentComparisonByChannel}
                             type = "channel"
-                            chartTitle="Sentiment"
+                            chartTitle="Engagement"
+                            colorType="engagementDefault"
+                            chartId="Chart 11"
                         />
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end" title="Chart 8">
-                    <Grid item xs={12} md={12} id="chart8">
-                        <MessagesByDay
+                </Grid>
+                <Grid item xs={12} md={6} id="chart12">
+                    <PeriodComparisonChart
                             white={whiteColor}
                             labelColor={labelColor}
                             success={lineChartYellow}
@@ -197,117 +253,54 @@ const SentimentDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultSentimentByBullyLevel}
-                            type = "bullyLevel"
-                            chartTitle="Sentiment"
+                            filterData={resultSenitmentComparisonByEngagement}
+                            type = "engagementType"
+                            chartTitle="Engagement"
+                            colorType="sentimentComparison"
+                            chartId="Chart 12"
                         />
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end" title="Chart 9">
-                    <Grid item xs={12} md={12} id="chart9">
-                        <MessagesByDay
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultSentimentByBullyType}
-                            type = "bullyType"
-                            chartTitle="Sentiment"
+                </Grid>
+                <Grid item xs={12} md={6} id="chart13">
+                    <SentimentScore
+                            sentimentScore={resultSenitmentScore}
+                            chartId="Chart 13"
                         />
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end" title="Chart 10">
-                    <Grid item xs={12} md={12} id="chart10">
-                        <TotalMessage
-                            totalMessage={resultTotalSentiment}
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    <SentimentScorePercentage
+                            sentimentLevel={resultSentimentScorePercentage}
                         />
-                    </Grid>
-                </StyledTooltip>
-                <StyledTooltip arrow placement="top-end" title="Chart 11">
-                        <Grid item xs={12} md={6} id="chart11">
-                            <PeriodComparisonChart
-                                    white={whiteColor}
-                                    labelColor={labelColor}
-                                    success={lineChartYellow}
-                                    borderColor={borderColor}
-                                    primary={lineChartPrimary}
-                                    warning={lineChartWarning}
-                                    gridLineColor={gridLineColor}
-                                    filterData={resultSenitmentComparisonByChannel}
-                                    type = "channel"
-                                    chartTitle="Engagement"
-                                    colorType="engagementDefault"
-                                />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-end" title="Chart 12">
-                        <Grid item xs={12} md={6} id="chart12">
-                            <PeriodComparisonChart
-                                    white={whiteColor}
-                                    labelColor={labelColor}
-                                    success={lineChartYellow}
-                                    borderColor={borderColor}
-                                    primary={lineChartPrimary}
-                                    warning={lineChartWarning}
-                                    gridLineColor={gridLineColor}
-                                    filterData={resultSenitmentComparisonByEngagement}
-                                    type = "engagementType"
-                                    chartTitle="Engagement"
-                                    colorType="sentimentComparison"
-                                />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-end" title="Chart 13">
-                        <Grid item xs={12} md={6} id="chart13">
-                            <SentimentScore
-                                    sentimentScore={resultSenitmentScore}
-                                />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-end" title="Chart 14">
-                        <Grid item xs={12} md={6} id="chart14">
-                            <SentimentScorePercentage
-                                    sentimentLevel={resultSentimentScorePercentage}
-                                />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-end" title="Chart 15">
-                        <Grid item xs={12} md={12} id="chart15">
-                            <SentimentComparison
-                                    sentimentComparison={resultSentimentComparison}
-                                />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-end" title="Chart 16">
-                        <Grid item xs={12} md={12} id="chart16">
-                            <SummaryByAccount
-                                    resultSummary={resultSummaryByAccount}
-                                    topAccount = {topAccount}
-                                    setTopAccount = {setTopAccount}
-                                />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-end" title="Chart 17">
-                        <Grid item xs={12} md={12} id="chart17">
-                            <SummaryByChannel
-                                    resultSummary={resultSummaryByChannel}
-                                    topChannel = {topChannel}
-                                    setTopChannel = {setTopChannel}
-                                />
-                        </Grid>
-                    </StyledTooltip>
-                    <StyledTooltip arrow placement="top-end" title="Chart 18">
-                        <Grid item xs={12} md={12} id="chart18">
-                            <SummaryByKeywords
-                                    resultSummary={resultSummaryByKeywords}
-                                    topKeyword = {topKeyword}
-                                    setTopKeyword = {setTopKeyword}
-                                />
-                        </Grid>
-                    </StyledTooltip>                    
+                </Grid>
+                <Grid item xs={12} md={12} id="chart14">
+                    <SentimentComparison
+                            sentimentComparison={resultSentimentComparison}
+                            chartId="Chart 14"
+                        />
+                </Grid>
+                <Grid item xs={12} md={12} id="chart15">
+                    <SummaryByAccount
+                            resultSummary={resultSummaryByAccount}
+                            topAccount = {topAccount}
+                            setTopAccount = {setTopAccount}
+                            chartId="Chart 15"
+                        />
+                </Grid>
+                <Grid item xs={12} md={12} id="chart16">
+                    <SummaryByChannel
+                            resultSummary={resultSummaryByChannel}
+                            topChannel = {topChannel}
+                            setTopChannel = {setTopChannel}
+                            chartId = "Chart 16"
+                        />
+                </Grid>
+                <Grid item xs={12} md={12} id="chart17">
+                    <SummaryByKeywords
+                            resultSummary={resultSummaryByKeywords}
+                            topKeyword = {topKeyword}
+                            setTopKeyword = {setTopKeyword}
+                            chartId = "Chart 17"
+                        />
+                </Grid>                 
                     
             </Grid>
             <QuickView />

@@ -97,122 +97,121 @@ const QuickView = () => {
   
               <Link to="chart1" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 1 : Daily Sentiment</Typography>
+                    <Typography>Chart 1 : Percentage of Bully Level</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart2" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 2 : Percentage of Sentiment</Typography>
+                    <Typography>Chart 2 : Daily Messages of Bully Level</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart3" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 3 : Sentiment by Day</Typography>
+                    <Typography>Chart 3 : Bully Level by Day</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart4" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 4 : Sentiment by Time</Typography>
+                    <Typography>Chart 4 : Bully Level by Time</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart5" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 5 : Sentiment by Devices</Typography>
+                    <Typography>Chart 5 : Bully Level by Devices</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart6" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 6 : Sentiment by Account</Typography>
+                    <Typography>Chart 6 : Bully Level by Account</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart7" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 7 : Sentiment by Channel</Typography>
+                    <Typography>Chart 7 : Bully Level by Channel</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart8" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 8 : Sentiment by Bully Level</Typography>
+                    <Typography>Chart 8 : Bully Level by Sentiment</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart9" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 9 : Sentiment by Bully Type</Typography>
+                    <Typography>Chart 9 : Percentage of Bully Type</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart10" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 10 : Total Message</Typography>
+                    <Typography>Chart 10 : Daily Messages of Bully Type</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart11" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 11 : Engagement by Channel</Typography>
+                    <Typography>Chart 11 : Bully Type by Day</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart12" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 12 : Engagement by Engagement Type</Typography>
+                    <Typography>Chart 12 : Bully Type by Time</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart13" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 13 : Sentiment Score</Typography>
+                    <Typography>Chart 13 : Bully Type by Devices</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart14" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 14 : Engagement Type Comparison</Typography>
+                    <Typography>Chart 14 : Bully Type by Account</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart15" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 15 : Summary Sentiment Score by Account</Typography>
+                    <Typography>Chart 15 : Bully Type by Channel</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart16" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 16 : Summary Sentiment Score by Channel</Typography>
+                    <Typography>Chart 16 : Bully Type by Sentiment</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart17" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
-                    <Typography>Chart 17 : Keywords</Typography>
+                    <Typography>Chart 17 : Share of Channel</Typography>
                 </Box>
               </Link>
-              <Divider sx={{ m: 0 }} />
 
             </CustomizerSpacing>
   

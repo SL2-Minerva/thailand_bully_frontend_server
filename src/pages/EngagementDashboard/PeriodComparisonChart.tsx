@@ -1,9 +1,10 @@
-import { Button, Card, CardContent, CardHeader, Grid, Paper, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Card, CardContent, CardHeader, Grid, Paper, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Information } from 'mdi-material-ui'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
 import { PeriodComparisonChannel, sentimentComparison, SentimentComparisonEngagment } from 'src/utils/const'
+import { StyledTooltip } from '../dashboard/overall'
 
 interface LineProps {
     white: string
@@ -17,6 +18,7 @@ interface LineProps {
     type: string
     chartTitle: string
     colorType?: string
+    chartId: string
   }
   
   const chartLabel = (data:any) => {
@@ -49,11 +51,10 @@ interface LineProps {
 
 const PeriodComparisonChart = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, filterData, type, chartTitle, colorType } = props
+  const { white, labelColor, borderColor, gridLineColor, filterData, type, chartTitle, colorType, chartId } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
-  const [ showDetail , setShowDetail ] = useState<boolean>(false);
 
   const chartRef = useRef();
   const onClick = (event : any) => {
@@ -61,12 +62,7 @@ const PeriodComparisonChart = (props: LineProps) => {
       console.log(getDatasetAtEvent(chartRef.current, event));
       console.log(getElementAtEvent(chartRef.current, event));
       console.log(getElementsAtEvent(chartRef.current, event));
-      setShowDetail(true);
     }
-  }
-
-  const showMessageDetail = () => {
-    setShowDetail(false);
   }
 
   const options = {
@@ -173,22 +169,16 @@ const PeriodComparisonChart = (props: LineProps) => {
 
     return (
         <Card>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-        <CardHeader
-          title={getTitle(type, chartTitle)}
-          titleTypographyProps={{ variant: 'h6' }}
-          subheaderTypographyProps={{ variant: 'caption' }}
-        />
-        {
-          showDetail ? 
-          <Button style={{ marginTop: '20px', marginRight: '10px' }} 
-             color="primary" onClick={showMessageDetail} size="small">
-            <CloseCircleOutline fontSize='large'/>
-          </Button>
-          :
-          ""
-        }
-      </div>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <CardHeader
+              title={getTitle(type, chartTitle)}
+              titleTypographyProps={{ variant: 'h6' }}
+              subheaderTypographyProps={{ variant: 'caption' }}
+            />
+            <StyledTooltip arrow title={chartId}>
+                <Information style={{marginTop: '22px', fontSize: '29px'}} />
+            </StyledTooltip>
+        </span>
       
       <CardContent>
         <Grid container spacing={2} >

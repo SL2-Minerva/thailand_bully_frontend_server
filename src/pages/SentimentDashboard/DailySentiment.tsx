@@ -10,6 +10,8 @@ import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment';
 import DailyMessageDetail from '../dashboard/DailyMessageDetail' 
 import { InteractionItem } from 'chart.js'
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -26,6 +28,7 @@ interface LineProps {
   filterData: any
   params : any
   type: string
+  chartId: string
 }
 
 const chartLabel = (data:any) => {
@@ -62,7 +65,7 @@ const chartLabel = (data:any) => {
 
 const DailySenitment = (props: LineProps) => {
   // ** Props
-  const { white, labelColor,  borderColor, gridLineColor, filterData, params } = props
+  const { white, labelColor,  borderColor, gridLineColor, filterData, params, chartId } = props
 
   // const [ chartData, setChartData ] = useState();
   const colors = [ '#5be12c','#f5cd19','#ea4228'];
@@ -207,12 +210,15 @@ const DailySenitment = (props: LineProps) => {
 
   return (
     <Card>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Daily Sentiment'
-          titleTypographyProps={{ variant: 'h6' }}
-        />
-      </div>
+            title='Daily Sentiment'
+            titleTypographyProps={{ variant: 'h6' }}
+          />
+          <StyledTooltip arrow title={chartId}>
+              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+          </StyledTooltip>
+      </span>
       
       <CardContent>
          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />

@@ -9,15 +9,18 @@ import { ApexOptions } from 'apexcharts'
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { useEffect, useState } from 'react'
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
 
 interface Props{
   hour : any[]
   day : any[]
+  chartId: string
 }
 
 const DayTimeSentiment = (props : Props) => {
 
-  const {day, hour } = props;
+  const {day, hour, chartId } = props;
 
   const [seriesHour, setSeriesHour ] = useState([{name: '', data:[]}]);
   const [seriesDays, setSeriesDays ] = useState([{name: '', data:[]}]);
@@ -72,7 +75,12 @@ const DayTimeSentiment = (props : Props) => {
 
       return (
         <Card>
-            <CardHeader title="Day&Time by Sentiment " titleTypographyProps={{ 'varient': 'h4' }}/>
+          <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <CardHeader title="Day&Time by Sentiment " titleTypographyProps={{ 'variant': 'h4' }}/>
+              <StyledTooltip arrow title={chartId || ""}>
+                  <Information style={{marginTop: '22px', fontSize: '29px'}} />
+              </StyledTooltip>
+          </span>
             <CardContent>
                 <Grid container spacing={3}>
                     <Grid item xs={4}>

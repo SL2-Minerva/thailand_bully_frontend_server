@@ -8,8 +8,10 @@ import { ApexOptions } from 'apexcharts'
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { useEffect, useState } from 'react'
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
 
-const DayTimeComparison = ({dayTimeComparison} : {dayTimeComparison: any}) => {
+const DayTimeComparison = ({dayTimeComparison, chartId} : {dayTimeComparison: any, chartId: string}) => {
 
     const [series, setSeries] = useState([]) ;
 
@@ -27,7 +29,7 @@ const DayTimeComparison = ({dayTimeComparison} : {dayTimeComparison: any}) => {
           categories: ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','00']
         },
         title: {
-          text: 'Day&Time'
+          text: ''
         },
       };
 
@@ -39,7 +41,12 @@ const DayTimeComparison = ({dayTimeComparison} : {dayTimeComparison: any}) => {
 
       return (
         <Card>
-            <CardHeader tilte="Day & Time " titleTypographyProps={{ varient: 'h4' }}/>
+          <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+              <CardHeader title="Day&Time " titleTypographyProps={{ 'variant': 'h4' }}/>
+              <StyledTooltip arrow title={chartId || ""}>
+                  <Information style={{marginTop: '22px', fontSize: '29px'}} />
+              </StyledTooltip>
+          </span>
             <CardContent>
                 <ReactApexcharts options={options} series={series} type="heatmap" height={350} />    
             </CardContent>

@@ -6,6 +6,8 @@ import { Grid } from "@mui/material"
 
 // ** Third Party Imports
 import { Bar } from 'react-chartjs-2'
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
 
 const ChartLabels = (data: any) => {
   if (!data) return [];
@@ -20,7 +22,7 @@ const ChartLabels = (data: any) => {
   return labels;
 }
 
-const ChannelBySentiment  = ({resultShareOfVoice} : {resultShareOfVoice: any}) => {
+const ChannelBySentiment  = ({resultShareOfVoice, chartId} : {resultShareOfVoice: any, chartId: string}) => {
 
   const labels = resultShareOfVoice ? ChartLabels(resultShareOfVoice) : [];
   const data = {
@@ -41,10 +43,15 @@ const ChannelBySentiment  = ({resultShareOfVoice} : {resultShareOfVoice: any}) =
 
   return (
     <Card>
-      <CardHeader
-        title='Channel by Sentiment'
-        titleTypographyProps={{ variant: 'h6' }}
-      />
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title='Channel by Sentiment'
+            titleTypographyProps={{ variant: 'h6' }}
+          />
+          <StyledTooltip arrow title={chartId}>
+              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+          </StyledTooltip>
+        </span>
       <CardContent>
         <Grid container spacing={3}>
             <Bar data={data} options={{ indexAxis: 'y' }} height={140}/>

@@ -8,8 +8,10 @@ import { ApexOptions } from 'apexcharts'
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { useEffect, useState } from 'react'
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
 
-const KeywordComparisonBySentiment = ({resultKeywordComparisonBySentiment} : {resultKeywordComparisonBySentiment:any}) => {
+const KeywordComparisonBySentiment = ({resultKeywordComparisonBySentiment, chartId} : {resultKeywordComparisonBySentiment:any, chartId: string}) => {
   const [series, setSeries] = useState([]);
   const [labels, setLabels] = useState([]);
 
@@ -48,10 +50,15 @@ const KeywordComparisonBySentiment = ({resultKeywordComparisonBySentiment} : {re
 
     return (
         <Card>
-            <CardHeader 
-                title='Percentage of Keyword Comparison By Sentiment'
-                titleTypographyProps={{ variant: 'h6' }}
-            />
+            <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <CardHeader 
+                    title='Percentage of Keyword Comparison By Sentiment'
+                    titleTypographyProps={{ variant: 'h6' }}
+                />
+                <StyledTooltip arrow title={chartId || ""}>
+                    <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                </StyledTooltip>
+            </span>
             <CardContent>
                 <ReactApexcharts type='radar' options={options} series={series} height={350}/>
             </CardContent>
