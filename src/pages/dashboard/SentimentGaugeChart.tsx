@@ -3,19 +3,26 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { Grid } from "@mui/material";
 import dynamic from 'next/dynamic'
+import { StyledTooltip } from './overall';
+import { Information } from 'mdi-material-ui';
 
 // import GaugeChart from 'react-gauge-chart'
 
 const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
 
-const SentimentGaugeChart = ({resultSentimentScore} : {resultSentimentScore:any}) => {
+const SentimentGaugeChart = ({resultSentimentScore, chartId} : {resultSentimentScore:any, chartId: string}) => {
     
     return(
         <Card style={{ maxHeight: '340px' }}>
-            <CardHeader
-                title='Sentiment Score'
-                titleTypographyProps={{ variant: 'h6' }}
-            />
+            <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <CardHeader
+                    title='Sentiment Score'
+                    titleTypographyProps={{ variant: 'h6' }}
+                />
+                <StyledTooltip arrow title={chartId}>
+                    <Information  style={{marginTop: '22px', fontSize: '29px'}} />
+                </StyledTooltip>
+            </span>
             <CardContent>
                 <Grid container spacing={4}>
                     <Grid item xs={8}>

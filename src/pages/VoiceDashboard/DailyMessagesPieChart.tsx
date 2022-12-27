@@ -12,14 +12,17 @@ import { Chart} from "chart.js";
 import * as DoughnutLabel from "chartjs-plugin-doughnutlabel-rebourne";
 import { useEffect, useState } from 'react'
 import { GraphicColors } from 'src/utils/const' 
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
 
 interface Props {
   percentData : any
   type : string
+  chartId : string
 }
 Chart.register(DoughnutLabel );
 const DailyMessagePieChart  = ( props : Props) => {
-  const { percentData, type } = props;
+  const { percentData, type, chartId } = props;
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -122,18 +125,23 @@ const DailyMessagePieChart  = ( props : Props) => {
 
   return (
     <Card style={{ minHeight: '330px' }}>
-      {
-        type === "message" ?
-        <CardHeader title="Percentage of Message" titleTypographyProps={{ varient:'h6' }}
-                subheader="Period over Period Comparison"
-                subheaderTypographyProps={{ varient: 'h6' }}
-            />
-        :
-        <CardHeader title="Percentage of Channel" titleTypographyProps={{ varient:'h6' }}
-                subheader="Period over Period Comparison"
-                subheaderTypographyProps={{ varient: 'h6' }}
-            />
-      }
+      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          {
+            type === "message" ?
+            <CardHeader title="Percentage of Message" titleTypographyProps={{ varient:'h6' }}
+                    subheader="Period over Period Comparison"
+                    subheaderTypographyProps={{ varient: 'h6' }}
+                />
+            :
+            <CardHeader title="Percentage of Channel" titleTypographyProps={{ varient:'h6' }}
+                    subheader="Period over Period Comparison"
+                    subheaderTypographyProps={{ varient: 'h6' }}
+                />
+          }
+          <StyledTooltip arrow title={chartId}>
+              <Information  style={{marginTop: '22px', fontSize: '29px'}} />
+          </StyledTooltip>
+      </span>
       
       <CardContent>
         <Grid container spacing={3}>

@@ -20,6 +20,8 @@ import CustomAvatar from 'src/@core/components/mui/avatar'
 // ** Icons Imports
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
+import { StyledTooltip } from './overall'
+import { Information } from 'mdi-material-ui'
 
 interface KeyStatusProps {
     title: string
@@ -33,7 +35,8 @@ interface KeyStatusProps {
     totalValue : string,
     averageText: string,
     averageValue: string,
-    type?: string
+    type?: string,
+    chartId? : string
   }
 
 // Styled Grid component
@@ -48,7 +51,7 @@ interface KeyStatusProps {
 
 const KeyStatusReport = (props: KeyStatusProps) => {
   // ** Props
-  const { title, color, icon, stats, trendNumber, totalText, totalValue, averageText, averageValue, type } = props
+  const { title, color, icon, stats, trendNumber, totalText, totalValue, averageText, averageValue, type, chartId } = props
 
   const TrendIcon = type === 'plus' ? ChevronUp : ChevronDown
 
@@ -90,7 +93,13 @@ const KeyStatusReport = (props: KeyStatusProps) => {
         <Divider sx={{ mt: 2, mb: 7.5 }} />
 
         <Typography variant='body2' sx={{ mb: 5 }}>
-          {title}
+            <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                {title}
+                <StyledTooltip arrow title={chartId || ""}>
+                    <Information fontSize='small' style={{marginLeft: '13px'}} />
+                </StyledTooltip>
+            </span>
+          
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
             <Typography variant='h4' sx={{ mb: 1 }}>

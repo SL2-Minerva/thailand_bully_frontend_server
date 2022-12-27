@@ -9,8 +9,10 @@ import { ApexOptions } from 'apexcharts'
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { useEffect, useState } from 'react'
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
 
-const ChannelVsDevice = ({resultDeviceVsChannel} : {resultDeviceVsChannel:any}) => {
+const ChannelVsDevice = ({resultDeviceVsChannel, chartId} : {resultDeviceVsChannel:any, chartId: string}) => {
 
   const [seriesData, setSeriesData ] = useState([]);
   const [labels, setLabels] = useState([]);
@@ -59,10 +61,15 @@ const ChannelVsDevice = ({resultDeviceVsChannel} : {resultDeviceVsChannel:any}) 
     return ( 
         
         <Card style={{ height: 455 }}>
-            <CardHeader title="Channel vs Devices" titleTypographyProps={{ varient:'h6' }}
-                subheader="Period over Period Comparison"
-                subheaderTypographyProps={{ varient: 'h6' }}
-            />
+            <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <CardHeader title="Channel vs Devices" titleTypographyProps={{ varient:'h6' }}
+                    subheader="Period over Period Comparison"
+                    subheaderTypographyProps={{ varient: 'h6' }}
+                />
+                <StyledTooltip arrow title={chartId || ""}>
+                    <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                </StyledTooltip>
+            </span>
             <CardContent>
                 <Grid container spacing={1}>
                     <Grid item xs={12} height={315}>

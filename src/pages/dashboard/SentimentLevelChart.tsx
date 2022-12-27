@@ -7,6 +7,8 @@ import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import { StyledTooltip } from './overall'
+import { Information } from 'mdi-material-ui'
 
 
 const Labels = (data: any) => {
@@ -48,7 +50,7 @@ const ChartDataPositive = (data: any, type : string) => {
   return value;
 }
 
-const SentimentLevelChart = ({sentimentLevel} : {sentimentLevel: any}) => {
+const SentimentLevelChart = ({sentimentLevel, chartId} : {sentimentLevel: any, chartId: string}) => {
   
   const chartLabels =  Labels(sentimentLevel);
   const positiveData = ChartDataPositive(sentimentLevel, 'positive');
@@ -112,10 +114,15 @@ const SentimentLevelChart = ({sentimentLevel} : {sentimentLevel: any}) => {
 
   return (
     <Card>
-        <CardHeader
-                title='Sentiment Level'
-                titleTypographyProps={{ variant: 'h6' }}
-        />
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+                  title='Sentiment Level'
+                  titleTypographyProps={{ variant: 'h6' }}
+          />
+          <StyledTooltip arrow title={chartId}>
+              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+          </StyledTooltip>
+        </span>
         <CardContent>
             <ReactApexcharts type="bar" height={276} series={series} options={options} />
         </CardContent>

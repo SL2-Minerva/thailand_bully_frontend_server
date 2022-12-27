@@ -2,15 +2,22 @@ import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer } from
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
+import { StyledTooltip } from "../dashboard/overall";
+import { Information } from "mdi-material-ui";
 
-const EngagementSummary = ({resultSummary} : {resultSummary: any}) => {
+const EngagementSummary = ({resultSummary, chartId} : {resultSummary: any, chartId: string}) => {
     
     return (
         <Card>
-            <CardHeader
-                title='Summary Engagement by Account'
-                titleTypographyProps={{ variant: 'h6' }}
-            />
+            <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <CardHeader
+                    title='Summary Engagement by Account'
+                    titleTypographyProps={{ variant: 'h6' }}
+                />
+                <StyledTooltip arrow title={chartId}>
+                    <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                </StyledTooltip>
+            </span>
             <CardContent>
             <TableContainer sx={{ maxHeight: 250 }}>
             <Table size="small" stickyHeader={true}>

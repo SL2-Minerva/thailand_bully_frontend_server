@@ -7,7 +7,7 @@ import { Table, TableRow, TableHead, TableCell } from "@mui/material";
 
 // ** Third Party Imports
 import { Bar } from 'react-chartjs-2'
-import { StyledTooltip } from './overall';
+import { StyledTooltip } from '../dashboard/overall'; 
 import { Information } from 'mdi-material-ui';
 
 const ChartLabels = (data: any) => {
@@ -23,14 +23,14 @@ const ChartLabels = (data: any) => {
   return labels;
 }
 
-const ShareOfVoice  = ({resultShareOfVoice, chartId} : {resultShareOfVoice: any, chartId : string}) => {
+const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  chartId} : {resultShareOfChannel: any,resultShareofChannelPlatform : any, chartId : string}) => {
 
-  const labels = resultShareOfVoice ? ChartLabels(resultShareOfVoice) : [];
+  const labels = resultShareOfChannel ? ChartLabels(resultShareOfChannel) : [];
   const data = {
   labels: labels,
   datasets: [{
       axis: 'y',
-      label: 'Number of Messages',
+      label: '',
       data: [65, 59, 80, 81, 56, 55, 40],
       fill: false,
       backgroundColor: ['rgb(54, 162, 235)'],
@@ -46,7 +46,7 @@ const ShareOfVoice  = ({resultShareOfVoice, chartId} : {resultShareOfVoice: any,
     <Card>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title='Share of Voice'
+            title='Share of Channel'
             titleTypographyProps={{ variant: 'h6' }}
           />
           <StyledTooltip arrow title={chartId}>
@@ -56,7 +56,7 @@ const ShareOfVoice  = ({resultShareOfVoice, chartId} : {resultShareOfVoice: any,
       <CardContent>
         <Grid container spacing={3}>
             <Grid item xs={5}>
-                <Bar data={data} options={{ indexAxis: 'y' }} height={245}/>
+                <Bar data={data} options={{ indexAxis: 'y' }} height={150}/>
             </Grid>
             <Grid item xs={7} >
                 <Table size="small">
@@ -98,7 +98,7 @@ const ShareOfVoice  = ({resultShareOfVoice, chartId} : {resultShareOfVoice: any,
                         </TableCell>
                     </TableHead>
                     {
-                      (resultShareOfVoice || []).map((shareVoice : any, index: number) => {
+                      (resultShareofChannelPlatform || []).map((shareVoice : any, index: number) => {
                         return(
                           <TableRow key={index}>
                             {
@@ -126,4 +126,4 @@ const ShareOfVoice  = ({resultShareOfVoice, chartId} : {resultShareOfVoice: any,
   )
 }
 
-export default ShareOfVoice
+export default ShareOfChannel

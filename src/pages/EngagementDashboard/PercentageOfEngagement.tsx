@@ -10,15 +10,18 @@ import { Grid } from "@mui/material"
 import { Doughnut } from 'react-chartjs-2'
 import { useEffect, useState } from 'react'
 import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const'
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
 
 interface MessageData {
   filterData : any,
   type: string
+  chartId : string
 }
 
 const PercentageOfEngangement = (props : MessageData) => {
 
-  const { filterData, type } = props;
+  const { filterData, type, chartId } = props;
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
 
   const [ previousData, setPreviousData ] = useState<any>({
@@ -122,12 +125,17 @@ const PercentageOfEngangement = (props : MessageData) => {
 
   return (
     <Card>
-      <CardHeader
-        title= {title}
-        titleTypographyProps={{ variant: 'h6' }}
-        subheader='Period over Period Comparison'
-        subheaderTypographyProps={{ variant: 'caption' }}
-      />
+      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title= {title}
+            titleTypographyProps={{ variant: 'h6' }}
+            subheader='Period over Period Comparison'
+            subheaderTypographyProps={{ variant: 'caption' }}
+          />
+          <StyledTooltip arrow title={chartId}>
+              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+          </StyledTooltip>
+      </span>
       <CardContent>
         <Grid container spacing={3}>
             <Grid item xs={12} md={6}>

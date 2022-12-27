@@ -50,7 +50,8 @@ import TotalMessageLists from "./TotalMessageLists"
 import WordCloudChannel from "./WordCloudChannel"
 import AccountList from "./AccountList"
 import WordCloudSentiment from "./WordCloudSentiment"
-import QuickView from "./QuickView"
+
+// import QuickView from "./QuickView"
 
 export const calculateDate = (days: number) => {
     const today = new Date()
@@ -354,132 +355,110 @@ const OverallDashboard = () => {
         </Grid>
         
         <Grid container spacing={3} mt={2}>
-            <StyledTooltip arrow title="Chart 1">
-                <Grid id="chart1" item xs={12} md={4}>
-                    <DonutChart filterData = {resultFilterData} />
-                </Grid>
-            </StyledTooltip>
-            <StyledTooltip arrow placement="top-end" title="Chart 2">
-                <Grid id="chart2" item xs={12} md={8}>
-                    <StackedChart
-                        white={whiteColor}
-                        labelColor={labelColor}
-                        success={lineChartYellow}
-                        borderColor={borderColor}
-                        primary={lineChartPrimary}
-                        warning={lineChartWarning}
-                        gridLineColor={gridLineColor}
-                        filterData={resultFilterData}
-                        params= {params}
-                    />
-                </Grid>
-            </StyledTooltip>
+            <Grid id="chart1" item xs={12} md={4}>
+                <DonutChart filterData = {resultFilterData} />
+            </Grid>
+            <Grid id="chart2" item xs={12} md={8}>
+                <StackedChart
+                    white={whiteColor}
+                    labelColor={labelColor}
+                    success={lineChartYellow}
+                    borderColor={borderColor}
+                    primary={lineChartPrimary}
+                    warning={lineChartWarning}
+                    gridLineColor={gridLineColor}
+                    filterData={resultFilterData}
+                    params= {params}
+                />
+            </Grid>
         </Grid>
         
         <Grid container spacing={3} mt={2}>
-            <StyledTooltip arrow title="Chart 3">
-                <Grid id="chart3" item xs={12} md={4}>
-                    <KeyStatusReport
-                        stats= {resultTotalMessagePerDay?.comparison || '0'}
-                        type={resultTotalMessagePerDay?.type}
-                        color='primary'
-                        trendNumber={resultTotalMessagePerDay?.percentage || '0%'}
-                        icon={<MessageText />}
-                        title='Period over Period Comparison'
-                        chipText='Last 1 Month'
-                        totalText = 'Total Message'
-                        totalValue = {resultTotalMessagePerDay?.total_message?.toString() || '0'}
-                        averageText="Average Message per Day"
-                        averageValue= {resultTotalMessagePerDay?.average_message?.toString() || '0'}
-                    />
-                </Grid>
-            </StyledTooltip>
-            <StyledTooltip arrow title="Chart 4">
-                <Grid id="chart4" item xs={12} md={4}>
-                    <KeyStatusReport
-                        stats={resultTotalEngagement?.comparison || '0'}
-                        type={resultTotalEngagement?.type}
-                        color='primary'
-                        trendNumber={resultTotalEngagement?.percentage || '0'}
-                        icon={<ThumbUp />}
-                        title='Period over Period Comparison'
-                        chipText='Last 1 Month'
-                        totalText = 'Total Engagement'
-                        totalValue = {resultTotalEngagement?.total_engagement?.toString() || '0'}
-                        averageText="Avg. Engagement per Day"
-                        averageValue={resultTotalEngagement?.average_engagement?.toString() || '0'}
-                    />
-                </Grid>
-            </StyledTooltip>
-            <StyledTooltip arrow title="Chart 5">
-                <Grid id="chart5" item xs={12} md={4}>
-                    <KeyStatusReport
-                        stats={resultTotalAccount?.comparison || '0'}
-                        type={resultTotalAccount?.type}
-                        color='primary'
-                        trendNumber={resultTotalAccount?.percentage || '0'}
-                        icon={<Person />}
-                        title='Period over Period Comparison'
-                        chipText='Last 1 Month'
-                        totalText = 'Total Account'
-                        totalValue = {resultTotalAccount?.total_account?.toString() || '0'}
-                        averageText="Average Account per Day"
-                        averageValue={resultTotalAccount?.average_account?.toString() || '0'}
-                    />
-                </Grid>
-            </StyledTooltip>
+            <Grid id="chart3" item xs={12} md={4}>
+                <KeyStatusReport
+                    stats= {resultTotalMessagePerDay?.comparison || '0'}
+                    type={resultTotalMessagePerDay?.type}
+                    color='primary'
+                    trendNumber={resultTotalMessagePerDay?.percentage || '0%'}
+                    icon={<MessageText />}
+                    title='Period over Period Comparison'
+                    chipText='Last 1 Month'
+                    totalText = 'Total Message'
+                    totalValue = {resultTotalMessagePerDay?.total_message?.toString() || '0'}
+                    averageText="Average Message per Day"
+                    averageValue= {resultTotalMessagePerDay?.average_message?.toString() || '0'}
+                    chartId = "Chart 3"
+                />
+            </Grid>
+            <Grid id="chart4" item xs={12} md={4}>
+                <KeyStatusReport
+                    stats={resultTotalEngagement?.comparison || '0'}
+                    type={resultTotalEngagement?.type}
+                    color='primary'
+                    trendNumber={resultTotalEngagement?.percentage || '0'}
+                    icon={<ThumbUp />}
+                    title='Period over Period Comparison'
+                    chipText='Last 1 Month'
+                    totalText = 'Total Engagement'
+                    totalValue = {resultTotalEngagement?.total_engagement?.toString() || '0'}
+                    averageText="Avg. Engagement per Day"
+                    averageValue={resultTotalEngagement?.average_engagement?.toString() || '0'}
+                    chartId = "Chart 4"
+                />
+            </Grid>
+            
+            <Grid id="chart5" item xs={12} md={4}>
+                <KeyStatusReport
+                    stats={resultTotalAccount?.comparison || '0'}
+                    type={resultTotalAccount?.type}
+                    color='primary'
+                    trendNumber={resultTotalAccount?.percentage || '0'}
+                    icon={<Person />}
+                    title='Period over Period Comparison'
+                    chipText='Last 1 Month'
+                    totalText = 'Total Account'
+                    totalValue = {resultTotalAccount?.total_account?.toString() || '0'}
+                    averageText="Average Account per Day"
+                    averageValue={resultTotalAccount?.average_account?.toString() || '0'}
+                    chartId = "Chart 5"
+                />
+            </Grid>
         </Grid>
         
         <Grid container spacing={3} mt={2}>
-            <StyledTooltip arrow title="Chart 6">
-                <Grid id="chart6" item xs={12}>
-                    <KeywordTable resultKeywords={resultKeywords}/>
-                </Grid>
-            </StyledTooltip>
+            <Grid id="chart6" item xs={12}>
+                <KeywordTable resultKeywords={resultKeywords} chartId="Chart 6"/>
+            </Grid>
         </Grid>
 
         <Grid container spacing={3} mt={2}>
-            <StyledTooltip arrow placement="top-start" title="Chart 7">
-                <Grid id="chart7" item xs={12} md={4}>
-                    <MainKeyWordTable mainKeyword={resultTopKeywords?.main_keyword} params={params}/>
-                </Grid>
-            </StyledTooltip>
-            <StyledTooltip arrow placement="top-end" title="Chart 8">
-                <Grid id="chart8" item xs={12} md={4}>
-                    <TopSiteList topsites={resultTopKeywords?.top_sites} params={params}/>
-                </Grid>
-            </StyledTooltip>
-            <StyledTooltip arrow placement="top-end" title="Chart 9">
-                <Grid id="chart9" item xs={12} md={4}>
-                    <TopHashtagList topHashtags={resultTopKeywords?.top_hastag} params={params}/>
-                </Grid>
-            </StyledTooltip>
+            <Grid id="chart7" item xs={12} md={4}>
+                <MainKeyWordTable mainKeyword={resultTopKeywords?.main_keyword} params={params} chartId="Chart 7"/>
+            </Grid>
+            <Grid id="chart8" item xs={12} md={4}>
+                <TopSiteList topsites={resultTopKeywords?.top_sites} params={params} chartId="Chart 8"/>
+            </Grid>
+            <Grid id="chart9" item xs={12} md={4}>
+                <TopHashtagList topHashtags={resultTopKeywords?.top_hastag} params={params} chartId="Chart 9"/>
+            </Grid>
         </Grid>
 
         <Grid container spacing={3} mt={2}>
-            <StyledTooltip arrow title="Chart 10">
-                <Grid id="chart10" item xs={12} md ={6}>
-                    <SentimentGaugeChart resultSentimentScore={resultSentimentScore}/>
-                </Grid>
-            </StyledTooltip>
-            <StyledTooltip arrow title="Chart 11">
-                <Grid id="chart11" item xs={12} md={6}>
-                    <CommentSentiment resultSentimentType={resultSentimentType}/>
-                </Grid>
-            </StyledTooltip>
+            <Grid id="chart10" item xs={12} md ={6}>
+                <SentimentGaugeChart resultSentimentScore={resultSentimentScore} chartId="Chart 10" />
+            </Grid>
+            <Grid id="chart11" item xs={12} md={6}>
+                <CommentSentiment resultSentimentType={resultSentimentType} chartId="Chart 11" />
+            </Grid>
         </Grid>
 
         <Grid container spacing={3} mt={2}>
-            <StyledTooltip arrow title="Chart 12">
-                <Grid id="chart12" item xs={12} md={8}>
-                    <ShareOfVoice resultShareOfVoice={resultShareOfVoice}/>
-                </Grid>
-            </StyledTooltip>
-            <StyledTooltip arrow title="Chart 13">
-                <Grid id="chart13" item xs={12} md={4}>
-                    <SentimentLevelChart sentimentLevel={resultSentimentLevel}/>
-                </Grid>
-            </StyledTooltip>
+            <Grid id="chart12" item xs={12} md={8}>
+                <ShareOfVoice resultShareOfVoice={resultShareOfVoice} chartId="Chart 12"/>
+            </Grid>
+            <Grid id="chart13" item xs={12} md={4}>
+                <SentimentLevelChart sentimentLevel={resultSentimentLevel} chartId="Chart 13"/>
+            </Grid>
         </Grid>
 
         <Grid container spacing={3} mt ={2}> 
@@ -494,45 +473,34 @@ const OverallDashboard = () => {
             </Grid>
         </Grid>
 
-        <Grid container spacing={3} mt ={2}> 
-            <StyledTooltip arrow title="Chart 14">
-                <Grid id="chart14" item xs={12} md={6}>
-                    <WordCloud resultWordClouds={resultWordClouds}/>
-                </Grid>
-            </StyledTooltip>
-            <StyledTooltip arrow title="Chart 15">
-                <Grid id="chart15" item xs={12} md={6}>
-                    <TotalMessageLists resultKeywords={resultKeywords}/>
-                </Grid>
-            </StyledTooltip>
+        <Grid container spacing={3} mt ={2}>
+            <Grid id="chart14" item xs={12} md={6}>
+                <WordCloud resultWordClouds={resultWordClouds} chartId="Chart 14"/>
+            </Grid>
+            <Grid id="chart15" item xs={12} md={6}>
+                <TotalMessageLists resultKeywords={resultKeywords} chartId="Chart 15"/>
+            </Grid>
         </Grid>
 
         <Grid container spacing={3} mt ={2}> 
-            <StyledTooltip arrow title="Chart 16">
-                <Grid id="chart16" item xs={12} md={6}>
-                    <WordCloudChannel resultWordClouds={resultWordClouds}/>
-                </Grid>
-            </StyledTooltip>
-            <StyledTooltip arrow placement="top-end" title="Chart 17">
-                <Grid id="chart17" item xs={12} md={6}>
-                    <AccountList resultKeywords={resultKeywords}/>
-                </Grid>
-            </StyledTooltip>
+            <Grid id="chart16" item xs={12} md={6}>
+                <WordCloudChannel resultWordClouds={resultWordClouds} chartId="Chart 16"/>
+            </Grid>
+            <Grid id="chart17" item xs={12} md={6}>
+                <AccountList resultKeywords={resultKeywords} chartId="Chart 17"/>
+            </Grid>
         </Grid>
         
-        <Grid container spacing={3} mt ={2}> 
-            <StyledTooltip arrow title="Chart 18">
-                <Grid id="chart18" item xs={12} md={6}>
-                    <WordCloudSentiment resultWordClouds={resultWordClouds}/>
-                </Grid>
-            </StyledTooltip>
-            <StyledTooltip arrow placement="top-end"  title="Chart 19">
-                <Grid id="chart19" item xs={12} md={6}>
-                    <AccountList resultKeywords={resultKeywords}/>
-                </Grid>
-            </StyledTooltip>
+        <Grid container spacing={3} mt ={2}>
+            <Grid id="chart18" item xs={12} md={6}>
+                <WordCloudSentiment resultWordClouds={resultWordClouds} chartId="Chart 18"/>
+            </Grid>
+            <Grid id="chart19" item xs={12} md={6}>
+                <AccountList resultKeywords={resultKeywords} chartId="Chart 19"/>
+            </Grid>
         </Grid>
-        <QuickView />
+
+        {/* <QuickView /> */}
     </>
   )
     

@@ -8,9 +8,9 @@ import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment';
-import MessageDetail from './MessageDetail' 
-import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const'
+import DailyMessageDetail from '../dashboard/DailyMessageDetail' 
 import { InteractionItem } from 'chart.js'
+import { BullyDashboardColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 
@@ -29,7 +29,7 @@ interface LineProps {
   filterData: any
   params : any
   type: string
-  chartId: string
+  chartId : string
 }
 
 const chartLabel = (data:any) => {
@@ -64,12 +64,12 @@ const chartLabel = (data:any) => {
   return labelValue;
 }
 
-const DailyEngagement = (props: LineProps) => {
+const DailyMessgeByBully = (props: LineProps) => {
   // ** Props
   const { white, labelColor,  borderColor, gridLineColor, filterData, params, type, chartId } = props
 
   // const [ chartData, setChartData ] = useState();
-  const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
+  const colors = BullyDashboardColors;
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -82,12 +82,15 @@ const DailyEngagement = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const engagementData = filterData?.engagement;
+    const bully_levelData = filterData?.bully_level;
     let keywordId : number | null= null;
-    if (engagementData?.length > 0) {
-      for (let i =0; i<engagementData?.length; i++) {
-          if(keywordName === engagementData[i].keyword_name) {
-            keywordId = engagementData[i].keyword_id;
+    if (bully_levelData?.length > 0) {
+      for (let i =0; i<bully_levelData?.length; i++) {
+          if(keywordName === bully_levelData[i].bully_level) {
+            keywordId = bully_levelData[i].id;
+          }
+          if(keywordName === bully_levelData[i].bully_type) {
+            keywordId = bully_levelData[i].id;
           }
       }
     }
@@ -97,9 +100,9 @@ const DailyEngagement = (props: LineProps) => {
 
   const onClick = (event : any) => {
     if(chartRef.current) {
-      const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
-      if(keyword_id) {
-        setKeywordId(keyword_id);
+      const id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
+      if(id) {
+        setKeywordId(id);
         setShowDetail(true);
       }
       
@@ -166,7 +169,14 @@ const DailyEngagement = (props: LineProps) => {
         totalAmount.push(total[j].total_at_date);
       } 
       
-      keywordName = data[i].keyword_name;
+      if(data[i].bully_level) {
+        keywordName = data[i].bully_level;
+      } 
+
+      
+      if(data[i].bully_type) {
+        keywordName = data[i].bully_type;
+      } 
 
       const chartDataset : StackChartDataset  = {
         fill: false,
@@ -193,12 +203,12 @@ const DailyEngagement = (props: LineProps) => {
 
   useEffect(() => {
     if(filterData) {
-      const engagementData = filterData?.engagement;
-      if(engagementData) {
-        const labels = chartLabel(engagementData);
+      const bully_levelData = filterData?.bully_level ? filterData?.bully_level : filterData?.bully_type;
+      if(bully_levelData) {
+        const labels = chartLabel(bully_levelData);
         setLabel(labels);
         
-        const dataSets = chartDatasets(engagementData);
+        const dataSets = chartDatasets(bully_levelData);
         setDataset(dataSets);
       }
     }
@@ -209,23 +219,25 @@ const DailyEngagement = (props: LineProps) => {
     datasets: dataset
   }
 
+  const title =  type === 'level' ? 'Daily Messages of Bully Level' : "Daily Messages of Bully Type";
+
   return (
     <Card>
-        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <CardHeader
-              title='Daily Engagement'
-              titleTypographyProps={{ variant: 'h6' }}
-              subheader='KeyWords'
-              subheaderTypographyProps={{ variant: 'caption' }}
-            />
-          <StyledTooltip arrow title={chartId}>
-              <Information style={{marginTop: '22px', fontSize: '29px'}} />
-          </StyledTooltip>
-        </span>
+      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+        <CardHeader
+            title= {title}
+            titleTypographyProps={{ variant: 'h6' }}
+            subheader='Period over Period Comparison'
+            subheaderTypographyProps={{ variant: 'caption' }}
+        />
+        <StyledTooltip arrow title={chartId}>
+            <Information style={{marginTop: '22px', fontSize: '29px'}} />
+        </StyledTooltip>
+      </span>
       
       <CardContent>
          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
-         <MessageDetail 
+         <DailyMessageDetail 
             show={showDetail}
             setShow={setShowDetail}
             params = {params}
@@ -236,4 +248,4 @@ const DailyEngagement = (props: LineProps) => {
   )
 }
 
-export default DailyEngagement
+export default DailyMessgeByBully

@@ -20,6 +20,8 @@ import CustomAvatar from 'src/@core/components/mui/avatar'
 // ** Icons Imports
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
 
 interface InfluencerComparisonProps {
     icon: ReactNode
@@ -28,11 +30,12 @@ interface InfluencerComparisonProps {
     trend?: string
     totalText: string,
     totalValue : number
+    chartId: string
   }
 
 const InfluencerComparison = (props: InfluencerComparisonProps) => {
   // ** Props
-  const { color, icon, trend, trendNumber, totalText, totalValue } = props
+  const { color, icon, trend, trendNumber, totalText, totalValue, chartId } = props
 
   const TrendIcon = trend === 'plus' ? ChevronUp : ChevronDown
 
@@ -71,7 +74,13 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
         </Box>
 
         <Divider sx={{ mt: 2, mb: 7.5 }} />
-         Period over Period comparison
+         
+         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+             Period over Period comparison
+              <StyledTooltip arrow title={chartId}>
+                  <Information style={{marginLeft: '10px', fontSize: '29px'}} />
+              </StyledTooltip>
+          </span>
       </CardContent>
     </Card>
   )

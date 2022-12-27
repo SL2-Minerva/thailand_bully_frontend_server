@@ -8,8 +8,10 @@ import { ApexOptions } from 'apexcharts'
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { getSeries, getXaxisData } from './DailyMessageGraph'
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
 
-const InfluencerGraph = ({numberOfAccounts}: {numberOfAccounts: any}) => {
+const InfluencerGraph = ({numberOfAccounts, chartId}: {numberOfAccounts: any, chartId: string}) => {
     const series = getSeries(numberOfAccounts);
 
     const options : ApexOptions = {
@@ -49,10 +51,15 @@ const InfluencerGraph = ({numberOfAccounts}: {numberOfAccounts: any}) => {
 
       return (
         <Card>
-            <CardHeader 
-                title='Number of Accounts'
-                titleTypographyProps={{ variant: 'h6' }}
-            />
+            <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+              <CardHeader 
+                  title='Number of Accounts'
+                  titleTypographyProps={{ variant: 'h6' }}
+              />
+              <StyledTooltip arrow title={chartId || ""}>
+                  <Information style={{marginTop: '22px', fontSize: '29px'}} />
+              </StyledTooltip>
+          </span>
             <CardContent>
                 <ReactApexcharts type='bar' options={options} series={series} height={350}/>
             </CardContent>

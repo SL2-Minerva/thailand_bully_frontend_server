@@ -11,10 +11,12 @@ import { Doughnut } from 'react-chartjs-2'
 import { Chart} from "chart.js";
 import * as DoughnutLabel from "chartjs-plugin-doughnutlabel-rebourne";
 import { useEffect, useState } from 'react'
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
 
 
 Chart.register(DoughnutLabel );
-const PlatformsComparison  = ({resultPlatformComparison} : {resultPlatformComparison:any}) => {
+const PlatformsComparison  = ({resultPlatformComparison, chartId} : {resultPlatformComparison:any, chartId: string}) => {
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -131,10 +133,16 @@ const PlatformsComparison  = ({resultPlatformComparison} : {resultPlatformCompar
 
   return (
     <Card style={{ minHeight: '330px' }}>
-      <CardHeader title="Channel/Platforms" titleTypographyProps={{ varient:'h6' }}
+      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+        <CardHeader title="Channel/Platforms" titleTypographyProps={{ varient:'h6' }}
                 subheader="Period over Period Comparison"
                 subheaderTypographyProps={{ varient: 'h6' }}
             />
+          <StyledTooltip arrow title={chartId || ""}>
+              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+          </StyledTooltip>
+      </span>
+     
       <CardContent>
         <Grid container spacing={3}>
             <Grid item xs={12} md={6}>

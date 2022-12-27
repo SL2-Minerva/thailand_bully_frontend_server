@@ -1,10 +1,11 @@
-import { Button, Card, CardContent, CardHeader } from '@mui/material'
+import { Card, CardContent, CardHeader } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import DailyMessageDetail from '../dashboard/DailyMessageDetail' 
-import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
-import { EngagementTypeColors, GraphicColors } from 'src/utils/const'
+import DailyMessageDetail from '../dashboard/DailyMessageDetail'
+import { BullyDashboardColors, EngagementTypeColors, GraphicColors } from 'src/utils/const'
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
 
 interface LineProps {
     white: string
@@ -18,6 +19,7 @@ interface LineProps {
     type: string
     chartTitle: string
     colorType?: string
+    chartId? : string
   }
   
   const chartLabel = (data:any) => {
@@ -60,7 +62,7 @@ interface LineProps {
 
 const MessagesByDay = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, filterData, type, chartTitle, colorType } = props
+  const { white, labelColor, borderColor, gridLineColor, filterData, type, chartTitle, colorType, chartId } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -77,10 +79,6 @@ const MessagesByDay = (props: LineProps) => {
       setCurrent({})
 
     }
-  }
-
-  const showMessageDetail = () => {
-    setShowDetail(false);
   }
 
   const options = {
@@ -134,7 +132,7 @@ const MessagesByDay = (props: LineProps) => {
     let totalAmount : number[] = [];
     let keywordName = "";
     const returnData : StackChartDataset[] = [];
-    const color = colorType === "engagementType" ? EngagementTypeColors :GraphicColors
+    const color = colorType === "engagementType" ? EngagementTypeColors : colorType === "bullyDashboard" ? BullyDashboardColors : GraphicColors
     for(let i = 0 ; i<data?.value?.length; i++) {
       totalAmount = []
       const total = data?.value;
@@ -186,23 +184,17 @@ const MessagesByDay = (props: LineProps) => {
     }
 
     return (
-        <Card>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-        <CardHeader
-          title={getTitle(type, chartTitle)}
-          titleTypographyProps={{ variant: 'h6' }}
-          subheaderTypographyProps={{ variant: 'caption' }}
-        />
-        {
-          showDetail ? 
-          <Button style={{ marginTop: '20px', marginRight: '10px' }} 
-             color="primary" onClick={showMessageDetail} size="small">
-            <CloseCircleOutline fontSize='large'/>
-          </Button>
-          :
-          ""
-        }
-      </div>
+      <Card>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={getTitle(type, chartTitle)}
+            titleTypographyProps={{ variant: 'h6' }}
+            subheaderTypographyProps={{ variant: 'caption' }}
+          />
+          <StyledTooltip arrow title={chartId || ""}>
+              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+          </StyledTooltip>
+        </span>
       
       <CardContent>
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />

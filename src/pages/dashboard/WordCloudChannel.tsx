@@ -4,8 +4,10 @@ import "tippy.js/animations/scale.css";
 import { Card, CardHeader, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useCallback, useState } from "react";
 import SourceService from "src/services/api/source/SourceApi";
+import { StyledTooltip } from "./overall";
+import { Information } from "mdi-material-ui";
 
-const WordCloudChannel = ({resultWordClouds} : {resultWordClouds: any}) => {
+const WordCloudChannel = ({resultWordClouds, chartId} : {resultWordClouds: any, chartId : string}) => {
     const [ platformId, setPlatformId ] = useState<string>("1")
     const { result_source_list  } = SourceService();
 
@@ -15,10 +17,15 @@ const WordCloudChannel = ({resultWordClouds} : {resultWordClouds: any}) => {
 
     return (
         <Card sx={{ maxHeight: 500,minHeight: 500 }}>
-            <CardHeader
-                title='Word Clouds'
-                titleTypographyProps={{ variant: 'h6' }}
-            />
+            <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <CardHeader
+                    title='Word Clouds'
+                    titleTypographyProps={{ variant: 'h6' }}
+                />
+                <StyledTooltip arrow title={chartId}>
+                    <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                </StyledTooltip>
+            </span>
             <Grid container spacing={2}>
                 <Grid item sm={6} xs={6} ml={4}>
                     <FormControl fullWidth>

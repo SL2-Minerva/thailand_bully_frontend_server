@@ -1,37 +1,33 @@
-import { Table, TableRow, TableHead, TableCell, TableContainer, Button } from "@mui/material"; 
+import { Table, TableRow, TableHead, TableCell, TableContainer } from "@mui/material"; 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
 import { useState } from "react";
 import DailyMessageDetail from "./DailyMessageDetail";
+import { StyledTooltip } from "./overall";
+import { Information } from "mdi-material-ui";
 
 interface Props {
     topsites: any,
     params: any
+    chartId : string
 }
 
-const TopSiteList = ({topsites, params} : Props) => {
+const TopSiteList = ({topsites, params, chartId} : Props) => {
     const [showDetail, setShowDetail] = useState<boolean>(false);
     const [keywordId, setKeywordId] = useState<number>();
 
     return (
         <Card sx={{ maxHeight: 360,minHeight: 360 }}>
-            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+            <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title='Top Sites'
                     titleTypographyProps={{ variant: 'h6' }}
                 />
-                {
-                    showDetail ? 
-                    <Button style={{ marginTop: '20px', marginRight: '10px' }} 
-                        color="primary" onClick={()=>{setShowDetail(false)}} size="small">
-                        <CloseCircleOutline fontSize='large'/>
-                    </Button>
-                    :
-                    ""
-                }
-            </div>
+                <StyledTooltip arrow title={chartId}>
+                    <Information  style={{marginTop: '21px', fontSize: '29px'}} />
+                </StyledTooltip>
+            </span>
             <CardContent>
                
                 <TableContainer sx={{ maxHeight: 250,minHeight: 250 }}>

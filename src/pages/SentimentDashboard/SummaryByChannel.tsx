@@ -3,18 +3,26 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import LinearProgressBar from "./LinearProgressBar";
+import { StyledTooltip } from "../dashboard/overall";
+import { Information } from "mdi-material-ui";
 
-const SummaryByChannel = ({resultSummary, topChannel, setTopChannel} : {resultSummary: any, topChannel : string, setTopChannel : any}) => {
+const SummaryByChannel = ({resultSummary, topChannel, setTopChannel, chartId} :
+     {resultSummary: any, topChannel : string, setTopChannel : any, chartId: string}) => {
     const handleTopChannels = (data: string) => {
         setTopChannel(data);
     }
 
     return (
         <Card>
-            <CardHeader
-                title='Summary Sentiment Score by Channel'
-                titleTypographyProps={{ variant: 'h6' }}
-            />
+            <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <CardHeader
+                    title='Summary Sentiment Score by Channel'
+                    titleTypographyProps={{ variant: 'h6' }}
+                />
+                <StyledTooltip arrow title={chartId}>
+                    <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                </StyledTooltip>
+            </span>
             <CardContent>
             <Grid container spacing={3} mt ={2} mb={3}> 
                 <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>

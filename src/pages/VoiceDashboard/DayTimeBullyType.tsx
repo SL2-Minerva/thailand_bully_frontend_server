@@ -9,14 +9,17 @@ import { ApexOptions } from 'apexcharts'
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { useEffect, useState } from 'react'
+import { Information } from 'mdi-material-ui'
+import { StyledTooltip } from '../dashboard/overall'
 
 interface Props{
   hour : any[]
   day : any[]
+  chartId : string
 }
 
 const DayTimeBullyType = (props: Props) => {
-  const {day, hour } = props;
+  const {day, hour, chartId } = props;
 
   const [seriesHour, setSeriesHour ] = useState([{name: '', data:[]}]);
   const [seriesDays, setSeriesDays ] = useState([{name: '', data:[]}]);
@@ -71,7 +74,12 @@ const DayTimeBullyType = (props: Props) => {
 
       return (
         <Card>
-            <CardHeader title="Day&Time by Bully Type " titleTypographyProps={{ 'varient': 'h4' }}/>
+          <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <CardHeader title="Day&Time by Bully Type " titleTypographyProps={{ 'variant': 'h4' }}/>
+              <StyledTooltip arrow title={chartId || ""}>
+                  <Information style={{marginTop: '22px', fontSize: '29px'}} />
+              </StyledTooltip>
+          </span>
             <CardContent>
                 <Grid container spacing={3}>
                     <Grid item xs={4}>
