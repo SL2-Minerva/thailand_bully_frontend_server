@@ -18,7 +18,7 @@ import DialogSource from './dialogSource'
 import SourceService from 'src/services/api/source/SourceApi'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
-import { UserPermissionMock } from 'src/services/api/users/role'
+import { UserPermission } from 'src/services/api/users/role'
 
 const SourceManagement = () => {
   const [showEdit, setShowEdit] = useState<boolean>(false)
@@ -65,7 +65,7 @@ const SourceManagement = () => {
     setTableData(result_source_list)
   }
   const [tableData, setTableData] = useState(result_source_list)
-  const { resultPermission } = UserPermissionMock();
+  const { resultPermission } = UserPermission();
 
   return (
     <Grid container spacing={6}>

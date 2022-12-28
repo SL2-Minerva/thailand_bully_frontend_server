@@ -196,6 +196,34 @@ export const GetSentimentType = (campaignId?: string, reload?: boolean, platform
   }
 }
 
+export const GetShareOfVoiceChart = (campaignId?: string, reload?: boolean, platformId?: string, 
+  start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any ) => {
+    const params = {
+      campaignId: campaignId,
+      platformId: platformId, 
+      start_date: start_date,
+      end_date: end_date, 
+      period: period, 
+      previousDate: previousDate, 
+      previousEndDate: previousEndDate
+    };
+
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-overall/share-of-voice-number`,
+    method: 'GET',
+    params : GetParams(params),
+    data: {
+      reload: reload
+    }
+  })
+
+  return {
+    resultShareOfVoiceChart: response?.data || null,
+    loadingShareOfVoiceChart: loading,
+    errorShareOfVoiceChart: error
+  }
+}
+
 export const GetShareOfVoice = (campaignId?: string, reload?: boolean, platformId?: string, 
   start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any ) => {
     const params = {

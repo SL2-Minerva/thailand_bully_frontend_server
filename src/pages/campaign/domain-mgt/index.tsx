@@ -18,7 +18,7 @@ import DialogDomain from './dialogDomain'
 import DomainList from 'src/services/api/domains/DomainAPI'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
-import { UserPermissionMock } from 'src/services/api/users/role'
+import { UserPermission } from 'src/services/api/users/role'
 
 const DomainManagement = () => {
   const [showEdit, setShowEdit] = useState<boolean>(false)
@@ -34,7 +34,7 @@ const DomainManagement = () => {
   }
 
   const { result_domain_list } = DomainList(reload)
-  const { resultPermission } = UserPermissionMock();
+  const { resultPermission } = UserPermission();
 
   useEffect(() => {
     setReload(!reload)

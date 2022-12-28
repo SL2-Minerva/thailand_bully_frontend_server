@@ -28,7 +28,7 @@ import { Organization } from 'src/services/api/organization/organization'
 import DomainList from 'src/services/api/domains/DomainAPI'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
-import { UserPermissionMock } from 'src/services/api/users/role'
+import { UserPermission } from 'src/services/api/users/role'
 
 const CampaignManagement = () => {
   
@@ -63,7 +63,7 @@ const CampaignManagement = () => {
 
   const { list } = Organization.getList(reload)
 
-  const { resultPermission } = UserPermissionMock();
+  const { resultPermission } = UserPermission();
 
   const handleOrganization = useCallback((e: SelectChangeEvent) => {
     setOrganization(e.target.value)

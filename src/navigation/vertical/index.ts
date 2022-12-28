@@ -7,12 +7,12 @@ import { NewspaperVariantMultiple } from 'mdi-material-ui'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
-import { UserPermissionMock } from 'src/services/api/users/role'
+import { UserPermission } from 'src/services/api/users/role'
 
 const navigation = (): VerticalNavItemsType => {
-  const { resultPermission } = UserPermissionMock();
+  const { resultPermission } = UserPermission();
 
-  const UserPermission = resultPermission?.user?.authorized_view ? {
+  const UserPermissionData = resultPermission?.user?.authorized_view ? {
     title: 'User Permission',
     icon: CogOutline,
     children: [
@@ -127,8 +127,8 @@ const navigation = (): VerticalNavItemsType => {
 
   const sideMenuBar: any [] = [];
 
-  if(UserPermission) {
-    sideMenuBar.push(UserPermission);
+  if(UserPermissionData) {
+    sideMenuBar.push(UserPermissionData);
   }
 
   if (OrganizationPermission) {

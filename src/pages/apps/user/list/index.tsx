@@ -56,7 +56,7 @@ import { Organization } from 'src/services/api/organization/organization'
 import axios from 'axios'
 import authConfig from '../../../../configs/auth'
 import { API_PATH } from 'src/utils/const'
-import { UserPermissionMock } from 'src/services/api/users/role'
+import { UserPermission } from 'src/services/api/users/role'
 
 interface UserRoleType {
   [key: string]: ReactElement
@@ -123,7 +123,7 @@ const RowOptions = ({ id, current }: { id: any; current: any }) => {
   const [show, setShow] = useState<boolean>(false)
 
   const rowOptionsOpen = Boolean(anchorEl)
-  const { resultPermission } = UserPermissionMock();
+  const { resultPermission } = UserPermission();
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -324,7 +324,7 @@ const UserList = () => {
   const current = {}
 
   //user permission 
-  const { resultPermission } = UserPermissionMock();
+  const { resultPermission } = UserPermission();
 
   // ** Hooks
   const { list } = Organization.getList(reload)

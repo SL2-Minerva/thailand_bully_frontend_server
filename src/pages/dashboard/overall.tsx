@@ -41,7 +41,7 @@ import CommentSentiment from "./CommentSentiment"
 import ShareOfVoice from "./ShareOfVoice"
 import SentimentLevelChart from "./SentimentLevelChart"
 import { CampaignList } from "src/services/api/campaign/CampaignAPI"
-import { FilterByCampaignId, GetSentimentLevel, GetSentimentScore, GetShareOfVoice, GetTopKeywords, GetWordClouds, TotalKeyStats } from "src/services/api/dashboards/overall/overallDashboardApi"
+import { FilterByCampaignId, GetSentimentLevel, GetSentimentScore, GetShareOfVoice, GetShareOfVoiceChart, GetTopKeywords, GetWordClouds, TotalKeyStats } from "src/services/api/dashboards/overall/overallDashboardApi"
 import SourceService from "src/services/api/source/SourceApi"
 import { GetSentimentType } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
@@ -116,6 +116,7 @@ const OverallDashboard = () => {
     const { resultKeywords } = GetKeyWords(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
     const {resultSentimentScore} = GetSentimentScore(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
     const { resultWordClouds } = GetWordClouds(campaign, reload, platformId, date, endDate, period, topKeyword, previousDate, previousEndDate);
+    const { resultShareOfVoiceChart } = GetShareOfVoiceChart(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
 
     const params = {
         campaign: campaign,
@@ -454,7 +455,7 @@ const OverallDashboard = () => {
 
         <Grid container spacing={3} mt={2}>
             <Grid id="chart12" item xs={12} md={8}>
-                <ShareOfVoice resultShareOfVoice={resultShareOfVoice} chartId="Chart 12"/>
+                <ShareOfVoice resultShareOfVoice={resultShareOfVoice} resultShareofVoiceChart={resultShareOfVoiceChart} chartId="Chart 12"/>
             </Grid>
             <Grid id="chart13" item xs={12} md={4}>
                 <SentimentLevelChart sentimentLevel={resultSentimentLevel} chartId="Chart 13"/>

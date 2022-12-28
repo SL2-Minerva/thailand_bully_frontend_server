@@ -15,7 +15,7 @@ import { PencilOutline } from 'mdi-material-ui'
 import DialogRoleInfo from './DialogRoleInfo'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import { role_list, UserPermissionMock } from '../../../../services/api/users/role'
+import { role_list, UserPermission } from '../../../../services/api/users/role'
 import axios from 'axios'
 import authConfig from '../../../../configs/auth'
 
@@ -25,7 +25,7 @@ const RoleManagement = () => {
   const [action, setAction] = useState<string>('create')
   const [reload, setReload] = useState<boolean>(false)
   
-  const { resultPermission } = UserPermissionMock();
+  const { resultPermission } = UserPermission();
   const { resultRoleList } = role_list(showDialog)
 
   useEffect(() => {
