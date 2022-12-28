@@ -27,8 +27,6 @@ import Autocomplete from '@mui/material/Autocomplete'
 import Close from 'mdi-material-ui/Close'
 import axios from 'axios'
 import authConfig from '../../../../configs/auth'
-
-import { top100Films } from 'src/@fake-db/autocomplete'
 import { ReportOptions } from 'src/utils/const'
 
 interface DialogRoleInfoProps {
@@ -51,20 +49,10 @@ const Transition = forwardRef(function Transition(
 const DialogRoleInfo = (props: DialogRoleInfoProps) => {
   const { show, setShow, action, current } = props
 
-  const [roleName, setRoleName] = useState(current.user_role_name ?? '')
-  const [roleDescription, setDescription] = useState(current.user_role_description ?? '')
+  const [roleName, setRoleName] = useState(current?.user_role_name ?? '')
+  const [roleDescription, setDescription] = useState(current?.user_role_description ?? '')
 
-  const options = top100Films.map(option => {
-
-  const firstLetter = option.title[0].toUpperCase()
-
-    return {
-      firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
-      ...option
-    }
-  })
-
-  console.log('options', options);
+  
 
 
   const [permission, setPermission] = useState<any>({
@@ -100,12 +88,12 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
 
 
   useEffect(() => {
-    setRoleName(current.user_role_name ?? '')
-    setDescription(current.user_role_description ?? '')
+    setRoleName(current?.user_role_name ?? '')
+    setDescription(current?.user_role_description ?? '')
 
     if (action === 'edit') {
-      if ( current.permission ) {
-        setPermission(current.permission ) 
+      if ( current?.permission ) {
+        setPermission(current?.permission ) 
       } else {
 
         setPermission({
@@ -204,7 +192,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
       .put(
         authConfig.updateRole,
         {
-          id: current.id,
+          id: current?.id,
           role_name: roleName,
           role_description: roleDescription,
           permission: permission

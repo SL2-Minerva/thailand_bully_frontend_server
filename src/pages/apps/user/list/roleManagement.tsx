@@ -15,7 +15,7 @@ import { PencilOutline } from 'mdi-material-ui'
 import DialogRoleInfo from './DialogRoleInfo'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import { role_list } from '../../../../services/api/users/role'
+import { role_list, UserPermissionMock } from '../../../../services/api/users/role'
 import axios from 'axios'
 import authConfig from '../../../../configs/auth'
 
@@ -25,7 +25,7 @@ const RoleManagement = () => {
   const [action, setAction] = useState<string>('create')
   const [reload, setReload] = useState<boolean>(false)
   
-
+  const { resultPermission } = UserPermissionMock();
   const { resultRoleList } = role_list(showDialog)
 
   useEffect(() => {
@@ -68,26 +68,37 @@ const RoleManagement = () => {
           <CardHeader title='Role Management' sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }} />
           <CardContent>
             <TableContainer component={Paper}>
-              <Box
-                sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
-              >
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-                  <Button sx={{ mb: 2 }} onClick={() => {
-                    setCurrent({}); 
-                    setAction('create'); 
-                    setShowDialog(true)}
-                    } variant='contained'>
-                    Add Role
-                  </Button>
+              {
+                resultPermission?.user?.authorized_create ? 
+                <Box
+                  sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
+                >
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                    <Button sx={{ mb: 2 }} onClick={() => {
+                      setCurrent({}); 
+                      setAction('create'); 
+                      setShowDialog(true)}
+                      } variant='contained'>
+                      Add Role
+                    </Button>
+                  </Box>
                 </Box>
-              </Box>
+                :
+                ""
+              }
+              
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Role Name</TableCell>
                     <TableCell align='center'>Description</TableCell>
                     <TableCell align='center'>Status</TableCell>
-                    <TableCell align='center'>Action</TableCell>
+                    {
+                      resultPermission?.user?.authorized_edit ? 
+                      <TableCell align='center'>Action</TableCell>
+                      : 
+                      ""
+                    }
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -105,20 +116,33 @@ const RoleManagement = () => {
                           {row.user_role_name}
                         </TableCell>
                         <TableCell align='center'>{row.user_role_description}</TableCell>
-                        <TableCell align='center'>
-                        <Switch
-                                  key={index}
-                                  checked={row.status}
-                                  onChange={e => handleChange(index, row.id, e)}
-                                />
-                        </TableCell>
-                        <TableCell align='center'>
-                        <PencilOutline
-                            onClick={() => {
-                              handleEdit(index)
-                            }}
-                          />
-                        </TableCell>
+                        {
+                          resultPermission?.user?.authorized_edit ? 
+                            <>
+                              <TableCell align='center'>
+                                <Switch
+                                          key={index}
+                                          checked={row.status}
+                                          onChange={e => handleChange(index, row.id, e)}
+                                        />
+                              </TableCell>
+                              <TableCell align='center'>
+                                <PencilOutline
+                                    onClick={() => {
+                                      handleEdit(index)
+                                    }}
+                                  />
+                              </TableCell>
+                            </> 
+                          : 
+                          <TableCell align='center'>
+                            <Switch
+                                      key={index}
+                                      checked={row.status}
+                                    />
+                          </TableCell>
+                        }
+                        
                       </TableRow>
                     ))}
                 </TableBody>

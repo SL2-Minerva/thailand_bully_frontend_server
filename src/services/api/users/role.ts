@@ -6,6 +6,7 @@ export const role_list = (reload?: boolean, paged?: boolean, filter?: string, or
     method: 'GET',
     data: { paged, filter, org_id, reload }
   })
+
   return {
     resultRoleList: res?.data || null,
     loadingRoleList: loading,
@@ -25,12 +26,13 @@ const RolesService = () => {
     },
     { manual: true }
   )
+
   return {
     result_user_create: data?.data,
     loading_user_create: loading,
     error_user_create: error,
     update_user: (userInput: any) => {
-      let inputData = userInput
+      const inputData = userInput
 
       return new Promise((resolve, reject) => {
         store({
@@ -48,6 +50,47 @@ const RolesService = () => {
           })
       })
     }
+  }
+}
+
+export const UserPermissionMock = () => {
+  const response = {
+    "user": {
+        "authorized_create": 0,
+        "authorized_view": 1,
+        "authorized_edit": 1,
+        "authorized_delete": 0,
+        "authorized_export": 0,
+        "id": 17
+    },
+    "campaign": {
+        "authorized_create": 1,
+        "authorized_view": 1,
+        "authorized_edit": 0,
+        "authorized_delete": 1,
+        "authorized_export": 0,
+        "id": 18
+    },
+    "dashboard": {
+        "authorized_create": 1,
+        "authorized_view": 0,
+        "authorized_edit": 0,
+        "authorized_delete": 1,
+        "authorized_export": 1,
+        "id": 19
+    },
+    "report": {
+        "authorized_create": 1,
+        "authorized_view": 1,
+        "authorized_edit": 0,
+        "authorized_delete": 1,
+        "authorized_export": 1,
+        "id": 20
+    }
+  }
+
+  return {
+    resultPermission: response || null,
   }
 }
 

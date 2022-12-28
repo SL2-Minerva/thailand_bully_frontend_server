@@ -18,6 +18,7 @@ import DialogSource from './dialogSource'
 import SourceService from 'src/services/api/source/SourceApi'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
+import { UserPermissionMock } from 'src/services/api/users/role'
 
 const SourceManagement = () => {
   const [showEdit, setShowEdit] = useState<boolean>(false)
@@ -64,6 +65,7 @@ const SourceManagement = () => {
     setTableData(result_source_list)
   }
   const [tableData, setTableData] = useState(result_source_list)
+  const { resultPermission } = UserPermissionMock();
 
   return (
     <Grid container spacing={6}>
@@ -72,22 +74,32 @@ const SourceManagement = () => {
           <CardHeader title='Source Management' />
           <CardContent>
             <TableContainer component={Paper}>
-              <Box
-                sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
-              >
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-                  <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                    Add
-                  </Button>
-                </Box>
-              </Box>
+              {
+                resultPermission?.campaign?.authorized_create ? 
+                  <Box
+                    sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
+                  >
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                      <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
+                        Add
+                      </Button>
+                    </Box>
+                  </Box>
+                :
+                <></>
+              }
+              
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Source</TableCell>
                     <TableCell align='center'>Description</TableCell>
                     <TableCell align='center'>Status</TableCell>
-                    <TableCell align='center'>Action</TableCell>
+                    {
+                      resultPermission?.campaign?.authorized_edit ? 
+                      <TableCell align='center'>Action</TableCell> : ""
+                    }
+                    
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -105,16 +117,25 @@ const SourceManagement = () => {
                           {row.name}
                         </TableCell>
                         <TableCell align='center'>{row.description}</TableCell>
-                        <TableCell align='center'>
-                          <Switch key={index} checked={row.status} onChange={e => handleChange(index, row.id, e)} />
-                        </TableCell>
-                        <TableCell align='center'>
-                          <PencilOutline
-                            onClick={() => {
-                              handleEdit(index)
-                            }}
-                          />
-                        </TableCell>
+                        {
+                          resultPermission?.campaign?.authorized_edit ? 
+                          <>
+                            <TableCell align='center'>
+                              <Switch key={index} checked={row.status} onChange={e => handleChange(index, row.id, e)} />
+                            </TableCell>
+                            <TableCell align='center'>
+                              <PencilOutline
+                                onClick={() => {
+                                  handleEdit(index)
+                                }}
+                              />
+                            </TableCell>
+                          </> : 
+                            <TableCell align='center'>
+                              <Switch key={index} checked={row.status} />
+                            </TableCell>
+                        }
+                        
                       </TableRow>
                     ))}
                 </TableBody>
