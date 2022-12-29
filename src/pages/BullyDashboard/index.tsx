@@ -9,9 +9,10 @@ import { FilterByCampaignId, GetBullyByAccount, GetBullyByChannel, GetBullyByDay
     GetBullyTypeByChannel,
     GetBullyTypeBySentiment,
     GetShareOfChannelChart,
-    GetShareOfChannelPlatform,
+    GetShareOfChannelPlatforms,
     GetShareOfChannelBullyLevel,
     GetShareOfChannelChartBullyLevel, } from "src/services/api/dashboards/bully/BullyDashboardAPI"
+import { UserPermission } from "src/services/api/users/role"
 import { DateType } from "src/types/forms/reactDatepickerTypes"
 import Filter from "../VoiceDashboard/Filter"
 import MessagesByDay from "../VoiceDashboard/MessagesByDay"
@@ -49,6 +50,7 @@ const BullyDashboard = () => {
 
     const [ bullyType, setBullyType ] = useState<string>('level');
 
+    const { resultReportPermission } = UserPermission();
     const { resultFilterData  } = FilterByCampaignId(campaign, date, endDate, period);
     const { resultBullyByDay } = GetBullyByDay(campaign, date, endDate, period);
     const { resultBullyByTime } = GetBullyByTime(campaign, date, endDate, period);
@@ -64,10 +66,10 @@ const BullyDashboard = () => {
     const {resultBullyTypeByAccount} =  GetBullyTypeByAccount(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
     const {resultBullyTypeByChannel} = GetBullyTypeByChannel(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
     const {resultBullyTypeBySentiment} = GetBullyTypeBySentiment(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
-    const { resultShareOfChannelPlatform } = GetShareOfChannelPlatform(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
-    const { resultShareOfChannelChart } = GetShareOfChannelChart(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
     const { resultShareOfChannelBullyLevel } = GetShareOfChannelBullyLevel(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
     const { resultShareOfChannelChartBullyLevel } = GetShareOfChannelChartBullyLevel(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
+    const { resultShareOfChannelPlatform } = GetShareOfChannelPlatforms(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
+    const { resultShareOfChannelChart } = GetShareOfChannelChart(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
     const params = {
         campaign: campaign,
         date : date, 
@@ -100,266 +102,335 @@ const BullyDashboard = () => {
                 setCampaign={setCampaign}
                 />
             </Grid>
-            <Grid id="chart1" item xs={12} md={4}>
-                <PercentageOfBully filterData={resultFilterData} type="level" chartId="Chart 1"/>
-            </Grid>
-            <Grid id="chart2" item xs={12} md={8}>
-                <DailyMessgeByBully
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultFilterData}
-                    params= {params}
-                    type="level"
-                    chartId="Chart 2"
-                />
-            </Grid>
-            <Grid item xs={12} md={12} id="chart3">
-                <MessagesByDay
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultBullyByDay}
-                    type="day"
-                    chartTitle="Bully Level"
-                    chartId="Chart 3"
-                    colorType="bullyDashboard"
-                />
-            </Grid>
-            <Grid item xs={12} md={12} id="chart4">
-                <MessagesByDay
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultBullyByTime}
-                    type="time"
-                    chartTitle="Bully Level"
-                    chartId="Chart 4"
-                    colorType="bullyDashboard"
-                />
-            </Grid>
-            <Grid item xs={12} md={12} id="chart5">
-                <MessagesByDay
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultBullyByDevice}
-                    type="device"
-                    chartTitle="Bully Level"
-                    chartId="Chart 5"
-                    colorType="bullyDashboard"
-                />
-            </Grid>
-            <Grid item xs={12} md={12} id="chart6">
-                <MessagesByDay
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultBullyByAccount}
-                    type="account"
-                    chartTitle="Bully Level"
-                    chartId="Chart 6"
-                    colorType="bullyDashboard"
-                />
-            </Grid>
-            <Grid item xs={12} md={12} id="chart7">
-                <MessagesByDay
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultBullyByChannel}
-                    type="channel"
-                    chartTitle="Bully Level"
-                    chartId="Chart 7"
-                    colorType="bullyDashboard"
-                />
-            </Grid>
-            <Grid item xs={12} md={12} id="chart8">
-                <MessagesByDay
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultBullyBySentiment}
-                    type="sentiment"
-                    chartTitle="Bully Level"
-                    chartId="Chart 8"
-                    colorType="bullyDashboard"
-                />
-            </Grid>
+            {
+                resultReportPermission?.includes("93") ? 
+                <Grid id="chart1" item xs={12} md={4}>
+                    <PercentageOfBully filterData={resultFilterData} type="level" chartId="Chart 1"/>
+                </Grid> : ""
+            }
+            {
+                resultReportPermission?.includes("94") ?
+                <Grid id="chart2" item xs={12} md={8}>
+                    <DailyMessgeByBully
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultFilterData}
+                        params= {params}
+                        type="level"
+                        chartId="Chart 2"
+                    />
+                </Grid>
+                : ""
+            }
+            {
+                resultReportPermission?.includes("95") ?
+                <Grid item xs={12} md={12} id="chart3">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultBullyByDay}
+                        type="day"
+                        chartTitle="Bully Level"
+                        chartId="Chart 3"
+                        colorType="bullyDashboard"
+                    />
+                </Grid>
+                : ""
+            }
+            {
+                resultReportPermission?.includes("96") ?
+                <Grid item xs={12} md={12} id="chart4">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultBullyByTime}
+                        type="time"
+                        chartTitle="Bully Level"
+                        chartId="Chart 4"
+                        colorType="bullyDashboard"
+                    />
+                </Grid>
+                : ""
+            }
+            {
+                resultReportPermission?.includes("97") ?
+                <Grid item xs={12} md={12} id="chart5">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultBullyByDevice}
+                        type="device"
+                        chartTitle="Bully Level"
+                        chartId="Chart 5"
+                        colorType="bullyDashboard"
+                    />
+                </Grid>
+                : ""
+            }
+            {
+                resultReportPermission?.includes("98") ?
+                <Grid item xs={12} md={12} id="chart6">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultBullyByAccount}
+                        type="account"
+                        chartTitle="Bully Level"
+                        chartId="Chart 6"
+                        colorType="bullyDashboard"
+                    />
+                </Grid>
+                : ""
+            }
+            {
+                resultReportPermission?.includes("99") ?
+                <Grid item xs={12} md={12} id="chart7">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultBullyByChannel}
+                        type="channel"
+                        chartTitle="Bully Level"
+                        chartId="Chart 7"
+                        colorType="bullyDashboard"
+                    />
+                </Grid>
+                : ""
+            }
+            {
+                resultReportPermission?.includes("100") ?
+                <Grid item xs={12} md={12} id="chart8">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultBullyBySentiment}
+                        type="sentiment"
+                        chartTitle="Bully Level"
+                        chartId="Chart 8"
+                        colorType="bullyDashboard"
+                    />
+                </Grid>
+                : ""
+            }
             <Grid item xs={12}>
                 <Filter 
-                tilte="Bully Dashboard"
-                date ={dateBullyType}
-                setDate ={setDateBullyType}
-                endDate ={endDateBullyType}
-                setEndDate = {setEndDateBullyType}
-                previousDate = {previousDateBullyType}
-                setPreviousDate = {setPreviousDateBullyType}
-                previousEndDate = {previousEndDateBullyType}
-                setPreviousEndDate = {setPreviousEndDateBullyType}
-                period ={periodBullyType}
-                setPeriod ={setPeriodBullyType}
-                dateSelect= {dateSelectBullyType}
-                setDateSelect ={setDateSelectBullyType}
-                campaign={campaignBullyType}
-                setCampaign={setCampaignBullyType}
-                />
+                    tilte="Bully Dashboard"
+                    date ={dateBullyType}
+                    setDate ={setDateBullyType}
+                    endDate ={endDateBullyType}
+                    setEndDate = {setEndDateBullyType}
+                    previousDate = {previousDateBullyType}
+                    setPreviousDate = {setPreviousDateBullyType}
+                    previousEndDate = {previousEndDateBullyType}
+                    setPreviousEndDate = {setPreviousEndDateBullyType}
+                    period ={periodBullyType}
+                    setPeriod ={setPeriodBullyType}
+                    dateSelect= {dateSelectBullyType}
+                    setDateSelect ={setDateSelectBullyType}
+                    campaign={campaignBullyType}
+                    setCampaign={setCampaignBullyType}
+                    />
             </Grid>
-            <Grid id="chart9" item xs={12} md={4}>
-                <PercentageOfBully filterData={resultBullyTypeFilterData} type="type" chartId="Chart 9"/>
-            </Grid>
-            <Grid id="chart10" item xs={12} md={8}>
-                <DailyMessgeByBully
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultBullyTypeFilterData}
-                    params= {params}
-                    type="type"
-                    chartId="Chart 10"
-                />
-            </Grid>
-            <Grid item xs={12} md={12} id="chart11">
-                <MessagesByDay
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultBullyTypeByDay}
-                    type="day"
-                    chartTitle="Bully Type"
-                    chartId="Chart 11"
-                    colorType="bullyDashboard"
-                />
-            </Grid>
-            <Grid item xs={12} md={12} id="chart12">
-                <MessagesByDay
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultBullyTypeByTime}
-                    type="time"
-                    chartTitle="Bully Type"
-                    chartId="Chart 12"
-                    colorType="bullyDashboard"
-                />
-            </Grid>
-            <Grid item xs={12} md={12} id="chart13">
-                <MessagesByDay
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultBullyTypeByDevice}
-                    type="device"
-                    chartTitle="Bully Type"
-                    chartId="Chart 13"
-                    colorType="bullyDashboard"
-                />
-            </Grid>
-            <Grid item xs={12} md={12} id="chart14">
-                <MessagesByDay
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultBullyTypeByAccount}
-                    type="account"
-                    chartTitle="Bully Type"
-                    chartId="Chart 14"
-                    colorType="bullyDashboard"
-                />
-            </Grid>
-            <Grid item xs={12} md={12} id="chart15">
-                <MessagesByDay
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultBullyTypeByChannel}
-                    type="channel"
-                    chartTitle="Bully Type"
-                    chartId="Chart 15"
-                    colorType="bullyDashboard"
-                />
-            </Grid>
-            <Grid item xs={12} md={12} id="chart16">
-                <MessagesByDay
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultBullyTypeBySentiment}
-                    type="sentiment"
-                    chartTitle="Bully Type"
-                    chartId="Chart 16"
-                    colorType="bullyDashboard"
-                />
-            </Grid>
-            <Grid container spacing={3} mt ={2}> 
-                <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
-                    <Button variant="contained" color={bullyType === 'level' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }}
-                    onClick={() => {handleBullyType("level")}}> Bully Level</Button>
-                    <Button variant="contained" color={bullyType === 'type' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }}
-                    onClick={() => {handleBullyType("type")}}> Bully Type </Button>
+            {
+                resultReportPermission?.includes("101") ?
+                <Grid id="chart9" item xs={12} md={4}>
+                    <PercentageOfBully filterData={resultBullyTypeFilterData} type="type" chartId="Chart 9"/>
                 </Grid>
-            </Grid>
-            <Grid id="chart17" item xs={12} mt={3}>
-                <ShareOfChannel resultShareOfChannel={bullyType === 'level' ? resultShareOfChannelChartBullyLevel :resultShareOfChannelChart}
-                 resultShareofChannelPlatform={bullyType === 'level' ? resultShareOfChannelBullyLevel :resultShareOfChannelPlatform}
-                 chartId={bullyType === 'level' ? "Chart 17" : "Chart 18"}/>
-            </Grid>
+                : ""
+            }
+            {
+                resultReportPermission?.includes("102") ?
+                <Grid id="chart10" item xs={12} md={8}>
+                    <DailyMessgeByBully
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultBullyTypeFilterData}
+                        params= {params}
+                        type="type"
+                        chartId="Chart 10"
+                    />
+                </Grid>
+                : ""
+            }
+            {
+                resultReportPermission?.includes("103") ?
+                <Grid item xs={12} md={12} id="chart11">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultBullyTypeByDay}
+                        type="day"
+                        chartTitle="Bully Type"
+                        chartId="Chart 11"
+                        colorType="bullyDashboard"
+                    />
+                </Grid>
+                : ""
+            }
+            {
+                resultReportPermission?.includes("104") ?
+                <Grid item xs={12} md={12} id="chart12">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultBullyTypeByTime}
+                        type="time"
+                        chartTitle="Bully Type"
+                        chartId="Chart 12"
+                        colorType="bullyDashboard"
+                    />
+                </Grid>
+                : ""
+            }
+            {
+                resultReportPermission?.includes("105") ?
+                <Grid item xs={12} md={12} id="chart13">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultBullyTypeByDevice}
+                        type="device"
+                        chartTitle="Bully Type"
+                        chartId="Chart 13"
+                        colorType="bullyDashboard"
+                    />
+                </Grid>
+                : ""
+            }
+            {
+                resultReportPermission?.includes("106") ?
+                <Grid item xs={12} md={12} id="chart14">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultBullyTypeByAccount}
+                        type="account"
+                        chartTitle="Bully Type"
+                        chartId="Chart 14"
+                        colorType="bullyDashboard"
+                    />
+                </Grid>
+                : ""
+            }
+            {
+                resultReportPermission?.includes("107") ?
+                <Grid item xs={12} md={12} id="chart15">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultBullyTypeByChannel}
+                        type="channel"
+                        chartTitle="Bully Type"
+                        chartId="Chart 15"
+                        colorType="bullyDashboard"
+                    />
+                </Grid>
+                : ""
+            }
+            {
+                resultReportPermission?.includes("108") ?
+                <Grid item xs={12} md={12} id="chart16">
+                    <MessagesByDay
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultBullyTypeBySentiment}
+                        type="sentiment"
+                        chartTitle="Bully Type"
+                        chartId="Chart 16"
+                        colorType="bullyDashboard"
+                    />
+                </Grid>
+                : ""
+            }
+            {
+                resultReportPermission?.includes("109") ?
+                <>
+                    <Grid container spacing={3} mt ={2}> 
+                        <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
+                            <Button variant="contained" color={bullyType === 'level' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }}
+                            onClick={() => {handleBullyType("level")}}> Bully Level</Button>
+                            <Button variant="contained" color={bullyType === 'type' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }}
+                            onClick={() => {handleBullyType("type")}}> Bully Type </Button>
+                        </Grid>
+                    </Grid>
+                    <Grid id="chart17" item xs={12} mt={3}>
+                        <ShareOfChannel resultShareOfChannel={bullyType !== 'level' ? resultShareOfChannelChartBullyLevel : resultShareOfChannelChart}
+                        resultShareofChannelPlatform={bullyType !== 'level' ? resultShareOfChannelBullyLevel : resultShareOfChannelPlatform}
+                        chartId={bullyType === 'level' ? "Chart 17" : "Chart 18"}/>
+                    </Grid>
+                </>
+                : ""
+            }
             <QuickView/>
         </Grid> 
     )

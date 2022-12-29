@@ -23,15 +23,93 @@ const ChartLabels = (data: any) => {
   return labels;
 }
 
-const ShareOfVoice  = ({resultShareOfVoice, chartId} : {resultShareOfVoice: any, chartId : string}) => {
+const ChartData = (data: any ) => {
+  if (!data) return [];
 
-  const labels = resultShareOfVoice ? ChartLabels(resultShareOfVoice) : [];
+  const chartDatas : any[] = [];
+  for (let i = 0; i<data?.length ; i ++) {
+    chartDatas.push(data[i]?.number_of_massage)
+  }
+  
+  return chartDatas;
+}
+
+const TableData = ({channel, percentage, highlight} : {channel:any, percentage:any, highlight: any}) => {
+  return (
+    <>
+        <TableCell>
+            {
+              channel === 'facebook' ?
+              <span style={{ border : highlight ? "1px solid red" : "", padding: '4px' }}>
+                { percentage + "%"}
+              </span>
+              :
+              <span style={{ padding: '4px' }}>
+                { 0 + "%"}
+              </span>
+            }
+        </TableCell>
+        <TableCell>
+            {
+              channel === 'twitter' ?
+            <span style={{ border : highlight ? "1px solid red" : "", padding: '4px' }}>
+              {percentage + "%"}
+            </span>
+            :
+            <span style={{ padding: '4px' }}>
+              { 0 + "%"}
+            </span>
+          }
+        </TableCell>
+        <TableCell>
+          {
+                channel === 'youtube' ?
+              <span style={{ border : highlight ? "1px solid red" : "", padding: '4px' }}>
+                {percentage + "%"}
+              </span>
+              :
+              <span style={{ padding: '4px' }}>
+                { 0 + "%"}
+              </span>
+            }
+        </TableCell>
+        <TableCell>
+            {
+                channel === 'instagram' ?
+              <span style={{ border : highlight ? "1px solid red" : "", padding: '4px' }}>
+                {percentage + "%"}
+              </span>
+              :
+              <span style={{ padding: '4px' }}>
+                { 0 + "%"}
+              </span>
+            }
+        </TableCell>
+        <TableCell>
+            {
+              channel === 'pantip' ?
+              <span style={{ border : highlight ? "1px solid red" : "", padding: '4px' }}>
+                {percentage + "%"}
+              </span>
+              :
+              <span style={{ padding: '4px' }}>
+                { 0 + "%"}
+              </span>
+            }
+        </TableCell>
+    </>
+  )
+}
+
+const ShareOfVoice  = ({resultShareOfVoice, resultShareofVoiceChart, chartId} : {resultShareOfVoice: any,resultShareofVoiceChart: any, chartId : string}) => {
+
+  const labels = resultShareofVoiceChart ? ChartLabels(resultShareofVoiceChart) : [];
   const data = {
   labels: labels,
   datasets: [{
       axis: 'y',
       label: 'Number of Messages',
-      data: [65, 59, 80, 81, 56, 55, 40],
+      data: ChartData(resultShareofVoiceChart),
       fill: false,
       backgroundColor: ['rgb(54, 162, 235)'],
       borderColor: [
@@ -104,11 +182,21 @@ const ShareOfVoice  = ({resultShareOfVoice, chartId} : {resultShareOfVoice: any,
                             {
                               (shareVoice.value || []).map((value : any, key: number) => {
                                 return (
-                                  <TableCell key={key}>
-                                    <span style={{ border : value?.highlight ? "1px solid red" : "", padding: '4px' }}>
-                                      {value?.percentage + "%"}
-                                    </span>
-                                  </TableCell>
+                                  <>
+                                      {
+                                        key === 0 ?
+                                          <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
+                                        : key === 1?
+                                            <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
+                                        : key === 2 ?
+                                            <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
+                                        : key === 3 ?
+                                            <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
+                                        : key === 4 ? 
+                                            <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
+                                        : <></>
+                                      }
+                                  </>
                                 )
                               })
                             }

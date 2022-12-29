@@ -19,6 +19,7 @@ import EngagmentComparisonChart from "./EngagmentComparisonChart";
 import EngagementSummary from "./EngagementSummary";
 import QuickView from "./QuickView";
 import { Information } from "mdi-material-ui";
+import { UserPermission } from "src/services/api/users/role";
 
 const EngagementDashboard = () => {
     const theme = useTheme()
@@ -40,6 +41,7 @@ const EngagementDashboard = () => {
     const [ campaignType, setCampaignType ] = useState<string>("1")
     const [ topKeyword, setTopKeyword ] = useState<string>('all');
 
+    const { resultReportPermission } = UserPermission();
     const { resultCampaiganList } = CampaignList();
     const { resultFilterData } = FilterByCampaignId(campaign);
     const { resultMessagesByDay } = GetMessagesByDay(campaign);
@@ -116,99 +118,120 @@ const EngagementDashboard = () => {
             </Grid> 
 
             <Grid container spacing={3} mt={2}>
-                <Grid id="chart1" item xs={12} md={4}>
-                    <PercentageOfEngangement filterData={resultFilterData} type="transaction" chartId="Chart 1"/>
-                </Grid>
-                <Grid id="chart2" item xs={12} md={8}>
-                    <DailyEngagement
-                        white={whiteColor}
-                        labelColor={labelColor}
-                        success={lineChartYellow}
-                        borderColor={borderColor}
-                        primary={lineChartPrimary}
-                        warning={lineChartWarning}
-                        gridLineColor={gridLineColor}
-                        filterData={resultFilterData}
-                        params= {params}
-                        type="transaction"
-                        chartId="Chart 2"
-                    />
-                </Grid>
-                <Grid item xs={12} md={12} id="chart3">
-                    <MessagesByDay 
-                        white={whiteColor}
-                        labelColor={labelColor}
-                        success={lineChartYellow}
-                        borderColor={borderColor}
-                        primary={lineChartPrimary}
-                        warning={lineChartWarning}
-                        gridLineColor={gridLineColor}
-                        filterData={resultMessagesByDay}
-                        type="day"
-                        chartTitle="Engagement"
-                        chartId="Chart 3"
-                    />
-                </Grid>
-                <Grid item xs={12} md={12} id="chart4">
-                    <MessagesByDay
-                        white={whiteColor}
-                        labelColor={labelColor}
-                        success={lineChartYellow}
-                        borderColor={borderColor}
-                        primary={lineChartPrimary}
-                        warning={lineChartWarning}
-                        gridLineColor={gridLineColor}
-                        filterData={resultMessagesByTime}
-                        type="time"
-                        chartTitle="Engagement"
-                        chartId="Chart 4"
-                    />
-                </Grid>
-                <Grid item xs={12} md={12} id="chart5">
-                    <MessagesByDay
-                        white={whiteColor}
-                        labelColor={labelColor}
-                        success={lineChartYellow}
-                        borderColor={borderColor}
-                        primary={lineChartPrimary}
-                        warning={lineChartWarning}
-                        gridLineColor={gridLineColor}
-                        filterData={resultMessagesByDevice}
-                        type = "device"
-                        chartTitle="Engagement"
-                        chartId="Chart 5"
-                    />
-                </Grid>
-                <Grid item xs={12} md={12} id="chart6">
-                    <MessagesByDay
-                        white={whiteColor}
-                        labelColor={labelColor}
-                        success={lineChartYellow}
-                        borderColor={borderColor}
-                        primary={lineChartPrimary}
-                        warning={lineChartWarning}
-                        gridLineColor={gridLineColor}
-                        filterData={resultMessagesByAccount}
-                        type = "account"
-                        chartTitle="Engagement"
-                        chartId="Chart 6"
-                    />
-                </Grid>
-                <Grid item xs={12} md={12} id="chart7">
-                    <MessagesByDay
-                        white={whiteColor}
-                        labelColor={labelColor}
-                        success={lineChartYellow}
-                        borderColor={borderColor}
-                        primary={lineChartPrimary}
-                        warning={lineChartWarning}
-                        gridLineColor={gridLineColor}
-                        filterData={resultMessagesByChannel}
-                        type = "channel"
-                        chartTitle="Engagement"
-                        chartId="Chart 7"
-                    />
-                </Grid>
+                {
+                    resultReportPermission?.includes("57") ?
+                    <Grid id="chart1" item xs={12} md={4}>
+                        <PercentageOfEngangement filterData={resultFilterData} type="transaction" chartId="Chart 1"/>
+                    </Grid> : ""
+                }
+                {
+                    resultReportPermission?.includes("58") ?
+                    <Grid id="chart2" item xs={12} md={8}>
+                        <DailyEngagement
+                            white={whiteColor}
+                            labelColor={labelColor}
+                            success={lineChartYellow}
+                            borderColor={borderColor}
+                            primary={lineChartPrimary}
+                            warning={lineChartWarning}
+                            gridLineColor={gridLineColor}
+                            filterData={resultFilterData}
+                            params= {params}
+                            type="transaction"
+                            chartId="Chart 2"
+                        />
+                    </Grid> : ""
+                }
+                {
+                    resultReportPermission?.includes("59") ?
+                    <Grid item xs={12} md={12} id="chart3">
+                        <MessagesByDay 
+                            white={whiteColor}
+                            labelColor={labelColor}
+                            success={lineChartYellow}
+                            borderColor={borderColor}
+                            primary={lineChartPrimary}
+                            warning={lineChartWarning}
+                            gridLineColor={gridLineColor}
+                            filterData={resultMessagesByDay}
+                            type="day"
+                            chartTitle="Engagement"
+                            chartId="Chart 3"
+                        />
+                    </Grid> : ""
+                }
+                {
+                    resultReportPermission?.includes("60") ?
+                    <Grid item xs={12} md={12} id="chart4">
+                        <MessagesByDay
+                            white={whiteColor}
+                            labelColor={labelColor}
+                            success={lineChartYellow}
+                            borderColor={borderColor}
+                            primary={lineChartPrimary}
+                            warning={lineChartWarning}
+                            gridLineColor={gridLineColor}
+                            filterData={resultMessagesByTime}
+                            type="time"
+                            chartTitle="Engagement"
+                            chartId="Chart 4"
+                        />
+                    </Grid> : ""
+                }
+                {
+                    resultReportPermission?.includes("61") ?
+                    <Grid item xs={12} md={12} id="chart5">
+                        <MessagesByDay
+                            white={whiteColor}
+                            labelColor={labelColor}
+                            success={lineChartYellow}
+                            borderColor={borderColor}
+                            primary={lineChartPrimary}
+                            warning={lineChartWarning}
+                            gridLineColor={gridLineColor}
+                            filterData={resultMessagesByDevice}
+                            type = "device"
+                            chartTitle="Engagement"
+                            chartId="Chart 5"
+                        />
+                    </Grid> : ""
+                }
+                {
+                    resultReportPermission?.includes("62") ?
+                    <Grid item xs={12} md={12} id="chart6">
+                        <MessagesByDay
+                            white={whiteColor}
+                            labelColor={labelColor}
+                            success={lineChartYellow}
+                            borderColor={borderColor}
+                            primary={lineChartPrimary}
+                            warning={lineChartWarning}
+                            gridLineColor={gridLineColor}
+                            filterData={resultMessagesByAccount}
+                            type = "account"
+                            chartTitle="Engagement"
+                            chartId="Chart 6"
+                        />
+                    </Grid> : ""
+                }
+                {
+                    resultReportPermission?.includes("63") ?
+                    <Grid item xs={12} md={12} id="chart7">
+                        <MessagesByDay
+                            white={whiteColor}
+                            labelColor={labelColor}
+                            success={lineChartYellow}
+                            borderColor={borderColor}
+                            primary={lineChartPrimary}
+                            warning={lineChartWarning}
+                            gridLineColor={gridLineColor}
+                            filterData={resultMessagesByChannel}
+                            type = "channel"
+                            chartTitle="Engagement"
+                            chartId="Chart 7"
+                        />
+                    </Grid> : ""
+                }
             </Grid>
 
             <Grid container spacing={3} mt={2}>
@@ -229,126 +252,17 @@ const EngagementDashboard = () => {
                     campaign={campaignType}
                     setCampaign={setCampaignType}
                 />
-
                 <Grid container spacing={3} mt={2}>
-                    <Grid id="chart8" item xs={12} md={4}>
-                        <PercentageOfEngangement filterData={resultEngagementType} type="type" chartId="Chart 8"/>
-                    </Grid>
-                    <Grid id="chart9" item xs={12} md={8}>
-                        <DailyEngagement
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultEngagementType}
-                            params= {params}
-                            type="type"
-                            chartId="Chart 9"
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={12} id="chart10">
-                        <MessagesByDay 
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultEngagementTypeByDay}
-                            type="day"
-                            chartTitle="Engagement"
-                            colorType="engagementType"
-                            chartId="Chart 10"
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={12} id="chart11">
-                        <MessagesByDay
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultEngagementTypeByTime}
-                            type="time"
-                            chartTitle="Engagement"
-                            colorType="engagementType"
-                            chartId="Chart 11"
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={12} id="chart12">
-                        <MessagesByDay
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultEngagementTypeByDevice}
-                            type = "device"
-                            chartTitle="Engagement"
-                            colorType="engagementType"
-                            chartId="Chart 12"
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={12} id="chart13">
-                        <MessagesByDay
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultEngagementTypeByAccount}
-                            type = "account"
-                            chartTitle="Engagement"
-                            colorType="engagementType"
-                            chartId="Chart 13"
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={12} id="chart14">
-                        <MessagesByDay
-                            white={whiteColor}
-                            labelColor={labelColor}
-                            success={lineChartYellow}
-                            borderColor={borderColor}
-                            primary={lineChartPrimary}
-                            warning={lineChartWarning}
-                            gridLineColor={gridLineColor}
-                            filterData={resultEngagementTypeByChannel}
-                            type = "channel"
-                            chartTitle="Engagement"
-                            colorType="engagementType"
-                            chartId="Chart 14"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Card>
-                            <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                                <CardHeader 
-                                    title='Period over Period Comparison'
-                                    titleTypographyProps={{ variant: 'h6' }}
-                                />
-                                <StyledTooltip arrow title="Chart 15">
-                                    <Information style={{marginTop: '22px', fontSize: '29px'}} />
-                                </StyledTooltip>
-                            </span>
-                        </Card>
-                    </Grid>
-                    <Grid item xs={12} md={12} id="chart15">
-                        <TotalEngagement
-                            totalEngagement={ resultTotalEngagement}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={6} id="chart16">
-                        <PeriodComparisonChart
+                    {
+                        resultReportPermission?.includes("64") ?
+                        <Grid id="chart8" item xs={12} md={4}>
+                            <PercentageOfEngangement filterData={resultEngagementType} type="type" chartId="Chart 8"/>
+                        </Grid> : ''
+                    }
+                    {
+                        resultReportPermission?.includes("65") ?
+                        <Grid id="chart9" item xs={12} md={8}>
+                            <DailyEngagement
                                 white={whiteColor}
                                 labelColor={labelColor}
                                 success={lineChartYellow}
@@ -356,51 +270,204 @@ const EngagementDashboard = () => {
                                 primary={lineChartPrimary}
                                 warning={lineChartWarning}
                                 gridLineColor={gridLineColor}
-                                filterData={resultPeriodComparisonByChannel}
+                                filterData={resultEngagementType}
+                                params= {params}
+                                type="type"
+                                chartId="Chart 9"
+                            /> 
+                        </Grid> : ""
+                    }
+                    {
+                        resultReportPermission?.includes("66") ?
+                        <Grid item xs={12} md={12} id="chart10">
+                            <MessagesByDay 
+                                white={whiteColor}
+                                labelColor={labelColor}
+                                success={lineChartYellow}
+                                borderColor={borderColor}
+                                primary={lineChartPrimary}
+                                warning={lineChartWarning}
+                                gridLineColor={gridLineColor}
+                                filterData={resultEngagementTypeByDay}
+                                type="day"
+                                chartTitle="Engagement"
+                                colorType="engagementType"
+                                chartId="Chart 10"
+                            />
+                        </Grid> : ""
+                    }
+                    {
+                        resultReportPermission?.includes("67") ?
+                        <Grid item xs={12} md={12} id="chart11">
+                            <MessagesByDay
+                                white={whiteColor}
+                                labelColor={labelColor}
+                                success={lineChartYellow}
+                                borderColor={borderColor}
+                                primary={lineChartPrimary}
+                                warning={lineChartWarning}
+                                gridLineColor={gridLineColor}
+                                filterData={resultEngagementTypeByTime}
+                                type="time"
+                                chartTitle="Engagement"
+                                colorType="engagementType"
+                                chartId="Chart 11"
+                            />
+                        </Grid> : ""
+                    }
+                    {
+                        resultReportPermission?.includes("68") ?
+                        <Grid item xs={12} md={12} id="chart12">
+                            <MessagesByDay
+                                white={whiteColor}
+                                labelColor={labelColor}
+                                success={lineChartYellow}
+                                borderColor={borderColor}
+                                primary={lineChartPrimary}
+                                warning={lineChartWarning}
+                                gridLineColor={gridLineColor}
+                                filterData={resultEngagementTypeByDevice}
+                                type = "device"
+                                chartTitle="Engagement"
+                                colorType="engagementType"
+                                chartId="Chart 12"
+                            />
+                        </Grid> : ""
+                    }
+                    {
+                        resultReportPermission?.includes("69") ?
+                        <Grid item xs={12} md={12} id="chart13">
+                            <MessagesByDay
+                                white={whiteColor}
+                                labelColor={labelColor}
+                                success={lineChartYellow}
+                                borderColor={borderColor}
+                                primary={lineChartPrimary}
+                                warning={lineChartWarning}
+                                gridLineColor={gridLineColor}
+                                filterData={resultEngagementTypeByAccount}
+                                type = "account"
+                                chartTitle="Engagement"
+                                colorType="engagementType"
+                                chartId="Chart 13"
+                            />
+                        </Grid> : ""
+                    }   
+                    
+                    {
+                        resultReportPermission?.includes("70") ?
+                        <Grid item xs={12} md={12} id="chart14">
+                            <MessagesByDay
+                                white={whiteColor}
+                                labelColor={labelColor}
+                                success={lineChartYellow}
+                                borderColor={borderColor}
+                                primary={lineChartPrimary}
+                                warning={lineChartWarning}
+                                gridLineColor={gridLineColor}
+                                filterData={resultEngagementTypeByChannel}
                                 type = "channel"
                                 chartTitle="Engagement"
-                                colorType="engagementDefault"
-                                chartId="Chart 16"
+                                colorType="engagementType"
+                                chartId="Chart 14"
                             />
-                    </Grid>
-                    <Grid item xs={12} md={6} id="chart17">
-                        <PeriodComparisonChart
-                                white={whiteColor}
-                                labelColor={labelColor}
-                                success={lineChartYellow}
-                                borderColor={borderColor}
-                                primary={lineChartPrimary}
-                                warning={lineChartWarning}
-                                gridLineColor={gridLineColor}
-                                filterData={resultPeriodComparisonBySenitment}
-                                type = "sentiment"
-                                chartTitle="Engagement"
-                                colorType="SentimentComparisonEngagment"
-                                chartId="Chart 17"
-                            />
-                    </Grid>
-                    <Grid item xs={12} md={7} id="chart18">
-                        <EngagementTypeComparison
-                                engagementComparison={resultEngagementComparison} chartId="Chart 18"
-                            />
-                    </Grid>
-                    <Grid item xs={12} md={5} id="chart19">
-                            <EngagmentComparisonChart sentimentLevel={resultComparison}/>
-                    </Grid>
-                    <Grid container spacing={3} mt ={2}> 
-                        <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
-                            <span  style={{marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
-                            <Button variant="contained" color={topKeyword === 'top10' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }}
-                            onClick={() => {handleTopKeywords("top10")}}> Top 10</Button>
-                            <Button variant="contained" color={topKeyword === 'top20' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top20")}}> Top 20</Button>
-                            <Button variant="contained" color={topKeyword === 'top50' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top50")}}> Top 50</Button>
-                            <Button variant="contained" color={topKeyword === 'top100' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top100")}}> Top 100</Button>
-                            <Button variant="contained" color={topKeyword === 'all' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("all")}}> ALL </Button>
-                        </Grid>
-                    </Grid>
-                    <Grid item xs={12} id="chart20">
-                            <EngagementSummary resultSummary={resultSummary} chartId="Chart 20"/>
-                    </Grid>
+                        </Grid> : ""
+                    }
+                    
+                    {
+                        resultReportPermission?.includes("71") ?
+                        <>
+                            <Grid item xs={12}>
+                                <Card>
+                                    <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                                        <CardHeader 
+                                            title='Period over Period Comparison'
+                                            titleTypographyProps={{ variant: 'h6' }}
+                                        />
+                                        <StyledTooltip arrow title="Chart 15">
+                                            <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                                        </StyledTooltip>
+                                    </span>
+                                </Card>
+                            </Grid>
+                            <Grid item xs={12} md={12} id="chart15">
+                                <TotalEngagement
+                                    totalEngagement={ resultTotalEngagement}
+                                />
+                            </Grid> 
+                        </> : ""
+                    }
+                    {
+                        resultReportPermission?.includes("72") ?
+                        <Grid item xs={12} md={6} id="chart16">
+                            <PeriodComparisonChart
+                                    white={whiteColor}
+                                    labelColor={labelColor}
+                                    success={lineChartYellow}
+                                    borderColor={borderColor}
+                                    primary={lineChartPrimary}
+                                    warning={lineChartWarning}
+                                    gridLineColor={gridLineColor}
+                                    filterData={resultPeriodComparisonByChannel}
+                                    type = "channel"
+                                    chartTitle="Engagement Comparison"
+                                    colorType="engagementDefault"
+                                    chartId="Chart 16"
+                                />
+                        </Grid> : ""
+                    }
+                    {
+                        resultReportPermission?.includes("73") ?
+                        <Grid item xs={12} md={6} id="chart17">
+                            <PeriodComparisonChart
+                                    white={whiteColor}
+                                    labelColor={labelColor}
+                                    success={lineChartYellow}
+                                    borderColor={borderColor}
+                                    primary={lineChartPrimary}
+                                    warning={lineChartWarning}
+                                    gridLineColor={gridLineColor}
+                                    filterData={resultPeriodComparisonBySenitment}
+                                    type = "sentiment"
+                                    chartTitle="Engagement Comparison"
+                                    colorType="SentimentComparisonEngagment"
+                                    chartId="Chart 17"
+                                />
+                        </Grid> : ""
+                    }
+                    {
+                        resultReportPermission?.includes("74") ?
+                        <>
+                            <Grid item xs={12} md={7} id="chart18">
+                                <EngagementTypeComparison
+                                        engagementComparison={resultEngagementComparison} chartId="Chart 18"
+                                    />
+                            </Grid> 
+                            <Grid item xs={12} md={5} id="chart19">
+                                    <EngagmentComparisonChart sentimentLevel={resultComparison}/>
+                            </Grid>
+                        </>
+                        : ""
+                    }
+                    {
+                        resultReportPermission?.includes("75") ?
+                        <>
+                            <Grid container spacing={3} mt ={2}> 
+                                <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
+                                    <span  style={{marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
+                                    <Button variant="contained" color={topKeyword === 'top10' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }}
+                                    onClick={() => {handleTopKeywords("top10")}}> Top 10</Button>
+                                    <Button variant="contained" color={topKeyword === 'top20' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top20")}}> Top 20</Button>
+                                    <Button variant="contained" color={topKeyword === 'top50' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top50")}}> Top 50</Button>
+                                    <Button variant="contained" color={topKeyword === 'top100' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top100")}}> Top 100</Button>
+                                    <Button variant="contained" color={topKeyword === 'all' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("all")}}> ALL </Button>
+                                </Grid>
+                            </Grid>
+                            <Grid item xs={12} id="chart20">
+                                    <EngagementSummary resultSummary={resultSummary} chartId="Chart 20"/>
+                            </Grid>
+                        </> : ""
+                    }
                     
                 </Grid>
                 <QuickView/>

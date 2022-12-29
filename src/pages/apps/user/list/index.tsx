@@ -56,6 +56,7 @@ import { Organization } from 'src/services/api/organization/organization'
 import axios from 'axios'
 import authConfig from '../../../../configs/auth'
 import { API_PATH } from 'src/utils/const'
+import { UserPermission } from 'src/services/api/users/role'
 
 interface UserRoleType {
   [key: string]: ReactElement
@@ -122,6 +123,7 @@ const RowOptions = ({ id, current }: { id: any; current: any }) => {
   const [show, setShow] = useState<boolean>(false)
 
   const rowOptionsOpen = Boolean(anchorEl)
+  const { resultPermission } = UserPermission();
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -150,36 +152,52 @@ const RowOptions = ({ id, current }: { id: any; current: any }) => {
 
   return (
     <>
-      <IconButton size='small' onClick={handleRowOptionsClick}>
+    {
+      !resultPermission?.user?.authorized_edit && !resultPermission?.user?.authorized_delete ?
+        <></>
+      :
+      <>
+        <IconButton size='small' onClick={handleRowOptionsClick}>
         <DotsVertical />
-      </IconButton>
-      <Menu
-        keepMounted
-        anchorEl={anchorEl}
-        open={rowOptionsOpen}
-        onClose={handleRowOptionsClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right'
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right'
-        }}
-        PaperProps={{ style: { minWidth: '8rem' } }}
-      >
-        <MenuItem onClick={handleRowOptionsClose}>
-          <PencilOutline fontSize='small' sx={{ mr: 2 }} />
-          Edit
-        </MenuItem>
-        <MenuItem onClick={handleDelete}>
-          <DeleteOutline fontSize='small' sx={{ mr: 2 }} />
-          Delete
-        </MenuItem>
-      </Menu>
+        </IconButton>
+        <Menu
+          keepMounted
+          anchorEl={anchorEl}
+          open={rowOptionsOpen}
+          onClose={handleRowOptionsClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right'
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+          PaperProps={{ style: { minWidth: '8rem' } }}
+        >
+          {
+            resultPermission?.user?.authorized_edit ? 
+            <MenuItem onClick={handleRowOptionsClose}>
+              <PencilOutline fontSize='small' sx={{ mr: 2 }} />
+              Edit
+            </MenuItem>
+            :  <></>
+          }
 
-      {/* <DialogEditUserInfo show = {show} setShow ={setShow} action="edit"/> */}
-      <DialogEditUserInfo show={show} setShow={setShow} action='edit' current={current}></DialogEditUserInfo>
+          {
+            resultPermission?.user?.authorized_delete ? 
+            <MenuItem onClick={handleDelete}>
+              <DeleteOutline fontSize='small' sx={{ mr: 2 }} />
+              Delete
+            </MenuItem>
+            :<></>
+          }
+        </Menu>
+
+        <DialogEditUserInfo show={show} setShow={setShow} action='edit' current={current}></DialogEditUserInfo>
+      </>
+    }
+      
     </>
   )
 }
@@ -304,6 +322,9 @@ const UserList = () => {
   const [reload, setReload] = useState<boolean>(false)
   const [users, setUsers] = useState<any[]>([])
   const current = {}
+
+  //user permission 
+  const { resultPermission } = UserPermission();
 
   // ** Hooks
   const { list } = Organization.getList(reload)
@@ -449,7 +470,11 @@ const UserList = () => {
         </Grid>
         <Grid item xs={12}>
           <Card>
-            <TableHeader value={value} handleFilter={handleFilter} toggle={toggleAddUserDrawer} />
+            {
+              resultPermission?.user?.authorized_create ? 
+                <TableHeader value={value} handleFilter={handleFilter} toggle={toggleAddUserDrawer} />
+                : <></>
+            }
             <DataGrid
               autoHeight
               rows={users}

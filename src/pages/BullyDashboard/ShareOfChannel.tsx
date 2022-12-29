@@ -22,6 +22,16 @@ const ChartLabels = (data: any) => {
   
   return labels;
 }
+const ChartData = (data: any ) => {
+  if (!data) return [];
+
+  const chartDatas : any[] = [];
+  for (let i = 0; i<data?.length ; i ++) {
+    chartDatas.push(data[i]?.number_of_massage)
+  }
+  
+  return chartDatas;
+}
 
 const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  chartId} : {resultShareOfChannel: any,resultShareofChannelPlatform : any, chartId : string}) => {
 
@@ -31,7 +41,7 @@ const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  c
   datasets: [{
       axis: 'y',
       label: '',
-      data: [65, 59, 80, 81, 56, 55, 40],
+      data: ChartData(resultShareOfChannel),
       fill: false,
       backgroundColor: ['rgb(54, 162, 235)'],
       borderColor: [
@@ -39,7 +49,7 @@ const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  c
       ],
       borderWidth: 1
   }]
-  };  
+};
 
 
   return (

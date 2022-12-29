@@ -18,7 +18,7 @@ const SentimentComparison  = ({sentimentComparison, chartId} : {sentimentCompari
       
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title='Engagement Type Comparison'
+            title='Sentiment Comparison'
             titleTypographyProps={{ variant: 'h6' }}
             subheader="Period over Period"
           />

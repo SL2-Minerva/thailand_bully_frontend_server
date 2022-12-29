@@ -41,7 +41,7 @@ import CommentSentiment from "./CommentSentiment"
 import ShareOfVoice from "./ShareOfVoice"
 import SentimentLevelChart from "./SentimentLevelChart"
 import { CampaignList } from "src/services/api/campaign/CampaignAPI"
-import { FilterByCampaignId, GetSentimentLevel, GetSentimentScore, GetShareOfVoice, GetTopKeywords, GetWordClouds, TotalKeyStats } from "src/services/api/dashboards/overall/overallDashboardApi"
+import { FilterByCampaignId, GetSentimentLevel, GetSentimentScore, GetShareOfVoice, GetShareOfVoiceChart, GetTopKeywords, GetWordClouds, GetWordCloudsPlatform, GetWordCloudsSentiment, TotalKeyStats } from "src/services/api/dashboards/overall/overallDashboardApi"
 import SourceService from "src/services/api/source/SourceApi"
 import { GetSentimentType } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
@@ -50,6 +50,7 @@ import TotalMessageLists from "./TotalMessageLists"
 import WordCloudChannel from "./WordCloudChannel"
 import AccountList from "./AccountList"
 import WordCloudSentiment from "./WordCloudSentiment"
+import { UserPermission } from "src/services/api/users/role"
 
 // import QuickView from "./QuickView"
 
@@ -105,6 +106,7 @@ const OverallDashboard = () => {
     const borderColor = theme.palette.action.focus
     const gridLineColor = theme.palette.action.focus
 
+    const { resultReportPermission } = UserPermission();
     const { resultCampaiganList } = CampaignList();
     const { resultFilterData } = FilterByCampaignId(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
     const { result_source_list  } = SourceService();
@@ -116,6 +118,10 @@ const OverallDashboard = () => {
     const { resultKeywords } = GetKeyWords(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
     const {resultSentimentScore} = GetSentimentScore(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
     const { resultWordClouds } = GetWordClouds(campaign, reload, platformId, date, endDate, period, topKeyword, previousDate, previousEndDate);
+    const { resultWordCloudsSentiment } = GetWordCloudsSentiment(campaign, reload, platformId, date, endDate, period, topKeyword, previousDate, previousEndDate);
+    const { resultWordCloudsPlatform } = GetWordCloudsPlatform(campaign, reload, platformId, date, endDate, period, topKeyword, previousDate, previousEndDate);
+    
+    const { resultShareOfVoiceChart } = GetShareOfVoiceChart(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
 
     const params = {
         campaign: campaign,
@@ -355,150 +361,211 @@ const OverallDashboard = () => {
         </Grid>
         
         <Grid container spacing={3} mt={2}>
-            <Grid id="chart1" item xs={12} md={4}>
-                <DonutChart filterData = {resultFilterData} />
-            </Grid>
-            <Grid id="chart2" item xs={12} md={8}>
-                <StackedChart
-                    white={whiteColor}
-                    labelColor={labelColor}
-                    success={lineChartYellow}
-                    borderColor={borderColor}
-                    primary={lineChartPrimary}
-                    warning={lineChartWarning}
-                    gridLineColor={gridLineColor}
-                    filterData={resultFilterData}
-                    params= {params}
-                />
-            </Grid>
+            {
+                resultReportPermission?.includes("1") ?
+                <Grid id="chart1" item xs={12} md={4}>
+                    <DonutChart filterData = {resultFilterData} />
+                </Grid> : ""
+            }
+            {
+                resultReportPermission?.includes("2") ?
+                <Grid id="chart2" item xs={12} md={8}>
+                    <StackedChart
+                        white={whiteColor}
+                        labelColor={labelColor}
+                        success={lineChartYellow}
+                        borderColor={borderColor}
+                        primary={lineChartPrimary}
+                        warning={lineChartWarning}
+                        gridLineColor={gridLineColor}
+                        filterData={resultFilterData}
+                        params= {params}
+                    />
+                </Grid> : ''
+            }
         </Grid>
         
         <Grid container spacing={3} mt={2}>
-            <Grid id="chart3" item xs={12} md={4}>
-                <KeyStatusReport
-                    stats= {resultTotalMessagePerDay?.comparison || '0'}
-                    type={resultTotalMessagePerDay?.type}
-                    color='primary'
-                    trendNumber={resultTotalMessagePerDay?.percentage || '0%'}
-                    icon={<MessageText />}
-                    title='Period over Period Comparison'
-                    chipText='Last 1 Month'
-                    totalText = 'Total Message'
-                    totalValue = {resultTotalMessagePerDay?.total_message?.toString() || '0'}
-                    averageText="Average Message per Day"
-                    averageValue= {resultTotalMessagePerDay?.average_message?.toString() || '0'}
-                    chartId = "Chart 3"
-                />
-            </Grid>
-            <Grid id="chart4" item xs={12} md={4}>
-                <KeyStatusReport
-                    stats={resultTotalEngagement?.comparison || '0'}
-                    type={resultTotalEngagement?.type}
-                    color='primary'
-                    trendNumber={resultTotalEngagement?.percentage || '0'}
-                    icon={<ThumbUp />}
-                    title='Period over Period Comparison'
-                    chipText='Last 1 Month'
-                    totalText = 'Total Engagement'
-                    totalValue = {resultTotalEngagement?.total_engagement?.toString() || '0'}
-                    averageText="Avg. Engagement per Day"
-                    averageValue={resultTotalEngagement?.average_engagement?.toString() || '0'}
-                    chartId = "Chart 4"
-                />
-            </Grid>
-            
-            <Grid id="chart5" item xs={12} md={4}>
-                <KeyStatusReport
-                    stats={resultTotalAccount?.comparison || '0'}
-                    type={resultTotalAccount?.type}
-                    color='primary'
-                    trendNumber={resultTotalAccount?.percentage || '0'}
-                    icon={<Person />}
-                    title='Period over Period Comparison'
-                    chipText='Last 1 Month'
-                    totalText = 'Total Account'
-                    totalValue = {resultTotalAccount?.total_account?.toString() || '0'}
-                    averageText="Average Account per Day"
-                    averageValue={resultTotalAccount?.average_account?.toString() || '0'}
-                    chartId = "Chart 5"
-                />
-            </Grid>
+            {
+                resultReportPermission?.includes("3") ? 
+                <Grid id="chart3" item xs={12} md={4}>
+                    <KeyStatusReport
+                        stats= {resultTotalMessagePerDay?.comparison || '0'}
+                        type={resultTotalMessagePerDay?.type}
+                        color='primary'
+                        trendNumber={resultTotalMessagePerDay?.percentage || '0%'}
+                        icon={<MessageText />}
+                        title='Period over Period Comparison'
+                        chipText='Last 1 Month'
+                        totalText = 'Total Message'
+                        totalValue = {resultTotalMessagePerDay?.total_message?.toString() || '0'}
+                        averageText="Average Message per Day"
+                        averageValue= {resultTotalMessagePerDay?.average_message?.toString() || '0'}
+                        chartId = "Chart 3"
+                    />
+                </Grid> :
+                ""
+            }
+
+            {
+                resultReportPermission?.includes("4") ? 
+                <Grid id="chart4" item xs={12} md={4}>
+                    <KeyStatusReport
+                        stats={resultTotalEngagement?.comparison || '0'}
+                        type={resultTotalEngagement?.type}
+                        color='primary'
+                        trendNumber={resultTotalEngagement?.percentage || '0'}
+                        icon={<ThumbUp />}
+                        title='Period over Period Comparison'
+                        chipText='Last 1 Month'
+                        totalText = 'Total Engagement'
+                        totalValue = {resultTotalEngagement?.total_engagement?.toString() || '0'}
+                        averageText="Avg. Engagement per Day"
+                        averageValue={resultTotalEngagement?.average_engagement?.toString() || '0'}
+                        chartId = "Chart 4"
+                    />
+                </Grid> : ""
+            }
+
+            {
+                resultReportPermission?.includes("5") ? 
+                <Grid id="chart5" item xs={12} md={4}>
+                    <KeyStatusReport
+                        stats={resultTotalAccount?.comparison || '0'}
+                        type={resultTotalAccount?.type}
+                        color='primary'
+                        trendNumber={resultTotalAccount?.percentage || '0'}
+                        icon={<Person />}
+                        title='Period over Period Comparison'
+                        chipText='Last 1 Month'
+                        totalText = 'Total Account'
+                        totalValue = {resultTotalAccount?.total_account?.toString() || '0'}
+                        averageText="Average Account per Day"
+                        averageValue={resultTotalAccount?.average_account?.toString() || '0'}
+                        chartId = "Chart 5"
+                    />
+                </Grid> : ""
+            }
         </Grid>
         
         <Grid container spacing={3} mt={2}>
-            <Grid id="chart6" item xs={12}>
-                <KeywordTable resultKeywords={resultKeywords} chartId="Chart 6"/>
-            </Grid>
+            {
+                resultReportPermission?.includes("6") ? 
+                <Grid id="chart6" item xs={12}>
+                    <KeywordTable resultKeywords={resultKeywords} chartId="Chart 6"/>
+                </Grid> : ""
+            }
         </Grid>
 
         <Grid container spacing={3} mt={2}>
-            <Grid id="chart7" item xs={12} md={4}>
-                <MainKeyWordTable mainKeyword={resultTopKeywords?.main_keyword} params={params} chartId="Chart 7"/>
-            </Grid>
-            <Grid id="chart8" item xs={12} md={4}>
-                <TopSiteList topsites={resultTopKeywords?.top_sites} params={params} chartId="Chart 8"/>
-            </Grid>
-            <Grid id="chart9" item xs={12} md={4}>
-                <TopHashtagList topHashtags={resultTopKeywords?.top_hastag} params={params} chartId="Chart 9"/>
-            </Grid>
+            {
+                resultReportPermission?.includes("7") ? 
+                <Grid id="chart7" item xs={12} md={4}>
+                    <MainKeyWordTable mainKeyword={resultTopKeywords?.main_keyword} params={params} chartId="Chart 7"/>
+                </Grid> : ""
+            }
+
+            {
+                resultReportPermission?.includes("8") ? 
+                <Grid id="chart8" item xs={12} md={4}>
+                    <TopSiteList topsites={resultTopKeywords?.top_sites} params={params} chartId="Chart 8"/>
+                </Grid> : ""
+            }
+
+            {
+                resultReportPermission?.includes("9") ? 
+                <Grid id="chart9" item xs={12} md={4}>
+                    <TopHashtagList topHashtags={resultTopKeywords?.top_hastag} params={params} chartId="Chart 9"/>
+                </Grid> : ""
+            }
+
         </Grid>
 
         <Grid container spacing={3} mt={2}>
-            <Grid id="chart10" item xs={12} md ={6}>
-                <SentimentGaugeChart resultSentimentScore={resultSentimentScore} chartId="Chart 10" />
-            </Grid>
-            <Grid id="chart11" item xs={12} md={6}>
-                <CommentSentiment resultSentimentType={resultSentimentType} chartId="Chart 11" />
-            </Grid>
+            {
+                resultReportPermission?.includes("10") ? 
+                <Grid id="chart10" item xs={12} md ={6}>
+                    <SentimentGaugeChart resultSentimentScore={resultSentimentScore} chartId="Chart 10" />
+                </Grid> : 
+                ""
+            }
+            {
+                resultReportPermission?.includes("11") ? 
+                <Grid id="chart11" item xs={12} md={6}>
+                    <CommentSentiment resultSentimentType={resultSentimentType} chartId="Chart 11" />
+                </Grid> : ""
+            }
         </Grid>
 
         <Grid container spacing={3} mt={2}>
-            <Grid id="chart12" item xs={12} md={8}>
-                <ShareOfVoice resultShareOfVoice={resultShareOfVoice} chartId="Chart 12"/>
-            </Grid>
-            <Grid id="chart13" item xs={12} md={4}>
-                <SentimentLevelChart sentimentLevel={resultSentimentLevel} chartId="Chart 13"/>
-            </Grid>
+            {
+                resultReportPermission?.includes("12") ? 
+                <>
+                    <Grid id="chart12" item xs={12} md={8}>
+                        <ShareOfVoice resultShareOfVoice={resultShareOfVoice} resultShareofVoiceChart={resultShareOfVoiceChart} chartId="Chart 12"/>
+                    </Grid>
+                    <Grid id="chart13" item xs={12} md={4}>
+                        <SentimentLevelChart sentimentLevel={resultSentimentLevel} chartId="Chart 13"/>
+                    </Grid>
+                </> : ""
+            }
         </Grid>
 
-        <Grid container spacing={3} mt ={2}> 
-            <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
-                <span  style={{marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
-                <Button variant="contained" color={topKeyword === 'top10' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }}
-                 onClick={() => {handleTopKeywords("top10")}}> Top 10</Button>
-                <Button variant="contained" color={topKeyword === 'top20' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top20")}}> Top 20</Button>
-                <Button variant="contained" color={topKeyword === 'top50' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top50")}}> Top 50</Button>
-                <Button variant="contained" color={topKeyword === 'top100' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top100")}}> Top 100</Button>
-                <Button variant="contained" color={topKeyword === 'all' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("all")}}> ALL </Button>
-            </Grid>
-        </Grid>
+        {
+            resultReportPermission?.includes("13") || resultReportPermission?.includes("15") || resultReportPermission?.includes("18") ?
+            <Grid container spacing={3} mt ={2}> 
+                <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
+                    <span  style={{marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
+                    <Button variant="contained" color={topKeyword === 'top10' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }}
+                    onClick={() => {handleTopKeywords("top10")}}> Top 10</Button>
+                    <Button variant="contained" color={topKeyword === 'top20' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top20")}}> Top 20</Button>
+                    <Button variant="contained" color={topKeyword === 'top50' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top50")}}> Top 50</Button>
+                    <Button variant="contained" color={topKeyword === 'top100' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("top100")}}> Top 100</Button>
+                    <Button variant="contained" color={topKeyword === 'all' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("all")}}> ALL </Button>
+                </Grid>
+            </Grid> : ""
+        }
 
-        <Grid container spacing={3} mt ={2}>
-            <Grid id="chart14" item xs={12} md={6}>
-                <WordCloud resultWordClouds={resultWordClouds} chartId="Chart 14"/>
-            </Grid>
-            <Grid id="chart15" item xs={12} md={6}>
-                <TotalMessageLists resultKeywords={resultKeywords} chartId="Chart 15"/>
-            </Grid>
-        </Grid>
+        {
+            resultReportPermission?.includes("13") ?
+            <>
+                <Grid container spacing={3} mt ={2}>
+                    <Grid id="chart14" item xs={12} md={6}>
+                        <WordCloud resultWordClouds={resultWordClouds} chartId="Chart 14"/>
+                    </Grid>
+                    <Grid id="chart15" item xs={12} md={6}>
+                        <TotalMessageLists resultKeywords={resultKeywords} chartId="Chart 15"/>
+                    </Grid>
+                </Grid>
+            </> : ""
+        }
 
-        <Grid container spacing={3} mt ={2}> 
-            <Grid id="chart16" item xs={12} md={6}>
-                <WordCloudChannel resultWordClouds={resultWordClouds} chartId="Chart 16"/>
-            </Grid>
-            <Grid id="chart17" item xs={12} md={6}>
-                <AccountList resultKeywords={resultKeywords} chartId="Chart 17"/>
-            </Grid>
-        </Grid>
+        {
+            resultReportPermission?.includes("15") ?
+            <Grid container spacing={3} mt ={2}> 
+                <Grid id="chart16" item xs={12} md={6}>
+                    <WordCloudChannel resultWordClouds={resultWordCloudsPlatform} chartId="Chart 16"/>
+                </Grid>
+                <Grid id="chart17" item xs={12} md={6}>
+                    <AccountList resultKeywords={resultKeywords} chartId="Chart 17"/>
+                </Grid>
+            </Grid> : ""
+        }
+        {
+            resultReportPermission?.includes("18") ?
+            <Grid container spacing={3} mt ={2}>
+                <Grid id="chart18" item xs={12} md={6}>
+                    <WordCloudSentiment resultWordClouds={resultWordCloudsSentiment} chartId="Chart 18"/>
+                </Grid>
+                <Grid id="chart19" item xs={12} md={6}>
+                    <AccountList resultKeywords={resultKeywords} chartId="Chart 19"/>
+                </Grid>
+            </Grid> : ""
+        }   
+
         
-        <Grid container spacing={3} mt ={2}>
-            <Grid id="chart18" item xs={12} md={6}>
-                <WordCloudSentiment resultWordClouds={resultWordClouds} chartId="Chart 18"/>
-            </Grid>
-            <Grid id="chart19" item xs={12} md={6}>
-                <AccountList resultKeywords={resultKeywords} chartId="Chart 19"/>
-            </Grid>
-        </Grid>
+        
+        
 
         {/* <QuickView /> */}
     </>

@@ -48,8 +48,8 @@ const SentimentGaugeChart = ({resultSentimentScore, chartId} : {resultSentimentS
 
                 <Grid container spacing={1}>
                     <Grid item xs={12} sx={{ display:'flex', justifyContent: 'center' }}>
-                        <h2 style={{ marginTop: '1.8rem', marginRight: '1rem' }}>Previous Period Score</h2>
-                        <h1>{resultSentimentScore?.pervious_sentiment}</h1>
+                        <h2 style={{ marginTop: '0.5rem', marginRight: '1rem' }}>Previous Period Score {  resultSentimentScore?.pervious_sentiment}</h2>
+                        <h1></h1>
                     </Grid>
                 </Grid>
                 

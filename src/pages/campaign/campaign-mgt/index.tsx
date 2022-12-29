@@ -28,6 +28,7 @@ import { Organization } from 'src/services/api/organization/organization'
 import DomainList from 'src/services/api/domains/DomainAPI'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
+import { UserPermission } from 'src/services/api/users/role'
 
 const CampaignManagement = () => {
   
@@ -62,8 +63,7 @@ const CampaignManagement = () => {
 
   const { list } = Organization.getList(reload)
 
-
-
+  const { resultPermission } = UserPermission();
 
   const handleOrganization = useCallback((e: SelectChangeEvent) => {
     setOrganization(e.target.value)
@@ -219,15 +219,21 @@ const CampaignManagement = () => {
         <Card>
           <CardContent>
             <TableContainer component={Paper}>
-              <Box
-                sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
-              >
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-                  <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                    Add
-                  </Button>
+              {
+                resultPermission?.campaign?.authorized_create ?
+                <Box
+                  sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
+                >
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                    <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
+                      Add
+                    </Button>
+                  </Box>
                 </Box>
-              </Box>
+                :
+                <></>
+              }
+              
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
@@ -236,7 +242,11 @@ const CampaignManagement = () => {
                     <TableCell align='center'>Domain</TableCell>
                     <TableCell align='center'>Organization</TableCell>
                     <TableCell align='center'>Status</TableCell>
-                    <TableCell align='center'>Action</TableCell>
+                    {
+                      resultPermission?.campaign?.authorized_edit ?
+                      <TableCell align='center'>Action</TableCell>
+                      : <></>
+                    }
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -268,17 +278,27 @@ const CampaignManagement = () => {
                         ))}
                       </TableCell>
                       <TableCell align='center'>{campaignList.organization}</TableCell>
-                      <TableCell align='center'>
-                      <Switch key={index} checked={campaignList.status} onChange={e => handleChange(index, campaignList.id, e)} />
-                      </TableCell>
-                      <TableCell align='center'>
-                      <PencilOutline
-                                onClick={() => {
-                                  handleEdit(index)
-                                }}
-                              />
-                      </TableCell>
+                      {
+                        resultPermission?.campaign?.authorized_edit ?
+                        <>
+                            <TableCell align='center'>
+                              <Switch key={index} checked={campaignList.status} onChange={e => handleChange(index, campaignList.id, e)} />
+                            </TableCell>
+                            <TableCell align='center'>
+                            <PencilOutline
+                                      onClick={() => {
+                                        handleEdit(index)
+                                      }}
+                                    />
+                            </TableCell>
+                        </>
+                        : 
+                        <TableCell align='center'>
+                            <Switch key={index} checked={campaignList.status}/>
+                        </TableCell>
+                      }
                     </TableRow>
+                      
                   ))}
                 </TableBody>
               </Table>
