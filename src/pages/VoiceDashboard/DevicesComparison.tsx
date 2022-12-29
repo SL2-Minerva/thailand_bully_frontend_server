@@ -21,7 +21,7 @@ const DevicesComparison  = ({resultDevicesComparison, chartId} : {resultDevicesC
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
   const initValue = {
-    labels: [],
+    label: [],
     data: [],
     total: 0
   }
@@ -61,7 +61,7 @@ const DevicesComparison  = ({resultDevicesComparison, chartId} : {resultDevicesC
   }
 
   const currentPeriodData = {
-    labels: currentData?.labels || [],
+    labels: currentData?.label || [],
     datasets: [{
         data: currentData?.data || [],
       backgroundColor: [
@@ -109,7 +109,7 @@ const DevicesComparison  = ({resultDevicesComparison, chartId} : {resultDevicesC
   }
 
   const previousPeriodData = {
-    labels: previousData?.labels || [],
+    labels: previousData?.label || [],
     datasets: [{
         data: previousData?.data || [],
       backgroundColor: [

@@ -10,7 +10,58 @@ import { VerticalNavItemsType } from 'src/@core/layouts/types'
 import { UserPermission } from 'src/services/api/users/role'
 
 const navigation = (): VerticalNavItemsType => {
-  const { resultPermission } = UserPermission();
+  const { resultPermission, showOverallDashboard, showVoiceDashboard, showChannelDashboard, showBullyDashboard, showEngagementDashboard, showSentimentDashboard } = UserPermission();
+
+  const overallDashboard = {
+    "title": "Overall Dashboard",
+    "path": "/dashboard/overall"
+  };
+
+  const voiceDashboard = {
+    "title": "Voice Dashboard",
+    "path": "/VoiceDashboard"
+  };
+
+  const channelDashboard = {
+    "title": "Channel Dashboard",
+    "path": "/ChannelDashboard"
+  };
+  
+  const engagementDashboard = {
+    "title": "Engagement Dashboard",
+    "path": "/EngagementDashboard"
+  };
+  
+  const sentimentDashboard = {
+    "title": "Sentiment Dashboard",
+    "path": "/SentimentDashboard"
+  };
+
+  const bullyDashboard = {
+    "title": "Bully Dashboard",
+    "path": "/BullyDashboard"
+  };
+
+  const reportDashboardList : any[] = [];
+
+  if(showOverallDashboard) {
+    reportDashboardList.push(overallDashboard)
+  } 
+  if(showVoiceDashboard) {
+    reportDashboardList.push(voiceDashboard);
+  } 
+  if(showChannelDashboard) {
+    reportDashboardList.push(channelDashboard);
+  }
+  if(showEngagementDashboard) {
+    reportDashboardList.push(engagementDashboard);
+  }
+  if(showSentimentDashboard) {
+    reportDashboardList.push(sentimentDashboard);
+  }
+  if(showBullyDashboard) {
+    reportDashboardList.push(bullyDashboard);
+  }
 
   const UserPermissionData = resultPermission?.user?.authorized_view ? {
     title: 'User Permission',
@@ -68,46 +119,7 @@ const navigation = (): VerticalNavItemsType => {
   const ReportPermission = resultPermission?.report?.authorized_view ? {
     title: 'Reports',
     icon: Finance,
-    children: [
-      {
-        title: 'Overall Dashboard',
-        path: '/dashboard/overall'
-      },
-      {
-        title: 'Voice Dashboard',
-        path: '/VoiceDashboard'
-      }, 
-      {
-        title: 'Channel Dashboard', 
-        path: '/ChannelDashboard'
-      },
-      {
-        title: 'Engagement Dashboard', 
-        path: '/EngagementDashboard'
-      },
-      {
-        title: 'Sentiment Dashboard', 
-        path: '/SentimentDashboard'
-      },
-      {
-        title: 'Bully Dashboard', 
-        path: '/BullyDashboard'
-      }
-      
-      // ,
-      // {
-      //   title: 'Network Graph',
-      //   path: '/content/content-mgt/NetworkGraph'
-      // },
-      // {
-      //   title: 'Report',
-      //   path: '/report/report'
-      // },
-      // {
-      //   title: 'System Log Report',
-      //   path: '/report/system-log'
-      // }
-    ]
+    children: reportDashboardList
   }: null;
 
   const ContentPermission = {

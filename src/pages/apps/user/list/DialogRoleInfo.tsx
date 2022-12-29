@@ -27,7 +27,9 @@ import Autocomplete from '@mui/material/Autocomplete'
 import Close from 'mdi-material-ui/Close'
 import axios from 'axios'
 import authConfig from '../../../../configs/auth'
-import { ReportOptions } from 'src/utils/const'
+import { ReportListPermission } from 'src/services/api/users/role'
+
+// import { ReportOptions } from 'src/utils/const'
 
 interface DialogRoleInfoProps {
   show: boolean
@@ -52,7 +54,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
   const [roleName, setRoleName] = useState(current?.user_role_name ?? '')
   const [roleDescription, setDescription] = useState(current?.user_role_description ?? '')
 
-  
+  const {resultReportChartList} = ReportListPermission();
 
 
   const [permission, setPermission] = useState<any>({
@@ -326,10 +328,10 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
               <Autocomplete
                 multiple
                 id='autocomplete-grouped'
-                groupBy={ReportOptions => ReportOptions.groupName}
-                getOptionLabel={ReportOptions => ReportOptions.title}
+                groupBy={resultReportChartList => resultReportChartList?.groupName}
+                getOptionLabel={resultReportChartList => resultReportChartList?.title}
                 renderInput={params => <TextField {...params} label='Reports' />}
-                options={ReportOptions}
+                options={resultReportChartList}
               />
             </Grid>
           </Grid>

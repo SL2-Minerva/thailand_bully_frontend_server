@@ -133,15 +133,16 @@ const MessagesByDay = (props: LineProps) => {
     let keywordName = "";
     const returnData : StackChartDataset[] = [];
     const color = colorType === "engagementType" ? EngagementTypeColors : colorType === "bullyDashboard" ? BullyDashboardColors : GraphicColors
-    for(let i = 0 ; i<data?.value?.length; i++) {
+    const total = data?.value || data?.data || [];
+
+    for(let i = 0 ; i<total?.length; i++) {
       totalAmount = []
-      const total = data?.value;
-    
+
       for(let j=0; j<total[i]?.data?.length ; j++ ) {
         totalAmount.push(total[i]?.data[j]);
       } 
       
-      keywordName = data?.value[i]?.keyword_name;
+      keywordName = total[i]?.keyword_name;
       const chartDataset : StackChartDataset  = {
         fill: false,
         tension: 0.5,

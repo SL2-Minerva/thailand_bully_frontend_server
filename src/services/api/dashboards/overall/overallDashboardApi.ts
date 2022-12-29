@@ -321,6 +321,88 @@ export const GetWordClouds = (campaignId?: string, reload?: boolean, platformId?
   }
 }
 
+export const GetWordCloudsPlatform = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any,
+  end_date?: any, period?: any, select?: string, previousDate?: any, previousEndDate?: any ) => {
+   let params = {};
+   const todayDate = new Date();
+   if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate ) {
+     params = {
+       campaign_id: campaignId || "",
+       source: platformId || "",
+       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+       period: period,
+       select: select || "top10",
+       start_date_period : previousDate ? moment(previousDate).format('YYYY-MM-DD') : "",
+       end_date_period : previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : "",
+     }
+   } else  {
+     params = {
+       campaign_id: campaignId || "",
+       source: platformId || "",
+       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+       period: period,
+       select: select || "top10"
+     }
+   }
+ const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+   url: `/dashboard-overall/word-clouds-platform`,
+   method: 'GET',
+   params : params,
+   data: {
+     reload: reload
+   }
+ })
+
+ return {
+   resultWordCloudsPlatform: response?.data || null,
+   loadingWordCloudsPlatform: loading,
+   errorWordCloudsPlatform: error
+ }
+}
+
+export const GetWordCloudsSentiment = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any,
+  end_date?: any, period?: any, select?: string, previousDate?: any, previousEndDate?: any ) => {
+   let params = {};
+   const todayDate = new Date();
+   if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate ) {
+     params = {
+       campaign_id: campaignId || "",
+       source: platformId || "",
+       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+       period: period,
+       select: select || "top10",
+       start_date_period : previousDate ? moment(previousDate).format('YYYY-MM-DD') : "",
+       end_date_period : previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : "",
+     }
+   } else  {
+     params = {
+       campaign_id: campaignId || "",
+       source: platformId || "",
+       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+       period: period,
+       select: select || "top10"
+     }
+   }
+ const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+   url: `/dashboard-overall/word-clouds-position`,
+   method: 'GET',
+   params : params,
+   data: {
+     reload: reload
+   }
+ })
+
+ return {
+   resultWordCloudsSentiment: response?.data || null,
+   loadingWordCloudsSentiment: loading,
+   errorWordCloudsSentiment: error
+ }
+}
+
 export const GetDetailMessage = (campaignId?: string, platformId?: string, start_date?: any,
   end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, keywordId?: any ) => {
    let params = {};

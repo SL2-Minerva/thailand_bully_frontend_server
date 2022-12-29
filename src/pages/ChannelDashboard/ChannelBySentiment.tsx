@@ -22,15 +22,26 @@ const ChartLabels = (data: any) => {
   return labels;
 }
 
-const ChannelBySentiment  = ({resultShareOfVoice, chartId} : {resultShareOfVoice: any, chartId: string}) => {
+const ChartData = (data: any ) => {
+  if (!data) return [];
 
-  const labels = resultShareOfVoice ? ChartLabels(resultShareOfVoice) : [];
+  const chartDatas : any[] = [];
+  for (let i = 0; i<data?.length ; i ++) {
+    chartDatas.push(data[i]?.total_value)
+  }
+  
+  return chartDatas;
+}
+
+const ChannelBySentiment  = ({channelBySentiment, chartId} : {channelBySentiment: any, chartId: string}) => {
+
+  const labels = channelBySentiment ? ChartLabels(channelBySentiment) : [];
   const data = {
   labels: labels,
   datasets: [{
       axis: 'y',
-      label: 'Number of Messages',
-      data: [65, 59, 80, 81, 56, 55, 40],
+      label: '',
+      data: ChartData(channelBySentiment),
       fill: false,
       backgroundColor: ['rgb(54, 162, 235)'],
       borderColor: [

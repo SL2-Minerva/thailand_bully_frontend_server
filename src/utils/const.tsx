@@ -160,7 +160,7 @@ export const ReportOptions = [
   },
   {
     groupName : 'Overall Dashboard',
-    title : 'Accoutns(Sentiment)',
+    title : 'Accounts(Sentiment)',
     id: 19
   },
   {
@@ -446,171 +446,171 @@ export const ReportOptions = [
   {
     groupName : 'Sentiment Dashboard',
     title : 'Daily Sentiment',
-    id: 78
+    id: 76
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Percentage of Sentiment',
-    id: 79
+    id: 77
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Sentiment by Day',
-    id: 80
+    id: 78
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Sentiment by Time',
-    id: 81
+    id: 79
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Sentiment by Devices',
-    id: 82
+    id: 80
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Sentiment by Account',
-    id: 83
+    id: 81
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Sentiment by Channel',
-    id: 84
+    id: 82
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Sentiment by Bully Level',
-    id: 85
+    id: 83
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Sentiment by Bully Type',
-    id: 86
+    id: 84
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Total Message',
-    id: 87
+    id: 85
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Engagement Comparison by Channel',
-    id: 88
+    id: 86
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Engagement Comparison by Engagement Type',
-    id: 89
+    id: 87
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Sentiment Score',
-    id: 90
+    id: 88
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Engagement Type Comparison',
-    id: 91
+    id: 89
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Summary Sentiment Score by Account',
-    id: 92
+    id: 90
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Summary Sentiment Score by Channel',
-    id: 93
+    id: 91
   },
   {
     groupName : 'Sentiment Dashboard',
     title : 'Keywords',
-    id: 94
+    id: 92
   },
   {
     groupName: "Bully Dashboard",
     title: 'Percentage of Bully Level', 
-    id: 95
+    id: 93
   },
   {
     groupName: "Bully Dashboard",
     title: 'Daily Message of Bully Level', 
-    id: 96
+    id: 94
   },
   {
     groupName: "Bully Dashboard",
     title: 'Bully Level By Day', 
-    id: 97
+    id: 95
   },
   {
     groupName: "Bully Dashboard",
     title: 'Bully Level By Time', 
-    id: 98
+    id: 96
   },
   {
     groupName: "Bully Dashboard",
     title: 'Bully Level By Devices', 
-    id: 99
+    id: 97
   },
   {
     groupName: "Bully Dashboard",
     title: 'Bully Level by Account', 
-    id: 100
+    id: 98
   },
   {
     groupName: "Bully Dashboard",
     title: 'Bully Level by Channel', 
-    id: 101
+    id: 99
   },
   {
     groupName: "Bully Dashboard",
     title: 'Bully Level by Sentiment', 
-    id: 102
+    id: 100
   },
   {
     groupName: "Bully Dashboard",
     title: 'Percentage of Bully Type', 
-    id: 103
+    id: 101
   },
   {
     groupName: "Bully Dashboard",
     title: 'Daily Message of Bully Type', 
-    id: 104
+    id: 102
   },
   {
     groupName: "Bully Dashboard",
     title: 'Bully Type By Day', 
-    id: 105
+    id: 103
   },
   {
     groupName: "Bully Dashboard",
     title: 'Bully Type By Time', 
-    id: 106
+    id: 104
   },
   {
     groupName: "Bully Dashboard",
     title: 'Bully Type By Devices', 
-    id: 107
+    id: 105
   },
   {
     groupName: "Bully Dashboard",
     title: 'Bully Type by Account', 
-    id: 108
+    id: 106
   },
   {
     groupName: "Bully Dashboard",
     title: 'Bully Type by Channel', 
-    id: 109
+    id: 107
   },
   {
     groupName: "Bully Dashboard",
     title: 'Bully Type by Sentiment', 
-    id: 110
+    id: 108
   },
   {
     groupName: "Bully Dashboard",
     title: 'Share of Channel', 
-    id: 111
+    id: 109
   }
 ]
