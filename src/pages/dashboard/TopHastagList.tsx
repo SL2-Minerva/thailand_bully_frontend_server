@@ -54,6 +54,7 @@ const TopHashtagList = ({topHashtags, params, chartId} : Props) => {
                     setShow={setShowDetail}
                     params={params}
                     keywordId={keywordId}
+                    setKeywordId = {setKeywordId}
                 />
             </CardContent>
         </Card>
