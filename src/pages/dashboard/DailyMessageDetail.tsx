@@ -59,7 +59,9 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
     const [messageId, setMessageId ] = useState<number | string>();
     const [pageCount, setPageCount] = useState<number>(0);
 
-    const {resultMessageDetail, totalMessage} = GetDetailMessage(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, keywordId, page, 10);
+    const platformId = params?.platformId || "";
+
+    const {resultMessageDetail, totalMessage} = GetDetailMessage(params?.campaign, platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, keywordId, page, 10);
 
     const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
       setPage(value-1);
@@ -100,7 +102,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
             </IconButton>
             <Box sx={{ mb: 8, textAlign: 'center' }}>
               <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-                 Daily Message Detail
+                Message Detail
               </Typography>
             </Box>
 

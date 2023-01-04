@@ -267,7 +267,7 @@ export const GetComparison = (campaignId?: string, start_date?: any, end_date?: 
   
     return {
       resultTotalMessages: response?.data?.total_messages || null,
-      resultTotalAccount: response?.data?.total_accounts || null,
+      resultTotalAccount: response?.data?.total_account || null,
       loadingTotalComparison: loading,
       errorTotalComparison: error
     }

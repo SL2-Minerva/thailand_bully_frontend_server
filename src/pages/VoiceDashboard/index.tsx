@@ -45,6 +45,15 @@ const VoiceDashboard = () => {
     const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
 
+    const params = {
+        campaign: campaign,
+        date: date,
+        endDate: endDate, 
+        period: period, 
+        previousDate: previousDate, 
+        previousEndDate: previousEndDate,
+    }
+
     const { resultReportPermission } = UserPermission();
     const { resultMessagesByDay } = GetMessagesByDay(campaign, date, endDate, period);
     const { resultDailyMessage } = GetDailyMessages(campaign, date, endDate, period);
@@ -99,7 +108,7 @@ const VoiceDashboard = () => {
             {
                 resultReportPermission?.includes("21") ? 
                 <Grid item xs={12} md={6} id="chart2">
-                    <DailyMessageGraph dailyData={resultDailyMessage} type="message" chartId="Chart 2"/>
+                    <DailyMessageGraph dailyData={resultDailyMessage} type="message" params={params} chartId="Chart 2"/>
                 </Grid> : ""
             }
 
@@ -256,7 +265,7 @@ const VoiceDashboard = () => {
            {
                 resultReportPermission?.includes("30") ? 
                 <Grid item xs={12} md={8} id="chart11">
-                    <InfluencerGraph numberOfAccounts={resultNumbersOfAccounts} chartId="Chart 11"/>
+                    <InfluencerGraph numberOfAccounts={resultNumbersOfAccounts} chartId="Chart 11" params={params}/>
                 </Grid> : ""
            }
            
@@ -280,11 +289,11 @@ const VoiceDashboard = () => {
                     <Grid xs={12} mt={5}>
                         <InfluencerComparison 
                             color='primary'
-                            trendNumber={resultTotalAccount?.percentage}
+                            trendNumber={resultTotalAccount?.percentage || ""}
                             trend={resultTotalAccount?.type}
                             icon={<AccountGroup />}
                             totalText = 'Accounts'
-                            totalValue = {resultTotalAccount?.total_account}
+                            totalValue = {resultTotalAccount?.total_account || resultTotalAccount?.total_message}
                             chartId = 'Chart 12'
                         />
                     </Grid> : ""
@@ -294,28 +303,28 @@ const VoiceDashboard = () => {
             {
                 resultReportPermission?.includes("33") ?
                 <Grid item xs={12} id="chart13">
-                    <DayTimeComparison dayTimeComparison={resultDayTimeComparison} chartId="Chart 13"/>
+                    <DayTimeComparison dayTimeComparison={resultDayTimeComparison} params={params} chartId="Chart 13"/>
                 </Grid> : ""
             }
 
             {
                 resultReportPermission?.includes("34") ? 
                 <Grid item xs={12} id="chart14">
-                    <DayTimeSentiment day={resultDayBySentiment} hour={resultTimeBySentiment} chartId="Chart 14"/>
+                    <DayTimeSentiment day={resultDayBySentiment} hour={resultTimeBySentiment} chartId="Chart 14" params={params}/>
                 </Grid> : ""
             }
 
             {
                 resultReportPermission?.includes("35") ? 
                 <Grid item xs={12} id="chart15">
-                    <DayTimeBullyLevel day={resultDayByBullyLevel} hour={resultTimeByBullyLevel} chartId="Chart 15"/>
+                    <DayTimeBullyLevel day={resultDayByBullyLevel} hour={resultTimeByBullyLevel} chartId="Chart 15" params={params}/>
                 </Grid> : ""
             }
             
             {
                 resultReportPermission?.includes("36") ?
                 <Grid item xs={12} id="chart16">
-                    <DayTimeBullyType day={resultDayByBullyType} hour={resultTimeByBullyType} chartId="Chart 16"/>
+                    <DayTimeBullyType day={resultDayByBullyType} hour={resultTimeByBullyType} chartId="Chart 16" params={params}/>
                 </Grid>: ""
             }
             {

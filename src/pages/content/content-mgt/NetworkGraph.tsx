@@ -113,6 +113,7 @@ const NetworkGraph = () => {
             <Grid item xs={12}>
               <Card>
                 <Graph
+                  key={Math.random()}
                   graph={graph}
                   options={options}
                 />
