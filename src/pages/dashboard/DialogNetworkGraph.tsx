@@ -1,13 +1,13 @@
-import {forwardRef, ReactElement, Ref, useEffect, useState} from "react";
+import {forwardRef, ReactElement, Ref} from "react";
 import Fade, { FadeProps } from '@mui/material/Fade'
 import { Box, Card, Dialog, DialogContent, IconButton, 
     Typography,  Grid } from "@mui/material";
 import Close from 'mdi-material-ui/Close'
 import Graph from 'react-graph-vis';
 import 'react-graph-vis/node_modules/vis-network/dist/dist/vis-network.css';
-import { CampaignList } from 'src/services/api/campaign/CampaignAPI';
 import { GetNetworkGraph } from "src/services/api/dashboards/overall/overallDashboardApi";
 
+// import { CampaignList } from 'src/services/api/campaign/CampaignAPI';
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -23,11 +23,12 @@ interface DialogInfoProps {
   params?: any
   keywordId?: number | string,
   messageId?: number | string
+  setKeywordId?: any
+  setMessageId?: any
 }
 
 const DialogNetworkGraph = (props: DialogInfoProps) => {
-    const { showDialog, setShowDialog, currentData, params, keywordId, messageId } = props
-    const { resultCampaiganList } = CampaignList();
+    const { showDialog, setShowDialog, params, keywordId, messageId, setMessageId } = props
     const { resultNetworkGraph } = GetNetworkGraph(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, keywordId, messageId);
 
   
@@ -35,7 +36,8 @@ const DialogNetworkGraph = (props: DialogInfoProps) => {
       "nodes": [],
       "edges": []
     };
-    const [ graph, setGraph ] = useState(initialGraph);
+
+    // const [ graph, setGraph ] = useState(initialGraph);
   
     const options = {
       layout: {
@@ -47,12 +49,18 @@ const DialogNetworkGraph = (props: DialogInfoProps) => {
       },
       height: "500px"
     };
+
+    const onClose = () => {
+      setShowDialog(false);
+      setMessageId("");
+    }
   
-    useEffect(() => {
-      if (resultNetworkGraph) {
-        setGraph(resultNetworkGraph);
-      }
-    },[resultCampaiganList, resultNetworkGraph, currentData]);
+    // useEffect(() => {
+    //   if (resultNetworkGraph) {
+    //     console.log("get data from api", resultNetworkGraph);
+    //     setGraph(resultNetworkGraph);
+    //   }
+    // },[resultNetworkGraph]);
 
     return (
       <Card>
@@ -61,13 +69,13 @@ const DialogNetworkGraph = (props: DialogInfoProps) => {
           open={showDialog}
           maxWidth='md'
           scroll='body'
-          onClose={() => setShowDialog(false)}
+          onClose={onClose}
           TransitionComponent={Transition}
         > 
         <DialogContent sx={{ pb: 6, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
             <IconButton
               size='small'
-              onClick={() => setShowDialog(false)}
+              onClick={onClose}
               sx={{ position: 'absolute', right: '1rem', top: '1rem' }}
             >
               <Close />
@@ -81,7 +89,7 @@ const DialogNetworkGraph = (props: DialogInfoProps) => {
             <Grid container spacing={3}>
             <Grid item xs={12}>
                 <Graph
-                  graph={graph}
+                  graph={resultNetworkGraph ? resultNetworkGraph : initialGraph}
                   options={options}
                 />
             </Grid>
