@@ -152,14 +152,23 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
 
           </DialogContent>
         </Dialog>
-        <DialogNetworkGraph
-          showDialog={showDialog}
-          setShowDialog={setShowDialog}
-          currentData={current}
-          params ={params}
-          keywordId = {keywordId}
-          messageId = {messageId}
-        />
+
+        {
+          messageId ? 
+          <DialogNetworkGraph
+            showDialog={showDialog}
+            setShowDialog={setShowDialog}
+            currentData={current}
+            params ={params}
+            keywordId = {keywordId}
+            messageId = {messageId}
+            setKeywordId = {setKeywordId}
+            setMessageId = {setMessageId}
+          />
+          :
+          ""
+        }
+        
       </Card>
     );
 }
