@@ -34,7 +34,15 @@ const ChannelDashboard = () => {
     const [ campaign, setCampaign ] = useState<string>("all")
     const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
-
+    const params = {
+        campaign: campaign,
+        date: date,
+        endDate: endDate, 
+        period: period, 
+        previousDate: previousDate, 
+        previousEndDate: previousEndDate,
+    }
+    
     //api call
     const { resultReportPermission } = UserPermission();
     const { resultPercentageChannel } = GetPercentageChannel(campaign, date, endDate, period);
@@ -81,7 +89,7 @@ const ChannelDashboard = () => {
             {
                 resultReportPermission?.includes("45") ?
                 <Grid item xs={12} md={6} id="chart2">
-                    <DailyMessageGraph dailyData={resultDailyChannel} type="channel" chartId="Chart 2"/>
+                    <DailyMessageGraph dailyData={resultDailyChannel} type="channel" chartId="Chart 2" params={params}/>
                 </Grid> : ""
             }
 

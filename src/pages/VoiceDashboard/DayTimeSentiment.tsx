@@ -11,25 +11,34 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 
 interface Props{
   hour : any[]
   day : any[]
-  chartId: string
+  chartId: string,
+  params : any
 }
 
 const DayTimeSentiment = (props : Props) => {
 
-  const {day, hour, chartId } = props;
+  const {day, hour, chartId, params } = props;
 
   const [seriesHour, setSeriesHour ] = useState([{name: '', data:[]}]);
   const [seriesDays, setSeriesDays ] = useState([{name: '', data:[]}]);
+  const [ showDetail , setShowDetail ] = useState<boolean>(false);
 
     const options_hours : ApexOptions = {
         chart: {
           height: 200,
           type: 'heatmap',
-          toolbar: { show: false }
+          toolbar: { show: false },
+          events: {
+            dataPointSelection: (event, chartContext, config) => {
+              console.log(config.w.config.labels[config.dataPointIndex], "context", chartContext);
+              setShowDetail(true);
+            }
+          }
         },
         dataLabels: {
           enabled: false
@@ -44,7 +53,13 @@ const DayTimeSentiment = (props : Props) => {
         chart: {
           height: 100,
           type: 'heatmap',
-          toolbar: { show: false }
+          toolbar: { show: false },
+          events: {
+            dataPointSelection: (event, chartContext, config) => {
+              console.log(config.w.config.labels[config.dataPointIndex], "context", chartContext);
+              setShowDetail(true);
+            }
+          }
         },
         dataLabels: {
           enabled: false
@@ -90,6 +105,14 @@ const DayTimeSentiment = (props : Props) => {
                         <ReactApexcharts options={options_hours} series={seriesHour} type="heatmap" height={170} />  
                     </Grid>
                 </Grid>  
+                <DailyMessageDetail 
+                    show={showDetail}
+                    setShow={setShowDetail}
+                    params = {params}
+
+                    // keywordId = {keywordId}
+                    // setKeywordId={setKeywordId}
+                /> 
             </CardContent>
         </Card>
       )

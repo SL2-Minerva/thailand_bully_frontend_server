@@ -1,11 +1,12 @@
 import { Card, CardContent, CardHeader } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
-import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
+import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 import { BullyDashboardColors, EngagementTypeColors, GraphicColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import { InteractionItem } from 'chart.js'
 
 interface LineProps {
     white: string
@@ -68,16 +69,37 @@ const MessagesByDay = (props: LineProps) => {
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
   const [current, setCurrent] = useState<any>({})
+  const [keywordId, setKeywordId] = useState<any>();
 
   const chartRef = useRef();
+  const getKeywordId = (dataset: InteractionItem[]) => {
+    if (!dataset.length) return;
+
+    const datasetIndex = dataset[0].datasetIndex;
+    const keywordName = data.datasets[datasetIndex].label;
+    const dailyMessageData = filterData?.daily_message;
+    let keywordId : number | null= null;
+    if (dailyMessageData?.length > 0) {
+      for (let i =0; i<dailyMessageData?.length; i++) {
+          if(keywordName === dailyMessageData[i].keyword_name) {
+            keywordId = dailyMessageData[i].keyword_id;
+          }
+      }
+    }
+
+    return keywordId;
+  };
+  
   const onClick = (event : any) => {
     if(chartRef.current) {
-      console.log(getDatasetAtEvent(chartRef.current, event));
-      console.log(getElementAtEvent(chartRef.current, event));
-      console.log(getElementsAtEvent(chartRef.current, event));
+      const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
       setShowDetail(true);
-      setCurrent({})
 
+      if(keyword_id) {
+        // setShowDetail(true);
+        setCurrent({})
+      }
+      
     }
   }
 
@@ -203,6 +225,8 @@ const MessagesByDay = (props: LineProps) => {
             show={showDetail}
             setShow={setShowDetail}
             current={current}
+            keywordId={keywordId}
+            setKeywordId={setKeywordId}
          />
         
       </CardContent>

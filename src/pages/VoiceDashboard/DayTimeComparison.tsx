@@ -10,10 +10,12 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 
-const DayTimeComparison = ({dayTimeComparison, chartId} : {dayTimeComparison: any, chartId: string}) => {
+const DayTimeComparison = ({dayTimeComparison, params, chartId} : {dayTimeComparison: any, params: any, chartId: string}) => {
 
     const [series, setSeries] = useState([]) ;
+    const [ showDetail , setShowDetail ] = useState<boolean>(false);
 
     const options : ApexOptions = {
         chart: {
@@ -23,6 +25,7 @@ const DayTimeComparison = ({dayTimeComparison, chartId} : {dayTimeComparison: an
           events: {
             dataPointSelection: (event, chartContext, config) => {
               console.log(config.w.config.labels[config.dataPointIndex], "context", chartContext);
+              setShowDetail(true);
             }
           }
         },
@@ -53,7 +56,15 @@ const DayTimeComparison = ({dayTimeComparison, chartId} : {dayTimeComparison: an
               </StyledTooltip>
           </span>
             <CardContent>
-                <ReactApexcharts options={options} series={series} type="heatmap" height={350} />    
+                <ReactApexcharts options={options} series={series} type="heatmap" height={350} />   
+                <DailyMessageDetail 
+                    show={showDetail}
+                    setShow={setShowDetail}
+                    params = {params}
+
+                    // keywordId = {keywordId}
+                    // setKeywordId={setKeywordId}
+                /> 
             </CardContent>
         </Card>
       )
