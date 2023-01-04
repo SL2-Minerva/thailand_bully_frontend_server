@@ -19,7 +19,12 @@ const DayTimeComparison = ({dayTimeComparison, chartId} : {dayTimeComparison: an
         chart: {
           height: 350,
           type: 'heatmap',
-          toolbar: { show: false }
+          toolbar: { show: false },
+          events: {
+            dataPointSelection: (event, chartContext, config) => {
+              console.log(config.w.config.labels[config.dataPointIndex], "context", chartContext);
+            }
+          }
         },
         dataLabels: {
           enabled: false

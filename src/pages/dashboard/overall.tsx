@@ -89,8 +89,8 @@ const OverallDashboard = () => {
     const [endDate, setEndDate] = useState<DateType>(new Date())
     const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
-    const [ campaign, setCampaign ] = useState<string>("1")
-    const [ platformId, setPlatformId ] = useState<string>("1")
+    const [ campaign, setCampaign ] = useState<string>("all")
+    const [ platformId, setPlatformId ] = useState<string>("all")
     const [ dateSelect, setDateSelect ] = useState<string>("1")
     const [ reload ] = useState<boolean>(false);
     const [ period, setPeriod ] = useState<string>('daily')
@@ -267,6 +267,9 @@ const OverallDashboard = () => {
                                 onChange={(e) => {handleSelectList(e, 'campaign')}}
                                 inputProps={{ placeholder: 'Select Campaign' }}
                             >
+                                <MenuItem  value="all">
+                                    ALL
+                                </MenuItem>
                                 {
                                 resultCampaiganList && resultCampaiganList.map((item: any, index: number) => {
                                     return (
@@ -291,6 +294,9 @@ const OverallDashboard = () => {
                                 onChange={(e) => {handleSelectList(e, 'platform')}}
                                 inputProps={{ placeholder: 'Select Platform' }}
                             >
+                                <MenuItem  value="all">
+                                    ALL
+                                </MenuItem>
                                 {
                                     result_source_list && result_source_list.map((item: any, index: number) => {
                                         return (

@@ -227,6 +227,7 @@ const DailySenitment = (props: LineProps) => {
             setShow={setShowDetail}
             params = {params}
             keywordId = {keywordId}
+            setKeywordId = {setKeywordId}
          />
       </CardContent>
     </Card>
