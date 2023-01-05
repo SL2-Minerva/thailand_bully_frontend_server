@@ -47,15 +47,28 @@ const Transition = forwardRef(function Transition(
   return <Fade ref={ref} {...props} />
 })
 
+const getReportIds = (data: any) => {
+  if(data && data?.length === 0) return [];
+
+  const reportIds : any[] = []
+  if(data?.length > 0 ) {
+    for (let i = 0; i<data?.length; i++) {
+      reportIds.push(data[i]?.id);
+    }
+  }
+
+  return reportIds;
+}
+
 
 const DialogRoleInfo = (props: DialogRoleInfoProps) => {
   const { show, setShow, action, current } = props
 
   const [roleName, setRoleName] = useState(current?.user_role_name ?? '')
   const [roleDescription, setDescription] = useState(current?.user_role_description ?? '')
-
+  const [ reportIds, setReportIds ] = useState<any[]>();
   const {resultReportChartList} = ReportListPermission();
-
+  const defaultValue: any[] = [];
 
   const [permission, setPermission] = useState<any>({
     user: {
@@ -88,12 +101,26 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
     }
   });
 
+  if ( current?.report && current?.report?.length> 0) {
+    const reports = current?.report;
+    const reportTitleIds : any[] = [];
+    for ( let i=0; i<reports?.length; i++) {
+      const reportId = parseInt(reports[i]) - 1;
+      reportTitleIds.push(reportId)
+    }
+    
+    ( reportTitleIds || []).map((value) => {console.log("value", value, resultReportChartList[value]?.title);
+      defaultValue.push(resultReportChartList[value])})
+      console.log("test", defaultValue);
+  }
+
 
   useEffect(() => {
     setRoleName(current?.user_role_name ?? '')
     setDescription(current?.user_role_description ?? '')
 
     if (action === 'edit') {
+      setReportIds(defaultValue);
       if ( current?.permission ) {
         setPermission(current?.permission ) 
       } else {
@@ -129,7 +156,6 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
           }
         }) 
       }
-      
     }
 
     else {
@@ -197,7 +223,8 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
           id: current?.id,
           role_name: roleName,
           role_description: roleDescription,
-          permission: permission
+          permission: permission, 
+          report: getReportIds(reportIds)
         },
         {
           headers: {
@@ -326,12 +353,19 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
             </Grid>
             <Grid item xs={12}>
               <Autocomplete
+                disableCloseOnSelect
                 multiple
                 id='autocomplete-grouped'
                 groupBy={resultReportChartList => resultReportChartList?.groupName}
                 getOptionLabel={resultReportChartList => resultReportChartList?.title}
                 renderInput={params => <TextField {...params} label='Reports' />}
                 options={resultReportChartList}
+                value={reportIds}
+                onChange = {(event: any, newValue: any) => {
+                  setReportIds(newValue);
+                }}
+
+                defaultValue={defaultValue}
               />
             </Grid>
           </Grid>

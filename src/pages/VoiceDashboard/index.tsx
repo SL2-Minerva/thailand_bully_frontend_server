@@ -41,7 +41,7 @@ const VoiceDashboard = () => {
     const [endDate, setEndDate] = useState<DateType>(new Date())
     const [ period, setPeriod ] = useState<string>('daily')
     const [ dateSelect, setDateSelect ] = useState<string>("1")
-    const [ campaign, setCampaign ] = useState<string>("all")
+    const [ campaign, setCampaign ] = useState<string>("1")
     const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
 

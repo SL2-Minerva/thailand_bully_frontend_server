@@ -89,7 +89,7 @@ const OverallDashboard = () => {
     const [endDate, setEndDate] = useState<DateType>(new Date())
     const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
-    const [ campaign, setCampaign ] = useState<string>("all")
+    const [ campaign, setCampaign ] = useState<string>("1")
     const [ platformId, setPlatformId ] = useState<string>("all")
     const [ dateSelect, setDateSelect ] = useState<string>("1")
     const [ reload ] = useState<boolean>(false);
@@ -267,9 +267,6 @@ const OverallDashboard = () => {
                                 onChange={(e) => {handleSelectList(e, 'campaign')}}
                                 inputProps={{ placeholder: 'Select Campaign' }}
                             >
-                                <MenuItem  value="all">
-                                    ALL
-                                </MenuItem>
                                 {
                                 resultCampaiganList && resultCampaiganList.map((item: any, index: number) => {
                                     return (

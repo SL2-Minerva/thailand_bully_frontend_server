@@ -34,73 +34,6 @@ const ChartData = (data: any ) => {
   return chartDatas;
 }
 
-const TableData = ({channel, percentage, highlight} : {channel:any, percentage:any, highlight: any}) => {
-  return (
-    <>
-        <TableCell>
-            {
-              channel === 'facebook' ?
-              <span style={{ border : highlight ? "1px solid red" : "", padding: '4px' }}>
-                { percentage + "%"}
-              </span>
-              :
-              <span style={{ padding: '4px' }}>
-                { 0 + "%"}
-              </span>
-            }
-        </TableCell>
-        <TableCell>
-            {
-              channel === 'twitter' ?
-            <span style={{ border : highlight ? "1px solid red" : "", padding: '4px' }}>
-              {percentage + "%"}
-            </span>
-            :
-            <span style={{ padding: '4px' }}>
-              { 0 + "%"}
-            </span>
-          }
-        </TableCell>
-        <TableCell>
-          {
-                channel === 'youtube' ?
-              <span style={{ border : highlight ? "1px solid red" : "", padding: '4px' }}>
-                {percentage + "%"}
-              </span>
-              :
-              <span style={{ padding: '4px' }}>
-                { 0 + "%"}
-              </span>
-            }
-        </TableCell>
-        <TableCell>
-            {
-                channel === 'instagram' ?
-              <span style={{ border : highlight ? "1px solid red" : "", padding: '4px' }}>
-                {percentage + "%"}
-              </span>
-              :
-              <span style={{ padding: '4px' }}>
-                { 0 + "%"}
-              </span>
-            }
-        </TableCell>
-        <TableCell>
-            {
-              channel === 'pantip' ?
-              <span style={{ border : highlight ? "1px solid red" : "", padding: '4px' }}>
-                {percentage + "%"}
-              </span>
-              :
-              <span style={{ padding: '4px' }}>
-                { 0 + "%"}
-              </span>
-            }
-        </TableCell>
-    </>
-  )
-}
-
 const ShareOfVoice  = ({resultShareOfVoice, resultShareofVoiceChart, chartId} : {resultShareOfVoice: any,resultShareofVoiceChart: any, chartId : string}) => {
 
   const labels = resultShareofVoiceChart ? ChartLabels(resultShareofVoiceChart) : [];
@@ -118,6 +51,14 @@ const ShareOfVoice  = ({resultShareOfVoice, resultShareofVoiceChart, chartId} : 
       borderWidth: 1
   }]
   };  
+
+  const searchChannel = (data : any, channelName: string) => {
+    if(!data ) return null;
+
+    const result = data.find(({channel} : {channel: any}) => { return channel === channelName});
+
+    return result;
+  }
 
 
   return (
@@ -178,28 +119,69 @@ const ShareOfVoice  = ({resultShareOfVoice, resultShareofVoiceChart, chartId} : 
                     {
                       (resultShareOfVoice || []).map((shareVoice : any, index: number) => {
                         return(
+
+                          // <TableRow key={index}>
+                          //   {
+                          //     (shareVoice.value || []).map((value : any, key: number) => {
+                          //       return (
+                          //         <>
+                                    
+                          //             {/* {
+                          //               key === 0 ?
+                          //                 <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
+                          //               : key === 1?
+                          //                   <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
+                          //               : key === 2 ?
+                          //                   <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
+                          //               : key === 3 ?
+                          //                   <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
+                          //               : key === 4 ? 
+                          //                   <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
+                          //               : <></>
+                          //             } */}
+                          //         </>
+                          //       )
+                          //     })
+                          //   }
+                          // </TableRow>
+
                           <TableRow key={index}>
-                            {
-                              (shareVoice.value || []).map((value : any, key: number) => {
-                                return (
-                                  <>
-                                      {
-                                        key === 0 ?
-                                          <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
-                                        : key === 1?
-                                            <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
-                                        : key === 2 ?
-                                            <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
-                                        : key === 3 ?
-                                            <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
-                                        : key === 4 ? 
-                                            <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
-                                        : <></>
-                                      }
-                                  </>
-                                )
-                              })
-                            }
+                              <TableCell>
+                                  { searchChannel(shareVoice?.value, "facebook") ? 
+                                      <span style={{ border : searchChannel(shareVoice?.value, "facebook")?.highlight ? "1px solid red" : "", padding: '4px' }}>
+                                        { searchChannel(shareVoice?.value, "facebook")?.percentage  + "%"}
+                                      </span>
+                                    : "0%"}
+                              </TableCell>
+                              <TableCell>
+                                  { searchChannel(shareVoice?.value, "twitter") ?
+                                    <span style={{ border : searchChannel(shareVoice?.value, "twitter")?.highlight ? "1px solid red" : "", padding: '4px' }}>
+                                      { searchChannel(shareVoice?.value, "twitter")?.percentage  + "%"}
+                                    </span>
+
+                                   : "0%"}
+                              </TableCell>
+                              <TableCell>
+                                  { searchChannel(shareVoice?.value, "youtube") ? 
+                                    <span style={{ border : searchChannel(shareVoice?.value, "youtube")?.highlight ? "1px solid red" : "", padding: '4px' }}>
+                                      { searchChannel(shareVoice?.value, "youtube")?.percentage  + "%"}
+                                    </span>
+                                  : "0%"}
+                              </TableCell>
+                              <TableCell>
+                                  { searchChannel(shareVoice?.value, "instagram") ? 
+                                    <span style={{ border : searchChannel(shareVoice?.value, "instagram")?.highlight ? "1px solid red" : "", padding: '4px' }}>
+                                      { searchChannel(shareVoice?.value, "instagram")?.percentage  + "%"}
+                                    </span>
+                                  : "0%"}
+                              </TableCell>
+                              <TableCell>
+                                  { searchChannel(shareVoice?.value, "pantip") ? 
+                                    <span style={{ border : searchChannel(shareVoice?.value, "pantip")?.highlight ? "1px solid red" : "", padding: '4px' }}>
+                                      { searchChannel(shareVoice?.value, "pantip")?.percentage  + "%"}
+                                    </span> : "0%"}
+                              </TableCell>
+                              
                           </TableRow>
                         )
                       })

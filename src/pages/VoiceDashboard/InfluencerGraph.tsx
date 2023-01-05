@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 
 // ** Custom Components Imports
-import { getXaxisData } from './DailyMessageGraph'
+import { chartLabel } from './DailyMessageGraph'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -132,7 +132,7 @@ const InfluencerGraph = ({numberOfAccounts, chartId, params}: {numberOfAccounts:
   
       useEffect(() => {
         if(numberOfAccounts) {
-            const labels = getXaxisData(numberOfAccounts);
+            const labels = chartLabel(numberOfAccounts);
             setLabel(labels);
             
             const dataSets = chartDatasets(numberOfAccounts);

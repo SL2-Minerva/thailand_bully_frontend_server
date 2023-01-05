@@ -31,14 +31,14 @@ const EngagementDashboard = () => {
     const borderColor = theme.palette.action.focus
     const gridLineColor = theme.palette.action.focus
 
-    const [ campaign, setCampaign ] = useState<string>("all")
+    const [ campaign, setCampaign ] = useState<string>("1")
     const [date, setDate] = useState<DateType>(new Date())
     const [endDate, setEndDate] = useState<DateType>(new Date())
     const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
     const [ period, setPeriod ] = useState<string>('daily')
     const [ dateSelect, setDateSelect ] = useState<string>("1")
-    const [ campaignType, setCampaignType ] = useState<string>("all")
+    const [ campaignType, setCampaignType ] = useState<string>("1")
     const [ topKeyword, setTopKeyword ] = useState<string>('all');
 
     const { resultReportPermission } = UserPermission();
@@ -98,9 +98,6 @@ const EngagementDashboard = () => {
                                         onChange={(e) => {handleSelectList(e)}}
                                         inputProps={{ placeholder: 'Select Campaign' }}
                                     >
-                                        <MenuItem  value="all">
-                                            ALL
-                                        </MenuItem>
                                         {
                                         resultCampaiganList && resultCampaiganList.map((item: any, index: number) => {
                                             return (
