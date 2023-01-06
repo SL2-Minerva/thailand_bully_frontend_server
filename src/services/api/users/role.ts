@@ -7,41 +7,7 @@ export const role_list = (reload?: boolean, paged?: boolean, filter?: string, or
     data: { paged, filter, org_id, reload }
   })
 
-  // const test : any[] = [];
-  // if(res?.data) {
-  //   const response = res?.data;
-  //   for (let i =0; i< response?.length; i++) {
-  //     const data = {
-  //       "id": response[i].id,
-  //       "status": response[i].status,
-  //       "user_role_name": response[i].user_role_name,
-  //       "user_role_description": response[i].user_role_description,
-  //       "authorized_menu": response[i].authorized_menu,
-  //       "created_by": response[i].created_by,
-  //       "updated_by": response[i].updated_by,
-  //       "created_at": response[i].created_at,
-  //       "updated_at": response[i].updated_at,
-  //       "authorized_report": response[i].authorized_report,
-  //       "permission": response[i]?.permission,
-  //       "report" : [
-  //         "1",
-  //         "2",
-  //         "3",
-  //         "4",
-  //         "5",
-  //         "6",
-  //         "7",
-  //         "8",
-  //         "9"
-  //       ]
-  //     }
-  //     test.push(data);
-  //   }
-  // }
-
   return {
-    // resultRoleList: res?.data ? test : null,
-
     resultRoleList: res?.data || null,
     loadingRoleList: loading,
     errorRoleList: error
