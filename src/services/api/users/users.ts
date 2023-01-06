@@ -6,6 +6,7 @@ export const userlist = (paged?: number, filter?: string) => {
     method: 'GET',
     data: { paged, filter}
   });
+  
   return{
     resultUserList: res?.data ||  null,
     loadingUserList: loading,
@@ -26,12 +27,13 @@ const UserService = () => {
     },
     { manual: true }
   )
+
   return {
     result_user_create: data?.data,
     loading_user_create: loading,
     error_user_create: error,
     update_user: (userInput: any) => {
-      let inputData = userInput
+      const inputData = userInput
 
       return new Promise((resolve, reject) => {
         store({

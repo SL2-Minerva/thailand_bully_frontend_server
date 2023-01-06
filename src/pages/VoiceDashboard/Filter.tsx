@@ -205,9 +205,6 @@ const Filter = (props : Props) => {
                             onChange={(e) => {handleSelectList(e)}}
                             inputProps={{ placeholder: 'Select Campaign' }}
                         >
-                            <MenuItem  value="all">
-                                    ALL
-                            </MenuItem>
                             {
                             resultCampaiganList && resultCampaiganList.map((item: any, index: number) => {
                                 return (

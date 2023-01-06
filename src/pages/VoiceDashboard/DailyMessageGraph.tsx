@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { InteractionItem } from 'chart.js'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
+import moment from 'moment'
 
 interface Props {
   dailyData: any
@@ -36,15 +37,35 @@ export const getSeries = (seriesData: any) => {
   return series;
 }
 
-export const getXaxisData = (seriesData: any) => {
-  if(!seriesData) return [];
-
-  let data : any[] = [];
-  if (seriesData && seriesData?.length>0) {
-      data = seriesData[0]?.date
+export const chartLabel = (data:any) => {
+  if(!data) return [];
+  
+  let labels : any[] = [];
+  let labelsArrayLength; 
+  const labelValue : string[] = []
+  for(let i = 0 ; i<data?.length; i++) {
+    const label = data[i]?.value;
+    if(data?.length-1 !== i) {
+        if(label?.length > data[i+1].length) {
+            labelsArrayLength= i
+            labels = data[labelsArrayLength]?.value
+        } else {
+            labelsArrayLength= i+1
+            labels = data[labelsArrayLength]?.value
+        }
+    } else {
+      labels = label;
+    }
+    
   }
 
-  return data;
+  if (labels?.length > 0) {
+    for (let i =0; i<labels?.length; i++) {
+        labelValue.push(moment(labels[i]?.date_m).format('DD/MM/YYYY'));
+    }
+  }
+
+  return labelValue;
 }
 
 const DailyMessageGraph = ( props : Props) => {
@@ -76,12 +97,10 @@ const DailyMessageGraph = ( props : Props) => {
     const onClick = (event : any) => {
       if(chartRef.current) {
         const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
-        setShowDetail(true);
-  
+
         if(keyword_id) {
           setKeywordId(keyword_id);
-
-          // setShowDetail(true);
+          setShowDetail(true);
         }
         
       }
@@ -131,8 +150,14 @@ const DailyMessageGraph = ( props : Props) => {
       const returnData : StackChartDataset[] = [];
       const color = GraphicColors
       for(let i = 0 ; i<data?.length; i++) {
-        totalAmount = data[i].data;         
-        keywordName = data[i].name;
+        totalAmount = []
+        const total = data[i]?.value;
+      
+        for(let j=0; j<data[i]?.value?.length ; j++ ) {
+          totalAmount.push(total[j].total_at_date);
+        } 
+        
+        keywordName = data[i].keyword_name;
   
         const chartDataset : StackChartDataset  = {
           fill: false,
@@ -144,7 +169,7 @@ const DailyMessageGraph = ( props : Props) => {
           borderColor: color[i],
           backgroundColor: color[i],
           pointHoverBorderWidth: 5,
-          pointHoverBorderColor: '#fff',
+          pointHoverBorderColor: "#fff",
           pointBorderColor: 'transparent',
           pointHoverBackgroundColor: color[i],
           data: totalAmount
@@ -164,7 +189,7 @@ const DailyMessageGraph = ( props : Props) => {
 
       useEffect(() => {
         if(dailyData) {
-            const labels = getXaxisData(dailyData);
+            const labels = chartLabel(dailyData);
             setLabel(labels);
             
             const dataSets = chartDatasets(dailyData);
