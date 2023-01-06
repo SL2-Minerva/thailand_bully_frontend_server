@@ -101,17 +101,16 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
     }
   });
 
-  if ( current?.report && current?.report?.length> 0) {
-    const reports = current?.report;
+  if ( current?.authorized_report && current?.authorized_report?.length> 0) {
+    const reports = current?.authorized_report;
     const reportTitleIds : any[] = [];
     for ( let i=0; i<reports?.length; i++) {
       const reportId = parseInt(reports[i]) - 1;
       reportTitleIds.push(reportId)
     }
     
-    ( reportTitleIds || []).map((value) => {console.log("value", value, resultReportChartList[value]?.title);
+    ( reportTitleIds || []).map((value) => {
       defaultValue.push(resultReportChartList[value])})
-      console.log("test", defaultValue);
   }
 
 
@@ -203,7 +202,8 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
             
             role_name: roleName,
             role_description: roleDescription,
-            permission: permission
+            permission: permission,
+            authorized_report: getReportIds(reportIds)
           },
           {
             headers: {
@@ -213,7 +213,9 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
         )
         .then(res => {
           console.log('res', res)
-          setShow(false)
+          onClose();
+
+          // setShow(false);
         })
     } else {
       axios
@@ -224,7 +226,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
           role_name: roleName,
           role_description: roleDescription,
           permission: permission, 
-          report: getReportIds(reportIds)
+          authorized_report: getReportIds(reportIds)
         },
         {
           headers: {
@@ -234,7 +236,9 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
       )
       .then(res => {
         console.log('res', res)
-        setShow(false)
+        onClose();
+
+        // setShow(false)
       })
     }
   }
@@ -249,6 +253,11 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
     setPermission(permissionNew)
   }
 
+  const onClose = () => {
+    setShow(false);
+    setReportIds([]);
+  }
+
   return (
     <Card>
       <Dialog
@@ -256,14 +265,14 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
         open={show}
         maxWidth='md'
         scroll='body'
-        onClose={() => setShow(false)}
+        onClose={onClose}
         TransitionComponent={Transition}
-        onBackdropClick={() => setShow(false)}
+        onBackdropClick={onClose}
       >
         <DialogContent sx={{ pb: 6, px: { xs: 8, sm: 15 }, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
           <IconButton
             size='small'
-            onClick={() => setShow(false)}
+            onClick={onClose}
             sx={{ position: 'absolute', right: '1rem', top: '1rem' }}
           >
             <Close />
@@ -374,7 +383,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
           <Button variant='contained' sx={{ mr: 2 }} onClick={() => handleSubmit()}>
             Submit
           </Button>
-          <Button variant='outlined' color='secondary' onClick={() => setShow(false)}>
+          <Button variant='outlined' color='secondary' onClick={onClose}>
             Discard
           </Button>
         </DialogActions>
