@@ -107,7 +107,7 @@ export const UserPermission = () => {
   // const report = showAllMenu;
   // resultReportPermission : showAllMenu,
 
-  const report = res?.data?.report; 
+  const report = res?.data?.authorized_report; 
   
   let showOverallDashboard = false;
   let showVoiceDashboard = false;
@@ -128,7 +128,7 @@ export const UserPermission = () => {
   
   return {
     resultPermission: res?.data?.permission ||  null,
-    resultReportPermission : res?.data?.report || [],
+    resultReportPermission : res?.data?.authorized_report || [],
     showOverallDashboard : showOverallDashboard,
     showVoiceDashboard: showVoiceDashboard, 
     showChannelDashboard: showChannelDashboard,
