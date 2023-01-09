@@ -12,31 +12,27 @@ import { useEffect, useState } from 'react'
 import { GraphicColors } from 'src/utils/const'
 import { Information } from 'mdi-material-ui'
 import { StyledTooltip } from './overall'
+import { FilterByCampaignId } from 'src/services/api/dashboards/overall/overallDashboardApi'
 
 interface MessageData {
-  filterData : any
+  params : any
 }
 
 const DonutChart = (props : MessageData) => {
 
-  const { filterData } = props;
+  const { params } = props;
+  const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const initValue = {
+    labels: [],
+    datasets: [{
+      data: [],
+      backgroundColor: GraphicColors,
+      hoverOffset: 4
+    }]
+  };
 
-  const [ previousData, setPreviousData ] = useState<any>({
-    labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: GraphicColors,
-      hoverOffset: 4
-    }]
-  });
-  const [ currentData, setCurrentData ] = useState<any>({
-    labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: GraphicColors,
-      hoverOffset: 4
-    }]
-  });
+  const [ previousData, setPreviousData ] = useState<any>(initValue);
+  const [ currentData, setCurrentData ] = useState<any>(initValue);
   const [ currentPeriod, setCurrentPeriod ] = useState<string>('');
   const [ previousPeriod, setPreviousPeriod ] = useState<string>('');
 
@@ -103,20 +99,25 @@ const DonutChart = (props : MessageData) => {
   }
 
   useEffect(() =>{
-    if (filterData) {
-      const currentMessageData = filterData?.prcentage_of_messages_current;
-      const previousMessageData = filterData?.prcentage_of_messages_previous;
+    if (resultFilterData) {
+      const currentMessageData = resultFilterData?.prcentage_of_messages_current;
+      const previousMessageData = resultFilterData?.prcentage_of_messages_previous;
       
       if(currentMessageData) {
         const currentDataset = chartDataset(currentMessageData, 'current');
         setCurrentData(currentDataset);
+      } else {
+        setCurrentData(initValue);
+      }
 
+      if(previousMessageData) {
         const previousDataset = chartDataset(previousMessageData, 'previous');
         setPreviousData(previousDataset);
-
+      } else {
+        setPreviousData(initValue);
       }
     }
-  }, [filterData]);
+  }, [resultFilterData]);
 
   return (
     <Card>

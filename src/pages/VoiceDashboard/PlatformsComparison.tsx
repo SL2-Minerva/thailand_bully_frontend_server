@@ -13,10 +13,12 @@ import * as DoughnutLabel from "chartjs-plugin-doughnutlabel-rebourne";
 import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import { GetPlatformsComparison } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
 
 Chart.register(DoughnutLabel );
-const PlatformsComparison  = ({resultPlatformComparison, chartId} : {resultPlatformComparison:any, chartId: string}) => {
+const PlatformsComparison  = ({params, chartId} : {params:any, chartId: string}) => {
+  const {  resultPlatformComparison } = GetPlatformsComparison(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary

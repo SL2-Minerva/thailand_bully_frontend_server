@@ -6,16 +6,17 @@ import { useState } from "react";
 import DailyMessageDetail from "./DailyMessageDetail";
 import { StyledTooltip } from "./overall";
 import { Information } from "mdi-material-ui";
+import { GetTopKeywords } from "src/services/api/dashboards/overall/overallDashboardApi";
 
 interface Props {
-    topHashtags : any,
     params : any
     chartId : string
 }
 
-const TopHashtagList = ({topHashtags, params, chartId} : Props) => {
+const TopHashtagList = ({params, chartId} : Props) => {
     const [showDetail, setShowDetail] = useState<boolean>(false);
     const [keywordId, setKeywordId] = useState<number>();
+    const { resultTopKeywords } = GetTopKeywords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
     
     return (
         <Card sx={{ maxHeight: 360,minHeight: 360 }}>
@@ -37,7 +38,7 @@ const TopHashtagList = ({topHashtags, params, chartId} : Props) => {
                             <TableCell variant="head"> % </TableCell>
                         </TableHead>
                         {
-                            (topHashtags || [])?.map((hashtag:any, index:any) => {
+                            (resultTopKeywords?.top_hastag || [])?.map((hashtag:any, index:any) => {
                                 return(
                                     <TableRow key={index} onClick={()=>{setShowDetail(true);setKeywordId(hashtag?.keyword_id)}}>
                                         <TableCell sx={{ backgroundColor: "lightslategrey !important", color:'white'}}>{hashtag?.hashtag}</TableCell>
@@ -49,13 +50,16 @@ const TopHashtagList = ({topHashtags, params, chartId} : Props) => {
                         }
                     </Table>
                     </TableContainer>
-                    <DailyMessageDetail 
-                    show={showDetail}
-                    setShow={setShowDetail}
-                    params={params}
-                    keywordId={keywordId}
-                    setKeywordId = {setKeywordId}
-                />
+                    {
+                        params?.campaign ? 
+                        <DailyMessageDetail 
+                            show={showDetail}
+                            setShow={setShowDetail}
+                            params={params}
+                            keywordId={keywordId}
+                            setKeywordId = {setKeywordId}
+                        /> : ""
+                    }
             </CardContent>
         </Card>
         

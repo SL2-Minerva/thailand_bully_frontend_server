@@ -14,13 +14,15 @@ import { GraphicColors } from 'src/utils/const'
 import { useEffect, useRef, useState } from 'react'
 import { InteractionItem } from 'chart.js'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
+import { GetNumbersOfAccounts } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
-const InfluencerGraph = ({numberOfAccounts, chartId, params}: {numberOfAccounts: any, chartId: string, params: any}) => {
+const InfluencerGraph = ({ chartId, params}: {chartId: string, params: any}) => {
 
       const [ label, setLabel ] = useState<string[]>([]);
       const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
       const [ showDetail , setShowDetail ] = useState<boolean>(false);
       const [ keywordId, setKeywordId] = useState<any>();
+      const { resultNumbersOfAccounts } = GetNumbersOfAccounts(params?.campaign, params?.date, params?.endDate, params?.period);
   
       const chartRef = useRef();
       const getKeywordId = (dataset: InteractionItem[]) => {
@@ -28,7 +30,7 @@ const InfluencerGraph = ({numberOfAccounts, chartId, params}: {numberOfAccounts:
     
         const datasetIndex = dataset[0].datasetIndex;
         const keywordName = data.datasets[datasetIndex].label;
-        const dailyMessageData = numberOfAccounts;
+        const dailyMessageData = resultNumbersOfAccounts;
         let keywordId : number | null= null;
         if (dailyMessageData?.length > 0) {
           for (let i =0; i<dailyMessageData?.length; i++) {
@@ -131,14 +133,14 @@ const InfluencerGraph = ({numberOfAccounts, chartId, params}: {numberOfAccounts:
       }
   
       useEffect(() => {
-        if(numberOfAccounts) {
-            const labels = chartLabel(numberOfAccounts);
+        if(resultNumbersOfAccounts) {
+            const labels = chartLabel(resultNumbersOfAccounts);
             setLabel(labels);
             
-            const dataSets = chartDatasets(numberOfAccounts);
+            const dataSets = chartDatasets(resultNumbersOfAccounts);
             setDataset(dataSets);
         }
-      },[numberOfAccounts]);
+      },[resultNumbersOfAccounts]);
 
       return (
         <Card>

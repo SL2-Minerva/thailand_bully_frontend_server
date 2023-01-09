@@ -10,8 +10,10 @@ import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { StyledTooltip } from '../dashboard/overall';
 import { Information } from 'mdi-material-ui';
+import { GetEngagementComparison } from 'src/services/api/dashboards/engagement/EngagementApi';
 
-const EngagementTypeComparison  = ({engagementComparison, chartId} : {engagementComparison: any, chartId: string}) => {
+const EngagementTypeComparison  = ({params, chartId} : {params: any, chartId: string}) => {
+  const { resultEngagementComparison } = GetEngagementComparison(params?.campaign, params?.date, params?.endDate, params?.period);
 
   return (
     <Card>
@@ -47,7 +49,7 @@ const EngagementTypeComparison  = ({engagementComparison, chartId} : {engagement
                         </TableCell>
                     </TableHead>
                     {
-                      (engagementComparison || []).map((comparison : any, index: number) => {
+                      (resultEngagementComparison || []).map((comparison : any, index: number) => {
                         return(
                           <TableRow key={index}>
                             <TableCell>{comparison.keyword_name}</TableCell>

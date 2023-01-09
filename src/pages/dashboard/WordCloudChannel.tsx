@@ -6,10 +6,12 @@ import { useCallback, useState } from "react";
 import SourceService from "src/services/api/source/SourceApi";
 import { StyledTooltip } from "./overall";
 import { Information } from "mdi-material-ui";
+import { GetWordCloudsPlatform } from "src/services/api/dashboards/overall/overallDashboardApi";
 
-const WordCloudChannel = ({resultWordClouds, chartId} : {resultWordClouds: any, chartId : string}) => {
+const WordCloudChannel = ({params, chartId} : {params: any, chartId : string}) => {
     const [ platformId, setPlatformId ] = useState<string>("1")
     const { result_source_list  } = SourceService();
+    const { resultWordCloudsPlatform } = GetWordCloudsPlatform(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
 
     const handleSelectList = useCallback((e: SelectChangeEvent) => {
         setPlatformId(e.target.value)
@@ -53,7 +55,7 @@ const WordCloudChannel = ({resultWordClouds, chartId} : {resultWordClouds: any, 
                 </Grid>
             </Grid>
             <div style={{ height: 400, width: 600 }}>
-                <ReactWordcloud words={resultWordClouds?.word_clouds_platform || []} />
+                <ReactWordcloud words={resultWordCloudsPlatform?.word_clouds_platform || []} />
             </div>
         </Card>
     )

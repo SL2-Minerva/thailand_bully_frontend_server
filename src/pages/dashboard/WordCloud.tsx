@@ -4,8 +4,10 @@ import "tippy.js/animations/scale.css";
 import { Card, CardHeader } from "@mui/material";
 import { StyledTooltip } from "./overall";
 import { Information } from "mdi-material-ui";
+import { GetWordClouds } from "src/services/api/dashboards/overall/overallDashboardApi";
 
-const WordCloud = ({resultWordClouds, chartId} : {resultWordClouds: any, chartId: string} ) => {
+const WordCloud = ({params, chartId} : {params: any, chartId: string} ) => {
+    const { resultWordClouds } = GetWordClouds(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
 
     return (
         <Card sx={{ maxHeight: 450,minHeight: 450 }}>

@@ -13,6 +13,7 @@ import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const
 import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import { FilterByCampaignId } from 'src/services/api/dashboards/engagement/EngagementApi'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -26,7 +27,6 @@ interface LineProps {
   labelColor: string
   borderColor: string
   gridLineColor: string
-  filterData: any
   params : any
   type: string
   chartId: string
@@ -66,7 +66,7 @@ const chartLabel = (data:any) => {
 
 const DailyEngagement = (props: LineProps) => {
   // ** Props
-  const { white, labelColor,  borderColor, gridLineColor, filterData, params, type, chartId } = props
+  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId } = props
 
   // const [ chartData, setChartData ] = useState();
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
@@ -75,6 +75,7 @@ const DailyEngagement = (props: LineProps) => {
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
   const [keywordId, setKeywordId] = useState<any>();
+  const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => { 
@@ -82,7 +83,7 @@ const DailyEngagement = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const engagementData = filterData?.engagement;
+    const engagementData = resultFilterData?.engagement;
     let keywordId : number | null= null;
     if (engagementData?.length > 0) {
       for (let i =0; i<engagementData?.length; i++) {
@@ -192,8 +193,8 @@ const DailyEngagement = (props: LineProps) => {
   }
 
   useEffect(() => {
-    if(filterData) {
-      const engagementData = filterData?.engagement;
+    if(resultFilterData) {
+      const engagementData = resultFilterData?.engagement;
       if(engagementData) {
         const labels = chartLabel(engagementData);
         setLabel(labels);
@@ -202,7 +203,7 @@ const DailyEngagement = (props: LineProps) => {
         setDataset(dataSets);
       }
     }
-  },[filterData]);
+  },[resultFilterData]);
 
   const data = {
     labels: label || [],

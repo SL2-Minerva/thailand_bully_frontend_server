@@ -12,6 +12,7 @@ import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import { FilterByCampaignId } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -25,7 +26,6 @@ interface LineProps {
   labelColor: string
   borderColor: string
   gridLineColor: string
-  filterData: any
   params : any
   type: string
   chartId: string
@@ -65,7 +65,8 @@ const chartLabel = (data:any) => {
 
 const DailySenitment = (props: LineProps) => {
   // ** Props
-  const { white, labelColor,  borderColor, gridLineColor, filterData, params, chartId } = props
+  const { white, labelColor,  borderColor, gridLineColor, params, chartId } = props
+  const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
 
   // const [ chartData, setChartData ] = useState();
   const colors = [ '#5be12c','#f5cd19','#ea4228'];
@@ -81,7 +82,7 @@ const DailySenitment = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const sentimentData = filterData?.sentiment;
+    const sentimentData = resultFilterData?.sentiment;
     let keywordId : number | null= null;
     if (sentimentData?.length > 0) {
       for (let i =0; i<sentimentData?.length; i++) {
@@ -191,8 +192,8 @@ const DailySenitment = (props: LineProps) => {
   }
 
   useEffect(() => {
-    if(filterData) {
-      const sentimentData = filterData?.sentiment;
+    if(resultFilterData) {
+      const sentimentData = resultFilterData?.sentiment;
       if(sentimentData) {
         const labels = chartLabel(sentimentData);
         setLabel(labels);
@@ -201,7 +202,7 @@ const DailySenitment = (props: LineProps) => {
         setDataset(dataSets);
       }
     }
-  },[filterData]);
+  },[resultFilterData]);
 
   const data = {
     labels: label || [],

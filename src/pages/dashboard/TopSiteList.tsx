@@ -6,16 +6,17 @@ import { useState } from "react";
 import DailyMessageDetail from "./DailyMessageDetail";
 import { StyledTooltip } from "./overall";
 import { Information } from "mdi-material-ui";
+import { GetTopKeywords } from "src/services/api/dashboards/overall/overallDashboardApi";
 
 interface Props {
-    topsites: any,
     params: any
     chartId : string
 }
 
-const TopSiteList = ({topsites, params, chartId} : Props) => {
+const TopSiteList = ({ params, chartId} : Props) => {
     const [showDetail, setShowDetail] = useState<boolean>(false);
     const [keywordId, setKeywordId] = useState<number>();
+    const { resultTopKeywords } = GetTopKeywords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
 
     return (
         <Card sx={{ maxHeight: 360,minHeight: 360 }}>
@@ -39,7 +40,7 @@ const TopSiteList = ({topsites, params, chartId} : Props) => {
                         </TableHead>
 
                         {
-                            (topsites || [])?.map((topsite :any, index:any) => {
+                            (resultTopKeywords?.top_sites || [])?.map((topsite :any, index:any) => {
                                 return(
                                     <TableRow key={index} onClick={()=>{setShowDetail(true); setKeywordId(topsite?.keyword_id)}}>
                                         <TableCell sx={{ backgroundColor: "lightslategrey !important", color:'white' }}>{topsite?.site_domain}</TableCell>
@@ -51,13 +52,16 @@ const TopSiteList = ({topsites, params, chartId} : Props) => {
                         }
                     </Table>
                 </TableContainer>
-                <DailyMessageDetail 
-                    show={showDetail}
-                    setShow={setShowDetail}
-                    params={params}
-                    keywordId={keywordId}
-                    setKeywordId = {setKeywordId}
-                />
+                {
+                    params?.campaign ? 
+                        <DailyMessageDetail 
+                            show={showDetail}
+                            setShow={setShowDetail}
+                            params={params}
+                            keywordId={keywordId}
+                            setKeywordId = {setKeywordId}
+                        /> : ""
+                }
             </CardContent>
         </Card>
         

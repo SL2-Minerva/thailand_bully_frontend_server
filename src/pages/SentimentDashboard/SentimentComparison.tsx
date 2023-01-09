@@ -10,8 +10,10 @@ import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { StyledTooltip } from '../dashboard/overall';
 import { Information } from 'mdi-material-ui';
+import { GetSentimentComparison } from 'src/services/api/dashboards/sentiment/sentimentDashboard';
 
-const SentimentComparison  = ({sentimentComparison, chartId} : {sentimentComparison: any, chartId: string}) => {
+const SentimentComparison  = ({params, chartId} : {params: any, chartId: string}) => {
+  const { resultSentimentComparison } = GetSentimentComparison(params?.campaign, params?.date, params?.endDate, params?.period);
 
   return (
     <Card>
@@ -51,7 +53,7 @@ const SentimentComparison  = ({sentimentComparison, chartId} : {sentimentCompari
                         </TableCell>
                     </TableHead>
                     {
-                      (sentimentComparison || []).map((comparison : any, index: number) => {
+                      (resultSentimentComparison || []).map((comparison : any, index: number) => {
                         return(
                           <TableRow key={index}>
                             <TableCell>{comparison.keyword_name}</TableCell>

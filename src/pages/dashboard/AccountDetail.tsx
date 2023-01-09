@@ -99,11 +99,15 @@ const AccountDetail = (props: DialogInfoProps) => {
             </TableContainer>
           </DialogContent>
         </Dialog>
-        <DialogNetworkGraph
-          showDialog={showDialog}
-          setShowDialog={setShowDialog}
-          currentData={current}
-        />
+        {
+          showDialog ?
+          <DialogNetworkGraph
+            showDialog={showDialog}
+            setShowDialog={setShowDialog}
+            currentData={current}
+          /> : ""
+        }
+        
       </Card>
     );
 }

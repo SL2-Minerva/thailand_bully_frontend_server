@@ -4,11 +4,7 @@ import { useState } from "react"
 import Filter from "../VoiceDashboard/Filter"
 import { DateType } from "src/types/forms/reactDatepickerTypes"
 import { StyledTooltip } from "../dashboard/overall"
-import MessagesByDay from "../VoiceDashboard/MessagesByDay"
-import { FilterByCampaignId, GetSenitmemntByDay, GetSenitmentComparisonByChannel, 
-    GetSenitmentComparisonByEngagement, GetSentimentByAccount, GetSentimentByBullyLevel,
-     GetSentimentByBullyType, GetSentimentByChannel, GetSentimentByDevice,
-      GetSentimentByTime, GetSentimentComparison, GetSentimentScore, GetSummaryByAccount, GetSummaryByChannel, GetSummaryByKeywords, GetTotalSentiment } from "src/services/api/dashboards/sentiment/sentimentDashboard"
+import {  GetSummaryByAccount, GetSummaryByChannel, GetSummaryByKeywords, GetTotalSentiment } from "src/services/api/dashboards/sentiment/sentimentDashboard"
 import DailySenitment from "./DailySentiment"
 import PercentageOfSentiment from "./PercentageOfSentiment"
 import TotalMessage from "./TotalMessage"
@@ -22,6 +18,14 @@ import SummaryByKeywords from "./SummaryByKeywords"
 import QuickView from "./QuickView"
 import { Information } from "mdi-material-ui"
 import { UserPermission } from "src/services/api/users/role"
+import SentimentByDay from "./SentimentByDay"
+import PeriodComparisonChannelChart from "./PeriodComparisonChannel"
+import SentimentByTime from "./SentimentByTime"
+import SentimentByDevice from "./SentimentByDevice"
+import SentimentByBullyType from "./SentimentByBullyType"
+import SentimentByBullyLevel from "./SentimentByBullyLevel"
+import SentimentByChannel from "./SentitmentByChannel"
+import SentimentByAccount from "./SentimentByAccount"
 
 const SentimentDashboard = () => {
     const theme = useTheme()
@@ -46,19 +50,7 @@ const SentimentDashboard = () => {
     const [ topChannel, setTopChannel ] = useState<string>('all');
 
     const { resultReportPermission } = UserPermission();
-    const { resultFilterData } = FilterByCampaignId(campaign, date, endDate, period);
-    const { resultSentimentByDay } = GetSenitmemntByDay(campaign, date, endDate, period);
-    const { resultSentimentByTime  } = GetSentimentByTime(campaign, date, endDate, period);
-    const { resultSentimentByDevice } = GetSentimentByDevice(campaign, date, endDate, period);
-    const { resultSentimentByAccount } = GetSentimentByAccount(campaign, date, endDate, period);
-    const { resultSentimentByChannel } = GetSentimentByChannel(campaign, date, endDate, period);
-    const { resultSentimentByBullyLevel } = GetSentimentByBullyLevel(campaign, date, endDate, period);
-    const { resultSentimentByBullyType  } = GetSentimentByBullyType(campaign, date, endDate, period);
     const { resultTotalSentiment } = GetTotalSentiment(campaign, date, endDate, period);
-    const { resultSenitmentComparisonByChannel } = GetSenitmentComparisonByChannel(campaign, date, endDate, period);
-    const { resultSenitmentComparisonByEngagement } = GetSenitmentComparisonByEngagement(campaign, date, endDate, period);
-    const { resultSenitmentScore, resultSentimentScorePercentage } = GetSentimentScore(campaign, date, endDate, period);
-    const { resultSentimentComparison } = GetSentimentComparison(campaign, date, endDate, period);
     const { resultSummaryByAccount } = GetSummaryByAccount(campaign, date, endDate, period);
     const { resultSummaryByChannel } = GetSummaryByChannel(campaign, date, endDate, period);
     const { resultSummaryByKeywords } = GetSummaryByKeywords(campaign, date, endDate, period);
@@ -100,7 +92,6 @@ const SentimentDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultFilterData}
                             params= {params}
                             type="transaction"
                             chartId="Chart 1"
@@ -110,13 +101,13 @@ const SentimentDashboard = () => {
                 {
                     resultReportPermission?.includes("77") ?
                     <Grid id="chart2" item xs={12} md={4}>
-                        <PercentageOfSentiment filterData={resultFilterData} type="transaction" chartId="Chart 2"/>
+                        <PercentageOfSentiment params={params} type="transaction" chartId="Chart 2"/>
                     </Grid> : ""
                 }
                 {
                     resultReportPermission?.includes("78") ?
                     <Grid item xs={12} md={12} id="chart3">
-                        <MessagesByDay 
+                        <SentimentByDay 
                             white={whiteColor}
                             labelColor={labelColor}
                             success={lineChartYellow}
@@ -124,9 +115,7 @@ const SentimentDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultSentimentByDay}
-                            type="day"
-                            chartTitle="Sentiment"
+                            params={params}
                             chartId="Chart 3"
                         />
                     </Grid> : ""
@@ -134,7 +123,7 @@ const SentimentDashboard = () => {
                 {
                     resultReportPermission?.includes("79") ?
                     <Grid item xs={12} md={12} id="chart4">
-                        <MessagesByDay
+                        <SentimentByTime
                             white={whiteColor}
                             labelColor={labelColor}
                             success={lineChartYellow}
@@ -142,9 +131,7 @@ const SentimentDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultSentimentByTime}
-                            type="time"
-                            chartTitle="Sentiment"
+                            params={params}
                             chartId="Chart 4"
                         />
                     </Grid> : ""
@@ -152,7 +139,7 @@ const SentimentDashboard = () => {
                 {
                     resultReportPermission?.includes("80") ?
                     <Grid item xs={12} md={12} id="chart5">
-                        <MessagesByDay
+                        <SentimentByDevice
                             white={whiteColor}
                             labelColor={labelColor}
                             success={lineChartYellow}
@@ -160,9 +147,7 @@ const SentimentDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultSentimentByDevice}
-                            type = "device"
-                            chartTitle="Sentiment"
+                            params={params}
                             chartId="Chart 5"
                         />
                     </Grid> : ""
@@ -170,7 +155,7 @@ const SentimentDashboard = () => {
                 {
                     resultReportPermission?.includes("81") ?
                     <Grid item xs={12} md={12} id="chart6">
-                        <MessagesByDay
+                        <SentimentByAccount
                             white={whiteColor}
                             labelColor={labelColor}
                             success={lineChartYellow}
@@ -178,10 +163,8 @@ const SentimentDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultSentimentByAccount}
-                            type = "account"
-                            chartTitle="Sentiment"
                             chartId="Chart 6"
+                            params={params}
                         />
                     </Grid> : ""
                 }
@@ -189,7 +172,7 @@ const SentimentDashboard = () => {
                 {
                     resultReportPermission?.includes("82") ?
                     <Grid item xs={12} md={12} id="chart7">
-                        <MessagesByDay
+                        <SentimentByChannel
                             white={whiteColor}
                             labelColor={labelColor}
                             success={lineChartYellow}
@@ -197,17 +180,15 @@ const SentimentDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultSentimentByChannel}
-                            type = "channel"
-                            chartTitle="Sentiment"
                             chartId="Chart 7"
+                            params={params}
                         />
                     </Grid> : ""
                 }
                 {
                     resultReportPermission?.includes("83") ?
                     <Grid item xs={12} md={12} id="chart8">
-                        <MessagesByDay
+                        <SentimentByBullyLevel
                             white={whiteColor}
                             labelColor={labelColor}
                             success={lineChartYellow}
@@ -215,17 +196,15 @@ const SentimentDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultSentimentByBullyLevel}
-                            type = "bullyLevel"
-                            chartTitle="Sentiment"
                             chartId="Chart 8"
+                            params={params}
                         />
                     </Grid> : ""
                 }
                 {
                     resultReportPermission?.includes("84") ?
                     <Grid item xs={12} md={12} id="chart9">
-                        <MessagesByDay
+                        <SentimentByBullyType
                             white={whiteColor}
                             labelColor={labelColor}
                             success={lineChartYellow}
@@ -233,9 +212,7 @@ const SentimentDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultSentimentByBullyType}
-                            type = "bullyType"
-                            chartTitle="Sentiment"
+                            params ={params}
                             chartId="Chart 9"
                         />
                     </Grid> : ""
@@ -266,7 +243,7 @@ const SentimentDashboard = () => {
                 {
                     resultReportPermission?.includes("86") ?
                     <Grid item xs={12} md={6} id="chart11">
-                        <PeriodComparisonChart
+                        <PeriodComparisonChannelChart
                                 white={whiteColor}
                                 labelColor={labelColor}
                                 success={lineChartYellow}
@@ -274,11 +251,11 @@ const SentimentDashboard = () => {
                                 primary={lineChartPrimary}
                                 warning={lineChartWarning}
                                 gridLineColor={gridLineColor}
-                                filterData={resultSenitmentComparisonByChannel}
                                 type = "channel"
                                 chartTitle="Sentiment Comparison"
                                 colorType="engagementDefault"
                                 chartId="Chart 11"
+                                params={params}
                             />
                     </Grid> : ""
                 }
@@ -293,7 +270,7 @@ const SentimentDashboard = () => {
                                 primary={lineChartPrimary}
                                 warning={lineChartWarning}
                                 gridLineColor={gridLineColor}
-                                filterData={resultSenitmentComparisonByEngagement}
+                                params={params}
                                 type = "engagementType"
                                 chartTitle="Sentiment Comparison"
                                 colorType="sentimentComparison"
@@ -306,13 +283,13 @@ const SentimentDashboard = () => {
                     <>
                         <Grid item xs={12} md={6} id="chart13">
                             <SentimentScore
-                                    sentimentScore={resultSenitmentScore}
+                                    params={params}
                                     chartId="Chart 13"
                                 />
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <SentimentScorePercentage
-                                    sentimentLevel={resultSentimentScorePercentage}
+                                    params={params}
                                 />
                         </Grid>
                     </> : ""
@@ -321,7 +298,7 @@ const SentimentDashboard = () => {
                     resultReportPermission?.includes("89") ?
                     <Grid item xs={12} md={12} id="chart14">
                         <SentimentComparison
-                                sentimentComparison={resultSentimentComparison}
+                                params={params}
                                 chartId="Chart 14"
                             />
                     </Grid>: ""

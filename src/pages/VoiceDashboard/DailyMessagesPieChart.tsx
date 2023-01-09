@@ -14,16 +14,18 @@ import { useEffect, useState } from 'react'
 import { GraphicColors } from 'src/utils/const' 
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import { GetPercentageMessage } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
 interface Props {
-  percentData : any
+  params : any
   type : string
   chartId : string
 }
 Chart.register(DoughnutLabel );
 const DailyMessagePieChart  = ( props : Props) => {
-  const { percentData, type, chartId } = props;
+  const { type, chartId, params } = props;
 
+  const { resultPercentageMessage } = GetPercentageMessage(params?.campaign, params?.date, params?.endDate, params?.period);
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
   const initValue = {
@@ -162,9 +164,9 @@ const DailyMessagePieChart  = ( props : Props) => {
   }
 
   useEffect(()=>{
-    if(percentData) {
-      const currentMessageData = percentData?.prcentage_of_messages_current;
-      const previousMessageData = percentData?.prcentage_of_messages_previous;
+    if(resultPercentageMessage) {
+      const currentMessageData = resultPercentageMessage?.prcentage_of_messages_current;
+      const previousMessageData = resultPercentageMessage?.prcentage_of_messages_previous;
       const currentDataset = chartDataset(currentMessageData, 'current');
       setCurrentData(currentDataset);
 
@@ -172,7 +174,7 @@ const DailyMessagePieChart  = ( props : Props) => {
       setPreviousData(previousDataset);
     }
 
-  },[percentData]);
+  },[resultPercentageMessage]);
 
   return (
     <Card style={{ minHeight: '330px' }}>

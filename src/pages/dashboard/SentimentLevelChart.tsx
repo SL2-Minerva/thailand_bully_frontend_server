@@ -9,6 +9,7 @@ import { ApexOptions } from 'apexcharts'
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
+import { GetSentimentLevel } from 'src/services/api/dashboards/overall/overallDashboardApi'
 
 
 const Labels = (data: any) => {
@@ -50,12 +51,12 @@ const ChartDataPositive = (data: any, type : string) => {
   return value;
 }
 
-const SentimentLevelChart = ({sentimentLevel, chartId} : {sentimentLevel: any, chartId: string}) => {
-  
-  const chartLabels =  Labels(sentimentLevel);
-  const positiveData = ChartDataPositive(sentimentLevel, 'positive');
-  const neutralData = ChartDataPositive(sentimentLevel, 'neutral');
-  const negativeData = ChartDataPositive(sentimentLevel, 'negative');
+const SentimentLevelChart = ({params, chartId} : {params: any, chartId: string}) => {
+  const { resultSentimentLevel } = GetSentimentLevel(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const chartLabels =  Labels(resultSentimentLevel);
+  const positiveData = ChartDataPositive(resultSentimentLevel, 'positive');
+  const neutralData = ChartDataPositive(resultSentimentLevel, 'neutral');
+  const negativeData = ChartDataPositive(resultSentimentLevel, 'negative');
 
 
   const series =  [{

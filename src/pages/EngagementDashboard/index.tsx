@@ -1,14 +1,10 @@
 import { Button, Card, CardHeader, Grid } from "@mui/material"
 import { useState } from "react";
-import { EngagementTypePercetage, FilterByCampaignId,GetComparison,GetEngagementComparison,GetEngagementTypeByAccount,
-    GetEngagementTypeByChannel,GetEngagementTypeByDay,GetEngagementTypeByDevice
-    ,GetEngagementTypeByTime,GetMessagesByAccount, 
-    GetMessagesByChannel, GetMessagesByDay, GetMessagesByDevice, GetMessagesByTime, GetPeriodComparisonByChannel, GetPeriodComparisonBySenitment, GetSummary, GetTotalEngagment } from "src/services/api/dashboards/engagement/EngagementApi";
+import { GetSummary, GetTotalEngagment } from "src/services/api/dashboards/engagement/EngagementApi";
 import { StyledTooltip } from "../dashboard/overall";
 import DailyEngagement from "./DailyEngagement";
 import PercentageOfEngangement from "./PercentageOfEngagement";
 import { useTheme } from '@mui/material/styles'
-import MessagesByDay from "../VoiceDashboard/MessagesByDay";
 import Filter from "../VoiceDashboard/Filter";
 import { DateType } from "src/types/forms/reactDatepickerTypes";
 import TotalEngagement from "./TotalEngagement";
@@ -19,6 +15,19 @@ import EngagementSummary from "./EngagementSummary";
 import QuickView from "./QuickView";
 import { Information } from "mdi-material-ui";
 import { UserPermission } from "src/services/api/users/role";
+import DailyEngagementType from "./DailyEngagementType";
+import EngagementByDay from "./EngagementByDay";
+import EngagementByTime from "./EngagementByTime";
+import EngagementByDevice from "./EngagementByDevice";
+import EngagementByAccounts from "./EngagementByAccount";
+import EngagementByChannel from "./EngagementByChannel";
+import PercentageOfEngangementType from "./PercentageEngagementType";
+import EngagementTypeByDay from "./EngagementTypeByDay";
+import EngagementTypeByTime from "./EngagementTypeByTime";
+import EngagementTypeByDevice from "./EngagementTypeByDevice";
+import EngagementTypeByAccount from "./EngagementTypeByAccount";
+import EngagementTypeByChannel from "./EngagementTypeByChannel";
+import PeriodComparisonChartSentiment from "./PeriodComparisonChartSentiment";
 
 const EngagementDashboard = () => {
     const theme = useTheme()
@@ -40,27 +49,11 @@ const EngagementDashboard = () => {
     const [ topKeyword, setTopKeyword ] = useState<string>('all');
 
     const { resultReportPermission } = UserPermission();
-    const { resultFilterData } = FilterByCampaignId(campaignType, date, endDate, period);
-    const { resultMessagesByDay } = GetMessagesByDay(campaignType, date, endDate, period);
-    const { resultMessagesByTime } = GetMessagesByTime(campaignType, date, endDate, period);
-    const { resultMessagesByDevice } = GetMessagesByDevice(campaignType, date, endDate, period);
-    const { resultMessagesByAccount } = GetMessagesByAccount(campaignType, date, endDate, period);
-    const { resultMessagesByChannel } = GetMessagesByChannel(campaignType, date, endDate, period);
-    const { resultEngagementType } = EngagementTypePercetage(campaignType, date, endDate, period);
-    const { resultEngagementTypeByDay } = GetEngagementTypeByDay(campaignType, date, endDate, period);
-    const { resultEngagementTypeByTime } = GetEngagementTypeByTime(campaignType, date, endDate, period);
-    const { resultEngagementTypeByDevice } = GetEngagementTypeByDevice(campaignType, date, endDate, period);
-    const { resultEngagementTypeByAccount } = GetEngagementTypeByAccount(campaignType, date, endDate, period);
-    const { resultEngagementTypeByChannel } =  GetEngagementTypeByChannel(campaignType, date, endDate, period);
     const { resultTotalEngagement } = GetTotalEngagment(campaignType, date, endDate, period);
-    const { resultPeriodComparisonBySenitment }  =GetPeriodComparisonBySenitment(campaignType, date, endDate, period); 
-    const { resultPeriodComparisonByChannel } = GetPeriodComparisonByChannel(campaignType, date, endDate, period);
-    const { resultEngagementComparison } = GetEngagementComparison(campaignType, date, endDate, period); 
-    const { resultComparison }  = GetComparison(campaignType, date, endDate, period); 
     const { resultSummary } = GetSummary(campaignType, date, endDate, period); 
 
     const params = {
-        campaignType : campaignType,
+        campaign : campaignType,
         date : date, 
         endDate : endDate,
         period : period
@@ -96,7 +89,7 @@ const EngagementDashboard = () => {
                 {
                     resultReportPermission?.includes("57") ?
                     <Grid id="chart1" item xs={12} md={4}>
-                        <PercentageOfEngangement filterData={resultFilterData} type="transaction" chartId="Chart 1"/>
+                        <PercentageOfEngangement params={params} type="transaction" chartId="Chart 1"/>
                     </Grid> : ""
                 }
                 {
@@ -110,7 +103,6 @@ const EngagementDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultFilterData}
                             params= {params}
                             type="transaction"
                             chartId="Chart 2"
@@ -120,7 +112,7 @@ const EngagementDashboard = () => {
                 {
                     resultReportPermission?.includes("59") ?
                     <Grid item xs={12} md={12} id="chart3">
-                        <MessagesByDay 
+                        <EngagementByDay 
                             white={whiteColor}
                             labelColor={labelColor}
                             success={lineChartYellow}
@@ -128,9 +120,7 @@ const EngagementDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultMessagesByDay}
-                            type="day"
-                            chartTitle="Engagement"
+                            params ={params}
                             chartId="Chart 3"
                         />
                     </Grid> : ""
@@ -138,7 +128,7 @@ const EngagementDashboard = () => {
                 {
                     resultReportPermission?.includes("60") ?
                     <Grid item xs={12} md={12} id="chart4">
-                        <MessagesByDay
+                        <EngagementByTime
                             white={whiteColor}
                             labelColor={labelColor}
                             success={lineChartYellow}
@@ -146,9 +136,7 @@ const EngagementDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultMessagesByTime}
-                            type="time"
-                            chartTitle="Engagement"
+                            params= {params}
                             chartId="Chart 4"
                         />
                     </Grid> : ""
@@ -156,7 +144,7 @@ const EngagementDashboard = () => {
                 {
                     resultReportPermission?.includes("61") ?
                     <Grid item xs={12} md={12} id="chart5">
-                        <MessagesByDay
+                        <EngagementByDevice
                             white={whiteColor}
                             labelColor={labelColor}
                             success={lineChartYellow}
@@ -164,9 +152,7 @@ const EngagementDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultMessagesByDevice}
-                            type = "device"
-                            chartTitle="Engagement"
+                            params={params}
                             chartId="Chart 5"
                         />
                     </Grid> : ""
@@ -174,7 +160,7 @@ const EngagementDashboard = () => {
                 {
                     resultReportPermission?.includes("62") ?
                     <Grid item xs={12} md={12} id="chart6">
-                        <MessagesByDay
+                        <EngagementByAccounts
                             white={whiteColor}
                             labelColor={labelColor}
                             success={lineChartYellow}
@@ -182,17 +168,15 @@ const EngagementDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultMessagesByAccount}
-                            type = "account"
-                            chartTitle="Engagement"
                             chartId="Chart 6"
+                            params={params}
                         />
                     </Grid> : ""
                 }
                 {
                     resultReportPermission?.includes("63") ?
                     <Grid item xs={12} md={12} id="chart7">
-                        <MessagesByDay
+                        <EngagementByChannel
                             white={whiteColor}
                             labelColor={labelColor}
                             success={lineChartYellow}
@@ -200,10 +184,8 @@ const EngagementDashboard = () => {
                             primary={lineChartPrimary}
                             warning={lineChartWarning}
                             gridLineColor={gridLineColor}
-                            filterData={resultMessagesByChannel}
-                            type = "channel"
-                            chartTitle="Engagement"
                             chartId="Chart 7"
+                            params={params}
                         />
                     </Grid> : ""
                 }
@@ -214,13 +196,13 @@ const EngagementDashboard = () => {
                     {
                         resultReportPermission?.includes("64") ?
                         <Grid id="chart8" item xs={12} md={4}>
-                            <PercentageOfEngangement filterData={resultEngagementType} type="type" chartId="Chart 8"/>
+                            <PercentageOfEngangementType params={params} type="type" chartId="Chart 8"/>
                         </Grid> : ''
                     }
                     {
                         resultReportPermission?.includes("65") ?
                         <Grid id="chart9" item xs={12} md={8}>
-                            <DailyEngagement
+                            <DailyEngagementType
                                 white={whiteColor}
                                 labelColor={labelColor}
                                 success={lineChartYellow}
@@ -228,7 +210,6 @@ const EngagementDashboard = () => {
                                 primary={lineChartPrimary}
                                 warning={lineChartWarning}
                                 gridLineColor={gridLineColor}
-                                filterData={resultEngagementType}
                                 params= {params}
                                 type="type"
                                 chartId="Chart 9"
@@ -238,7 +219,7 @@ const EngagementDashboard = () => {
                     {
                         resultReportPermission?.includes("66") ?
                         <Grid item xs={12} md={12} id="chart10">
-                            <MessagesByDay 
+                            <EngagementTypeByDay 
                                 white={whiteColor}
                                 labelColor={labelColor}
                                 success={lineChartYellow}
@@ -246,9 +227,7 @@ const EngagementDashboard = () => {
                                 primary={lineChartPrimary}
                                 warning={lineChartWarning}
                                 gridLineColor={gridLineColor}
-                                filterData={resultEngagementTypeByDay}
-                                type="day"
-                                chartTitle="Engagement"
+                                params={params}
                                 colorType="engagementType"
                                 chartId="Chart 10"
                             />
@@ -257,7 +236,7 @@ const EngagementDashboard = () => {
                     {
                         resultReportPermission?.includes("67") ?
                         <Grid item xs={12} md={12} id="chart11">
-                            <MessagesByDay
+                            <EngagementTypeByTime
                                 white={whiteColor}
                                 labelColor={labelColor}
                                 success={lineChartYellow}
@@ -265,9 +244,7 @@ const EngagementDashboard = () => {
                                 primary={lineChartPrimary}
                                 warning={lineChartWarning}
                                 gridLineColor={gridLineColor}
-                                filterData={resultEngagementTypeByTime}
-                                type="time"
-                                chartTitle="Engagement"
+                                params={params}
                                 colorType="engagementType"
                                 chartId="Chart 11"
                             />
@@ -276,7 +253,7 @@ const EngagementDashboard = () => {
                     {
                         resultReportPermission?.includes("68") ?
                         <Grid item xs={12} md={12} id="chart12">
-                            <MessagesByDay
+                            <EngagementTypeByDevice
                                 white={whiteColor}
                                 labelColor={labelColor}
                                 success={lineChartYellow}
@@ -284,9 +261,7 @@ const EngagementDashboard = () => {
                                 primary={lineChartPrimary}
                                 warning={lineChartWarning}
                                 gridLineColor={gridLineColor}
-                                filterData={resultEngagementTypeByDevice}
-                                type = "device"
-                                chartTitle="Engagement"
+                                params={params}
                                 colorType="engagementType"
                                 chartId="Chart 12"
                             />
@@ -295,7 +270,7 @@ const EngagementDashboard = () => {
                     {
                         resultReportPermission?.includes("69") ?
                         <Grid item xs={12} md={12} id="chart13">
-                            <MessagesByDay
+                            <EngagementTypeByAccount
                                 white={whiteColor}
                                 labelColor={labelColor}
                                 success={lineChartYellow}
@@ -303,10 +278,7 @@ const EngagementDashboard = () => {
                                 primary={lineChartPrimary}
                                 warning={lineChartWarning}
                                 gridLineColor={gridLineColor}
-                                filterData={resultEngagementTypeByAccount}
-                                type = "account"
-                                chartTitle="Engagement"
-                                colorType="engagementType"
+                                params={params}
                                 chartId="Chart 13"
                             />
                         </Grid> : ""
@@ -315,7 +287,7 @@ const EngagementDashboard = () => {
                     {
                         resultReportPermission?.includes("70") ?
                         <Grid item xs={12} md={12} id="chart14">
-                            <MessagesByDay
+                            <EngagementTypeByChannel
                                 white={whiteColor}
                                 labelColor={labelColor}
                                 success={lineChartYellow}
@@ -323,10 +295,7 @@ const EngagementDashboard = () => {
                                 primary={lineChartPrimary}
                                 warning={lineChartWarning}
                                 gridLineColor={gridLineColor}
-                                filterData={resultEngagementTypeByChannel}
-                                type = "channel"
-                                chartTitle="Engagement"
-                                colorType="engagementType"
+                                params={params}
                                 chartId="Chart 14"
                             />
                         </Grid> : ""
@@ -366,7 +335,7 @@ const EngagementDashboard = () => {
                                     primary={lineChartPrimary}
                                     warning={lineChartWarning}
                                     gridLineColor={gridLineColor}
-                                    filterData={resultPeriodComparisonByChannel}
+                                    params={params}
                                     type = "channel"
                                     chartTitle="Engagement Comparison"
                                     colorType="engagementDefault"
@@ -377,7 +346,7 @@ const EngagementDashboard = () => {
                     {
                         resultReportPermission?.includes("73") ?
                         <Grid item xs={12} md={6} id="chart17">
-                            <PeriodComparisonChart
+                            <PeriodComparisonChartSentiment
                                     white={whiteColor}
                                     labelColor={labelColor}
                                     success={lineChartYellow}
@@ -385,7 +354,7 @@ const EngagementDashboard = () => {
                                     primary={lineChartPrimary}
                                     warning={lineChartWarning}
                                     gridLineColor={gridLineColor}
-                                    filterData={resultPeriodComparisonBySenitment}
+                                    params={params}
                                     type = "sentiment"
                                     chartTitle="Engagement Comparison"
                                     colorType="SentimentComparisonEngagment"
@@ -398,11 +367,11 @@ const EngagementDashboard = () => {
                         <>
                             <Grid item xs={12} md={7} id="chart18">
                                 <EngagementTypeComparison
-                                        engagementComparison={resultEngagementComparison} chartId="Chart 18"
+                                        params={params} chartId="Chart 18"
                                     />
                             </Grid> 
                             <Grid item xs={12} md={5} id="chart19">
-                                    <EngagmentComparisonChart sentimentLevel={resultComparison}/>
+                                    <EngagmentComparisonChart params={params}/>
                             </Grid>
                         </>
                         : ""

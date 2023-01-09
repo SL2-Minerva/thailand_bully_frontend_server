@@ -14,6 +14,7 @@ import { InteractionItem } from 'chart.js'
 
 import { Information } from 'mdi-material-ui'
 import { StyledTooltip } from './overall'
+import { FilterByCampaignId } from 'src/services/api/dashboards/overall/overallDashboardApi'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -27,7 +28,6 @@ interface LineProps {
   labelColor: string
   borderColor: string
   gridLineColor: string
-  filterData: any
   params : any
 }
 
@@ -65,7 +65,8 @@ const chartLabel = (data:any) => {
 
 const StackedChart = (props: LineProps) => {
   // ** Props
-  const { white, labelColor,  borderColor, gridLineColor, filterData, params } = props
+  const { white, labelColor,  borderColor, gridLineColor, params } = props
+  const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
 
   // const [ chartData, setChartData ] = useState();
 
@@ -81,7 +82,7 @@ const StackedChart = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = filterData?.daily_message;
+    const dailyMessageData = resultFilterData?.daily_message;
     let keywordId : number | null= null;
     if (dailyMessageData?.length > 0) {
       for (let i =0; i<dailyMessageData?.length; i++) {
@@ -200,17 +201,20 @@ const StackedChart = (props: LineProps) => {
   }
 
   useEffect(() => {
-    if(filterData) {
-      const dailyMessageData = filterData?.daily_message;
+    if(resultFilterData) {
+      const dailyMessageData = resultFilterData?.daily_message;
       if(dailyMessageData) {
         const labels = chartLabel(dailyMessageData);
         setLabel(labels);
         
         const dataSets = chartDatasets(dailyMessageData);
         setDataset(dataSets);
+      }else {
+        setLabel([]);
+        setDataset([]);
       }
     }
-  },[filterData]);
+  },[resultFilterData]);
 
   const data = {
     labels: label || [],
@@ -235,13 +239,16 @@ const StackedChart = (props: LineProps) => {
       
       <CardContent>
          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
-         <DailyMessageDetail 
-            show={showDetail}
-            setShow={setShowDetail}
-            params = {params}
-            keywordId = {keywordId}
-            setKeywordId={setKeywordId}
-         />
+         {
+          keywordId && params?.campaign ? 
+          <DailyMessageDetail 
+              show={showDetail}
+              setShow={setShowDetail}
+              params = {params}
+              keywordId = {keywordId}
+              setKeywordId={setKeywordId}
+          /> : ""
+         }
       </CardContent>
     </Card>
   )

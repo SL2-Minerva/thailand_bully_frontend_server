@@ -5,9 +5,11 @@ import { Button, Card, CardHeader, Grid } from "@mui/material";
 import { useState } from "react";
 import { StyledTooltip } from "./overall";
 import { Information } from "mdi-material-ui";
+import { GetWordCloudsSentiment } from "src/services/api/dashboards/overall/overallDashboardApi";
 
-const WordCloudSentiment = ({resultWordClouds, chartId} : {resultWordClouds: any, chartId: string}) => {
+const WordCloudSentiment = ({params, chartId} : {params: any, chartId: string}) => {
     const [ sentiment, setSentiment ] = useState('');
+    const { resultWordCloudsSentiment } = GetWordCloudsSentiment(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
 
     const chooseSentiment = (value: string) =>{ 
         setSentiment(value);
@@ -38,7 +40,7 @@ const WordCloudSentiment = ({resultWordClouds, chartId} : {resultWordClouds: any
                 </Grid>
             </Grid>
             <div style={{ height: 400, width: 600 }}>
-                <ReactWordcloud words={resultWordClouds?.word_clouds_position || [] } />
+                <ReactWordcloud words={resultWordCloudsSentiment?.word_clouds_position || [] } />
             </div>
         </Card>
     )

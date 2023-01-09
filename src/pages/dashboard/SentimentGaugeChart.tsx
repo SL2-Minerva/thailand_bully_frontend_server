@@ -5,12 +5,14 @@ import { Grid } from "@mui/material";
 import dynamic from 'next/dynamic'
 import { StyledTooltip } from './overall';
 import { Information } from 'mdi-material-ui';
+import { GetSentimentScore } from 'src/services/api/dashboards/overall/overallDashboardApi';
 
 // import GaugeChart from 'react-gauge-chart'
 
 const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
 
-const SentimentGaugeChart = ({resultSentimentScore, chartId} : {resultSentimentScore:any, chartId: string}) => {
+const SentimentGaugeChart = ({params, chartId} : {params:any, chartId: string}) => {
+    const {resultSentimentScore} = GetSentimentScore(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
     
     return(
         <Card style={{ maxHeight: '340px' }}>
