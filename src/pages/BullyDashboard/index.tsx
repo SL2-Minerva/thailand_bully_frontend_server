@@ -40,13 +40,13 @@ const BullyDashboard = () => {
     const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
 
-    const [dateBullyType, setDateBullyType] = useState<DateType>(new Date())
-    const [endDateBullyType, setEndDateBullyType] = useState<DateType>(new Date())
-    const [ periodBullyType, setPeriodBullyType ] = useState<string>('daily')
-    const [ dateSelectBullyType, setDateSelectBullyType ] = useState<string>("1")
-    const [ campaignBullyType, setCampaignBullyType ] = useState<string>("1")
-    const [ previousDateBullyType, setPreviousDateBullyType] = useState<DateType>(new Date())
-    const [ previousEndDateBullyType, setPreviousEndDateBullyType] = useState<DateType>(new Date())
+    // const [dateBullyType, setDateBullyType] = useState<DateType>(new Date())
+    // const [endDateBullyType, setEndDateBullyType] = useState<DateType>(new Date())
+    // const [ periodBullyType, setPeriodBullyType ] = useState<string>('daily')
+    // const [ dateSelectBullyType, setDateSelectBullyType ] = useState<string>("1")
+    // const [ campaignBullyType, setCampaignBullyType ] = useState<string>("1")
+    // const [ previousDateBullyType, setPreviousDateBullyType] = useState<DateType>(new Date())
+    // const [ previousEndDateBullyType, setPreviousEndDateBullyType] = useState<DateType>(new Date())
 
     const [ bullyType, setBullyType ] = useState<string>('level');
 
@@ -59,17 +59,17 @@ const BullyDashboard = () => {
     const { resultBullyByChannel } = GetBullyByChannel(campaign, date, endDate, period);
     const { resultBullyBySentiment } = GetBullyBySentiment(campaign, date, endDate, period);
 
-    const {resultBullyTypeFilterData} = FilterBullyTypeByCampaignId(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
-    const {resultBullyTypeByDay} = GetBullyTypeByDay(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
-    const {resultBullyTypeByTime} = GetBullyTypeByTime(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
-    const {resultBullyTypeByDevice} = GetBullyTypeByDevice(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
-    const {resultBullyTypeByAccount} =  GetBullyTypeByAccount(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
-    const {resultBullyTypeByChannel} = GetBullyTypeByChannel(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
-    const {resultBullyTypeBySentiment} = GetBullyTypeBySentiment(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
-    const { resultShareOfChannelBullyLevel } = GetShareOfChannelBullyLevel(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
-    const { resultShareOfChannelChartBullyLevel } = GetShareOfChannelChartBullyLevel(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
-    const { resultShareOfChannelPlatform } = GetShareOfChannelPlatforms(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
-    const { resultShareOfChannelChart } = GetShareOfChannelChart(campaignBullyType, dateBullyType, endDateBullyType, periodBullyType);
+    const {resultBullyTypeFilterData} = FilterBullyTypeByCampaignId(campaign, date, endDate, period);
+    const {resultBullyTypeByDay} = GetBullyTypeByDay(campaign, date, endDate, period);
+    const {resultBullyTypeByTime} = GetBullyTypeByTime(campaign, date, endDate, period);
+    const {resultBullyTypeByDevice} = GetBullyTypeByDevice(campaign, date, endDate, period);
+    const {resultBullyTypeByAccount} =  GetBullyTypeByAccount(campaign, date, endDate, period);
+    const {resultBullyTypeByChannel} = GetBullyTypeByChannel(campaign, date, endDate, period);
+    const {resultBullyTypeBySentiment} = GetBullyTypeBySentiment(campaign, date, endDate, period);
+    const { resultShareOfChannelBullyLevel } = GetShareOfChannelBullyLevel(campaign, date, endDate, period);
+    const { resultShareOfChannelChartBullyLevel } = GetShareOfChannelChartBullyLevel(campaign, date, endDate, period);
+    const { resultShareOfChannelPlatform } = GetShareOfChannelPlatforms(campaign, date, endDate, period);
+    const { resultShareOfChannelChart } = GetShareOfChannelChart(campaign, date, endDate, period);
     const params = {
         campaign: campaign,
         date : date, 
@@ -247,25 +247,6 @@ const BullyDashboard = () => {
                 </Grid>
                 : ""
             }
-            <Grid item xs={12}>
-                <Filter 
-                    tilte="Bully Dashboard"
-                    date ={dateBullyType}
-                    setDate ={setDateBullyType}
-                    endDate ={endDateBullyType}
-                    setEndDate = {setEndDateBullyType}
-                    previousDate = {previousDateBullyType}
-                    setPreviousDate = {setPreviousDateBullyType}
-                    previousEndDate = {previousEndDateBullyType}
-                    setPreviousEndDate = {setPreviousEndDateBullyType}
-                    period ={periodBullyType}
-                    setPeriod ={setPeriodBullyType}
-                    dateSelect= {dateSelectBullyType}
-                    setDateSelect ={setDateSelectBullyType}
-                    campaign={campaignBullyType}
-                    setCampaign={setCampaignBullyType}
-                    />
-            </Grid>
             {
                 resultReportPermission?.includes("101") ?
                 <Grid id="chart9" item xs={12} md={4}>
