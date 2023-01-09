@@ -1,6 +1,5 @@
-import { Button, Card, CardContent, CardHeader, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material"
-import { useCallback, useState } from "react";
-import { CampaignList } from "src/services/api/campaign/CampaignAPI";
+import { Button, Card, CardHeader, Grid } from "@mui/material"
+import { useState } from "react";
 import { EngagementTypePercetage, FilterByCampaignId,GetComparison,GetEngagementComparison,GetEngagementTypeByAccount,
     GetEngagementTypeByChannel,GetEngagementTypeByDay,GetEngagementTypeByDevice
     ,GetEngagementTypeByTime,GetMessagesByAccount, 
@@ -31,7 +30,6 @@ const EngagementDashboard = () => {
     const borderColor = theme.palette.action.focus
     const gridLineColor = theme.palette.action.focus
 
-    const [ campaign, setCampaign ] = useState<string>("1")
     const [date, setDate] = useState<DateType>(new Date())
     const [endDate, setEndDate] = useState<DateType>(new Date())
     const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
@@ -42,13 +40,12 @@ const EngagementDashboard = () => {
     const [ topKeyword, setTopKeyword ] = useState<string>('all');
 
     const { resultReportPermission } = UserPermission();
-    const { resultCampaiganList } = CampaignList();
-    const { resultFilterData } = FilterByCampaignId(campaign);
-    const { resultMessagesByDay } = GetMessagesByDay(campaign);
-    const { resultMessagesByTime } = GetMessagesByTime(campaign);
-    const { resultMessagesByDevice } = GetMessagesByDevice(campaign);
-    const { resultMessagesByAccount } = GetMessagesByAccount(campaign);
-    const { resultMessagesByChannel } = GetMessagesByChannel(campaign);
+    const { resultFilterData } = FilterByCampaignId(campaignType, date, endDate, period);
+    const { resultMessagesByDay } = GetMessagesByDay(campaignType, date, endDate, period);
+    const { resultMessagesByTime } = GetMessagesByTime(campaignType, date, endDate, period);
+    const { resultMessagesByDevice } = GetMessagesByDevice(campaignType, date, endDate, period);
+    const { resultMessagesByAccount } = GetMessagesByAccount(campaignType, date, endDate, period);
+    const { resultMessagesByChannel } = GetMessagesByChannel(campaignType, date, endDate, period);
     const { resultEngagementType } = EngagementTypePercetage(campaignType, date, endDate, period);
     const { resultEngagementTypeByDay } = GetEngagementTypeByDay(campaignType, date, endDate, period);
     const { resultEngagementTypeByTime } = GetEngagementTypeByTime(campaignType, date, endDate, period);
@@ -63,16 +60,11 @@ const EngagementDashboard = () => {
     const { resultSummary } = GetSummary(campaignType, date, endDate, period); 
 
     const params = {
-        campaign: campaign,
         campaignType : campaignType,
         date : date, 
         endDate : endDate,
         period : period
     }
-
-    const handleSelectList = useCallback((e: SelectChangeEvent) => {
-        setCampaign(e.target.value)
-    }, [])
 
     const handleTopKeywords = (data: string) => {
         setTopKeyword(data);
@@ -81,40 +73,23 @@ const EngagementDashboard = () => {
     return (
         <>
             <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Card>
-                        <CardHeader title='Engagement Dashboard' />
-                        <CardContent>
-                            <Grid container spacing={6} mt={2}>
-                                <Grid item sm={4} xs={12}>
-                                    <FormControl fullWidth>
-                                    <InputLabel id='plan-select'>Select Campaign</InputLabel>
-                                    <Select
-                                        fullWidth
-                                        value={campaign}
-                                        id='select-campaign'
-                                        label='Select campaign'
-                                        labelId='campaign-select'
-                                        onChange={(e) => {handleSelectList(e)}}
-                                        inputProps={{ placeholder: 'Select Campaign' }}
-                                    >
-                                        {
-                                        resultCampaiganList && resultCampaiganList.map((item: any, index: number) => {
-                                            return (
-                                            <MenuItem key={index} value={item.id}>
-                                                {item.name}
-                                            </MenuItem>
-                                            )
-                                        })
-                                        }
-                                    </Select>
-                                    </FormControl>
-                                </Grid>
-                            </Grid>
-                        </CardContent>
-                        
-                    </Card>
-                </Grid> 
+                 <Filter 
+                    tilte="Engagement Dashboard"
+                    date ={date}
+                    setDate ={setDate}
+                    endDate ={endDate}
+                    setEndDate = {setEndDate}
+                    previousDate = {previousDate}
+                    setPreviousDate = {setPreviousDate}
+                    previousEndDate = {previousEndDate}
+                    setPreviousEndDate = {setPreviousEndDate}
+                    period ={period}
+                    setPeriod ={setPeriod}
+                    dateSelect= {dateSelect}
+                    setDateSelect ={setDateSelect}
+                    campaign={campaignType}
+                    setCampaign={setCampaignType}
+                />
             </Grid> 
 
             <Grid container spacing={3} mt={2}>
@@ -235,23 +210,6 @@ const EngagementDashboard = () => {
             </Grid>
 
             <Grid container spacing={3} mt={2}>
-                <Filter 
-                    tilte=" Dashboard"
-                    date ={date}
-                    setDate ={setDate}
-                    endDate ={endDate}
-                    setEndDate = {setEndDate}
-                    previousDate = {previousDate}
-                    setPreviousDate = {setPreviousDate}
-                    previousEndDate = {previousEndDate}
-                    setPreviousEndDate = {setPreviousEndDate}
-                    period ={period}
-                    setPeriod ={setPeriod}
-                    dateSelect= {dateSelect}
-                    setDateSelect ={setDateSelect}
-                    campaign={campaignType}
-                    setCampaign={setCampaignType}
-                />
                 <Grid container spacing={3} mt={2}>
                     {
                         resultReportPermission?.includes("64") ?

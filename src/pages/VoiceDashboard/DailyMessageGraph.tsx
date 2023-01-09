@@ -41,27 +41,34 @@ export const chartLabel = (data:any) => {
   if(!data) return [];
   
   let labels : any[] = [];
-  let labelsArrayLength; 
+
+  // let labelsArrayLength; 
   const labelValue : string[] = []
+
   for(let i = 0 ; i<data?.length; i++) {
     const label = data[i]?.value;
-    if(data?.length-1 !== i) {
-        if(label?.length > data[i+1].length) {
-            labelsArrayLength= i
-            labels = data[labelsArrayLength]?.value
-        } else {
-            labelsArrayLength= i+1
-            labels = data[labelsArrayLength]?.value
-        }
-    } else {
-      labels = label;
+
+    // if(data?.length-1 !== i) {
+    //     if(label?.length > data[i+1].length) {
+    //         labelsArrayLength= i
+    //         labels = data[labelsArrayLength]?.value
+    //     } else {
+    //         labelsArrayLength= i+1
+    //         labels = data[labelsArrayLength]?.value
+    //     }
+    // } else {
+    //   labels = label;
+    // }
+    if(labels && label){
+      labels = [...labels, ...label];
     }
     
   }
 
-  if (labels?.length > 0) {
-    for (let i =0; i<labels?.length; i++) {
-        labelValue.push(moment(labels[i]?.date_m).format('DD/MM/YYYY'));
+  if (labels && labels?.length > 0) {
+    const filterArray = [...new Set(labels)]
+    for (let i =0; i<filterArray?.length; i++) {
+        labelValue.push(moment(filterArray[i]?.date_m).format('DD/MM/YYYY'));
     }
   }
 
@@ -157,7 +164,7 @@ const DailyMessageGraph = ( props : Props) => {
           totalAmount.push(total[j].total_at_date);
         } 
         
-        keywordName = data[i].keyword_name;
+        keywordName = data[i].keyword_name ? data[i].keyword_name : data[i].source_name ? data[i].source_name : "";
   
         const chartDataset : StackChartDataset  = {
           fill: false,
