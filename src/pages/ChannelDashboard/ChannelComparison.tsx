@@ -54,8 +54,8 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
                                 </Typography> */}
                             </span>
                             <Typography variant='body2' mt={4}>
-                                <Typography variant='h3' sx={{ display:'flex', justifyContent: 'center' }}>
-                                    {trend === 'plus' ? "+" : "-"}{totalValue}
+                                <Typography variant='h4' sx={{ display:'flex', justifyContent: 'center' }}>
+                                    {trend === 'plus' ? "+" : ""}{totalValue}
                                 </Typography>
                             </Typography>
                             <Typography variant='body2' mt={4}>

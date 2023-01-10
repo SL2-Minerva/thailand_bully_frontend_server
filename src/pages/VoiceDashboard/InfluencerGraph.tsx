@@ -156,13 +156,17 @@ const InfluencerGraph = ({ chartId, params}: {chartId: string, params: any}) => 
             <CardContent>
               <Bar ref={chartRef} data={data} options={options as any} height={353} onClick={onClick} />
             </CardContent>
-            <DailyMessageDetail 
-              show={showDetail}
-              setShow={setShowDetail}
-              params = {params}
-              keywordId = {keywordId}
-              setKeywordId={setKeywordId}
-            />
+            {
+              showDetail ? 
+              <DailyMessageDetail 
+                show={showDetail}
+                setShow={setShowDetail}
+                params = {params}
+                keywordId = {keywordId}
+                setKeywordId={setKeywordId}
+              /> : ""
+            }
+            
         </Card>
         
       )

@@ -57,15 +57,19 @@ const DayTimeComparison = ({params, chartId} : { params: any, chartId: string}) 
               </StyledTooltip>
           </span>
             <CardContent>
-                <ReactApexcharts options={options} series={series} type="heatmap" height={350} />   
-                <DailyMessageDetail 
-                    show={showDetail}
-                    setShow={setShowDetail}
-                    params = {params}
+                <ReactApexcharts options={options} series={series} type="heatmap" height={350} /> 
+                {
+                  showDetail ? 
+                  <DailyMessageDetail 
+                      show={showDetail}
+                      setShow={setShowDetail}
+                      params = {params}
 
-                    // keywordId = {keywordId}
-                    // setKeywordId={setKeywordId}
-                /> 
+                      // keywordId = {keywordId}
+                      // setKeywordId={setKeywordId}
+                  /> : ""
+                }  
+                
             </CardContent>
         </Card>
       )

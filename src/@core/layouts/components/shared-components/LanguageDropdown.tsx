@@ -49,7 +49,7 @@ const LanguageDropdown = ({ settings, saveSettings }: Props) => {
     setAnchorEl(null)
   }
 
-  const handleLangItemClick = (lang: 'en' | 'fr' | 'ar') => {
+  const handleLangItemClick = (lang: 'en' | 'fr' | 'ar' | 'th') => {
     i18n.changeLanguage(lang)
     handleLangDropdownClose()
   }
@@ -79,6 +79,16 @@ const LanguageDropdown = ({ settings, saveSettings }: Props) => {
         </MenuItem>
         <MenuItem
           sx={{ py: 2 }}
+          selected={i18n.language === 'th'}
+          onClick={() => {
+            handleLangItemClick('th')
+            saveSettings({ ...settings, direction: 'ltr' })
+          }}
+        >
+          Thai
+        </MenuItem>
+        {/* <MenuItem
+          sx={{ py: 2 }}
           selected={i18n.language === 'fr'}
           onClick={() => {
             handleLangItemClick('fr')
@@ -96,7 +106,7 @@ const LanguageDropdown = ({ settings, saveSettings }: Props) => {
           }}
         >
           Arabic
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
     </Fragment>
   )

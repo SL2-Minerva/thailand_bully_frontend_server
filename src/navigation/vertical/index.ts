@@ -4,6 +4,7 @@ import HomeAnalytics from 'mdi-material-ui/HomeAnalytics'
 import Pin from 'mdi-material-ui/Pin'
 import Finance from 'mdi-material-ui/Finance'
 import { NewspaperVariantMultiple } from 'mdi-material-ui' 
+import VectorArrangeBelow from 'mdi-material-ui/VectorArrangeBelow'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -137,6 +138,19 @@ const navigation = (): VerticalNavItemsType => {
     ]
   };
 
+  const LinkOut = {
+    title: 'Others',
+    icon: VectorArrangeBelow,
+    children: [
+      {
+        openInNewTab: true,
+        externalLink: true,
+        title: 'Link Out',
+        path: 'https://www.youtube.com/watch?v=7hBf9Fxsg6M'
+      }
+    ]
+  };
+
   const sideMenuBar: any [] = [];
 
   if(UserPermissionData) {
@@ -157,6 +171,10 @@ const navigation = (): VerticalNavItemsType => {
 
   if (ContentPermission) {
     sideMenuBar.push(ContentPermission);
+  }
+
+  if (LinkOut) {
+    sideMenuBar.push(LinkOut);
   }
 
   return sideMenuBar;

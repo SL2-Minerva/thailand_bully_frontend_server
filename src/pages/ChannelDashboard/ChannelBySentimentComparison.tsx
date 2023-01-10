@@ -2,13 +2,13 @@ import { Card, CardContent, CardHeader } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 import { GraphicColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { chartLabel, LineProps } from '../VoiceDashboard/MessageByDays'
 import { GetChannelBySentiment } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
+import MessageDetail from './MessageDetail'
   
 const ChannelBySentimentComparison = (props: LineProps) => {
 
@@ -17,41 +17,63 @@ const ChannelBySentimentComparison = (props: LineProps) => {
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const [current, setCurrent] = useState<any>({})
-  const [keywordId, setKeywordId] = useState<any>();
   const { resultChannelBySentiment } = GetChannelBySentiment(params?.campaign, params?.date, params?.endDate, params?.period);
+  const [ paramsId, setParamsId] = useState<any>({
+    keywordId : null,
+    sourceId: null,
+    campaign_id: null,
+    organization_id: null,
+    classification_id: null
+  });
 
   const chartRef = useRef();
+
   const getKeywordId = (dataset: InteractionItem[]) => {
     if (!dataset.length) return;
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultChannelBySentiment?.daily_message;
-    let keywordId : number | null= null;
+    const dailyMessageData = resultChannelBySentiment?.value;
+
+    const keywordId : number | null= null;
+    let sourceId : number | null = null;
+    let campaign_id : number | null = null;
+    const organization_id : number | null = null;
+    let classification_id : number | null = null;
+
     if (dailyMessageData?.length > 0) {
       for (let i =0; i<dailyMessageData?.length; i++) {
-          if(keywordName === dailyMessageData[i].keyword_name) {
-            keywordId = dailyMessageData[i].keyword_id;
+          if(keywordName === dailyMessageData[i].source_name) {
+            sourceId = dailyMessageData[i].source_id;
+            campaign_id = dailyMessageData[i].campaign_id;
+            classification_id = dailyMessageData[i].classification_id;
           }
       }
     }
 
-    return keywordId;
+    const returnData  = {
+      keywordId : keywordId,
+      sourceId: sourceId,
+      campaign_id: campaign_id,
+      organization_id: organization_id,
+      classification_id: classification_id
+    }
+    
+    return returnData;
   };
   
-  const onClick = (event : any) => {
-    if(chartRef.current) {
-      const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
-      setShowDetail(true);
-
-      if(keyword_id) {
-        // setShowDetail(true);
-        setCurrent({})
+   const onClick = (event : any) => {
+      if(chartRef.current) {
+        const messageDetailIds =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
+  
+        if(messageDetailIds) {
+          setParamsId(messageDetailIds);
+          setShowDetail(true);
+        }
+        
       }
-      
     }
-  }
+
 
   const options = {
     responsive: true,
@@ -114,7 +136,7 @@ const ChannelBySentimentComparison = (props: LineProps) => {
         totalAmount.push(total[i]?.data[j]);
       } 
       
-      keywordName = total[i]?.keyword_name;
+      keywordName = total[i]?.source_name;
       const chartDataset : StackChartDataset  = {
         fill: false,
         tension: 0.5,
@@ -172,13 +194,13 @@ const ChannelBySentimentComparison = (props: LineProps) => {
       <CardContent>
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
           {
-            showDetail ? 
-            <DailyMessageDetail 
+            showDetail ?
+            <MessageDetail 
                 show={showDetail}
                 setShow={setShowDetail}
-                current={current}
-                keywordId={keywordId}
-                setKeywordId={setKeywordId}
+                params = {params}
+                paramsId = {paramsId}
+                setParamsId={setParamsId}
             /> : ""
           }
           

@@ -104,14 +104,17 @@ const DayTimeBullyType = (props: Props) => {
                         <ReactApexcharts options={options_hours} series={seriesHour} type="heatmap" height={220} />  
                     </Grid>
                 </Grid> 
-                <DailyMessageDetail 
-                    show={showDetail}
-                    setShow={setShowDetail}
-                    params = {params}
+                {
+                  showDetail ? 
+                  <DailyMessageDetail 
+                      show={showDetail}
+                      setShow={setShowDetail}
+                      params = {params}
 
-                    // keywordId = {keywordId}
-                    // setKeywordId={setKeywordId}
-                />  
+                      // keywordId = {keywordId}
+                      // setKeywordId={setKeywordId}
+                  /> : ""
+                } 
             </CardContent>
         </Card>
       )
