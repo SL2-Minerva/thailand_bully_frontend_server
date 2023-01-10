@@ -12,20 +12,20 @@ import { useEffect, useState } from 'react'
 import { Information } from 'mdi-material-ui'
 import { StyledTooltip } from '../dashboard/overall'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
+import { GetDayTimeByBullyType } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
 interface Props{
-  hour : any[]
-  day : any[]
   chartId : string,
   params : any
 }
 
 const DayTimeBullyType = (props: Props) => {
-  const {day, hour, chartId, params } = props;
+  const { chartId, params } = props;
 
   const [seriesHour, setSeriesHour ] = useState([{name: '', data:[]}]);
   const [seriesDays, setSeriesDays ] = useState([{name: '', data:[]}]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
+  const { resultDayByBullyType, resultTimeByBullyType } = GetDayTimeByBullyType(params?.campaign, params?.date, params?.endDate, params?.period);
 
     const options_hours : ApexOptions = {
         chart: {
@@ -70,22 +70,22 @@ const DayTimeBullyType = (props: Props) => {
       };
 
       useEffect(() =>{
-        if(day) {
-          setSeriesDays(day);
+        if(resultDayByBullyType) {
+          setSeriesDays(resultDayByBullyType);
         } 
-        if (hour) {
+        if (resultTimeByBullyType) {
           const hourValue:any[] = [];
-          if(hour?.length> 0) {
-            for(let i=0; i<hour?.length; i++ ) {
+          if(resultTimeByBullyType?.length> 0) {
+            for(let i=0; i<resultTimeByBullyType?.length; i++ ) {
               hourValue.push({
                 name: '',
-                data: hour[i]?.data
+                data: resultTimeByBullyType[i]?.data
               })
             }
           }
           setSeriesHour(hourValue);
         }
-      }, [day, hour])
+      }, [resultDayByBullyType, resultTimeByBullyType])
 
       return (
         <Card>

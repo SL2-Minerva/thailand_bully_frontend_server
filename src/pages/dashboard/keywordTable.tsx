@@ -4,8 +4,10 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from "./overall";
 import { Information } from "mdi-material-ui";
+import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
 
-const KeywordTable = ({resultKeywords, chartId} : {resultKeywords: any, chartId: string}) => {
+const KeywordTable = ({params, chartId} : {params: any, chartId: string}) => {
+    const { resultKeywords } = GetKeyWords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
     
     return (
         <Card>

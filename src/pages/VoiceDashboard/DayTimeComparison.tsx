@@ -11,12 +11,13 @@ import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
+import { GetDayTimeComparison } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
-const DayTimeComparison = ({dayTimeComparison, params, chartId} : {dayTimeComparison: any, params: any, chartId: string}) => {
-
+const DayTimeComparison = ({params, chartId} : { params: any, chartId: string}) => {
+  const { resultDayTimeComparison } = GetDayTimeComparison(params?.campaign, params?.date, params?.endDate, params?.period);
     const [series, setSeries] = useState([]) ;
     const [ showDetail , setShowDetail ] = useState<boolean>(false);
-
+  
     const options : ApexOptions = {
         chart: {
           height: 350,
@@ -42,10 +43,10 @@ const DayTimeComparison = ({dayTimeComparison, params, chartId} : {dayTimeCompar
       };
 
       useEffect(() => {
-        if(dayTimeComparison) {
-          setSeries(dayTimeComparison);
+        if(resultDayTimeComparison) {
+          setSeries(resultDayTimeComparison);
         }
-      }, [dayTimeComparison])
+      }, [resultDayTimeComparison])
 
       return (
         <Card>

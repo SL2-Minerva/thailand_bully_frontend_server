@@ -7,6 +7,7 @@ import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import { GetSentimentScore } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
 
 
 const Labels = (data: any) => {
@@ -48,12 +49,13 @@ const ChartDataSentiment = (data: any, type : string) => {
   return value;
 }
 
-const SentimentScorePercentage = ({sentimentLevel} : {sentimentLevel: any}) => {
+const SentimentScorePercentage = ({params} : {params: any}) => {
+  const { resultSentimentScorePercentage } = GetSentimentScore(params?.campaign, params?.date, params?.endDate, params?.period);
   
-  const chartLabels =  Labels(sentimentLevel);
-  const negativeData = ChartDataSentiment(sentimentLevel, 'negative');
-  const neutralData = ChartDataSentiment(sentimentLevel, 'neutral');
-  const positiveData = ChartDataSentiment(sentimentLevel, 'positive');
+  const chartLabels =  Labels(resultSentimentScorePercentage);
+  const negativeData = ChartDataSentiment(resultSentimentScorePercentage, 'negative');
+  const neutralData = ChartDataSentiment(resultSentimentScorePercentage, 'neutral');
+  const positiveData = ChartDataSentiment(resultSentimentScorePercentage, 'positive');
 
 
   const series =  [{

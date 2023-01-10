@@ -29,7 +29,7 @@ export const GetParams = (data : any) => {
   return params;
 }
 
-export const FilterByCampaignId = (campaignId?: string, reload?: boolean, platformId?: string, 
+export const FilterByCampaignId = (campaignId?: string, platformId?: string, 
   start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any ) => {
     const params = {
       campaignId: campaignId,
@@ -44,10 +44,7 @@ export const FilterByCampaignId = (campaignId?: string, reload?: boolean, platfo
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-overall`,
       method: 'GET',
-      params : GetParams(params),
-      data: {
-        reload: reload
-      }
+      params : GetParams(params)
     })
 
     return {
@@ -86,7 +83,7 @@ export const TotalKeyStats = (campaignId?: string, reload?: boolean, platformId?
   }
 }
 
-export const GetKeyWords = (campaignId?: string, reload?: boolean, platformId?: string, 
+export const GetKeyWords = (campaignId?: string, platformId?: string, 
   start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any ) => {
     const params = {
       campaignId: campaignId,
@@ -101,9 +98,6 @@ export const GetKeyWords = (campaignId?: string, reload?: boolean, platformId?: 
     url: `/dashboard-overall/keyword-summary`,
     method: 'GET',
     params : GetParams(params),
-    data: {
-      reload: reload
-    }
   })
 
   return {
@@ -113,7 +107,7 @@ export const GetKeyWords = (campaignId?: string, reload?: boolean, platformId?: 
   }
 }
 
-export const GetTopKeywords = (campaignId?: string, reload?: boolean, platformId?: string, 
+export const GetTopKeywords = (campaignId?: string, platformId?: string, 
   start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any ) => {
     const params = {
       campaignId: campaignId,
@@ -127,10 +121,7 @@ export const GetTopKeywords = (campaignId?: string, reload?: boolean, platformId
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/keyword-summary-top`,
     method: 'GET',
-    params : GetParams(params),
-    data: {
-      reload: reload
-    }
+    params : GetParams(params)
   })
 
   return {
@@ -140,7 +131,7 @@ export const GetTopKeywords = (campaignId?: string, reload?: boolean, platformId
   }
 }
 
-export const GetSentimentScore = (campaignId?: string, reload?: boolean, platformId?: string, 
+export const GetSentimentScore = (campaignId?: string, platformId?: string, 
   start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any ) => {
     const params = {
       campaignId: campaignId,
@@ -155,10 +146,7 @@ export const GetSentimentScore = (campaignId?: string, reload?: boolean, platfor
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/sentiment-score`,
     method: 'GET',
-    params : GetParams(params),
-    data: {
-      reload: reload
-    }
+    params : GetParams(params)
   })
 
   return {
@@ -168,7 +156,7 @@ export const GetSentimentScore = (campaignId?: string, reload?: boolean, platfor
   }
 }
 
-export const GetSentimentType = (campaignId?: string, reload?: boolean, platformId?: string, 
+export const GetSentimentType = (campaignId?: string, platformId?: string, 
   start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any ) => {
     const params = {
       campaignId: campaignId,
@@ -184,9 +172,6 @@ export const GetSentimentType = (campaignId?: string, reload?: boolean, platform
     url: `/dashboard-overall/sentiment-type`,
     method: 'GET',
     params : GetParams(params),
-    data: {
-      reload: reload
-    }
   })
 
   return {
@@ -196,7 +181,7 @@ export const GetSentimentType = (campaignId?: string, reload?: boolean, platform
   }
 }
 
-export const GetShareOfVoiceChart = (campaignId?: string, reload?: boolean, platformId?: string, 
+export const GetShareOfVoiceChart = (campaignId?: string, platformId?: string, 
   start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any ) => {
     const params = {
       campaignId: campaignId,
@@ -211,10 +196,7 @@ export const GetShareOfVoiceChart = (campaignId?: string, reload?: boolean, plat
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/share-of-voice-number`,
     method: 'GET',
-    params : GetParams(params),
-    data: {
-      reload: reload
-    }
+    params : GetParams(params)
   })
 
   return {
@@ -224,7 +206,7 @@ export const GetShareOfVoiceChart = (campaignId?: string, reload?: boolean, plat
   }
 }
 
-export const GetShareOfVoice = (campaignId?: string, reload?: boolean, platformId?: string, 
+export const GetShareOfVoice = (campaignId?: string, platformId?: string, 
   start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any ) => {
     const params = {
       campaignId: campaignId,
@@ -239,10 +221,7 @@ export const GetShareOfVoice = (campaignId?: string, reload?: boolean, platformI
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/share-of-voice`,
     method: 'GET',
-    params : GetParams(params),
-    data: {
-      reload: reload
-    }
+    params : GetParams(params)
   })
 
   return {
@@ -252,7 +231,7 @@ export const GetShareOfVoice = (campaignId?: string, reload?: boolean, platformI
   }
 }
 
-export const GetSentimentLevel = (campaignId?: string, reload?: boolean, platformId?: string, 
+export const GetSentimentLevel = (campaignId?: string, platformId?: string, 
   start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any ) => {
     const params = {
       campaignId: campaignId,
@@ -267,10 +246,7 @@ export const GetSentimentLevel = (campaignId?: string, reload?: boolean, platfor
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/sentiment-level`,
     method: 'GET',
-    params : GetParams(params),
-    data: {
-      reload: reload
-    }
+    params : GetParams(params)
   })
 
   return {
@@ -280,7 +256,7 @@ export const GetSentimentLevel = (campaignId?: string, reload?: boolean, platfor
   }
 }
 
-export const GetWordClouds = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any,
+export const GetWordClouds = (campaignId?: string, platformId?: string, start_date?: any,
    end_date?: any, period?: any, select?: string, previousDate?: any, previousEndDate?: any ) => {
     let params = {};
     const todayDate = new Date();
@@ -308,10 +284,7 @@ export const GetWordClouds = (campaignId?: string, reload?: boolean, platformId?
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/word-clouds`,
     method: 'GET',
-    params : params,
-    data: {
-      reload: reload
-    }
+    params : params
   })
 
   return {
@@ -321,7 +294,7 @@ export const GetWordClouds = (campaignId?: string, reload?: boolean, platformId?
   }
 }
 
-export const GetWordCloudsPlatform = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any,
+export const GetWordCloudsPlatform = (campaignId?: string, platformId?: string, start_date?: any,
   end_date?: any, period?: any, select?: string, previousDate?: any, previousEndDate?: any ) => {
    let params = {};
    const todayDate = new Date();
@@ -349,10 +322,7 @@ export const GetWordCloudsPlatform = (campaignId?: string, reload?: boolean, pla
  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
    url: `/dashboard-overall/word-clouds-platform`,
    method: 'GET',
-   params : params,
-   data: {
-     reload: reload
-   }
+   params : params
  })
 
  return {
@@ -362,7 +332,7 @@ export const GetWordCloudsPlatform = (campaignId?: string, reload?: boolean, pla
  }
 }
 
-export const GetWordCloudsSentiment = (campaignId?: string, reload?: boolean, platformId?: string, start_date?: any,
+export const GetWordCloudsSentiment = (campaignId?: string, platformId?: string, start_date?: any,
   end_date?: any, period?: any, select?: string, previousDate?: any, previousEndDate?: any ) => {
    let params = {};
    const todayDate = new Date();
@@ -390,10 +360,7 @@ export const GetWordCloudsSentiment = (campaignId?: string, reload?: boolean, pl
  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
    url: `/dashboard-overall/word-clouds-position`,
    method: 'GET',
-   params : params,
-   data: {
-     reload: reload
-   }
+   params : params
  })
 
  return {

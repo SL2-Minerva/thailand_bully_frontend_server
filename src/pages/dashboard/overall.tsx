@@ -41,10 +41,8 @@ import CommentSentiment from "./CommentSentiment"
 import ShareOfVoice from "./ShareOfVoice"
 import SentimentLevelChart from "./SentimentLevelChart"
 import { CampaignList } from "src/services/api/campaign/CampaignAPI"
-import { FilterByCampaignId, GetSentimentLevel, GetSentimentScore, GetShareOfVoice, GetShareOfVoiceChart, GetTopKeywords, GetWordClouds, GetWordCloudsPlatform, GetWordCloudsSentiment, TotalKeyStats } from "src/services/api/dashboards/overall/overallDashboardApi"
+import { TotalKeyStats } from "src/services/api/dashboards/overall/overallDashboardApi"
 import SourceService from "src/services/api/source/SourceApi"
-import { GetSentimentType } from 'src/services/api/dashboards/overall/overallDashboardApi'
-import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
 import WordCloud from "./WordCloud"
 import TotalMessageLists from "./TotalMessageLists"
 import WordCloudChannel from "./WordCloudChannel"
@@ -108,20 +106,8 @@ const OverallDashboard = () => {
 
     const { resultReportPermission } = UserPermission();
     const { resultCampaiganList } = CampaignList();
-    const { resultFilterData } = FilterByCampaignId(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
     const { result_source_list  } = SourceService();
-    const { resultTopKeywords } = GetTopKeywords(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
     const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount } = TotalKeyStats(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
-    const { resultShareOfVoice } = GetShareOfVoice(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
-    const { resultSentimentLevel } = GetSentimentLevel(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
-    const {resultSentimentType} = GetSentimentType(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
-    const { resultKeywords } = GetKeyWords(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
-    const {resultSentimentScore} = GetSentimentScore(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
-    const { resultWordClouds } = GetWordClouds(campaign, reload, platformId, date, endDate, period, topKeyword, previousDate, previousEndDate);
-    const { resultWordCloudsSentiment } = GetWordCloudsSentiment(campaign, reload, platformId, date, endDate, period, topKeyword, previousDate, previousEndDate);
-    const { resultWordCloudsPlatform } = GetWordCloudsPlatform(campaign, reload, platformId, date, endDate, period, topKeyword, previousDate, previousEndDate);
-    
-    const { resultShareOfVoiceChart } = GetShareOfVoiceChart(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
 
     const params = {
         campaign: campaign,
@@ -367,7 +353,7 @@ const OverallDashboard = () => {
             {
                 resultReportPermission?.includes("1") ?
                 <Grid id="chart1" item xs={12} md={4}>
-                    <DonutChart filterData = {resultFilterData} />
+                    <DonutChart params={params} />
                 </Grid> : ""
             }
             {
@@ -381,7 +367,6 @@ const OverallDashboard = () => {
                         primary={lineChartPrimary}
                         warning={lineChartWarning}
                         gridLineColor={gridLineColor}
-                        filterData={resultFilterData}
                         params= {params}
                     />
                 </Grid> : ''
@@ -455,7 +440,7 @@ const OverallDashboard = () => {
             {
                 resultReportPermission?.includes("6") ? 
                 <Grid id="chart6" item xs={12}>
-                    <KeywordTable resultKeywords={resultKeywords} chartId="Chart 6"/>
+                    <KeywordTable params={params} chartId="Chart 6"/>
                 </Grid> : ""
             }
         </Grid>
@@ -464,21 +449,21 @@ const OverallDashboard = () => {
             {
                 resultReportPermission?.includes("7") ? 
                 <Grid id="chart7" item xs={12} md={4}>
-                    <MainKeyWordTable mainKeyword={resultTopKeywords?.main_keyword} params={params} chartId="Chart 7"/>
+                    <MainKeyWordTable params={params} chartId="Chart 7"/>
                 </Grid> : ""
             }
 
             {
                 resultReportPermission?.includes("8") ? 
                 <Grid id="chart8" item xs={12} md={4}>
-                    <TopSiteList topsites={resultTopKeywords?.top_sites} params={params} chartId="Chart 8"/>
+                    <TopSiteList params={params} chartId="Chart 8"/>
                 </Grid> : ""
             }
 
             {
                 resultReportPermission?.includes("9") ? 
                 <Grid id="chart9" item xs={12} md={4}>
-                    <TopHashtagList topHashtags={resultTopKeywords?.top_hastag} params={params} chartId="Chart 9"/>
+                    <TopHashtagList params={params} chartId="Chart 9"/>
                 </Grid> : ""
             }
 
@@ -488,14 +473,14 @@ const OverallDashboard = () => {
             {
                 resultReportPermission?.includes("10") ? 
                 <Grid id="chart10" item xs={12} md ={6}>
-                    <SentimentGaugeChart resultSentimentScore={resultSentimentScore} chartId="Chart 10" />
+                    <SentimentGaugeChart params={params} chartId="Chart 10" />
                 </Grid> : 
                 ""
             }
             {
                 resultReportPermission?.includes("11") ? 
                 <Grid id="chart11" item xs={12} md={6}>
-                    <CommentSentiment resultSentimentType={resultSentimentType} chartId="Chart 11" />
+                    <CommentSentiment params={params} chartId="Chart 11" />
                 </Grid> : ""
             }
         </Grid>
@@ -505,10 +490,10 @@ const OverallDashboard = () => {
                 resultReportPermission?.includes("12") ? 
                 <>
                     <Grid id="chart12" item xs={12} md={8}>
-                        <ShareOfVoice resultShareOfVoice={resultShareOfVoice} resultShareofVoiceChart={resultShareOfVoiceChart} chartId="Chart 12"/>
+                        <ShareOfVoice params={params} chartId="Chart 12"/>
                     </Grid>
                     <Grid id="chart13" item xs={12} md={4}>
-                        <SentimentLevelChart sentimentLevel={resultSentimentLevel} chartId="Chart 13"/>
+                        <SentimentLevelChart params={params} chartId="Chart 13"/>
                     </Grid>
                 </> : ""
             }
@@ -534,10 +519,10 @@ const OverallDashboard = () => {
             <>
                 <Grid container spacing={3} mt ={2}>
                     <Grid id="chart14" item xs={12} md={6}>
-                        <WordCloud resultWordClouds={resultWordClouds} chartId="Chart 14"/>
+                        <WordCloud params={params} chartId="Chart 14"/>
                     </Grid>
                     <Grid id="chart15" item xs={12} md={6}>
-                        <TotalMessageLists resultKeywords={resultKeywords} chartId="Chart 15"/>
+                        <TotalMessageLists params={params} chartId="Chart 15"/>
                     </Grid>
                 </Grid>
             </> : ""
@@ -547,10 +532,10 @@ const OverallDashboard = () => {
             resultReportPermission?.includes("15") ?
             <Grid container spacing={3} mt ={2}> 
                 <Grid id="chart16" item xs={12} md={6}>
-                    <WordCloudChannel resultWordClouds={resultWordCloudsPlatform} chartId="Chart 16"/>
+                    <WordCloudChannel params={params} chartId="Chart 16"/>
                 </Grid>
                 <Grid id="chart17" item xs={12} md={6}>
-                    <AccountList resultKeywords={resultKeywords} chartId="Chart 17"/>
+                    <AccountList params={params} chartId="Chart 17"/>
                 </Grid>
             </Grid> : ""
         }
@@ -558,10 +543,10 @@ const OverallDashboard = () => {
             resultReportPermission?.includes("18") ?
             <Grid container spacing={3} mt ={2}>
                 <Grid id="chart18" item xs={12} md={6}>
-                    <WordCloudSentiment resultWordClouds={resultWordCloudsSentiment} chartId="Chart 18"/>
+                    <WordCloudSentiment params={params} chartId="Chart 18"/>
                 </Grid>
                 <Grid id="chart19" item xs={12} md={6}>
-                    <AccountList resultKeywords={resultKeywords} chartId="Chart 19"/>
+                    <AccountList params={params} chartId="Chart 19"/>
                 </Grid>
             </Grid> : ""
         }   

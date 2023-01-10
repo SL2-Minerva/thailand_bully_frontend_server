@@ -1,113 +1,190 @@
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
+import { Card, CardContent, CardHeader } from '@mui/material'
+import { useEffect, useRef, useState } from 'react'
+import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
+import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
+import DailyMessageDetail from '../dashboard/DailyMessageDetail'
+import { GraphicColors } from 'src/utils/const'
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
+import { InteractionItem } from 'chart.js'
+import { chartLabel, LineProps } from '../VoiceDashboard/MessageByDays'
+import { GetEngagementRate } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
+  
+const EngagementRate = (props: LineProps) => {
 
-// ** Third Party Imports
-import { ApexOptions } from 'apexcharts'
+  const { white, labelColor, borderColor, gridLineColor, chartId, params } = props
 
-// ** Custom Components Imports
-import ReactApexcharts from 'src/@core/components/react-apexcharts'
-import { GraphicColors } from 'src/utils/const' 
+  const [ label, setLabel ] = useState<string[]>([]);
+  const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
+  const [ showDetail , setShowDetail ] = useState<boolean>(false);
+  const [current, setCurrent] = useState<any>({})
+  const [keywordId, setKeywordId] = useState<any>();
+  const { resultEngagementRate } = GetEngagementRate(params?.campaign, params?.date, params?.endDate, params?.period);
 
-interface Props {
-  rateData: any
-  type: string
-}
-export const getSeries = (seriesData: any) => {
-  if(!seriesData) return [];
+  const chartRef = useRef();
+  const getKeywordId = (dataset: InteractionItem[]) => {
+    if (!dataset.length) return;
 
-  let series : any[] = [];
-  if (seriesData?.data) {
-    const chartData = seriesData?.data;
-    series = [
-        {
-            name: "current period",
-            data: chartData?.current_period ? chartData?.current_period : []
-        },
-        {
-            name: "previous period",
-            data: chartData?.previous_period ? chartData?.previous_period : []
-        },
-    ]
+    const datasetIndex = dataset[0].datasetIndex;
+    const keywordName = data.datasets[datasetIndex].label;
+    const dailyMessageData = resultEngagementRate?.daily_message;
+    let keywordId : number | null= null;
+    if (dailyMessageData?.length > 0) {
+      for (let i =0; i<dailyMessageData?.length; i++) {
+          if(keywordName === dailyMessageData[i].keyword_name) {
+            keywordId = dailyMessageData[i].keyword_id;
+          }
+      }
+    }
+
+    return keywordId;
+  };
+  
+  const onClick = (event : any) => {
+    if(chartRef.current) {
+      const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
+      setShowDetail(true);
+
+      if(keyword_id) {
+        // setShowDetail(true);
+        setCurrent({})
+      }
+      
+    }
   }
 
-  return series;
-}
-
-export const getXaxisData = (seriesData: any) => {
-  if(!seriesData) return [];
-
-  let data : any[] = [];
-  if (seriesData) {
-      data = seriesData?.labels
-  }
-
-  return data;
-}
-
-const EngagementRate = ( props : Props) => {
-    const {rateData, type} = props;
-    const series = getSeries(rateData);
-
-    const options : ApexOptions = {
-        chart: {
-          type: 'bar',
-          height: 350,
-          stacked: true,
-          toolbar: { show: false }
+  const options = {
+    responsive: true,
+    backgroundColor: false,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        ticks: { color: labelColor },
+        grid: {
+          borderColor,
+          color: gridLineColor
         },
-        dataLabels: { enabled: false },
+        stacked: false
+      },
+      y: {
+        min: 0,
 
-        responsive: [{
-          breakpoint: 480,
-          options: {
-            legend: {
-              position: 'bottom',
-              offsetX: -10,
-              offsetY: 0
-            }
-          }
-        }],
-        xaxis: {
-          categories: getXaxisData(rateData),
-        },
-        colors : GraphicColors,
-        fill: {
-          opacity: 1,
-          colors : GraphicColors
-        },
-        legend : {
-            position: 'top',
-            itemMargin: {
-                horizontal: 5,
-                vertical: 0
-            },
-        }
-      };
-
-      return (
-        <Card>
-          {
-            type === 'engagement' ?
-            <CardHeader 
-                title='Engagement Rate'
-                titleTypographyProps={{ variant: 'h6' }}
-            />
-            :
-            type === 'sentiment' ?
-            <CardHeader 
-                title='Sentiment Score'
-                titleTypographyProps={{ variant: 'h6' }}
-            />
-            : ""
-          }
-            
-            <CardContent>
-                <ReactApexcharts type='bar' options={options} series={series} height={350}/>
-            </CardContent>
-        </Card>
+        // max: 5000,
         
-      )
+        scaleLabel: { display: true },
+        ticks: {
+          stepSize: 100,
+          color: labelColor
+        },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        },
+
+        // stacked: true
+        
+      }
+    },
+    plugins: {
+      legend: {
+        align: 'end',
+        position: 'top',
+        labels: {
+          padding: 25,
+          boxWidth: 10,
+          color: labelColor,
+          usePointStyle: true
+        }
+      }
+    }
+  }
+
+  const chartDatasets = (data:any) => {
+    if(!data) return [];
+    let totalAmount : number[] = [];
+    let keywordName = "";
+    const returnData : StackChartDataset[] = [];
+    const color = GraphicColors
+    const total = data?.value || data?.data || [];
+
+    for(let i = 0 ; i<total?.length; i++) {
+      totalAmount = []
+
+      for(let j=0; j<total[i]?.data?.length ; j++ ) {
+        totalAmount.push(total[i]?.data[j]);
+      } 
+      
+      keywordName = total[i]?.keyword_name;
+      const chartDataset : StackChartDataset  = {
+        fill: false,
+        tension: 0.5,
+        pointRadius: 1,
+        label: keywordName,
+        pointHoverRadius: 5,
+        pointStyle: 'circle',
+        borderColor: color[i],
+        backgroundColor: color[i],
+        pointHoverBorderWidth: 5,
+        pointHoverBorderColor: white,
+        pointBorderColor: 'transparent',
+        pointHoverBackgroundColor: color[i],
+        data: totalAmount
+      }
+  
+      returnData.push(chartDataset);
+    }
+
+    return returnData;
+  
+  }
+
+    useEffect(() => {
+        if(resultEngagementRate) {
+        const dailyMessageData = resultEngagementRate;
+        if(dailyMessageData) {
+            const labels = chartLabel(dailyMessageData);
+            setLabel(labels);
+            
+            const dataSets = chartDatasets(dailyMessageData);
+            setDataset(dataSets);
+        }
+        }
+    },[resultEngagementRate]);
+
+    const data = {
+        labels: label || [],
+        datasets: dataset
+    }
+
+    return (
+      <Card>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title="Engagement Rate"
+            titleTypographyProps={{ variant: 'h6' }}
+            subheaderTypographyProps={{ variant: 'caption' }}
+          />
+          <StyledTooltip arrow title={chartId || ""}>
+              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+          </StyledTooltip>
+        </span>
+      
+      <CardContent>
+          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+          {
+            showDetail ? 
+            <DailyMessageDetail 
+                show={showDetail}
+                setShow={setShowDetail}
+                current={current}
+                keywordId={keywordId}
+                setKeywordId={setKeywordId}
+            /> : ""
+          }
+        
+      </CardContent>
+    </Card>
+    )
 }
 
 export default EngagementRate

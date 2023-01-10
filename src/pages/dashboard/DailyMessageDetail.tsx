@@ -154,7 +154,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
         </Dialog>
 
         {
-          messageId ? 
+          messageId && params?.campaign ? 
           <DialogNetworkGraph
             showDialog={showDialog}
             setShowDialog={setShowDialog}

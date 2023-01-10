@@ -10,10 +10,12 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import { GetKeywordComparisonByBullyType } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
-const KeywordComparisonByBullyType = ({resultKeywordComparisonByBullyType, chartId} : {resultKeywordComparisonByBullyType: any, chartId:string}) => {
+const KeywordComparisonByBullyType = ({params, chartId} : {params: any, chartId:string}) => {
   const [series, setSeries] = useState([]);
   const [labels, setLabels] = useState([]);
+  const { resultKeywordComparisonByBullyType } = GetKeywordComparisonByBullyType(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const options: ApexOptions = {
       chart: {

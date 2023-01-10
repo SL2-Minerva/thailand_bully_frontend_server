@@ -368,7 +368,7 @@ export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_dat
     }
   }
 
-  export const GetComparison = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+  export const GetComparisonEngagement = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
       const params = {
         campaignId: campaignId,
         start_date: moment(start_date).format('YYYY-MM-DD'),

@@ -13,6 +13,7 @@ import { InteractionItem } from 'chart.js'
 import { BullyDashboardColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import { FilterByCampaignId } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -26,7 +27,6 @@ interface LineProps {
   labelColor: string
   borderColor: string
   gridLineColor: string
-  filterData: any
   params : any
   type: string
   chartId : string
@@ -66,7 +66,7 @@ const chartLabel = (data:any) => {
 
 const DailyMessgeByBully = (props: LineProps) => {
   // ** Props
-  const { white, labelColor,  borderColor, gridLineColor, filterData, params, type, chartId } = props
+  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId } = props
 
   // const [ chartData, setChartData ] = useState();
   const colors = BullyDashboardColors;
@@ -75,6 +75,7 @@ const DailyMessgeByBully = (props: LineProps) => {
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
   const [keywordId, setKeywordId] = useState<any>();
+  const { resultFilterData  } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => { 
@@ -82,7 +83,7 @@ const DailyMessgeByBully = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const bully_levelData = filterData?.bully_level;
+    const bully_levelData = resultFilterData?.bully_level;
     let keywordId : number | null= null;
     if (bully_levelData?.length > 0) {
       for (let i =0; i<bully_levelData?.length; i++) {
@@ -202,8 +203,8 @@ const DailyMessgeByBully = (props: LineProps) => {
   }
 
   useEffect(() => {
-    if(filterData) {
-      const bully_levelData = filterData?.bully_level ? filterData?.bully_level : filterData?.bully_type;
+    if(resultFilterData) {
+      const bully_levelData = resultFilterData?.bully_level ? resultFilterData?.bully_level : resultFilterData?.bully_type;
       if(bully_levelData) {
         const labels = chartLabel(bully_levelData);
         setLabel(labels);
@@ -212,7 +213,7 @@ const DailyMessgeByBully = (props: LineProps) => {
         setDataset(dataSets);
       }
     }
-  },[filterData]);
+  },[resultFilterData]);
 
   const data = {
     labels: label || [],

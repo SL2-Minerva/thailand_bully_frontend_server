@@ -118,14 +118,18 @@ const MessageDetail = (props: DialogInfoProps) => {
             </TableContainer>
           </DialogContent>
         </Dialog>
-        <DialogNetworkGraph
-          showDialog={showDialog}
-          setShowDialog={setShowDialog}
-          currentData={current}
-          params ={params}
-          keywordId = {keywordId}
-          messageId = {messageId}
-        />
+        {
+          showDialog ?
+          <DialogNetworkGraph
+              showDialog={showDialog}
+              setShowDialog={setShowDialog}
+              currentData={current}
+              params ={params}
+              keywordId = {keywordId}
+              messageId = {messageId}
+            /> : ""
+        }
+        
       </Card>
     );
 }

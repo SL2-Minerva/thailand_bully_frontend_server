@@ -280,7 +280,7 @@ export const GetSentimentScore = (campaignId?: string, start_date?: any, end_dat
     }
 }
 
-export const GetChannelSentimentLevel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetChannelSentimentLevel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any ) => {
 
     const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-channel/channel-by-sentiment`,
@@ -289,10 +289,9 @@ export const GetChannelSentimentLevel = (campaignId?: string, start_date?: any, 
         campaign_id: campaignId || "",
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period
-      },
-      data: {
-        reload: reload
+        period: period,
+        start_date_period : previousDate ? moment(previousDate).format('YYYY-MM-DD') : "",
+        end_date_period : previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : "",
       }
     })
   

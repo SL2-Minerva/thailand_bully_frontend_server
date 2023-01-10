@@ -11,8 +11,10 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import { GetDeviceVsChannel } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
-const ChannelVsDevice = ({resultDeviceVsChannel, chartId} : {resultDeviceVsChannel:any, chartId: string}) => {
+const ChannelVsDevice = ({params, chartId} : {params:any, chartId: string}) => {
+  const { resultDeviceVsChannel } = GetDeviceVsChannel(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const [seriesData, setSeriesData ] = useState([]);
   const [labels, setLabels] = useState([]);

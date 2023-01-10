@@ -9,6 +9,7 @@ import { Table, TableRow, TableHead, TableCell } from "@mui/material";
 import { Bar } from 'react-chartjs-2'
 import { StyledTooltip } from './overall';
 import { Information } from 'mdi-material-ui';
+import { GetShareOfVoice, GetShareOfVoiceChart } from 'src/services/api/dashboards/overall/overallDashboardApi';
 
 const ChartLabels = (data: any) => {
   if (!data) return [];
@@ -34,15 +35,17 @@ const ChartData = (data: any ) => {
   return chartDatas;
 }
 
-const ShareOfVoice  = ({resultShareOfVoice, resultShareofVoiceChart, chartId} : {resultShareOfVoice: any,resultShareofVoiceChart: any, chartId : string}) => {
+const ShareOfVoice  = ({params, chartId} : {params: any, chartId : string}) => {
+  const { resultShareOfVoice } = GetShareOfVoice(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const { resultShareOfVoiceChart } = GetShareOfVoiceChart(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
 
-  const labels = resultShareofVoiceChart ? ChartLabels(resultShareofVoiceChart) : [];
+  const labels = resultShareOfVoiceChart ? ChartLabels(resultShareOfVoiceChart) : [];
   const data = {
   labels: labels,
   datasets: [{
       axis: 'y',
       label: 'Number of Messages',
-      data: ChartData(resultShareofVoiceChart),
+      data: ChartData(resultShareOfVoiceChart),
       fill: false,
       backgroundColor: ['rgb(54, 162, 235)'],
       borderColor: [
@@ -119,32 +122,6 @@ const ShareOfVoice  = ({resultShareOfVoice, resultShareofVoiceChart, chartId} : 
                     {
                       (resultShareOfVoice || []).map((shareVoice : any, index: number) => {
                         return(
-
-                          // <TableRow key={index}>
-                          //   {
-                          //     (shareVoice.value || []).map((value : any, key: number) => {
-                          //       return (
-                          //         <>
-                                    
-                          //             {/* {
-                          //               key === 0 ?
-                          //                 <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
-                          //               : key === 1?
-                          //                   <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
-                          //               : key === 2 ?
-                          //                   <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
-                          //               : key === 3 ?
-                          //                   <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
-                          //               : key === 4 ? 
-                          //                   <TableData key={key} channel={value?.channel} highlight={value?.highlight} percentage={value?.percentage}/>
-                          //               : <></>
-                          //             } */}
-                          //         </>
-                          //       )
-                          //     })
-                          //   }
-                          // </TableRow>
-
                           <TableRow key={index}>
                               <TableCell>
                                   { searchChannel(shareVoice?.value, "facebook") ? 

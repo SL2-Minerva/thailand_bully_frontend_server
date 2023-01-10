@@ -10,8 +10,11 @@ import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { StyledTooltip } from '../dashboard/overall';
 import { Information } from 'mdi-material-ui';
+import { GetSentimentScore } from 'src/services/api/dashboards/sentiment/sentimentDashboard';
 
-const SentimentScore  = ({sentimentScore, chartId} : {sentimentScore: any, chartId: string}) => {
+const SenitmentScore  = ({params, chartId} : {params: any, chartId: string}) => {
+
+  const { resultSenitmentScore } = GetSentimentScore(params?.campaign, params?.date, params?.endDate, params?.period);
 
   return (
     <Card>
@@ -43,7 +46,7 @@ const SentimentScore  = ({sentimentScore, chartId} : {sentimentScore: any, chart
                         </TableCell>
                     </TableHead>
                     {
-                      (sentimentScore || []).map((comparison : any, index: number) => {
+                      (resultSenitmentScore || []).map((comparison : any, index: number) => {
                         return(
                           <TableRow key={index}>  
                             <TableCell>
@@ -51,7 +54,7 @@ const SentimentScore  = ({sentimentScore, chartId} : {sentimentScore: any, chart
                             </TableCell>
                             <TableCell align='center'>
                                 <Typography variant='h4' sx={{ color: comparison.hightlightColor === "neutral" ? '#f5cd19' :  comparison.hightlightColor === "positive" ? '#5be12c' : '#ea4228' }}>
-                                    {comparison.sentimentScore}
+                                    {comparison.resultSenitmentScore}
                                 </Typography>
                             </TableCell>
                             <TableCell align='left'>
@@ -79,4 +82,4 @@ const SentimentScore  = ({sentimentScore, chartId} : {sentimentScore: any, chart
   )
 }
 
-export default SentimentScore
+export default SenitmentScore

@@ -1,20 +1,27 @@
 import { Card, CardHeader, Grid } from "@mui/material"
 import { useState } from "react"
-import { GetChannelByAccount, GetChannelByBullyLevel, GetChannelByBullyType, GetChannelByDay, GetChannelByDevice, GetChannelBySentiment, GetChannelByTime, GetChannelSentimentLevel, GetDailyChannel, GetEngagementRate, GetPercentageChannel, GetSentimentLevel, GetSentimentScore } from "src/services/api/dashboards/channel/ChannelDashboardApi"
-import DailyMessageGraph from "../VoiceDashboard/DailyMessageGraph"
-import DailyMessagePieChart from "../VoiceDashboard/DailyMessagesPieChart"
+import DailyMessageGraph from "./DailyMessageGraph"
 import Filter from "../VoiceDashboard/Filter"
 import { StyledTooltip } from "../dashboard/overall"
 import { useTheme } from '@mui/material/styles'
-import MessagesByDay from "../VoiceDashboard/MessagesByDay"
 import ChannelComparison from "./ChannelComparison"
 import { GetComparison } from "src/services/api/dashboards/channel/ChannelDashboardApi" 
 import ChannelBySentiment from "./ChannelBySentiment"
-import SentimentLevelChart from "../dashboard/SentimentLevelChart"
 import QuickView from "./QuickView"
 import { DateType } from "src/types/forms/reactDatepickerTypes"
 import { Information } from "mdi-material-ui"
 import { UserPermission } from "src/services/api/users/role"
+import DailyMessagePieChart from "./DailyMessagePieChart"
+import ChannelByDay from "./ChannelByDay"
+import ChannelByTime from "./ChannelByTime"
+import ChannelByDevice from "./ChannelByDevice"
+import ChannelByAccount from "./ChannelByAccount"
+import ChannelBySentimentComparison from "./ChannelBySentimentComparison"
+import ChannelByBullyLevel from "./ChannelByBullyLevel"
+import ChannelByBullyType from "./ChannelByBullyType"
+import EngagementRate from "./EngagementRate"
+import SentimentScore from "./SenitmentScore"
+import SentimentLevelChart from "./SentimentLevelChart"
 
 const ChannelDashboard = () => {
     const theme = useTheme()
@@ -45,20 +52,7 @@ const ChannelDashboard = () => {
     
     //api call
     const { resultReportPermission } = UserPermission();
-    const { resultPercentageChannel } = GetPercentageChannel(campaign, date, endDate, period);
-    const { resultDailyChannel } = GetDailyChannel(campaign, date, endDate, period);
-    const { resultChannelByDay } = GetChannelByDay(campaign, date, endDate, period);
-    const { resultChannelByTime } = GetChannelByTime(campaign, date, endDate, period);
-    const { resultChannelByDevice } = GetChannelByDevice(campaign, date, endDate, period);
-    const { resultChannelByAccount } = GetChannelByAccount(campaign, date, endDate, period);
-    const { resultChannelBySentiment } = GetChannelBySentiment(campaign, date, endDate, period);
-    const { resultChannelByBullyLevel } = GetChannelByBullyLevel(campaign, date, endDate, period);
-    const { resultChannelByBullyType } = GetChannelByBullyType(campaign, date, endDate, period);
     const { resultFacebookComparison, resultInstagramComparison, resultPantipComparison, resultTwitterComparison, resultYoutubeComparison } = GetComparison(campaign, date, endDate, period);
-    const { resultEngagementRate } = GetEngagementRate(campaign, date, endDate, period); 
-    const { resultSentimentScore } = GetSentimentScore(campaign, date, endDate, period);
-    const { resultChannelSentimentLevel } = GetChannelSentimentLevel(campaign, date, endDate, period);
-    const { resultSentimentLevel } = GetSentimentLevel(campaign, date, endDate, period);
 
     return (
         <Grid container spacing={6}>
@@ -82,21 +76,21 @@ const ChannelDashboard = () => {
             {
                 resultReportPermission?.includes("44") ?
                 <Grid item xs={12} md={6} id="chart1">
-                    <DailyMessagePieChart percentData={resultPercentageChannel} type="channel" chartId="Chart 1"/>
+                    <DailyMessagePieChart params={params} type="channel" chartId="Chart 1"/>
                 </Grid> : ""
             }
 
             {
                 resultReportPermission?.includes("45") ?
                 <Grid item xs={12} md={6} id="chart2">
-                    <DailyMessageGraph dailyData={resultDailyChannel} type="channel" chartId="Chart 2" params={params}/>
+                    <DailyMessageGraph params={params} type="channel" chartId="Chart 2"/>
                 </Grid> : ""
             }
 
             {
                 resultReportPermission?.includes("46") ?
                 <Grid item xs={12} md={12} id="chart3">
-                    <MessagesByDay 
+                    <ChannelByDay 
                         white={whiteColor}
                         labelColor={labelColor}
                         success={lineChartYellow}
@@ -104,9 +98,7 @@ const ChannelDashboard = () => {
                         primary={lineChartPrimary}
                         warning={lineChartWarning}
                         gridLineColor={gridLineColor}
-                        filterData={resultChannelByDay}
-                        type="day"
-                        chartTitle="Channel"
+                        params={params}
                         chartId="Chart 3"
                     />
                 </Grid> : ""
@@ -115,7 +107,7 @@ const ChannelDashboard = () => {
             {
                 resultReportPermission?.includes("47") ?
                 <Grid item xs={12} md={12} id="chart4">
-                    <MessagesByDay
+                    <ChannelByTime
                         white={whiteColor}
                         labelColor={labelColor}
                         success={lineChartYellow}
@@ -123,9 +115,7 @@ const ChannelDashboard = () => {
                         primary={lineChartPrimary}
                         warning={lineChartWarning}
                         gridLineColor={gridLineColor}
-                        filterData={resultChannelByTime}
-                        type="time"
-                        chartTitle="Channel"
+                        params={params}
                         chartId="Chart 4"
                     />
                 </Grid> : ""
@@ -134,7 +124,7 @@ const ChannelDashboard = () => {
             {
                 resultReportPermission?.includes("48") ?
                 <Grid item xs={12} md={12} id="chart5">
-                    <MessagesByDay
+                    <ChannelByDevice
                         white={whiteColor}
                         labelColor={labelColor}
                         success={lineChartYellow}
@@ -142,9 +132,7 @@ const ChannelDashboard = () => {
                         primary={lineChartPrimary}
                         warning={lineChartWarning}
                         gridLineColor={gridLineColor}
-                        filterData={resultChannelByDevice}
-                        type = "device"
-                        chartTitle="Channel"
+                        params={params}
                         chartId="Chart 5"
                     />
                 </Grid> : ""
@@ -153,7 +141,7 @@ const ChannelDashboard = () => {
             {
                 resultReportPermission?.includes("49") ?
                 <Grid item xs={12} md={12} id="chart6">
-                    <MessagesByDay
+                    <ChannelByAccount
                         white={whiteColor}
                         labelColor={labelColor}
                         success={lineChartYellow}
@@ -161,9 +149,7 @@ const ChannelDashboard = () => {
                         primary={lineChartPrimary}
                         warning={lineChartWarning}
                         gridLineColor={gridLineColor}
-                        filterData={resultChannelByAccount}
-                        type = "account"
-                        chartTitle="Channel"
+                        params={params}
                         chartId="Chart 6"
                     />
                 </Grid> : ""
@@ -172,7 +158,7 @@ const ChannelDashboard = () => {
             {
                 resultReportPermission?.includes("50") ?
                 <Grid item xs={12} md={12} id="chart7">
-                    <MessagesByDay
+                    <ChannelBySentimentComparison
                         white={whiteColor}
                         labelColor={labelColor}
                         success={lineChartYellow}
@@ -180,9 +166,7 @@ const ChannelDashboard = () => {
                         primary={lineChartPrimary}
                         warning={lineChartWarning}
                         gridLineColor={gridLineColor}
-                        filterData={resultChannelBySentiment}
-                        type = "sentiment"
-                        chartTitle="Channel"
+                        params ={params}
                         chartId="Chart 7"
                     />
                 </Grid> : ""
@@ -190,7 +174,7 @@ const ChannelDashboard = () => {
             {
                 resultReportPermission?.includes("51") ?
                 <Grid item xs={12} md={12} id="chart8">
-                    <MessagesByDay
+                    <ChannelByBullyLevel
                         white={whiteColor}
                         labelColor={labelColor}
                         success={lineChartYellow}
@@ -198,9 +182,7 @@ const ChannelDashboard = () => {
                         primary={lineChartPrimary}
                         warning={lineChartWarning}
                         gridLineColor={gridLineColor}
-                        filterData={resultChannelByBullyLevel}
-                        type = "bullyLevel"
-                        chartTitle="Channel"
+                        params={params}
                         chartId="Chart 8"
                     />
                 </Grid> : ""
@@ -208,7 +190,7 @@ const ChannelDashboard = () => {
             {
                 resultReportPermission?.includes("52") ?
                 <Grid item xs={12} md={12} id="chart9">
-                    <MessagesByDay
+                    <ChannelByBullyType
                         white={whiteColor}
                         labelColor={labelColor}
                         success={lineChartYellow}
@@ -216,9 +198,7 @@ const ChannelDashboard = () => {
                         primary={lineChartPrimary}
                         warning={lineChartWarning}
                         gridLineColor={gridLineColor}
-                        filterData={resultChannelByBullyType}
-                        type = "bullyType"
-                        chartTitle="Channel"
+                        params = {params}
                         chartId="Chart 9"
                     />
                 </Grid> : ""
@@ -294,7 +274,7 @@ const ChannelDashboard = () => {
             {
                 resultReportPermission?.includes("54") ?
                 <Grid item xs={12} md={6} id="chart11">
-                    <MessagesByDay
+                    <EngagementRate
                         white={whiteColor}
                         labelColor={labelColor}
                         success={lineChartYellow}
@@ -302,9 +282,7 @@ const ChannelDashboard = () => {
                         primary={lineChartPrimary}
                         warning={lineChartWarning}
                         gridLineColor={gridLineColor}
-                        filterData={resultEngagementRate}
-                        type = ""
-                        chartTitle="Engagement Rate"
+                        params={params}
                         chartId="Chart 11"
                     />
                 </Grid> : ""
@@ -312,7 +290,7 @@ const ChannelDashboard = () => {
             {
                 resultReportPermission?.includes("55") ?
                 <Grid item xs={12} md={6} id="chart12">
-                    <MessagesByDay
+                    <SentimentScore
                         white={whiteColor}
                         labelColor={labelColor}
                         success={lineChartYellow}
@@ -320,9 +298,7 @@ const ChannelDashboard = () => {
                         primary={lineChartPrimary}
                         warning={lineChartWarning}
                         gridLineColor={gridLineColor}
-                        filterData={resultSentimentScore}
-                        type = ""
-                        chartTitle="Sentiment Score"
+                        params ={params}
                         chartId = "Chart 12"
                     />
                 </Grid> : ""
@@ -331,10 +307,10 @@ const ChannelDashboard = () => {
                 resultReportPermission?.includes("56") ?
                 <Grid container spacing={4} ml={3} mt={2} id="chart13">
                     <Grid item xs={12} md={6}>
-                        <ChannelBySentiment channelBySentiment={resultChannelSentimentLevel} chartId="Chart 13"/>
+                        <ChannelBySentiment params={params} chartId="Chart 13"/>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <SentimentLevelChart sentimentLevel={resultSentimentLevel} chartId="Chart 13"/>
+                        <SentimentLevelChart params={params} chartId="Chart 13"/>
                     </Grid>
                 </Grid> : ""
             }

@@ -12,20 +12,20 @@ import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
+import { GetDayTimeByBullyLevel } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
 interface Props{
-  hour : any[]
-  day : any[]
   chartId : string,
   params : any
 }
 
 const DayTimeBullyLevel = (props : Props) => {
-    const {day, hour, chartId, params } = props;
+    const { chartId, params } = props;
 
     const [seriesHour, setSeriesHour ] = useState([{name: '', data:[]}]);
     const [seriesDays, setSeriesDays ] = useState([{name: '', data:[]}]);
     const [ showDetail , setShowDetail ] = useState<boolean>(false);
+    const { resultTimeByBullyLevel, resultDayByBullyLevel } = GetDayTimeByBullyLevel(params?.campaign, params?.date, params?.endDate, params?.period);
 
     const options_hours : ApexOptions = {
         chart: {
@@ -70,22 +70,22 @@ const DayTimeBullyLevel = (props : Props) => {
       };
 
       useEffect(() =>{
-        if(day) {
-          setSeriesDays(day);
+        if(resultTimeByBullyLevel) {
+          setSeriesDays(resultTimeByBullyLevel);
         } 
-        if (hour) {
+        if (resultDayByBullyLevel) {
           const hourValue:any[] = [];
-          if(hour?.length> 0) {
-            for(let i=0; i<hour?.length; i++ ) {
+          if(resultDayByBullyLevel?.length> 0) {
+            for(let i=0; i<resultDayByBullyLevel?.length; i++ ) {
               hourValue.push({
                 name: '',
-                data: hour[i]?.data
+                data: resultDayByBullyLevel[i]?.data
               })
             }
           }
           setSeriesHour(hourValue);
         }
-      }, [day, hour])
+      }, [resultTimeByBullyLevel, resultDayByBullyLevel])
 
       return (
         <Card>

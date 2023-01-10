@@ -10,8 +10,10 @@ import { Grid } from "@mui/material"
 import { Doughnut } from 'react-chartjs-2'
 import { ThumbUp, ThumbDown, ThumbsUpDown, Information } from 'mdi-material-ui'
 import { StyledTooltip } from './overall'
+import { GetSentimentType } from 'src/services/api/dashboards/overall/overallDashboardApi'
 
-const CommentSentiment  = ({resultSentimentType, chartId} : {resultSentimentType:any, chartId: string}) => {
+const CommentSentiment  = ({params, chartId} : {params:any, chartId: string}) => {
+  const {resultSentimentType} = GetSentimentType(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary

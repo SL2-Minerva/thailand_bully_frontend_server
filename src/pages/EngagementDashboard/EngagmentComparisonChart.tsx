@@ -7,6 +7,7 @@ import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import { GetComparisonEngagement } from 'src/services/api/dashboards/engagement/EngagementApi'
 
 
 const Labels = (data: any) => {
@@ -48,12 +49,13 @@ const ChartDataEngagement = (data: any, type : string) => {
   return value;
 }
 
-const EngagmentComparisonChart = ({sentimentLevel} : {sentimentLevel: any}) => {
+const EngagmentComparisonChart = ({params} : {params: any}) => {
+  const { resultComparison }  = GetComparisonEngagement(params?.campaign, params?.date, params?.endDate, params?.period);
   
-  const chartLabels =  Labels(sentimentLevel);
-  const shareData = ChartDataEngagement(sentimentLevel, 'share');
-  const commentData = ChartDataEngagement(sentimentLevel, 'comment');
-  const reactionData = ChartDataEngagement(sentimentLevel, 'reaction');
+  const chartLabels =  Labels(resultComparison);
+  const shareData = ChartDataEngagement(resultComparison, 'share');
+  const commentData = ChartDataEngagement(resultComparison, 'comment');
+  const reactionData = ChartDataEngagement(resultComparison, 'reaction');
 
 
   const series =  [{

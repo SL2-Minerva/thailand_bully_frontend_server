@@ -1,12 +1,14 @@
 import { Avatar, Card, CardHeader, Grid, Typography } from "@mui/material";
 import { Information } from "mdi-material-ui";
 import { useState } from "react";
+import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
 import AccountDetail from "./AccountDetail";
 import { StyledTooltip } from "./overall";
 
-const AccountList = ({resultKeywords, chartId} : {resultKeywords: any, chartId : string}) => {
+const AccountList = ({params, chartId} : {params: any, chartId : string}) => {
     const [showDetail, setShowDetail] = useState<boolean>(false);
     const [current, setCurrent] = useState<any>({})
+    const { resultKeywords } = GetKeyWords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
 
     return (
         <Card sx={{ maxHeight: 500,minHeight: 500, overflow: 'auto' }}>

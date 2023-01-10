@@ -14,9 +14,9 @@ import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { InteractionItem } from 'chart.js'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 import moment from 'moment'
+import { GetDailyMessages } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
 interface Props {
-  dailyData: any
   type: string
   chartId : string
   params: any
@@ -76,11 +76,12 @@ export const chartLabel = (data:any) => {
 }
 
 const DailyMessageGraph = ( props : Props) => {
-    const {dailyData, type, chartId, params} = props;
+    const { type, chartId, params} = props;
     const [ label, setLabel ] = useState<string[]>([]);
     const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
     const [ showDetail , setShowDetail ] = useState<boolean>(false);
     const [keywordId, setKeywordId] = useState<any>();
+    const { resultDailyMessage } = GetDailyMessages(params?.campaign, params?.date, params?.endDate, params?.period);
 
     const chartRef = useRef();
     const getKeywordId = (dataset: InteractionItem[]) => {
@@ -88,7 +89,7 @@ const DailyMessageGraph = ( props : Props) => {
   
       const datasetIndex = dataset[0].datasetIndex;
       const keywordName = data.datasets[datasetIndex].label;
-      const dailyMessageData = dailyData;
+      const dailyMessageData = resultDailyMessage;
       let keywordId : number | null= null;
       if (dailyMessageData?.length > 0) {
         for (let i =0; i<dailyMessageData?.length; i++) {
@@ -195,14 +196,14 @@ const DailyMessageGraph = ( props : Props) => {
     }
 
       useEffect(() => {
-        if(dailyData) {
-            const labels = chartLabel(dailyData);
+        if(resultDailyMessage) {
+            const labels = chartLabel(resultDailyMessage);
             setLabel(labels);
             
-            const dataSets = chartDatasets(dailyData);
+            const dataSets = chartDatasets(resultDailyMessage);
             setDataset(dataSets);
         }
-      },[dailyData]);
+      },[resultDailyMessage]);
 
       return (
         <Card>

@@ -10,8 +10,10 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import { GetKeywordComparisonByChannel } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
-const KeywordComparisonByChannel = ({resultKeywordComparisonByChannel, chartId} : {resultKeywordComparisonByChannel:any, chartId: string}) => {
+const KeywordComparisonByChannel = ({params, chartId} : {params:any, chartId: string}) => {
+  const { resultKeywordComparisonByChannel } = GetKeywordComparisonByChannel(params?.campaign, params?.date, params?.endDate, params?.period);
     
     const [series, setSeries] = useState([]);
     const [labels, setLabels] = useState([]);
