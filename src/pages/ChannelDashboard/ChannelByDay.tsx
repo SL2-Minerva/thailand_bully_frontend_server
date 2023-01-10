@@ -2,13 +2,13 @@ import { Card, CardContent, CardHeader } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 import { GraphicColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { chartLabel, LineProps } from '../VoiceDashboard/MessageByDays'
 import { GetChannelByDay } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
+import MessageDetail from './MessageDetail'
   
 const ChannelByDay = (props: LineProps) => {
 
@@ -17,37 +17,55 @@ const ChannelByDay = (props: LineProps) => {
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const [current, setCurrent] = useState<any>({})
-  const [keywordId, setKeywordId] = useState<any>();
+  const [ paramsId, setParamsId] = useState<any>({
+    keywordId : null,
+    sourceId: null,
+    campaign_id: null,
+    organization_id: null
+  });
   const { resultChannelByDay } = GetChannelByDay(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const chartRef = useRef();
+
   const getKeywordId = (dataset: InteractionItem[]) => {
     if (!dataset.length) return;
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultChannelByDay?.daily_message;
-    let keywordId : number | null= null;
+    const dailyMessageData = resultChannelByDay?.value;
+
+    const keywordId : number | null= null;
+    let sourceId : number | null = null;
+    let campaign_id : number | null = null;
+    let organization_id : number | null = null;
+
     if (dailyMessageData?.length > 0) {
       for (let i =0; i<dailyMessageData?.length; i++) {
-          if(keywordName === dailyMessageData[i].keyword_name) {
-            keywordId = dailyMessageData[i].keyword_id;
+          if(keywordName === dailyMessageData[i].source_name) {
+            sourceId = dailyMessageData[i].source_id;
+            campaign_id = dailyMessageData[i].campaign_id;
+            organization_id = dailyMessageData[i].organization_id;
           }
       }
     }
 
-    return keywordId;
+    const returnData  = {
+      keywordId : keywordId,
+      sourceId: sourceId,
+      campaign_id: campaign_id,
+      organization_id: organization_id
+    }
+    
+    return returnData;
   };
   
   const onClick = (event : any) => {
     if(chartRef.current) {
       const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
-      setShowDetail(true);
 
       if(keyword_id) {
-        // setShowDetail(true);
-        setCurrent({})
+        setParamsId(keyword_id);
+        setShowDetail(true);
       }
       
     }
@@ -173,13 +191,13 @@ const ChannelByDay = (props: LineProps) => {
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
           {
             showDetail ? 
-            <DailyMessageDetail 
+            <MessageDetail 
                 show={showDetail}
                 setShow={setShowDetail}
-                current={current}
-                keywordId={keywordId}
-                setKeywordId={setKeywordId}
-            /> : ""
+                params = {params}
+                paramsId = {paramsId}
+                setParamsId={setParamsId}
+            />: ""
           }
         
       </CardContent>

@@ -58,7 +58,7 @@ const DailyMessagePieChart  = ( props : Props) => {
     const labels : any[] = [];
     const percentage: number[] = [];
     for(let i =0; i<data?.length; i++ ) {
-      labels.push(data[i].keyword_name);
+      labels.push(data[i].source_name);
 
       const percentageValue = data[i]?.value;
       for(let j = 0 ; j<percentageValue?.length; j++) {

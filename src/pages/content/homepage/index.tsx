@@ -22,7 +22,7 @@ const ContentPage = () => {
 
     return(
         <Grid container spacing={6}>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={12} sm={12} mb={2}>
                 <Card>
                         <CardHeader title="Content 1"/> 
                 </Card>
@@ -30,11 +30,10 @@ const ContentPage = () => {
             {
                     (resultContents || []).map((contents, index) => {
                         return(
-                            <>
+                            <Grid container key={index} ml={4} spacing={2}>
                             {
                                 contents.content_id == "1" ? 
-                                <>
-                                    <Grid item md={6} xs={12} key={index}>
+                                    <Grid item md={6} xs={12}>
                                         <Card>
                                             <h2 style={{ marginLeft: '2rem', marginBottom: '-2.6rem' }}> 
                                                 <div dangerouslySetInnerHTML={ {__html: contents.title} } /> 
@@ -60,17 +59,16 @@ const ContentPage = () => {
                                             </CardContent>
                                         </Card>
                                     </Grid>
-                                </>
                                 :
                                 <></>
                             }
-                            </>
+                            </Grid>
                         )
                     })
                     
                 }
             
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={12} sm={12} mb={2}>
                 <Card>
                         <CardHeader title="Content 2"/> 
                 </Card>
@@ -79,11 +77,10 @@ const ContentPage = () => {
                 {
                     (resultContents || []).map((contents, index) => {
                         return(
-                            <>
+                            <Grid container key={index} ml={4} spacing={2}>
                             {
                                 contents.content_id == "2" ? 
-                                <>
-                                    <Grid item md={6} xs={12} key={index}>
+                                    <Grid item md={6} xs={12}>
                                         <Card>
                                             <h2 style={{ marginLeft: '2rem', marginBottom: '-2.6rem' }}> 
                                                 <div dangerouslySetInnerHTML={ {__html: contents.title} } /> 
@@ -109,16 +106,15 @@ const ContentPage = () => {
                                             </CardContent>
                                         </Card>
                                     </Grid>
-                                </>
                                 :
                                 <> </>
                             }
-                            </>
+                            </Grid>
                         )
                     })    
                 }      
 
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={12} sm={12} mb={2}>
                 <Card>
                         <CardHeader title="Content 3"/> 
                 </Card>
@@ -127,11 +123,10 @@ const ContentPage = () => {
                 {
                     (resultContents || []).map((contents, index) => {
                         return(
-                            <>
+                            <Grid container key={index} ml={4} spacing={2}>
                             {
                                 contents.content_id == "3" ? 
-                                <>
-                                    <Grid item md={6} xs={12} key={index}>
+                                    <Grid item md={6} xs={12}>
                                         <Card>
                                             <h2 style={{ marginLeft: '2rem', marginBottom: '-2.6rem' }}> 
                                                 <div dangerouslySetInnerHTML={ {__html: contents.title} } /> 
@@ -157,11 +152,10 @@ const ContentPage = () => {
                                             </CardContent>
                                         </Card>
                                     </Grid>
-                                </>
                                 :
                                 <> </>
                             }
-                            </>
+                            </Grid>
                         )
                     })    
                 }       

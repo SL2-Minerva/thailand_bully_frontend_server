@@ -436,3 +436,18 @@ export const GetNetworkGraph = (campaignId?: string, platformId?: string, start_
    errorNetworkGraph: error
  }
 }
+
+export const GetMessageDetail = (paramData: any ) => {
+ const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+   url: `/dashboard-overall/daily-message/level-three/`,
+   method: 'GET',
+   params : paramData
+ })
+
+ return {
+   resultMessageDetail: response?.data?.message || null,
+   totalMessage: response?.data?.total || 0, 
+   loadingMessageDetail: loading,
+   errorMessageDetail: error
+ }
+}

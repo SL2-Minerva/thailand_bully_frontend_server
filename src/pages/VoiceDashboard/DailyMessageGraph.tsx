@@ -229,13 +229,17 @@ const DailyMessageGraph = ( props : Props) => {
           <CardContent>
               <Bar ref={chartRef} data={data} options={options as any} height={366} onClick={onClick} />
           </CardContent>
-          <DailyMessageDetail 
-            show={showDetail}
-            setShow={setShowDetail}
-            params = {params}
-            keywordId = {keywordId}
-            setKeywordId={setKeywordId}
-         />
+          {
+            showDetail ?
+            <DailyMessageDetail 
+                show={showDetail}
+                setShow={setShowDetail}
+                params = {params}
+                keywordId = {keywordId}
+                setKeywordId={setKeywordId}
+            /> : ""
+          }
+          
         </Card>
         
       )

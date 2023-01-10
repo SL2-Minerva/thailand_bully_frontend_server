@@ -226,12 +226,15 @@ const DailyEngagementType = (props: LineProps) => {
       
       <CardContent>
          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
-         <MessageDetail 
+         {
+          showDetail ? 
+          <MessageDetail 
             show={showDetail}
             setShow={setShowDetail}
             params = {params}
             keywordId = {keywordId}
-         />
+         /> : ""
+         }
       </CardContent>
     </Card>
   )

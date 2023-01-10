@@ -257,6 +257,29 @@ export const GetEngagementRate = (campaignId?: string, start_date?: any, end_dat
     }
 }
 
+export const GetEngagementRatePrevious = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-channel/engagement-rate-previous`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period
+    },
+    data: {
+      reload: reload
+    }
+  })
+
+  return {
+    resultEngagementRatePrevious: res?.data || null,
+    loadingEngagementRatePrevious: loading,
+    errorEngagementRatePrevious: error
+  }
+}
+
 export const GetSentimentScore = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
@@ -273,11 +296,92 @@ export const GetSentimentScore = (campaignId?: string, start_date?: any, end_dat
       }
     }) 
 
+  //   const data = {
+  //     "status": 200,
+  //     "msg": "success",
+  //     "data": {
+  //         "labels": [
+  //             "facebook",
+  //             "twitter",
+  //             "youtube",
+  //             "instagram",
+  //             "google",
+  //             "pantip"
+  //         ],
+  //         "value": {
+  //             "current_period": {
+  //                 "id": 5,
+  //                 "keyword_name": "current period",
+  //                 "data": [
+  //                     0,
+  //                     16,
+  //                     83,
+  //                     0,
+  //                     0,
+  //                     0
+  //                 ]
+  //             }
+  //         }
+  //     }
+  // }
+
     return {
       resultSentimentScore : res?.data || null,
       loadingSentimentScore: loading,
       errorSentimentScore: error
     }
+}
+
+export const GetSentimentScorePrevious = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-channel/sentiment-score-previous`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period
+    },
+    data: {
+      reload: reload
+    }
+  }) 
+
+//    const data = {
+//     "status": 200,
+//     "msg": "success",
+//     "data": {
+//         "labels": [
+//             "facebook",
+//             "twitter",
+//             "youtube",
+//             "instagram",
+//             "google",
+//             "pantip"
+//         ],
+//         "value": {
+//             "previous_period": {
+//                 "id": 5,
+//                 "keyword_name": "previous period",
+//                 "data": [
+//                     0,
+//                     26,
+//                     112,
+//                     0,
+//                     0,
+//                     0
+//                 ]
+//             }
+//         }
+//     }
+// }
+
+  return {
+    resultSentimentScorePrevious : res?.data || null,
+    loadingSentimentScorePrevious : loading,
+    errorSentimentScorePrevious : error
+  }
 }
 
 export const GetChannelSentimentLevel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any ) => {
@@ -302,7 +406,7 @@ export const GetChannelSentimentLevel = (campaignId?: string, start_date?: any, 
     }
   }
   
-  export const GetSentimentLevel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+  export const GetSentimentLevel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, previousDate?:any, previousEndDate?:any ) => {
   
     const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-channel/sentiment-level`,
@@ -311,10 +415,9 @@ export const GetChannelSentimentLevel = (campaignId?: string, start_date?: any, 
         campaign_id: campaignId || "",
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period
-      },
-      data: {
-        reload: reload
+        period: period,
+        start_date_period : previousDate ? moment(previousDate).format('YYYY-MM-DD') : "",
+        end_date_period : previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : "",
       }
     })
   

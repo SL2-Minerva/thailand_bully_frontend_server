@@ -172,13 +172,17 @@ const MessagesByDevices = (props: LineProps) => {
       
       <CardContent>
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
-          <DailyMessageDetail 
-            show={showDetail}
-            setShow={setShowDetail}
-            current={current}
-            keywordId={keywordId}
-            setKeywordId={setKeywordId}
-         />
+          {
+            showDetail ?
+              <DailyMessageDetail 
+                  show={showDetail}
+                  setShow={setShowDetail}
+                  current={current}
+                  keywordId={keywordId}
+                  setKeywordId={setKeywordId}
+              /> : ""
+          }
+          
         
       </CardContent>
     </Card>
