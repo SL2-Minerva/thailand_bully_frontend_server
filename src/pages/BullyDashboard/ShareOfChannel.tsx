@@ -33,7 +33,7 @@ const ChartData = (data: any ) => {
   return chartDatas;
 }
 
-const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  chartId} : {resultShareOfChannel: any,resultShareofChannelPlatform : any, chartId : string}) => {
+const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  chartId, highlight} : {resultShareOfChannel: any,resultShareofChannelPlatform : any, chartId : string, highlight: boolean}) => {
 
   const labels = resultShareOfChannel ? ChartLabels(resultShareOfChannel) : [];
   const data = {
@@ -57,10 +57,10 @@ const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  c
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title='Share of Channel'
-            titleTypographyProps={{ variant: 'h6' }}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           />
           <StyledTooltip arrow title={chartId}>
-              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+              <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
       </span>
       <CardContent>

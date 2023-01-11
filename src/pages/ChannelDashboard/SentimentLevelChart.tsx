@@ -51,7 +51,7 @@ const ChartDataPositive = (data: any, type : string) => {
   return value;
 }
 
-const SentimentLevelChart = ({params, chartId} : {params: any, chartId: string}) => {
+const SentimentLevelChart = ({params, chartId, highlight} : {params: any, chartId: string, highlight: boolean}) => {
   const { resultSentimentLevel } = GetSentimentLevel(params?.campaign, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
   
   const chartLabels =  Labels(resultSentimentLevel);
@@ -119,10 +119,10 @@ const SentimentLevelChart = ({params, chartId} : {params: any, chartId: string})
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
                   title='Sentiment Level'
-                  titleTypographyProps={{ variant: 'h6' }}
+                  titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
           />
           <StyledTooltip arrow title={chartId}>
-              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+              <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
         <CardContent>

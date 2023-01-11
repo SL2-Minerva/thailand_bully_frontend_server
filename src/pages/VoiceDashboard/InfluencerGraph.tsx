@@ -6,22 +6,36 @@ import CardContent from '@mui/material/CardContent'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 
 // ** Custom Components Imports
-import { chartLabel } from './DailyMessageGraph'
+// import { chartLabel } from './DailyMessageGraph'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { GraphicColors } from 'src/utils/const'
 import { useEffect, useRef, useState } from 'react'
 import { InteractionItem } from 'chart.js'
-import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 import { GetNumbersOfAccounts } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
+import MessageDetail from '../ChannelDashboard/MessageDetail'
 
-const InfluencerGraph = ({ chartId, params}: {chartId: string, params: any}) => {
+const chartLabel = (data:any) => {
+  if(!data) return [];
+  
+  let labels : any[] = [];
+  if(data.length > 0) labels = data[0]?.date;
+  
+  return labels;
+}
+
+const InfluencerGraph = ({ chartId, params, highlight}: {chartId: string, params: any, highlight: boolean}) => {
 
       const [ label, setLabel ] = useState<string[]>([]);
       const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
       const [ showDetail , setShowDetail ] = useState<boolean>(false);
-      const [ keywordId, setKeywordId] = useState<any>();
+      const [ paramsId, setParamsId] = useState<any>({
+        keywordId : null,
+        sourceId: null,
+        campaign_id: null,
+        organization_id: null
+      });
       const { resultNumbersOfAccounts } = GetNumbersOfAccounts(params?.campaign, params?.date, params?.endDate, params?.period);
   
       const chartRef = useRef();
@@ -30,33 +44,44 @@ const InfluencerGraph = ({ chartId, params}: {chartId: string, params: any}) => 
     
         const datasetIndex = dataset[0].datasetIndex;
         const keywordName = data.datasets[datasetIndex].label;
-        const dailyMessageData = resultNumbersOfAccounts;
+        const dailyMessageData = resultNumbersOfAccounts?.value;
+    
         let keywordId : number | null= null;
+        let sourceId : number | null = null;
+        let campaign_id : number | null = null;
+    
         if (dailyMessageData?.length > 0) {
           for (let i =0; i<dailyMessageData?.length; i++) {
               if(keywordName === dailyMessageData[i].keyword_name) {
-                keywordId = dailyMessageData[i].keyword_id;
+                sourceId = dailyMessageData[i].source_id || "";
+                campaign_id = dailyMessageData[i].campaign_id || "";
+                keywordId = dailyMessageData[i].id || "";
               }
           }
         }
     
-        return keywordId;
+        const returnData  = {
+          keywordId : keywordId,
+          sourceId: sourceId,
+          campaign_id: campaign_id,
+          organization_id: ""
+        }
+        
+        return returnData;
       };
-  
+      
       const onClick = (event : any) => {
         if(chartRef.current) {
           const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
-          setShowDetail(true);
     
           if(keyword_id) {
-            setKeywordId(keyword_id);
-  
-            // setShowDetail(true);
+            setParamsId(keyword_id);
+            setShowDetail(true);
           }
           
         }
       }
-  
+
       const options = {
         responsive: true,
         backgroundColor: false,
@@ -147,25 +172,25 @@ const InfluencerGraph = ({ chartId, params}: {chartId: string, params: any}) => 
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
               <CardHeader 
                   title='Number of Accounts'
-                  titleTypographyProps={{ variant: 'h6' }}
+                  titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
               />
               <StyledTooltip arrow title={chartId || ""}>
-                  <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                  <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
               </StyledTooltip>
           </span>
             <CardContent>
               <Bar ref={chartRef} data={data} options={options as any} height={353} onClick={onClick} />
             </CardContent>
             {
-              showDetail ? 
-              <DailyMessageDetail 
+            showDetail ? 
+            <MessageDetail 
                 show={showDetail}
                 setShow={setShowDetail}
                 params = {params}
-                keywordId = {keywordId}
-                setKeywordId={setKeywordId}
-              /> : ""
-            }
+                paramsId = {paramsId}
+                setParamsId={setParamsId}
+            />: ""
+          }
             
         </Card>
         

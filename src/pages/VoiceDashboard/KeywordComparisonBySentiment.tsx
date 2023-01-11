@@ -12,7 +12,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { GetKeywordComparisonBySentiment } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
-const KeywordComparisonBySentiment = ({params, chartId} : {params:any, chartId: string}) => {
+const KeywordComparisonBySentiment = ({params, chartId, highlight} : {params:any, chartId: string, highlight?: boolean}) => {
   const [series, setSeries] = useState([]);
   const [labels, setLabels] = useState([]);
   const { resultKeywordComparisonBySentiment } = GetKeywordComparisonBySentiment(params?.campaign, params?.date, params?.endDate, params?.period);
@@ -55,10 +55,10 @@ const KeywordComparisonBySentiment = ({params, chartId} : {params:any, chartId: 
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader 
                     title='Percentage of Keyword Comparison By Sentiment'
-                    titleTypographyProps={{ variant: 'h6' }}
+                    titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
                 />
                 <StyledTooltip arrow title={chartId || ""}>
-                    <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                    <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
                 </StyledTooltip>
             </span>
             <CardContent>

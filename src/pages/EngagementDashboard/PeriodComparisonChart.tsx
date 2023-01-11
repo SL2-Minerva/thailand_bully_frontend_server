@@ -20,6 +20,7 @@ interface LineProps {
     chartTitle: string
     colorType?: string
     chartId: string
+    highlight : boolean
   }
   
   const chartLabel = (data:any) => {
@@ -52,7 +53,7 @@ interface LineProps {
 
 const PeriodComparisonChart = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, type, chartTitle, colorType, chartId, params } = props
+  const { white, labelColor, borderColor, gridLineColor, type, chartTitle, colorType, chartId, params, highlight } = props
   const { resultSenitmentComparisonByEngagement } = GetSenitmentComparisonByEngagement(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const [ label, setLabel ] = useState<string[]>([]);
@@ -174,11 +175,11 @@ const PeriodComparisonChart = (props: LineProps) => {
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <CardHeader
               title={getTitle(type, chartTitle)}
-              titleTypographyProps={{ variant: 'h6' }}
-              subheaderTypographyProps={{ variant: 'caption' }}
+              titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+              subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
             />
             <StyledTooltip arrow title={chartId}>
-                <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
             </StyledTooltip>
         </span>
       

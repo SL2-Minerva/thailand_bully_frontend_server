@@ -8,12 +8,12 @@ import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment';
-import MessageDetail from './MessageDetail' 
 import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const'
 import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { EngagementTypePercetage } from 'src/services/api/dashboards/engagement/EngagementApi'
+import MessageDetail from './MessageDetail'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -29,7 +29,8 @@ interface LineProps {
   gridLineColor: string
   params : any
   type: string
-  chartId: string
+  chartId: string,
+  highlight: boolean
 }
 
 const chartLabel = (data:any) => {
@@ -66,7 +67,7 @@ const chartLabel = (data:any) => {
 
 const DailyEngagementType = (props: LineProps) => {
   // ** Props
-  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId } = props
+  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId, highlight } = props
 
   // const [ chartData, setChartData ] = useState();
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
@@ -75,32 +76,52 @@ const DailyEngagementType = (props: LineProps) => {
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const [keywordId, setKeywordId] = useState<any>();
+  const [ paramsId, setParamsId] = useState<any>({
+    keywordId : null,
+    sourceId: null,
+    campaign_id: null,
+    organization_id: null
+  });
 
   const chartRef = useRef();
-  const getKeywordId = (dataset: InteractionItem[]) => { 
+  const getKeywordId = (dataset: InteractionItem[]) => {
     if (!dataset.length) return;
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const engagementData = resultEngagementType?.engagement;
-    let keywordId : number | null= null;
-    if (engagementData?.length > 0) {
-      for (let i =0; i<engagementData?.length; i++) {
-          if(keywordName === engagementData[i].name) {
-            keywordId = engagementData[i].keyword_id;
+    const dailyMessageData = resultEngagementType?.engagement;
+
+    const keywordId : number | null= null;
+    let sourceId : number | null = null;
+    let campaign_id : number | null = null;
+
+    if (dailyMessageData?.length > 0) {
+      for (let i =0; i<dailyMessageData?.length; i++) {
+          if(keywordName === dailyMessageData[i].name) {
+            sourceId = dailyMessageData[i]?.value[i]?.source_id || "";
+            campaign_id = dailyMessageData[i].campaign_id || "";
+
+            // keywordId = dailyMessageData[i].value[i]?.keyword_id || "";
           }
       }
     }
 
-    return keywordId;
+    const returnData  = {
+      keywordId : keywordId,
+      sourceId: sourceId,
+      campaign_id: campaign_id,
+      organization_id: ""
+    }
+    
+    return returnData;
   };
 
   const onClick = (event : any) => {
     if(chartRef.current) {
       const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
+
       if(keyword_id) {
-        setKeywordId(keyword_id);
+        setParamsId(keyword_id);
         setShowDetail(true);
       }
       
@@ -215,26 +236,27 @@ const DailyEngagementType = (props: LineProps) => {
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
               title='Daily Engagement'
-              titleTypographyProps={{ variant: 'h6' }}
+              titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
               subheader='KeyWords'
-              subheaderTypographyProps={{ variant: 'caption' }}
+              subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
             />
           <StyledTooltip arrow title={chartId}>
-              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+              <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
       
       <CardContent>
          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
          {
-          showDetail ? 
-          <MessageDetail 
-            show={showDetail}
-            setShow={setShowDetail}
-            params = {params}
-            keywordId = {keywordId}
-         /> : ""
-         }
+            showDetail ? 
+            <MessageDetail 
+                show={showDetail}
+                setShow={setShowDetail}
+                params = {params}
+                paramsId = {paramsId}
+                setParamsId={setParamsId}
+            />: ""
+          }
       </CardContent>
     </Card>
   )

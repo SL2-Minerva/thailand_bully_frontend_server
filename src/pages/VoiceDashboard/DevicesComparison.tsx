@@ -17,7 +17,7 @@ import { GetDevicesComparison } from 'src/services/api/dashboards/voice/VoiceDas
 
 
 Chart.register(DoughnutLabel );
-const DevicesComparison  = ({params, chartId} : {params:any, chartId: string}) => {
+const DevicesComparison  = ({params, chartId, highlight} : {params:any, chartId: string, highlight: boolean}) => {
   const { resultDevicesComparison } = GetDevicesComparison(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const theme = useTheme()
@@ -136,12 +136,12 @@ const DevicesComparison  = ({params, chartId} : {params:any, chartId: string}) =
   return (
     <Card style={{ minHeight: '330px' }}>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader title="Devices" titleTypographyProps={{ varient:'h6' }}
+        <CardHeader title="Devices" titleTypographyProps={{ varient:'h6',color: highlight ? 'green' : '#4c4e64de' }}
                 subheader="Period over Period Comparison"
-                subheaderTypographyProps={{ varient: 'h6' }}
+                subheaderTypographyProps={{ varient: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
             />
           <StyledTooltip arrow title={chartId || ""}>
-              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+              <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
       </span>
       <CardContent>

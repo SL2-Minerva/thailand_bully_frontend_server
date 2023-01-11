@@ -41,6 +41,8 @@ const ChannelDashboard = () => {
     const [ campaign, setCampaign ] = useState<string>("1")
     const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
+    const [ highlight, setHighlight ] = useState<string>("");
+
     const params = {
         campaign: campaign,
         date: date,
@@ -76,14 +78,14 @@ const ChannelDashboard = () => {
             {
                 resultReportPermission?.includes("44") ?
                 <Grid item xs={12} md={6} id="chart1">
-                    <DailyMessagePieChart params={params} type="channel" chartId="Chart 1"/>
+                    <DailyMessagePieChart params={params} type="channel" chartId="Chart 1" highlight = { highlight==='chart1' ? true : false }/>
                 </Grid> : ""
             }
 
             {
                 resultReportPermission?.includes("45") ?
                 <Grid item xs={12} md={6} id="chart2">
-                    <DailyMessageGraph params={params} type="channel" chartId="Chart 2"/>
+                    <DailyMessageGraph params={params} type="channel" chartId="Chart 2" highlight = { highlight==='chart2' ? true : false }/>
                 </Grid> : ""
             }
 
@@ -100,6 +102,7 @@ const ChannelDashboard = () => {
                         gridLineColor={gridLineColor}
                         params={params}
                         chartId="Chart 3"
+                        highlight = { highlight==='chart3' ? true : false }
                     />
                 </Grid> : ""
             }
@@ -117,6 +120,7 @@ const ChannelDashboard = () => {
                         gridLineColor={gridLineColor}
                         params={params}
                         chartId="Chart 4"
+                        highlight = { highlight==='chart4' ? true : false }
                     />
                 </Grid> : ""
             }
@@ -134,6 +138,7 @@ const ChannelDashboard = () => {
                         gridLineColor={gridLineColor}
                         params={params}
                         chartId="Chart 5"
+                        highlight = { highlight==='chart5' ? true : false }
                     />
                 </Grid> : ""
             }
@@ -151,6 +156,7 @@ const ChannelDashboard = () => {
                         gridLineColor={gridLineColor}
                         params={params}
                         chartId="Chart 6"
+                        highlight = { highlight==='chart6' ? true : false }
                     />
                 </Grid> : ""
             }
@@ -168,6 +174,7 @@ const ChannelDashboard = () => {
                         gridLineColor={gridLineColor}
                         params ={params}
                         chartId="Chart 7"
+                        highlight = { highlight==='chart7' ? true : false }
                     />
                 </Grid> : ""
             }
@@ -184,6 +191,7 @@ const ChannelDashboard = () => {
                         gridLineColor={gridLineColor}
                         params={params}
                         chartId="Chart 8"
+                        highlight = { highlight==='chart8' ? true : false }
                     />
                 </Grid> : ""
             }
@@ -200,6 +208,7 @@ const ChannelDashboard = () => {
                         gridLineColor={gridLineColor}
                         params = {params}
                         chartId="Chart 9"
+                        highlight = { highlight==='chart9' ? true : false }
                     />
                 </Grid> : ""
             }
@@ -207,15 +216,15 @@ const ChannelDashboard = () => {
             {
                 resultReportPermission?.includes("53") ?
                 <>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} id="chart10">
                         <Card>
                             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                                 <CardHeader 
                                     title='Period over Period Comparison'
-                                    titleTypographyProps={{ variant: 'h6' }}
+                                    titleTypographyProps={{ variant: 'h6', color : highlight === 'chart10' ? 'green' : '#4c4e64de' }}
                                 />
                                 <StyledTooltip arrow title="Chart 10">
-                                    <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                                    <Information style={{marginTop: '22px', fontSize: '29px',  color : highlight === 'chart10' ? 'green' : '#4c4e64de'}} />
                                 </StyledTooltip>
                             </span>
                         </Card>
@@ -240,7 +249,7 @@ const ChannelDashboard = () => {
                                 totalValue = {resultTwitterComparison?.comparison_value}
                             />
                         </Grid>
-                        <Grid item xs={6} md={2.4} id="chart13">
+                        <Grid item xs={6} md={2.4}>
                             <ChannelComparison 
                                 color='#c92d27'
                                 trendNumber={resultYoutubeComparison?.percentage}
@@ -249,7 +258,7 @@ const ChannelDashboard = () => {
                                 totalValue = {resultYoutubeComparison?.comparison_value}
                             />
                         </Grid>
-                        <Grid item xs={6} md={2.4} id="chart14">
+                        <Grid item xs={6} md={2.4}>
                             <ChannelComparison 
                                 color='#a5a5a5'
                                 trendNumber={resultInstagramComparison?.percentage}
@@ -258,7 +267,7 @@ const ChannelDashboard = () => {
                                 totalValue = {resultInstagramComparison?.comparison_value}
                             />
                         </Grid>
-                        <Grid item xs={6} md={2.4} id="chart15">
+                        <Grid item xs={6} md={2.4}>
                             <ChannelComparison 
                                 color='#ffc000'
                                 trendNumber={resultPantipComparison?.percentage}
@@ -284,6 +293,7 @@ const ChannelDashboard = () => {
                         gridLineColor={gridLineColor}
                         params={params}
                         chartId="Chart 11"
+                        highlight = { highlight==='chart11' ? true : false }
                     />
                 </Grid> : ""
             }
@@ -300,6 +310,7 @@ const ChannelDashboard = () => {
                         gridLineColor={gridLineColor}
                         params ={params}
                         chartId = "Chart 12"
+                        highlight = { highlight==='chart12' ? true : false }
                     />
                 </Grid> : ""
             }
@@ -307,14 +318,16 @@ const ChannelDashboard = () => {
                 resultReportPermission?.includes("56") ?
                 <Grid container spacing={4} ml={3} mt={2} id="chart13">
                     <Grid item xs={12} md={6}>
-                        <ChannelBySentiment params={params} chartId="Chart 13"/>
+                        <ChannelBySentiment params={params} chartId="Chart 13" highlight = { highlight==='chart13' ? true : false }/>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <SentimentLevelChart params={params} chartId="Chart 13"/>
+                        <SentimentLevelChart params={params} chartId="Chart 13" highlight = { highlight==='chart13' ? true : false }/>
                     </Grid>
                 </Grid> : ""
             }
-            <QuickView/>
+
+            <QuickView setHighlight={setHighlight}/>
+
         </Grid>
 
     )

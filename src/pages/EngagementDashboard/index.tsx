@@ -47,6 +47,7 @@ const EngagementDashboard = () => {
     const [ dateSelect, setDateSelect ] = useState<string>("1")
     const [ campaignType, setCampaignType ] = useState<string>("1")
     const [ topKeyword, setTopKeyword ] = useState<string>('all');
+    const [ highlight, setHighlight ] = useState<string>("");
 
     const { resultReportPermission } = UserPermission();
     const { resultTotalEngagement } = GetTotalEngagment(campaignType, date, endDate, period);
@@ -89,7 +90,7 @@ const EngagementDashboard = () => {
                 {
                     resultReportPermission?.includes("57") ?
                     <Grid id="chart1" item xs={12} md={4}>
-                        <PercentageOfEngangement params={params} type="transaction" chartId="Chart 1"/>
+                        <PercentageOfEngangement params={params} type="transaction" chartId="Chart 1" highlight = { highlight==='chart1' ? true : false }/>
                     </Grid> : ""
                 }
                 {
@@ -106,6 +107,7 @@ const EngagementDashboard = () => {
                             params= {params}
                             type="transaction"
                             chartId="Chart 2"
+                            highlight = { highlight==='chart2' ? true : false }
                         />
                     </Grid> : ""
                 }
@@ -122,6 +124,7 @@ const EngagementDashboard = () => {
                             gridLineColor={gridLineColor}
                             params ={params}
                             chartId="Chart 3"
+                            highlight = { highlight==='chart3' ? true : false }
                         />
                     </Grid> : ""
                 }
@@ -138,6 +141,7 @@ const EngagementDashboard = () => {
                             gridLineColor={gridLineColor}
                             params= {params}
                             chartId="Chart 4"
+                            highlight = { highlight==='chart4' ? true : false }
                         />
                     </Grid> : ""
                 }
@@ -154,6 +158,7 @@ const EngagementDashboard = () => {
                             gridLineColor={gridLineColor}
                             params={params}
                             chartId="Chart 5"
+                            highlight = { highlight==='chart5' ? true : false }
                         />
                     </Grid> : ""
                 }
@@ -170,6 +175,7 @@ const EngagementDashboard = () => {
                             gridLineColor={gridLineColor}
                             chartId="Chart 6"
                             params={params}
+                            highlight = { highlight==='chart6' ? true : false }
                         />
                     </Grid> : ""
                 }
@@ -186,6 +192,7 @@ const EngagementDashboard = () => {
                             gridLineColor={gridLineColor}
                             chartId="Chart 7"
                             params={params}
+                            highlight = { highlight==='chart7' ? true : false }
                         />
                     </Grid> : ""
                 }
@@ -196,7 +203,7 @@ const EngagementDashboard = () => {
                     {
                         resultReportPermission?.includes("64") ?
                         <Grid id="chart8" item xs={12} md={4}>
-                            <PercentageOfEngangementType params={params} type="type" chartId="Chart 8"/>
+                            <PercentageOfEngangementType params={params} type="type" chartId="Chart 8" highlight = { highlight==='chart8' ? true : false }/>
                         </Grid> : ''
                     }
                     {
@@ -213,6 +220,7 @@ const EngagementDashboard = () => {
                                 params= {params}
                                 type="type"
                                 chartId="Chart 9"
+                                highlight = { highlight==='chart9' ? true : false }
                             /> 
                         </Grid> : ""
                     }
@@ -230,6 +238,7 @@ const EngagementDashboard = () => {
                                 params={params}
                                 colorType="engagementType"
                                 chartId="Chart 10"
+                                highlight = { highlight==='chart10' ? true : false }
                             />
                         </Grid> : ""
                     }
@@ -247,6 +256,7 @@ const EngagementDashboard = () => {
                                 params={params}
                                 colorType="engagementType"
                                 chartId="Chart 11"
+                                highlight = { highlight==='chart11' ? true : false }
                             />
                         </Grid> : ""
                     }
@@ -264,6 +274,7 @@ const EngagementDashboard = () => {
                                 params={params}
                                 colorType="engagementType"
                                 chartId="Chart 12"
+                                highlight = { highlight==='chart12' ? true : false }
                             />
                         </Grid> : ""
                     }
@@ -280,6 +291,7 @@ const EngagementDashboard = () => {
                                 gridLineColor={gridLineColor}
                                 params={params}
                                 chartId="Chart 13"
+                                highlight = { highlight==='chart13' ? true : false }
                             />
                         </Grid> : ""
                     }   
@@ -297,6 +309,7 @@ const EngagementDashboard = () => {
                                 gridLineColor={gridLineColor}
                                 params={params}
                                 chartId="Chart 14"
+                                highlight = { highlight==='chart14' ? true : false }
                             />
                         </Grid> : ""
                     }
@@ -305,19 +318,19 @@ const EngagementDashboard = () => {
                         resultReportPermission?.includes("71") ?
                         <>
                             <Grid item xs={12}>
-                                <Card>
+                                <Card id="chart15">
                                     <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                                         <CardHeader 
                                             title='Period over Period Comparison'
-                                            titleTypographyProps={{ variant: 'h6' }}
+                                            titleTypographyProps={{ variant: 'h6', color : highlight === 'chart15' ? 'green' : '#4c4e64de' }}
                                         />
                                         <StyledTooltip arrow title="Chart 15">
-                                            <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                                            <Information style={{marginTop: '22px', fontSize: '29px', color : highlight === 'chart15' ? 'green' : '#4c4e64de'}} />
                                         </StyledTooltip>
                                     </span>
                                 </Card>
                             </Grid>
-                            <Grid item xs={12} md={12} id="chart15">
+                            <Grid item xs={12} md={12}>
                                 <TotalEngagement
                                     totalEngagement={ resultTotalEngagement}
                                 />
@@ -340,6 +353,7 @@ const EngagementDashboard = () => {
                                     chartTitle="Engagement Comparison"
                                     colorType="engagementDefault"
                                     chartId="Chart 16"
+                                    highlight = { highlight==='chart16' ? true : false }
                                 />
                         </Grid> : ""
                     }
@@ -359,6 +373,7 @@ const EngagementDashboard = () => {
                                     chartTitle="Engagement Comparison"
                                     colorType="SentimentComparisonEngagment"
                                     chartId="Chart 17"
+                                    highlight = { highlight==='chart17' ? true : false }
                                 />
                         </Grid> : ""
                     }
@@ -367,11 +382,11 @@ const EngagementDashboard = () => {
                         <>
                             <Grid item xs={12} md={7} id="chart18">
                                 <EngagementTypeComparison
-                                        params={params} chartId="Chart 18"
+                                        params={params} chartId="Chart 18" highlight = { highlight==='chart18' ? true : false }
                                     />
                             </Grid> 
                             <Grid item xs={12} md={5} id="chart19">
-                                    <EngagmentComparisonChart params={params}/>
+                                    <EngagmentComparisonChart params={params} highlight = { highlight==='chart19' ? true : false }/>
                             </Grid>
                         </>
                         : ""
@@ -391,13 +406,14 @@ const EngagementDashboard = () => {
                                 </Grid>
                             </Grid>
                             <Grid item xs={12} id="chart20">
-                                    <EngagementSummary resultSummary={resultSummary} chartId="Chart 20"/>
+                                    <EngagementSummary resultSummary={resultSummary} chartId="Chart 20" highlight = { highlight==='chart20' ? true : false }/>
                             </Grid>
                         </> : ""
                     }
                     
                 </Grid>
-                <QuickView/>
+                <QuickView setHighlight={setHighlight}/>
+
             </Grid>
         </>
         

@@ -6,8 +6,8 @@ import LinearProgressBar from "./LinearProgressBar";
 import { StyledTooltip } from "../dashboard/overall";
 import { Information } from "mdi-material-ui";
 
-const SummaryByAccount = ({resultSummary, topAccount, setTopAccount, chartId} : 
-    {resultSummary: any, topAccount : string, setTopAccount : any, chartId: string}) => {
+const SummaryByAccount = ({resultSummary, topAccount, setTopAccount, chartId, highlight} : 
+    {resultSummary: any, topAccount : string, setTopAccount : any, chartId: string, highlight: boolean}) => {
     const handleTopAccounts = (data: string) => {
         setTopAccount(data);
     }
@@ -17,10 +17,10 @@ const SummaryByAccount = ({resultSummary, topAccount, setTopAccount, chartId} :
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title='Summary Sentiment Score by Account'
-                    titleTypographyProps={{ variant: 'h6' }}
+                    titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
                 />
                 <StyledTooltip arrow title={chartId}>
-                    <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                    <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
                 </StyledTooltip>
             </span>
             <CardContent>

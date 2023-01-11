@@ -48,6 +48,7 @@ const SentimentDashboard = () => {
     const [ topKeyword, setTopKeyword ] = useState<string>('all');
     const [ topAccount, setTopAccount ] = useState<string>('all');
     const [ topChannel, setTopChannel ] = useState<string>('all');
+    const [ highlight, setHighlight ] = useState<string>("");
 
     const { resultReportPermission } = UserPermission();
     const { resultTotalSentiment } = GetTotalSentiment(campaign, date, endDate, period);
@@ -95,13 +96,14 @@ const SentimentDashboard = () => {
                             params= {params}
                             type="transaction"
                             chartId="Chart 1"
+                            highlight = { highlight==='chart1' ? true : false }
                         />
                     </Grid> : ""
                 }
                 {
                     resultReportPermission?.includes("77") ?
                     <Grid id="chart2" item xs={12} md={4}>
-                        <PercentageOfSentiment params={params} type="transaction" chartId="Chart 2"/>
+                        <PercentageOfSentiment params={params} type="transaction" chartId="Chart 2" highlight = { highlight==='chart2' ? true : false } />
                     </Grid> : ""
                 }
                 {
@@ -117,6 +119,7 @@ const SentimentDashboard = () => {
                             gridLineColor={gridLineColor}
                             params={params}
                             chartId="Chart 3"
+                            highlight = { highlight==='chart3' ? true : false }
                         />
                     </Grid> : ""
                 }
@@ -133,6 +136,7 @@ const SentimentDashboard = () => {
                             gridLineColor={gridLineColor}
                             params={params}
                             chartId="Chart 4"
+                            highlight = { highlight==='chart4' ? true : false }
                         />
                     </Grid> : ""
                 }
@@ -149,6 +153,7 @@ const SentimentDashboard = () => {
                             gridLineColor={gridLineColor}
                             params={params}
                             chartId="Chart 5"
+                            highlight = { highlight==='chart5' ? true : false }
                         />
                     </Grid> : ""
                 }
@@ -165,6 +170,7 @@ const SentimentDashboard = () => {
                             gridLineColor={gridLineColor}
                             chartId="Chart 6"
                             params={params}
+                            highlight = { highlight==='chart6' ? true : false }
                         />
                     </Grid> : ""
                 }
@@ -182,6 +188,7 @@ const SentimentDashboard = () => {
                             gridLineColor={gridLineColor}
                             chartId="Chart 7"
                             params={params}
+                            highlight = { highlight==='chart7' ? true : false }
                         />
                     </Grid> : ""
                 }
@@ -198,6 +205,7 @@ const SentimentDashboard = () => {
                             gridLineColor={gridLineColor}
                             chartId="Chart 8"
                             params={params}
+                            highlight = { highlight==='chart8' ? true : false }
                         />
                     </Grid> : ""
                 }
@@ -214,6 +222,7 @@ const SentimentDashboard = () => {
                             gridLineColor={gridLineColor}
                             params ={params}
                             chartId="Chart 9"
+                            highlight = { highlight==='chart9' ? true : false }
                         />
                     </Grid> : ""
                 }
@@ -221,19 +230,19 @@ const SentimentDashboard = () => {
                     resultReportPermission?.includes("85") ?
                     <>
                         <Grid item xs={12}>
-                            <Card>
+                            <Card  id="chart10">
                                 <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                                     <CardHeader 
                                         title='Period over Period Comparison'
-                                        titleTypographyProps={{ variant: 'h6' }}
+                                        titleTypographyProps={{ variant: 'h6', color : highlight === 'chart10' ? 'green' : '#4c4e64de' }}
                                     />
                                     <StyledTooltip arrow title="Chart 10">
-                                        <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                                        <Information style={{marginTop: '22px', fontSize: '29px', color : highlight === 'chart10' ? 'green' : '#4c4e64de'}} />
                                     </StyledTooltip>
                                 </span>
                             </Card>
                         </Grid>
-                        <Grid item xs={12} md={12} id="chart10">
+                        <Grid item xs={12} md={12}>
                             <TotalMessage
                                 totalMessage={resultTotalSentiment}
                             />
@@ -256,6 +265,7 @@ const SentimentDashboard = () => {
                                 colorType="engagementDefault"
                                 chartId="Chart 11"
                                 params={params}
+                                highlight = { highlight==='chart11' ? true : false }
                             />
                     </Grid> : ""
                 }
@@ -275,6 +285,7 @@ const SentimentDashboard = () => {
                                 chartTitle="Sentiment Comparison"
                                 colorType="sentimentComparison"
                                 chartId="Chart 12"
+                                highlight = { highlight==='chart12' ? true : false }
                             />
                     </Grid> : ""
                 }
@@ -285,11 +296,13 @@ const SentimentDashboard = () => {
                             <SentimentScore
                                     params={params}
                                     chartId="Chart 13"
+                                    highlight = { highlight==='chart13' ? true : false }
                                 />
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <SentimentScorePercentage
                                     params={params}
+                                    highlight = { highlight==='chart13' ? true : false }
                                 />
                         </Grid>
                     </> : ""
@@ -300,6 +313,7 @@ const SentimentDashboard = () => {
                         <SentimentComparison
                                 params={params}
                                 chartId="Chart 14"
+                                highlight = { highlight==='chart14' ? true : false }
                             />
                     </Grid>: ""
                 }
@@ -311,6 +325,7 @@ const SentimentDashboard = () => {
                                 topAccount = {topAccount}
                                 setTopAccount = {setTopAccount}
                                 chartId="Chart 15"
+                                highlight = { highlight==='chart15' ? true : false }
                             />
                     </Grid> : ""
                 }
@@ -322,6 +337,7 @@ const SentimentDashboard = () => {
                                 topChannel = {topChannel}
                                 setTopChannel = {setTopChannel}
                                 chartId = "Chart 16"
+                                highlight = { highlight==='chart16' ? true : false }
                             />
                     </Grid> : ""
                 }
@@ -333,11 +349,12 @@ const SentimentDashboard = () => {
                                 topKeyword = {topKeyword}
                                 setTopKeyword = {setTopKeyword}
                                 chartId = "Chart 17"
+                                highlight = { highlight==='chart17' ? true : false }
                             />
                     </Grid> : ""
                 } 
             </Grid>
-            <QuickView />
+            <QuickView setHighlight={setHighlight}/>
         </Grid> 
     )
 }

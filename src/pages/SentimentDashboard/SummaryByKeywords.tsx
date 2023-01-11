@@ -6,8 +6,8 @@ import LinearProgressBar from "./LinearProgressBar";
 import { StyledTooltip } from "../dashboard/overall";
 import { Information } from "mdi-material-ui";
 
-const SummaryByKeywords = ({resultSummary, topKeyword, setTopKeyword, chartId} :
-     {resultSummary: any, topKeyword : string, setTopKeyword : any, chartId: string}) => {
+const SummaryByKeywords = ({resultSummary, topKeyword, setTopKeyword, chartId, highlight} :
+     {resultSummary: any, topKeyword : string, setTopKeyword : any, chartId: string, highlight: boolean}) => {
     const handleTopKeyword = (data: string) => {
         setTopKeyword(data);
     }
@@ -17,10 +17,10 @@ const SummaryByKeywords = ({resultSummary, topKeyword, setTopKeyword, chartId} :
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title='Keywords'
-                    titleTypographyProps={{ variant: 'h6' }}
+                    titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
                 />
                 <StyledTooltip arrow title={chartId}>
-                    <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                    <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
                 </StyledTooltip>
             </span>
             <CardContent>

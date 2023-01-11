@@ -16,12 +16,13 @@ import { FilterByCampaignId } from 'src/services/api/dashboards/sentiment/sentim
 interface MessageData {
   type: string
   chartId: string,
-  params: any
+  params: any,
+  highlight: boolean
 }
 
 const PercentageOfSentiment = (props : MessageData) => {
 
-  const { params, type, chartId } = props;
+  const { params, type, chartId, highlight } = props;
   const colors = [ '#5be12c','#f5cd19','#ea4228'];
   const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
 
@@ -129,12 +130,12 @@ const PercentageOfSentiment = (props : MessageData) => {
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title= {title}
-            titleTypographyProps={{ variant: 'h6' }}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheader='Period over Period Comparison'
-            subheaderTypographyProps={{ variant: 'caption' }}
+            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />
           <StyledTooltip arrow title={chartId}>
-              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+              <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
       </span>
       <CardContent>

@@ -21,6 +21,7 @@ import BullyTypeByDevice from "./BullyTypeByDevice"
 import BullyTypeBySentiment from "./BullyTypeBySentiment"
 import BullyTypeByTime from "./BullyTypeByTime"
 import DailyMessgeByBully from "./DailyMessageByBully"
+import DailyMessgeByBullyType from "./DailyMessageByBullyType"
 import PercentageOfBully from "./PercentageOfBully"
 import QuickView from "./QuickView"
 import ShareOfChannel from "./ShareOfChannel"
@@ -43,16 +44,8 @@ const BullyDashboard = () => {
     const [ campaign, setCampaign ] = useState<string>("1")
     const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
-
-    // const [dateBullyType, setDateBullyType] = useState<DateType>(new Date())
-    // const [endDateBullyType, setEndDateBullyType] = useState<DateType>(new Date())
-    // const [ periodBullyType, setPeriodBullyType ] = useState<string>('daily')
-    // const [ dateSelectBullyType, setDateSelectBullyType ] = useState<string>("1")
-    // const [ campaignBullyType, setCampaignBullyType ] = useState<string>("1")
-    // const [ previousDateBullyType, setPreviousDateBullyType] = useState<DateType>(new Date())
-    // const [ previousEndDateBullyType, setPreviousEndDateBullyType] = useState<DateType>(new Date())
-
     const [ bullyType, setBullyType ] = useState<string>('level');
+    const [ highlight, setHighlight ] = useState<string>("");
 
     const { resultReportPermission } = UserPermission();
     const { resultShareOfChannelBullyLevel } = GetShareOfChannelBullyLevel(campaign, date, endDate, period);
@@ -94,7 +87,7 @@ const BullyDashboard = () => {
             {
                 resultReportPermission?.includes("93") ? 
                 <Grid id="chart1" item xs={12} md={4}>
-                    <PercentageOfBully params={params} type="level" chartId="Chart 1"/>
+                    <PercentageOfBully params={params} type="level" chartId="Chart 1" highlight = { highlight==='chart1' ? true : false }/>
                 </Grid> : ""
             }
             {
@@ -111,6 +104,7 @@ const BullyDashboard = () => {
                         params= {params}
                         type="level"
                         chartId="Chart 2"
+                        highlight = { highlight==='chart2' ? true : false }
                     />
                 </Grid>
                 : ""
@@ -129,6 +123,7 @@ const BullyDashboard = () => {
                         params={params}
                         chartId="Chart 3"
                         colorType="bullyDashboard"
+                        highlight = { highlight==='chart3' ? true : false }
                     />
                 </Grid>
                 : ""
@@ -147,6 +142,7 @@ const BullyDashboard = () => {
                         params={params}
                         chartId="Chart 4"
                         colorType="bullyDashboard"
+                        highlight = { highlight==='chart4' ? true : false }
                     />
                 </Grid>
                 : ""
@@ -165,6 +161,7 @@ const BullyDashboard = () => {
                         chartId="Chart 5"
                         colorType="bullyDashboard"
                         params={params}
+                        highlight = { highlight==='chart5' ? true : false }
                     />
                 </Grid>
                 : ""
@@ -183,6 +180,7 @@ const BullyDashboard = () => {
                         chartId="Chart 6"
                         colorType="bullyDashboard"
                         params={params}
+                        highlight = { highlight==='chart6' ? true : false }
                     />
                 </Grid>
                 : ""
@@ -201,6 +199,7 @@ const BullyDashboard = () => {
                         chartId="Chart 7"
                         colorType="bullyDashboard"
                         params={params}
+                        highlight = { highlight==='chart7' ? true : false }
                     />
                 </Grid>
                 : ""
@@ -219,6 +218,7 @@ const BullyDashboard = () => {
                         chartId="Chart 8"
                         colorType="bullyDashboard"
                         params={params}
+                        highlight = { highlight==='chart8' ? true : false }
                     />
                 </Grid>
                 : ""
@@ -226,14 +226,14 @@ const BullyDashboard = () => {
             {
                 resultReportPermission?.includes("101") ?
                 <Grid id="chart9" item xs={12} md={4}>
-                    <PercentageOfBully params={params} type="type" chartId="Chart 9"/>
+                    <PercentageOfBully params={params} type="type" chartId="Chart 9" highlight = { highlight==='chart9' ? true : false }/>
                 </Grid>
                 : ""
             }
             {
                 resultReportPermission?.includes("102") ?
                 <Grid id="chart10" item xs={12} md={8}>
-                    <DailyMessgeByBully
+                    <DailyMessgeByBullyType
                         white={whiteColor}
                         labelColor={labelColor}
                         success={lineChartYellow}
@@ -244,6 +244,7 @@ const BullyDashboard = () => {
                         params= {params}
                         type="type"
                         chartId="Chart 10"
+                        highlight = { highlight==='chart10' ? true : false }
                     />
                 </Grid>
                 : ""
@@ -262,6 +263,7 @@ const BullyDashboard = () => {
                         chartId="Chart 11"
                         colorType="bullyDashboard"
                         params={params}
+                        highlight = { highlight==='chart11' ? true : false }
                     />
                 </Grid>
                 : ""
@@ -280,6 +282,7 @@ const BullyDashboard = () => {
                         chartId="Chart 12"
                         colorType="bullyDashboard"
                         params={params}
+                        highlight = { highlight==='chart12' ? true : false }
                     />
                 </Grid>
                 : ""
@@ -298,6 +301,7 @@ const BullyDashboard = () => {
                         chartId="Chart 13"
                         colorType="bullyDashboard"
                         params={params}
+                        highlight = { highlight==='chart13' ? true : false }
                     />
                 </Grid>
                 : ""
@@ -316,6 +320,7 @@ const BullyDashboard = () => {
                         chartId="Chart 14"
                         colorType="bullyDashboard"
                         params={params}
+                        highlight = { highlight==='chart14' ? true : false }
                     />
                 </Grid>
                 : ""
@@ -334,6 +339,7 @@ const BullyDashboard = () => {
                         chartId="Chart 15"
                         colorType="bullyDashboard"
                         params={params}
+                        highlight = { highlight==='chart15' ? true : false }
                     />
                 </Grid>
                 : ""
@@ -352,6 +358,7 @@ const BullyDashboard = () => {
                         params={params}
                         chartId="Chart 16"
                         colorType="bullyDashboard"
+                        highlight = { highlight==='chart16' ? true : false }
                     />
                 </Grid>
                 : ""
@@ -370,12 +377,13 @@ const BullyDashboard = () => {
                     <Grid id="chart17" item xs={12} mt={3}>
                         <ShareOfChannel resultShareOfChannel={bullyType !== 'level' ? resultShareOfChannelChartBullyLevel : resultShareOfChannelChart}
                         resultShareofChannelPlatform={bullyType !== 'level' ? resultShareOfChannelBullyLevel : resultShareOfChannelPlatform}
-                        chartId={bullyType === 'level' ? "Chart 17" : "Chart 18"}/>
+                        chartId={bullyType === 'level' ? "Chart 17" : "Chart 18"} highlight = { highlight==='chart17' ? true : false }/>
                     </Grid>
                 </>
                 : ""
             }
-            <QuickView/>
+            <QuickView setHighlight={setHighlight}/>
+
         </Grid> 
     )
 }

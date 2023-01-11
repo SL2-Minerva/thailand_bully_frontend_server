@@ -51,9 +51,16 @@ export const CustomizerSpacing = styled('div')(({ theme }) => ({
   
  
   
-const QuickView = () => {
-    // ** State
-    const [open, setOpen] = useState<boolean>(false)
+const QuickView = ({setHighlight} : {setHighlight?:any}) => {
+  // ** State
+  const [open, setOpen] = useState<boolean>(false)
+
+  const onClose = (chartId?: string) => {
+    if(chartId) {
+      setHighlight(chartId);
+    }
+    setOpen(false);
+  }
   
     return (
       <div className='customizer'>
@@ -73,7 +80,7 @@ const QuickView = () => {
               Quick View
             </Typography>
             <IconButton
-              onClick={() => setOpen(false)}
+              onClick={() => onClose()}
               sx={{
                 right: 20,
                 top: '50%',
@@ -96,91 +103,91 @@ const QuickView = () => {
               </Typography>
   
               <Link to="chart1" spy={true} smooth={true}>
-                <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
+                <Box sx={{ mb: 4 }} onClick={() => {onClose("chart1")}}>
                     <Typography>Chart 1 : Percentage Of Channel</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart2" spy={true} smooth={true}>
-                <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
+                <Box sx={{ mb: 4 }} onClick={() => {onClose("chart2")}}>
                     <Typography>Chart 2 : Daily Channel </Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart3" spy={true} smooth={true}>
-                <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
+                <Box sx={{ mb: 4 }} onClick={() => {onClose("chart3")}}>
                     <Typography>Chart 3 : Channel by Day </Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart4" spy={true} smooth={true}>
-                <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
+                <Box sx={{ mb: 4 }} onClick={() => {onClose("chart4")}}>
                     <Typography>Chart 4 : Channel by Time </Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart5" spy={true} smooth={true}>
-                <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
+                <Box sx={{ mb: 4 }} onClick={() => {onClose("chart5")}}>
                     <Typography>Chart 5 : Channel by Devices </Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart6" spy={true} smooth={true}>
-                <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
+                <Box sx={{ mb: 4 }} onClick={() => {onClose("chart6")}}>
                     <Typography>Chart 6 : Channel by Account </Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart7" spy={true} smooth={true}>
-                <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
+                <Box sx={{ mb: 4 }} onClick={() => {onClose("chart7")}}>
                     <Typography>Chart 7 : Channel by Sentiment</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart8" spy={true} smooth={true}>
-                <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
+                <Box sx={{ mb: 4 }} onClick={() => {onClose("chart8")}}>
                     <Typography>Chart 8 : Channel by Bully Level</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart9" spy={true} smooth={true}>
-                <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
+                <Box sx={{ mb: 4 }} onClick={() => {onClose("chart9")}}>
                     <Typography>Chart 9 : Channel by Bully Type</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart10" spy={true} smooth={true}>
-                <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
+                <Box sx={{ mb: 4 }} onClick={() => {onClose("chart10")}}>
                     <Typography>Chart 10 : Period over Period Comparison</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart11" spy={true} smooth={true}>
-                <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
+                <Box sx={{ mb: 4 }} onClick={() => {onClose("chart11")}}>
                     <Typography>Chart 11 : Engagement Rate</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart12" spy={true} smooth={true}>
-                <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
+                <Box sx={{ mb: 4 }} onClick={() => {onClose("chart12")}}>
                     <Typography>Chart 12 : Sentiment Score</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart13" spy={true} smooth={true}>
-                <Box sx={{ mb: 4 }} onClick={() => {setOpen(false)}}>
+                <Box sx={{ mb: 4 }} onClick={() => {onClose("chart13")}}>
                     <Typography>Chart 13 : Channel By Sentiment</Typography>
                 </Box>
               </Link>

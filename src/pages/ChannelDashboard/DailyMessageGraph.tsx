@@ -20,6 +20,7 @@ interface Props {
   type: string
   chartId : string
   params: any
+  highlight: boolean
 }
 export const getSeries = (seriesData: any) => {
   if(!seriesData) return [];
@@ -76,7 +77,7 @@ export const chartLabel = (data:any) => {
 }
 
 const DailyMessageGraph = ( props : Props) => {
-    const { type, chartId, params} = props;
+    const { type, chartId, params, highlight} = props;
     const [ label, setLabel ] = useState<string[]>([]);
     const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
     const [ showDetail , setShowDetail ] = useState<boolean>(false);
@@ -232,18 +233,18 @@ const DailyMessageGraph = ( props : Props) => {
               type === 'message' ?
               <CardHeader 
                   title='Daily Messages'
-                  titleTypographyProps={{ variant: 'h6' }}
+                  titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
               />
               :
               type === 'channel' ?
               <CardHeader 
                   title='Daily Channel'
-                  titleTypographyProps={{ variant: 'h6' }}
+                  titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
               />
               : ""
             }
             <StyledTooltip arrow title={chartId}>
-                <Information  style={{marginTop: '22px', fontSize: '29px'}} />
+                <Information  style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
             </StyledTooltip>
         </span>  
           <CardContent>

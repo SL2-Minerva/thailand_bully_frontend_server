@@ -12,7 +12,7 @@ import { StyledTooltip } from '../dashboard/overall';
 import { Information } from 'mdi-material-ui';
 import { GetEngagementComparison } from 'src/services/api/dashboards/engagement/EngagementApi';
 
-const EngagementTypeComparison  = ({params, chartId} : {params: any, chartId: string}) => {
+const EngagementTypeComparison  = ({params, chartId, highlight} : {params: any, chartId: string, highlight: boolean}) => {
   const { resultEngagementComparison } = GetEngagementComparison(params?.campaign, params?.date, params?.endDate, params?.period);
 
   return (
@@ -20,11 +20,11 @@ const EngagementTypeComparison  = ({params, chartId} : {params: any, chartId: st
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title='Engagement Type Comparison'
-            titleTypographyProps={{ variant: 'h6' }}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheader="Period over Period"
           />
           <StyledTooltip arrow title={chartId}>
-              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+              <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
       </span>
 

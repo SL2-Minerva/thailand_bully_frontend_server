@@ -2,12 +2,12 @@ import { Card, CardContent, CardHeader } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 import { BullyDashboardColors, EngagementTypeColors, GraphicColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { GetMessagesByDay } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
+import MessageDetail from '../ChannelDashboard/MessageDetail'
 
 export interface LineProps {
     white: string
@@ -20,6 +20,7 @@ export interface LineProps {
     params: any
     colorType?: string
     chartId? : string 
+    highlight?: boolean
   }
   
 export const chartLabel = (data:any) => {
@@ -35,13 +36,17 @@ export const chartLabel = (data:any) => {
 
 const MessagesByDays = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, colorType, chartId, params } = props
+  const { white, labelColor, borderColor, gridLineColor, colorType, chartId, params,highlight } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const [current, setCurrent] = useState<any>({})
-  const [keywordId, setKeywordId] = useState<any>();
+  const [ paramsId, setParamsId] = useState<any>({
+    keywordId : null,
+    sourceId: null,
+    campaign_id: null,
+    organization_id: null
+  });
   const { resultMessagesByDay } = GetMessagesByDay(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const chartRef = useRef();
@@ -50,27 +55,39 @@ const MessagesByDays = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultMessagesByDay?.daily_message;
+    const dailyMessageData = resultMessagesByDay?.value;
+
     let keywordId : number | null= null;
+    let sourceId : number | null = null;
+    let campaign_id : number | null = null;
+
     if (dailyMessageData?.length > 0) {
       for (let i =0; i<dailyMessageData?.length; i++) {
           if(keywordName === dailyMessageData[i].keyword_name) {
-            keywordId = dailyMessageData[i].keyword_id;
+            sourceId = dailyMessageData[i].source_id || "";
+            campaign_id = dailyMessageData[i].campaign_id || "";
+            keywordId = dailyMessageData[i].id || "";
           }
       }
     }
 
-    return keywordId;
+    const returnData  = {
+      keywordId : keywordId,
+      sourceId: sourceId,
+      campaign_id: campaign_id,
+      organization_id: ""
+    }
+    
+    return returnData;
   };
   
   const onClick = (event : any) => {
     if(chartRef.current) {
       const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
-      setShowDetail(true);
 
       if(keyword_id) {
-        // setShowDetail(true);
-        setCurrent({})
+        setParamsId(keyword_id);
+        setShowDetail(true);
       }
       
     }
@@ -184,11 +201,11 @@ const MessagesByDays = (props: LineProps) => {
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title="Message By Day"
-            titleTypographyProps={{ variant: 'h6' }}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption' }}
           />
           <StyledTooltip arrow title={chartId || ""}>
-              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+              <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
       
@@ -196,13 +213,13 @@ const MessagesByDays = (props: LineProps) => {
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
           {
             showDetail ? 
-            <DailyMessageDetail 
+            <MessageDetail 
                 show={showDetail}
                 setShow={setShowDetail}
-                current={current}
-                keywordId={keywordId}
-                setKeywordId={setKeywordId}
-            /> : ""
+                params = {params}
+                paramsId = {paramsId}
+                setParamsId={setParamsId}
+            />: ""
           }
         
       </CardContent>

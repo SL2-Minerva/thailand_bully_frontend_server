@@ -5,17 +5,17 @@ import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from "../dashboard/overall";
 import { Information } from "mdi-material-ui";
 
-const EngagementSummary = ({resultSummary, chartId} : {resultSummary: any, chartId: string}) => {
+const EngagementSummary = ({resultSummary, chartId, highlight} : {resultSummary: any, chartId: string, highlight:boolean}) => {
     
     return (
         <Card>
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title='Summary Engagement by Account'
-                    titleTypographyProps={{ variant: 'h6' }}
+                    titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
                 />
                 <StyledTooltip arrow title={chartId}>
-                    <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                    <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
                 </StyledTooltip>
             </span>
             <CardContent>
