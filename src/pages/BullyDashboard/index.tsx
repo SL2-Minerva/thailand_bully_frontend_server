@@ -23,6 +23,7 @@ import BullyTypeByTime from "./BullyTypeByTime"
 import DailyMessgeByBully from "./DailyMessageByBully"
 import DailyMessgeByBullyType from "./DailyMessageByBullyType"
 import PercentageOfBully from "./PercentageOfBully"
+import PercentageOfBullyType from "./PercentageOfBullyType"
 import QuickView from "./QuickView"
 import ShareOfChannel from "./ShareOfChannel"
 
@@ -226,7 +227,7 @@ const BullyDashboard = () => {
             {
                 resultReportPermission?.includes("101") ?
                 <Grid id="chart9" item xs={12} md={4}>
-                    <PercentageOfBully params={params} type="type" chartId="Chart 9" highlight = { highlight==='chart9' ? true : false }/>
+                    <PercentageOfBullyType params={params} type="type" chartId="Chart 9" highlight = { highlight==='chart9' ? true : false }/>
                 </Grid>
                 : ""
             }

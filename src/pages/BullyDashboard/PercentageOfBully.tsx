@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react'
 import { BullyDashboardColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { FilterByCampaignId } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
+import { BullyLevelPercentage } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
 
 interface MessageData {
   params : any,
@@ -25,7 +25,7 @@ const PercentageOfBully = (props : MessageData) => {
 
   const { params, type, chartId, highlight } = props;
   const colors = BullyDashboardColors;
-  const { resultFilterData  } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultBullyLevelPercentage  } = BullyLevelPercentage(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const [ previousData, setPreviousData ] = useState<any>({
     labels: [],
@@ -115,9 +115,9 @@ const PercentageOfBully = (props : MessageData) => {
   const title =  type === 'level' ? 'Percentage of Bully Level' : "Percentage of Bully Type";
 
   useEffect(() =>{
-    if (resultFilterData) {
-      const currentMessageData = resultFilterData?.percentage_of_bully_current;
-      const previousMessageData = resultFilterData?.percentage_of_bully_previous;
+    if (resultBullyLevelPercentage) {
+      const currentMessageData = resultBullyLevelPercentage?.percentage_of_bully_current;
+      const previousMessageData = resultBullyLevelPercentage?.percentage_of_bully_previous;
       
       if(currentMessageData) {
         const currentDataset = chartDataset(currentMessageData, 'current');
@@ -128,7 +128,7 @@ const PercentageOfBully = (props : MessageData) => {
 
       }
     }
-  }, [resultFilterData]);
+  }, [resultBullyLevelPercentage]);
 
   return (
     <Card>
