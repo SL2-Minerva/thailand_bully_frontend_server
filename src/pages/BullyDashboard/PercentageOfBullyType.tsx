@@ -12,19 +12,20 @@ import { useEffect, useState } from 'react'
 import { BullyDashboardColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { FilterBullyTypeByCampaignId } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
+import { BullyTypePercentage } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
 
 interface MessageData {
   params : any,
   type: string,
-  chartId: string 
+  chartId: string
+  highlight : boolean 
 }
 
-const PercentageOfBully = (props : MessageData) => {
+const PercentageOfBullyType = (props : MessageData) => {
 
-  const { params, type, chartId } = props;
+  const { params, type, chartId, highlight } = props;
   const colors = BullyDashboardColors;
-  const {resultBullyTypeFilterData} = FilterBullyTypeByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
+  const {resultBullyTypePercentage} = BullyTypePercentage(params?.campaign, params?.date, params?.endDate, params?.period);
   
   const [ previousData, setPreviousData ] = useState<any>({
     labels: [],
@@ -114,9 +115,9 @@ const PercentageOfBully = (props : MessageData) => {
   const title =  type === 'level' ? 'Percentage of Bully Level' : "Percentage of Bully Type";
 
   useEffect(() =>{
-    if (resultBullyTypeFilterData) {
-      const currentMessageData = resultBullyTypeFilterData?.percentage_of_bully_current;
-      const previousMessageData = resultBullyTypeFilterData?.percentage_of_bully_previous;
+    if (resultBullyTypePercentage) {
+      const currentMessageData = resultBullyTypePercentage?.percentage_of_bully_current;
+      const previousMessageData = resultBullyTypePercentage?.percentage_of_bully_previous;
       
       if(currentMessageData) {
         const currentDataset = chartDataset(currentMessageData, 'current');
@@ -127,19 +128,19 @@ const PercentageOfBully = (props : MessageData) => {
 
       }
     }
-  }, [resultBullyTypeFilterData]);
+  }, [resultBullyTypePercentage]);
 
   return (
     <Card>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
             title= {title}
-            titleTypographyProps={{ variant: 'h6' }}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de'  }}
             subheader='Period over Period Comparison'
-            subheaderTypographyProps={{ variant: 'caption' }}
+            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de'  }}
         />
         <StyledTooltip arrow title={chartId}>
-            <Information style={{marginTop: '22px', fontSize: '29px'}} />
+            <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>
       <CardContent>
@@ -166,4 +167,4 @@ const PercentageOfBully = (props : MessageData) => {
   )
 }
 
-export default PercentageOfBully
+export default PercentageOfBullyType

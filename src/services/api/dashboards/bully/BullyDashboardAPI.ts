@@ -23,6 +23,28 @@ export const FilterByCampaignId = (campaignId?: string, start_date?: any, end_da
     }
 }
 
+export const BullyLevelPercentage = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+      url: `/dashboard-bully/bully-percentage`,
+      method: 'GET',
+      params :{
+          campaign_id: campaignId || "",
+          start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+          end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+          period: period
+      },
+      data: {
+          reload: reload
+      }
+  })
+
+  return {
+    resultBullyLevelPercentage: res?.data || null,
+    loadingBullyLevelPercentage: loading,
+    errorBullyLevelPercentage: error
+  }
+}
+
 export const GetBullyByDay = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
@@ -163,7 +185,7 @@ export const GetBullyBySentiment = (campaignId?: string, start_date?: any, end_d
 
   export const FilterBullyTypeByCampaignId = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
-      url: `/dashboard-bully/bully-percentage-daily`,
+      url: `/dashboard-bully/bully-type-daily`,
       method: 'GET',
       params :{
         campaign_id: campaignId || "",
@@ -181,6 +203,28 @@ export const GetBullyBySentiment = (campaignId?: string, start_date?: any, end_d
       loadingBullyTypeFilterData: loading,
       errorBullyTypeFilterData: error
     }
+}
+
+export const BullyTypePercentage = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-bully/bully-type-percentage-daily`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period
+    },
+    data: {
+      reload: reload
+    }
+  })
+
+  return {
+    resultBullyTypePercentage: res?.data || null,
+    loadingBullyTypePercentage: loading,
+    errorBullyTypePercentage: error
+  }
 }
 
 export const GetBullyTypeByDay = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
