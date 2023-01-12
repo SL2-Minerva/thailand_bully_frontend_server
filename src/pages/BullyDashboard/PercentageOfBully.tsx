@@ -18,11 +18,12 @@ interface MessageData {
   params : any,
   type: string,
   chartId: string 
+  highlight: boolean
 }
 
 const PercentageOfBully = (props : MessageData) => {
 
-  const { params, type, chartId } = props;
+  const { params, type, chartId, highlight } = props;
   const colors = BullyDashboardColors;
   const { resultFilterData  } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
 
@@ -134,12 +135,12 @@ const PercentageOfBully = (props : MessageData) => {
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
             title= {title}
-            titleTypographyProps={{ variant: 'h6' }}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheader='Period over Period Comparison'
-            subheaderTypographyProps={{ variant: 'caption' }}
+            subheaderTypographyProps={{ variant: 'caption' , color: highlight ? 'green' : '#4c4e64de'}}
         />
         <StyledTooltip arrow title={chartId}>
-            <Information style={{marginTop: '22px', fontSize: '29px'}} />
+            <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
         </StyledTooltip>
       </span>
       <CardContent>

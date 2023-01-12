@@ -12,7 +12,7 @@ import MessageDetail from './MessageDetail'
   
 const ChannelByBullyType = (props: LineProps) => {
 
-  const { labelColor, borderColor, gridLineColor, chartId, params } = props
+  const { labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -139,10 +139,10 @@ const ChannelByBullyType = (props: LineProps) => {
           <CardHeader
             title="Channel By Bully Type"
             titleTypographyProps={{ variant: 'h6' }}
-            subheaderTypographyProps={{ variant: 'caption' }}
+            subheaderTypographyProps={{ variant: 'caption',color: highlight ? 'green' : '#4c4e64de' }}
           />
           <StyledTooltip arrow title={chartId || ""}>
-              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+              <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
       

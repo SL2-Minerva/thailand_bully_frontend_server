@@ -19,11 +19,12 @@ import { GetPercentageChannel } from 'src/services/api/dashboards/channel/Channe
 interface Props {
   params : any
   type : string
-  chartId : string
+  chartId : string,
+  highlight: boolean
 }
 Chart.register(DoughnutLabel );
 const DailyMessagePieChart  = ( props : Props) => {
-  const { params, type, chartId } = props;
+  const { params, type, chartId, highlight } = props;
   const { resultPercentageChannel } = GetPercentageChannel(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const theme = useTheme()
@@ -181,18 +182,18 @@ const DailyMessagePieChart  = ( props : Props) => {
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           {
             type === "message" ?
-            <CardHeader title="Percentage of Message" titleTypographyProps={{ varient:'h6' }}
+            <CardHeader title="Percentage of Message" titleTypographyProps={{ varient:'h6',color: highlight ? 'green' : '#4c4e64de' }}
                     subheader="Period over Period Comparison"
-                    subheaderTypographyProps={{ varient: 'h6' }}
+                    subheaderTypographyProps={{ varient: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
                 />
             :
-            <CardHeader title="Percentage of Channel" titleTypographyProps={{ varient:'h6' }}
+            <CardHeader title="Percentage of Channel" titleTypographyProps={{ varient:'h6',color: highlight ? 'green' : '#4c4e64de' }}
                     subheader="Period over Period Comparison"
-                    subheaderTypographyProps={{ varient: 'h6' }}
+                    subheaderTypographyProps={{ varient: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
                 />
           }
           <StyledTooltip arrow title={chartId}>
-              <Information  style={{marginTop: '22px', fontSize: '29px'}} />
+              <Information  style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
       </span>
       

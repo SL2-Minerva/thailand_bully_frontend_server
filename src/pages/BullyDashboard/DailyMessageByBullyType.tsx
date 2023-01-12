@@ -7,13 +7,13 @@ import CardContent from '@mui/material/CardContent'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import moment from 'moment';
-import DailyMessageDetail from '../dashboard/DailyMessageDetail' 
+import moment from 'moment'; 
 import { InteractionItem } from 'chart.js'
 import { BullyDashboardColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { FilterBullyTypeByCampaignId } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
+import MessageDetail from '../ChannelDashboard/MessageDetail'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -30,6 +30,7 @@ interface LineProps {
   params : any
   type: string
   chartId : string
+  highlight: boolean
 }
 
 const chartLabel = (data:any) => {
@@ -64,9 +65,9 @@ const chartLabel = (data:any) => {
   return labelValue;
 }
 
-const DailyMessgeByBully = (props: LineProps) => {
+const DailyMessgeByBullyType = (props: LineProps) => {
   // ** Props
-  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId } = props
+  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId, highlight } = props
 
   // const [ chartData, setChartData ] = useState();
   const colors = BullyDashboardColors;
@@ -74,36 +75,55 @@ const DailyMessgeByBully = (props: LineProps) => {
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const [keywordId, setKeywordId] = useState<any>();
+  const [ paramsId, setParamsId] = useState<any>({
+    keywordId : null,
+    sourceId: null,
+    campaign_id: null,
+    organization_id: null
+  });
   const {resultBullyTypeFilterData} = FilterBullyTypeByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const chartRef = useRef();
-  const getKeywordId = (dataset: InteractionItem[]) => { 
+  const getKeywordId = (dataset: InteractionItem[]) => {
     if (!dataset.length) return;
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const bully_levelData = resultBullyTypeFilterData?.bully_level;
-    let keywordId : number | null= null;
-    if (bully_levelData?.length > 0) {
-      for (let i =0; i<bully_levelData?.length; i++) {
-          if(keywordName === bully_levelData[i].bully_level) {
-            keywordId = bully_levelData[i].id;
-          }
-          if(keywordName === bully_levelData[i].bully_type) {
-            keywordId = bully_levelData[i].id;
+    const dailyMessageData = resultBullyTypeFilterData?.bully_type;
+
+    const keywordId : number | null= null;
+    let sourceId : number | null = null;
+    let campaign_id : number | null = null;
+    let organization_id : number | null = null;
+
+    if (dailyMessageData?.length > 0) {
+      for (let i =0; i<dailyMessageData?.length; i++) {
+          if(keywordName === dailyMessageData[i].keyword_name) {
+            sourceId = dailyMessageData[i].source_id || "";
+            campaign_id = dailyMessageData[i].campaign_id || "";
+            organization_id = dailyMessageData[i].organization_id || "";
+
+            // keywordId = dailyMessageData[i].value[i]?.keyword_id;
           }
       }
     }
 
-    return keywordId;
+    const returnData  = {
+      keywordId : keywordId,
+      sourceId: sourceId,
+      campaign_id: campaign_id,
+      organization_id: organization_id
+    }
+    
+    return returnData;
   };
 
   const onClick = (event : any) => {
     if(chartRef.current) {
-      const id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
-      if(id) {
-        setKeywordId(id);
+      const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
+
+      if(keyword_id) {
+        setParamsId(keyword_id);
         setShowDetail(true);
       }
       
@@ -227,27 +247,30 @@ const DailyMessgeByBully = (props: LineProps) => {
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
             title= {title}
-            titleTypographyProps={{ variant: 'h6' }}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheader='Period over Period Comparison'
-            subheaderTypographyProps={{ variant: 'caption' }}
+            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={chartId}>
-            <Information style={{marginTop: '22px', fontSize: '29px'}} />
+            <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
         </StyledTooltip>
       </span>
       
       <CardContent>
          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
-         <DailyMessageDetail 
-            show={showDetail}
-            setShow={setShowDetail}
-            params = {params}
-            keywordId = {keywordId}
-            setKeywordId = {setKeywordId}
-         />
+         {
+          showDetail ?
+          <MessageDetail 
+              show={showDetail}
+              setShow={setShowDetail}
+              params = {params}
+              paramsId = {paramsId}
+              setParamsId={setParamsId}
+          /> : ""
+         }
       </CardContent>
     </Card>
   )
 }
 
-export default DailyMessgeByBully
+export default DailyMessgeByBullyType

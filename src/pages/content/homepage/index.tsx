@@ -43,7 +43,9 @@ const ContentPage = () => {
                                                     {
                                                         contents?.picture ?
                                                             <span style={{ display: 'flex', justifyContent: 'center' }}>
-                                                                <Img width={300} alt='Image' src={"http://cornea-analysis.com/storage/" + contents.picture} />
+                                                                <Img width={300} alt='Image' src={"http://202.44.231.31:8081/storage/" + contents.picture} />
+
+                                                                {/* <Img width={300} alt='Image' src={"http://cornea-analysis.com/storage/" + contents.picture} /> */}
                                                             </span>
                                                         :   
                                                             <></>
@@ -90,7 +92,8 @@ const ContentPage = () => {
                                                     {
                                                         contents?.picture ?
                                                             <span style={{ display: 'flex', justifyContent: 'center' }}>
-                                                                <Img width={300} alt='Image' src={"http://cornea-analysis.com/storage/" + contents.picture} />
+                                                                <Img width={300} alt='Image' src={"http://202.44.231.31:8081/storage/" + contents.picture} />
+                                                                {/* <Img width={300} alt='Image' src={"http://cornea-analysis.com/storage/" + contents.picture} /> */}
                                                             </span>
                                                         :   
                                                             <></>
@@ -136,7 +139,8 @@ const ContentPage = () => {
                                                     {
                                                         contents?.picture ?
                                                             <span style={{ display: 'flex', justifyContent: 'center' }}>
-                                                                <Img width={300} alt='Image' src={"http://cornea-analysis.com/storage/" + contents.picture} />
+                                                                <Img width={300} alt='Image' src={"http://202.44.231.31:8081/storage/" + contents.picture} />
+                                                                {/* <Img width={300} alt='Image' src={"http://cornea-analysis.com/storage/" + contents.picture} /> */}
                                                             </span>
                                                         :   
                                                             <></>

@@ -6,8 +6,8 @@ import LinearProgressBar from "./LinearProgressBar";
 import { StyledTooltip } from "../dashboard/overall";
 import { Information } from "mdi-material-ui";
 
-const SummaryByChannel = ({resultSummary, topChannel, setTopChannel, chartId} :
-     {resultSummary: any, topChannel : string, setTopChannel : any, chartId: string}) => {
+const SummaryByChannel = ({resultSummary, topChannel, setTopChannel, chartId, highlight} :
+     {resultSummary: any, topChannel : string, setTopChannel : any, chartId: string, highlight: boolean}) => {
     const handleTopChannels = (data: string) => {
         setTopChannel(data);
     }
@@ -17,10 +17,10 @@ const SummaryByChannel = ({resultSummary, topChannel, setTopChannel, chartId} :
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title='Summary Sentiment Score by Channel'
-                    titleTypographyProps={{ variant: 'h6' }}
+                    titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
                 />
                 <StyledTooltip arrow title={chartId}>
-                    <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                    <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
                 </StyledTooltip>
             </span>
             <CardContent>

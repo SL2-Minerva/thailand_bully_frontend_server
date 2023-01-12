@@ -29,7 +29,8 @@ interface LineProps {
   gridLineColor: string
   params : any
   type: string
-  chartId: string
+  chartId: string,
+  highlight: boolean
 }
 
 const chartLabel = (data:any) => {
@@ -66,7 +67,7 @@ const chartLabel = (data:any) => {
 
 const DailyEngagement = (props: LineProps) => {
   // ** Props
-  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId } = props
+  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId, highlight } = props
 
   // const [ chartData, setChartData ] = useState();
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
@@ -74,33 +75,55 @@ const DailyEngagement = (props: LineProps) => {
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const [keywordId, setKeywordId] = useState<any>();
+  const [ paramsId, setParamsId] = useState<any>({
+    keywordId : null,
+    sourceId: null,
+    campaign_id: null,
+    organization_id: null
+  });
   const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const chartRef = useRef();
-  const getKeywordId = (dataset: InteractionItem[]) => { 
+  const getKeywordId = (dataset: InteractionItem[]) => {
     if (!dataset.length) return;
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const engagementData = resultFilterData?.engagement;
-    let keywordId : number | null= null;
-    if (engagementData?.length > 0) {
-      for (let i =0; i<engagementData?.length; i++) {
-          if(keywordName === engagementData[i].keyword_name) {
-            keywordId = engagementData[i].keyword_id;
+    const dailyMessageData = resultFilterData?.engagement;
+
+    const keywordId : number | null= null;
+    let sourceId : number | null = null;
+    let campaign_id : number | null = null;
+    let organization_id : number | null = null;
+
+    if (dailyMessageData?.length > 0) {
+      for (let i =0; i<dailyMessageData?.length; i++) {
+          if(keywordName === dailyMessageData[i].keyword_name) {
+            sourceId = dailyMessageData[i].source_id || "";
+            campaign_id = dailyMessageData[i].campaign_id || "";
+            organization_id = dailyMessageData[i].organization_id || "";
+
+            // keywordId = dailyMessageData[i].value[i]?.keyword_id;
           }
       }
     }
 
-    return keywordId;
+    const returnData  = {
+      keywordId : keywordId,
+      sourceId: sourceId,
+      campaign_id: campaign_id,
+      organization_id: organization_id
+    }
+    
+    return returnData;
   };
 
   const onClick = (event : any) => {
     if(chartRef.current) {
       const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
+
       if(keyword_id) {
-        setKeywordId(keyword_id);
+        setParamsId(keyword_id);
         setShowDetail(true);
       }
       
@@ -215,12 +238,12 @@ const DailyEngagement = (props: LineProps) => {
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
               title='Daily Engagement'
-              titleTypographyProps={{ variant: 'h6' }}
+              titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
               subheader='KeyWords'
-              subheaderTypographyProps={{ variant: 'caption' }}
+              subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
             />
           <StyledTooltip arrow title={chartId}>
-              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+              <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
       
@@ -232,7 +255,8 @@ const DailyEngagement = (props: LineProps) => {
               show={showDetail}
               setShow={setShowDetail}
               params = {params}
-              keywordId = {keywordId}
+              paramsId = {paramsId}
+              setParamsId={setParamsId}
           /> : ""
          }
       </CardContent>

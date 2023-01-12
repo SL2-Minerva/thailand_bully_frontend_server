@@ -20,10 +20,11 @@ interface Props {
   params : any
   type : string
   chartId : string
+  highlight?: boolean
 }
 Chart.register(DoughnutLabel );
 const DailyMessagePieChart  = ( props : Props) => {
-  const { type, chartId, params } = props;
+  const { chartId, params, highlight } = props;
 
   const { resultPercentageMessage } = GetPercentageMessage(params?.campaign, params?.date, params?.endDate, params?.period);
   const theme = useTheme()
@@ -179,20 +180,12 @@ const DailyMessagePieChart  = ( props : Props) => {
   return (
     <Card style={{ minHeight: '330px' }}>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          {
-            type === "message" ?
-            <CardHeader title="Percentage of Message" titleTypographyProps={{ varient:'h6' }}
-                    subheader="Period over Period Comparison"
-                    subheaderTypographyProps={{ varient: 'h6' }}
-                />
-            :
-            <CardHeader title="Percentage of Channel" titleTypographyProps={{ varient:'h6' }}
-                    subheader="Period over Period Comparison"
-                    subheaderTypographyProps={{ varient: 'h6' }}
-                />
-          }
+          <CardHeader title="Percentage of Message" titleTypographyProps={{ varient:'h6', color: highlight ? 'green' : '#4c4e64de' }}
+              subheader="Period over Period Comparison"
+              subheaderTypographyProps={{ varient: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          />
           <StyledTooltip arrow title={chartId}>
-              <Information  style={{marginTop: '22px', fontSize: '29px'}} />
+              <Information  style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
           </StyledTooltip>
       </span>
       

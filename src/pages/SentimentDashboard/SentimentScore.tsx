@@ -12,7 +12,7 @@ import { StyledTooltip } from '../dashboard/overall';
 import { Information } from 'mdi-material-ui';
 import { GetSentimentScore } from 'src/services/api/dashboards/sentiment/sentimentDashboard';
 
-const SenitmentScore  = ({params, chartId} : {params: any, chartId: string}) => {
+const SenitmentScore  = ({params, chartId, highlight} : {params: any, chartId: string, highlight: boolean}) => {
 
   const { resultSenitmentScore } = GetSentimentScore(params?.campaign, params?.date, params?.endDate, params?.period);
 
@@ -21,10 +21,10 @@ const SenitmentScore  = ({params, chartId} : {params: any, chartId: string}) => 
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title='Sentiment Score'
-            titleTypographyProps={{ variant: 'h6' }}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           />
           <StyledTooltip arrow title={chartId}>
-              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+              <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
       </span>
 

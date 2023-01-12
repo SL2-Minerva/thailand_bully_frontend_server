@@ -31,8 +31,8 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                 <Box>
                     <Grid container spacing={7}>
                     <Grid item xs={6} md={3}>
-                            <span style={{ display: 'flex', justifyContent: 'center' }}>
-                                <Typography variant='h4'>Total Engagement</Typography>
+                            <span style={{ display: 'flex', justifyContent: 'left' }}>
+                                <Typography variant='h5'>Total Engagement</Typography>
                             </span>
                             <Typography variant='body2' mt={10}>
                                 <Typography variant='h3' sx={{ display:'flex', justifyContent: 'space-between' }}>
@@ -49,7 +49,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                                                     <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
                                                 }
 
-                                                <Typography variant='h4' sx={{ color: totalEngagement?.totalEngagement?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                                <Typography variant='h5' sx={{ color: totalEngagement?.totalEngagement?.type === 'plus' ? 'success.main' : 'error.main' }}>
                                                     {totalEngagement?.totalEngagement?.comparison}
                                                 </Typography>
                                             </Box>
@@ -64,7 +64,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                     <Grid item xs={6} md={3}>
                             <span style={{ display: 'flex', justifyContent: 'center' }}>
                                 <Share fontSize='large'/>
-                                <Typography variant='h4' sx={{ marginLeft: '20px' }}>Share</Typography>
+                                <Typography variant='h5' sx={{ marginLeft: '20px' }}>Share</Typography>
                             </span>
                             <Typography variant='body2' mt={10}>
                                 <Typography variant='h3' sx={{ display:'flex', justifyContent: 'center' }}>
@@ -79,7 +79,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                                                     :
                                                     <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
                                                 }
-                                                <Typography variant='h4' sx={{ color: totalEngagement?.share?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                                <Typography variant='h5' sx={{ color: totalEngagement?.share?.type === 'plus' ? 'success.main' : 'error.main' }}>
                                                     {totalEngagement?.share?.comparison}
                                                 </Typography>
                                             </Box>
@@ -94,7 +94,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                     <Grid item xs={6} md={3}>
                             <span style={{ display: 'flex', justifyContent: 'center' }}>
                                 <Message fontSize='large'/>
-                                <Typography variant='h4' sx={{ marginLeft: '20px' }}>Comment</Typography>
+                                <Typography variant='h5' sx={{ marginLeft: '20px' }}>Comment</Typography>
                             </span>
                             <Typography variant='body2' mt={10}>
                                 <Typography variant='h3' sx={{ display:'flex', justifyContent: 'center' }}>
@@ -108,7 +108,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                                                     :
                                                     <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
                                                 }
-                                                <Typography variant='h4' sx={{ color: totalEngagement?.comment?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                                <Typography variant='h5' sx={{ color: totalEngagement?.comment?.type === 'plus' ? 'success.main' : 'error.main' }}>
                                                     {totalEngagement?.comment?.comparison}
                                                 </Typography>
                                             </Box>
@@ -123,7 +123,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                     <Grid item xs={6} md={3}>
                             <span style={{ display: 'flex', justifyContent: 'center' }}>
                                 <StickerEmoji fontSize='large'/>
-                                <Typography variant='h4' sx={{ marginLeft: '20px' }}>Reaction</Typography>
+                                <Typography variant='h5' sx={{ marginLeft: '20px' }}>Reaction</Typography>
                             </span>
                             <Typography variant='body2' mt={10}>
                                 <Typography variant='h3' sx={{ display:'flex', justifyContent: 'center' }}>
@@ -137,7 +137,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                                                     :
                                                     <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
                                                 }
-                                                <Typography variant='h4' sx={{ color: totalEngagement?.reaction?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                                <Typography variant='h5' sx={{ color: totalEngagement?.reaction?.type === 'plus' ? 'success.main' : 'error.main' }}>
                                                     {totalEngagement?.reaction?.comparison}
                                                 </Typography>
                                             </Box>

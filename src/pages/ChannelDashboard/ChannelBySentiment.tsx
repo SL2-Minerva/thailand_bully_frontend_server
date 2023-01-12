@@ -34,7 +34,7 @@ const ChartData = (data: any ) => {
   return chartDatas;
 }
 
-const ChannelBySentiment  = ({params, chartId} : {params: any, chartId: string}) => {
+const ChannelBySentiment  = ({params, chartId, highlight} : {params: any, chartId: string, highlight : boolean}) => {
   const { resultChannelSentimentLevel } = GetChannelSentimentLevel(params?.campaign, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
 
   const labels = resultChannelSentimentLevel ? ChartLabels(resultChannelSentimentLevel) : [];
@@ -59,10 +59,10 @@ const ChannelBySentiment  = ({params, chartId} : {params: any, chartId: string})
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title='Channel by Sentiment'
-            titleTypographyProps={{ variant: 'h6' }}
+            titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
           />
           <StyledTooltip arrow title={chartId}>
-              <Information style={{marginTop: '22px', fontSize: '29px'}} />
+              <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
       <CardContent>

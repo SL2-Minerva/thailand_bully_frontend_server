@@ -31,11 +31,12 @@ interface InfluencerComparisonProps {
     totalText: string,
     totalValue : number
     chartId: string
+    highlight: boolean
   }
 
 const InfluencerComparison = (props: InfluencerComparisonProps) => {
   // ** Props
-  const { color, icon, trend, trendNumber, totalText, totalValue, chartId } = props
+  const { color, icon, trend, trendNumber, totalText, totalValue, chartId, highlight } = props
 
   const TrendIcon = trend === 'plus' ? ChevronUp : ChevronDown
 
@@ -75,7 +76,7 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
 
         <Divider sx={{ mt: 2, mb: 7.5 }} />
          
-         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+         <span style={{ display: 'flex', justifyContent: 'flex-start',color: highlight ? 'green' : '#4c4e64de' }}>
              Period over Period comparison
               <StyledTooltip arrow title={chartId}>
                   <Information style={{marginLeft: '10px', fontSize: '29px'}} />

@@ -16,12 +16,13 @@ import { GetDayTimeBySentiment } from 'src/services/api/dashboards/voice/VoiceDa
 
 interface Props{
   chartId: string,
-  params : any
+  params : any,
+  highlight: boolean
 }
 
 const DayTimeSentiment = (props : Props) => {
 
-  const { chartId, params } = props;
+  const { chartId, params, highlight } = props;
 
   const [seriesHour, setSeriesHour ] = useState([{name: '', data:[]}]);
   const [seriesDays, setSeriesDays ] = useState([{name: '', data:[]}]);
@@ -91,9 +92,9 @@ const DayTimeSentiment = (props : Props) => {
       return (
         <Card>
           <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <CardHeader title="Day&Time by Sentiment " titleTypographyProps={{ 'variant': 'h4' }}/>
+            <CardHeader title="Day&Time by Sentiment " titleTypographyProps={{ 'variant': 'h4',color: highlight ? 'green' : '#4c4e64de' }}/>
               <StyledTooltip arrow title={chartId || ""}>
-                  <Information style={{marginTop: '22px', fontSize: '29px'}} />
+                  <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
               </StyledTooltip>
           </span>
             <CardContent>

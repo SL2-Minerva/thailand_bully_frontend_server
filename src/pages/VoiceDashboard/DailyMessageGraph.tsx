@@ -12,14 +12,15 @@ import { Information } from 'mdi-material-ui'
 import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { InteractionItem } from 'chart.js'
-import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 import moment from 'moment'
 import { GetDailyMessages } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
+import MessageDetail from '../ChannelDashboard/MessageDetail'
 
 interface Props {
   type: string
   chartId : string
   params: any
+  highlight? : boolean
 }
 export const getSeries = (seriesData: any) => {
   if(!seriesData) return [];
@@ -76,11 +77,16 @@ export const chartLabel = (data:any) => {
 }
 
 const DailyMessageGraph = ( props : Props) => {
-    const { type, chartId, params} = props;
+    const { type, chartId, params, highlight} = props;
     const [ label, setLabel ] = useState<string[]>([]);
     const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
     const [ showDetail , setShowDetail ] = useState<boolean>(false);
-    const [keywordId, setKeywordId] = useState<any>();
+    const [ paramsId, setParamsId] = useState<any>({
+      keywordId : null,
+      sourceId: null,
+      campaign_id: null,
+      organization_id: null
+    });
     const { resultDailyMessage } = GetDailyMessages(params?.campaign, params?.date, params?.endDate, params?.period);
 
     const chartRef = useRef();
@@ -90,24 +96,39 @@ const DailyMessageGraph = ( props : Props) => {
       const datasetIndex = dataset[0].datasetIndex;
       const keywordName = data.datasets[datasetIndex].label;
       const dailyMessageData = resultDailyMessage;
+  
       let keywordId : number | null= null;
+      let sourceId : number | null = null;
+      let campaign_id : number | null = null;
+      let organization_id : number | null = null;
+  
       if (dailyMessageData?.length > 0) {
         for (let i =0; i<dailyMessageData?.length; i++) {
             if(keywordName === dailyMessageData[i].keyword_name) {
-              keywordId = dailyMessageData[i].keyword_id;
+              sourceId = dailyMessageData[i].source_id || "";
+              campaign_id = dailyMessageData[i].campaign_id || "";
+              organization_id = dailyMessageData[i].organization_id || "";
+              keywordId = dailyMessageData[i]?.keyword_id || "";
             }
         }
       }
   
-      return keywordId;
+      const returnData  = {
+        keywordId : keywordId,
+        sourceId: sourceId,
+        campaign_id: campaign_id,
+        organization_id: organization_id
+      }
+      
+      return returnData;
     };
-
+  
     const onClick = (event : any) => {
       if(chartRef.current) {
         const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
-
+  
         if(keyword_id) {
-          setKeywordId(keyword_id);
+          setParamsId(keyword_id);
           setShowDetail(true);
         }
         
@@ -120,7 +141,7 @@ const DailyMessageGraph = ( props : Props) => {
       maintainAspectRatio: false,
       scales: {
         x: {
-          ticks: { color: "grey" },
+          ticks: { color: "#4c4e64de" },
           stacked: true
         },
         y: {
@@ -131,7 +152,7 @@ const DailyMessageGraph = ( props : Props) => {
           scaleLabel: { display: true },
           ticks: {
             stepSize: 100,
-            color: "grey"
+            color: "#4c4e64de"
           },
           stacked: true
           
@@ -144,7 +165,7 @@ const DailyMessageGraph = ( props : Props) => {
           labels: {
             padding: 25,
             boxWidth: 10,
-            color: "grey",
+            color: "#4c4e64de",
             usePointStyle: true
           }
         }
@@ -212,33 +233,33 @@ const DailyMessageGraph = ( props : Props) => {
               type === 'message' ?
               <CardHeader 
                   title='Daily Messages'
-                  titleTypographyProps={{ variant: 'h6' }}
+                  titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
               />
               :
               type === 'channel' ?
               <CardHeader 
                   title='Daily Channel'
-                  titleTypographyProps={{ variant: 'h6' }}
+                  titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
               />
               : ""
             }
             <StyledTooltip arrow title={chartId}>
-                <Information  style={{marginTop: '22px', fontSize: '29px'}} />
+                <Information  style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
             </StyledTooltip>
         </span>  
           <CardContent>
               <Bar ref={chartRef} data={data} options={options as any} height={366} onClick={onClick} />
           </CardContent>
           {
-            showDetail ?
-            <DailyMessageDetail 
-                show={showDetail}
-                setShow={setShowDetail}
-                params = {params}
-                keywordId = {keywordId}
-                setKeywordId={setKeywordId}
-            /> : ""
-          }
+          showDetail ?
+          <MessageDetail 
+              show={showDetail}
+              setShow={setShowDetail}
+              params = {params}
+              paramsId = {paramsId}
+              setParamsId={setParamsId}
+          /> : ""
+         }
           
         </Card>
         

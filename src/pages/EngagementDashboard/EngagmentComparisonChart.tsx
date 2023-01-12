@@ -49,7 +49,7 @@ const ChartDataEngagement = (data: any, type : string) => {
   return value;
 }
 
-const EngagmentComparisonChart = ({params} : {params: any}) => {
+const EngagmentComparisonChart = ({params, highlight} : {params: any, highlight:boolean}) => {
   const { resultComparison }  = GetComparisonEngagement(params?.campaign, params?.date, params?.endDate, params?.period);
   
   const chartLabels =  Labels(resultComparison);
@@ -116,7 +116,7 @@ const EngagmentComparisonChart = ({params} : {params: any}) => {
     <Card>
         <CardHeader
                 title=''
-                titleTypographyProps={{ variant: 'h6' }}
+                titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <CardContent>
             <ReactApexcharts type="bar" height={486} series={series} options={options} />

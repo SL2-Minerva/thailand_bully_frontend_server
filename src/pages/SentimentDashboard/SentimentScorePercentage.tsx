@@ -49,7 +49,7 @@ const ChartDataSentiment = (data: any, type : string) => {
   return value;
 }
 
-const SentimentScorePercentage = ({params} : {params: any}) => {
+const SentimentScorePercentage = ({params, highlight} : {params: any, highlight: boolean}) => {
   const { resultSentimentScorePercentage } = GetSentimentScore(params?.campaign, params?.date, params?.endDate, params?.period);
   
   const chartLabels =  Labels(resultSentimentScorePercentage);
@@ -116,7 +116,7 @@ const SentimentScorePercentage = ({params} : {params: any}) => {
     <Card>
         <CardHeader
                 title=''
-                titleTypographyProps={{ variant: 'h6' }}
+                titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <CardContent>
             <ReactApexcharts type="bar" height={380} series={series} options={options} />
