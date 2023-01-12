@@ -249,7 +249,7 @@ const VoiceDashboard = () => {
                 <Grid item xs={12} md={4} id="chart12">
                 {
                     resultReportPermission?.includes("31") ?
-                    <Grid xs={12}>
+                    <Grid item xs={12}>
                         <InfluencerComparison 
                             color='primary'
                             trendNumber={resultTotalMessages?.percentage}
@@ -264,7 +264,7 @@ const VoiceDashboard = () => {
                 }
                 {
                     resultReportPermission?.includes("32") ?
-                    <Grid xs={12} mt={5}>
+                    <Grid item  xs={12} mt={5}>
                         <InfluencerComparison 
                             color='primary'
                             trendNumber={resultTotalAccount?.percentage || ""}

@@ -53,12 +53,12 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
                                     
                                 </Typography> */}
                             </span>
-                            <Typography variant='body2' mt={4}>
+                            <Grid mt={4}>
                                 <Typography variant='h4' sx={{ display:'flex', justifyContent: 'center' }}>
                                     {trend === 'plus' ? "+" : ""}{totalValue}
                                 </Typography>
-                            </Typography>
-                            <Typography variant='body2' mt={4}>
+                            </Grid>
+                            <Grid mt={4}>
                                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                         <TrendIcon fontSize='large' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }} />
@@ -69,7 +69,7 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
                                     </Box>
                                 </Box>
                                 
-                            </Typography>
+                            </Grid>
                         </Grid>
 
                     </Grid>

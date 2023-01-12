@@ -66,25 +66,25 @@ const KeyStatusReport = (props: KeyStatusProps) => {
                     </CustomAvatar>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography variant='body2' sx={{ mt: 7 }}>
-                        <h4> {totalText} </h4>
+                    <Typography variant='body2' sx={{ mt: 7, fontWeight: 'bold' }}>
+                    {totalText}
                     </Typography>
                 </Grid>
                 <Grid item xs={3}>
-                    <Typography variant='body2'>
-                        <h1> <b>{totalValue}</b> </h1>
+                    <Typography variant='h4' sx={{ mt: 5, fontWeight: 'bold' }}>
+                        <b>{totalValue}</b>
                     </Typography>
                 </Grid>
             </Grid>
-            <Grid container spacing={1} mt={-9}>
+            <Grid container spacing={1}>
                 <Grid item xs={8}>
-                    <Typography variant='body2' sx={{ mt: 7 }}>
-                        <h3> {averageText} </h3>
+                    <Typography variant='body2' sx={{ mt: 7, fontWeight: 'bold' }}>
+                        {averageText}
                     </Typography>
                 </Grid>
                 <Grid item xs={4}>
-                    <Typography variant='body2'>
-                        <h1> <b> {averageValue} </b> </h1>
+                    <Typography variant='h4' sx={{ mt: 5, fontWeight: 'bold' }}>
+                        {averageValue}
                     </Typography>
                 </Grid>
             </Grid>

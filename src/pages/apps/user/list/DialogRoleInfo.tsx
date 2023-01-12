@@ -211,8 +211,9 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
             }
           }
         )
-        .then(res => {
-          console.log('res', res)
+        .then(() => {
+
+          // console.log('res', res)
           onClose();
 
           // setShow(false);
@@ -234,8 +235,8 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
           }
         }
       )
-      .then(res => {
-        console.log('res', res)
+      .then(() => {
+        // console.log('res', res)
         onClose();
 
         // setShow(false)
@@ -327,28 +328,28 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                           </TableCell>
                           <TableCell align='left'>
                             <Checkbox
-                              checked={permission[row].authorized_create}
+                              checked={permission[row].authorized_create === 1 ? true : permission[row].authorized_create ? true : false}
                               onChange={e => handleChecked(e, row, 'create')}
                               inputProps={{ 'aria-label': 'controlled' }}
                             />
                           </TableCell>
                           <TableCell align='left'>
                             <Checkbox
-                              checked={permission[row].authorized_edit}
+                              checked={permission[row].authorized_edit === 1 ? true : permission[row].authorized_edit ? true : false}
                               onChange={e => handleChecked(e, row, 'edit')}
                               inputProps={{ 'aria-label': 'controlled' }}
                             />
                           </TableCell>
                           <TableCell align='left'>
                             <Checkbox
-                              checked={permission[row].authorized_view}
+                              checked={permission[row].authorized_view === 1 ? true : permission[row].authorized_view ? true : false}
                               onChange={e => handleChecked(e, row, 'view')}
                               inputProps={{ 'aria-label': 'controlled' }}
                             />
                           </TableCell>
                           <TableCell align='left'>
                             <Checkbox
-                              checked={permission[row].authorized_export}
+                              checked={permission[row].authorized_export === 1 ? true : permission[row].authorized_export ? true : false}
                               onChange={e => handleChecked(e, row, 'export')}
                               inputProps={{ 'aria-label': 'controlled' }}
                             />

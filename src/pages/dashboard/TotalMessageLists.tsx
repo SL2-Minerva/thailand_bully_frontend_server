@@ -24,10 +24,12 @@ const TotalMessageLists = ({params, chartId} : {params: any, chartId: string}) =
             <TableContainer sx={{ maxHeight: 400 }}>
             <Table size="small" stickyHeader={true}>
                     <TableHead sx={{ backgroundColor: "lightgrey !important"}}>
-                        <TableCell variant="head"> No. </TableCell>
-                        <TableCell variant="head"> Keyword </TableCell>
-                        <TableCell variant="head"> จํานวน Keyword </TableCell>
-                        <TableCell variant="head"> % </TableCell>
+                        <TableRow>
+                            <TableCell variant="head"> No. </TableCell>
+                            <TableCell variant="head"> Keyword </TableCell>
+                            <TableCell variant="head"> จํานวน Keyword </TableCell>
+                            <TableCell variant="head"> % </TableCell>
+                        </TableRow>
                     </TableHead>
                     <TableBody>
                         {

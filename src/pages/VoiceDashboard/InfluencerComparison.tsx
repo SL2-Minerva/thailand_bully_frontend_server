@@ -50,26 +50,23 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
                         {icon}
                     </CustomAvatar>
                 </Grid>
-                <Grid item xs={5}>
-                    <Typography variant='body2' mt={4}>
-                        <Typography variant='h4'>
-                            {trend === 'plus' ? "+" : "-"}{totalValue}
-                        </Typography>
-                        <h4> {totalText} </h4>
+                <Grid item xs={5} p={4}>
+                    <Typography variant='h4'>
+                        {trend === 'plus' ? "+" : "-"}{totalValue}
+                    </Typography>
+                    <Typography variant='h6' sx={{ m: 3 }} >
+                        <b>{totalText}</b>
                     </Typography>
                 </Grid>
-                <Grid item xs={4}>
-                    <Typography variant='body2' mt={4}>
-                        <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <Typography variant='h4' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
-                                    {trendNumber + "%"}
-                                </Typography>
-                                <TrendIcon fontSize='large' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }} />
-                            </Box>
+                <Grid item xs={4} p={4}>
+                    <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Typography variant='h4' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
+                                {trendNumber + "%"}
+                            </Typography>
+                            <TrendIcon fontSize='large' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }} />
                         </Box>
-                        
-                    </Typography>
+                    </Box>
                 </Grid>
             </Grid>
         </Box>

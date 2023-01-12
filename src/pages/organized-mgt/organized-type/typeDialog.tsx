@@ -76,13 +76,12 @@ const DialogOrganizationType = (props: DialogInfoProps) => {
   })
 
   useEffect(() => {
-    console.log('status',  current?.status === 1 ? true : false || true)
-    setValue('description', current?.organization_type_description || '')
-    setValue('type', current?.organization_type_name || '')
-    setValue('status', current?.status === 1 ? true : false || true)
-    if (action === 'edit') {
-      setValue('id', current?.id)
-    }
+      setValue('description', current?.organization_type_description || '')
+      setValue('type', current?.organization_type_name || '')
+      setValue('status', current?.status === 1 ? true : false || true)
+      if (action === 'edit') {
+        setValue('id', current?.id)
+      }
   }, [current])
 
   const onSubmit = (data: FormData) => {
@@ -93,8 +92,7 @@ const DialogOrganizationType = (props: DialogInfoProps) => {
           Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
         }
       })
-      .then(res => {
-        console.log('res', res);
+      .then(() => {
         setShow(false);
       });
     }
@@ -106,17 +104,17 @@ const DialogOrganizationType = (props: DialogInfoProps) => {
           Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
         }
       })
-      .then(res => {
-        console.log('res', res);
+      .then(() => {
+        // console.log('res', res);
         setShow(false);
       });
     }
     
   }
 
-  if (current) {
-    setValue('description', current?.organization_type_description)
-  }
+  // if (current) {
+  //   setValue('description', current?.organization_type_description)
+  // }
 
   return (
     <Card>

@@ -45,8 +45,6 @@ interface DialogInfoProps {
 const DialogEditUserInfo = (props: DialogInfoProps) => {
   const {show, setShow, action, current} = props
 
-  console.log('current', current)
-
   const [organization, setOrganization] = useState<any>(current.organization_id ?? '')
   const [name, setName] = useState<string>(current.name ?? '')
   const [email, setEmail] = useState<string>(current.email ?? '')

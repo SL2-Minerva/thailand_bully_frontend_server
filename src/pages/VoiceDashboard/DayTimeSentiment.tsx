@@ -92,7 +92,7 @@ const DayTimeSentiment = (props : Props) => {
       return (
         <Card>
           <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <CardHeader title="Day&Time by Sentiment " titleTypographyProps={{ 'variant': 'h4',color: highlight ? 'green' : '#4c4e64de' }}/>
+            <CardHeader title="Day&Time by Sentiment " titleTypographyProps={{ variant: 'h4',color: highlight ? 'green' : '#4c4e64de' }}/>
               <StyledTooltip arrow title={chartId || ""}>
                   <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
               </StyledTooltip>

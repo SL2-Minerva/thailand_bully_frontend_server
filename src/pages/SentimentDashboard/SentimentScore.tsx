@@ -33,17 +33,19 @@ const SenitmentScore  = ({params, chartId, highlight} : {params: any, chartId: s
             <Grid item xs={12} >
                 <Table size="small">
                     <TableHead>
+                      <TableRow>
                         <TableCell variant="head">  
-                        </TableCell>
-                        <TableCell variant="head" align='center'>  
-                          Sentiment Score
-                        </TableCell>
-                        <TableCell variant="head" align='center'> 
-                          
-                        </TableCell>
-                        <TableCell variant="head" align='center'> 
-                          Previous Period
-                        </TableCell>
+                          </TableCell>
+                          <TableCell variant="head" align='center'>  
+                            Sentiment Score
+                          </TableCell>
+                          <TableCell variant="head" align='center'> 
+                            
+                          </TableCell>
+                          <TableCell variant="head" align='center'> 
+                            Previous Period
+                          </TableCell>
+                      </TableRow>
                     </TableHead>
                     {
                       (resultSenitmentScore || []).map((comparison : any, index: number) => {

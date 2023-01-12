@@ -52,7 +52,6 @@ interface DialogInfoProps {
 
 const DialogOrganizationInfo = (props: DialogInfoProps) => {
   const { show, setShow, action, current } = props;
-  console.log(current);
 
   const { result_domain_list } = DomainList()
 
@@ -102,8 +101,8 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
           Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
         }
       })
-      .then(res => {
-        console.log('res', res);
+      .then(() => {
+        // console.log('res', res);
         setShow(false);
       });
     } else {
@@ -113,8 +112,8 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
           Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
         }
       })
-      .then(res => {
-        console.log('res', res);
+      .then(() => {
+        // console.log('res', res);
         setShow(false);
       });
     }

@@ -111,7 +111,7 @@ const DomainManagement = () => {
                         {result_domain_list &&
                           result_domain_list.map((row: any, index: number) => (
                             <TableRow
-                              key={row.name}
+                              key={index}
                               sx={{
                                 '&:last-of-type td, &:last-of-type th': {
                                   border: 0
@@ -128,7 +128,7 @@ const DomainManagement = () => {
                                     <TableCell align='center'>
                                       <Switch
                                         key={index}
-                                        checked={row.status}
+                                        checked={row.status === 1 ? true : row.status ? true : false}
                                         onChange={e => handleChange(index, row.id, e)}
                                       />
                                     </TableCell>
@@ -144,7 +144,7 @@ const DomainManagement = () => {
                                 <TableCell align='center'>
                                   <Switch
                                     key={index}
-                                    checked={row.status}
+                                    checked={row.status === 1 ? true : row.status ? true : false}
                                   />
                                 </TableCell>
                               }

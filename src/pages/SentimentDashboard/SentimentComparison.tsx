@@ -34,23 +34,25 @@ const SentimentComparison  = ({params, chartId, highlight} : {params: any, chart
             <Grid item xs={12} >
                 <Table size="small">
                     <TableHead>
+                      <TableRow>
                         <TableCell variant="head">  
-                        </TableCell>
-                        <TableCell variant="head" align='center'>  
-                          Total
-                        </TableCell>
-                        <TableCell variant="head" align='center'>  
-                          Comparison with previous
-                        </TableCell>
-                        <TableCell variant="head" align='center'> 
-                          Positive
-                        </TableCell>
-                        <TableCell variant="head" align='center'> 
-                          Neutral
-                        </TableCell>
-                        <TableCell variant="head" align='center'>
-                          Negative
-                        </TableCell>
+                          </TableCell>
+                          <TableCell variant="head" align='center'>  
+                            Total
+                          </TableCell>
+                          <TableCell variant="head" align='center'>  
+                            Comparison with previous
+                          </TableCell>
+                          <TableCell variant="head" align='center'> 
+                            Positive
+                          </TableCell>
+                          <TableCell variant="head" align='center'> 
+                            Neutral
+                          </TableCell>
+                          <TableCell variant="head" align='center'>
+                            Negative
+                          </TableCell>
+                      </TableRow>
                     </TableHead>
                     {
                       (resultSentimentComparison || []).map((comparison : any, index: number) => {

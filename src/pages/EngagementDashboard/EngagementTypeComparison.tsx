@@ -33,20 +33,23 @@ const EngagementTypeComparison  = ({params, chartId, highlight} : {params: any, 
             <Grid item xs={12} >
                 <Table size="small">
                     <TableHead>
+                      <TableRow>
                         <TableCell variant="head">  
-                        </TableCell>
-                        <TableCell variant="head" align='center'>  
-                          Total
-                        </TableCell>
-                        <TableCell variant="head" align='center'> 
-                          Share
-                        </TableCell>
-                        <TableCell variant="head" align='center'> 
-                          Comment
-                        </TableCell>
-                        <TableCell variant="head" align='center'>
-                          Reaction
-                        </TableCell>
+                          </TableCell>
+                          <TableCell variant="head" align='center'>  
+                            Total
+                          </TableCell>
+                          <TableCell variant="head" align='center'> 
+                            Share
+                          </TableCell>
+                          <TableCell variant="head" align='center'> 
+                            Comment
+                          </TableCell>
+                          <TableCell variant="head" align='center'>
+                            Reaction
+                          </TableCell>
+                      </TableRow>
+                        
                     </TableHead>
                     {
                       (resultEngagementComparison || []).map((comparison : any, index: number) => {

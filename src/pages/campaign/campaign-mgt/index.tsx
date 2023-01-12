@@ -57,7 +57,6 @@ const CampaignManagement = () => {
   
 
   const { resultCampaiganList } = CampaignList(reload, is_fillter, fillter)
-  console.log(resultCampaiganList)
 
   const { result_domain_list } = DomainList();
 
@@ -274,7 +273,7 @@ const CampaignManagement = () => {
                       </TableCell>
                       <TableCell align='center'>
                         {(result_domain_list || []).map((domain: any, domainIndex: number) => (
-                          <>{domain.id === campaignList.domain_id && <span key={domainIndex}>{domain.name}</span>}</>
+                          <span key={domainIndex}>{domain.id === campaignList.domain_id && <span>{domain.name}</span>}</span>
                         ))}
                       </TableCell>
                       <TableCell align='center'>{campaignList.organization}</TableCell>
@@ -282,7 +281,8 @@ const CampaignManagement = () => {
                         resultPermission?.campaign?.authorized_edit ?
                         <>
                             <TableCell align='center'>
-                              <Switch key={index} checked={campaignList.status} onChange={e => handleChange(index, campaignList.id, e)} />
+                              <Switch key={index} checked={campaignList.status === 1 ? true : campaignList.status ? true : false} 
+                                onChange={e => handleChange(index, campaignList.id, e)} />
                             </TableCell>
                             <TableCell align='center'>
                             <PencilOutline
@@ -294,7 +294,7 @@ const CampaignManagement = () => {
                         </>
                         : 
                         <TableCell align='center'>
-                            <Switch key={index} checked={campaignList.status}/>
+                            <Switch key={index} checked={campaignList.status === 1 ? true : campaignList.status ? true : false} />
                         </TableCell>
                       }
                     </TableRow>

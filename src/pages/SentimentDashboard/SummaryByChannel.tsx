@@ -38,11 +38,13 @@ const SummaryByChannel = ({resultSummary, topChannel, setTopChannel, chartId, hi
             <TableContainer sx={{ maxHeight: 500 }}>
             <Table size="small" stickyHeader={true}>
                     <TableHead style={{ backgroundColor: "green"}}>
-                        <TableCell variant="head"> Channel </TableCell>
-                        <TableCell variant="head"> Sentiment Score </TableCell>
-                        <TableCell variant="head"> Positive </TableCell>
-                        <TableCell variant="head"> Neutral </TableCell>
-                        <TableCell variant="head"> Negative </TableCell>
+                        <TableRow>
+                            <TableCell variant="head"> Channel </TableCell>
+                            <TableCell variant="head"> Sentiment Score </TableCell>
+                            <TableCell variant="head"> Positive </TableCell>
+                            <TableCell variant="head"> Neutral </TableCell>
+                            <TableCell variant="head"> Negative </TableCell>
+                        </TableRow>
                     </TableHead>
                     <TableBody>
                         {

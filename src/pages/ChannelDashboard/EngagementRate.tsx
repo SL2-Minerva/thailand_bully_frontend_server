@@ -192,8 +192,6 @@ const EngagementRate = (props: LineProps) => {
             
             const dataSets = chartDatasets(currentEngagementData, previousEngagementData);
             setDataset(dataSets);
-
-            console.log('data sets', dataSets);
         }
         }
     },[resultEngagementRate, resultEngagementRatePrevious]);

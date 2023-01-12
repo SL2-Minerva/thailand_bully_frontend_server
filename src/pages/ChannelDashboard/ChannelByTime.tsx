@@ -164,8 +164,6 @@ const ChannelByTime = (props: LineProps) => {
             
             const dataSets = chartDatasets(dailyMessageData);
             setDataset(dataSets);
-            console.log('data sets', dataSets);
-
         }
         }
     },[resultChannelByTime]);

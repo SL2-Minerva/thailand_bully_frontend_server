@@ -22,14 +22,15 @@ const EngagementSummary = ({resultSummary, chartId, highlight} : {resultSummary:
             <TableContainer sx={{ maxHeight: 250 }}>
             <Table size="small" stickyHeader={true}>
                     <TableHead style={{ backgroundColor: "green"}}>
-                        <TableCell variant="head"> Influencer </TableCell>
-                        <TableCell variant="head"> Total </TableCell>
-                        <TableCell variant="head"> Share </TableCell>
-                        <TableCell variant="head"> Comment </TableCell>
-                        <TableCell variant="head"> Reaction </TableCell>
-                        <TableCell variant="head"> Period over Period </TableCell>
-                        <TableCell variant="head"> Period over Period (%) </TableCell>
-
+                        <TableRow>
+                            <TableCell variant="head"> Influencer </TableCell>
+                            <TableCell variant="head"> Total </TableCell>
+                            <TableCell variant="head"> Share </TableCell>
+                            <TableCell variant="head"> Comment </TableCell>
+                            <TableCell variant="head"> Reaction </TableCell>
+                            <TableCell variant="head"> Period over Period </TableCell>
+                            <TableCell variant="head"> Period over Period (%) </TableCell>
+                        </TableRow>
                     </TableHead>
                     <TableBody>
                         {

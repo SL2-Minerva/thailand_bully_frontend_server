@@ -77,11 +77,11 @@ const DialogOrganization = (props: DialogInfoProps) => {
   })
 
   useEffect(() => {
-    setValue('description', current?.description)
-    setValue('name', current?.name)
-    setValue('status', current?.status === 1)
-    setValue('organization_type_id', current?.organization_type_id)
-    setValue('organization_group_id', current?.organization_group_id)
+    setValue('description', current?.description || "")
+    setValue('name', current?.name || "")
+    setValue('status', current?.status === 1 ? true : false)
+    setValue('organization_type_id', current?.organization_type_id || "")
+    setValue('organization_group_id', current?.organization_group_id || "")
     if (action === 'edit') {
       setValue('id', current?.id)
     }
@@ -96,8 +96,8 @@ const DialogOrganization = (props: DialogInfoProps) => {
             Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
           }
         })
-        .then(res => {
-          console.log('res', res)
+        .then(() => {
+          // console.log('res', res)
           setShow(false)
         })
     } else {
@@ -107,8 +107,8 @@ const DialogOrganization = (props: DialogInfoProps) => {
             Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
           }
         })
-        .then(res => {
-          console.log('res', res)
+        .then(() => {
+          // console.log('res', res)
           setShow(false)
         })
     }

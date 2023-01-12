@@ -106,7 +106,7 @@ const OrganizationType = () => {
                             </TableCell>
                             <TableCell align='center'>{row.organization_type_description}</TableCell>
                             <TableCell align='center'>
-                              <Switch key={index} checked={row.status} onChange={e => handleChange(index, row.id, e)} />
+                              <Switch key={index} checked={row.status === 1 ? true : row.status ? true : false} onChange={e => handleChange(index, row.id, e)} />
                             </TableCell>
                             <TableCell align='center'>
                               <PencilOutline
@@ -121,13 +121,24 @@ const OrganizationType = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <DialogOrganizationType
-                table={tableData}
-                show={action === 'create' ? showCreate : showEdit}
-                setShow={action === 'create' ? setShowCreate : setShowEdit}
-                action={action}
-                current={current}
-              />
+              {
+                action === 'create' ? 
+                <DialogOrganizationType
+                  table={tableData}
+                  show={showCreate}
+                  setShow={setShowCreate}
+                  action={action}
+                  current={current}
+                /> :
+                <DialogOrganizationType
+                  table={tableData}
+                  show={showEdit}
+                  setShow={setShowEdit}
+                  action={action}
+                  current={current}
+                />
+              }
+              
             </CardContent>
           </CardContent>
         </Card>

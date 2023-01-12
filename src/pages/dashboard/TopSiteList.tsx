@@ -1,4 +1,4 @@
-import { Table, TableRow, TableHead, TableCell, TableContainer } from "@mui/material"; 
+import { Table, TableRow, TableHead, TableCell, TableContainer, TableBody } from "@mui/material"; 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -34,22 +34,26 @@ const TopSiteList = ({ params, chartId} : Props) => {
                 <TableContainer sx={{ maxHeight: 250,minHeight: 250 }}>
                     <Table stickyHeader={true} size="small">
                         <TableHead sx={{ backgroundColor: "lightgrey !important" }}>
-                            <TableCell variant="head" sx={{ backgroundColor: "white !important" }}>  </TableCell>
-                            <TableCell variant="head"> No. of Messages </TableCell>
-                            <TableCell variant="head"> % </TableCell>
+                            <TableRow>
+                                <TableCell variant="head" sx={{ backgroundColor: "white !important" }}>  </TableCell>
+                                <TableCell variant="head"> No. of Messages </TableCell>
+                                <TableCell variant="head"> % </TableCell>
+                            </TableRow>
                         </TableHead>
-
-                        {
-                            (resultTopKeywords?.top_sites || [])?.map((topsite :any, index:any) => {
-                                return(
-                                    <TableRow key={index} onClick={()=>{setShowDetail(true); setKeywordId(topsite?.keyword_id)}}>
-                                        <TableCell sx={{ backgroundColor: "lightslategrey !important", color:'white' }}>{topsite?.site_domain}</TableCell>
-                                        <TableCell>{topsite?.no_of_message}</TableCell>
-                                        <TableCell>{topsite?.percentage}</TableCell>
-                                    </TableRow>
-                                )
-                            })
-                        }
+                        <TableBody>
+                            {
+                                (resultTopKeywords?.top_sites || [])?.map((topsite :any, index:any) => {
+                                    return(
+                                        <TableRow key={index} onClick={()=>{setShowDetail(true); setKeywordId(topsite?.keyword_id)}}>
+                                            <TableCell sx={{ backgroundColor: "lightslategrey !important", color:'white' }}>{topsite?.site_domain}</TableCell>
+                                            <TableCell>{topsite?.no_of_message}</TableCell>
+                                            <TableCell>{topsite?.percentage}</TableCell>
+                                        </TableRow>
+                                    )
+                                })
+                            }
+                        </TableBody>
+                        
                     </Table>
                 </TableContainer>
                 {
