@@ -24,12 +24,14 @@ const KeywordTable = ({params, chartId} : {params: any, chartId: string}) => {
             <TableContainer sx={{ maxHeight: 250 }}>
             <Table size="small" stickyHeader={true}>
                     <TableHead sx={{ backgroundColor: "lightgrey !important"}}>
-                        <TableCell variant="head" style={{ backgroundColor: 'white' }}> </TableCell>
-                        <TableCell variant="head"> Message </TableCell>
-                        <TableCell variant="head"> Engagement </TableCell>
-                        <TableCell variant="head"> Accounts </TableCell>
-                        <TableCell variant="head"> Average message per day </TableCell>
-                        <TableCell variant="head"> Average Engagement per day </TableCell>
+                        <TableRow>
+                            <TableCell variant="head" style={{ backgroundColor: 'white' }}> </TableCell>
+                            <TableCell variant="head"> Message </TableCell>
+                            <TableCell variant="head"> Engagement </TableCell>
+                            <TableCell variant="head"> Accounts </TableCell>
+                            <TableCell variant="head"> Average message per day </TableCell>
+                            <TableCell variant="head"> Average Engagement per day </TableCell>
+                        </TableRow>
                     </TableHead>
                     <TableBody>
                         {

@@ -34,31 +34,29 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                             <span style={{ display: 'flex', justifyContent: 'left' }}>
                                 <Typography variant='h5'>Total Engagement</Typography>
                             </span>
-                            <Typography variant='body2' mt={10}>
-                                <Typography variant='h3' sx={{ display:'flex', justifyContent: 'space-between' }}>
-                                    
+                            <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
+                                <Typography variant='h3' >
                                         {/* { totalEngagement?.totalEngagement?.type === 'plus' ? "+" : "-" } */}
                                         {totalEngagement?.totalEngagement?.totalValue}
-                                        <Typography variant='body2' mt={4}>
-                                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                {
-                                                    totalEngagement?.totalEngagement?.type === 'plus' ?
-                                                    <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
-                                                    :
-                                                    <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
-                                                }
-
-                                                <Typography variant='h5' sx={{ color: totalEngagement?.totalEngagement?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                                    {totalEngagement?.totalEngagement?.comparison}
-                                                </Typography>
-                                            </Box>
-                                        </Box>
-                                        
-                                    </Typography>
-                                   
                                 </Typography>
-                            </Typography>
+                                        
+                                <Box>
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Typography variant='h4' mt={4}>
+                                            {
+                                                totalEngagement?.totalEngagement?.type === 'plus' ?
+                                                <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
+                                                :
+                                                <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
+                                            }
+                                        </Typography>
+
+                                        <Typography variant='h4' sx={{ color: totalEngagement?.totalEngagement?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                            {totalEngagement?.totalEngagement?.comparison}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                            </Grid>
                             
                     </Grid>
                     <Grid item xs={6} md={3}>
@@ -66,29 +64,29 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                                 <Share fontSize='large'/>
                                 <Typography variant='h5' sx={{ marginLeft: '20px' }}>Share</Typography>
                             </span>
-                            <Typography variant='body2' mt={10}>
-                                <Typography variant='h3' sx={{ display:'flex', justifyContent: 'center' }}>
-                                    
-                                       {totalEngagement?.share?.totalValue}
-                                        <Typography variant='body2' mt={4}>
-                                        <Box sx={{ display: 'flex', justifyContent: 'center', marginLeft: '20px' }}>
-                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                {
-                                                    totalEngagement?.share?.type === 'plus' ?
-                                                    <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
-                                                    :
-                                                    <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
-                                                }
-                                                <Typography variant='h5' sx={{ color: totalEngagement?.share?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                                    {totalEngagement?.share?.comparison}
-                                                </Typography>
-                                            </Box>
-                                        </Box>
-                                        
-                                    </Typography>
-                                   
+                            
+                            <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
+                                <Typography variant='h3' >
+                                    {totalEngagement?.share?.totalValue}
                                 </Typography>
-                            </Typography>
+                                        
+                                <Box>
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Typography variant='h4' mt={4}>
+                                            {
+                                                totalEngagement?.share?.type === 'plus' ?
+                                                <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
+                                                :
+                                                <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
+                                            }
+                                        </Typography>
+
+                                        <Typography variant='h4' sx={{ color: totalEngagement?.share?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                            {totalEngagement?.share?.comparison}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                            </Grid>       
                     </Grid>
 
                     <Grid item xs={6} md={3}>
@@ -96,28 +94,28 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                                 <Message fontSize='large'/>
                                 <Typography variant='h5' sx={{ marginLeft: '20px' }}>Comment</Typography>
                             </span>
-                            <Typography variant='body2' mt={10}>
-                                <Typography variant='h3' sx={{ display:'flex', justifyContent: 'center' }}>
-                                        {totalEngagement?.comment?.totalValue}
-                                        <Typography variant='body2' mt={4}>
-                                        <Box sx={{ display: 'flex', justifyContent: 'center', marginLeft: '20px' }}>
-                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                {
-                                                    totalEngagement?.comment?.type === 'plus' ?
-                                                    <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
-                                                    :
-                                                    <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
-                                                }
-                                                <Typography variant='h5' sx={{ color: totalEngagement?.comment?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                                    {totalEngagement?.comment?.comparison}
-                                                </Typography>
-                                            </Box>
-                                        </Box>
-                                        
-                                    </Typography>
-                                   
+                            <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
+                                <Typography variant='h3' >
+                                    {totalEngagement?.comment?.totalValue}
                                 </Typography>
-                            </Typography>
+                                        
+                                <Box>
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Typography variant='h4' mt={4}>
+                                            {
+                                                totalEngagement?.comment?.type === 'plus' ?
+                                                <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
+                                                :
+                                                <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
+                                            }
+                                        </Typography>
+
+                                        <Typography variant='h4' sx={{ color: totalEngagement?.comment?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                            {totalEngagement?.comment?.comparison}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                            </Grid> 
                     </Grid>
 
                     <Grid item xs={6} md={3}>
@@ -125,29 +123,29 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                                 <StickerEmoji fontSize='large'/>
                                 <Typography variant='h5' sx={{ marginLeft: '20px' }}>Reaction</Typography>
                             </span>
-                            <Typography variant='body2' mt={10}>
-                                <Typography variant='h3' sx={{ display:'flex', justifyContent: 'center' }}>
-                                        {totalEngagement?.reaction?.totalValue}
-                                        <Typography variant='body2' mt={4}>
-                                        <Box sx={{ display: 'flex', justifyContent: 'center', marginLeft: '20px' }}>
-                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                {
-                                                    totalEngagement?.reaction?.type === 'plus' ?
-                                                    <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
-                                                    :
-                                                    <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
-                                                }
-                                                <Typography variant='h5' sx={{ color: totalEngagement?.reaction?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                                    {totalEngagement?.reaction?.comparison}
-                                                </Typography>
-                                            </Box>
-                                        </Box>
-                                        
-                                    </Typography>
-                                   
+                            <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
+                                <Typography variant='h3' >
+                                    {totalEngagement?.reaction?.totalValue}
                                 </Typography>
-                            </Typography>
-                    </Grid>
+                                        
+                                <Box>
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Typography variant='h4' mt={4}>
+                                            {
+                                                totalEngagement?.reaction?.type === 'plus' ?
+                                                <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
+                                                :
+                                                <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
+                                            }
+                                        </Typography>
+
+                                        <Typography variant='h4' sx={{ color: totalEngagement?.reaction?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                            {totalEngagement?.reaction?.comparison}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                            </Grid> 
+                    </Grid> 
 
                     </Grid>
                 </Box>

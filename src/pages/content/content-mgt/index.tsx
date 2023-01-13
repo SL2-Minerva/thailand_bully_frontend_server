@@ -220,7 +220,7 @@ const ContentManagement = () => {
                                     </TableCell>
                                     <TableCell align='center'>
                                     <Switch key={index} 
-                                        checked={contentList.status}
+                                        checked={contentList.status === 1 ? true : contentList.status ? true : false}
                                         onChange={e => handleChange(index, contentList.id, e)}
                                     />
                                     </TableCell>

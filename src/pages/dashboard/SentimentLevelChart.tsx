@@ -114,7 +114,7 @@ const SentimentLevelChart = ({params, chartId} : {params: any, chartId: string})
   }
 
   return (
-    <Card>
+    <Card sx={{ minHeight: 380 }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
                   title='Sentiment Level'
@@ -125,7 +125,7 @@ const SentimentLevelChart = ({params, chartId} : {params: any, chartId: string})
           </StyledTooltip>
         </span>
         <CardContent>
-            <ReactApexcharts type="bar" height={276} series={series} options={options} />
+            <ReactApexcharts type="bar"  series={series} options={options} />
         </CardContent>
     </Card>
   )

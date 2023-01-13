@@ -44,8 +44,6 @@ interface DialogInfoProps {
 const DialogSource = (props: DialogInfoProps) => {
   const {  show, setShow, action, current } = props
 
-  console.log(current);
-
   const schema = yup.object().shape({
 
     name: yup.string().required()
@@ -79,7 +77,7 @@ const DialogSource = (props: DialogInfoProps) => {
   }, [current])
 
   const onSubmit = (data: FormData) => {
-    console.log('data', data)
+    // console.log('data', data)
     if (action === 'create') {
       axios
       .post(authConfig.createSource, data, {
@@ -87,8 +85,8 @@ const DialogSource = (props: DialogInfoProps) => {
           Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
         }
       })
-      .then(res => {
-        console.log('res', res);
+      .then(() => {
+        // console.log('res', res);
         setShow(false);
       });
     } else {
@@ -98,8 +96,8 @@ const DialogSource = (props: DialogInfoProps) => {
           Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
         }
       })
-      .then(res => {
-        console.log('res', res);
+      .then(() => {
+        // console.log('res', res);
         setShow(false);
       });
     }

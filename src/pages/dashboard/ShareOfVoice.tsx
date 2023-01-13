@@ -2,7 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid } from "@mui/material"
+import { Grid, TableBody, Typography } from "@mui/material"
 import { Table, TableRow, TableHead, TableCell } from "@mui/material"; 
 
 // ** Third Party Imports
@@ -10,6 +10,7 @@ import { Bar } from 'react-chartjs-2'
 import { StyledTooltip } from './overall';
 import { Information } from 'mdi-material-ui';
 import { GetShareOfVoice, GetShareOfVoiceChart } from 'src/services/api/dashboards/overall/overallDashboardApi';
+import { FacebookIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const';
 
 const ChartLabels = (data: any) => {
   if (!data) return [];
@@ -55,17 +56,73 @@ const ShareOfVoice  = ({params, chartId} : {params: any, chartId : string}) => {
   }]
   };  
 
-  const searchChannel = (data : any, channelName: string) => {
-    if(!data ) return null;
+  const ShareOfVoiceTable = (data: any) => {
+    if(!data) return null;
+  
+    const percentageData = data?.data?.value;
 
-    const result = data.find(({channel} : {channel: any}) => { return channel === channelName});
+    return (
+       <>
+              {
+                (percentageData || []).map((percentage : any , index: number) => {
+                  return (
+                    <TableCell key={index}>
+                        <span style={{ border : percentage?.highlight ? "1px solid red" : "", padding: '4px' }}>
+                            { percentage?.percentage  + "%"} 
+                          </span>
+                    </TableCell>
+                  )
+                })
+              }
+       </> 
+    );
+  }
 
-    return result;
+  const ShareOfVoiceTableHead = (data: any) => {
+    if(!data) return null; 
+    const tableHeader : any[] = [];
+
+    const headerData = data?.data;
+
+    for(let i=0; i<headerData?.length ; i++) {
+      const value = headerData[i]?.value ; 
+      for(let j=0; j<value?.length; j++) {
+        tableHeader.push(value[i]?.channel);
+      }
+    }
+
+    const filterData = [...new Set(tableHeader)];
+
+    return (
+      <>
+          {
+            (filterData || []).map((title :any, i :number) => {
+              const imgPath = title === 'twitter' ? TwitterIcon : title === 'youtube' ? YoutubeIcon : title === 'facebook' ? FacebookIcon
+                              :  title === 'instagram' ? InstagramIcon :  title === 'pantip' ? PantipIcon : ""; 
+
+                return (
+                  <TableCell key={i}>
+                    
+                      {
+                        imgPath ? 
+                        <img alt="logo" width={34} height={34} src={imgPath}/>
+                        : 
+                        <Typography variant="caption" textTransform="uppercase">
+                            {title}
+                        </Typography>
+                      }
+                  </TableCell>
+                )
+            })
+          }
+      </>
+    )
+    
   }
 
 
   return (
-    <Card>
+    <Card sx={{ minHeight: 380 }}>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title='Share of Voice'
@@ -81,90 +138,24 @@ const ShareOfVoice  = ({params, chartId} : {params: any, chartId : string}) => {
                 <Bar data={data} options={{ indexAxis: 'y' }} height={245}/>
             </Grid>
             <Grid item xs={7} >
-                <Table size="small">
-                    <TableHead>
-                        <TableCell variant="head">  
-                          <img
-                            width={34}
-                            height={34}
-                            src={`/images/logos/facebook-round.png`}
-                          />
-                        </TableCell>
-                        <TableCell variant="head"> 
-                          <img
-                              width={34}
-                              height={34}
-                              src={`/images/logos/twitter.png`}
-                            />
-                        </TableCell>
-                        <TableCell variant="head"> 
-                          <img
-                              width={34}
-                              height={34}
-                              src={`/images/logos/youtube-text.png`}
-                            />
-                        </TableCell>
-                        <TableCell variant="head">
-                          <img
-                              width={34}
-                              height={34}
-                              src={`/images/logos/instagram.png`}
-                            />
-                        </TableCell>
-                        <TableCell variant="head">
-                          <img
-                              width={34}
-                              height={34}
-                              src={`/images/logos/pantip.png`}
-                            />
-                        </TableCell>
-                    </TableHead>
-                    {
-                      (resultShareOfVoice || []).map((shareVoice : any, index: number) => {
-                        return(
-                          <TableRow key={index}>
-                              <TableCell>
-                                  { searchChannel(shareVoice?.value, "facebook") ? 
-                                      <span style={{ border : searchChannel(shareVoice?.value, "facebook")?.highlight ? "1px solid red" : "", padding: '4px' }}>
-                                        { searchChannel(shareVoice?.value, "facebook")?.percentage  + "%"}
-                                      </span>
-                                    : "0%"}
-                              </TableCell>
-                              <TableCell>
-                                  { searchChannel(shareVoice?.value, "twitter") ?
-                                    <span style={{ border : searchChannel(shareVoice?.value, "twitter")?.highlight ? "1px solid red" : "", padding: '4px' }}>
-                                      { searchChannel(shareVoice?.value, "twitter")?.percentage  + "%"}
-                                    </span>
-
-                                   : "0%"}
-                              </TableCell>
-                              <TableCell>
-                                  { searchChannel(shareVoice?.value, "youtube") ? 
-                                    <span style={{ border : searchChannel(shareVoice?.value, "youtube")?.highlight ? "1px solid red" : "", padding: '4px' }}>
-                                      { searchChannel(shareVoice?.value, "youtube")?.percentage  + "%"}
-                                    </span>
-                                  : "0%"}
-                              </TableCell>
-                              <TableCell>
-                                  { searchChannel(shareVoice?.value, "instagram") ? 
-                                    <span style={{ border : searchChannel(shareVoice?.value, "instagram")?.highlight ? "1px solid red" : "", padding: '4px' }}>
-                                      { searchChannel(shareVoice?.value, "instagram")?.percentage  + "%"}
-                                    </span>
-                                  : "0%"}
-                              </TableCell>
-                              <TableCell>
-                                  { searchChannel(shareVoice?.value, "pantip") ? 
-                                    <span style={{ border : searchChannel(shareVoice?.value, "pantip")?.highlight ? "1px solid red" : "", padding: '4px' }}>
-                                      { searchChannel(shareVoice?.value, "pantip")?.percentage  + "%"}
-                                    </span> : "0%"}
-                              </TableCell>
-                              
+            <Table size="small">  
+                <TableHead>
+                    <TableRow>
+                        <ShareOfVoiceTableHead data={resultShareOfVoice} />
+                    </TableRow>
+                </TableHead>
+                {
+                  (resultShareOfVoice || []).map((shareVoice : any, index: number) => {
+                    return(
+                      <TableBody key={index}>
+                          <TableRow>
+                              <ShareOfVoiceTable data={shareVoice} />
                           </TableRow>
-                        )
-                      })
-                    }
-                    
-                </Table>
+                      </TableBody>
+                    )
+                  })
+                }
+              </Table>
             </Grid>  
         </Grid>
         

@@ -1,4 +1,4 @@
-import { Table, TableRow, TableHead, TableCell, TableContainer } from "@mui/material"; 
+import { Table, TableRow, TableHead, TableCell, TableContainer, TableBody } from "@mui/material"; 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -35,21 +35,25 @@ const MainKeyWordTable = ({ params, chartId} : Props) => {
             <TableContainer sx={{ maxHeight: 250, minHeight: 250 }}>
                 <Table stickyHeader={true} size="small">
                     <TableHead sx={{ backgroundColor: "lightgrey !important" }}>
-                        <TableCell variant="head" sx={{ backgroundColor: "white !important" }}>  </TableCell>
-                        <TableCell variant="head"> No. of Messages </TableCell>
-                        <TableCell variant="head"> % </TableCell>
+                        <TableRow>
+                            <TableCell variant="head" sx={{ backgroundColor: "white !important" }}>  </TableCell>
+                            <TableCell variant="head"> No. of Messages </TableCell>
+                            <TableCell variant="head"> % </TableCell>
+                        </TableRow>
                     </TableHead>
-                    {
-                        (resultTopKeywords?.main_keyword || [])?.map((keyword : any, index: any) => {
-                            return(
-                                <TableRow key={index} onClick={()=>{setShowDetail(true); setKeywordId(keyword?.keyword_id)}}>
-                                    <TableCell sx={{ backgroundColor: "lightslategrey !important", color:'white' }}>{keyword?.keyword}</TableCell>
-                                    <TableCell>{keyword?.no_of_message}</TableCell>
-                                    <TableCell>{keyword?.percentage}</TableCell>
-                                </TableRow>
-                            )
-                        })
-                    }
+                    <TableBody>
+                        {
+                            (resultTopKeywords?.main_keyword || [])?.map((keyword : any, index: any) => {
+                                return(
+                                    <TableRow key={index} onClick={()=>{setShowDetail(true); setKeywordId(keyword?.keyword_id)}}>
+                                        <TableCell sx={{ backgroundColor: "lightslategrey !important", color:'white' }}>{keyword?.keyword}</TableCell>
+                                        <TableCell>{keyword?.no_of_message}</TableCell>
+                                        <TableCell>{keyword?.percentage}</TableCell>
+                                    </TableRow>
+                                )
+                            })
+                        }
+                    </TableBody>
                 </Table>
             </TableContainer>
             {

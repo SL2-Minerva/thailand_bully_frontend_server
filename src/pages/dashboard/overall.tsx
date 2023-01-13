@@ -551,10 +551,6 @@ const OverallDashboard = () => {
             </Grid> : ""
         }   
 
-        
-        
-        
-
         {/* <QuickView /> */}
     </>
   )

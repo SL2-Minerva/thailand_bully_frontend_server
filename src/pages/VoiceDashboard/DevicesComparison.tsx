@@ -136,9 +136,9 @@ const DevicesComparison  = ({params, chartId, highlight} : {params:any, chartId:
   return (
     <Card style={{ minHeight: '330px' }}>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader title="Devices" titleTypographyProps={{ varient:'h6',color: highlight ? 'green' : '#4c4e64de' }}
+        <CardHeader title="Devices" titleTypographyProps={{ variant:'h6',color: highlight ? 'green' : '#4c4e64de' }}
                 subheader="Period over Period Comparison"
-                subheaderTypographyProps={{ varient: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
+                subheaderTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
             />
           <StyledTooltip arrow title={chartId || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />

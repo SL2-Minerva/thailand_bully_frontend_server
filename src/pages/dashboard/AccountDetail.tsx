@@ -1,4 +1,4 @@
-import {forwardRef, ReactElement, Ref, useEffect, useState} from "react";
+import {forwardRef, ReactElement, Ref, useState} from "react";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -42,9 +42,6 @@ const AccountDetail = (props: DialogInfoProps) => {
 
   const { show, setShow, current } = props
     const [ showDialog, setShowDialog ] = useState<boolean>(false);
-    useEffect(() => {
-        console.log("detail page loaded!");
-    }, [current])
 
     return (
       <Card>
@@ -82,8 +79,8 @@ const AccountDetail = (props: DialogInfoProps) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => (
-                    <TableRow key={row.name} onClick={() => {setShowDialog(true)}}>
+                  {rows.map((row, index) => (
+                    <TableRow key={index} onClick={() => {setShowDialog(true)}}>
                         <TableCell>0001</TableCell>
                         <TableCell style={{ whiteSpace: 'normal', width: 300 }}>                    
                             Before putting each word on the canvas, it is drawn on a separate canvas to read back the pixels to record is drawn spaces.

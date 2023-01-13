@@ -122,7 +122,7 @@ const RoleManagement = () => {
                               <TableCell align='center'>
                                 <Switch
                                           key={index}
-                                          checked={row.status}
+                                          checked={row.status === 1 ? true : row.status ? true : false}
                                           onChange={e => handleChange(index, row.id, e)}
                                         />
                               </TableCell>
@@ -138,7 +138,7 @@ const RoleManagement = () => {
                           <TableCell align='center'>
                             <Switch
                                       key={index}
-                                      checked={row.status}
+                                      checked={row.status === 1 ? true : row.status ? true : false}
                                     />
                           </TableCell>
                         }

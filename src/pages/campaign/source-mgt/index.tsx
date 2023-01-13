@@ -106,7 +106,7 @@ const SourceManagement = () => {
                   {result_source_list &&
                     result_source_list.map((row: any, index: number) => (
                       <TableRow
-                        key={row.name}
+                        key={index}
                         sx={{
                           '&:last-of-type td, &:last-of-type th': {
                             border: 0
@@ -121,7 +121,7 @@ const SourceManagement = () => {
                           resultPermission?.campaign?.authorized_edit ? 
                           <>
                             <TableCell align='center'>
-                              <Switch key={index} checked={row.status} onChange={e => handleChange(index, row.id, e)} />
+                              <Switch key={index} checked={row.status === 1 ? true : row.status ? true : false} onChange={e => handleChange(index, row.id, e)} />
                             </TableCell>
                             <TableCell align='center'>
                               <PencilOutline
@@ -132,7 +132,7 @@ const SourceManagement = () => {
                             </TableCell>
                           </> : 
                             <TableCell align='center'>
-                              <Switch key={index} checked={row.status} />
+                              <Switch key={index} checked={row.status === 1 ? true : row.status ? true : false} />
                             </TableCell>
                         }
                         

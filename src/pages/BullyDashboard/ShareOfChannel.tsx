@@ -71,7 +71,8 @@ const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  c
             <Grid item xs={7} >
                 <Table size="small">
                     <TableHead>
-                        <TableCell variant="head">  
+                      <TableRow>
+                      <TableCell variant="head">  
                           <img
                             width={34}
                             height={34}
@@ -106,6 +107,7 @@ const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  c
                               src={`/images/logos/pantip.png`}
                             />
                         </TableCell>
+                      </TableRow>
                     </TableHead>
                     {
                       (resultShareofChannelPlatform || []).map((shareVoice : any, index: number) => {

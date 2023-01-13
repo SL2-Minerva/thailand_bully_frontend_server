@@ -34,61 +34,58 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
                             <span style={{ display: 'flex', justifyContent: 'center' }}>
                                 <Typography variant='h4'>Total Message</Typography>
                             </span>
-                            <Typography variant='body2' mt={10}>
-                                <Typography variant='h3' sx={{ display:'flex', justifyContent: 'space-between' }}>
-                                    
-                                        {/* { totalMessage?.totalMessage?.type === 'plus' ? "+" : "-" } */}
+                            <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
+                                <Typography variant='h3' >
+                                         {/* { totalMessage?.totalMessage?.type === 'plus' ? "+" : "-" } */}
                                         {totalMessage?.totalSentiment?.totalValue}
-                                        <Typography variant='body2' mt={4}>
-                                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                </Typography>
+                                        
+                                <Box>
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Typography variant='h4' mt={4}>
                                                 {
                                                     totalMessage?.totalSentiment?.type === 'plus' ?
                                                     <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
                                                     :
                                                     <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
                                                 }
+                                        </Typography>
 
-                                                <Typography variant='h4' sx={{ color: totalMessage?.totalSentiment?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                                    {totalMessage?.totalSentiment?.comparison}
-                                                </Typography>
-                                            </Box>
-                                        </Box>
-                                        
-                                    </Typography>
-                                   
-                                </Typography>
-                            </Typography>
-                            
+                                        <Typography variant='h4' sx={{ color: totalMessage?.totalSentiment?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                                 {totalMessage?.totalSentiment?.comparison}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                            </Grid>
                     </Grid>
                     <Grid item xs={6} md={3}>
                             <span style={{ display: 'flex', justifyContent: 'center' }}>
                                 <ThumbUp fontSize='large'/>
                                 <Typography variant='h4' sx={{ marginLeft: '20px' }}>Positive</Typography>
                             </span>
-                            <Typography variant='body2' mt={10}>
-                                <Typography variant='h3' sx={{ display:'flex', justifyContent: 'center' }}>
-                                    
-                                       {totalMessage?.positive?.totalValue}
-                                        <Typography variant='body2' mt={4}>
-                                        <Box sx={{ display: 'flex', justifyContent: 'center', marginLeft: '20px' }}>
-                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
+                                <Typography variant='h3' >
+                                         {/* { totalMessage?.totalMessage?.type === 'plus' ? "+" : "-" } */}
+                                        {totalMessage?.positive?.totalValue}
+                                </Typography>
+                                        
+                                <Box>
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Typography variant='h4' mt={4}>
                                                 {
                                                     totalMessage?.positive?.type === 'plus' ?
                                                     <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
                                                     :
                                                     <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
                                                 }
-                                                <Typography variant='h4' sx={{ color: totalMessage?.positive?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                                    {totalMessage?.positive?.comparison}
-                                                </Typography>
-                                            </Box>
-                                        </Box>
-                                        
-                                    </Typography>
-                                   
-                                </Typography>
-                            </Typography>
+                                        </Typography>
+
+                                        <Typography variant='h4' sx={{ color: totalMessage?.positive?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                                 {totalMessage?.positive?.comparison}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                            </Grid>
                     </Grid>
 
                     <Grid item xs={6} md={3}>
@@ -96,28 +93,29 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
                                 <ThumbsUpDown fontSize='large'/>
                                 <Typography variant='h4' sx={{ marginLeft: '20px' }}>Neutral</Typography>
                             </span>
-                            <Typography variant='body2' mt={10}>
-                                <Typography variant='h3' sx={{ display:'flex', justifyContent: 'center' }}>
+                            <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
+                                <Typography variant='h3' >
+                                         {/* { totalMessage?.totalMessage?.type === 'plus' ? "+" : "-" } */}
                                         {totalMessage?.neutral?.totalValue}
-                                        <Typography variant='body2' mt={4}>
-                                        <Box sx={{ display: 'flex', justifyContent: 'center', marginLeft: '20px' }}>
-                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                </Typography>
+                                        
+                                <Box>
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Typography variant='h4' mt={4}>
                                                 {
                                                     totalMessage?.neutral?.type === 'plus' ?
                                                     <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
                                                     :
                                                     <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
                                                 }
-                                                <Typography variant='h4' sx={{ color: totalMessage?.neutral?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                                    {totalMessage?.neutral?.comparison}
-                                                </Typography>
-                                            </Box>
-                                        </Box>
-                                        
-                                    </Typography>
-                                   
-                                </Typography>
-                            </Typography>
+                                        </Typography>
+
+                                        <Typography variant='h4' sx={{ color: totalMessage?.neutral?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                                 {totalMessage?.neutral?.comparison}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                            </Grid>
                     </Grid>
 
                     <Grid item xs={6} md={3}>
@@ -125,28 +123,29 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
                                 <ThumbDown fontSize='large'/>
                                 <Typography variant='h4' sx={{ marginLeft: '20px' }}>Negative</Typography>
                             </span>
-                            <Typography variant='body2' mt={10}>
-                                <Typography variant='h3' sx={{ display:'flex', justifyContent: 'center' }}>
+                            <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
+                                <Typography variant='h3' >
+                                         {/* { totalMessage?.totalMessage?.type === 'plus' ? "+" : "-" } */}
                                         {totalMessage?.negative?.totalValue}
-                                        <Typography variant='body2' mt={4}>
-                                        <Box sx={{ display: 'flex', justifyContent: 'center', marginLeft: '20px' }}>
-                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                </Typography>
+                                        
+                                <Box>
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Typography variant='h4' mt={4}>
                                                 {
                                                     totalMessage?.negative?.type === 'plus' ?
                                                     <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
                                                     :
                                                     <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
                                                 }
-                                                <Typography variant='h4' sx={{ color: totalMessage?.negative?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                                    {totalMessage?.negative?.comparison}
-                                                </Typography>
-                                            </Box>
-                                        </Box>
-                                        
-                                    </Typography>
-                                   
-                                </Typography>
-                            </Typography>
+                                        </Typography>
+
+                                        <Typography variant='h4' sx={{ color: totalMessage?.negative?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                                 {totalMessage?.negative?.comparison}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                            </Grid>
                     </Grid>
 
                     </Grid>

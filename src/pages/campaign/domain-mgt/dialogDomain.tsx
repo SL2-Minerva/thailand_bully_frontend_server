@@ -74,7 +74,6 @@ const DialogDomain = (props: DialogInfoProps) => {
   }, [current])
 
   const onSubmit = (data: FormData) => {
-    console.log('data', data)
     if (action === 'create') {
       axios
         .post(authConfig.createDomain, data, {
@@ -82,8 +81,8 @@ const DialogDomain = (props: DialogInfoProps) => {
             Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
           }
         })
-        .then(res => {
-          console.log('res', res)
+        .then(() => {
+          // console.log('res', res)
           setShow(false)
         })
     } else {
@@ -93,8 +92,8 @@ const DialogDomain = (props: DialogInfoProps) => {
             Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
           }
         })
-        .then(res => {
-          console.log('res', res)
+        .then(() => {
+          // console.log('res', res)
           setShow(false)
         })
     }

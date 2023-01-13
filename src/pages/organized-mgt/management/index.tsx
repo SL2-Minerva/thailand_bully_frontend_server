@@ -237,7 +237,7 @@ const OrganizedManagement = () => {
                         <TableCell align='center'>{row.group}</TableCell>
                         <TableCell align='center'>{row.type}</TableCell>
                         <TableCell align='center'>
-                          <Switch key={index} checked={row.status} onChange={e => handleChange(index, row.id, e)} />
+                          <Switch key={index} checked={row.status === 1 ? true : row.status ? true : false} onChange={e => handleChange(index, row.id, e)} />
                         </TableCell>
                         <TableCell align='center'>
                           <PencilOutline

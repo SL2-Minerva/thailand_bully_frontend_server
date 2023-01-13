@@ -38,12 +38,14 @@ const SummaryByKeywords = ({resultSummary, topKeyword, setTopKeyword, chartId, h
             <TableContainer sx={{ maxHeight: 500 }}>
             <Table size="small" stickyHeader={true}>
                     <TableHead style={{ backgroundColor: "green"}}>
-                        <TableCell variant="head"> Keywords </TableCell>
-                        <TableCell variant="head"> Total Message </TableCell>
-                        <TableCell variant="head"> % </TableCell>
-                        <TableCell variant="head"> Positive </TableCell>
-                        <TableCell variant="head"> Neutral </TableCell>
-                        <TableCell variant="head"> Negative </TableCell>
+                        <TableRow>
+                            <TableCell variant="head"> Keywords </TableCell>
+                            <TableCell variant="head"> Total Message </TableCell>
+                            <TableCell variant="head"> % </TableCell>
+                            <TableCell variant="head"> Positive </TableCell>
+                            <TableCell variant="head"> Neutral </TableCell>
+                            <TableCell variant="head"> Negative </TableCell>
+                        </TableRow>
                     </TableHead>
                     <TableBody>
                         {
