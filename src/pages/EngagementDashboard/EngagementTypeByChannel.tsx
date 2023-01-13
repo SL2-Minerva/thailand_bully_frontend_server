@@ -130,7 +130,7 @@ const EngagementTypeByChannel = (props: LineProps) => {
         totalAmount.push(total[i]?.data[j]);
       } 
       
-      keywordName = total[i]?.keyword_name;
+      keywordName = total[i]?.name || "";
       const chartDataset : StackChartDataset  = {
         fill: false,
         tension: 0.5,

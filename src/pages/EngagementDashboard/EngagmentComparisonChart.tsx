@@ -113,7 +113,7 @@ const EngagmentComparisonChart = ({params, highlight} : {params: any, highlight:
   }
 
   return (
-    <Card>
+    <Card sx={{ minHeight: 560 }}>
         <CardHeader
                 title=''
                 titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}

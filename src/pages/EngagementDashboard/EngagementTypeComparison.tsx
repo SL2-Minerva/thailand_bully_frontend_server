@@ -16,7 +16,7 @@ const EngagementTypeComparison  = ({params, chartId, highlight} : {params: any, 
   const { resultEngagementComparison } = GetEngagementComparison(params?.campaign, params?.date, params?.endDate, params?.period);
 
   return (
-    <Card>
+    <Card sx={{ minHeight: 560 }}>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title='Engagement Type Comparison'

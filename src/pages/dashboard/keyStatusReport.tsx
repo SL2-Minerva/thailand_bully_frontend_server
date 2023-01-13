@@ -71,7 +71,7 @@ const KeyStatusReport = (props: KeyStatusProps) => {
                     </Typography>
                 </Grid>
                 <Grid item xs={3}>
-                    <Typography variant='h4' sx={{ mt: 5, fontWeight: 'bold' }}>
+                    <Typography variant='h5' sx={{ mt: 5, fontWeight: 'bold' }}>
                         <b>{totalValue}</b>
                     </Typography>
                 </Grid>
@@ -83,7 +83,7 @@ const KeyStatusReport = (props: KeyStatusProps) => {
                     </Typography>
                 </Grid>
                 <Grid item xs={4}>
-                    <Typography variant='h4' sx={{ mt: 5, fontWeight: 'bold' }}>
+                    <Typography variant='h5' sx={{ mt: 5, fontWeight: 'bold' }}>
                         {averageValue}
                     </Typography>
                 </Grid>
@@ -102,12 +102,12 @@ const KeyStatusReport = (props: KeyStatusProps) => {
           
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-            <Typography variant='h4' sx={{ mb: 1 }}>
+            <Typography variant='h5' sx={{ mb: 1 }}>
                 {stats}
             </Typography>
 
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant='h4' sx={{ color: type == "plus"  ? 'success.main' : 'error.main' }}>
+                <Typography variant='h5' sx={{ color: type == "plus"  ? 'success.main' : 'error.main' }}>
                     {trendNumber+ "%"}
                 </Typography>
                 <TrendIcon fontSize='large' sx={{ color: type == "plus"  ? 'success.main' : 'error.main' }} />
