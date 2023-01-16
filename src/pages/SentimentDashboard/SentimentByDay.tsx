@@ -172,15 +172,19 @@ const SentimentByDay = (props: LineProps) => {
         datasets: dataset
     }
 
+    const reportNo = '5.2.003';
+
+    const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+
     return (
       <Card>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Sentiment By Day"
+            title="Daily Sentiment By Day"
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />
-          <StyledTooltip arrow title={chartId || ""}>
+          <StyledTooltip arrow title={chartTitle || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
@@ -195,6 +199,7 @@ const SentimentByDay = (props: LineProps) => {
                 params = {params}
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
+                reportNo = {reportNo}
             />: ""
           }
         

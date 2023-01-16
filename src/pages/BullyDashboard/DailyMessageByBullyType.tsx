@@ -239,8 +239,11 @@ const DailyMessgeByBullyType = (props: LineProps) => {
     labels: label || [],
     datasets: dataset
   }
+  const reportNo = '6.2.012';
 
-  const title =  type === 'level' ? 'Daily Messages of Bully Level' : "Daily Messages of Bully Type";
+    const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+
+  const title =  type === 'level' ? 'Bully Level: Daily Message by Date' : "Bully Type: Daily Message by Date";
 
   return (
     <Card>
@@ -251,7 +254,7 @@ const DailyMessgeByBullyType = (props: LineProps) => {
             subheader='Period over Period Comparison'
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartId}>
+        <StyledTooltip arrow title={chartTitle || ""}>
             <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
         </StyledTooltip>
       </span>
@@ -266,6 +269,7 @@ const DailyMessgeByBullyType = (props: LineProps) => {
               params = {params}
               paramsId = {paramsId}
               setParamsId={setParamsId}
+              reportNo = {reportNo}
           /> : ""
          }
       </CardContent>

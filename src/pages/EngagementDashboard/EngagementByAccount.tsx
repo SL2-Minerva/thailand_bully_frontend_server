@@ -24,6 +24,9 @@ const EngagementByAccounts = (props: LineProps) => {
     organization_id: null
   });
   const { resultMessagesByAccount } = GetMessagesByAccount(params?.campaign, params?.date, params?.endDate, params?.period);
+  const reportNo = '4.2.006';
+
+  const title = chartId + ", Report Level 2(" + reportNo + ")";
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -176,11 +179,11 @@ const EngagementByAccounts = (props: LineProps) => {
       <Card>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Engangement By Account"
+            title="Daily Engagement By Account"
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />
-          <StyledTooltip arrow title={chartId || ""}>
+          <StyledTooltip arrow title={title || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
@@ -195,6 +198,7 @@ const EngagementByAccounts = (props: LineProps) => {
                 params = {params}
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
+                reportNo = {reportNo}
             />: ""
           }
         

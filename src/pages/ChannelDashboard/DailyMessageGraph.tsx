@@ -216,6 +216,10 @@ const DailyMessageGraph = ( props : Props) => {
       datasets: dataset
     }
 
+    const reportNo = '3.2.002';
+
+  const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+
       useEffect(() => {
         if(resultDailyChannel) {
             const labels = chartLabel(resultDailyChannel);
@@ -232,18 +236,18 @@ const DailyMessageGraph = ( props : Props) => {
             {
               type === 'message' ?
               <CardHeader 
-                  title='Daily Messages'
+                  title='Daily Messages by Date'
                   titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
               />
               :
               type === 'channel' ?
               <CardHeader 
-                  title='Daily Channel'
+                  title='Daily Messages by Date'
                   titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
               />
               : ""
             }
-            <StyledTooltip arrow title={chartId}>
+            <StyledTooltip arrow title={chartTitle || ""}>
                 <Information  style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
             </StyledTooltip>
         </span>  
@@ -258,6 +262,7 @@ const DailyMessageGraph = ( props : Props) => {
                 params = {params}
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
+                reportNo = {reportNo}
             /> : ""
           }
         </Card>

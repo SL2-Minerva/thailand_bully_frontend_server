@@ -110,6 +110,10 @@ const PercentageOfEngangement = (props : MessageData) => {
 
   const title =  type === 'transaction' ? 'Percentage of Engagement Trans' : "Percentage of Engagement Type";
 
+  const reportNo = '4.1.001';
+
+  const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
+
   useEffect(() =>{
     if (resultFilterData) {
       const currentMessageData = resultFilterData?.prcentage_of_engagement_current;
@@ -135,7 +139,7 @@ const PercentageOfEngangement = (props : MessageData) => {
             subheader='Period over Period Comparison'
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />
-          <StyledTooltip arrow title={chartId}>
+          <StyledTooltip arrow title={chartTitle || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
       </span>

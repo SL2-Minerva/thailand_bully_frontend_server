@@ -232,13 +232,13 @@ const DailyMessageGraph = ( props : Props) => {
             {
               type === 'message' ?
               <CardHeader 
-                  title='Daily Messages'
+                  title='Daily Messages by Date'
                   titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
               />
               :
               type === 'channel' ?
               <CardHeader 
-                  title='Daily Channel'
+                  title='Daily Channel By Date'
                   titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
               />
               : ""

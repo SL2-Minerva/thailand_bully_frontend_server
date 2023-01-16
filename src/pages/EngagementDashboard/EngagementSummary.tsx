@@ -1,12 +1,31 @@
-import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer } from "@mui/material"; 
+import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer, Box, Pagination } from "@mui/material"; 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from "../dashboard/overall";
 import { Information } from "mdi-material-ui";
+import { GetSummary } from "src/services/api/dashboards/engagement/EngagementApi";
+import { useEffect, useState } from "react";
 
-const EngagementSummary = ({resultSummary, chartId, highlight} : {resultSummary: any, chartId: string, highlight:boolean}) => {
-    
+const EngagementSummary = ({ topKeyword, params, chartId, highlight} : {topKeyword: string, params:any, chartId: string, highlight:boolean}) => {
+    const [page, setPage] = useState(0);
+    const [pageCount, setPageCount] = useState<number>(0);
+
+    const { resultSummary, totalSummary } = GetSummary(topKeyword, params?.campaignType, params?.date, params?.endDate, params?.period, page); 
+    const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+        setPage(value-1);
+    };
+
+    useEffect(()=> {
+        if (totalSummary > 0) {
+         setPageCount(Math.ceil(totalSummary / 10));
+        }
+    }, [totalSummary]);
+
+    const reportNo = '4.2.025';
+
+     const title = chartId + ", Report Level 2(" + reportNo + ")";
+
     return (
         <Card>
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -14,7 +33,7 @@ const EngagementSummary = ({resultSummary, chartId, highlight} : {resultSummary:
                     title='Summary Engagement by Account'
                     titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
                 />
-                <StyledTooltip arrow title={chartId}>
+                <StyledTooltip arrow title={title || ""}>
                     <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
                 </StyledTooltip>
             </span>
@@ -53,6 +72,13 @@ const EngagementSummary = ({resultSummary, chartId, highlight} : {resultSummary:
                     
             </Table>
             </TableContainer>
+            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
+            {
+                totalSummary > 0 ? 
+                <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
+                : ""
+            }
+            </Box>
             </CardContent>
         </Card>
         

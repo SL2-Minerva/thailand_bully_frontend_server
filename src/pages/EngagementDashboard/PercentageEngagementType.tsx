@@ -26,7 +26,9 @@ const PercentageOfEngangementType = (props : MessageData) => {
   const { type, chartId, params, highlight } = props;
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
   const {resultEngagementType} = EngagementTypePercetage(params?.campaign, params?.date, params?.endDate, params?.period);
+  const reportNo = '4.1.011';
 
+  const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
   const [ previousData, setPreviousData ] = useState<any>({
     labels: [],
     datasets: [{
@@ -135,7 +137,7 @@ const PercentageOfEngangementType = (props : MessageData) => {
             subheader='Period over Period Comparison'
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />
-          <StyledTooltip arrow title={chartId}>
+          <StyledTooltip arrow title={chartTitle || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
       </span>

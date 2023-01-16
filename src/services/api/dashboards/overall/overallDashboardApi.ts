@@ -84,7 +84,7 @@ export const TotalKeyStats = (campaignId?: string, reload?: boolean, platformId?
 }
 
 export const GetKeyWords = (campaignId?: string, platformId?: string, 
-  start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any ) => {
+  start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any) => {
     const params = {
       campaignId: campaignId,
       platformId: platformId, 
@@ -414,14 +414,15 @@ export const GetDetailMessage = (campaignId?: string, platformId?: string, start
 }
 
 export const GetNetworkGraph = (campaignId?: string, platformId?: string, start_date?: any,
-  end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, keywordId?: any, messageId?: any ) => {
+  end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, keywordId?: any, messageId?: any, reportNo?: string ) => {
    let params = {};
     params = {
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
       message_id: messageId || "",
-      keyword_id: keywordId || ""
+      keyword_id: keywordId || "", 
+      report_number: reportNo ||""
     }
 
  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({

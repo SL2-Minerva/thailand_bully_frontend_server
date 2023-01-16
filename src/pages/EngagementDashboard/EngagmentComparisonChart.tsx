@@ -8,7 +8,8 @@ import { ApexOptions } from 'apexcharts'
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { GetComparisonEngagement } from 'src/services/api/dashboards/engagement/EngagementApi'
-
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui';
 
 const Labels = (data: any) => {
   if(!data) {
@@ -49,7 +50,7 @@ const ChartDataEngagement = (data: any, type : string) => {
   return value;
 }
 
-const EngagmentComparisonChart = ({params, highlight} : {params: any, highlight:boolean}) => {
+const EngagmentComparisonChart = ({params, highlight, chartId} : {params: any, highlight:boolean, chartId: string}) => {
   const { resultComparison }  = GetComparisonEngagement(params?.campaign, params?.date, params?.endDate, params?.period);
   
   const chartLabels =  Labels(resultComparison);
@@ -112,14 +113,25 @@ const EngagmentComparisonChart = ({params, highlight} : {params: any, highlight:
     }
   }
 
+  const reportNo = '4.2.024';
+
+  const title = chartId + ", Report Level 2(" + reportNo + ")";
+
   return (
     <Card sx={{ minHeight: 560 }}>
+      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-                title=''
+                title='Engagement Type Proportion'
                 titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
+          <StyledTooltip arrow title={title || ""}>
+              <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
+          </StyledTooltip>
+      </span>
+        
+        
         <CardContent>
-            <ReactApexcharts type="bar" height={486} series={series} options={options} />
+            <ReactApexcharts type="bar" height={420} series={series} options={options} />
         </CardContent>
     </Card>
   )

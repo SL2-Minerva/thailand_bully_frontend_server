@@ -13,7 +13,7 @@ const KeywordTable = ({params, chartId} : {params: any, chartId: string}) => {
         <Card>
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
-                    title='KeyWords'
+                    title='KeyWord Summary'
                     titleTypographyProps={{ variant: 'h6' }}
                 />
                 <StyledTooltip arrow title={chartId}>

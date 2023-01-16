@@ -4,14 +4,13 @@ import { useState } from "react"
 import Filter from "../VoiceDashboard/Filter"
 import { DateType } from "src/types/forms/reactDatepickerTypes"
 import { StyledTooltip } from "../dashboard/overall"
-import {  GetSummaryByAccount, GetSummaryByChannel, GetSummaryByKeywords, GetTotalSentiment } from "src/services/api/dashboards/sentiment/sentimentDashboard"
+import { GetTotalSentiment } from "src/services/api/dashboards/sentiment/sentimentDashboard"
 import DailySenitment from "./DailySentiment"
 import PercentageOfSentiment from "./PercentageOfSentiment"
 import TotalMessage from "./TotalMessage"
 import PeriodComparisonChart from "../EngagementDashboard/PeriodComparisonChart"
 import SentimentScore from "./SentimentScore"
 import SentimentScorePercentage from "./SentimentScorePercentage"
-import SentimentComparison from "./SentimentComparison"
 import SummaryByAccount from "./SummaryByAccount"
 import SummaryByChannel from "./SummaryByChannel"
 import SummaryByKeywords from "./SummaryByKeywords"
@@ -26,6 +25,7 @@ import SentimentByBullyType from "./SentimentByBullyType"
 import SentimentByBullyLevel from "./SentimentByBullyLevel"
 import SentimentByChannel from "./SentitmentByChannel"
 import SentimentByAccount from "./SentimentByAccount"
+import SentimentComparisonTable from "./SentimentComparison"
 
 const SentimentDashboard = () => {
     const theme = useTheme()
@@ -45,16 +45,13 @@ const SentimentDashboard = () => {
     const [ campaign, setCampaign ] = useState<string>("1")
     const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
-    const [ topKeyword, setTopKeyword ] = useState<string>('all');
-    const [ topAccount, setTopAccount ] = useState<string>('all');
-    const [ topChannel, setTopChannel ] = useState<string>('all');
+    
     const [ highlight, setHighlight ] = useState<string>("");
 
     const { resultReportPermission } = UserPermission();
     const { resultTotalSentiment } = GetTotalSentiment(campaign, date, endDate, period);
-    const { resultSummaryByAccount } = GetSummaryByAccount(campaign, date, endDate, period);
-    const { resultSummaryByChannel } = GetSummaryByChannel(campaign, date, endDate, period);
-    const { resultSummaryByKeywords } = GetSummaryByKeywords(campaign, date, endDate, period);
+
+    
     const params = {
         campaign: campaign,
         date : date, 
@@ -85,6 +82,12 @@ const SentimentDashboard = () => {
                 {
                     resultReportPermission?.includes("76") ?
                     <Grid id="chart1" item xs={12} md={8}>
+                        <PercentageOfSentiment params={params} type="transaction" chartId="Chart 1" highlight = { highlight==='chart1' ? true : false } />
+                    </Grid> : ""
+                }
+                {
+                    resultReportPermission?.includes("77") ?
+                    <Grid id="chart2" item xs={12} md={4}>
                         <DailySenitment
                             white={whiteColor}
                             labelColor={labelColor}
@@ -95,15 +98,9 @@ const SentimentDashboard = () => {
                             gridLineColor={gridLineColor}
                             params= {params}
                             type="transaction"
-                            chartId="Chart 1"
-                            highlight = { highlight==='chart1' ? true : false }
+                            chartId="Chart 2"
+                            highlight = { highlight==='chart2' ? true : false }
                         />
-                    </Grid> : ""
-                }
-                {
-                    resultReportPermission?.includes("77") ?
-                    <Grid id="chart2" item xs={12} md={4}>
-                        <PercentageOfSentiment params={params} type="transaction" chartId="Chart 2" highlight = { highlight==='chart2' ? true : false } />
                     </Grid> : ""
                 }
                 {
@@ -233,10 +230,10 @@ const SentimentDashboard = () => {
                             <Card  id="chart10">
                                 <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                                     <CardHeader 
-                                        title='Period over Period Comparison'
+                                        title='Total Messages by Engagement Type'
                                         titleTypographyProps={{ variant: 'h6', color : highlight === 'chart10' ? 'green' : '#4c4e64de' }}
                                     />
-                                    <StyledTooltip arrow title="Chart 10">
+                                    <StyledTooltip arrow title="Chart 10, Report Level 2(5.2.012)">
                                         <Information style={{marginTop: '22px', fontSize: '29px', color : highlight === 'chart10' ? 'green' : '#4c4e64de'}} />
                                     </StyledTooltip>
                                 </span>
@@ -286,6 +283,7 @@ const SentimentDashboard = () => {
                                 colorType="sentimentComparison"
                                 chartId="Chart 12"
                                 highlight = { highlight==='chart12' ? true : false }
+                                reportNo = "5.2.014"
                             />
                     </Grid> : ""
                 }
@@ -310,7 +308,7 @@ const SentimentDashboard = () => {
                 {
                     resultReportPermission?.includes("89") ?
                     <Grid item xs={12} md={12} id="chart14">
-                        <SentimentComparison
+                        <SentimentComparisonTable
                                 params={params}
                                 chartId="Chart 14"
                                 highlight = { highlight==='chart14' ? true : false }
@@ -321,9 +319,7 @@ const SentimentDashboard = () => {
                     resultReportPermission?.includes("90") ?
                     <Grid item xs={12} md={12} id="chart15">
                         <SummaryByAccount
-                                resultSummary={resultSummaryByAccount}
-                                topAccount = {topAccount}
-                                setTopAccount = {setTopAccount}
+                                params={params}
                                 chartId="Chart 15"
                                 highlight = { highlight==='chart15' ? true : false }
                             />
@@ -333,9 +329,7 @@ const SentimentDashboard = () => {
                     resultReportPermission?.includes("91") ?
                     <Grid item xs={12} md={12} id="chart16">
                         <SummaryByChannel
-                                resultSummary={resultSummaryByChannel}
-                                topChannel = {topChannel}
-                                setTopChannel = {setTopChannel}
+                                params={params}
                                 chartId = "Chart 16"
                                 highlight = { highlight==='chart16' ? true : false }
                             />
@@ -345,9 +339,7 @@ const SentimentDashboard = () => {
                     resultReportPermission?.includes("92") ?
                     <Grid item xs={12} md={12} id="chart17">
                         <SummaryByKeywords
-                                resultSummary={resultSummaryByKeywords}
-                                topKeyword = {topKeyword}
-                                setTopKeyword = {setTopKeyword}
+                                params = { params }
                                 chartId = "Chart 17"
                                 highlight = { highlight==='chart17' ? true : false }
                             />

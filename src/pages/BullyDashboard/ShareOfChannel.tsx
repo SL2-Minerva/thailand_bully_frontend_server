@@ -51,7 +51,6 @@ const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  c
   }]
 };
 
-
   return (
     <Card>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -74,6 +73,7 @@ const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  c
                       <TableRow>
                       <TableCell variant="head">  
                           <img
+                            alt={"logo"}
                             width={34}
                             height={34}
                             src={`/images/logos/facebook-round.png`}
@@ -81,6 +81,7 @@ const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  c
                         </TableCell>
                         <TableCell variant="head"> 
                           <img
+                            alt={"logo"}
                               width={34}
                               height={34}
                               src={`/images/logos/twitter.png`}
@@ -90,20 +91,23 @@ const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  c
                           <img
                               width={34}
                               height={34}
-                              src={`/images/logos/youtube-text.png`}
+                              alt={"logo"}
+                            src={`/images/logos/youtube-text.png`} 
                             />
                         </TableCell>
                         <TableCell variant="head">
                           <img
                               width={34}
-                              height={34}
+                            alt={"logo"}
+                            height={34}
                               src={`/images/logos/instagram.png`}
                             />
                         </TableCell>
                         <TableCell variant="head">
                           <img
                               width={34}
-                              height={34}
+                            alt={"logo"}
+                            height={34}
                               src={`/images/logos/pantip.png`}
                             />
                         </TableCell>

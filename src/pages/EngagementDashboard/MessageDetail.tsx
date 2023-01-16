@@ -51,10 +51,11 @@ interface DialogInfoProps {
   params?: any
   paramsId?: any
   setParamsId?: any
+  reportNo?: string
 }
 
 const MessageDetail = (props: DialogInfoProps) => {
-    const { show, setShow, current, params, paramsId, setParamsId } = props
+    const { show, setShow, current, params, paramsId, setParamsId, reportNo } = props
     const [ showDialog, setShowDialog ] = useState<boolean>(false);
     const [page, setPage] = useState(0);
     const [messageId, setMessageId ] = useState<number | string>();
@@ -75,7 +76,8 @@ const MessageDetail = (props: DialogInfoProps) => {
             start_date_period : params?.previousDate ? moment(params?.previousDate).format('YYYY-MM-DD') : "",
             end_date_period : params?.previousEndDate ? moment(params?.previousEndDate).format('YYYY-MM-DD') : "",
             page: page, 
-            limit: 10
+            limit: 10, 
+            report_nubmer : reportNo
         }
     } else  {
         paramData = {
@@ -88,7 +90,8 @@ const MessageDetail = (props: DialogInfoProps) => {
             classification_id: paramsId?.classification_id || "",
             organization_id: paramsId?.organization_id || "",
             page: page, 
-            limit: 10
+            limit: 10,
+            report_nubmer : reportNo
         }
     }
 
@@ -191,6 +194,7 @@ const MessageDetail = (props: DialogInfoProps) => {
             messageId = {messageId}
             setKeywordId = {setParamsId}
             setMessageId = {setMessageId}
+            reportNo= {reportNo}
           />
           :
           ""

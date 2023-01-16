@@ -170,6 +170,10 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
         datasets: dataset
     }
 
+    const reportNo = '5.2.013';
+
+   const title = chartId + ", Report Level 2(" + reportNo + ")";
+
     return (
         <Card>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -178,7 +182,7 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
               titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
               subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
             />
-            <StyledTooltip arrow title={chartId}>
+            <StyledTooltip arrow title={title || ""}>
                 <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
             </StyledTooltip>
         </span>

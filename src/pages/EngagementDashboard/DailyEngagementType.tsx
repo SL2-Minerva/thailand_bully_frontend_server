@@ -231,16 +231,20 @@ const DailyEngagementType = (props: LineProps) => {
     datasets: dataset
   }
 
+  const reportNo = '4.2.012';
+
+  const title = chartId + ", Report Level 2(" + reportNo + ")";
+
   return (
     <Card>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-              title='Daily Engagement'
+              title='Daily Engagement Type By Date'
               titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
               subheader='KeyWords'
               subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
             />
-          <StyledTooltip arrow title={chartId}>
+          <StyledTooltip arrow title={title || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
@@ -255,6 +259,7 @@ const DailyEngagementType = (props: LineProps) => {
                 params = {params}
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
+                reportNo = {reportNo}
             />: ""
           }
       </CardContent>

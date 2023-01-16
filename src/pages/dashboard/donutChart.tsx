@@ -128,7 +128,7 @@ const DonutChart = (props : MessageData) => {
             subheader='Period over Period Comparison'
             subheaderTypographyProps={{ variant: 'caption' }}
           />
-          <StyledTooltip arrow title="Chart 1">
+          <StyledTooltip arrow title="Chart 1, Report Level 1(1.1.001)">
               <Information fontSize='large' style={{marginTop: '23px'}} />
           </StyledTooltip>
       </span>
