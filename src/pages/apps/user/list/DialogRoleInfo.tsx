@@ -28,6 +28,7 @@ import Close from 'mdi-material-ui/Close'
 import axios from 'axios'
 import authConfig from '../../../../configs/auth'
 import { ReportListPermission } from 'src/services/api/users/role'
+import { FormHelperText } from '@mui/material'
 
 // import { ReportOptions } from 'src/utils/const'
 
@@ -69,6 +70,8 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
   const [ reportIds, setReportIds ] = useState<any[]>();
   const {resultReportChartList} = ReportListPermission();
   const defaultValue: any[] = [];
+  const [ errorRoleName, setErrorRoleName ] = useState<boolean>(false);
+  const [ errorDescription, setErrorDescription ] = useState<boolean>(false);
 
   const [permission, setPermission] = useState<any>({
     user: {
@@ -117,6 +120,8 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
   useEffect(() => {
     setRoleName(current?.user_role_name ?? '')
     setDescription(current?.user_role_description ?? '')
+    setErrorDescription(false);
+    setErrorRoleName(false);
 
     if (action === 'edit') {
       setReportIds(defaultValue);
@@ -194,16 +199,42 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
   // const [permission, setPermission] = useState<any>(current.permission ?? [])
 
   const handleSubmit = () => {
-    if (action === 'create') {
-      axios
-        .post(
-          authConfig.createRole,
+    if(roleName && roleDescription) {
+      if (action === 'create') {
+        axios
+          .post(
+            authConfig.createRole,
+            {
+              
+              role_name: roleName,
+              role_description: roleDescription,
+              permission: permission,
+              authorized_report: getReportIds(reportIds)
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+              }
+            }
+          )
+          .then(() => {
+  
+            // console.log('res', res)
+            onClose();
+  
+            // setShow(false);
+          })
+      } else {
+        axios
+        .put(
+          authConfig.updateRole,
           {
-            
+            id: current?.id,
             role_name: roleName,
             role_description: roleDescription,
-            permission: permission,
-            authorized_report: getReportIds(reportIds)
+            permission: permission, 
+            authorized_report: getReportIds(reportIds),
+            status: current?.status
           },
           {
             headers: {
@@ -212,36 +243,22 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
           }
         )
         .then(() => {
-
           // console.log('res', res)
           onClose();
-
-          // setShow(false);
+  
+          // setShow(false)
         })
+      }
     } else {
-      axios
-      .put(
-        authConfig.updateRole,
-        {
-          id: current?.id,
-          role_name: roleName,
-          role_description: roleDescription,
-          permission: permission, 
-          authorized_report: getReportIds(reportIds)
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
-          }
-        }
-      )
-      .then(() => {
-        // console.log('res', res)
-        onClose();
+      if(!roleName) {
+        setErrorRoleName(true);
+      }
 
-        // setShow(false)
-      })
+      if (!roleDescription) {
+        setErrorDescription(true);
+      }
     }
+    
   }
 
   const handleChecked = (e: any, row: any, key: any) => {
@@ -291,9 +308,16 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                 placeholder='Role Name'
                 value={roleName}
                 onChange={e => {
-                  setRoleName(e.target.value)
+                  setRoleName(e.target.value);
+                  if(!e.target.value) {
+                    setErrorRoleName(true)
+                  } else {
+                    setErrorRoleName(false)
+                  }
                 }}
+                error={errorRoleName ? true: false}
               />
+              {errorRoleName && <FormHelperText sx={{ color: 'error.main' }}>Role Name is required</FormHelperText>}
             </Grid>
             <Grid item sm={6} xs={12}>
               <TextField
@@ -301,8 +325,18 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                 label='Description'
                 placeholder='description'
                 value={roleDescription}
-                onChange={e => setDescription(e.target.value)}
+                onChange={e => {
+                  setDescription(e.target.value)
+                  if(!e.target.value) {
+                    setErrorDescription(true)
+                  } else {
+                    setErrorDescription(false)
+                  }
+                }}
+                error={errorDescription ? true: false}
               />
+              {errorDescription && <FormHelperText sx={{ color: 'error.main' }}>Description is required</FormHelperText>}
+
             </Grid>
             <Grid item xs={12}>
               <TableContainer component={Paper}>

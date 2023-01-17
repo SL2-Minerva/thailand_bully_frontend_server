@@ -113,14 +113,11 @@ const renderClient = (row: UsersType) => {
   }
 }
 
-const RowOptions = ({ id, current }: { id: any; current: any }) => {
-  console.log(id, 'id', current)
-
+const RowOptions = ({ id, current, show, setShow,refreshDelete, setRefreshDelete }: { id: any; current: any, show: boolean, setShow: any, refreshDelete:boolean, setRefreshDelete:any }) => {
   // ** Hooks
 
   // ** State
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const [show, setShow] = useState<boolean>(false)
 
   const rowOptionsOpen = Boolean(anchorEl)
   const { resultPermission } = UserPermission();
@@ -130,7 +127,6 @@ const RowOptions = ({ id, current }: { id: any; current: any }) => {
   }
   const handleRowOptionsClose = () => {
     setAnchorEl(null)
-    setShow(true)
   }
 
   const handleDelete = () => {
@@ -143,7 +139,8 @@ const RowOptions = ({ id, current }: { id: any; current: any }) => {
       .then(async response => {
         const { data, status } = response.data
         console.log(data, status)
-        handleRowOptionsClose()
+        handleRowOptionsClose();
+        setRefreshDelete(!refreshDelete);
       })
       .catch((ex: any) => {
         console.log(ex)
@@ -177,7 +174,7 @@ const RowOptions = ({ id, current }: { id: any; current: any }) => {
         >
           {
             resultPermission?.user?.authorized_edit ? 
-            <MenuItem onClick={handleRowOptionsClose}>
+            <MenuItem onClick={() => {setShow(true);  setAnchorEl(null)}}>
               <PencilOutline fontSize='small' sx={{ mr: 2 }} />
               Edit
             </MenuItem>
@@ -202,109 +199,6 @@ const RowOptions = ({ id, current }: { id: any; current: any }) => {
   )
 }
 
-const columns = [
-  {
-    flex: 0.2,
-    minWidth: 230,
-    field: 'id',
-    headerName: 'ID',
-    renderCell: ({ row }: CellType) => {
-      const { id } = row
-
-      return <Box sx={{ display: 'flex', alignItems: 'center' }}>{id}</Box>
-    }
-  },
-  {
-    flex: 0.2,
-    minWidth: 230,
-    field: 'name',
-    headerName: 'User',
-    renderCell: ({ row }: CellType) => {
-      const { name } = row
-
-      return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {renderClient(row)}
-          <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
-            <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
-              {name}
-            </Typography>
-          </Box>
-        </Box>
-      )
-    }
-  },
-  {
-    flex: 0.2,
-    minWidth: 250,
-    field: 'email',
-    headerName: 'Email',
-    renderCell: ({ row }: CellType) => {
-      return (
-        <Typography noWrap variant='body2'>
-          {row.email}
-        </Typography>
-      )
-    }
-  },
-  {
-    flex: 0.15,
-    field: 'organization',
-    minWidth: 150,
-    headerName: 'Organization',
-    renderCell: ({ row }: CellType) => {
-      return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {userRoleObj[row.company]}
-          <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
-            {row.company}
-          </Typography>
-        </Box>
-      )
-    }
-  },
-  {
-    flex: 0.15,
-    minWidth: 120,
-    headerName: 'Organization Group',
-    field: 'group',
-    renderCell: ({ row }: CellType) => {
-      return (
-        <Typography variant='subtitle1' noWrap sx={{ textTransform: 'capitalize' }}>
-          {row.group}
-        </Typography>
-      )
-    }
-  },
-  {
-    flex: 0.1,
-    minWidth: 110,
-    field: 'status',
-    headerName: 'Status',
-    renderCell: ({ row }: CellType) => {
-      return (
-        <CustomChip
-          skin='light'
-          size='small'
-          label={row.status ? 'active' : 'inactive'}
-          color={userStatusObj[row.status ? 'active' : 'inactive']}
-          sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
-        />
-      )
-    }
-  },
-  {
-    flex: 0.1,
-    minWidth: 90,
-    sortable: false,
-    field: 'actions',
-    headerName: 'Actions',
-    renderCell: ({ row }: CellType) => {
-      return <RowOptions id={row.id} current={row} />
-    }
-  }
-]
-
 const UserList = () => {
   // ** State
 
@@ -322,6 +216,8 @@ const UserList = () => {
   const [reload, setReload] = useState<boolean>(false)
   const [users, setUsers] = useState<any[]>([])
   const current = {}
+  const [show, setShow] = useState<boolean>(false)
+  const [ refreshDelete, setRefreshDelete ] = useState<boolean>(false);
 
   //user permission 
   const { resultPermission } = UserPermission();
@@ -368,6 +264,113 @@ const UserList = () => {
   }, [])
 
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
+
+  useEffect(()=> {
+    handleList();
+  },[addUserOpen, show, refreshDelete])
+
+  const columns = [
+    {
+      flex: 0.2,
+      minWidth: 230,
+      field: 'id',
+      headerName: 'ID',
+      renderCell: ({ row }: CellType) => {
+        const { id } = row
+  
+        return <Box sx={{ display: 'flex', alignItems: 'center' }}>{id}</Box>
+      }
+    },
+    {
+      flex: 0.2,
+      minWidth: 230,
+      field: 'name',
+      headerName: 'User',
+      renderCell: ({ row }: CellType) => {
+        const { name } = row
+  
+        return (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {renderClient(row)}
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
+              <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
+                {name}
+              </Typography>
+            </Box>
+          </Box>
+        )
+      }
+    },
+    {
+      flex: 0.2,
+      minWidth: 250,
+      field: 'email',
+      headerName: 'Email',
+      renderCell: ({ row }: CellType) => {
+        return (
+          <Typography noWrap variant='body2'>
+            {row.email}
+          </Typography>
+        )
+      }
+    },
+    {
+      flex: 0.15,
+      field: 'organization',
+      minWidth: 150,
+      headerName: 'Organization',
+      renderCell: ({ row }: CellType) => {
+        return (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {userRoleObj[row.company]}
+            <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
+              {row.company}
+            </Typography>
+          </Box>
+        )
+      }
+    },
+    {
+      flex: 0.15,
+      minWidth: 120,
+      headerName: 'Organization Group',
+      field: 'group',
+      renderCell: ({ row }: CellType) => {
+        return (
+          <Typography variant='subtitle1' noWrap sx={{ textTransform: 'capitalize' }}>
+            {row.group}
+          </Typography>
+        )
+      }
+    },
+    {
+      flex: 0.1,
+      minWidth: 110,
+      field: 'status',
+      headerName: 'Status',
+      renderCell: ({ row }: CellType) => {
+        return (
+          <CustomChip
+            skin='light'
+            size='small'
+            label={row.status ? 'active' : 'inactive'}
+            color={userStatusObj[row.status ? 'active' : 'inactive']}
+            sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
+          />
+        )
+      }
+    },
+    {
+      flex: 0.1,
+      minWidth: 90,
+      sortable: false,
+      field: 'actions',
+      headerName: 'Actions',
+      renderCell: ({ row }: CellType) => {
+        return <RowOptions id={row.id} current={row} setShow={setShow} show={show} refreshDelete={refreshDelete} setRefreshDelete={setRefreshDelete} />
+      }
+    }
+  ]
 
   return (
     <>

@@ -67,6 +67,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
     setValue('msg_transaction', current?.keyword_condition || '')
     setValue('platform', current?.platform || '')
     setValue('total_user', current?.total_user || 0)
+    setValue('msg_transaction', current?.msg_transaction || 0)
 
     setValue('domains', current?.domains || [])
     setValue('platform', current?.platform || [])
@@ -119,6 +120,13 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
     }
   }
 
+  useEffect(() =>{
+    errors.organization_group_name = false;
+    errors.organization_group_description = false;
+    errors.total_keyword = false;
+    errors.msg_transaction = false;
+    errors.total_user = false;
+  })
 
   return (
     <Card>
@@ -156,9 +164,9 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                         autoFocus
                         value={value}
                         onBlur={onBlur}
-                        label='Organization Type'
+                        label='Organization Group'
                         onChange={onChange}
-                        placeholder='Organization Type'
+                        placeholder='Organization Group'
                         error={errors?.organization_group_name ? true : false}
                       />
                     )}
@@ -198,7 +206,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
               <Grid item sm={12} xs={12}>
                 <FormControl fullWidth sx={{ mb: 4 }}>
                   <Controller
-                    name='organization_group_description'
+                    name='total_keyword'
                     control={control}
                     render={({ field: { value, onChange } }) => (
                       <TextField
@@ -207,13 +215,13 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                         type='number'
                         onChange={onChange}
                         placeholder='Number of Keyword'
-                        error={errors?.organization_group_description ? true : false}
+                        error={errors?.total_keyword ? true : false}
                       />
                     )}
                   />
-                  {errors.organization_group_description && (
+                  {errors.total_keyword && (
                     <FormHelperText sx={{ color: 'error.main' }}>
-                      {errors.organization_group_description.message}
+                      {errors.total_keyword.message}
                     </FormHelperText>
                   )}
                 </FormControl>

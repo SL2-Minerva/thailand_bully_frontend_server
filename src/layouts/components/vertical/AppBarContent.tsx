@@ -15,7 +15,7 @@ import LanguageDropdown from 'src/@core/layouts/components/shared-components/Lan
 
 // import LanguageDropdown from 'src/@core/layouts/components/shared-components/LanguageDropdown'
 // import NotificationDropdown from 'src/@core/layouts/components/shared-components/NotificationDropdown'
-// import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
+import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
 
 
 interface Props {
@@ -41,8 +41,8 @@ const AppBarContent = (props: Props) => {
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
         <LanguageDropdown settings={settings} saveSettings={saveSettings} />
-        {/* <ModeToggler settings={settings} saveSettings={saveSettings} />
-        <NotificationDropdown settings={settings} /> */}
+        <ModeToggler settings={settings} saveSettings={saveSettings} />
+        {/*<NotificationDropdown settings={settings} /> */}
         <UserDropdown settings={settings} />
       </Box>
     </Box>

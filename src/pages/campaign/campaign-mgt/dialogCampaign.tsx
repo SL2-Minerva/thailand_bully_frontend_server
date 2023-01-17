@@ -132,7 +132,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
       name: campaignName,
       organization_id: 1,
       domain_id: parseInt(domain),
-      status: status,
+      status: status ? 1 : 0,
       description: description,
       start_at: format(date ? date : new Date(), 'yyyy-MM-dd'),
       end_at: format(endDate ? endDate : new Date(), 'yyyy-MM-dd'),

@@ -81,12 +81,13 @@ const CampaignManagement = () => {
           Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
         }
       }
-    )
+    ).then(() => {
+      const values = [...resultCampaiganList]
+      values[index].status = event.target.checked
+      setTableData(values)
+      setReload(!reload)
+    })
 
-    const values = [...resultCampaiganList]
-    values[index].status = event.target.checked
-    setTableData(values)
-    setReload(!reload)
   }
 
   function handleEdit(i: number) {

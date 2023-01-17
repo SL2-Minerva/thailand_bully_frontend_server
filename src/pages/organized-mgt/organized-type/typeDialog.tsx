@@ -75,14 +75,20 @@ const DialogOrganizationType = (props: DialogInfoProps) => {
     resolver: yupResolver(schema)
   })
 
-  useEffect(() => {
-      setValue('description', current?.organization_type_description || '')
-      setValue('type', current?.organization_type_name || '')
-      setValue('status', current?.status === 1 ? true : false || true)
-      if (action === 'edit') {
-        setValue('id', current?.id)
-      }
+  useEffect(() => { 
+    
+    setValue('description', current?.organization_type_description || '')
+    setValue('type', current?.organization_type_name || '')
+    setValue('status', current?.status === 1 ? true : false)
+    if (action === 'edit') {
+      setValue('id', current?.id)
+    }
   }, [current])
+
+  useEffect(() => {
+    errors.type = false;
+    errors.description = false;
+  })
 
   const onSubmit = (data: FormData) => {
     if (action === 'create') { 
@@ -190,7 +196,7 @@ const DialogOrganizationType = (props: DialogInfoProps) => {
                         label='Description'
                         onChange={onChange}
                         placeholder='Description'
-                        error={Boolean(errors.description)}
+                        error={errors.description ? true: false}
                       />
                     )}
                   />

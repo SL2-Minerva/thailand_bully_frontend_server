@@ -47,8 +47,8 @@ const KeywordComparisonByBullyType = ({params, chartId, highlight} : {params: an
     
       useEffect(() => {
           if (resultKeywordComparisonByBullyType) {
-            setLabels(resultKeywordComparisonByBullyType?.labels);
-            setSeries(resultKeywordComparisonByBullyType?.data);
+            setLabels(resultKeywordComparisonByBullyType?.labels ? resultKeywordComparisonByBullyType?.labels : []);
+            setSeries(resultKeywordComparisonByBullyType?.data ? resultKeywordComparisonByBullyType?.data : []);
           }
       },[resultKeywordComparisonByBullyType]);
 
