@@ -68,6 +68,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
   const [campaignName, setCampaignName] = useState<string>('')
   const [description, setDescription] = useState<string>('')
+  const [ status, setStatus ] = useState<boolean>(false)
 
   const [keywords, setKeywords] = useState([
     {
@@ -131,7 +132,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
       name: campaignName,
       organization_id: 1,
       domain_id: parseInt(domain),
-      status: 1,
+      status: status,
       description: description,
       start_at: format(date ? date : new Date(), 'yyyy-MM-dd'),
       end_at: format(endDate ? endDate : new Date(), 'yyyy-MM-dd'),
@@ -183,7 +184,6 @@ const DialogCampaign = (props: DialogInfoProps) => {
   useEffect(() => {
     if (action === 'edit') {
       if (current) {
-        
         setCampaignName(current.name)
         setDescription(current.description)
         setDomain(current.domain_id)
@@ -195,6 +195,9 @@ const DialogCampaign = (props: DialogInfoProps) => {
           console.log('current.keyword', current.keyword)
           setKeywords(current.keyword)
         }
+
+        const campaignStatus = current.status === 1 ? true : false;
+        setStatus(campaignStatus)
       }  
     } else { 
       setCampaignName('');
@@ -212,6 +215,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
       ])
       setDate(null);
       setEndDate(null);
+      setStatus(true);
     }
   },[current, action])
 
@@ -372,7 +376,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
               <Grid item sm={6} xs={12} mt={3}>
                 <FormControl>
                   <FormControlLabel
-                    control={<Switch defaultChecked />}
+                    control={<Switch checked={status} onChange={e => {setStatus(e.target.checked)}}/>}
                     label='Campaign Status : '
                     labelPlacement='start'
                   />

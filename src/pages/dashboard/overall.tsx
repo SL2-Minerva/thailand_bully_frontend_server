@@ -117,6 +117,7 @@ const OverallDashboard = () => {
         period: period, 
         previousDate: previousDate, 
         previousEndDate: previousEndDate,
+        topKeyword : topKeyword
       }
 
     const handleSelectList = useCallback((e: SelectChangeEvent, type:string) => {
@@ -390,6 +391,7 @@ const OverallDashboard = () => {
                         averageText="Average Message per Day"
                         averageValue= {resultTotalMessagePerDay?.average_message?.toString() || '0'}
                         chartId = "Chart 3"
+                        reportNo = '1.1.005'
                     />
                 </Grid> :
                 ""
@@ -411,6 +413,7 @@ const OverallDashboard = () => {
                         averageText="Avg. Engagement per Day"
                         averageValue={resultTotalEngagement?.average_engagement?.toString() || '0'}
                         chartId = "Chart 4"
+                        reportNo = '1.1.006'
                     />
                 </Grid> : ""
             }
@@ -431,6 +434,7 @@ const OverallDashboard = () => {
                         averageText="Average Account per Day"
                         averageValue={resultTotalAccount?.average_account?.toString() || '0'}
                         chartId = "Chart 5"
+                        reportNo = '1.1.007'
                     />
                 </Grid> : ""
             }
@@ -492,8 +496,8 @@ const OverallDashboard = () => {
                     <Grid id="chart12" item xs={12} md={8}>
                         <ShareOfVoice params={params} chartId="Chart 12"/>
                     </Grid>
-                    <Grid id="chart13" item xs={12} md={4}>
-                        <SentimentLevelChart params={params} chartId="Chart 13"/>
+                    <Grid item xs={12} md={4}>
+                        <SentimentLevelChart params={params}/>
                     </Grid>
                 </> : ""
             }
@@ -518,11 +522,11 @@ const OverallDashboard = () => {
             resultReportPermission?.includes("13") ?
             <>
                 <Grid container spacing={3} mt ={2}>
-                    <Grid id="chart14" item xs={12} md={6}>
-                        <WordCloud params={params} chartId="Chart 14"/>
+                    <Grid id="chart13" item xs={12} md={6}>
+                        <WordCloud params={params} chartId="Chart 13"/>
                     </Grid>
-                    <Grid id="chart15" item xs={12} md={6}>
-                        <TotalMessageLists params={params} chartId="Chart 15"/>
+                    <Grid id="chart14" item xs={12} md={6}>
+                        <TotalMessageLists params={params} chartId="Chart 14"/>
                     </Grid>
                 </Grid>
             </> : ""
@@ -531,22 +535,22 @@ const OverallDashboard = () => {
         {
             resultReportPermission?.includes("15") ?
             <Grid container spacing={3} mt ={2}> 
-                <Grid id="chart16" item xs={12} md={6}>
-                    <WordCloudChannel params={params} chartId="Chart 16"/>
+                <Grid id="chart15" item xs={12} md={6}>
+                    <WordCloudChannel params={params} chartId="Chart 15"/>
                 </Grid>
-                <Grid id="chart17" item xs={12} md={6}>
-                    <AccountList params={params} chartId="Chart 17"/>
+                <Grid id="chart16" item xs={12} md={6}>
+                    <AccountList params={params} chartId="Chart 16" cardHeader="Word Cloud By Account" />
                 </Grid>
             </Grid> : ""
         }
         {
             resultReportPermission?.includes("18") ?
             <Grid container spacing={3} mt ={2}>
-                <Grid id="chart18" item xs={12} md={6}>
+                <Grid id="chart17" item xs={12} md={6}>
                     <WordCloudSentiment params={params} chartId="Chart 18"/>
                 </Grid>
-                <Grid id="chart19" item xs={12} md={6}>
-                    <AccountList params={params} chartId="Chart 19"/>
+                <Grid id="chart18" item xs={12} md={6}>
+                    <AccountList params={params} chartId="Chart 19" cardHeader="Word Cloud By Sentiment" />
                 </Grid>
             </Grid> : ""
         }   

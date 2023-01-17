@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
 // ** MUI Imports
 import { Grid, Card, CardHeader, CardContent } from '@mui/material'
@@ -72,10 +72,6 @@ const CampaignManagement = () => {
     setStatus(e.target.value)
   }, [])
 
-  // useEffect(() => {
-  //   setReload(!reload)
-  // }, [showCreate, showEdit])
-
   function handleChange(index: number, i: number, event: any) {
     axios.put(
       authConfig.updateCampaign,
@@ -114,6 +110,13 @@ const CampaignManagement = () => {
     setFillter(data);
 
   }
+  useEffect(() => {
+    setReload(!reload)
+  }, [showCreate, showEdit])
+
+  useEffect(()=> {
+    setTableData(resultCampaiganList)
+  },[resultCampaiganList])
 
   return (
     <Grid container spacing={6}>

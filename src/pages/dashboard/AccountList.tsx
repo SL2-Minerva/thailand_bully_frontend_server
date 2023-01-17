@@ -5,19 +5,22 @@ import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboar
 import AccountDetail from "./AccountDetail";
 import { StyledTooltip } from "./overall";
 
-const AccountList = ({params, chartId} : {params: any, chartId : string}) => {
+const AccountList = ({params, chartId, cardHeader} : {params: any, chartId : string, cardHeader: string}) => {
     const [showDetail, setShowDetail] = useState<boolean>(false);
     const [current, setCurrent] = useState<any>({})
+
     const { resultKeywords } = GetKeyWords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const reportNo = '1.2.02';
+    const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
 
     return (
         <Card sx={{ maxHeight: 500,minHeight: 500, overflow: 'auto' }}>
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
-                    title='Accounts'
+                    title={cardHeader}
                     titleTypographyProps={{ variant: 'h6' }}
                 />
-                <StyledTooltip arrow title={chartId}>
+                <StyledTooltip arrow title={chartTitle || ''}>
                     <Information style={{marginTop: '22px', fontSize: '29px'}} />
                 </StyledTooltip>
             </span>

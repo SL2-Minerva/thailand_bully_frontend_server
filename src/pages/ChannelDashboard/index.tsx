@@ -220,10 +220,10 @@ const ChannelDashboard = () => {
                         <Card>
                             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                                 <CardHeader 
-                                    title='Period over Period Comparison'
+                                    title='Channel Comparison: Period over Period'
                                     titleTypographyProps={{ variant: 'h6', color : highlight === 'chart10' ? 'green' : '#4c4e64de' }}
                                 />
-                                <StyledTooltip arrow title="Chart 10">
+                                <StyledTooltip arrow title="Chart 10, Report Level 2(3.3.012)">
                                     <Information style={{marginTop: '22px', fontSize: '29px',  color : highlight === 'chart10' ? 'green' : '#4c4e64de'}} />
                                 </StyledTooltip>
                             </span>

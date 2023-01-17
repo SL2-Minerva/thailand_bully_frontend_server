@@ -213,6 +213,11 @@ const DailyEngagementType = (props: LineProps) => {
   
   }
 
+  let data = {
+    labels: label || [],
+    datasets: dataset
+  }
+
   useEffect(() => {
     if(resultEngagementType) {
       const engagementData = resultEngagementType?.engagement;
@@ -222,25 +227,38 @@ const DailyEngagementType = (props: LineProps) => {
         
         const dataSets = chartDatasets(engagementData);
         setDataset(dataSets);
+      } else {
+        console.log("engagement:", resultEngagementType?.engagement)
+        setLabel([]);
+        setDataset([]);
+        data = { labels : [], datasets : [] }
+      }
+    } else {
+      setLabel([]);
+      setDataset([]);
+      data = {
+        labels : [],
+        datasets : []
       }
     }
   },[resultEngagementType]);
 
-  const data = {
-    labels: label || [],
-    datasets: dataset
-  }
+  
+
+  const reportNo = '4.2.012';
+
+  const title = chartId + ", Report Level 2(" + reportNo + ")";
 
   return (
     <Card>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-              title='Daily Engagement'
+              title='Daily Engagement Type By Date'
               titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
               subheader='KeyWords'
               subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
             />
-          <StyledTooltip arrow title={chartId}>
+          <StyledTooltip arrow title={title || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
@@ -255,6 +273,7 @@ const DailyEngagementType = (props: LineProps) => {
                 params = {params}
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
+                reportNo = {reportNo}
             />: ""
           }
       </CardContent>

@@ -50,10 +50,12 @@ interface DialogInfoProps {
   params?: any
   keywordId?: number
   setKeywordId?: any
+  reportNo?: any
+  title?: any
 }
 
 const DailyMessageDetail = (props: DialogInfoProps) => {
-    const { show, setShow, current, params, keywordId, setKeywordId } = props
+    const { show, setShow, current, params, keywordId, setKeywordId, reportNo, title } = props
     const [ showDialog, setShowDialog ] = useState<boolean>(false);
     const [page, setPage] = useState(0);
     const [messageId, setMessageId ] = useState<number | string>();
@@ -61,7 +63,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
 
     const platformId = params?.platformId || "";
 
-    const {resultMessageDetail, totalMessage} = GetDetailMessage(params?.campaign, platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, keywordId, page, 10);
+    const {resultMessageDetail, totalMessage} = GetDetailMessage(params?.campaign, platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, keywordId, page, 10, reportNo);
 
     const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
       setPage(value-1);
@@ -81,6 +83,8 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
        setPageCount(Math.ceil(totalMessage / 10));
       }
     }, [totalMessage]);
+
+    const cardTitle = title ? title : "Daily Messages:";
 
     return (
       <Card>
@@ -102,7 +106,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
             </IconButton>
             <Box sx={{ mb: 8, textAlign: 'center' }}>
               <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-                Message Detail
+                {cardTitle} Message Transaction 
               </Typography>
             </Box>
 
@@ -164,6 +168,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
             messageId = {messageId}
             setKeywordId = {setKeywordId}
             setMessageId = {setMessageId}
+            reportNo = {reportNo}
           />
           :
           ""

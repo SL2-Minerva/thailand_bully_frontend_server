@@ -26,23 +26,17 @@ const PercentageOfBullyType = (props : MessageData) => {
   const { params, type, chartId, highlight } = props;
   const colors = BullyDashboardColors;
   const {resultBullyTypePercentage} = BullyTypePercentage(params?.campaign, params?.date, params?.endDate, params?.period);
-  
-  const [ previousData, setPreviousData ] = useState<any>({
+  const initValue = {
     labels: [],
     datasets: [{
       data: [],
       backgroundColor: colors,
       hoverOffset: 4
     }]
-  });
-  const [ currentData, setCurrentData ] = useState<any>({
-    labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: colors,
-      hoverOffset: 4
-    }]
-  });
+  };
+
+  const [ previousData, setPreviousData ] = useState<any>(initValue);
+  const [ currentData, setCurrentData ] = useState<any>(initValue);
   const [ currentPeriod, setCurrentPeriod ] = useState<string>('');
   const [ previousPeriod, setPreviousPeriod ] = useState<string>('');
 
@@ -126,9 +120,19 @@ const PercentageOfBullyType = (props : MessageData) => {
         const previousDataset = chartDataset(previousMessageData, 'previous');
         setPreviousData(previousDataset);
 
+      } else {
+        setCurrentData(initValue);
+        setPreviousData(initValue);
       }
+    } else {
+      setCurrentData(initValue);
+      setPreviousData(initValue);
     }
   }, [resultBullyTypePercentage]);
+
+  const reportNo = '6.1.011';
+
+  const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
 
   return (
     <Card>
@@ -139,7 +143,7 @@ const PercentageOfBullyType = (props : MessageData) => {
             subheader='Period over Period Comparison'
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de'  }}
         />
-        <StyledTooltip arrow title={chartId}>
+        <StyledTooltip arrow title={chartTitle || ""}>
             <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

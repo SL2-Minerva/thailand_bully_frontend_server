@@ -48,11 +48,15 @@ const DayTimeComparison = ({params, chartId, highlight} : { params: any, chartId
         }
       }, [resultDayTimeComparison])
 
+      const reportNo = '2.2.016';
+
+    const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+
       return (
         <Card>
           <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
               <CardHeader title="Day&Time " titleTypographyProps={{ variant: 'h4',color: highlight ? 'green' : '#4c4e64de' }}/>
-              <StyledTooltip arrow title={chartId || ""}>
+              <StyledTooltip arrow title={chartTitle || ""}>
                   <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
               </StyledTooltip>
           </span>
@@ -64,7 +68,8 @@ const DayTimeComparison = ({params, chartId, highlight} : { params: any, chartId
                       show={showDetail}
                       setShow={setShowDetail}
                       params = {params}
-
+                      reportNo = {reportNo}
+                      
                       // keywordId = {keywordId}
                       // setKeywordId={setKeywordId}
                   /> : ""

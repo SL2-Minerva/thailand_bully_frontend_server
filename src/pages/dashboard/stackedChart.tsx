@@ -221,6 +221,10 @@ const StackedChart = (props: LineProps) => {
     datasets: dataset
   }
 
+  const reportNo = '1.2.002';
+
+  const chartTitle = "Chart 2, Report Level 2(" + reportNo + ")";
+
   return (
     <Card>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -231,7 +235,7 @@ const StackedChart = (props: LineProps) => {
             subheader='KeyWords'
             subheaderTypographyProps={{ variant: 'caption' }}
           />
-          <StyledTooltip arrow title="Chart 2">
+          <StyledTooltip arrow title={chartTitle || ""}>
               <Information fontSize='large' style={{marginTop: '23px'}} />
           </StyledTooltip>
       </span>
@@ -247,6 +251,8 @@ const StackedChart = (props: LineProps) => {
               params = {params}
               keywordId = {keywordId}
               setKeywordId={setKeywordId}
+              reportNo = {reportNo}
+              title = "Daily Messages:"
           /> : ""
          }
       </CardContent>

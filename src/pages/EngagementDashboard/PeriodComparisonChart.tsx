@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Grid, Paper, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Box, Card, CardContent, CardHeader, Grid, Pagination, Paper, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import { Information } from 'mdi-material-ui'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
@@ -21,6 +21,7 @@ interface LineProps {
     colorType?: string
     chartId: string
     highlight : boolean
+    reportNo: string
   }
   
   const chartLabel = (data:any) => {
@@ -53,11 +54,24 @@ interface LineProps {
 
 const PeriodComparisonChart = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, type, chartTitle, colorType, chartId, params, highlight } = props
-  const { resultSenitmentComparisonByEngagement } = GetSenitmentComparisonByEngagement(params?.campaign, params?.date, params?.endDate, params?.period);
-
+  const { white, labelColor, borderColor, gridLineColor, type, chartTitle, colorType, chartId, params, highlight, reportNo } = props
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
+  const [page, setPage] = useState(0);
+  const [pageCount, setPageCount] = useState<number>(0);
+
+  const { resultSentimentComparisonByEngagement, total } = GetSenitmentComparisonByEngagement(params?.campaign, params?.date, params?.endDate, params?.period, page);
+
+  const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value-1);
+};
+
+  useEffect(()=> {
+      if (total > 0) {
+      setPageCount(Math.ceil(total / 10));
+      }
+  }, [total]);
+
 
   const chartRef = useRef();
   const onClick = (event : any) => {
@@ -153,8 +167,8 @@ const PeriodComparisonChart = (props: LineProps) => {
   }
 
     useEffect(() => {
-        if(resultSenitmentComparisonByEngagement) {
-        const dailyMessageData = resultSenitmentComparisonByEngagement;
+        if(resultSentimentComparisonByEngagement) {
+        const dailyMessageData = resultSentimentComparisonByEngagement;
         if(dailyMessageData) {
             const labels = chartLabel(dailyMessageData);
             setLabel(labels);
@@ -163,12 +177,14 @@ const PeriodComparisonChart = (props: LineProps) => {
             setDataset(dataSets);
         }
         }
-    },[resultSenitmentComparisonByEngagement]);
+    },[resultSentimentComparisonByEngagement]);
 
     const data = {
         labels: label || [],
         datasets: dataset
     }
+
+    const title = chartId + ", Report Level 2(" + reportNo + ")";
 
     return (
         <Card>
@@ -178,7 +194,7 @@ const PeriodComparisonChart = (props: LineProps) => {
               titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
               subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
             />
-            <StyledTooltip arrow title={chartId}>
+            <StyledTooltip arrow title={title || ""}>
                 <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
             </StyledTooltip>
         </span>
@@ -196,11 +212,11 @@ const PeriodComparisonChart = (props: LineProps) => {
                         <TableRow>
                             <TableCell width={30}>
                               {
-                                resultSenitmentComparisonByEngagement?.share ? "Share" : "Positive"
+                                resultSentimentComparisonByEngagement?.share ? "Share" : "Positive"
                               }
                             </TableCell>
                             {
-                                (resultSenitmentComparisonByEngagement?.share || resultSenitmentComparisonByEngagement?.positive || [])?.map((share : any, index : number) => {
+                                (resultSentimentComparisonByEngagement?.share || resultSentimentComparisonByEngagement?.positive || [])?.map((share : any, index : number) => {
                                     return(
                                         <TableCell align='left' key={index}>{share}</TableCell>
                                     )
@@ -210,11 +226,11 @@ const PeriodComparisonChart = (props: LineProps) => {
                         <TableRow>
                             <TableCell>
                               {
-                                resultSenitmentComparisonByEngagement?.comment ? "Comment" : "Neutral"
+                                resultSentimentComparisonByEngagement?.comment ? "Comment" : "Neutral"
                               }
                             </TableCell>
                             {
-                                (resultSenitmentComparisonByEngagement?.comment || resultSenitmentComparisonByEngagement?.neutral ||  [])?.map((comment : any, index : number) => {
+                                (resultSentimentComparisonByEngagement?.comment || resultSentimentComparisonByEngagement?.neutral ||  [])?.map((comment : any, index : number) => {
                                     return(
                                         <TableCell align='left' key={index}>{comment}</TableCell>
                                     )
@@ -224,11 +240,11 @@ const PeriodComparisonChart = (props: LineProps) => {
                         <TableRow>
                             <TableCell>
                               {
-                                resultSenitmentComparisonByEngagement?.comment ? "Reaction" : "Negative"
+                                resultSentimentComparisonByEngagement?.comment ? "Reaction" : "Negative"
                               }
                             </TableCell>
                             {
-                                (resultSenitmentComparisonByEngagement?.reaction || resultSenitmentComparisonByEngagement?.negative || [])?.map((reaction : any, index : number) => {
+                                (resultSentimentComparisonByEngagement?.reaction || resultSentimentComparisonByEngagement?.negative || [])?.map((reaction : any, index : number) => {
                                     return(
                                         <TableCell align='left' key={index}>{reaction}</TableCell>
                                     )
@@ -238,6 +254,13 @@ const PeriodComparisonChart = (props: LineProps) => {
                     </TableHead>
                     </Table>
               </TableContainer>
+              <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
+              {
+                  total > 0 ? 
+                  <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
+                  : ""
+              }
+              </Box>
             </Grid>
         </Grid>
           

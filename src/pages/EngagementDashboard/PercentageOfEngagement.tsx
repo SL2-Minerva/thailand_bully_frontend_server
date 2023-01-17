@@ -26,23 +26,17 @@ const PercentageOfEngangement = (props : MessageData) => {
   const { type, chartId, params, highlight } = props;
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
   const {resultFilterData} = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
+  const initValue = {
+    labels: [],
+    datasets: [{
+      data: [],
+      backgroundColor: colors,
+      hoverOffset: 4
+    }]
+  };
 
-  const [ previousData, setPreviousData ] = useState<any>({
-    labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: colors,
-      hoverOffset: 4
-    }]
-  });
-  const [ currentData, setCurrentData ] = useState<any>({
-    labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: colors,
-      hoverOffset: 4
-    }]
-  });
+  const [ previousData, setPreviousData ] = useState<any>(initValue);
+  const [ currentData, setCurrentData ] = useState<any>(initValue);
   const [ currentPeriod, setCurrentPeriod ] = useState<string>('');
   const [ previousPeriod, setPreviousPeriod ] = useState<string>('');
 
@@ -110,6 +104,10 @@ const PercentageOfEngangement = (props : MessageData) => {
 
   const title =  type === 'transaction' ? 'Percentage of Engagement Trans' : "Percentage of Engagement Type";
 
+  const reportNo = '4.1.001';
+
+  const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
+
   useEffect(() =>{
     if (resultFilterData) {
       const currentMessageData = resultFilterData?.prcentage_of_engagement_current;
@@ -123,6 +121,9 @@ const PercentageOfEngangement = (props : MessageData) => {
         setPreviousData(previousDataset);
 
       }
+    } else {
+        setCurrentData(initValue);
+        setPreviousData(initValue);
     }
   }, [resultFilterData]);
 
@@ -135,7 +136,7 @@ const PercentageOfEngangement = (props : MessageData) => {
             subheader='Period over Period Comparison'
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />
-          <StyledTooltip arrow title={chartId}>
+          <StyledTooltip arrow title={chartTitle || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
       </span>

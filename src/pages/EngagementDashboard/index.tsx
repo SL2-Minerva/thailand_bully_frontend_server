@@ -1,6 +1,6 @@
 import { Button, Card, CardHeader, Grid } from "@mui/material"
 import { useState } from "react";
-import { GetSummary, GetTotalEngagment } from "src/services/api/dashboards/engagement/EngagementApi";
+import { GetTotalEngagment } from "src/services/api/dashboards/engagement/EngagementApi";
 import { StyledTooltip } from "../dashboard/overall";
 import DailyEngagement from "./DailyEngagement";
 import PercentageOfEngangement from "./PercentageOfEngagement";
@@ -51,7 +51,6 @@ const EngagementDashboard = () => {
 
     const { resultReportPermission } = UserPermission();
     const { resultTotalEngagement } = GetTotalEngagment(campaignType, date, endDate, period);
-    const { resultSummary } = GetSummary(campaignType, date, endDate, period); 
 
     const params = {
         campaign : campaignType,
@@ -321,10 +320,10 @@ const EngagementDashboard = () => {
                                 <Card id="chart15">
                                     <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                                         <CardHeader 
-                                            title='Period over Period Comparison'
+                                            title='Total Engagement'
                                             titleTypographyProps={{ variant: 'h6', color : highlight === 'chart15' ? 'green' : '#4c4e64de' }}
                                         />
-                                        <StyledTooltip arrow title="Chart 15">
+                                        <StyledTooltip arrow title="Chart 15, Report Level 2 (4.2.020)">
                                             <Information style={{marginTop: '22px', fontSize: '29px', color : highlight === 'chart15' ? 'green' : '#4c4e64de'}} />
                                         </StyledTooltip>
                                     </span>
@@ -350,10 +349,11 @@ const EngagementDashboard = () => {
                                     gridLineColor={gridLineColor}
                                     params={params}
                                     type = "channel"
-                                    chartTitle="Engagement Comparison"
+                                    chartTitle="Engagement"
                                     colorType="engagementDefault"
                                     chartId="Chart 16"
                                     highlight = { highlight==='chart16' ? true : false }
+                                    reportNo = "4.2.021"
                                 />
                         </Grid> : ""
                     }
@@ -370,7 +370,7 @@ const EngagementDashboard = () => {
                                     gridLineColor={gridLineColor}
                                     params={params}
                                     type = "sentiment"
-                                    chartTitle="Engagement Comparison"
+                                    chartTitle="Engagement"
                                     colorType="SentimentComparisonEngagment"
                                     chartId="Chart 17"
                                     highlight = { highlight==='chart17' ? true : false }
@@ -386,7 +386,7 @@ const EngagementDashboard = () => {
                                     />
                             </Grid> 
                             <Grid item xs={12} md={5} id="chart19">
-                                    <EngagmentComparisonChart params={params} highlight = { highlight==='chart19' ? true : false }/>
+                                    <EngagmentComparisonChart params={params} chartId="chart 19" highlight = { highlight==='chart19' ? true : false }/>
                             </Grid>
                         </>
                         : ""
@@ -406,7 +406,7 @@ const EngagementDashboard = () => {
                                 </Grid>
                             </Grid>
                             <Grid item xs={12} id="chart20">
-                                    <EngagementSummary resultSummary={resultSummary} chartId="Chart 20" highlight = { highlight==='chart20' ? true : false }/>
+                                    <EngagementSummary topKeyword={topKeyword} params={params} chartId="Chart 20" highlight = { highlight==='chart20' ? true : false }/>
                             </Grid>
                         </> : ""
                     }

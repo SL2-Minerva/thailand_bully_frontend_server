@@ -172,15 +172,19 @@ const MessagesByBullyType = (props: LineProps) => {
         datasets: dataset
     }
 
+    const reportNo = '2.2.010';
+
+    const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+
     return (
       <Card>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Message By Bully Type"
+            title="Daily Messages By Bully Type"
             titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption',color: highlight ? 'green' : '#4c4e64de' }}
           />
-          <StyledTooltip arrow title={chartId || ""}>
+          <StyledTooltip arrow title={chartTitle || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
@@ -195,6 +199,7 @@ const MessagesByBullyType = (props: LineProps) => {
                 params = {params}
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
+                reportNo = {reportNo}
             />: ""
           }
         

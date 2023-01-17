@@ -54,10 +54,12 @@ export const CustomizerSpacing = styled('div')(({ theme }) => ({
 const QuickView = ({setHighlight} : {setHighlight?:any}) => {
   // ** State
   const [open, setOpen] = useState<boolean>(false)
+  const [ highlightText, setHightlightText ] = useState<string>('');
 
   const onClose = (chartId?: string) => {
     if(chartId) {
       setHighlight(chartId);
+      setHightlightText(chartId);
     }
     setOpen(false);
   }
@@ -104,143 +106,150 @@ const QuickView = ({setHighlight} : {setHighlight?:any}) => {
   
               <Link to="chart1" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart1")}}>
-                    <Typography>Chart 1 : Percentage of Engagement Trans</Typography>
+                    <Typography sx={{ color : highlightText === 'chart1' ? 'green' : '#4c4e64de'  }}>Chart 1 : Percentage of Engagement Trans</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart2" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart2")}}>
-                    <Typography>Chart 2 : Daily Engagement</Typography>
+                    <Typography sx={{ color : highlightText === 'chart2' ? 'green' : '#4c4e64de'  }}>Chart 2 : Daily Engagement by Date</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart3" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart3")}}>
-                    <Typography>Chart 3 : Engagement by Day</Typography>
+                    <Typography sx={{ color : highlightText === 'chart3' ? 'green' : '#4c4e64de'  }}>Chart 3 : Daily Engagement by Day</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart4" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart4")}}>
-                    <Typography>Chart 4 : Engagement  by Time</Typography>
+                    <Typography sx={{ color : highlightText === 'chart4' ? 'green' : '#4c4e64de'  }}>Chart 4 : Daily Engagement  by Time</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart5" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart5")}}>
-                    <Typography>Chart 5 : Engagement  by Devices</Typography>
+                    <Typography sx={{ color : highlightText === 'chart5' ? 'green' : '#4c4e64de'  }}>Chart 5 : Daily Engagement  by Devices</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart6" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart6")}}>
-                    <Typography>Chart 6 : Engagement  by Account</Typography>
+                    <Typography sx={{ color : highlightText === 'chart6' ? 'green' : '#4c4e64de'  }}>Chart 6 : Daily Engagement  by Account</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart7" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart7")}}>
-                    <Typography>Chart 7 : Engagement  by Channel</Typography>
+                    <Typography sx={{ color : highlightText === 'chart7' ? 'green' : '#4c4e64de'  }}>Chart 7 : Daily Engagement  by Channel</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart8" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart8")}}>
-                    <Typography>Chart 8 : Percentage of Engagement Type(Period over Period)</Typography>
+                    <Typography sx={{ color : highlightText === 'chart8' ? 'green' : '#4c4e64de'  }}>Chart 8 : Percentage of Engagement Type</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart9" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart9")}}>
-                    <Typography>Chart 9 : Daily Engagement Type(Period over Period)</Typography>
+                    <Typography sx={{ color : highlightText === 'chart9' ? 'green' : '#4c4e64de'  }}>Chart 9 : Daily Engagement Type by Date</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart10" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart10")}}>
-                    <Typography>Chart 10 : Engagement Type by Day</Typography>
+                    <Typography sx={{ color : highlightText === 'chart10' ? 'green' : '#4c4e64de'  }}>Chart 10 : Daily Engagement Type by Day</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart11" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart11")}}>
-                    <Typography>Chart 11 : Engagement Type by Time</Typography>
+                    <Typography sx={{ color : highlightText === 'chart11' ? 'green' : '#4c4e64de'  }}>Chart 11 : Daily Engagement Type by Time</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart12" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart12")}}>
-                    <Typography>Chart 12 : Engagement Type by Devices</Typography>
+                    <Typography sx={{ color : highlightText === 'chart12' ? 'green' : '#4c4e64de'  }}>Chart 12 : Daily Engagement Type by Devices</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart13" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart13")}}>
-                    <Typography>Chart 13 : Engagement Type by Account</Typography>
+                    <Typography sx={{ color : highlightText === 'chart13' ? 'green' : '#4c4e64de'  }}>Chart 13 : Daily Engagement Type by Account</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart14" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart14")}}>
-                    <Typography>Chart 14 : Engagement Type by Channel</Typography>
+                    <Typography sx={{ color : highlightText === 'chart14' ? 'green' : '#4c4e64de'  }}>Chart 14 : Daily Engagement Type by Channel</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart15" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart15")}}>
-                    <Typography>Chart 15 : Total Engagement </Typography>
+                    <Typography sx={{ color : highlightText === 'chart15' ? 'green' : '#4c4e64de'  }}>Chart 15 : Total Engagement </Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart16" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart16")}}>
-                    <Typography>Chart 16 : Engagement by Channel </Typography>
+                    <Typography sx={{ color : highlightText === 'chart16' ? 'green' : '#4c4e64de'  }}>Chart 16 : Engagement by Channel </Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart17" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart17")}}>
-                    <Typography>Chart 17 : Engagement by Sentiment</Typography>
+                    <Typography sx={{ color : highlightText === 'chart17' ? 'green' : '#4c4e64de'  }}>Chart 17 : Engagement by Sentiment</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart18" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart18")}}>
-                    <Typography>Chart 18 : Engagement Type Comparison</Typography>
+                    <Typography sx={{ color : highlightText === 'chart18' ? 'green' : '#4c4e64de'  }}>Chart 18 : Engagement Type Comparison</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart19" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart19")}}>
-                    <Typography>Chart 19 : Engagement Type Comparison</Typography>
+                    <Typography sx={{ color : highlightText === 'chart19' ? 'green' : '#4c4e64de'  }}>Chart 19 : Engagement Type Proportion</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart20" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart20")}}>
-                    <Typography>Chart 20 : Summary Engagement by Account</Typography>
+                    <Typography sx={{ color : highlightText === 'chart20' ? 'green' : '#4c4e64de'  }}>Chart 20 : Summary Engagement by Account</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
+
+              {/* <Link to="chart21" spy={true} smooth={true}>
+                <Box sx={{ mb: 4 }} onClick={() => {onClose("chart21")}}>
+                    <Typography sx={{ color : highlightText === 'chart21' ? 'green' : '#4c4e64de'  }}>Chart 21 : Summary Engagement by Account</Typography>
+                </Box>
+              </Link>
+              <Divider sx={{ m: 0 }} /> */}
 
             </CustomizerSpacing>
   

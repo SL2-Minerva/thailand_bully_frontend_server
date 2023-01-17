@@ -66,6 +66,8 @@ const chartLabel = (data:any) => {
 }
 
 const DailyEngagement = (props: LineProps) => {
+  const reportNo = '4.2.002';
+
   // ** Props
   const { white, labelColor,  borderColor, gridLineColor, params, type, chartId, highlight } = props
 
@@ -82,6 +84,7 @@ const DailyEngagement = (props: LineProps) => {
     organization_id: null
   });
   const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
+  
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -225,6 +228,9 @@ const DailyEngagement = (props: LineProps) => {
         const dataSets = chartDatasets(engagementData);
         setDataset(dataSets);
       }
+    } else {
+      setLabel([]);
+      setDataset([]);
     }
   },[resultFilterData]);
 
@@ -233,16 +239,18 @@ const DailyEngagement = (props: LineProps) => {
     datasets: dataset
   }
 
+  const title = chartId + ", Report Level 2(" + reportNo + ")";
+
   return (
     <Card>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-              title='Daily Engagement'
+              title='Daily Engagement By Date'
               titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
               subheader='KeyWords'
               subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
             />
-          <StyledTooltip arrow title={chartId}>
+          <StyledTooltip arrow title={title}>
               <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
@@ -257,6 +265,7 @@ const DailyEngagement = (props: LineProps) => {
               params = {params}
               paramsId = {paramsId}
               setParamsId={setParamsId}
+              reportNo = {reportNo}
           /> : ""
          }
       </CardContent>

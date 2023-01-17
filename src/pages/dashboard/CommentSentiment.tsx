@@ -14,6 +14,9 @@ import { GetSentimentType } from 'src/services/api/dashboards/overall/overallDas
 
 const CommentSentiment  = ({params, chartId} : {params:any, chartId: string}) => {
   const {resultSentimentType} = GetSentimentType(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const reportNo = '1.1.019';
+
+  const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -56,7 +59,7 @@ const CommentSentiment  = ({params, chartId} : {params:any, chartId: string}) =>
             title='Comment Sentiment'
             titleTypographyProps={{ variant: 'h6' }}
           />
-          <StyledTooltip arrow title={chartId}>
+          <StyledTooltip arrow title={chartTitle || ""}>
               <Information  style={{marginTop: '22px', fontSize: '29px'}} />
           </StyledTooltip>
       </span>

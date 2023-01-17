@@ -246,10 +246,10 @@ const VoiceDashboard = () => {
                 </Grid> : ""
            }
            
-                <Grid item xs={12} md={4} id="chart12">
+                <Grid item xs={12} md={4}>
                 {
                     resultReportPermission?.includes("31") ?
-                    <Grid item xs={12}>
+                    <Grid item xs={12} id="chart12">
                         <InfluencerComparison 
                             color='primary'
                             trendNumber={resultTotalMessages?.percentage}
@@ -259,12 +259,13 @@ const VoiceDashboard = () => {
                             totalValue = {resultTotalMessages?.total_message}
                             chartId = 'Chart 12'
                             highlight = { highlight==='chart12' ? true : false }
+                            reportNo = '2.2.014'
                         />
                     </Grid> : ""
                 }
                 {
                     resultReportPermission?.includes("32") ?
-                    <Grid item  xs={12} mt={5}>
+                    <Grid item  xs={12} mt={5} id="chart13">
                         <InfluencerComparison 
                             color='primary'
                             trendNumber={resultTotalAccount?.percentage || ""}
@@ -272,8 +273,9 @@ const VoiceDashboard = () => {
                             icon={<AccountGroup />}
                             totalText = 'Accounts'
                             totalValue = {resultTotalAccount?.total_account || resultTotalAccount?.total_message}
-                            chartId = 'Chart 12'
-                            highlight = { highlight==='chart12' ? true : false }
+                            chartId = 'Chart 13'
+                            highlight = { highlight==='chart13' ? true : false }
+                            reportNo = "2.2.015"
                         />
                     </Grid> : ""
                 }
@@ -281,71 +283,71 @@ const VoiceDashboard = () => {
            
             {
                 resultReportPermission?.includes("33") ?
-                <Grid item xs={12} id="chart13">
-                    <DayTimeComparison params={params} chartId="Chart 13" highlight = { highlight==='chart13' ? true : false }/>
+                <Grid item xs={12} id="chart14">
+                    <DayTimeComparison params={params} chartId="Chart 14" highlight = { highlight==='chart14' ? true : false }/>
                 </Grid> : ""
             }
 
             {
                 resultReportPermission?.includes("34") ? 
-                <Grid item xs={12} id="chart14">
-                    <DayTimeSentiment chartId="Chart 14" params={params} highlight = { highlight==='chart14' ? true : false }/>
+                <Grid item xs={12} id="chart15">
+                    <DayTimeSentiment chartId="Chart 15" params={params} highlight = { highlight==='chart15' ? true : false }/>
                 </Grid> : ""
             }
 
             {
                 resultReportPermission?.includes("35") ? 
-                <Grid item xs={12} id="chart15">
-                    <DayTimeBullyLevel chartId="Chart 15" params={params} highlight = { highlight==='chart15' ? true : false }/>
+                <Grid item xs={12} id="chart16">
+                    <DayTimeBullyLevel chartId="Chart 16" params={params} highlight = { highlight==='chart16' ? true : false }/>
                 </Grid> : ""
             }
             
             {
                 resultReportPermission?.includes("36") ?
-                <Grid item xs={12} id="chart16">
-                    <DayTimeBullyType chartId="Chart 16" params={params} highlight = { highlight==='chart16' ? true : false }/>
+                <Grid item xs={12} id="chart17">
+                    <DayTimeBullyType chartId="Chart 17" params={params} highlight = { highlight==='chart17' ? true : false }/>
                 </Grid>: ""
             }
             {
                 resultReportPermission?.includes("37") ?
-                <Grid item xs={12} md={4} id="chart17">
-                    <PlatformsComparison params={params} chartId="chart 17" highlight = { highlight==='chart17' ? true : false }/>
+                <Grid item xs={12} md={4} id="chart18">
+                    <PlatformsComparison params={params} chartId="chart 18" highlight = { highlight==='chart18' ? true : false }/>
                 </Grid> : ""
             }
             {
                 resultReportPermission?.includes("38") ?
-                <Grid item xs={12} md={4} id="chart18">
-                    <DevicesComparison params={params} chartId="Chart 18" highlight = { highlight==='chart18' ? true : false }/>
+                <Grid item xs={12} md={4} id="chart19">
+                    <DevicesComparison params={params} chartId="Chart 19" highlight = { highlight==='chart19' ? true : false }/>
                 </Grid> : ""
             }
             {
                 resultReportPermission?.includes("39") ?
-                <Grid item xs={12} md={4} id="chart19">
-                    <ChannelVsDevice params={params} chartId="Chart 19" highlight = { highlight==='chart19' ? true : false }/>
+                <Grid item xs={12} md={4} id="chart20">
+                    <ChannelVsDevice params={params} chartId="Chart 20" highlight = { highlight==='chart20' ? true : false }/>
                 </Grid> : ""
             }
             {   
                 resultReportPermission?.includes("40") ? 
-                <Grid item xs={12} md={6} id="chart20">
-                    <KeywordComparisonByChannel params={params} chartId="Chart 20" highlight = { highlight==='chart20' ? true : false }/>
+                <Grid item xs={12} md={6} id="chart21">
+                    <KeywordComparisonByChannel params={params} chartId="Chart 21" highlight = { highlight==='chart21' ? true : false }/>
                 </Grid> : ""
             }
             {
                 resultReportPermission?.includes("41") ?
-                <Grid item xs={12} md={6} id="chart21">
-                    <KeywordComparisonBySentiment params={params} chartId="Chart 21" highlight = { highlight==='chart21' ? true : false }/>
+                <Grid item xs={12} md={6} id="chart22">
+                    <KeywordComparisonBySentiment params={params} chartId="Chart 22" highlight = { highlight==='chart23' ? true : false }/>
                 </Grid> : ""
             }
             {
                 resultReportPermission?.includes("42") ?
-                <Grid item xs={12} md={6} id="chart22">
-                    <KeywordComparisonByBullyLevel params={params} chartId="Chart 22" highlight = { highlight==='chart22' ? true : false }/>
+                <Grid item xs={12} md={6} id="chart23">
+                    <KeywordComparisonByBullyLevel params={params} chartId="Chart 23" highlight = { highlight==='chart23' ? true : false }/>
                 </Grid> : ""
             }
             {
                 resultReportPermission?.includes("43") ?
-                <Grid item xs={12} md={6} id="chart23">
-                    <KeywordComparisonByBullyType params={params} chartId="Chart 23" highlight = { highlight==='chart23' ? true : false }/>
+                <Grid item xs={12} md={6} id="chart24">
+                    <KeywordComparisonByBullyType params={params} chartId="Chart 24" highlight = { highlight==='chart24' ? true : false }/>
                 </Grid> : ""
             }
             <QuickView setHighlight={setHighlight}/>

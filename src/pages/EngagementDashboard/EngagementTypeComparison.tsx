@@ -14,6 +14,9 @@ import { GetEngagementComparison } from 'src/services/api/dashboards/engagement/
 
 const EngagementTypeComparison  = ({params, chartId, highlight} : {params: any, chartId: string, highlight: boolean}) => {
   const { resultEngagementComparison } = GetEngagementComparison(params?.campaign, params?.date, params?.endDate, params?.period);
+  const reportNo = '4.2.023';
+
+  const title = chartId + ", Report Level 2(" + reportNo + ")";
 
   return (
     <Card sx={{ minHeight: 560 }}>
@@ -23,7 +26,7 @@ const EngagementTypeComparison  = ({params, chartId, highlight} : {params: any, 
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheader="Period over Period"
           />
-          <StyledTooltip arrow title={chartId}>
+          <StyledTooltip arrow title={title || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
       </span>

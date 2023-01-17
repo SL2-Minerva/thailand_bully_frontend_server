@@ -169,6 +169,9 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
         labels: label || [],
         datasets: dataset
     }
+    const reportNo = '4.2.022';
+
+    const title = chartId + ", Report Level 2(" + reportNo + ")";
 
     return (
         <Card>
@@ -178,7 +181,7 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
               titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
               subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
             />
-            <StyledTooltip arrow title={chartId}>
+            <StyledTooltip arrow title={title || ""}>
                 <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
             </StyledTooltip>
         </span>

@@ -11,7 +11,7 @@ import { GetMessagesByDay } from 'src/services/api/dashboards/engagement/Engagem
 import MessageDetail from './MessageDetail'
   
 const EngagementByDay = (props: LineProps) => {
-
+  const reportNo = '4.2.003';
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
@@ -172,15 +172,17 @@ const EngagementByDay = (props: LineProps) => {
         datasets: dataset
     }
 
+  const title = chartId + ", Report Level 2(" + reportNo + ")";
+
     return (
       <Card>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Engangement By Day"
+            title="Daily Engagement By Day"
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />
-          <StyledTooltip arrow title={chartId || ""}>
+          <StyledTooltip arrow title={title || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
@@ -195,6 +197,7 @@ const EngagementByDay = (props: LineProps) => {
                 params = {params}
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
+                reportNo = {reportNo}
             />: ""
           }
         

@@ -1,16 +1,39 @@
-import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer, Grid, Button } from "@mui/material"; 
+import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer, Grid, Button, Box, Pagination } from "@mui/material"; 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import LinearProgressBar from "./LinearProgressBar";
 import { StyledTooltip } from "../dashboard/overall";
 import { Information } from "mdi-material-ui";
+import { useEffect, useState } from "react";
+import { GetSummaryByAccount } from "src/services/api/dashboards/sentiment/sentimentDashboard";
 
-const SummaryByAccount = ({resultSummary, topAccount, setTopAccount, chartId, highlight} : 
-    {resultSummary: any, topAccount : string, setTopAccount : any, chartId: string, highlight: boolean}) => {
+const SummaryByAccount = ({ params, chartId, highlight} : 
+    {params: any, chartId: string, highlight: boolean}) => {
+    
+    const [ topAccount, setTopAccount ] = useState<string>('all');
+    const [page, setPage] = useState(0);
+    const [pageCount, setPageCount] = useState<number>(0);
+
+    const { resultSummaryByAccount, total } = GetSummaryByAccount(topAccount, params?.campaign, params?.date, params?.endDate, params?.period);
+
     const handleTopAccounts = (data: string) => {
         setTopAccount(data);
     }
+
+    const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+        setPage(value-1);
+    };
+
+    useEffect(()=> {
+        if (total > 0) {
+        setPageCount(Math.ceil(total / 10));
+        }
+    }, [total]);
+
+    const reportNo = '5.2.017';
+
+   const title = chartId + ", Report Level 2(" + reportNo + ")";
 
     return (
         <Card>
@@ -19,7 +42,7 @@ const SummaryByAccount = ({resultSummary, topAccount, setTopAccount, chartId, hi
                     title='Summary Sentiment Score by Account'
                     titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
                 />
-                <StyledTooltip arrow title={chartId}>
+                <StyledTooltip arrow title={title || ""}>
                     <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
                 </StyledTooltip>
             </span>
@@ -48,7 +71,7 @@ const SummaryByAccount = ({resultSummary, topAccount, setTopAccount, chartId, hi
                     </TableHead>
                     <TableBody>
                         {
-                            (resultSummary||[])?.map((summary: any, index:any) => {
+                            (resultSummaryByAccount||[])?.map((summary: any, index:any) => {
                                 return(
                                     <TableRow key={index}>
                                         <TableCell><b>{summary.infulencer}</b></TableCell>
@@ -70,6 +93,13 @@ const SummaryByAccount = ({resultSummary, topAccount, setTopAccount, chartId, hi
                     
             </Table>
             </TableContainer>
+            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
+                {
+                    total > 0 ? 
+                    <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
+                    : ""
+                }
+            </Box>
             </CardContent>
         </Card>
         

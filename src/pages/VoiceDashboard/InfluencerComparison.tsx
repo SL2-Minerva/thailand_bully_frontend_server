@@ -28,17 +28,22 @@ interface InfluencerComparisonProps {
     color?: ThemeColor
     trendNumber: string
     trend?: string
-    totalText: string,
+    totalText: string
     totalValue : number
     chartId: string
     highlight: boolean
+    reportNo : string
   }
 
 const InfluencerComparison = (props: InfluencerComparisonProps) => {
   // ** Props
-  const { color, icon, trend, trendNumber, totalText, totalValue, chartId, highlight } = props
+  const { color, icon, trend, trendNumber, totalText, totalValue, chartId, highlight, reportNo } = props
 
   const TrendIcon = trend === 'plus' ? ChevronUp : ChevronDown
+
+  const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
+
+  const title = totalText === "Messages" ? 'Number of Messages: Period over Period Comparison' : 'Number of Accounts: Period over Period Comparison'
 
   return (
     <Card>
@@ -72,13 +77,15 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
         </Box>
 
         <Divider sx={{ mt: 2, mb: 7.5 }} />
+                
+                <span style={{ display: 'flex', justifyContent: 'flex-start',color: highlight ? 'green' : '#4c4e64de' }}>
+                    {title}
+                    <StyledTooltip arrow title={chartTitle || ""}>
+                        <Information style={{marginLeft: '10px', fontSize: '29px'}} />
+                    </StyledTooltip>
+                </span>
+
          
-         <span style={{ display: 'flex', justifyContent: 'flex-start',color: highlight ? 'green' : '#4c4e64de' }}>
-             Period over Period comparison
-              <StyledTooltip arrow title={chartId}>
-                  <Information style={{marginLeft: '10px', fontSize: '29px'}} />
-              </StyledTooltip>
-          </span>
       </CardContent>
     </Card>
   )

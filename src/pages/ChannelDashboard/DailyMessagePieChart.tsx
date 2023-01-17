@@ -173,9 +173,16 @@ const DailyMessagePieChart  = ( props : Props) => {
 
       const previousDataset = chartDataset(previousMessageData, 'previous');
       setPreviousData(previousDataset);
+    } else {
+      setCurrentData(initValue);
+      setPreviousData(initValue);
     }
 
   },[resultPercentageChannel]);
+
+  const reportNo = '3.1.001';
+
+  const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
 
   return (
     <Card style={{ minHeight: '330px' }}>
@@ -192,7 +199,7 @@ const DailyMessagePieChart  = ( props : Props) => {
                     subheaderTypographyProps={{ varient: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
                 />
           }
-          <StyledTooltip arrow title={chartId}>
+          <StyledTooltip arrow title={chartTitle || ""}>
               <Information  style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
       </span>

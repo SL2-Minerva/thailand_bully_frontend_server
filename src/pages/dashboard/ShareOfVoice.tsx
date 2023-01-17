@@ -39,6 +39,9 @@ const ChartData = (data: any ) => {
 const ShareOfVoice  = ({params, chartId} : {params: any, chartId : string}) => {
   const { resultShareOfVoice } = GetShareOfVoice(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
   const { resultShareOfVoiceChart } = GetShareOfVoiceChart(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const reportNo = '1.1.020';
+
+  const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
 
   const labels = resultShareOfVoiceChart ? ChartLabels(resultShareOfVoiceChart) : [];
   const data = {
@@ -128,7 +131,7 @@ const ShareOfVoice  = ({params, chartId} : {params: any, chartId : string}) => {
             title='Share of Voice'
             titleTypographyProps={{ variant: 'h6' }}
           />
-          <StyledTooltip arrow title={chartId}>
+          <StyledTooltip arrow title={chartTitle || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px'}} />
           </StyledTooltip>
       </span>

@@ -11,7 +11,6 @@ import { GetMessagesByDevice } from 'src/services/api/dashboards/engagement/Enga
 import MessageDetail from './MessageDetail'
   
 const EngagementByDevice = (props: LineProps) => {
-
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
@@ -26,6 +25,10 @@ const EngagementByDevice = (props: LineProps) => {
   const { resultMessagesByDevice } = GetMessagesByDevice(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const chartRef = useRef();
+  const reportNo = '4.2.005';
+
+  const title = chartId + ", Report Level 2(" + reportNo + ")";
+
   const getKeywordId = (dataset: InteractionItem[]) => {
     if (!dataset.length) return;
 
@@ -176,11 +179,11 @@ const EngagementByDevice = (props: LineProps) => {
       <Card>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Engangement By Device"
+            title="Daily Engagement By Device"
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />
-          <StyledTooltip arrow title={chartId || ""}>
+          <StyledTooltip arrow title={title || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
@@ -195,6 +198,7 @@ const EngagementByDevice = (props: LineProps) => {
                 params = {params}
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
+                reportNo = {reportNo}
             />: ""
           }
         

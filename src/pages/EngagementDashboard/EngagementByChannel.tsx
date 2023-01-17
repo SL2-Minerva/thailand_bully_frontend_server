@@ -24,7 +24,9 @@ const EngagementByChannel = (props: LineProps) => {
     organization_id: null
   });
   const { resultMessagesByChannel } = GetMessagesByChannel(params?.campaign, params?.date, params?.endDate, params?.period);
+  const reportNo = '4.2.007';
 
+  const title = chartId + ", Report Level 2(" + reportNo + ")";
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
     if (!dataset.length) return;
@@ -176,11 +178,11 @@ const EngagementByChannel = (props: LineProps) => {
       <Card>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Engangement By Channel"
+            title="Daily Engagement By Channel"
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />
-          <StyledTooltip arrow title={chartId || ""}>
+          <StyledTooltip arrow title={title || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
@@ -195,6 +197,7 @@ const EngagementByChannel = (props: LineProps) => {
                 params = {params}
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
+                reportNo = {reportNo}
             />: ""
           }
         

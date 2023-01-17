@@ -37,6 +37,7 @@ interface KeyStatusProps {
     averageValue: string,
     type?: string,
     chartId? : string
+    reportNo?: string
   }
 
 // Styled Grid component
@@ -51,9 +52,10 @@ interface KeyStatusProps {
 
 const KeyStatusReport = (props: KeyStatusProps) => {
   // ** Props
-  const { title, color, icon, stats, trendNumber, totalText, totalValue, averageText, averageValue, type, chartId } = props
+  const { title, color, icon, stats, trendNumber, totalText, totalValue, averageText, averageValue, type, chartId, reportNo } = props
 
   const TrendIcon = type === 'plus' ? ChevronUp : ChevronDown
+  const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
 
   return (
     <Card>
@@ -95,7 +97,7 @@ const KeyStatusReport = (props: KeyStatusProps) => {
         <Typography variant='body2' sx={{ mb: 5 }}>
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 {title}
-                <StyledTooltip arrow title={chartId || ""}>
+                <StyledTooltip arrow title={chartTitle || ""}>
                     <Information fontSize='small' style={{marginLeft: '13px'}} />
                 </StyledTooltip>
             </span>

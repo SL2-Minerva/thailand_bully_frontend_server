@@ -25,11 +25,12 @@ interface DialogInfoProps {
   messageId?: number | string
   setKeywordId?: any
   setMessageId?: any
+  reportNo? : string
 }
 
 const DialogNetworkGraph = (props: DialogInfoProps) => {
-    const { showDialog, setShowDialog, params, keywordId, messageId, setMessageId } = props
-    const { resultNetworkGraph } = GetNetworkGraph(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, keywordId, messageId);
+    const { showDialog, setShowDialog, params, keywordId, messageId, setMessageId, reportNo } = props
+    const { resultNetworkGraph } = GetNetworkGraph(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, keywordId, messageId, reportNo);
 
   
     const initialGraph = {

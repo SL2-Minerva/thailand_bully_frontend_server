@@ -1,25 +1,46 @@
-import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer, Grid, Button } from "@mui/material"; 
+import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer, Grid, Button, Box, Pagination } from "@mui/material"; 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import LinearProgressBar from "./LinearProgressBar";
 import { StyledTooltip } from "../dashboard/overall";
 import { Information } from "mdi-material-ui";
+import { GetSummaryByKeywords } from "src/services/api/dashboards/sentiment/sentimentDashboard";
+import { useEffect, useState } from "react";
 
-const SummaryByKeywords = ({resultSummary, topKeyword, setTopKeyword, chartId, highlight} :
-     {resultSummary: any, topKeyword : string, setTopKeyword : any, chartId: string, highlight: boolean}) => {
+const SummaryByKeywords = ({params, chartId, highlight} :
+     {params: any, chartId: string, highlight: boolean}) => {
+    
+    const [ topKeyword, setTopKeyword ] = useState<string>('all');
+    const [page, setPage] = useState(0);
+    const [pageCount, setPageCount] = useState<number>(0);
+    
+    const { resultSummaryByKeywords, total } = GetSummaryByKeywords(topKeyword, params?.campaign, params?.date, params?.endDate, params?.period, page);
     const handleTopKeyword = (data: string) => {
         setTopKeyword(data);
     }
+    const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+        setPage(value-1);
+    };
+
+    useEffect(()=> {
+        if (total > 0) {
+        setPageCount(Math.ceil(total / 10));
+        }
+    }, [total]);
+
+    const reportNo = '5.2.019';
+
+    const title = chartId + ", Report Level 2(" + reportNo + ")";
 
     return (
         <Card>
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
-                    title='Keywords'
+                    title='Sentiment Type by Keyword'
                     titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
                 />
-                <StyledTooltip arrow title={chartId}>
+                <StyledTooltip arrow title={title || ""}>
                     <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
                 </StyledTooltip>
             </span>
@@ -49,7 +70,7 @@ const SummaryByKeywords = ({resultSummary, topKeyword, setTopKeyword, chartId, h
                     </TableHead>
                     <TableBody>
                         {
-                            (resultSummary||[])?.map((summary: any, index:any) => {
+                            (resultSummaryByKeywords||[])?.map((summary: any, index:any) => {
                                 return(
                                     <TableRow key={index}>
                                         <TableCell><b>{summary.keyword}</b></TableCell>
@@ -72,6 +93,13 @@ const SummaryByKeywords = ({resultSummary, topKeyword, setTopKeyword, chartId, h
                     
             </Table>
             </TableContainer>
+            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
+                {
+                    total > 0 ? 
+                    <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
+                    : ""
+                }
+            </Box>
             </CardContent>
         </Card>
         

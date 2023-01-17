@@ -26,22 +26,17 @@ const PercentageOfSentiment = (props : MessageData) => {
   const colors = [ '#5be12c','#f5cd19','#ea4228'];
   const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
 
-  const [ previousData, setPreviousData ] = useState<any>({
+  const initValue = {
     labels: [],
     datasets: [{
       data: [],
       backgroundColor: colors,
       hoverOffset: 4
     }]
-  });
-  const [ currentData, setCurrentData ] = useState<any>({
-    labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: colors,
-      hoverOffset: 4
-    }]
-  });
+  };
+
+  const [ previousData, setPreviousData ] = useState<any>(initValue);
+  const [ currentData, setCurrentData ] = useState<any>(initValue);
   const [ currentPeriod, setCurrentPeriod ] = useState<string>('');
   const [ previousPeriod, setPreviousPeriod ] = useState<string>('');
 
@@ -108,6 +103,9 @@ const PercentageOfSentiment = (props : MessageData) => {
   }
 
   const title =  type === 'transaction' ? 'Percentage of Sentiment' : "Percentage of Sentiment Type";
+  const reportNo = '5.1.001';
+
+  const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
 
   useEffect(() =>{
     if (resultFilterData) {
@@ -121,7 +119,15 @@ const PercentageOfSentiment = (props : MessageData) => {
         const previousDataset = chartDataset(previousMessageData, 'previous');
         setPreviousData(previousDataset);
 
+      } else { 
+        setCurrentData(initValue);
+        setPreviousData(initValue);
+
       }
+    } else { 
+      setCurrentData(initValue);
+      setPreviousData(initValue);
+
     }
   }, [resultFilterData]);
 
@@ -134,7 +140,7 @@ const PercentageOfSentiment = (props : MessageData) => {
             subheader='Period over Period Comparison'
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />
-          <StyledTooltip arrow title={chartId}>
+          <StyledTooltip arrow title={chartTitle || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
       </span>
