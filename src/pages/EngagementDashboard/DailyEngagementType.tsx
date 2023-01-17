@@ -213,6 +213,11 @@ const DailyEngagementType = (props: LineProps) => {
   
   }
 
+  let data = {
+    labels: label || [],
+    datasets: dataset
+  }
+
   useEffect(() => {
     if(resultEngagementType) {
       const engagementData = resultEngagementType?.engagement;
@@ -222,14 +227,23 @@ const DailyEngagementType = (props: LineProps) => {
         
         const dataSets = chartDatasets(engagementData);
         setDataset(dataSets);
+      } else {
+        console.log("engagement:", resultEngagementType?.engagement)
+        setLabel([]);
+        setDataset([]);
+        data = { labels : [], datasets : [] }
+      }
+    } else {
+      setLabel([]);
+      setDataset([]);
+      data = {
+        labels : [],
+        datasets : []
       }
     }
   },[resultEngagementType]);
 
-  const data = {
-    labels: label || [],
-    datasets: dataset
-  }
+  
 
   const reportNo = '4.2.012';
 

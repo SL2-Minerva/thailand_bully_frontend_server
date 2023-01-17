@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react'
 import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { EngagementTypePercetage } from "src/services/api/dashboards/engagement/EngagementApi";
+import { EngagementTypePercetage } from "src/services/api/dashboards/engagement/EngagementApi"
 
 interface MessageData {
   type: string
@@ -27,24 +27,18 @@ const PercentageOfEngangementType = (props : MessageData) => {
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
   const {resultEngagementType} = EngagementTypePercetage(params?.campaign, params?.date, params?.endDate, params?.period);
   const reportNo = '4.1.011';
-
   const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
-  const [ previousData, setPreviousData ] = useState<any>({
+  const initValue = {
     labels: [],
     datasets: [{
       data: [],
       backgroundColor: colors,
       hoverOffset: 4
     }]
-  });
-  const [ currentData, setCurrentData ] = useState<any>({
-    labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: colors,
-      hoverOffset: 4
-    }]
-  });
+  };
+
+  const [ previousData, setPreviousData ] = useState<any>(initValue);
+  const [ currentData, setCurrentData ] = useState<any>(initValue);
   const [ currentPeriod, setCurrentPeriod ] = useState<string>('');
   const [ previousPeriod, setPreviousPeriod ] = useState<string>('');
 
@@ -124,7 +118,13 @@ const PercentageOfEngangementType = (props : MessageData) => {
         const previousDataset = chartDataset(previousMessageData, 'previous');
         setPreviousData(previousDataset);
 
+      } else {
+        setCurrentData(initValue);
+        setPreviousData(initValue);
       }
+    } else {
+      setCurrentData(initValue);
+      setPreviousData(initValue);
     }
   }, [resultEngagementType]);
 

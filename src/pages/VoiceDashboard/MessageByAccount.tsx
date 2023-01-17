@@ -174,6 +174,10 @@ const MessagesByAccount = (props: LineProps) => {
         datasets: dataset
     }
 
+    const reportNo = '2.2.006';
+
+    const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+
     return (
       <Card>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -182,7 +186,7 @@ const MessagesByAccount = (props: LineProps) => {
             titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption',color: highlight ? 'green' : '#4c4e64de' }}
           />
-          <StyledTooltip arrow title={chartId || ""}>
+          <StyledTooltip arrow title={chartTitle || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
@@ -197,6 +201,7 @@ const MessagesByAccount = (props: LineProps) => {
                 params = {params}
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
+                reportNo = {reportNo}
             />: ""
           }
       </CardContent>

@@ -228,6 +228,9 @@ const DailyEngagement = (props: LineProps) => {
         const dataSets = chartDatasets(engagementData);
         setDataset(dataSets);
       }
+    } else {
+      setLabel([]);
+      setDataset([]);
     }
   },[resultFilterData]);
 

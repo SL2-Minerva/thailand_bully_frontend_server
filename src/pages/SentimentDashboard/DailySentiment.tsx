@@ -210,6 +210,11 @@ const DailySenitment = (props: LineProps) => {
   
   }
 
+  let data = {
+    labels: label || [],
+    datasets: dataset
+  }
+
   useEffect(() => {
     if(resultFilterData) {
       const sentimentData = resultFilterData?.sentiment;
@@ -219,14 +224,20 @@ const DailySenitment = (props: LineProps) => {
         
         const dataSets = chartDatasets(sentimentData);
         setDataset(dataSets);
+      } else  {
+        setLabel([]);
+        setDataset([]);
+
+        data = { labels : [], datasets: []}
       }
+    } else  {
+      setLabel([]);
+      setDataset([]);
+
+      data = { labels : [], datasets: []}
     }
   },[resultFilterData]);
 
-  const data = {
-    labels: label || [],
-    datasets: dataset
-  }
 
   const reportNo = '5.2.002';
 

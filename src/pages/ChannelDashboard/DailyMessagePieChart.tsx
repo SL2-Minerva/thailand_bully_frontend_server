@@ -173,6 +173,9 @@ const DailyMessagePieChart  = ( props : Props) => {
 
       const previousDataset = chartDataset(previousMessageData, 'previous');
       setPreviousData(previousDataset);
+    } else {
+      setCurrentData(initValue);
+      setPreviousData(initValue);
     }
 
   },[resultPercentageChannel]);

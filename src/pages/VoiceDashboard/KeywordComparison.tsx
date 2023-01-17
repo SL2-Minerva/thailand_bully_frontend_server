@@ -52,6 +52,10 @@ const KeywordComparisonByChannel = ({params, chartId, highlight} : {params:any, 
               setSeries(resultKeywordComparisonByChannel?.data);
             }
         },[resultKeywordComparisonByChannel]);
+
+        const reportNo = '2.2.025';
+
+        const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
     
     return (
         <Card>
@@ -60,7 +64,7 @@ const KeywordComparisonByChannel = ({params, chartId, highlight} : {params:any, 
                     title='Percentage of Keyword Comparison By Channel'
                     titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
                 />
-                <StyledTooltip arrow title={chartId || ""}>
+                <StyledTooltip arrow title={chartTitle || ""}>
                     <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
                 </StyledTooltip>
             </span>

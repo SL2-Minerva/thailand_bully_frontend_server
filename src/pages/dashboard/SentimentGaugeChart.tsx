@@ -13,7 +13,10 @@ const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
 
 const SentimentGaugeChart = ({params, chartId} : {params:any, chartId: string}) => {
     const {resultSentimentScore} = GetSentimentScore(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
-    
+    const reportNo = '1.1.018';
+
+    const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
+
     return(
         <Card style={{ maxHeight: '340px' }}>
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -21,7 +24,7 @@ const SentimentGaugeChart = ({params, chartId} : {params:any, chartId: string}) 
                     title='Sentiment Score'
                     titleTypographyProps={{ variant: 'h6' }}
                 />
-                <StyledTooltip arrow title={chartId}>
+                <StyledTooltip arrow title={chartTitle}>
                     <Information  style={{marginTop: '22px', fontSize: '29px'}} />
                 </StyledTooltip>
             </span>
@@ -44,7 +47,7 @@ const SentimentGaugeChart = ({params, chartId} : {params:any, chartId: string}) 
                     </Grid>
                     <Grid item xs={4}>
                         <h1>{resultSentimentScore?.neutral_value}</h1>
-                        <p>Neutral</p>
+                        <p>{resultSentimentScore?.text || "-"}</p>
                     </Grid>
                 </Grid>
 

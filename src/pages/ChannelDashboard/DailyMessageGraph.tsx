@@ -227,6 +227,9 @@ const DailyMessageGraph = ( props : Props) => {
             
             const dataSets = chartDatasets(resultDailyChannel);
             setDataset(dataSets);
+        } else {
+          setLabel([]);
+          setDataset([]);
         }
       },[resultDailyChannel]);
 

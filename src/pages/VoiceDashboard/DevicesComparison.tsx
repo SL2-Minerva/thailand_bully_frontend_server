@@ -126,6 +126,10 @@ const DevicesComparison  = ({params, chartId, highlight} : {params:any, chartId:
     }]
   };
 
+  const reportNo = '2.2.023';
+
+  const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+
   useEffect(()=>{
     if(resultDevicesComparison) {
         setCurrentData(resultDevicesComparison.current_period);
@@ -140,7 +144,7 @@ const DevicesComparison  = ({params, chartId, highlight} : {params:any, chartId:
                 subheader="Period over Period Comparison"
                 subheaderTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
             />
-          <StyledTooltip arrow title={chartId || ""}>
+          <StyledTooltip arrow title={chartTitle || ""}>
               <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
       </span>

@@ -18,6 +18,9 @@ const MainKeyWordTable = ({ params, chartId} : Props) => {
     const [showDetail, setShowDetail] = useState<boolean>(false);
     const [keywordId, setKeywordId] = useState<number>();
     const { resultTopKeywords } = GetTopKeywords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const reportNo = '1.2.009';
+
+    const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
 
     return (
         <Card sx={{ maxHeight: 360,minHeight: 360 }}>
@@ -26,7 +29,7 @@ const MainKeyWordTable = ({ params, chartId} : Props) => {
                     title='Main Keyword'
                     titleTypographyProps={{ variant: 'h6' }}
                 />
-                <StyledTooltip arrow title={chartId}>
+                <StyledTooltip arrow title={chartTitle || ""}>
                     <Information  style={{marginTop: '22px', fontSize: '29px'}} />
                 </StyledTooltip>
             </span>
@@ -64,6 +67,8 @@ const MainKeyWordTable = ({ params, chartId} : Props) => {
                     params={params}
                     keywordId={keywordId}
                     setKeywordId = {setKeywordId}
+                    reportNo = {reportNo}
+                    title = "Main Keyword:"
                 /> : ""
             }
             </CardContent>

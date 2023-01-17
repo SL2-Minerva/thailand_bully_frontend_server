@@ -26,23 +26,17 @@ const PercentageOfEngangement = (props : MessageData) => {
   const { type, chartId, params, highlight } = props;
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
   const {resultFilterData} = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
+  const initValue = {
+    labels: [],
+    datasets: [{
+      data: [],
+      backgroundColor: colors,
+      hoverOffset: 4
+    }]
+  };
 
-  const [ previousData, setPreviousData ] = useState<any>({
-    labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: colors,
-      hoverOffset: 4
-    }]
-  });
-  const [ currentData, setCurrentData ] = useState<any>({
-    labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: colors,
-      hoverOffset: 4
-    }]
-  });
+  const [ previousData, setPreviousData ] = useState<any>(initValue);
+  const [ currentData, setCurrentData ] = useState<any>(initValue);
   const [ currentPeriod, setCurrentPeriod ] = useState<string>('');
   const [ previousPeriod, setPreviousPeriod ] = useState<string>('');
 
@@ -127,6 +121,9 @@ const PercentageOfEngangement = (props : MessageData) => {
         setPreviousData(previousDataset);
 
       }
+    } else {
+        setCurrentData(initValue);
+        setPreviousData(initValue);
     }
   }, [resultFilterData]);
 

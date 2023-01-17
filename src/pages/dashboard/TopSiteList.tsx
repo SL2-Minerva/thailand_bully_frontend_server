@@ -18,6 +18,10 @@ const TopSiteList = ({ params, chartId} : Props) => {
     const [keywordId, setKeywordId] = useState<number>();
     const { resultTopKeywords } = GetTopKeywords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
 
+    const reportNo = '1.2.012';
+
+    const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+
     return (
         <Card sx={{ maxHeight: 360,minHeight: 360 }}>
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -25,7 +29,7 @@ const TopSiteList = ({ params, chartId} : Props) => {
                     title='Top Sites'
                     titleTypographyProps={{ variant: 'h6' }}
                 />
-                <StyledTooltip arrow title={chartId}>
+                <StyledTooltip arrow title={chartTitle || ""}>
                     <Information  style={{marginTop: '21px', fontSize: '29px'}} />
                 </StyledTooltip>
             </span>
@@ -64,6 +68,8 @@ const TopSiteList = ({ params, chartId} : Props) => {
                             params={params}
                             keywordId={keywordId}
                             setKeywordId = {setKeywordId}
+                            reportNo = {reportNo}
+                            title = "Top Site:"
                         /> : ""
                 }
             </CardContent>

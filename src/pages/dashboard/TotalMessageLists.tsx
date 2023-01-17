@@ -8,7 +8,10 @@ import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboar
 
 const TotalMessageLists = ({params, chartId} : {params: any, chartId: string}) => {
     const { resultKeywords } = GetKeyWords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
-    
+    const reportNo = '1.2.022';
+
+    const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+
     return (
         <Card sx={{ maxHeight: 450,minHeight: 450 }}>
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -16,7 +19,7 @@ const TotalMessageLists = ({params, chartId} : {params: any, chartId: string}) =
                     title='Total Message'
                     titleTypographyProps={{ variant: 'h6' }}
                 />
-                <StyledTooltip arrow title={chartId}>
+                <StyledTooltip arrow title={chartTitle}>
                     <Information style={{marginTop: '22px', fontSize: '29px'}} />
                 </StyledTooltip>
             </span>

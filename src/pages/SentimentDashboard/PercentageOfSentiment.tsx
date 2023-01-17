@@ -26,22 +26,17 @@ const PercentageOfSentiment = (props : MessageData) => {
   const colors = [ '#5be12c','#f5cd19','#ea4228'];
   const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
 
-  const [ previousData, setPreviousData ] = useState<any>({
+  const initValue = {
     labels: [],
     datasets: [{
       data: [],
       backgroundColor: colors,
       hoverOffset: 4
     }]
-  });
-  const [ currentData, setCurrentData ] = useState<any>({
-    labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: colors,
-      hoverOffset: 4
-    }]
-  });
+  };
+
+  const [ previousData, setPreviousData ] = useState<any>(initValue);
+  const [ currentData, setCurrentData ] = useState<any>(initValue);
   const [ currentPeriod, setCurrentPeriod ] = useState<string>('');
   const [ previousPeriod, setPreviousPeriod ] = useState<string>('');
 
@@ -124,7 +119,15 @@ const PercentageOfSentiment = (props : MessageData) => {
         const previousDataset = chartDataset(previousMessageData, 'previous');
         setPreviousData(previousDataset);
 
+      } else { 
+        setCurrentData(initValue);
+        setPreviousData(initValue);
+
       }
+    } else { 
+      setCurrentData(initValue);
+      setPreviousData(initValue);
+
     }
   }, [resultFilterData]);
 

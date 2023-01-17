@@ -42,6 +42,7 @@ const AccountDetail = (props: DialogInfoProps) => {
 
   const { show, setShow, current } = props
     const [ showDialog, setShowDialog ] = useState<boolean>(false);
+    const [messageId, setMessageId] = useState<string>('');
 
     return (
       <Card>
@@ -102,6 +103,8 @@ const AccountDetail = (props: DialogInfoProps) => {
             showDialog={showDialog}
             setShowDialog={setShowDialog}
             currentData={current}
+            messageId = {messageId}
+            setMessageId = {setMessageId}
           /> : ""
         }
         

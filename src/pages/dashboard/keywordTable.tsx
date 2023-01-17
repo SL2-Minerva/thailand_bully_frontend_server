@@ -9,6 +9,10 @@ import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboar
 const KeywordTable = ({params, chartId} : {params: any, chartId: string}) => {
     const { resultKeywords } = GetKeyWords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
     
+    const reportNo = '1.1.008';
+
+  const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
+
     return (
         <Card>
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -16,7 +20,7 @@ const KeywordTable = ({params, chartId} : {params: any, chartId: string}) => {
                     title='KeyWord Summary'
                     titleTypographyProps={{ variant: 'h6' }}
                 />
-                <StyledTooltip arrow title={chartId}>
+                <StyledTooltip arrow title={chartTitle || ""}>
                     <Information  style={{marginTop: '22px', fontSize: '29px'}} />
                 </StyledTooltip>
             </span>

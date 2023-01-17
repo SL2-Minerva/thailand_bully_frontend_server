@@ -231,7 +231,13 @@ const DailyMessgeByBullyType = (props: LineProps) => {
         
         const dataSets = chartDatasets(bully_levelData);
         setDataset(dataSets);
+      } else {
+        setLabel([]);
+        setDataset([]);
       }
+    } else {
+      setLabel([]);
+      setDataset([]);
     }
   },[resultBullyTypeFilterData]);
 

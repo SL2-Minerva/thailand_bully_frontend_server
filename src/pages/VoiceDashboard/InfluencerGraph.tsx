@@ -167,6 +167,10 @@ const InfluencerGraph = ({ chartId, params, highlight}: {chartId: string, params
         }
       },[resultNumbersOfAccounts]);
 
+      const reportNo = '2.2.013';
+
+      const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+
       return (
         <Card>
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -174,7 +178,7 @@ const InfluencerGraph = ({ chartId, params, highlight}: {chartId: string, params
                   title='Number of Accounts'
                   titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
               />
-              <StyledTooltip arrow title={chartId || ""}>
+              <StyledTooltip arrow title={chartTitle || ""}>
                   <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
               </StyledTooltip>
           </span>
@@ -189,6 +193,7 @@ const InfluencerGraph = ({ chartId, params, highlight}: {chartId: string, params
                 params = {params}
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
+                reportNo = {reportNo}
             />: ""
           }
             

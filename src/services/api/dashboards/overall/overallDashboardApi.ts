@@ -371,7 +371,7 @@ export const GetWordCloudsSentiment = (campaignId?: string, platformId?: string,
 }
 
 export const GetDetailMessage = (campaignId?: string, platformId?: string, start_date?: any,
-  end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, keywordId?: any, page?: number, limit?: number ) => {
+  end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, keywordId?: any, page?: number, limit?: number, reportNo?: string ) => {
    let params = {};
    const todayDate = new Date();
    if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate ) {
@@ -385,7 +385,8 @@ export const GetDetailMessage = (campaignId?: string, platformId?: string, start
        start_date_period : previousDate ? moment(previousDate).format('YYYY-MM-DD') : "",
        end_date_period : previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : "",
        page: page, 
-       limit: limit
+       limit: limit, 
+       report_number: reportNo
      }
    } else  {
      params = {
@@ -396,7 +397,8 @@ export const GetDetailMessage = (campaignId?: string, platformId?: string, start
        period: period,
        keyword_id: keywordId || "", 
        page: page, 
-       limit : limit
+       limit : limit, 
+       report_number: reportNo
      }
    }
  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({

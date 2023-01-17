@@ -391,6 +391,7 @@ const OverallDashboard = () => {
                         averageText="Average Message per Day"
                         averageValue= {resultTotalMessagePerDay?.average_message?.toString() || '0'}
                         chartId = "Chart 3"
+                        reportNo = '1.1.005'
                     />
                 </Grid> :
                 ""
@@ -412,6 +413,7 @@ const OverallDashboard = () => {
                         averageText="Avg. Engagement per Day"
                         averageValue={resultTotalEngagement?.average_engagement?.toString() || '0'}
                         chartId = "Chart 4"
+                        reportNo = '1.1.006'
                     />
                 </Grid> : ""
             }
@@ -432,6 +434,7 @@ const OverallDashboard = () => {
                         averageText="Average Account per Day"
                         averageValue={resultTotalAccount?.average_account?.toString() || '0'}
                         chartId = "Chart 5"
+                        reportNo = '1.1.007'
                     />
                 </Grid> : ""
             }
@@ -536,7 +539,7 @@ const OverallDashboard = () => {
                     <WordCloudChannel params={params} chartId="Chart 15"/>
                 </Grid>
                 <Grid id="chart16" item xs={12} md={6}>
-                    <AccountList params={params} chartId="Chart 16"/>
+                    <AccountList params={params} chartId="Chart 16" cardHeader="Word Cloud By Account" />
                 </Grid>
             </Grid> : ""
         }
@@ -547,7 +550,7 @@ const OverallDashboard = () => {
                     <WordCloudSentiment params={params} chartId="Chart 18"/>
                 </Grid>
                 <Grid id="chart18" item xs={12} md={6}>
-                    <AccountList params={params} chartId="Chart 19"/>
+                    <AccountList params={params} chartId="Chart 19" cardHeader="Word Cloud By Sentiment" />
                 </Grid>
             </Grid> : ""
         }   

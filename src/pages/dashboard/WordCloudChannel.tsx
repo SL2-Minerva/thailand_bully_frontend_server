@@ -17,14 +17,18 @@ const WordCloudChannel = ({params, chartId} : {params: any, chartId : string}) =
         setPlatformId(e.target.value)
     }, [])
 
+    const reportNo = '1.2.023';
+
+    const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+
     return (
         <Card sx={{ maxHeight: 500,minHeight: 500 }}>
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
-                    title='Word Clouds'
+                    title='Word Clouds By Channel'
                     titleTypographyProps={{ variant: 'h6' }}
                 />
-                <StyledTooltip arrow title={chartId}>
+                <StyledTooltip arrow title={chartTitle}>
                     <Information style={{marginTop: '22px', fontSize: '29px'}} />
                 </StyledTooltip>
             </span>

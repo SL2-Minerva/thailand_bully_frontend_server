@@ -52,6 +52,10 @@ const KeywordComparisonByBullyLevel = ({params, chartId, highlight} : {params:an
           }
       },[resultKeywordComparisonByBullyLevel]);
 
+      const reportNo = '2.2.027';
+
+    const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+
     return (
         <Card>
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -59,7 +63,7 @@ const KeywordComparisonByBullyLevel = ({params, chartId, highlight} : {params:an
                     title='Percentage of Keyword Comparison By Bully Level'
                     titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
                 />
-                <StyledTooltip arrow title={chartId || ""}>
+                <StyledTooltip arrow title={chartTitle || ""}>
                     <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
                 </StyledTooltip>
             </span>

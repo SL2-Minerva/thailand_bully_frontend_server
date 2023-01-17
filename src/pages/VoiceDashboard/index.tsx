@@ -259,6 +259,7 @@ const VoiceDashboard = () => {
                             totalValue = {resultTotalMessages?.total_message}
                             chartId = 'Chart 12'
                             highlight = { highlight==='chart12' ? true : false }
+                            reportNo = '2.2.014'
                         />
                     </Grid> : ""
                 }
@@ -274,6 +275,7 @@ const VoiceDashboard = () => {
                             totalValue = {resultTotalAccount?.total_account || resultTotalAccount?.total_message}
                             chartId = 'Chart 13'
                             highlight = { highlight==='chart13' ? true : false }
+                            reportNo = "2.2.015"
                         />
                     </Grid> : ""
                 }

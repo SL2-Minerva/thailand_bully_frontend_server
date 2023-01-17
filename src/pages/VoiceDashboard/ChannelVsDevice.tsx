@@ -60,6 +60,10 @@ const ChannelVsDevice = ({params, chartId, highlight} : {params:any, chartId: st
       }
     },[resultDeviceVsChannel])
 
+    const reportNo = '2.2.024';
+
+    const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+
     return ( 
         
         <Card style={{ height: 455 }}>
@@ -68,7 +72,7 @@ const ChannelVsDevice = ({params, chartId, highlight} : {params:any, chartId: st
                     subheader="Period over Period Comparison"
                     subheaderTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
                 />
-                <StyledTooltip arrow title={chartId || ""}>
+                <StyledTooltip arrow title={chartTitle || ""}>
                     <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
                 </StyledTooltip>
             </span>

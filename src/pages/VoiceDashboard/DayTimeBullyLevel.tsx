@@ -87,12 +87,15 @@ const DayTimeBullyLevel = (props : Props) => {
           setSeriesHour(hourValue);
         }
       }, [resultTimeByBullyLevel, resultDayByBullyLevel])
+      const reportNo = '2.2.018';
+
+      const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
 
       return (
         <Card>
           <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <CardHeader title="Day&Time by Bully Level " titleTypographyProps={{ variant: 'h4',color: highlight ? 'green' : '#4c4e64de' }}/>
-              <StyledTooltip arrow title={chartId || ""}>
+              <StyledTooltip arrow title={chartTitle || ""}>
                   <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
               </StyledTooltip>
           </span>
@@ -111,6 +114,7 @@ const DayTimeBullyLevel = (props : Props) => {
                       show={showDetail}
                       setShow={setShowDetail}
                       params = {params}
+                      reportNo = {reportNo}
 
                       // keywordId = {keywordId}
                       // setKeywordId={setKeywordId}
