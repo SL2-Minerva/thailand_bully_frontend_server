@@ -45,8 +45,8 @@ const KeywordComparisonBySentiment = ({params, chartId, highlight} : {params:any
         };
         useEffect(() => {
           if (resultKeywordComparisonBySentiment) {
-            setLabels(resultKeywordComparisonBySentiment?.labels);
-            setSeries(resultKeywordComparisonBySentiment?.data);
+            setLabels(resultKeywordComparisonBySentiment?.labels ? resultKeywordComparisonBySentiment?.labels  : []);
+            setSeries(resultKeywordComparisonBySentiment?.data ? resultKeywordComparisonBySentiment?.data : []);
           }
       },[resultKeywordComparisonBySentiment]);
 

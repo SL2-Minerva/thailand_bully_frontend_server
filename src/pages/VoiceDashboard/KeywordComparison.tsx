@@ -48,8 +48,8 @@ const KeywordComparisonByChannel = ({params, chartId, highlight} : {params:any, 
       
         useEffect(() => {
             if (resultKeywordComparisonByChannel) {
-              setLabels(resultKeywordComparisonByChannel?.labels);
-              setSeries(resultKeywordComparisonByChannel?.data);
+              setLabels(resultKeywordComparisonByChannel?.labels ? resultKeywordComparisonByChannel?.labels : []);
+              setSeries(resultKeywordComparisonByChannel?.data ? resultKeywordComparisonByChannel?.data : []);
             }
         },[resultKeywordComparisonByChannel]);
 

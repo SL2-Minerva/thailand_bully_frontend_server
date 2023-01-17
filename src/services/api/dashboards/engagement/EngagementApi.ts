@@ -3,7 +3,7 @@ import { CallAPI } from 'src/services/CallAPI'
 
 export const FilterByCampaignId = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
       const params = {
-        campaignId: campaignId,
+        campaign_id: campaignId,
         start_date: start_date? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date? moment(end_date).format('YYYY-MM-DD') : "",
         period: period
@@ -142,7 +142,7 @@ export const GetMessagesByChannel = (campaignId?: string, start_date?: any, end_
 
 export const EngagementTypePercetage = (campaignId?: string, start_date?: any, end_date?: any, period?: any) => {
     const params = {
-      campaignId: campaignId,
+      campaign_id: campaignId,
       start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "", 
       period: period
@@ -370,7 +370,7 @@ export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_dat
 
   export const GetComparisonEngagement = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
       const params = {
-        campaignId: campaignId,
+        campaign_id: campaignId,
         start_date: moment(start_date).format('YYYY-MM-DD'),
         end_date: moment(end_date).format('YYYY-MM-DD'), 
         period: period

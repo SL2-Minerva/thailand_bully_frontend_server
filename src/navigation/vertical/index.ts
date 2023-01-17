@@ -139,16 +139,11 @@ const navigation = (): VerticalNavItemsType => {
   };
 
   const LinkOut = {
-    title: 'Others',
+    title: 'LinkOut',
     icon: VectorArrangeBelow,
-    children: [
-      {
-        openInNewTab: true,
-        externalLink: true,
-        title: 'Link Out',
-        path: 'https://www.youtube.com/watch?v=7hBf9Fxsg6M'
-      }
-    ]
+    openInNewTab: true,
+    externalLink: true,
+    path: 'https://www.youtube.com/watch?v=7hBf9Fxsg6M'
   };
 
   const sideMenuBar: any [] = [];

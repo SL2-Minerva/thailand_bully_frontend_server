@@ -26,16 +26,13 @@ const OrganizationGroup = () => {
   const [reload, setReload] = useState<boolean>(false)
   const [current, setCurrent] = useState<any>({})
   const [action, setAction] = useState<string>('create')
-  const toggleShowCreate = () => setShowCreate(!showCreate)
-
-
+  const toggleCreate = ()=>{setAction('create');setShowCreate(true); setCurrent({})}
   const { result_organization_group_list } = OrganzationGroupServiceList(reload);
 
 
   useEffect(() => {
     setReload(!reload)
   }, [showCreate, showEdit])
-
 
   function handleEdit(i: number) {
     setAction('edit')
@@ -53,9 +50,9 @@ const OrganizationGroup = () => {
           Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
         }
       }
-    )
-
-    setReload(!reload)
+    ).then(() => {
+      {setReload(!reload)}
+    });
 
     // const values = [...result_organization_group_list]
     // values[index].status = event.target.checked
@@ -71,7 +68,7 @@ const OrganizationGroup = () => {
           <TableContainer component={Paper}>
                 <Box sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-                        <Button sx={{ mb: 2 }} onClick={toggleShowCreate} variant='contained'>
+                        <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
                               Add
                         </Button>
                     </Box>

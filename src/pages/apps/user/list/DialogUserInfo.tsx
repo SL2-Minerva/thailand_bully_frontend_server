@@ -1,5 +1,5 @@
 // ** React Imports
-import { Ref, forwardRef, ReactElement, useState } from 'react'
+import { Ref, forwardRef, ReactElement, useState, useEffect } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -94,6 +94,17 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
       })
     }
   }
+
+  useEffect(() => {
+    if(action === 'create') {
+      setOrganization('');
+      setName("");
+      setEmail("");
+      setCompany('');
+      setRole('');
+      setStatus('');
+    }
+  },[action])
 
   return (
     <Card>

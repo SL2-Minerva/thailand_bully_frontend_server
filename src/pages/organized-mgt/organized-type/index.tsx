@@ -47,12 +47,15 @@ const OrganizationType = () => {
           Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
         }
       }
-    )
+    ).then(() => {
+      const values = [...result_organization_type_list]
+      values[index].status = event.target.checked
+      setTableData(values)
+  
+      setReload(!reload)
+    })
 
-    const values = [...result_organization_type_list]
-    values[index].status = event.target.checked
-    setTableData(values)
-    setReload(!reload)
+    
   }
 
   function handleEdit(i: number) {
