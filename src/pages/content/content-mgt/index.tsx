@@ -1,7 +1,7 @@
 import { Grid, Card, CardHeader, CardContent, FormControl,
      TextField, InputLabel, Select, MenuItem, SelectChangeEvent, Box, 
      Button, TableContainer, Paper, Table, TableHead, TableRow,
-     TableCell, TableBody } from '@mui/material'
+     TableCell, TableBody, Pagination } from '@mui/material'
 import React, { useCallback, useEffect, useState } from 'react';
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
@@ -27,8 +27,10 @@ const ContentManagement = () => {
     const [current, setCurrent] = useState<any>({})
     const [reload, setReload] = useState<boolean>(false);
     const [ updateStatus, setUpdateStatus ] =  useState<boolean>(false);
+    const [page, setPage] = useState(0);
+    const [pageCount, setPageCount] = useState<number>(0);
 
-    const {resultContents} = ContentLists(reload, content);
+    const {resultContents, total} = ContentLists(reload, content, page);
 
     const handleStatusChange = useCallback((e: SelectChangeEvent) => {
         setStatus(e.target.value)
@@ -64,6 +66,16 @@ const ContentManagement = () => {
         setAction('create')
         setShowCreate(!showCreate)
     }
+
+    const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+        setPage(value-1);
+      };
+    
+    useEffect(()=> {
+        if (total > 0) {
+        setPageCount(Math.ceil(total / 10));
+        }
+    }, [total]);
 
     useEffect(() => {
         setReload(!reload);
@@ -239,6 +251,13 @@ const ContentManagement = () => {
                             </TableBody>
                         </Table>
                         </TableContainer>
+                        <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
+                        {
+                            total > 0 ? 
+                            <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
+                            : ""
+                        }
+                        </Box>
                     </CardContent>
                 </Card>
 
