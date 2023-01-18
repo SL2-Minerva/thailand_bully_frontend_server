@@ -41,7 +41,7 @@ const CreateCampaign = () => {
   }
 }
 
-export const CampaignList = (reload?: boolean, is_fillter?: boolean, fillter?: any) => {
+export const CampaignList = (reload?: boolean, is_fillter?: boolean, fillter?: any, page?: number) => {
   let query = ''
   
   if (is_fillter) {
@@ -49,10 +49,19 @@ export const CampaignList = (reload?: boolean, is_fillter?: boolean, fillter?: a
       .map(key => `${key}=${fillter[key]}`)
       .join('&')}`
   }
+  let params;
+
+    if(page ||  page === 0  ) {
+      params = {
+        page: page,
+        limit : 10
+      }
+    }
 
   const [{ data: res, loading, error }, refetch] = CallAPI<{ data?: any }>({
     url: `/campaign/list/${query}`,
     method: 'GET',
+    params: params,
     data: {
       reload: reload
     }
@@ -60,6 +69,7 @@ export const CampaignList = (reload?: boolean, is_fillter?: boolean, fillter?: a
   
   return {
     resultCampaiganList: res?.data || null,
+    total: res?.data?.total || 0,
     loadingCampaiganList: loading,
     errorCampaiganList: error
   }

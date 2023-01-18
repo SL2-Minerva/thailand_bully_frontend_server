@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 
 // ** MUI Imports
-import { Grid, Card, CardHeader, CardContent } from '@mui/material'
+import { Grid, Card, CardHeader, CardContent, Pagination } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
@@ -26,6 +26,8 @@ const DomainManagement = () => {
   const [reload, setReload] = useState<boolean>(false)
   const [current, setCurrent] = useState<any>({})
   const [action, setAction] = useState<string>('create')
+  const [page, setPage] = useState(0);
+  const [pageCount, setPageCount] = useState<number>(0);
 
   const toggleCreate = () => {
     setAction('create')
@@ -33,7 +35,7 @@ const DomainManagement = () => {
     setCurrent({})
   }
 
-  const { result_domain_list } = DomainList(reload)
+  const { result_domain_list, total } = DomainList(reload, page)
   const { resultPermission } = UserPermission();
 
   useEffect(() => {
@@ -65,6 +67,17 @@ const DomainManagement = () => {
     setTableData(result_domain_list)
   }
   const [tableData, setTableData] = useState(result_domain_list)
+
+  const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value-1);
+  };
+
+  useEffect(()=> {
+      if (total > 0) {
+      setPageCount(Math.ceil(total / 10));
+      }
+  }, [total]);
+
 
   return (
     <Grid container spacing={6}>
@@ -157,6 +170,13 @@ const DomainManagement = () => {
                 </TableBody>
               </Table>
             </TableContainer>
+            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
+              {
+                  total > 0 ? 
+                  <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
+                  : ""
+              }
+            </Box>
             <DialogDomain
               table={tableData}
               show={action === 'create' ? showCreate : showEdit}

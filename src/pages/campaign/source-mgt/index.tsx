@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 
 // ** MUI Imports
-import { Grid, Card, CardHeader, CardContent } from '@mui/material'
+import { Grid, Card, CardHeader, CardContent, Pagination } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
@@ -27,6 +27,8 @@ const SourceManagement = () => {
   const [reload, setReload] = useState<boolean>(false)
   const [current, setCurrent] = useState<any>({})
   const [action, setAction] = useState<string>('create')
+  const [page, setPage] = useState(0);
+  const [pageCount, setPageCount] = useState<number>(0);
 
   const toggleCreate = () => {
     setAction('create')
@@ -34,7 +36,7 @@ const SourceManagement = () => {
     setCurrent({})
   }
 
-  const { result_source_list } = SourceService(reload)
+  const { result_source_list, total } = SourceService(reload, page)
 
   useEffect(() => {
     setReload(!reload)
@@ -66,6 +68,16 @@ const SourceManagement = () => {
   }
   const [tableData, setTableData] = useState(result_source_list)
   const { resultPermission } = UserPermission();
+
+  const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value-1);
+  };
+
+  useEffect(()=> {
+      if (total > 0) {
+      setPageCount(Math.ceil(total / 10));
+      }
+  }, [total]);
 
   return (
     <Grid container spacing={6}>
@@ -141,7 +153,13 @@ const SourceManagement = () => {
                 </TableBody>
               </Table>
             </TableContainer>
-
+            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
+              {
+                  total > 0 ? 
+                  <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
+                  : ""
+              }
+            </Box>
             <DialogSource
               table={tableData}
               show={action === 'create' ? showCreate : showEdit}

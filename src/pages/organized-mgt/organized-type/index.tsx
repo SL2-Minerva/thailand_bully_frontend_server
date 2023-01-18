@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 
 // ** MUI Imports
-import { Grid, Card, CardHeader, CardContent } from '@mui/material'
+import { Grid, Card, CardHeader, CardContent, Pagination } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
@@ -25,13 +25,26 @@ const OrganizationType = () => {
   const [reload, setReload] = useState<boolean>(false)
   const [current, setCurrent] = useState<any>({})
   const [action, setAction] = useState<string>('create')
+  const [page, setPage] = useState(0);
+  const [pageCount, setPageCount] = useState<number>(0);
+
   const toggleCreate = () => {
     setAction('create')
     setShowCreate(!showCreate)
     setCurrent({})
   }
 
-  const { result_organization_type_list } = OrganizationTypeService(reload)
+  const { result_organization_type_list, total } = OrganizationTypeService(reload, page)
+
+  const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value-1);
+  };
+
+  useEffect(()=> {
+      if (total > 0) {
+      setPageCount(Math.ceil(total / 10));
+      }
+  }, [total]);
 
   useEffect(() => {
     setReload(!reload)
@@ -124,6 +137,13 @@ const OrganizationType = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
+              <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
+                {
+                    total > 0 ? 
+                    <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
+                    : ""
+                }
+              </Box>
               {
                 action === 'create' ? 
                 <DialogOrganizationType

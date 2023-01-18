@@ -6,19 +6,30 @@ export type FormInput = {
     file: File;
   };
 
-export const ContentLists = (reload?: boolean, contentId?: string) => {
+export const ContentLists = (reload?: boolean, contentId?: string, page?:number ) => {
+    let params : any = {
+      reload: reload,
+      content_id: contentId
+    };
+
+    if(page ||  page === 0  ) {
+      params = {
+        reload: reload,
+        content_id: contentId,
+        page: page,
+        limit : 10
+      }
+    }
     
-    const [{ data: response, loading, error }] = CallAPI<{ data?: ContentList[] }>({
+    const [{ data: response, loading, error }] = CallAPI<{ data?: {data: ContentList[] , total : number} }>({
       url: `/organization-content`,
       method: 'GET',
-      params: {
-        reload: reload,
-        content_id: contentId
-      }
+      params: params
     })
 
     return {
-      resultContents: response?.data || [],
+      resultContents: response?.data?.data || [],
+      total : response?.data?.total || 0,
       loadingCampaiganList: loading,
       errorCampaiganList: error
     }
