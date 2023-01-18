@@ -1,7 +1,6 @@
-import { Button, Card, CardHeader, Grid } from "@mui/material"
+import { Button, Grid } from "@mui/material"
 import { useState } from "react";
 import { GetTotalEngagment } from "src/services/api/dashboards/engagement/EngagementApi";
-import { StyledTooltip } from "../dashboard/overall";
 import DailyEngagement from "./DailyEngagement";
 import PercentageOfEngangement from "./PercentageOfEngagement";
 import { useTheme } from '@mui/material/styles'
@@ -13,7 +12,6 @@ import EngagementTypeComparison from "./EngagementTypeComparison";
 import EngagmentComparisonChart from "./EngagmentComparisonChart";
 import EngagementSummary from "./EngagementSummary";
 import QuickView from "./QuickView";
-import { Information } from "mdi-material-ui";
 import { UserPermission } from "src/services/api/users/role";
 import DailyEngagementType from "./DailyEngagementType";
 import EngagementByDay from "./EngagementByDay";
@@ -316,7 +314,7 @@ const EngagementDashboard = () => {
                     {
                         resultReportPermission?.includes("71") ?
                         <>
-                            <Grid item xs={12}>
+                            {/* <Grid item xs={12}>
                                 <Card id="chart15">
                                     <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                                         <CardHeader 
@@ -328,10 +326,11 @@ const EngagementDashboard = () => {
                                         </StyledTooltip>
                                     </span>
                                 </Card>
-                            </Grid>
-                            <Grid item xs={12} md={12}>
+                            </Grid> */}
+                            <Grid item xs={12} md={12} id="chart15">
                                 <TotalEngagement
                                     totalEngagement={ resultTotalEngagement}
+                                    highlight = { highlight==='chart15' ? true : false }
                                 />
                             </Grid> 
                         </> : ""
