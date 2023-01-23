@@ -9,6 +9,7 @@ import { Table, TableRow, TableHead, TableCell } from "@mui/material";
 import { Bar } from 'react-chartjs-2'
 import { StyledTooltip } from '../dashboard/overall'; 
 import { Information } from 'mdi-material-ui';
+import { BullyLevelSummaryColors, BullyTypeSummaryColors } from 'src/utils/const';
 
 const ChartLabels = (data: any) => {
   if (!data) return [];
@@ -33,8 +34,8 @@ const ChartData = (data: any ) => {
   return chartDatas;
 }
 
-const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  chartId, highlight} : {resultShareOfChannel: any,resultShareofChannelPlatform : any, chartId : string, highlight: boolean}) => {
-
+const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  chartId, highlight, type} : {resultShareOfChannel: any,resultShareofChannelPlatform : any, chartId : string, highlight: boolean, type: string}) => {
+  
   const labels = resultShareOfChannel ? ChartLabels(resultShareOfChannel) : [];
   const data = {
   labels: labels,
@@ -43,10 +44,8 @@ const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  c
       label: '',
       data: ChartData(resultShareOfChannel),
       fill: false,
-      backgroundColor: ['rgb(54, 162, 235)'],
-      borderColor: [
-      'rgb(54, 162, 235)'
-      ],
+      backgroundColor: type ==="level"? BullyLevelSummaryColors : BullyTypeSummaryColors,
+      borderColor: type ==="level" ? BullyLevelSummaryColors : BullyTypeSummaryColors, 
       borderWidth: 1
   }]
 };

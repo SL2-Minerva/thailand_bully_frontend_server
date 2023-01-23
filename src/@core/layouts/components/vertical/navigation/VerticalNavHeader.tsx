@@ -17,7 +17,7 @@ import Close from 'mdi-material-ui/Close'
 import { Settings } from 'src/@core/context/settingsContext'
 
 // ** Configs
-import themeConfig from 'src/configs/themeConfig'
+// import themeConfig from 'src/configs/themeConfig'
 
 interface Props {
   hidden: boolean
@@ -136,12 +136,22 @@ const VerticalNavHeader = (props: Props) => {
       ) : (
         <Link href='/' passHref>
           <StyledLink>
-          
+              {
+                navCollapsed ? 
+                  <img src='/images/Logo_notext.png' alt='logo' width={40}  height={40} />
+                :
+                ""
+              }
             <HeaderTitle variant='h6' sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 2 }) }}>
-            <div className={'logo-sidebar'}>
-            <img src='/images/Logo_Horizontal2.png' alt='logo'  />
-            </div>
-              {/*{themeConfig.templateName}*/}
+              {
+                navCollapsed ? 
+                ""
+                :
+                <div className={'logo-sidebar'}>
+                  <img src='/images/Logo_Horizontal2.png' alt='logo'  />
+                </div>
+              }
+                
             </HeaderTitle>
           </StyledLink>
         </Link>

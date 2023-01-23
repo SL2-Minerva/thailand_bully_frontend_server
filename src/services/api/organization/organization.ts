@@ -29,3 +29,28 @@ export const Organization = {
   },
   
 };
+
+export const OrganizationSearchList = (reload?: boolean, page?: number, name? : string, group?: string, type?: string, status?: string) => {
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/organization/search`,
+    method: 'GET',
+    params: {
+      page: page, 
+      limit: 10,
+      name : name, 
+      group : group,
+      type : type,
+      status: status, 
+    },
+    data: {
+      reload: reload
+    }
+  })
+
+  return {
+    resultOrganizationSearch: res?.data || null,
+    total: res?.data?.total || 0,
+    resultOrganizationLoading: loading,
+    errorOrganizationSearch: error
+  }
+}

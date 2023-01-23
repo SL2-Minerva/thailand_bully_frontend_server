@@ -1,4 +1,5 @@
 import { init } from 'i18next'
+import moment from 'moment'
 import { CallAPI } from 'src/services/CallAPI'
 import { number } from 'yup'
 
@@ -75,4 +76,33 @@ export const CampaignList = (reload?: boolean, is_fillter?: boolean, fillter?: a
   }
 }
 
+export const CampaignSearchList = (reload?: boolean, page?: number, name?: string, status?: string, organization_id?: string, start_at?: any, end_at?:any) => {
+  const params = {
+    page: page,
+    limit : 10,
+    name : name, 
+    status : status, 
+    organization_id : organization_id,
+    start_at : start_at ? moment(start_at).format('YYYY-MM-DD') : "",
+    end_at :end_at ?  moment(end_at).format('YYYY-MM-DD') : "",
+
+  }
+    
+
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/campaign/search`,
+    method: 'GET',
+    params: params,
+    data: {
+      reload: reload
+    }
+  })
+  
+  return {
+    resultCampaiganList: res?.data || null,
+    total: res?.data?.total || 0,
+    loadingCampaiganList: loading,
+    errorCampaiganList: error
+  }
+}
 export default CreateCampaign

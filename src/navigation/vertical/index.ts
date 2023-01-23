@@ -143,7 +143,7 @@ const navigation = (): VerticalNavItemsType => {
     icon: VectorArrangeBelow,
     openInNewTab: true,
     externalLink: true,
-    path: 'https://www.youtube.com/watch?v=7hBf9Fxsg6M'
+    path: 'https://www.google.com/'
   };
 
   const sideMenuBar: any [] = [];

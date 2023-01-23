@@ -57,6 +57,7 @@ import axios from 'axios'
 import authConfig from '../../../../configs/auth'
 import { API_PATH } from 'src/utils/const'
 import { UserPermission } from 'src/services/api/users/role'
+import moment from 'moment'
 
 interface UserRoleType {
   [key: string]: ReactElement
@@ -204,7 +205,7 @@ const UserList = () => {
 
   const [role] = useState<string>('')
 
-  const [userName] = useState<string>('')
+  const [userName, setUserName] = useState<string>('')
 
   const [organization, setOrganization] = useState<string>('')
   const [value, setValue] = useState<string>('')
@@ -230,13 +231,22 @@ const UserList = () => {
     setReload(!reload)
 
     setUsers([])
-  }, [organization, role, status, value])
+  }, [organization, role, status, value, userName, date, endDate])
 
   const handleList = () => {
     axios
-      .get(`${API_PATH}/user/list-active`, {
+      .get(`${API_PATH}/user/search`, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+        }, 
+
+        params : {
+          name : userName, 
+          status : status, 
+          organization_id: organization,
+          start_at : date ? moment(date).format('YYYY-MM-DD') : "",
+          end_at : endDate ?  moment(endDate).format('YYYY-MM-DD') : "",
+
         }
       })
       .then(async response => {
@@ -372,6 +382,15 @@ const UserList = () => {
     }
   ]
 
+  const handleClear = () => {
+    setUserName('');
+    setOrganization('');
+    setDate(null);
+    setEndDate(null);
+    setStatus('');
+    
+  }
+
   return (
     <>
       <Grid container spacing={6}>
@@ -382,7 +401,7 @@ const UserList = () => {
               <Grid container spacing={6}>
                 <Grid item sm={4} xs={12}>
                   <FormControl fullWidth>
-                    <TextField id='userName' label='User Name' value={userName} />
+                    <TextField id='userName' label='User Name' value={userName} onChange={(e) => setUserName(e.target.value)}/>
                   </FormControl>
                 </Grid>
                 <Grid item sm={4} xs={12}>
@@ -397,6 +416,9 @@ const UserList = () => {
                       onChange={handleOrganization}
                       inputProps={{ placeholder: 'Select Organization' }}
                     >
+                      <MenuItem value="">
+                        All
+                      </MenuItem>
                       {list &&
                         list.map((item: any, index: number) => {
                           return (
@@ -420,8 +442,7 @@ const UserList = () => {
                       onChange={handleStatusChange}
                       inputProps={{ placeholder: 'Select Status' }}
                     >
-                      <MenuItem value=''>Select Status</MenuItem>
-                      <MenuItem value='2'>Pending</MenuItem>
+                      <MenuItem value=''>All</MenuItem>
                       <MenuItem value='1'>Active</MenuItem>
                       <MenuItem value='0'>Inactive</MenuItem>
                     </Select>
@@ -464,6 +485,15 @@ const UserList = () => {
                       variant='contained'
                     >
                       search
+                    </Button>
+                    <Button
+                      sx={{ mb: 2, ml: 3 }}
+                      onClick={() => {
+                        handleClear();
+                      }}
+                      variant='contained'
+                    >
+                      Clear
                     </Button>
                   </Box>
                 </Grid>

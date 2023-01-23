@@ -23,13 +23,14 @@ import TextField from '@mui/material/TextField'
 import DialogOrganization from './dialogOrganization'
 import {OrganzationGroupServiceList}  from 'src/services/api/organization/OrganizationApi';
 import OrganizationTypeService from 'src/services/api/organization/OrganizationApi'
-import { Organization } from 'src/services/api/organization/organization'
+import { OrganizationSearchList } from 'src/services/api/organization/organization'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
 
 const OrganizedManagement = () => {
   const [showEdit, setShowEdit] = useState<boolean>(false)
   const [showCreate, setShowCreate] = useState<boolean>(false)
+  const [name, setName] = useState<string>("");
   const [organization, setOrganization] = useState<string>('')
   const [organizationType, setOrganizationType] = useState<string>('')
   const [status, setStatus] = useState<string>('')
@@ -39,11 +40,12 @@ const OrganizedManagement = () => {
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState<number>(0);
 
-  const { list, total } = Organization.getList(reload, page)
+  // const { list, total } = Organization.getList(reload, page)
   const { result_organization_group_list } = OrganzationGroupServiceList(reload);
   const { result_organization_type_list } = OrganizationTypeService(reload)
+  const { resultOrganizationSearch, total } = OrganizationSearchList(reload, page, name, organization, organizationType,status )
 
-  const [tableData, setTableData] = useState(list)
+  const [tableData, setTableData] = useState(resultOrganizationSearch)
 
   const handleOrganization = useCallback((e: SelectChangeEvent) => {
     setOrganization(e.target.value)
@@ -76,7 +78,7 @@ const OrganizedManagement = () => {
   useEffect(() => {
     setReload(!reload)
 
-    setTableData(list)
+    setTableData(resultOrganizationSearch)
   }, [showCreate, showEdit])
 
   function handleChange(index: number, i: number, event: any) {
@@ -90,7 +92,7 @@ const OrganizedManagement = () => {
       }
     )
 
-    const values = [...list]
+    const values = [...resultOrganizationSearch]
     values[index].status = event.target.checked
     setTableData(values)
     setReload(!reload)
@@ -98,9 +100,17 @@ const OrganizedManagement = () => {
 
   function handleEdit(i: number) {
     setAction('edit')
-    setCurrent(list[i])
+    setCurrent(resultOrganizationSearch[i])
     setShowEdit(true)
-    setTableData(list)
+    setTableData(resultOrganizationSearch)
+  }
+
+  const handleClear = () => {
+    setName('');
+    setOrganization('');
+    setOrganizationType('');
+    setStatus('');
+    setPage(0);
   }
 
   return (
@@ -115,7 +125,7 @@ const OrganizedManagement = () => {
             <Grid container spacing={6}>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <TextField id='name' label='Organization Name' />
+                  <TextField id='name' value={name} onChange={(e)=> {setName(e.target.value)}} label='Organization Name' />
                 </FormControl>
               </Grid>
               <Grid item sm={4} xs={12}>
@@ -130,7 +140,9 @@ const OrganizedManagement = () => {
                     onChange={handleOrganization}
                     inputProps={{ placeholder: 'Select Organization' }}
                   >
-
+                    <MenuItem value="">
+                       All
+                    </MenuItem>
                     {
                       result_organization_group_list && result_organization_group_list.map((item: any, index: number) => {
                         return (
@@ -156,6 +168,9 @@ const OrganizedManagement = () => {
                     onChange={handleOrganizationType}
                     inputProps={{ placeholder: 'Select Organization' }}
                   >
+                    <MenuItem value="">
+                       All
+                    </MenuItem>
                    {
                       result_organization_type_list && result_organization_type_list.map((item: any, index: number) => {
                         return (
@@ -180,7 +195,7 @@ const OrganizedManagement = () => {
                     onChange={handleStatusChange}
                     inputProps={{ placeholder: 'Select Status' }}
                   >
-                    <MenuItem value=''>Select Status</MenuItem>
+                    <MenuItem value=''>All</MenuItem>
                     <MenuItem value='2'>Pending</MenuItem>
                     <MenuItem value='1'>Active</MenuItem>
                     <MenuItem value='0'>Inactive</MenuItem>
@@ -198,6 +213,15 @@ const OrganizedManagement = () => {
                     variant='contained'
                   >
                     search
+                  </Button>
+                  <Button
+                    sx={{ mb: 2, ml: 3 }}
+                    onClick={() => {
+                      handleClear();
+                    }}
+                    variant='contained'
+                  >
+                    Clear
                   </Button>
                 </Box>
               </Grid>
@@ -229,8 +253,8 @@ const OrganizedManagement = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {list &&
-                    list.map((row: any, index: number) => (
+                  {resultOrganizationSearch &&
+                    resultOrganizationSearch.map((row: any, index: number) => (
                       <TableRow
                         key={row.id}
                         sx={{
