@@ -210,6 +210,7 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
                                     )
                                 })
                             }
+                            {/* <TableCell align='left'>{resultSenitmentComparisonByChannel?.share || resultSenitmentComparisonByChannel?.positive || ""}</TableCell> */}
                         </TableRow>
                         <TableRow>
                             <TableCell>
@@ -224,6 +225,7 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
                                     )
                                 })
                             }
+                            {/* <TableCell>{resultSenitmentComparisonByChannel?.comment || resultSenitmentComparisonByChannel?.neutral ||  ""}</TableCell> */}
                         </TableRow>
                         <TableRow>
                             <TableCell>
@@ -238,6 +240,8 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
                                     )
                                 })
                             }
+                          {/* <TableCell>{resultSenitmentComparisonByChannel?.reaction || resultSenitmentComparisonByChannel?.negative ||  ""}</TableCell> */}
+
                         </TableRow>
                     </TableHead>
                     </Table>

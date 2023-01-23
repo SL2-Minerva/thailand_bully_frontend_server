@@ -120,22 +120,22 @@ const OrganizedManagement = () => {
               </Grid>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='plan-select'>Select Organization</InputLabel>
+                  <InputLabel id='plan-select'>Select Organization Group</InputLabel>
                   <Select
                     fullWidth
                     value={organization}
                     id='select-organization'
-                    label='Select Organization'
+                    label='Select Organization Group'
                     labelId='organization-select'
                     onChange={handleOrganization}
                     inputProps={{ placeholder: 'Select Organization' }}
                   >
 
                     {
-                      list && list.map((item: any, index: number) => {
+                      result_organization_group_list && result_organization_group_list.map((item: any, index: number) => {
                         return (
                           <MenuItem key={index} value={item.id}>
-                            {item.name}
+                            {item.organization_group_name}
                           </MenuItem>
                         )
                       })

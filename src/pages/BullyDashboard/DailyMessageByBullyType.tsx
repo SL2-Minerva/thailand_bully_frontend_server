@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment'; 
 import { InteractionItem } from 'chart.js'
-import { BullyDashboardColors } from 'src/utils/const'
+import { BullyTypeColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { FilterBullyTypeByCampaignId } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
@@ -70,7 +70,7 @@ const DailyMessgeByBullyType = (props: LineProps) => {
   const { white, labelColor,  borderColor, gridLineColor, params, type, chartId, highlight } = props
 
   // const [ chartData, setChartData ] = useState();
-  const colors = BullyDashboardColors;
+  const colors = BullyTypeColors;
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);

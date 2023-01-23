@@ -222,6 +222,7 @@ const PeriodComparisonChart = (props: LineProps) => {
                                     )
                                 })
                             }
+                            {/* <TableCell align='left'>{resultSentimentComparisonByEngagement?.share || resultSentimentComparisonByEngagement?.positive || ""}</TableCell> */}
                         </TableRow>
                         <TableRow>
                             <TableCell>
@@ -236,6 +237,7 @@ const PeriodComparisonChart = (props: LineProps) => {
                                     )
                                 })
                             }
+                            {/* <TableCell align='left'>{resultSentimentComparisonByEngagement?.comment || resultSentimentComparisonByEngagement?.neutral || ""}</TableCell> */}
                         </TableRow>
                         <TableRow>
                             <TableCell>
@@ -250,6 +252,8 @@ const PeriodComparisonChart = (props: LineProps) => {
                                     )
                                 })
                             }
+                            {/* <TableCell align='left'>{resultSentimentComparisonByEngagement?.reaction || resultSentimentComparisonByEngagement?.negative || ""}</TableCell> */}
+
                         </TableRow>
                     </TableHead>
                     </Table>

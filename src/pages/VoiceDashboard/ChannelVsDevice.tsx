@@ -54,7 +54,7 @@ const ChannelVsDevice = ({params, chartId, highlight} : {params:any, chartId: st
         };
 
     useEffect(() => {
-      if(resultDeviceVsChannel) {
+      if(resultDeviceVsChannel?.length > 0) {
         setSeriesData(resultDeviceVsChannel?.data);
         setLabels(resultDeviceVsChannel?.labels);
       }

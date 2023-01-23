@@ -81,13 +81,13 @@ const SentimentDashboard = () => {
             <Grid container spacing={3} mt={2}>
                 {
                     resultReportPermission?.includes("76") ?
-                    <Grid id="chart1" item xs={12} md={8}>
+                    <Grid id="chart1" item xs={12} md={4}>
                         <PercentageOfSentiment params={params} type="transaction" chartId="Chart 1" highlight = { highlight==='chart1' ? true : false } />
                     </Grid> : ""
                 }
                 {
                     resultReportPermission?.includes("77") ?
-                    <Grid id="chart2" item xs={12} md={4}>
+                    <Grid id="chart2" item xs={12} md={8}>
                         <DailySenitment
                             white={whiteColor}
                             labelColor={labelColor}

@@ -1,5 +1,5 @@
 
-export const API_PATH = process.env.NEXT_PUBLIC_APP_ENV === 'localhost' ? 'http://127.0.0.1:8000/api' : 'http://202.44.231.31:8081/api';
+export const API_PATH = process.env.NEXT_PUBLIC_APP_ENV === 'localhost' ? 'http://127.0.0.1:8000/api' : 'http://202.44.231.31/api';
 
 // export const API_PATH = process.env.NEXT_PUBLIC_APP_ENV === 'localhost' ? 'http://127.0.0.1:8000/api' : 'http://cornea-analysis.com/api';
 export const GraphicColors = [
@@ -14,6 +14,11 @@ export const GraphicColors = [
     "#e02916",
     "#ffca25",
     "#C0D3DF",
+    '#4f86b9',
+    '#70ad47',
+    '#c00000',
+   '#c46627',
+
   ];
 
 export const EngagementTransChartColor = [
@@ -52,7 +57,7 @@ export const EngagementTypeColors = [
 export const PeriodComparisonChannel = [
   '#4472c4',
   '#8fa2d4',
-  "#4472c4",
+  "#c46627",
   "#ed7d31",
   "#a5a5a5",
   "#ffc000",
@@ -112,6 +117,58 @@ export const BullyDashboardColors = [
   "#e02916",
   "#ffca25",
   "#C0D3DF",
+]
+
+export const BullyLevelColors = [
+  "#EDF2F4",
+  "#8D99AE",
+  "#4C4B63",
+  "#7A0010"
+]
+
+export const BullyTypeColors = [
+  "#F0F0F0",
+  "#EFD4DC",
+  "#EA638C",
+  "#89023E",
+  "#521130",
+  "#34213E",
+  '#ed7d31',
+  '#ffc000',
+  '#70ad47',
+  '#9e480e',
+  '#997300',
+  "#4472c4",
+  "#a5a5a5",
+  "#5b9bd5",
+  "#299b82",
+  "#1640a1c4",
+  "#d8df20",
+  "#e02916",
+  "#ffca25",
+  "#C0D3DF",
+]
+
+export const SentimentColors = [
+  "#C73E1D",
+  '#FEB95F',
+  '#63A375'
+]
+
+export const SentimentAllColors = [
+  "#C73E1D",
+  '#FEB95F',
+  '#63A375',
+  "#F0F0F0",
+  "#EFD4DC",
+  "#EA638C",
+  "#89023E",
+  "#521130",
+  "#34213E",
+  "#EDF2F4",
+  "#8D99AE",
+  "#4C4B63",
+  "#7A0010"
 ]
 
 export const FacebookIcon = '/images/logos/facebook-round.png';

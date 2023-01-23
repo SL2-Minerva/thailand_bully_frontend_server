@@ -8,6 +8,7 @@ import { ApexOptions } from 'apexcharts'
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { GetSentimentLevel } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
+import { SentimentAllColors } from 'src/utils/const'
 
 
 const Labels = (data: any) => {
@@ -90,7 +91,7 @@ const SentimentLevelChart = ({params, highlight} : {params: any, chartId: string
     title: {
       text: ''
     },
-    colors: ['#FF0000', '#F47B20', '#008000'],
+    colors: SentimentAllColors,
     xaxis: {
       categories: chartLabels,
     },
@@ -103,7 +104,7 @@ const SentimentLevelChart = ({params, highlight} : {params: any, chartId: string
     },
     fill: {
       opacity: 1,
-      colors: ['#FF0000', '#F47B20', '#008000'],
+      colors: SentimentAllColors,
     },
     legend: {
       position: 'top',

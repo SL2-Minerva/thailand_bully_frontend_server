@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import { BullyDashboardColors } from 'src/utils/const'
+import { BullyTypeColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
@@ -121,7 +121,7 @@ const BullyTypeBySentiment = (props: LineProps) => {
     let totalAmount : number[] = [];
     let keywordName = "";
     const returnData : StackChartDataset[] = [];
-    const color = BullyDashboardColors
+    const color = BullyTypeColors
     const total = data?.value || data?.data || [];
 
     for(let i = 0 ; i<total?.length; i++) {

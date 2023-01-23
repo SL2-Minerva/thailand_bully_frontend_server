@@ -68,10 +68,10 @@ const SenitmentScore  = ({params, chartId, highlight} : {params: any, chartId: s
                         return(
                           <TableRow key={index}>  
                             <TableCell>
-                                <Typography variant='h5'>{comparison.keyword_name}</Typography>
+                                <Typography variant='h6'>{comparison.keyword_name}</Typography>
                             </TableCell>
                             <TableCell align='center'>
-                                <Typography variant='h4' sx={{ color: comparison.hightlightColor === "neutral" ? '#f5cd19' :  comparison.hightlightColor === "positive" ? '#5be12c' : '#ea4228' }}>
+                                <Typography variant='body1' sx={{ color: comparison.hightlightColor === "neutral" ? '#f5cd19' :  comparison.hightlightColor === "positive" ? '#5be12c' : '#ea4228' }}>
                                     {comparison.resultSenitmentScore}
                                 </Typography>
                             </TableCell>
@@ -84,7 +84,7 @@ const SenitmentScore  = ({params, chartId, highlight} : {params: any, chartId: s
                                 }
                             </TableCell>
                             <TableCell align='center'>
-                                <Typography variant='h4'>{comparison?.previous_period}</Typography>
+                                <Typography variant='body1'>{comparison?.previous_period}</Typography>
                             </TableCell>
                           </TableRow>
                         )

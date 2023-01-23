@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { FilterByCampaignId } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
+import { SentimentColors } from 'src/utils/const'
 
 interface MessageData {
   type: string
@@ -23,7 +24,7 @@ interface MessageData {
 const PercentageOfSentiment = (props : MessageData) => {
 
   const { params, type, chartId, highlight } = props;
-  const colors = [ '#5be12c','#f5cd19','#ea4228'];
+  const colors = SentimentColors;
   const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const initValue = {
@@ -109,8 +110,11 @@ const PercentageOfSentiment = (props : MessageData) => {
 
   useEffect(() =>{
     if (resultFilterData) {
-      const currentMessageData = resultFilterData?.percentage_of_sentitment_current;
-      const previousMessageData = resultFilterData?.percentage_of_sentitment_previous;
+      // const currentMessageData = resultFilterData?.percentage_of_sentitment_current;
+      // const previousMessageData = resultFilterData?.percentage_of_sentitment_previous;
+
+      const currentMessageData = resultFilterData?.prcentage_of_messages_current;
+      const previousMessageData = resultFilterData?.prcentage_of_messages_previous;
       
       if(currentMessageData) {
         const currentDataset = chartDataset(currentMessageData, 'current');
