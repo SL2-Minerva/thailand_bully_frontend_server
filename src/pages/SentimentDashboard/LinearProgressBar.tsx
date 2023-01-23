@@ -9,7 +9,7 @@ const LinearProgressBar = ({value} : {value:any}) => {
                      {value}%
                 </Typography>
             </Box>
-            <LinearProgress value={value} variant='buffer' color="warning" sx={{ height: 10, borderRadius: '5px' }} />
+            <LinearProgress value={value} variant='determinate' color="warning" sx={{ height: 10, borderRadius: '5px' }} />
         </>
         
     )
