@@ -9,7 +9,7 @@ import { Grid } from "@mui/material"
 
 import { Doughnut } from 'react-chartjs-2'
 import { useEffect, useState } from 'react'
-import { BullyDashboardColors } from 'src/utils/const'
+import { BullyLevelColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { BullyLevelPercentage } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
@@ -24,7 +24,7 @@ interface MessageData {
 const PercentageOfBully = (props : MessageData) => {
 
   const { params, type, chartId, highlight } = props;
-  const colors = BullyDashboardColors;
+  const colors = BullyLevelColors;
   const { resultBullyLevelPercentage  } = BullyLevelPercentage(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const initValue = {
@@ -84,15 +84,12 @@ const PercentageOfBully = (props : MessageData) => {
              labels.push(data[i].bully_type);
         }
 
-      const percentageValue = data[i]?.value;
-      for(let j = 0 ; j<percentageValue?.length; j++) {
-        percentage.push(data[i].value[j]?.percentage);
+      percentage.push(data[i].value?.percentage);
         if (type === 'current') {
-          setCurrentPeriod(data[i].value[j]?.date)
+          setCurrentPeriod(data[i].value?.date)
         } else {
-          setPreviousPeriod(data[i].value[j]?.date);
+          setPreviousPeriod(data[i].value?.date);
         }
-      }
     }
     const returnData = {
       labels: labels,
@@ -110,8 +107,8 @@ const PercentageOfBully = (props : MessageData) => {
 
   useEffect(() =>{
     if (resultBullyLevelPercentage) {
-      const currentMessageData = resultBullyLevelPercentage?.percentage_of_bully_current;
-      const previousMessageData = resultBullyLevelPercentage?.percentage_of_bully_previous;
+      const currentMessageData = resultBullyLevelPercentage?.prcentage_of_messages_current;
+      const previousMessageData = resultBullyLevelPercentage?.prcentage_of_messages_previous;
       
       if(currentMessageData) {
         const currentDataset = chartDataset(currentMessageData, 'current');

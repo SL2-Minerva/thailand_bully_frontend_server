@@ -224,7 +224,7 @@ const DailyMessgeByBullyType = (props: LineProps) => {
 
   useEffect(() => {
     if(resultBullyTypeFilterData) {
-      const bully_levelData = resultBullyTypeFilterData?.bully_level ? resultBullyTypeFilterData?.bully_level : resultBullyTypeFilterData?.bully_type;
+      const bully_levelData = resultBullyTypeFilterData;
       if(bully_levelData) {
         const labels = chartLabel(bully_levelData);
         setLabel(labels);
