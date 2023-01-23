@@ -3,7 +3,7 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
-import { Grid } from "@mui/material"
+import { Grid, LinearProgress } from "@mui/material"
 
 // ** Third Party Imports
 
@@ -21,7 +21,7 @@ interface MessageData {
 const DonutChart = (props : MessageData) => {
 
   const { params } = props;
-  const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
   const initValue = {
     labels: [],
     datasets: [{
@@ -121,6 +121,11 @@ const DonutChart = (props : MessageData) => {
 
   return (
     <Card>
+      {loadingFilterData && (
+          <LinearProgress
+            style={{ width: "100%" }}
+          />
+        )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title='Percentage of Messages'

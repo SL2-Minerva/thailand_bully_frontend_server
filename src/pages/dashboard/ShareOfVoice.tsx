@@ -2,7 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, TableBody, Typography } from "@mui/material"
+import { Grid, LinearProgress, TableBody, Typography } from "@mui/material"
 import { Table, TableRow, TableHead, TableCell } from "@mui/material"; 
 
 // ** Third Party Imports
@@ -37,8 +37,8 @@ const ChartData = (data: any ) => {
 }
 
 const ShareOfVoice  = ({params, chartId} : {params: any, chartId : string}) => {
-  const { resultShareOfVoice } = GetShareOfVoice(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
-  const { resultShareOfVoiceChart } = GetShareOfVoiceChart(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const { resultShareOfVoice, loadingShareOfVoice } = GetShareOfVoice(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const { resultShareOfVoiceChart, loadingShareOfVoiceChart } = GetShareOfVoiceChart(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
   const reportNo = '1.1.020';
 
   const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
@@ -126,6 +126,11 @@ const ShareOfVoice  = ({params, chartId} : {params: any, chartId : string}) => {
 
   return (
     <Card sx={{ minHeight: 380 }}>
+      {loadingShareOfVoice && loadingShareOfVoiceChart && (
+          <LinearProgress
+            style={{ width: "100%" }}
+          />
+        )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title='Share of Voice'

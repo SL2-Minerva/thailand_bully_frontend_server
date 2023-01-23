@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from '@mui/material'
+import { Card, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -47,7 +47,7 @@ const MessagesByDays = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultMessagesByDay } = GetMessagesByDay(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultMessagesByDay, loadingMessagesByDay } = GetMessagesByDay(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -202,6 +202,11 @@ const MessagesByDays = (props: LineProps) => {
 
     return (
       <Card>
+        {loadingMessagesByDay && (
+          <LinearProgress
+            style={{ width: "100%" }}
+          />
+        )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title="Daily Messages By Day"

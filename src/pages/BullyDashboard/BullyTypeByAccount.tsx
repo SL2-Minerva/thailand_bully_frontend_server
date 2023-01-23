@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from '@mui/material'
+import { Card, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -23,7 +23,7 @@ const BullyTypeByAccount = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const {resultBullyTypeByAccount} =  GetBullyTypeByAccount(params?.campaign, params?.date, params?.endDate, params?.period);
+  const {resultBullyTypeByAccount, loadingBullyTypeByAccount} =  GetBullyTypeByAccount(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -178,6 +178,11 @@ const BullyTypeByAccount = (props: LineProps) => {
 
     return (
       <Card>
+         {loadingBullyTypeByAccount && (
+            <LinearProgress
+                style={{ width: "100%" }} 
+            />
+            )} 
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title="Bully Type: Daily Message by Account"

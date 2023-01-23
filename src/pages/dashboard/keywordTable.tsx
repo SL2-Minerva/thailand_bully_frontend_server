@@ -1,4 +1,4 @@
-import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer } from "@mui/material"; 
+import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer, LinearProgress } from "@mui/material"; 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -7,7 +7,7 @@ import { Information } from "mdi-material-ui";
 import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
 
 const KeywordTable = ({params, chartId} : {params: any, chartId: string}) => {
-    const { resultKeywords } = GetKeyWords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const { resultKeywords, loadingFilterData } = GetKeyWords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
     
     const reportNo = '1.1.008';
 
@@ -15,6 +15,11 @@ const KeywordTable = ({params, chartId} : {params: any, chartId: string}) => {
 
     return (
         <Card>
+            {loadingFilterData && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title='KeyWord Summary'

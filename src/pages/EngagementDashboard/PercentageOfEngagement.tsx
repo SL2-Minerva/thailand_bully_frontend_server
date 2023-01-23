@@ -3,7 +3,7 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
-import { Grid } from "@mui/material"
+import { Grid, LinearProgress } from "@mui/material"
 
 // ** Third Party Imports
 
@@ -25,7 +25,7 @@ const PercentageOfEngangement = (props : MessageData) => {
 
   const { type, chartId, params, highlight } = props;
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
-  const {resultFilterData} = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
+  const {resultFilterData, loadingFilterData} = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
   const initValue = {
     labels: [],
     datasets: [{
@@ -129,6 +129,11 @@ const PercentageOfEngangement = (props : MessageData) => {
 
   return (
     <Card>
+      {loadingFilterData && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title= {title}

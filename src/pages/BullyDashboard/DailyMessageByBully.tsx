@@ -14,6 +14,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { FilterByCampaignId } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
+import { LinearProgress } from '@mui/material'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -81,7 +82,7 @@ const DailyMessgeByBully = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultFilterData  } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultFilterData, loadingFilterData  } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -254,6 +255,11 @@ const DailyMessgeByBully = (props: LineProps) => {
 
   return (
     <Card>
+       {loadingFilterData && (
+            <LinearProgress
+                style={{ width: "100%" }} 
+            />
+            )} 
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
             title= {title}

@@ -1,4 +1,4 @@
-import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer, Box, Pagination } from "@mui/material"; 
+import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer, Box, Pagination, LinearProgress } from "@mui/material"; 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -11,7 +11,7 @@ const EngagementSummary = ({ topKeyword, params, chartId, highlight} : {topKeywo
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState<number>(0);
 
-    const { resultSummary, totalSummary } = GetSummary(topKeyword, params?.campaign, params?.date, params?.endDate, params?.period, page); 
+    const { resultSummary, totalSummary, loadingSummary } = GetSummary(topKeyword, params?.campaign, params?.date, params?.endDate, params?.period, page); 
     const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value-1);
     };
@@ -28,6 +28,11 @@ const EngagementSummary = ({ topKeyword, params, chartId, highlight} : {topKeywo
 
     return (
         <Card>
+            {loadingSummary && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title='Summary Engagement by Account'

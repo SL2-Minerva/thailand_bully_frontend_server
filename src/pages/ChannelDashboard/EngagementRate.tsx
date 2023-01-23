@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from '@mui/material'
+import { Card, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -89,8 +89,8 @@ const EngagementRate = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultEngagementRate } = GetEngagementRate(params?.campaign, params?.date, params?.endDate, params?.period);
-  const { resultEngagementRatePrevious } = GetEngagementRatePrevious(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultEngagementRate, loadingEngagementRate } = GetEngagementRate(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultEngagementRatePrevious, loadingEngagementRatePrevious } = GetEngagementRatePrevious(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -207,6 +207,11 @@ const EngagementRate = (props: LineProps) => {
 
     return (
       <Card>
+        {loadingEngagementRate && loadingEngagementRatePrevious && (
+        <LinearProgress
+            style={{ width: "100%" }}
+        />
+        )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title="Engagement Rate"

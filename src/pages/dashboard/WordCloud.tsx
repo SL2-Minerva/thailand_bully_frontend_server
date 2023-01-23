@@ -1,19 +1,24 @@
 import ReactWordcloud from "react-wordcloud";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
-import { Card, CardHeader } from "@mui/material";
+import { Card, CardHeader, LinearProgress } from "@mui/material";
 import { StyledTooltip } from "./overall";
 import { Information } from "mdi-material-ui";
 import { GetWordClouds } from "src/services/api/dashboards/overall/overallDashboardApi";
 
 const WordCloud = ({params, chartId} : {params: any, chartId: string} ) => {
-    const { resultWordClouds } = GetWordClouds(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const { resultWordClouds, loadingWordClouds } = GetWordClouds(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
     const reportNo = '1.2.021';
 
     const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
 
     return (
         <Card sx={{ maxHeight: 450,minHeight: 450 }}>
+            {loadingWordClouds && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title='Word Clouds'

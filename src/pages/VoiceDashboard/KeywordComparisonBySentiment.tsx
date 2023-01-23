@@ -18,6 +18,7 @@ import {
 
 import { Radar } from 'react-chartjs-2';
 import { getChartData, initValue } from './KeywordComparisonByBullyType'
+import { LinearProgress } from '@mui/material'
 
 ChartJS.register(
   RadialLinearScale,
@@ -31,7 +32,7 @@ ChartJS.register(
 const KeywordComparisonBySentiment = ({params, chartId, highlight} : {params:any, chartId: string, highlight?: boolean}) => {
   const [ charData, setChartData ] = useState(initValue);
 
-  const { resultKeywordComparisonBySentiment } = GetKeywordComparisonBySentiment(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultKeywordComparisonBySentiment, loadingKeywordComparisonBySentiment } = GetKeywordComparisonBySentiment(params?.campaign, params?.date, params?.endDate, params?.period);
 
   useEffect(() => {
     if (resultKeywordComparisonBySentiment) {
@@ -50,6 +51,11 @@ const KeywordComparisonBySentiment = ({params, chartId, highlight} : {params:any
 
     return (
         <Card>
+          {loadingKeywordComparisonBySentiment && (
+            <LinearProgress
+              style={{ width: "100%" }}
+            />
+          )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader 
                     title='Percentage of Keyword Comparison By Sentiment'

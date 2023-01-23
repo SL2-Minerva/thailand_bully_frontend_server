@@ -2,7 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, Pagination, Typography } from "@mui/material"
+import { Box, Grid, LinearProgress, Pagination, Typography } from "@mui/material"
 import { Table, TableRow, TableHead, TableCell } from "@mui/material"; 
 
 // ** Icons Imports
@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 const SenitmentScore  = ({params, chartId, highlight} : {params: any, chartId: string, highlight: boolean}) => {
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState<number>(0);
-  const { resultSenitmentScore, total } = GetSentimentScore(params?.campaign, params?.date, params?.endDate, params?.period, page);
+  const { resultSenitmentScore, total, loadingSentimentScore } = GetSentimentScore(params?.campaign, params?.date, params?.endDate, params?.period, page);
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
       setPage(value-1);
@@ -34,6 +34,11 @@ const SenitmentScore  = ({params, chartId, highlight} : {params: any, chartId: s
 
   return (
     <Card sx={{ minHeight: 455 }}>
+      {loadingSentimentScore && (
+            <LinearProgress
+                style={{ width: "100%" }}
+            />
+            )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title='Sentiment Score'

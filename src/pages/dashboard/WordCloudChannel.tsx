@@ -1,7 +1,7 @@
 import ReactWordcloud from "react-wordcloud";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
-import { Card, CardHeader, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Card, CardHeader, FormControl, Grid, InputLabel, LinearProgress, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useCallback, useState } from "react";
 import SourceService from "src/services/api/source/SourceApi";
 import { StyledTooltip } from "./overall";
@@ -11,7 +11,7 @@ import { GetWordCloudsPlatform } from "src/services/api/dashboards/overall/overa
 const WordCloudChannel = ({params, chartId} : {params: any, chartId : string}) => {
     const [ platformId, setPlatformId ] = useState<string>("1")
     const { result_source_list  } = SourceService();
-    const { resultWordCloudsPlatform } = GetWordCloudsPlatform(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const { resultWordCloudsPlatform, loadingWordCloudsPlatform } = GetWordCloudsPlatform(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
 
     const handleSelectList = useCallback((e: SelectChangeEvent) => {
         setPlatformId(e.target.value)
@@ -23,6 +23,11 @@ const WordCloudChannel = ({params, chartId} : {params: any, chartId : string}) =
 
     return (
         <Card sx={{ maxHeight: 500,minHeight: 500 }}>
+            {loadingWordCloudsPlatform && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title='Word Clouds By Channel'

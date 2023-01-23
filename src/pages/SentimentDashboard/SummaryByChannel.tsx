@@ -1,4 +1,4 @@
-import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer, Grid, Button, Box, Pagination } from "@mui/material"; 
+import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer, Grid, Button, Box, Pagination, LinearProgress } from "@mui/material"; 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -15,7 +15,7 @@ const SummaryByChannel = ({params, chartId, highlight} :
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState<number>(0);
 
-    const { resultSummaryByChannel, total } = GetSummaryByChannel(topChannel, params?.campaign, params?.date, params?.endDate, params?.period, page);
+    const { resultSummaryByChannel, total, loadingSummaryByChannel } = GetSummaryByChannel(topChannel, params?.campaign, params?.date, params?.endDate, params?.period, page);
     const handleTopChannels = (data: string) => {
         setTopChannel(data);
     }
@@ -36,6 +36,11 @@ const SummaryByChannel = ({params, chartId, highlight} :
 
     return (
         <Card>
+            {loadingSummaryByChannel && (
+            <LinearProgress
+                style={{ width: "100%" }}
+            />
+            )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title='Summary Sentiment Score by Channel'

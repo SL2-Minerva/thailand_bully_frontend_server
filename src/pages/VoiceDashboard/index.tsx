@@ -62,7 +62,7 @@ const VoiceDashboard = () => {
     }
 
     const { resultReportPermission } = UserPermission();
-    const { resultTotalAccount,resultTotalMessages } = GetComparison(campaign, date, endDate, period);
+    const { resultTotalAccount,resultTotalMessages, loadingTotalComparison } = GetComparison(campaign, date, endDate, period);
 
     return (
         <Grid container spacing={6}>
@@ -260,6 +260,7 @@ const VoiceDashboard = () => {
                             chartId = 'Chart 12'
                             highlight = { highlight==='chart12' ? true : false }
                             reportNo = '2.2.014'
+                            loading = {loadingTotalComparison}
                         />
                     </Grid> : ""
                 }
@@ -276,6 +277,7 @@ const VoiceDashboard = () => {
                             chartId = 'Chart 13'
                             highlight = { highlight==='chart13' ? true : false }
                             reportNo = "2.2.015"
+                            loading={loadingTotalComparison}
                         />
                     </Grid> : ""
                 }

@@ -22,6 +22,7 @@ import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
+import { LinearProgress } from '@mui/material'
 
 interface KeyStatusProps {
     title: string
@@ -38,6 +39,7 @@ interface KeyStatusProps {
     type?: string,
     chartId? : string
     reportNo?: string
+    loading?: boolean
   }
 
 // Styled Grid component
@@ -52,13 +54,18 @@ interface KeyStatusProps {
 
 const KeyStatusReport = (props: KeyStatusProps) => {
   // ** Props
-  const { title, color, icon, stats, trendNumber, totalText, totalValue, averageText, averageValue, type, chartId, reportNo } = props
+  const { title, color, icon, stats, trendNumber, totalText, totalValue, averageText, averageValue, type, chartId, reportNo, loading } = props
 
   const TrendIcon = type === 'plus' ? ChevronUp : ChevronDown
   const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
 
   return (
     <Card>
+      {loading && (
+          <LinearProgress
+            style={{ width: "100%" }}
+          />
+        )}
       <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box>
             <Grid container spacing={1}>

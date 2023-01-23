@@ -20,6 +20,7 @@ import {
 
 import { Radar } from 'react-chartjs-2';
 import { BullyDashboardColors } from 'src/utils/const'
+import { LinearProgress } from '@mui/material'
 
 ChartJS.register(
   RadialLinearScale,
@@ -58,7 +59,7 @@ export const getChartData = (data: any) => {
 
 const KeywordComparisonByBullyType = ({params, chartId, highlight} : {params: any, chartId:string, highlight?:boolean}) => {
   const [ charData, setChartData ] = useState(initValue);
-  const { resultKeywordComparisonByBullyType } = GetKeywordComparisonByBullyType(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultKeywordComparisonByBullyType, loadingKeywordComparisonByBullyType } = GetKeywordComparisonByBullyType(params?.campaign, params?.date, params?.endDate, params?.period);
 
   useEffect(() => {
       if (resultKeywordComparisonByBullyType) {
@@ -77,6 +78,11 @@ const KeywordComparisonByBullyType = ({params, chartId, highlight} : {params: an
     
     return (
         <Card>
+          {loadingKeywordComparisonByBullyType && (
+            <LinearProgress
+              style={{ width: "100%" }}
+            />
+          )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader 
                     title='Percentage of Keyword Comparison By Bully Type'

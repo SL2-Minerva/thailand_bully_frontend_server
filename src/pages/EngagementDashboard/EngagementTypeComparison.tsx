@@ -2,7 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, TableBody, TableContainer, Typography } from "@mui/material"
+import { Grid, LinearProgress, TableBody, TableContainer, Typography } from "@mui/material"
 import { Table, TableRow, TableHead, TableCell } from "@mui/material"; 
 
 // ** Icons Imports
@@ -13,13 +13,18 @@ import { Information } from 'mdi-material-ui';
 import { GetEngagementComparison } from 'src/services/api/dashboards/engagement/EngagementApi';
 
 const EngagementTypeComparison  = ({params, chartId, highlight} : {params: any, chartId: string, highlight: boolean}) => {
-  const { resultEngagementComparison } = GetEngagementComparison(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultEngagementComparison, loadingEngagementComparison } = GetEngagementComparison(params?.campaign, params?.date, params?.endDate, params?.period);
   const reportNo = '4.2.023';
 
   const title = chartId + ", Report Level 2(" + reportNo + ")";
 
   return (
     <Card sx={{ minHeight: 560 }}>
+      {loadingEngagementComparison && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title='Engagement Type Comparison'

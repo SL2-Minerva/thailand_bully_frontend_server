@@ -49,10 +49,10 @@ const BullyDashboard = () => {
     const [ highlight, setHighlight ] = useState<string>("");
 
     const { resultReportPermission } = UserPermission();
-    const { resultShareOfChannelBullyLevel } = GetShareOfChannelBullyLevel(campaign, date, endDate, period);
-    const { resultShareOfChannelChartBullyLevel } = GetShareOfChannelChartBullyLevel(campaign, date, endDate, period);
-    const { resultShareOfChannelPlatform } = GetShareOfChannelPlatforms(campaign, date, endDate, period);
-    const { resultShareOfChannelChart } = GetShareOfChannelChart(campaign, date, endDate, period);
+    const { resultShareOfChannelBullyLevel, loadingShareOfChannelBullyLevel } = GetShareOfChannelBullyLevel(campaign, date, endDate, period);
+    const { resultShareOfChannelChartBullyLevel, loadingShareOfChannelChartBullyLevel } = GetShareOfChannelChartBullyLevel(campaign, date, endDate, period);
+    const { resultShareOfChannelPlatform, loadingShareOfChannelPlatform } = GetShareOfChannelPlatforms(campaign, date, endDate, period);
+    const { resultShareOfChannelChart, loadingShareOfChannelChart } = GetShareOfChannelChart(campaign, date, endDate, period);
     const params = {
         campaign: campaign,
         date : date, 
@@ -378,6 +378,8 @@ const BullyDashboard = () => {
                     <Grid id="chart17" item xs={12} mt={3}>
                         <ShareOfChannel resultShareOfChannel={bullyType !== 'level' ? resultShareOfChannelChartBullyLevel : resultShareOfChannelChart}
                         resultShareofChannelPlatform={bullyType !== 'level' ? resultShareOfChannelBullyLevel : resultShareOfChannelPlatform}
+                        loading={bullyType !== 'level' ? loadingShareOfChannelBullyLevel : loadingShareOfChannelPlatform}
+                        loadingChannel ={bullyType !== 'level' ? loadingShareOfChannelChartBullyLevel : loadingShareOfChannelChart} 
                         type = {bullyType}
                         chartId={bullyType === 'level' ? "Chart 17, Report Level 2(6.2.021)" : "Chart 18, Report Level 2(6.2.022)"} highlight = { highlight==='chart17' ? true : false }/>
                     </Grid>

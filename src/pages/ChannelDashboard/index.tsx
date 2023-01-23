@@ -54,7 +54,7 @@ const ChannelDashboard = () => {
     
     //api call
     const { resultReportPermission } = UserPermission();
-    const { resultFacebookComparison, resultInstagramComparison, resultPantipComparison, resultTwitterComparison, resultYoutubeComparison } = GetComparison(campaign, date, endDate, period);
+    const { resultFacebookComparison, resultInstagramComparison, resultPantipComparison, resultTwitterComparison, resultYoutubeComparison, loadingTotalComparison } = GetComparison(campaign, date, endDate, period);
 
     return (
         <Grid container spacing={6}>
@@ -238,6 +238,7 @@ const ChannelDashboard = () => {
                                 trend={resultFacebookComparison?.type}
                                 totalText = 'Facebook'
                                 totalValue = {resultFacebookComparison?.comparison_value}
+                                loading={loadingTotalComparison}
                             />
                         </Grid>
                         <Grid item xs={6} md={2.4}>
@@ -247,6 +248,7 @@ const ChannelDashboard = () => {
                                 trend={resultTwitterComparison?.type}
                                 totalText = 'Twitter'
                                 totalValue = {resultTwitterComparison?.comparison_value}
+                                loading={loadingTotalComparison}
                             />
                         </Grid>
                         <Grid item xs={6} md={2.4}>
@@ -256,6 +258,7 @@ const ChannelDashboard = () => {
                                 trend={resultYoutubeComparison?.type}
                                 totalText = 'Youtube'
                                 totalValue = {resultYoutubeComparison?.comparison_value}
+                                loading={loadingTotalComparison}
                             />
                         </Grid>
                         <Grid item xs={6} md={2.4}>
@@ -265,6 +268,7 @@ const ChannelDashboard = () => {
                                 trend={resultInstagramComparison?.type}
                                 totalText = 'Instagram'
                                 totalValue = {resultInstagramComparison?.comparison_value}
+                                loading={loadingTotalComparison}
                             />
                         </Grid>
                         <Grid item xs={6} md={2.4}>
@@ -274,6 +278,7 @@ const ChannelDashboard = () => {
                                 trend={resultPantipComparison?.type}
                                 totalText = 'Pantip'
                                 totalValue = {resultPantipComparison?.comparison_value}
+                                loading={loadingTotalComparison}
                             />
                         </Grid>
                     </Grid>

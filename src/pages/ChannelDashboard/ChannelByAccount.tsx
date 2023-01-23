@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from '@mui/material'
+import { Card, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -23,7 +23,7 @@ const ChannelByAccount = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultChannelByAccount } = GetChannelByAccount(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultChannelByAccount, loadingChannelByAccount } = GetChannelByAccount(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -177,6 +177,11 @@ const ChannelByAccount = (props: LineProps) => {
 
     return (
       <Card>
+        {loadingChannelByAccount && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title="Daily Messages By Account"

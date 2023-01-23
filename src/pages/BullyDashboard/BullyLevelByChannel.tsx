@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from '@mui/material'
+import { Card, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -23,7 +23,7 @@ const BullyLevelByChannel = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultBullyByChannel } = GetBullyByChannel(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultBullyByChannel, loadingBullyByChannel } = GetBullyByChannel(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -178,6 +178,11 @@ const BullyLevelByChannel = (props: LineProps) => {
 
     return (
       <Card>
+         {loadingBullyByChannel && (
+            <LinearProgress
+                style={{ width: "100%" }} 
+            />
+            )} 
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title="Bully Level: Daily Messages by Channel"

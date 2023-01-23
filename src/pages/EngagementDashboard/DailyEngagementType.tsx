@@ -14,6 +14,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { EngagementTypePercetage } from 'src/services/api/dashboards/engagement/EngagementApi'
 import MessageDetail from './MessageDetail'
+import { LinearProgress } from '@mui/material'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -71,7 +72,7 @@ const DailyEngagementType = (props: LineProps) => {
 
   // const [ chartData, setChartData ] = useState();
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
-  const { resultEngagementType } = EngagementTypePercetage(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultEngagementType, loadingEngagementType } = EngagementTypePercetage(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -251,6 +252,11 @@ const DailyEngagementType = (props: LineProps) => {
 
   return (
     <Card>
+      {loadingEngagementType && (
+        <LinearProgress
+            style={{ width: "100%" }}
+        />
+        )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
               title='Daily Engagement Type By Date'

@@ -1,4 +1,4 @@
-import { Avatar, Card, CardHeader, Grid, Typography } from "@mui/material";
+import { Avatar, Card, CardHeader, Grid, LinearProgress, Typography } from "@mui/material";
 import { Information } from "mdi-material-ui";
 import { useState } from "react";
 import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
@@ -9,12 +9,17 @@ const AccountList = ({params, chartId, cardHeader} : {params: any, chartId : str
     const [showDetail, setShowDetail] = useState<boolean>(false);
     const [current, setCurrent] = useState<any>({})
 
-    const { resultKeywords } = GetKeyWords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const { resultKeywords, loadingFilterData } = GetKeyWords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
     const reportNo = '1.2.02';
     const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
 
     return (
         <Card sx={{ maxHeight: 500,minHeight: 500, overflow: 'auto' }}>
+            {loadingFilterData && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title={cardHeader}

@@ -15,6 +15,7 @@ import { useEffect, useRef, useState } from 'react'
 import { InteractionItem } from 'chart.js'
 import { GetNumbersOfAccounts } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
+import { LinearProgress } from '@mui/material'
 
 const chartLabel = (data:any) => {
   if(!data) return [];
@@ -36,7 +37,7 @@ const InfluencerGraph = ({ chartId, params, highlight}: {chartId: string, params
         campaign_id: null,
         organization_id: null
       });
-      const { resultNumbersOfAccounts } = GetNumbersOfAccounts(params?.campaign, params?.date, params?.endDate, params?.period);
+      const { resultNumbersOfAccounts, loadingNumbersOfAccounts } = GetNumbersOfAccounts(params?.campaign, params?.date, params?.endDate, params?.period);
   
       const chartRef = useRef();
       const getKeywordId = (dataset: InteractionItem[]) => {
@@ -173,6 +174,11 @@ const InfluencerGraph = ({ chartId, params, highlight}: {chartId: string, params
 
       return (
         <Card>
+          {loadingNumbersOfAccounts && (
+            <LinearProgress
+              style={{ width: "100%" }}
+            />
+          )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
               <CardHeader 
                   title='Number of Accounts'

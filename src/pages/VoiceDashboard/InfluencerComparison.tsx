@@ -22,6 +22,7 @@ import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import { LinearProgress } from '@mui/material'
 
 interface InfluencerComparisonProps {
     icon: ReactNode
@@ -33,11 +34,12 @@ interface InfluencerComparisonProps {
     chartId: string
     highlight: boolean
     reportNo : string
+    loading: boolean
   }
 
 const InfluencerComparison = (props: InfluencerComparisonProps) => {
   // ** Props
-  const { color, icon, trend, trendNumber, totalText, totalValue, chartId, highlight, reportNo } = props
+  const { color, icon, trend, trendNumber, totalText, totalValue, chartId, highlight, reportNo, loading } = props
 
   const TrendIcon = trend === 'plus' ? ChevronUp : ChevronDown
 
@@ -47,6 +49,11 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
 
   return (
     <Card>
+        {loading && (
+          <LinearProgress
+            style={{ width: "100%" }}
+          />
+        )}
       <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box>
             <Grid container spacing={6}>

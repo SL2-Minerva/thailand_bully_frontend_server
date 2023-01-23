@@ -48,7 +48,7 @@ const EngagementDashboard = () => {
     const [ highlight, setHighlight ] = useState<string>("");
 
     const { resultReportPermission } = UserPermission();
-    const { resultTotalEngagement } = GetTotalEngagment(campaignType, date, endDate, period);
+    const { resultTotalEngagement, loadingTotalEngagement } = GetTotalEngagment(campaignType, date, endDate, period);
 
     const params = {
         campaign : campaignType,
@@ -331,6 +331,7 @@ const EngagementDashboard = () => {
                                 <TotalEngagement
                                     totalEngagement={ resultTotalEngagement}
                                     highlight = { highlight==='chart15' ? true : false }
+                                    loading = {loadingTotalEngagement}
                                 />
                             </Grid> 
                         </> : ""

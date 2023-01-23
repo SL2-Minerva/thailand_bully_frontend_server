@@ -14,6 +14,7 @@ import { Information } from 'mdi-material-ui'
 import { FilterByCampaignId } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { SentimentColors } from 'src/utils/const'
+import { LinearProgress } from '@mui/material'
 
 interface LineProps {
   white: string
@@ -64,7 +65,7 @@ const chartLabel = (data:any) => {
 const DailySenitment = (props: LineProps) => {
   // ** Props
   const { white, labelColor,  borderColor, gridLineColor, params, chartId, highlight } = props
-  const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
 
   // const [ chartData, setChartData ] = useState();
   const colors = SentimentColors;
@@ -246,6 +247,11 @@ const DailySenitment = (props: LineProps) => {
 
   return (
     <Card>
+      {loadingFilterData && (
+            <LinearProgress
+                style={{ width: "100%" }}
+            />
+            )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
             title='Daily Sentiment Type by Date'

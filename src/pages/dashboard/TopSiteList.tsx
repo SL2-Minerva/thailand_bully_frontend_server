@@ -1,4 +1,4 @@
-import { Table, TableRow, TableHead, TableCell, TableContainer, TableBody } from "@mui/material"; 
+import { Table, TableRow, TableHead, TableCell, TableContainer, TableBody, LinearProgress } from "@mui/material"; 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -16,7 +16,7 @@ interface Props {
 const TopSiteList = ({ params, chartId} : Props) => {
     const [showDetail, setShowDetail] = useState<boolean>(false);
     const [keywordId, setKeywordId] = useState<number>();
-    const { resultTopKeywords } = GetTopKeywords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const { resultTopKeywords, loadingFilterData } = GetTopKeywords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
 
     const reportNo = '1.2.012';
 
@@ -24,6 +24,11 @@ const TopSiteList = ({ params, chartId} : Props) => {
 
     return (
         <Card sx={{ maxHeight: 360,minHeight: 360 }}>
+            {loadingFilterData && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title='Top Sites'
