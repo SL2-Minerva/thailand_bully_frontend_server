@@ -15,16 +15,30 @@ import MuiDrawer, { DrawerProps } from '@mui/material/Drawer'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
-import { ViewGridOutline } from 'mdi-material-ui'
+import { ArrowLeftDropCircle, ArrowRightDropCircle } from 'mdi-material-ui'
 
 export const Toggler = styled(Box)<BoxProps>(({ theme }) => ({
     right: 0,
     top: '50%',
-    display: 'flex',
+    display: 'block',
     cursor: 'pointer',
     position: 'fixed',
     zIndex: theme.zIndex.modal,
-    padding: theme.spacing(2.5),
+    padding: '10px 0px 30px 0px',
+    transform: 'translateY(-50%)',
+    backgroundColor: theme.palette.primary.main,
+    borderTopLeftRadius: theme.shape.borderRadius,
+    borderBottomLeftRadius: theme.shape.borderRadius
+  }))
+
+export const TogglerOpen = styled(Box)<BoxProps>(({ theme }) => ({
+    right: '390px',
+    top: '50%',
+    display: 'block',
+    cursor: 'pointer',
+    position: 'fixed',
+    zIndex: theme.zIndex.modal,
+    padding: '10px 0px 30px 0px',
     transform: 'translateY(-50%)',
     backgroundColor: theme.palette.primary.main,
     borderTopLeftRadius: theme.shape.borderRadius,
@@ -67,9 +81,15 @@ const QuickView = ({setHighlight} : {setHighlight?:any}) => {
     return (
       <div className='customizer'>
         <Toggler className='customizer-toggler' onClick={() => setOpen(true)}>
-            <ViewGridOutline fontSize='large' sx={{ color: 'common.white' }}/>
+          <ArrowLeftDropCircle fontSize='large' sx={{ color: 'common.white', mb : 3 , ml: 6}}/>
+            <p style={{  transform: 'rotate(90deg)',color : 'white'  }}>QuickView</p>
         </Toggler>
         <Drawer open={open} hideBackdrop anchor='right' variant='persistent'>
+        <TogglerOpen className='customizer-toggler' onClick={() => setOpen(false)}>
+          <ArrowRightDropCircle fontSize='large' sx={{ color: 'common.white', mb : 3 , ml: 6}}/>
+            
+            <p style={{  transform: 'rotate(90deg)',color : 'white'  }}>QuickView</p>
+        </TogglerOpen>
           <Box
             className='customizer-header'
             sx={{

@@ -10,27 +10,14 @@ import Divider from '@mui/material/Divider'
 import { styled } from '@mui/material/styles'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import Box, { BoxProps } from '@mui/material/Box'
+import Box from '@mui/material/Box'
 import MuiDrawer, { DrawerProps } from '@mui/material/Drawer'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
-import { ViewGridOutline } from 'mdi-material-ui'
+import { ArrowLeftDropCircle, ArrowRightDropCircle } from 'mdi-material-ui'
+import { Toggler, TogglerOpen } from '../VoiceDashboard/QuickView'
 
-export const Toggler = styled(Box)<BoxProps>(({ theme }) => ({
-    right: 0,
-    top: '50%',
-    display: 'flex',
-    cursor: 'pointer',
-    position: 'fixed',
-    zIndex: theme.zIndex.modal,
-    padding: theme.spacing(2.5),
-    transform: 'translateY(-50%)',
-    backgroundColor: theme.palette.primary.main,
-    borderTopLeftRadius: theme.shape.borderRadius,
-    borderBottomLeftRadius: theme.shape.borderRadius
-  }))
-  
 export const Drawer = styled(MuiDrawer)<DrawerProps>(({ theme }) => ({
     width: 400,
     zIndex: theme.zIndex.modal,
@@ -67,9 +54,15 @@ const QuickView = ({setHighlight} : {setHighlight?:any}) => {
     return (
       <div className='customizer'>
         <Toggler className='customizer-toggler' onClick={() => setOpen(true)}>
-            <ViewGridOutline fontSize='large' sx={{ color: 'common.white' }}/>
+          <ArrowLeftDropCircle fontSize='large' sx={{ color: 'common.white', mb : 3 , ml: 6}}/>
+            <p style={{  transform: 'rotate(90deg)',color : 'white'  }}>QuickView</p>
         </Toggler>
         <Drawer open={open} hideBackdrop anchor='right' variant='persistent'>
+        <TogglerOpen className='customizer-toggler' onClick={() => setOpen(false)}>
+          <ArrowRightDropCircle fontSize='large' sx={{ color: 'common.white', mb : 3 , ml: 6}}/>
+            
+            <p style={{  transform: 'rotate(90deg)',color : 'white'  }}>QuickView</p>
+        </TogglerOpen>
           <Box
             className='customizer-header'
             sx={{

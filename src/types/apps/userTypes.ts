@@ -11,7 +11,9 @@ export type UsersType = {
   email: string
   name: string
   group: string
-  organization: string
+  organization?: string, 
+  role_id?: any, 
+  organization_id?: any,
   status: string
   avatar: string
   company: string
