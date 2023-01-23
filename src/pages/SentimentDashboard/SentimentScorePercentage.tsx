@@ -98,7 +98,7 @@ const SentimentScorePercentage = ({params, highlight} : {params: any, highlight:
     tooltip: {
       y: {
         formatter: function (val) {
-          return val + "K"
+          return val + "%"
         }
       }
     },

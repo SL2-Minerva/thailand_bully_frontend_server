@@ -9,7 +9,7 @@ import { Grid } from "@mui/material"
 
 import { Doughnut } from 'react-chartjs-2'
 import { useEffect, useState } from 'react'
-import { BullyDashboardColors } from 'src/utils/const'
+import { BullyTypeColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { BullyTypePercentage } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
@@ -24,8 +24,8 @@ interface MessageData {
 const PercentageOfBullyType = (props : MessageData) => {
 
   const { params, type, chartId, highlight } = props;
-  const colors = BullyDashboardColors;
-  const {resultBullyTypePercentage} = BullyTypePercentage(params?.campaign, params?.date, params?.endDate, params?.period);
+  const colors = BullyTypeColors;
+  const { resultBullyTypePercentage } = BullyTypePercentage(params?.campaign, params?.date, params?.endDate, params?.period);
   const initValue = {
     labels: [],
     datasets: [{
@@ -84,15 +84,17 @@ const PercentageOfBullyType = (props : MessageData) => {
              labels.push(data[i].bully_type);
         }
 
-      const percentageValue = data[i]?.value;
-      for(let j = 0 ; j<percentageValue?.length; j++) {
-        percentage.push(data[i].value[j]?.percentage);
+      // const percentageValue = data[i]?.value;
+      // for(let j = 0 ; j<percentageValue?.length; j++) {
+        
+      // }
+
+      percentage.push(data[i].value?.percentage);
         if (type === 'current') {
-          setCurrentPeriod(data[i].value[j]?.date)
+          setCurrentPeriod(data[i].value?.date)
         } else {
-          setPreviousPeriod(data[i].value[j]?.date);
+          setPreviousPeriod(data[i].value?.date);
         }
-      }
     }
     const returnData = {
       labels: labels,
@@ -110,9 +112,12 @@ const PercentageOfBullyType = (props : MessageData) => {
 
   useEffect(() =>{
     if (resultBullyTypePercentage) {
-      const currentMessageData = resultBullyTypePercentage?.percentage_of_bully_current;
-      const previousMessageData = resultBullyTypePercentage?.percentage_of_bully_previous;
-      
+
+      // const currentMessageData = resultBullyTypePercentage?.percentage_of_bully_current;
+      // const previousMessageData = resultBullyTypePercentage?.percentage_of_bully_previous;
+
+      const currentMessageData = resultBullyTypePercentage?.prcentage_of_messages_current;
+      const previousMessageData = resultBullyTypePercentage?.prcentage_of_messages_previous;
       if(currentMessageData) {
         const currentDataset = chartDataset(currentMessageData, 'current');
         setCurrentData(currentDataset);

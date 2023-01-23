@@ -26,132 +26,146 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
 
   return (
     <>
-        <Card>
-            <CardContent>
-                <Box>
-                    <Grid container spacing={7}>
-                    <Grid item xs={6} md={3}>
-                            <span style={{ display: 'flex', justifyContent: 'center' }}>
-                                <Typography variant='h4'>Total Message</Typography>
-                            </span>
-                            <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
-                                <Typography variant='h3' >
-                                         {/* { totalMessage?.totalMessage?.type === 'plus' ? "+" : "-" } */}
-                                        {totalMessage?.totalSentiment?.totalValue}
+        
+        <Grid container spacing={3}>
+        <Grid item xs={6} md={3}>
+            <Card>
+                <CardContent>
+                    <span style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Typography variant='h4'>Total Message</Typography>
+                    </span>
+                    <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
+                        <Typography variant='h3' >
+                                {totalMessage?.totalSentiment?.totalValue}
+                        </Typography>
+                                
+                        <Box>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Typography variant='h6' mt={4}>
+                                        {
+                                            totalMessage?.totalSentiment?.type === 'plus' ?
+                                            <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
+                                            :
+                                            <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
+                                        }
                                 </Typography>
-                                        
-                                <Box>
-                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                        <Typography variant='h4' mt={4}>
-                                                {
-                                                    totalMessage?.totalSentiment?.type === 'plus' ?
-                                                    <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
-                                                    :
-                                                    <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
-                                                }
-                                        </Typography>
 
-                                        <Typography variant='h4' sx={{ color: totalMessage?.totalSentiment?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                                 {totalMessage?.totalSentiment?.comparison}
-                                        </Typography>
-                                    </Box>
-                                </Box>
-                            </Grid>
-                    </Grid>
-                    <Grid item xs={6} md={3}>
-                            <span style={{ display: 'flex', justifyContent: 'center' }}>
-                                <ThumbUp fontSize='large'/>
-                                <Typography variant='h4' sx={{ marginLeft: '20px' }}>Positive</Typography>
-                            </span>
-                            <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
-                                <Typography variant='h3' >
-                                         {/* { totalMessage?.totalMessage?.type === 'plus' ? "+" : "-" } */}
-                                        {totalMessage?.positive?.totalValue}
+                                <Typography variant='h4' sx={{ color: totalMessage?.totalSentiment?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                            {totalMessage?.totalSentiment?.comparison}
                                 </Typography>
-                                        
-                                <Box>
-                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                        <Typography variant='h4' mt={4}>
-                                                {
-                                                    totalMessage?.positive?.type === 'plus' ?
-                                                    <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
-                                                    :
-                                                    <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
-                                                }
-                                        </Typography>
-
-                                        <Typography variant='h4' sx={{ color: totalMessage?.positive?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                                 {totalMessage?.positive?.comparison}
-                                        </Typography>
-                                    </Box>
-                                </Box>
-                            </Grid>
+                            </Box>
+                        </Box>
                     </Grid>
-
-                    <Grid item xs={6} md={3}>
-                            <span style={{ display: 'flex', justifyContent: 'center' }}>
-                                <ThumbsUpDown fontSize='large'/>
-                                <Typography variant='h4' sx={{ marginLeft: '20px' }}>Neutral</Typography>
-                            </span>
-                            <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
-                                <Typography variant='h3' >
-                                         {/* { totalMessage?.totalMessage?.type === 'plus' ? "+" : "-" } */}
-                                        {totalMessage?.neutral?.totalValue}
+                </CardContent>
+            </Card> 
+        </Grid>
+        <Grid item xs={6} md={3}>
+            <Card>
+                <CardContent>
+                    <span style={{ display: 'flex', justifyContent: 'center' }}>
+                        <ThumbUp fontSize='large'/>
+                        <Typography variant='h4' sx={{ marginLeft: '20px' }}>Positive</Typography>
+                    </span>
+                    <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
+                        <Typography variant='h3' >
+                                    {/* { totalMessage?.totalMessage?.type === 'plus' ? "+" : "-" } */}
+                                {totalMessage?.positive?.totalValue}
+                        </Typography>
+                                
+                        <Box>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Typography variant='h4' mt={4}>
+                                        {
+                                            totalMessage?.positive?.type === 'plus' ?
+                                            <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
+                                            :
+                                            <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
+                                        }
                                 </Typography>
-                                        
-                                <Box>
-                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                        <Typography variant='h4' mt={4}>
-                                                {
-                                                    totalMessage?.neutral?.type === 'plus' ?
-                                                    <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
-                                                    :
-                                                    <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
-                                                }
-                                        </Typography>
 
-                                        <Typography variant='h4' sx={{ color: totalMessage?.neutral?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                                 {totalMessage?.neutral?.comparison}
-                                        </Typography>
-                                    </Box>
-                                </Box>
-                            </Grid>
-                    </Grid>
-
-                    <Grid item xs={6} md={3}>
-                            <span style={{ display: 'flex', justifyContent: 'center' }}>
-                                <ThumbDown fontSize='large'/>
-                                <Typography variant='h4' sx={{ marginLeft: '20px' }}>Negative</Typography>
-                            </span>
-                            <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
-                                <Typography variant='h3' >
-                                         {/* { totalMessage?.totalMessage?.type === 'plus' ? "+" : "-" } */}
-                                        {totalMessage?.negative?.totalValue}
+                                <Typography variant='h4' sx={{ color: totalMessage?.positive?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                            {totalMessage?.positive?.comparison}
                                 </Typography>
-                                        
-                                <Box>
-                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                        <Typography variant='h4' mt={4}>
-                                                {
-                                                    totalMessage?.negative?.type === 'plus' ?
-                                                    <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
-                                                    :
-                                                    <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
-                                                }
-                                        </Typography>
-
-                                        <Typography variant='h4' sx={{ color: totalMessage?.negative?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                                 {totalMessage?.negative?.comparison}
-                                        </Typography>
-                                    </Box>
-                                </Box>
-                            </Grid>
+                            </Box>
+                        </Box>
                     </Grid>
+                </CardContent>
+            </Card>
+                
+        </Grid>
 
+        <Grid item xs={6} md={3}>
+            <Card>
+                <CardContent>
+                    <span style={{ display: 'flex', justifyContent: 'center' }}>
+                        <ThumbsUpDown fontSize='large'/>
+                        <Typography variant='h4' sx={{ marginLeft: '20px' }}>Neutral</Typography>
+                    </span>
+                    <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
+                        <Typography variant='h3' >
+                                    {/* { totalMessage?.totalMessage?.type === 'plus' ? "+" : "-" } */}
+                                {totalMessage?.neutral?.totalValue}
+                        </Typography>
+                                
+                        <Box>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Typography variant='h4' mt={4}>
+                                        {
+                                            totalMessage?.neutral?.type === 'plus' ?
+                                            <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
+                                            :
+                                            <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
+                                        }
+                                </Typography>
+
+                                <Typography variant='h4' sx={{ color: totalMessage?.neutral?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                            {totalMessage?.neutral?.comparison}
+                                </Typography>
+                            </Box>
+                        </Box>
                     </Grid>
-                </Box>
-            </CardContent>
-        </Card>
+                </CardContent>
+            </Card>
+                
+        </Grid>
+
+        <Grid item xs={6} md={3}>
+            <Card>
+                <CardContent>
+                <span style={{ display: 'flex', justifyContent: 'center' }}>
+                    <ThumbDown fontSize='large'/>
+                    <Typography variant='h4' sx={{ marginLeft: '20px' }}>Negative</Typography>
+                </span>
+                <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
+                    <Typography variant='h3' >
+                                {/* { totalMessage?.totalMessage?.type === 'plus' ? "+" : "-" } */}
+                            {totalMessage?.negative?.totalValue}
+                    </Typography>
+                            
+                    <Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Typography variant='h4' mt={4}>
+                                    {
+                                        totalMessage?.negative?.type === 'plus' ?
+                                        <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
+                                        :
+                                        <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
+                                    }
+                            </Typography>
+
+                            <Typography variant='h4' sx={{ color: totalMessage?.negative?.type === 'plus' ? 'success.main' : 'error.main' }}>
+                                        {totalMessage?.negative?.comparison}
+                            </Typography>
+                        </Box>
+                    </Box>
+                </Grid>
+                </CardContent>
+            </Card>
+                
+        </Grid>
+
+        </Grid>
+               
     </>
   )
 }

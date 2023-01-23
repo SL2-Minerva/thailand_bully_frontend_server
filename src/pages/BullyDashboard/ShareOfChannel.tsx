@@ -27,7 +27,7 @@ const ChartData = (data: any ) => {
 
   const chartDatas : any[] = [];
   for (let i = 0; i<data?.length ; i ++) {
-    chartDatas.push(data[i]?.number_of_massage)
+    chartDatas.push(data[i]?.data)
   }
   
   return chartDatas;
