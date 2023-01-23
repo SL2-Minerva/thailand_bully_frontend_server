@@ -89,7 +89,7 @@ const SentimentLevelChart = ({params} : {params: any}) => {
     title: {
       text: ''
     },
-    colors: ['#FF0000', '#F47B20', '#008000'],
+    colors: ['#C73E1D', '#FEB95F', '#63A375'],
     xaxis: {
       categories: chartLabels,
     },
@@ -102,7 +102,7 @@ const SentimentLevelChart = ({params} : {params: any}) => {
     },
     fill: {
       opacity: 1,
-      colors: ['#FF0000', '#F47B20', '#008000'],
+      colors: ['#C73E1D', '#FEB95F', '#63A375'],
     },
     legend: {
       position: 'top',

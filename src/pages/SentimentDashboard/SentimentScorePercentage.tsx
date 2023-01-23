@@ -8,6 +8,7 @@ import { ApexOptions } from 'apexcharts'
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { GetSentimentScore } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
+import { SentimentAllColors } from 'src/utils/const'
 
 
 const Labels = (data: any) => {
@@ -90,7 +91,7 @@ const SentimentScorePercentage = ({params, highlight} : {params: any, highlight:
     title: {
       text: ''
     },
-    colors: ['#ea4228','#f5cd19', '#5be12c'],
+    colors: SentimentAllColors,
     xaxis: {
       categories: chartLabels,
     },
@@ -103,7 +104,7 @@ const SentimentScorePercentage = ({params, highlight} : {params: any, highlight:
     },
     fill: {
       opacity: 1,
-      colors: ['#ea4228','#f5cd19', '#5be12c'],
+      colors: SentimentAllColors,
     },
     legend: {
       position: 'top',

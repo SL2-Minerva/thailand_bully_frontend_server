@@ -13,6 +13,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { FilterByCampaignId } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
+import { SentimentColors } from 'src/utils/const'
 
 interface LineProps {
   white: string
@@ -66,7 +67,7 @@ const DailySenitment = (props: LineProps) => {
   const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
 
   // const [ chartData, setChartData ] = useState();
-  const colors = [ '#5be12c','#f5cd19','#ea4228'];
+  const colors = SentimentColors;
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);

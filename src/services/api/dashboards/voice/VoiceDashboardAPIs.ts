@@ -429,7 +429,7 @@ export const GetDeviceVsChannel = (campaignId?: string, start_date?: any, end_da
   })
 
   return {
-    resultDeviceVsChannel: response?.data || null,
+    resultDeviceVsChannel: response?.data || [],
     loadingDeviceVsChannel: loading,
     errorDeviceVsChannel: error
   }

@@ -239,12 +239,12 @@ const VoiceDashboard = () => {
                 </Grid> : ""
            }
             
-           {
+          {
                 resultReportPermission?.includes("30") ? 
                 <Grid item xs={12} md={8} id="chart11">
                     <InfluencerGraph chartId="Chart 11" params={params} highlight = { highlight==='chart11' ? true : false }/>
                 </Grid> : ""
-           }
+           } 
            
                 <Grid item xs={12} md={4}>
                 {
@@ -279,7 +279,7 @@ const VoiceDashboard = () => {
                         />
                     </Grid> : ""
                 }
-                </Grid> 
+                </Grid>
            
             {
                 resultReportPermission?.includes("33") ?
@@ -325,7 +325,7 @@ const VoiceDashboard = () => {
                 <Grid item xs={12} md={4} id="chart20">
                     <ChannelVsDevice params={params} chartId="Chart 20" highlight = { highlight==='chart20' ? true : false }/>
                 </Grid> : ""
-            }
+            } 
             {   
                 resultReportPermission?.includes("40") ? 
                 <Grid item xs={12} md={6} id="chart21">

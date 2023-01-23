@@ -2,59 +2,78 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
-// ** Third Party Imports
-import { ApexOptions } from 'apexcharts'
-
 // ** Custom Components Imports
-import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { GetKeywordComparisonByBullyType } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+import { Radar } from 'react-chartjs-2';
+import { BullyDashboardColors } from 'src/utils/const'
+
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend
+);
+
+const datasets : any [] = [];
+export const initValue = {
+  labels: [],
+  datasets: datasets
+}
+
+export const getChartData = (data: any) => {
+  if(!data) return [];
+  
+  const seriesData : any[] = [];
+
+  if(data) {
+    for (let i=0; i<data?.length; i++) {
+      seriesData.push({
+        label: data[i].keyword_name || "",
+        data: data[i].data || [],
+        backgroundColor: 'rgba(0,0,0,0.01)',
+        borderColor: BullyDashboardColors[i],
+        borderWidth: 1,
+      },);
+    }
+  }
+  
+  return seriesData;
+}
+
 const KeywordComparisonByBullyType = ({params, chartId, highlight} : {params: any, chartId:string, highlight?:boolean}) => {
-  const [series, setSeries] = useState([]);
-  const [labels, setLabels] = useState([]);
+  const [ charData, setChartData ] = useState(initValue);
   const { resultKeywordComparisonByBullyType } = GetKeywordComparisonByBullyType(params?.campaign, params?.date, params?.endDate, params?.period);
 
-  const options: ApexOptions = {
-      chart: {
-          height: 350,
-          type: 'radar',
-          dropShadow: {
-            enabled: true,
-            blur: 1,
-            left: 1,
-            top: 1
-          },
-          toolbar: {show: false}
+  useEffect(() => {
+      if (resultKeywordComparisonByBullyType) {
+        const seriesData = getChartData(resultKeywordComparisonByBullyType?.value);
+        setChartData({
+          labels: resultKeywordComparisonByBullyType?.labels ? resultKeywordComparisonByBullyType?.labels : [],
+          datasets: seriesData
+        })
+      }
+      
+  },[resultKeywordComparisonByBullyType]);
 
-        },
-        stroke: {
-          width: 2
-        },
-        fill: {
-          opacity: 0
-        },
-        markers: {
-          size: 0
-        },
-        xaxis: {
-          categories: labels
-        },
-        colors: ["#787EFF", 'green', 'yellow', 'pink', 'purple', 'red']
-      };
-    
-      useEffect(() => {
-          if (resultKeywordComparisonByBullyType) {
-            setLabels(resultKeywordComparisonByBullyType?.labels ? resultKeywordComparisonByBullyType?.labels : []);
-            setSeries(resultKeywordComparisonByBullyType?.data ? resultKeywordComparisonByBullyType?.data : []);
-          }
-      },[resultKeywordComparisonByBullyType]);
+  const reportNo = '2.2.028';
 
-      const reportNo = '2.2.028';
-
-      const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+  const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
     
     return (
         <Card>
@@ -68,7 +87,7 @@ const KeywordComparisonByBullyType = ({params, chartId, highlight} : {params: an
                 </StyledTooltip>
             </span>
             <CardContent>
-                <ReactApexcharts type='radar' options={options} series={series} height={350}/>
+                <Radar data={charData} height={100}/>
             </CardContent>
         </Card>
     )

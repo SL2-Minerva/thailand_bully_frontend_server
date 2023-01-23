@@ -47,7 +47,7 @@ const CommentSentiment  = ({params, chartId} : {params:any, chartId: string}) =>
     ],
     datasets: [{
       data: [resultSentimentType?.negative_percentage || 0 , resultSentimentType?.neutral_percentage || 0, resultSentimentType?.positive_percentage||0],
-      backgroundColor: ['#ea4228','#f5cd19', '#5be12c'],
+      backgroundColor: ['#C73E1D','#FEB95F', '#63A375'],
       hoverOffset: 3
     }]
   };
