@@ -73,7 +73,7 @@ const SummaryByKeywords = ({params, chartId, highlight} :
                             (resultSummaryByKeywords||[])?.map((summary: any, index:any) => {
                                 return(
                                     <TableRow key={index}>
-                                        <TableCell><b>{summary.keyword}</b></TableCell>
+                                        <TableCell><b>{summary.keyword_name}</b></TableCell>
                                         <TableCell>{summary.total_messages}</TableCell>
                                         <TableCell>{summary.percentage}%</TableCell>
                                         <TableCell>
