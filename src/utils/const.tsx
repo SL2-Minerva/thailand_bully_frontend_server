@@ -169,7 +169,26 @@ export const SentimentAllColors = [
   "#8D99AE",
   "#4C4B63",
   "#7A0010"
+];
+
+export const BullyTypeSummaryColors  = [
+  '#FEB95F',
+  "#F0F0F0",
+  "#EFD4DC",
+  "#EA638C",
+  "#89023E",
+  "#521130",
+  "#34213E",
 ]
+
+export const BullyLevelSummaryColors  = [
+  '#FEB95F',
+  "#EDF2F4",
+  "#8D99AE",
+  "#4C4B63",
+  "#7A0010"
+]
+
 
 export const FacebookIcon = '/images/logos/facebook-round.png';
 export const TwitterIcon = '/images/logos/twitter.png';

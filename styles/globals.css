@@ -33,6 +33,15 @@ code[class*='language-'] {
   height: auto;
 }
 
+.logo-sidebar-noText {
+  margin: auto;
+}
+
+.logo-sidebar-noText img{
+  width: 100%;
+  height: auto;
+}
+
 .vertical-text {
 	transform: rotate(90deg);
 	transform-origin: right top 0;

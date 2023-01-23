@@ -23,7 +23,7 @@ import MenuItem from '@mui/material/MenuItem'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DialogCampaign from './dialogCampaign'
-import { CampaignList } from 'src/services/api/campaign/CampaignAPI'
+import { CampaignSearchList } from 'src/services/api/campaign/CampaignAPI'
 import { Organization } from 'src/services/api/organization/organization'
 import DomainList from 'src/services/api/domains/DomainAPI'
 import axios from 'axios'
@@ -55,11 +55,7 @@ const CampaignManagement = () => {
     setCurrent({})
   }
 
-  const [fillter, setFillter] = useState<any>({name: '', organization_id: '', status: '', start_date: '', end_date: ''})
-  const [is_fillter, setIsFillter] = useState<boolean>(false);
-  
-
-  const { resultCampaiganList, total } = CampaignList(reload, is_fillter, fillter, page)
+  const { resultCampaiganList, total } = CampaignSearchList(reload, page, campaignName, status, organization, date, endDate)
 
   const { result_domain_list } = DomainList();
 
@@ -101,22 +97,21 @@ const CampaignManagement = () => {
   const [tableData, setTableData] = useState(resultCampaiganList)
 
   function handleSubmitSearch ()  {
-    
-    const data = {
-      name: campaignName,
-      organization_id: organization,
-      status: status,
-      start_date: date,
-      end_date: endDate
-    }
-    setIsFillter(true);
     setReload(!reload);
-    setFillter(data);
-
+    setPage(0);
   }
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value-1);
   };
+
+  const handleClear = () => {
+    setCampaignName('');
+    setOrganization('');
+    setDate(null);
+    setEndDate(null);
+    setStatus('');
+    setPage(0);
+  }
 
   useEffect(()=> {
       if (total > 0) {
@@ -156,6 +151,9 @@ const CampaignManagement = () => {
                     onChange={handleOrganization}
                     inputProps={{ placeholder: 'Select Organization' }}
                   >
+                    <MenuItem value="">
+                       All
+                    </MenuItem>
                      {
                       list && list.map((item: any, index: number) => {
                         return (
@@ -180,10 +178,11 @@ const CampaignManagement = () => {
                     onChange={handleStatusChange}
                     inputProps={{ placeholder: 'Select Status' }}
                   >
-                    <MenuItem value=''>Select Status</MenuItem>
-                    <MenuItem value='pending'>Pending</MenuItem>
-                    <MenuItem value='active'>Active</MenuItem>
-                    <MenuItem value='inactive'>Inactive</MenuItem>
+                    <MenuItem value="">
+                       All
+                    </MenuItem>
+                    <MenuItem value='1'>Active</MenuItem>
+                    <MenuItem value='0'>Inactive</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -224,6 +223,15 @@ const CampaignManagement = () => {
                     variant='contained'
                   >
                     search
+                  </Button>
+                  <Button
+                    sx={{ mb: 2, ml: 3 }}
+                    onClick={() => {
+                      handleClear();
+                    }}
+                    variant='contained'
+                  >
+                    Clear
                   </Button>
                 </Box>
               </Grid>
