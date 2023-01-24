@@ -86,6 +86,27 @@ export const GetMessagesByDevice = (campaignId?: string, start_date?: any, end_d
   }
 }
 
+export const GetMessagesByEngagementType = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
+
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-engagement/keyword-by-engagement-type`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period,
+      fillter_keywords: fillter_keywords
+    }
+  })
+
+  return {
+    resultMessagesByDevice: res?.data || null,
+    loadingMessagesByDevice : loading,
+    errorMessagesByDevice : error
+  }
+}
+
 export const GetMessagesByAccount = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({

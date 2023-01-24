@@ -28,6 +28,7 @@ import EngagementTypeByChannel from "./EngagementTypeByChannel";
 import PeriodComparisonChartSentiment from "./PeriodComparisonChartSentiment";
 import { GetKeyWordsList } from "src/services/api/dashboards/overall/overallDashboardApi";
 import { EngagementTransChartColor } from "src/utils/const";
+import EngagementByType from "./EngagementByType";
 
 const EngagementDashboard = () => {
     const theme = useTheme()
@@ -268,19 +269,36 @@ const EngagementDashboard = () => {
                         />
                     </Grid> : ""
                 }
+                {
+                    resultReportPermission?.includes("61") ?
+                    <Grid item xs={12} md={12} id="chart8">
+                        <EngagementByType
+                            white={whiteColor}
+                            labelColor={labelColor}
+                            success={lineChartYellow}
+                            borderColor={borderColor}
+                            primary={lineChartPrimary}
+                            warning={lineChartWarning}
+                            gridLineColor={gridLineColor}
+                            params={params}
+                            chartId="Chart 8"
+                            highlight = { highlight==='chart8' ? true : false }
+                        />
+                    </Grid> : ""
+                }
             </Grid>
 
             <Grid container spacing={3} mt={2}>
                 <Grid container spacing={3} mt={2}>
                     {
                         resultReportPermission?.includes("64") ?
-                        <Grid id="chart8" item xs={12} md={4}>
-                            <PercentageOfEngangementType params={params} type="type" chartId="Chart 8" highlight = { highlight==='chart8' ? true : false }/>
+                        <Grid id="chart9" item xs={12} md={4}>
+                            <PercentageOfEngangementType params={params} type="type" chartId="Chart 9" highlight = { highlight==='chart9' ? true : false }/>
                         </Grid> : ''
                     }
                     {
                         resultReportPermission?.includes("65") ?
-                        <Grid id="chart9" item xs={12} md={8}>
+                        <Grid id="chart10" item xs={12} md={8}>
                             <DailyEngagementType
                                 white={whiteColor}
                                 labelColor={labelColor}
@@ -291,33 +309,15 @@ const EngagementDashboard = () => {
                                 gridLineColor={gridLineColor}
                                 params= {params}
                                 type="type"
-                                chartId="Chart 9"
-                                highlight = { highlight==='chart9' ? true : false }
+                                chartId="Chart 10"
+                                highlight = { highlight==='chart10' ? true : false }
                             /> 
                         </Grid> : ""
                     }
                     {
                         resultReportPermission?.includes("66") ?
-                        <Grid item xs={12} md={12} id="chart10">
-                            <EngagementTypeByDay 
-                                white={whiteColor}
-                                labelColor={labelColor}
-                                success={lineChartYellow}
-                                borderColor={borderColor}
-                                primary={lineChartPrimary}
-                                warning={lineChartWarning}
-                                gridLineColor={gridLineColor}
-                                params={params}
-                                colorType="engagementType"
-                                chartId="Chart 10"
-                                highlight = { highlight==='chart10' ? true : false }
-                            />
-                        </Grid> : ""
-                    }
-                    {
-                        resultReportPermission?.includes("67") ?
                         <Grid item xs={12} md={12} id="chart11">
-                            <EngagementTypeByTime
+                            <EngagementTypeByDay 
                                 white={whiteColor}
                                 labelColor={labelColor}
                                 success={lineChartYellow}
@@ -333,9 +333,9 @@ const EngagementDashboard = () => {
                         </Grid> : ""
                     }
                     {
-                        resultReportPermission?.includes("68") ?
-                        <Grid item xs={12} md={12} id="chart12">
-                            <EngagementTypeByDevice
+                        resultReportPermission?.includes("67") ?
+                        <Grid item xs={12} md={12} id="chart10">
+                            <EngagementTypeByTime
                                 white={whiteColor}
                                 labelColor={labelColor}
                                 success={lineChartYellow}
@@ -351,9 +351,9 @@ const EngagementDashboard = () => {
                         </Grid> : ""
                     }
                     {
-                        resultReportPermission?.includes("69") ?
+                        resultReportPermission?.includes("68") ?
                         <Grid item xs={12} md={12} id="chart13">
-                            <EngagementTypeByAccount
+                            <EngagementTypeByDevice
                                 white={whiteColor}
                                 labelColor={labelColor}
                                 success={lineChartYellow}
@@ -362,16 +362,16 @@ const EngagementDashboard = () => {
                                 warning={lineChartWarning}
                                 gridLineColor={gridLineColor}
                                 params={params}
+                                colorType="engagementType"
                                 chartId="Chart 13"
                                 highlight = { highlight==='chart13' ? true : false }
                             />
                         </Grid> : ""
-                    }   
-                    
+                    }
                     {
-                        resultReportPermission?.includes("70") ?
+                        resultReportPermission?.includes("69") ?
                         <Grid item xs={12} md={12} id="chart14">
-                            <EngagementTypeByChannel
+                            <EngagementTypeByAccount
                                 white={whiteColor}
                                 labelColor={labelColor}
                                 success={lineChartYellow}
@@ -382,6 +382,24 @@ const EngagementDashboard = () => {
                                 params={params}
                                 chartId="Chart 14"
                                 highlight = { highlight==='chart14' ? true : false }
+                            />
+                        </Grid> : ""
+                    }   
+                    
+                    {
+                        resultReportPermission?.includes("70") ?
+                        <Grid item xs={12} md={12} id="chart15">
+                            <EngagementTypeByChannel
+                                white={whiteColor}
+                                labelColor={labelColor}
+                                success={lineChartYellow}
+                                borderColor={borderColor}
+                                primary={lineChartPrimary}
+                                warning={lineChartWarning}
+                                gridLineColor={gridLineColor}
+                                params={params}
+                                chartId="Chart 15"
+                                highlight = { highlight==='chart15' ? true : false }
                             />
                         </Grid> : ""
                     }
@@ -402,10 +420,10 @@ const EngagementDashboard = () => {
                                     </span>
                                 </Card>
                             </Grid> */}
-                            <Grid item xs={12} md={12} id="chart15">
+                            <Grid item xs={12} md={12} id="chart16">
                                 <TotalEngagement
                                     totalEngagement={ resultTotalEngagement}
-                                    highlight = { highlight==='chart15' ? true : false }
+                                    highlight = { highlight==='chart16' ? true : false }
                                     loading = {loadingTotalEngagement}
                                 />
                             </Grid> 
@@ -413,7 +431,7 @@ const EngagementDashboard = () => {
                     }
                     {
                         resultReportPermission?.includes("72") ?
-                        <Grid item xs={12} md={6} id="chart16">
+                        <Grid item xs={12} md={6} id="chart17">
                             <PeriodComparisonChart
                                     white={whiteColor}
                                     labelColor={labelColor}
@@ -426,15 +444,15 @@ const EngagementDashboard = () => {
                                     type = "channel"
                                     chartTitle="Engagement"
                                     colorType="engagementDefault"
-                                    chartId="Chart 16"
-                                    highlight = { highlight==='chart16' ? true : false }
+                                    chartId="Chart 17"
+                                    highlight = { highlight==='chart17' ? true : false }
                                     reportNo = "4.2.021"
                                 />
                         </Grid> : ""
                     }
                     {
                         resultReportPermission?.includes("73") ?
-                        <Grid item xs={12} md={6} id="chart17">
+                        <Grid item xs={12} md={6} id="chart18">
                             <PeriodComparisonChartSentiment
                                     white={whiteColor}
                                     labelColor={labelColor}
@@ -447,21 +465,21 @@ const EngagementDashboard = () => {
                                     type = "sentiment"
                                     chartTitle="Engagement"
                                     colorType="SentimentComparisonEngagment"
-                                    chartId="Chart 17"
-                                    highlight = { highlight==='chart17' ? true : false }
+                                    chartId="Chart 18"
+                                    highlight = { highlight==='chart18' ? true : false }
                                 />
                         </Grid> : ""
                     }
                     {
                         resultReportPermission?.includes("74") ?
                         <>
-                            <Grid item xs={12} md={7} id="chart18">
+                            <Grid item xs={12} md={7} id="chart19">
                                 <EngagementTypeComparison
-                                        params={params} chartId="Chart 18" highlight = { highlight==='chart18' ? true : false }
+                                        params={params} chartId="Chart 19" highlight = { highlight==='chart19' ? true : false }
                                     />
                             </Grid> 
-                            <Grid item xs={12} md={5} id="chart19">
-                                    <EngagmentComparisonChart params={params} chartId="chart 19" highlight = { highlight==='chart19' ? true : false }/>
+                            <Grid item xs={12} md={5} id="chart20">
+                                    <EngagmentComparisonChart params={params} chartId="chart 20" highlight = { highlight==='chart20' ? true : false }/>
                             </Grid>
                         </>
                         : ""
@@ -480,8 +498,8 @@ const EngagementDashboard = () => {
                                     <Button variant="contained" color={topKeyword === 'all' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopKeywords("all")}}> ALL </Button>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={12} id="chart20">
-                                    <EngagementSummary topKeyword={topKeyword} params={params} chartId="Chart 20" highlight = { highlight==='chart20' ? true : false }/>
+                            <Grid item xs={12} id="chart21">
+                                    <EngagementSummary topKeyword={topKeyword} params={params} chartId="Chart 21" highlight = { highlight==='chart21' ? true : false }/>
                             </Grid>
                         </> : ""
                     }

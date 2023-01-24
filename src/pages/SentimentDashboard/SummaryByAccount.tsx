@@ -1,39 +1,55 @@
-import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer, Grid, Button, Box, Pagination, LinearProgress } from "@mui/material"; 
+import { Grid, Button, LinearProgress } from "@mui/material"; 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import LinearProgressBar from "./LinearProgressBar";
 import { StyledTooltip } from "../dashboard/overall";
 import { Information } from "mdi-material-ui";
 import { useEffect, useState } from "react";
 import { GetSummaryByAccount } from "src/services/api/dashboards/sentiment/sentimentDashboard";
+import { renderProgress } from "./SummaryByKeywords";
+import { DataGrid } from "@mui/x-data-grid";
 
 const SummaryByAccount = ({ params, chartId, highlight} : 
     {params: any, chartId: string, highlight: boolean}) => {
     
     const [ topAccount, setTopAccount ] = useState<string>('all');
-    const [page, setPage] = useState(0);
-    const [pageCount, setPageCount] = useState<number>(0);
+    
+    // const [page, setPage] = useState(0);
+    // const [pageCount, setPageCount] = useState<number>(0);
 
-    const { resultSummaryByAccount, total, loadingSummaryByAccount } = GetSummaryByAccount(topAccount, params?.campaign, params?.date, params?.endDate, params?.period, page, params?.keywordIds);
+    const { resultSummaryByAccount, total, loadingSummaryByAccount } = GetSummaryByAccount(topAccount, params?.campaign, params?.date, params?.endDate, params?.period, 0, params?.keywordIds);
 
     const handleTopAccounts = (data: string) => {
         setTopAccount(data);
     }
 
-    const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-        setPage(value-1);
-    };
+    // const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+    //     setPage(value-1);
+    // };
 
     useEffect(()=> {
         if (total > 0) {
-        setPageCount(Math.ceil(total / 10));
+        // setPageCount(Math.ceil(total / 10));
         }
     }, [total]);
 
     const reportNo = '5.2.017';
 
    const title = chartId + ", Report Level 2(" + reportNo + ")";
+
+   const columns = [
+    { field: 'infulencer', headerName: 'Influencer',flex: 1 , sortable: false },
+    { field: 'sentiment_score', headerName: 'Sentiment Score ', flex: 1  },
+    { field: 'positive', headerName: ' Positive', flex: 1  ,
+        renderCell: renderProgress
+    },
+    { field: 'neutral', headerName: ' Neutral', flex: 1  ,
+        renderCell: renderProgress
+    },
+    { field: 'negative', headerName: ' Negative', flex: 1  ,
+        renderCell: renderProgress
+    }
+  ];
 
     return (
         <Card>
@@ -63,7 +79,7 @@ const SummaryByAccount = ({ params, chartId, highlight} :
                     <Button variant="contained" color={topAccount === 'all' ? "warning" : 'inherit'} size="medium" sx={{ marginRight: '20px' }} onClick={() => {handleTopAccounts("all")}}> ALL </Button>
                 </Grid>
             </Grid>
-            <TableContainer sx={{ maxHeight: 500 }}>
+            {/* <TableContainer sx={{ maxHeight: 500 }}>
             <Table size="small" stickyHeader={true}>
                     <TableHead style={{ backgroundColor: "green"}}>
                         <TableRow>
@@ -104,7 +120,19 @@ const SummaryByAccount = ({ params, chartId, highlight} :
                     <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
                     : ""
                 }
-            </Box>
+            </Box> */}
+
+            {
+                resultSummaryByAccount ? 
+                <DataGrid
+                    autoHeight
+                    rows={resultSummaryByAccount}
+                    columns={columns}
+                    pageSize={10}
+                    rowsPerPageOptions={[10]}
+                    getRowId={(row) => row.id} 
+                /> : ""
+            }
             </CardContent>
         </Card>
         
