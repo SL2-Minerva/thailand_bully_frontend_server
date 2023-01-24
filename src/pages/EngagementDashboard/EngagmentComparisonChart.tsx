@@ -10,6 +10,7 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { GetComparisonEngagement } from 'src/services/api/dashboards/engagement/EngagementApi'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui';
+import { LinearProgress } from '@mui/material'
 
 const Labels = (data: any) => {
   if(!data) {
@@ -51,7 +52,7 @@ const ChartDataEngagement = (data: any, type : string) => {
 }
 
 const EngagmentComparisonChart = ({params, highlight, chartId} : {params: any, highlight:boolean, chartId: string}) => {
-  const { resultComparison }  = GetComparisonEngagement(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultComparison, loadingComparison }  = GetComparisonEngagement(params?.campaign, params?.date, params?.endDate, params?.period);
   
   const chartLabels =  Labels(resultComparison);
   const shareData = ChartDataEngagement(resultComparison, 'share');
@@ -119,6 +120,11 @@ const EngagmentComparisonChart = ({params, highlight, chartId} : {params: any, h
 
   return (
     <Card sx={{ minHeight: 560 }}>
+      {loadingComparison && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
                 title='Engagement Type Proportion'

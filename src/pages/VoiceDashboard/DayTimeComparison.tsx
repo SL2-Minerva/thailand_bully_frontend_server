@@ -12,9 +12,10 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 import { GetDayTimeComparison } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
+import { LinearProgress } from '@mui/material'
 
 const DayTimeComparison = ({params, chartId, highlight} : { params: any, chartId: string, highlight: boolean}) => {
-  const { resultDayTimeComparison } = GetDayTimeComparison(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultDayTimeComparison, loadingDayTimeComparison } = GetDayTimeComparison(params?.campaign, params?.date, params?.endDate, params?.period);
     const [series, setSeries] = useState([]) ;
     const [ showDetail , setShowDetail ] = useState<boolean>(false);
   
@@ -54,6 +55,11 @@ const DayTimeComparison = ({params, chartId, highlight} : { params: any, chartId
 
       return (
         <Card>
+          {loadingDayTimeComparison && (
+            <LinearProgress
+              style={{ width: "100%" }}
+            />
+          )}
           <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
               <CardHeader title="Day&Time " titleTypographyProps={{ variant: 'h4',color: highlight ? 'green' : '#4c4e64de' }}/>
               <StyledTooltip arrow title={chartTitle || ""}>

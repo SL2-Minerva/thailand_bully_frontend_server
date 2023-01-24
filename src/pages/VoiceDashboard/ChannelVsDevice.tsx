@@ -1,7 +1,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid } from '@mui/material'
+import { Grid, LinearProgress } from '@mui/material'
 
 // ** Third Party Imports
 import { ApexOptions } from 'apexcharts'
@@ -14,7 +14,7 @@ import { Information } from 'mdi-material-ui'
 import { GetDeviceVsChannel } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
 const ChannelVsDevice = ({params, chartId, highlight} : {params:any, chartId: string, highlight: boolean}) => {
-  const { resultDeviceVsChannel } = GetDeviceVsChannel(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultDeviceVsChannel, loadingDeviceVsChannel } = GetDeviceVsChannel(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const [seriesData, setSeriesData ] = useState([]);
   const [labels, setLabels] = useState([]);
@@ -67,6 +67,11 @@ const ChannelVsDevice = ({params, chartId, highlight} : {params:any, chartId: st
     return ( 
         
         <Card style={{ height: 455 }}>
+          {loadingDeviceVsChannel && (
+            <LinearProgress
+              style={{ width: "100%" }}
+            />
+          )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader title="Channel vs Devices" titleTypographyProps={{ variant:'h6',color: highlight ? 'green' : '#4c4e64de' }}
                     subheader="Period over Period Comparison"

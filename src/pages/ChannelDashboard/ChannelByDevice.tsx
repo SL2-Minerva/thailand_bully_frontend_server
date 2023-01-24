@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from '@mui/material'
+import { Card, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -17,7 +17,7 @@ const ChannelByDevice = (props: LineProps) => {
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const { resultChannelByDevice } = GetChannelByDevice(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultChannelByDevice, loadingChannelByDevice } = GetChannelByDevice(params?.campaign, params?.date, params?.endDate, params?.period);
   const [ paramsId, setParamsId] = useState<any>({
     keywordId : null,
     sourceId: null,
@@ -178,6 +178,11 @@ const ChannelByDevice = (props: LineProps) => {
 
     return (
       <Card>
+        {loadingChannelByDevice && (
+          <LinearProgress
+              style={{ width: "100%" }}
+          />
+        )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title="Daily Messages By Device"

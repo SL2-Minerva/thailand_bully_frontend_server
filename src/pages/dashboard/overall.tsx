@@ -107,7 +107,7 @@ const OverallDashboard = () => {
     const { resultReportPermission } = UserPermission();
     const { resultCampaiganList } = CampaignList();
     const { result_source_list  } = SourceService();
-    const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount } = TotalKeyStats(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
+    const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount, loadingTotalKeystats } = TotalKeyStats(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
 
     const params = {
         campaign: campaign,
@@ -392,6 +392,7 @@ const OverallDashboard = () => {
                         averageValue= {resultTotalMessagePerDay?.average_message?.toString() || '0'}
                         chartId = "Chart 3"
                         reportNo = '1.1.005'
+                        loading = {loadingTotalKeystats}
                     />
                 </Grid> :
                 ""
@@ -414,6 +415,7 @@ const OverallDashboard = () => {
                         averageValue={resultTotalEngagement?.average_engagement?.toString() || '0'}
                         chartId = "Chart 4"
                         reportNo = '1.1.006'
+                        loading = {loadingTotalKeystats}
                     />
                 </Grid> : ""
             }
@@ -435,6 +437,7 @@ const OverallDashboard = () => {
                         averageValue={resultTotalAccount?.average_account?.toString() || '0'}
                         chartId = "Chart 5"
                         reportNo = '1.1.007'
+                        loading = {loadingTotalKeystats}
                     />
                 </Grid> : ""
             }

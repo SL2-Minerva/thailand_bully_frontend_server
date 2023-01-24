@@ -114,8 +114,11 @@ const renderClient = (row: UsersType) => {
   }
 }
 
-const RowOptions = ({ id, current, show, setShow,refreshDelete, setRefreshDelete }: { id: any; current: any, show: boolean, setShow: any, refreshDelete:boolean, setRefreshDelete:any }) => {
+const RowOptions = ({ id, current, show, setShow,refreshDelete, setRefreshDelete }
+  : { id: any; current: any, show: boolean, setShow: any, refreshDelete:boolean, setRefreshDelete:any }) => {
   // ** Hooks
+
+  const [ updateData, setUpdateData ] = useState();
 
   // ** State
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -175,7 +178,7 @@ const RowOptions = ({ id, current, show, setShow,refreshDelete, setRefreshDelete
         >
           {
             resultPermission?.user?.authorized_edit ? 
-            <MenuItem onClick={() => {setShow(true);  setAnchorEl(null)}}>
+            <MenuItem onClick={() => {setShow(true);  setAnchorEl(null); setUpdateData(current);}}>
               <PencilOutline fontSize='small' sx={{ mr: 2 }} />
               Edit
             </MenuItem>
@@ -191,8 +194,11 @@ const RowOptions = ({ id, current, show, setShow,refreshDelete, setRefreshDelete
             :<></>
           }
         </Menu>
-
-        <DialogEditUserInfo show={show} setShow={setShow} action='edit' current={current}></DialogEditUserInfo>
+        {
+          updateData ? 
+          <DialogEditUserInfo show={show} setShow={setShow} action='edit' current={updateData} setCurrent={setUpdateData}></DialogEditUserInfo>
+          : ""
+        }
       </>
     }
       
@@ -377,7 +383,9 @@ const UserList = () => {
       field: 'actions',
       headerName: 'Actions',
       renderCell: ({ row }: CellType) => {
-        return <RowOptions id={row.id} current={row} setShow={setShow} show={show} refreshDelete={refreshDelete} setRefreshDelete={setRefreshDelete} />
+
+        return <RowOptions id={row.id} current={row}
+         setShow={setShow} show={show} refreshDelete={refreshDelete} setRefreshDelete={setRefreshDelete} />
       }
     }
   ]

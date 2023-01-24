@@ -1,7 +1,7 @@
 import ReactWordcloud from "react-wordcloud";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
-import { Button, Card, CardHeader, Grid } from "@mui/material";
+import { Button, Card, CardHeader, Grid, LinearProgress } from "@mui/material";
 import { useState } from "react";
 import { StyledTooltip } from "./overall";
 import { Information } from "mdi-material-ui";
@@ -9,7 +9,7 @@ import { GetWordCloudsSentiment } from "src/services/api/dashboards/overall/over
 
 const WordCloudSentiment = ({params, chartId} : {params: any, chartId: string}) => {
     const [ sentiment, setSentiment ] = useState('');
-    const { resultWordCloudsSentiment } = GetWordCloudsSentiment(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const { resultWordCloudsSentiment, loadingWordCloudsSentiment } = GetWordCloudsSentiment(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
 
     const chooseSentiment = (value: string) =>{ 
         setSentiment(value);
@@ -17,6 +17,11 @@ const WordCloudSentiment = ({params, chartId} : {params: any, chartId: string}) 
 
     return (
         <Card sx={{ maxHeight: 500,minHeight: 500 }}>
+            {loadingWordCloudsSentiment && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title='Word Clouds'

@@ -1,7 +1,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid } from "@mui/material";
+import { Grid, LinearProgress } from "@mui/material";
 import dynamic from 'next/dynamic'
 import { StyledTooltip } from './overall';
 import { Information } from 'mdi-material-ui';
@@ -12,13 +12,18 @@ import { GetSentimentScore } from 'src/services/api/dashboards/overall/overallDa
 const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
 
 const SentimentGaugeChart = ({params, chartId} : {params:any, chartId: string}) => {
-    const {resultSentimentScore} = GetSentimentScore(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const {resultSentimentScore, loadingFilterData} = GetSentimentScore(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
     const reportNo = '1.1.018';
 
     const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
 
     return(
         <Card style={{ maxHeight: '340px' }}>
+            {loadingFilterData && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title='Sentiment Score'

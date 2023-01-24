@@ -16,15 +16,17 @@ import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { Share, StickerEmoji, Message } from 'mdi-material-ui'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from "mdi-material-ui";
+import { LinearProgress } from '@mui/material'
 
 interface InfluencerComparisonProps {
     totalEngagement?: any,
-    highlight: boolean
+    highlight: boolean,
+    loading?: boolean 
   }
 
 const TotalEngagement = (props: InfluencerComparisonProps) => {
     // ** Props
-    const { totalEngagement, highlight } = props
+    const { totalEngagement, highlight, loading } = props
 
 
   return (
@@ -33,6 +35,11 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
         <Grid container spacing={2}>
             <Grid item xs={6} md={3}>
             <Card>
+                {loading && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
                 <CardContent>
                     <span style={{ display: 'flex', justifyContent: 'left' }}>
                         <Typography variant='h5' sx={{ color : highlight ? 'green' : '#4c4e64de' }}>
@@ -70,6 +77,11 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
             </Grid>
         <Grid item xs={6} md={3}>
             <Card>
+            {loading && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
                 <CardContent>
                 <span style={{ display: 'flex', justifyContent: 'center' }}>
                     <Share fontSize='large'/>
@@ -104,6 +116,11 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
 
         <Grid item xs={6} md={3}>
              <Card>
+             {loading && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
                 <CardContent>
                 <span style={{ display: 'flex', justifyContent: 'center' }}>
                     <Message fontSize='large'/>
@@ -137,6 +154,11 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
 
         <Grid item xs={6} md={3}>
             <Card>
+            {loading && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
                 <CardContent>
                 <span style={{ display: 'flex', justifyContent: 'center' }}>
                     <StickerEmoji fontSize='large'/>

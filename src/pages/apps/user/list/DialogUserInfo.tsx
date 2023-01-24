@@ -39,20 +39,20 @@ interface DialogInfoProps {
   setShow: any
   action: string
   current?: any
+  setCurrent?: any
 }
 
 
 const DialogEditUserInfo = (props: DialogInfoProps) => {
-  const {show, setShow, action, current} = props
+  const {show, setShow, action, current, setCurrent} = props
 
-  const [organization, setOrganization] = useState<any>(current.organization_id ?? '')
-  const [name, setName] = useState<string>(current.name ?? '')
-  const [email, setEmail] = useState<string>(current.email ?? '')
-  const [company, setCompany] = useState<string>(current.company ?? '')
-  const [role_id, setRole] = useState<any>(current.role_id ?? '')
-  const [status, setStatus] = useState<string>(current.status ?? '')
-
-
+  const [organization, setOrganization] = useState<any>(current?.organization_id ?? '')
+  const [name, setName] = useState<string>(current?.name ?? '')
+  const [email, setEmail] = useState<string>(current?.email ?? '')
+  const [company, setCompany] = useState<string>(current?.company ?? '')
+  const [role_id, setRole] = useState<any>(current?.role_id ?? '')
+  const [status, setStatus] = useState<string>(current?.status ?? '')
+  
   const { list } = Organization.getList()
   const { resultRoleList } = role_list()
 
@@ -62,7 +62,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
     if (action === 'edit') {
 
       axios
-      .put(`${API_PATH}/user/update/${current.id}`, {  name, email,company, organization_id: organization, role_id, status }, {
+      .put(`${API_PATH}/user/update/${current?.id}`, {  name, email,company, organization_id: organization, role_id, status }, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
         }
@@ -71,10 +71,12 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
         const { data, status } = response.data
         console.log(data, status)
 
-        setShow(false)
+        setShow(false);
+        setCurrent();
       })
       .catch((ex: any) => {
-        console.log(ex)
+        console.log(ex);
+        setCurrent();
       })
     } else {
       axios
@@ -85,12 +87,14 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
       })
       .then(async response => {
         const { data, status } = response.data
-        console.log(data, status)
+        console.log(data, status);
+        setCurrent();
 
         setShow(false)
       })
       .catch((ex: any) => {
-        console.log(ex)
+        console.log(ex);
+        setCurrent();
       })
     }
   }
@@ -113,14 +117,14 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
         open={show}
         maxWidth='md'
         scroll='body'
-        onClose={() => setShow(false)}
+        onClose={() => {setShow(false); setCurrent();}}
         TransitionComponent={Transition}
-        onBackdropClick={() => setShow(false)}
+        onBackdropClick={() => {setShow(false); setCurrent();}}
       >
         <DialogContent sx={{ pb: 6, px: { xs: 8, sm: 15 }, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
           <IconButton
             size='small'
-            onClick={() => setShow(false)}
+            onClick={() => {setShow(false); setCurrent();}}
             sx={{ position: 'absolute', right: '1rem', top: '1rem' }}
           >
             <Close />
@@ -207,7 +211,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
           <Button variant='contained' sx={{ mr: 2 }} onClick={() => handleSummit()}>
             Submit
           </Button>
-          <Button variant='outlined' color='secondary' onClick={() => setShow(false)}>
+          <Button variant='outlined' color='secondary' onClick={() => {setShow(false); setCurrent();}}>
             Discard
           </Button>
         </DialogActions>

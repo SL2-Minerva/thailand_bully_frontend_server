@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Grid, Paper, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Card, CardContent, CardHeader, Grid, LinearProgress, Paper, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import { Information } from 'mdi-material-ui'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
@@ -54,7 +54,7 @@ interface LineProps {
 const PeriodComparisonChannelChart = (props: LineProps) => {
 
   const { white, labelColor, borderColor, gridLineColor, type, chartTitle, chartId, params, highlight } = props
-  const { resultSenitmentComparisonByChannel } = GetSenitmentComparisonByChannel(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultSenitmentComparisonByChannel, loadingSenitmentComparisonByChannel } = GetSenitmentComparisonByChannel(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -176,6 +176,11 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
 
     return (
         <Card>
+          {loadingSenitmentComparisonByChannel && (
+            <LinearProgress
+                style={{ width: "100%" }}
+            />
+            )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <CardHeader
               title={getTitle(type, chartTitle)}

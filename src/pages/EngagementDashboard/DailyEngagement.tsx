@@ -14,6 +14,7 @@ import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { FilterByCampaignId } from 'src/services/api/dashboards/engagement/EngagementApi'
+import { LinearProgress } from '@mui/material'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -83,7 +84,7 @@ const DailyEngagement = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
   
 
   const chartRef = useRef();
@@ -243,6 +244,11 @@ const DailyEngagement = (props: LineProps) => {
 
   return (
     <Card>
+      {loadingFilterData && (
+        <LinearProgress
+            style={{ width: "100%" }}
+        />
+        )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
               title='Daily Engagement By Date'

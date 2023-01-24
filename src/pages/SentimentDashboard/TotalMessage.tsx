@@ -14,14 +14,16 @@ import Grid from '@mui/material/Grid'
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { ThumbUp, ThumbDown, ThumbsUpDown } from 'mdi-material-ui'
+import { LinearProgress } from '@mui/material'
 
 interface InfluencerComparisonProps {
-    totalMessage?: any
+    totalMessage?: any,
+    loadingTotalSentiment? : boolean
   }
 
 const TotalMessage = (props: InfluencerComparisonProps) => {
     // ** Props
-    const { totalMessage } = props
+    const { totalMessage, loadingTotalSentiment } = props
 
 
   return (
@@ -30,6 +32,11 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
         <Grid container spacing={3}>
         <Grid item xs={6} md={3}>
             <Card>
+            {loadingTotalSentiment && (
+            <LinearProgress
+                style={{ width: "100%" }}
+            />
+            )}
                 <CardContent>
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                         <Typography variant='h4'>Total Message</Typography>
@@ -61,6 +68,11 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
         </Grid>
         <Grid item xs={6} md={3}>
             <Card>
+            {loadingTotalSentiment && (
+            <LinearProgress
+                style={{ width: "100%" }}
+            />
+            )}
                 <CardContent>
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                         <ThumbUp fontSize='large'/>
@@ -96,6 +108,11 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
 
         <Grid item xs={6} md={3}>
             <Card>
+            {loadingTotalSentiment && (
+            <LinearProgress
+                style={{ width: "100%" }}
+            />
+            )}
                 <CardContent>
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                         <ThumbsUpDown fontSize='large'/>
@@ -131,6 +148,11 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
 
         <Grid item xs={6} md={3}>
             <Card>
+            {loadingTotalSentiment && (
+            <LinearProgress
+                style={{ width: "100%" }}
+            />
+            )} 
                 <CardContent>
                 <span style={{ display: 'flex', justifyContent: 'center' }}>
                     <ThumbDown fontSize='large'/>

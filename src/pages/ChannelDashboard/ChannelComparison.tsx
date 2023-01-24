@@ -15,7 +15,7 @@ import Grid from '@mui/material/Grid'
 // ** Icons Imports
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
-import { Avatar, Chip } from '@mui/material'
+import { Avatar, Chip, LinearProgress } from '@mui/material'
 import { FacebookIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const'
 
 interface InfluencerComparisonProps {
@@ -24,12 +24,13 @@ interface InfluencerComparisonProps {
     trendNumber: string
     trend?: string
     totalText: string,
-    totalValue : number
+    totalValue : number,
+    loading?: boolean
   }
 
 const ChannelComparison = (props: InfluencerComparisonProps) => {
     // ** Props
-    const { color, trend, trendNumber, totalText, totalValue } = props
+    const { color, trend, trendNumber, totalText, totalValue, loading } = props
 
     const TrendIcon = trend === 'plus' ? ChevronUp : ChevronDown
     const imgPath = totalText === "Facebook" ? FacebookIcon : totalText === "Twitter" ? TwitterIcon :
@@ -39,6 +40,11 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
   return (
     <>
         <Card>
+        {loading && (
+            <LinearProgress
+                style={{ width: "100%" }}
+            />
+            )}
             <CardContent>
                 <Box>
                     <Grid container spacing={6}>

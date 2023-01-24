@@ -3,7 +3,7 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
-import { Grid } from "@mui/material"
+import { Grid, LinearProgress } from "@mui/material"
 
 // ** Third Party Imports
 
@@ -13,7 +13,7 @@ import { StyledTooltip } from './overall'
 import { GetSentimentType } from 'src/services/api/dashboards/overall/overallDashboardApi'
 
 const CommentSentiment  = ({params, chartId} : {params:any, chartId: string}) => {
-  const {resultSentimentType} = GetSentimentType(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const {resultSentimentType, loadingFilterData} = GetSentimentType(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
   const reportNo = '1.1.019';
 
   const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
@@ -54,6 +54,11 @@ const CommentSentiment  = ({params, chartId} : {params:any, chartId: string}) =>
 
   return (
     <Card style={{ minHeight: '340px' }}>
+      {loadingFilterData && (
+          <LinearProgress
+            style={{ width: "100%" }}
+          />
+        )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title='Comment Sentiment'

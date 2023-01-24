@@ -2,7 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid } from "@mui/material"
+import { Grid, LinearProgress } from "@mui/material"
 
 // ** Third Party Imports
 import { Bar } from 'react-chartjs-2'
@@ -35,7 +35,7 @@ const ChartData = (data: any ) => {
 }
 
 const ChannelBySentiment  = ({params, chartId, highlight} : {params: any, chartId: string, highlight : boolean}) => {
-  const { resultChannelSentimentLevel } = GetChannelSentimentLevel(params?.campaign, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const { resultChannelSentimentLevel, loadingChannelSentimentLevel } = GetChannelSentimentLevel(params?.campaign, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
 
   const labels = resultChannelSentimentLevel ? ChartLabels(resultChannelSentimentLevel) : [];
   const data = {
@@ -59,6 +59,11 @@ const ChannelBySentiment  = ({params, chartId, highlight} : {params: any, chartI
 
   return (
     <Card>
+      {loadingChannelSentimentLevel && (
+        <LinearProgress
+            style={{ width: "100%" }}
+        />
+        )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title='Channel by Sentiment'

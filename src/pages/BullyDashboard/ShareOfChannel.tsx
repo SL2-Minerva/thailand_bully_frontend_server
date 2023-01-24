@@ -2,7 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid } from "@mui/material"
+import { Grid, LinearProgress } from "@mui/material"
 import { Table, TableRow, TableHead, TableCell } from "@mui/material"; 
 
 // ** Third Party Imports
@@ -34,7 +34,8 @@ const ChartData = (data: any ) => {
   return chartDatas;
 }
 
-const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  chartId, highlight, type} : {resultShareOfChannel: any,resultShareofChannelPlatform : any, chartId : string, highlight: boolean, type: string}) => {
+const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  chartId, highlight, type, loading, loadingChannel} : 
+  {resultShareOfChannel: any,resultShareofChannelPlatform : any, chartId : string, highlight: boolean, type: string, loading: boolean, loadingChannel: boolean}) => {
   
   const labels = resultShareOfChannel ? ChartLabels(resultShareOfChannel) : [];
   const data = {
@@ -52,6 +53,11 @@ const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  c
 
   return (
     <Card>
+      {loading && loadingChannel && (
+            <LinearProgress
+                style={{ width: "100%" }} 
+            />
+            )}  
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title='Share of Channel'

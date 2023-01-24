@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, CardHeader, Grid, Pagination, Paper, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Box, Card, CardContent, CardHeader, Grid, LinearProgress, Pagination, Paper, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import { Information } from 'mdi-material-ui'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
@@ -60,7 +60,7 @@ const PeriodComparisonChart = (props: LineProps) => {
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState<number>(0);
 
-  const { resultSentimentComparisonByEngagement, total } = GetSenitmentComparisonByEngagement(params?.campaign, params?.date, params?.endDate, params?.period, page);
+  const { resultSentimentComparisonByEngagement, total, loadingSenitmentComparisonByEngagement } = GetSenitmentComparisonByEngagement(params?.campaign, params?.date, params?.endDate, params?.period, page);
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value-1);
@@ -188,6 +188,11 @@ const PeriodComparisonChart = (props: LineProps) => {
 
     return (
         <Card>
+          {loadingSenitmentComparisonByEngagement && (
+                <LinearProgress
+                    style={{ width: "100%" }}
+                />
+                )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <CardHeader
               title={getTitle(type, chartTitle)}

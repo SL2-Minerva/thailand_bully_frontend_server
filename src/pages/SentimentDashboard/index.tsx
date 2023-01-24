@@ -49,7 +49,7 @@ const SentimentDashboard = () => {
     const [ highlight, setHighlight ] = useState<string>("");
 
     const { resultReportPermission } = UserPermission();
-    const { resultTotalSentiment } = GetTotalSentiment(campaign, date, endDate, period);
+    const { resultTotalSentiment, loadingTotalSentiment } = GetTotalSentiment(campaign, date, endDate, period);
 
     
     const params = {
@@ -242,6 +242,7 @@ const SentimentDashboard = () => {
                         <Grid item xs={12} md={12}>
                             <TotalMessage
                                 totalMessage={resultTotalSentiment}
+                                loadingTotalSentiment={loadingTotalSentiment}
                             />
                         </Grid>
                     </> : ""

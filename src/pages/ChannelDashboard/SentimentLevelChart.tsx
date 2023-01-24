@@ -9,6 +9,7 @@ import { ApexOptions } from 'apexcharts'
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { GetSentimentLevel } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
 import { SentimentAllColors } from 'src/utils/const'
+import { LinearProgress } from '@mui/material'
 
 
 const Labels = (data: any) => {
@@ -51,7 +52,7 @@ const ChartDataPositive = (data: any, type : string) => {
 }
 
 const SentimentLevelChart = ({params, highlight} : {params: any, chartId: string, highlight: boolean}) => {
-  const { resultSentimentLevel } = GetSentimentLevel(params?.campaign, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const { resultSentimentLevel, loadingSentimentLevel } = GetSentimentLevel(params?.campaign, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
   
   const chartLabels =  Labels(resultSentimentLevel);
   const positiveData = ChartDataPositive(resultSentimentLevel, 'positive');
@@ -115,6 +116,11 @@ const SentimentLevelChart = ({params, highlight} : {params: any, chartId: string
 
   return (
     <Card>
+        {loadingSentimentLevel && (
+        <LinearProgress
+            style={{ width: "100%" }}
+        />
+        )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
                   title='Sentiment Level'

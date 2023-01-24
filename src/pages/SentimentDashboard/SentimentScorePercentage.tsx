@@ -9,6 +9,7 @@ import { ApexOptions } from 'apexcharts'
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { GetSentimentScore } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
 import { SentimentAllColors } from 'src/utils/const'
+import { LinearProgress } from '@mui/material'
 
 
 const Labels = (data: any) => {
@@ -51,7 +52,7 @@ const ChartDataSentiment = (data: any, type : string) => {
 }
 
 const SentimentScorePercentage = ({params, highlight} : {params: any, highlight: boolean}) => {
-  const { resultSentimentScorePercentage } = GetSentimentScore(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultSentimentScorePercentage, loadingSentimentScore } = GetSentimentScore(params?.campaign, params?.date, params?.endDate, params?.period);
   
   const chartLabels =  Labels(resultSentimentScorePercentage);
   const negativeData = ChartDataSentiment(resultSentimentScorePercentage, 'negative');
@@ -115,6 +116,11 @@ const SentimentScorePercentage = ({params, highlight} : {params: any, highlight:
 
   return (
     <Card>
+      {loadingSentimentScore && (
+            <LinearProgress
+                style={{ width: "100%" }}
+            />
+            )}
         <CardHeader
                 title=''
                 titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}

@@ -3,7 +3,7 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
-import { Grid } from "@mui/material"
+import { Grid, LinearProgress } from "@mui/material"
 
 // ** Third Party Imports
 
@@ -18,7 +18,7 @@ import { GetPlatformsComparison } from 'src/services/api/dashboards/voice/VoiceD
 
 Chart.register(DoughnutLabel );
 const PlatformsComparison  = ({params, chartId, highlight} : {params:any, chartId: string, highlight: boolean}) => {
-  const {  resultPlatformComparison } = GetPlatformsComparison(params?.campaign, params?.date, params?.endDate, params?.period);
+  const {  resultPlatformComparison, loadingPlatformComparison } = GetPlatformsComparison(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -139,6 +139,11 @@ const PlatformsComparison  = ({params, chartId, highlight} : {params:any, chartI
 
   return (
     <Card style={{ minHeight: '330px' }}>
+      {loadingPlatformComparison && (
+          <LinearProgress
+            style={{ width: "100%" }}
+          />
+        )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title="Channel/Platforms" titleTypographyProps={{ variant:'h6',color: highlight ? 'green' : '#4c4e64de' }}
                 subheader="Period over Period Comparison"

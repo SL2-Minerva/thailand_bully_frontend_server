@@ -15,6 +15,7 @@ import { InteractionItem } from 'chart.js'
 import { Information } from 'mdi-material-ui'
 import { StyledTooltip } from './overall'
 import { FilterByCampaignId } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import { LinearProgress } from '@mui/material'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -66,7 +67,7 @@ const chartLabel = (data:any) => {
 const StackedChart = (props: LineProps) => {
   // ** Props
   const { white, labelColor,  borderColor, gridLineColor, params } = props
-  const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
 
   // const [ chartData, setChartData ] = useState();
 
@@ -227,6 +228,11 @@ const StackedChart = (props: LineProps) => {
 
   return (
     <Card>
+      {loadingFilterData && (
+          <LinearProgress
+            style={{ width: "100%" }}
+          />
+        )}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader

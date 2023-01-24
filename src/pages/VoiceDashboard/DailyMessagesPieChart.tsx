@@ -3,7 +3,7 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
-import { Grid } from "@mui/material"
+import { Grid, LinearProgress } from "@mui/material"
 
 // ** Third Party Imports
 
@@ -26,7 +26,7 @@ Chart.register(DoughnutLabel );
 const DailyMessagePieChart  = ( props : Props) => {
   const { chartId, params, highlight } = props;
 
-  const { resultPercentageMessage } = GetPercentageMessage(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultPercentageMessage, loadingPercentageMessage } = GetPercentageMessage(params?.campaign, params?.date, params?.endDate, params?.period);
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
   const initValue = {
@@ -186,6 +186,11 @@ const DailyMessagePieChart  = ( props : Props) => {
 
   return (
     <Card style={{ minHeight: '330px' }}>
+      {loadingPercentageMessage && (
+          <LinearProgress
+            style={{ width: "100%" }}
+          />
+        )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader title="Percentage of Message" titleTypographyProps={{ variant:'h6', color: highlight ? 'green' : '#4c4e64de' }}
               subheader="Period over Period Comparison"

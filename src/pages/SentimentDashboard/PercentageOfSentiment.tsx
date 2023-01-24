@@ -3,7 +3,7 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
-import { Grid } from "@mui/material"
+import { Grid, LinearProgress } from "@mui/material"
 
 // ** Third Party Imports
 
@@ -25,7 +25,7 @@ const PercentageOfSentiment = (props : MessageData) => {
 
   const { params, type, chartId, highlight } = props;
   const colors = SentimentColors;
-  const { resultFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const initValue = {
     labels: [],
@@ -137,6 +137,11 @@ const PercentageOfSentiment = (props : MessageData) => {
 
   return (
     <Card>
+      {loadingFilterData && (
+            <LinearProgress
+                style={{ width: "100%" }}
+            />
+            )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title= {title}

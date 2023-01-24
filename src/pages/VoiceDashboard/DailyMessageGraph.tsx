@@ -15,6 +15,7 @@ import { InteractionItem } from 'chart.js'
 import moment from 'moment'
 import { GetDailyMessages } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
+import { LinearProgress } from '@mui/material'
 
 interface Props {
   type: string
@@ -87,7 +88,7 @@ const DailyMessageGraph = ( props : Props) => {
       campaign_id: null,
       organization_id: null
     });
-    const { resultDailyMessage } = GetDailyMessages(params?.campaign, params?.date, params?.endDate, params?.period);
+    const { resultDailyMessage, loadingDailyMessage } = GetDailyMessages(params?.campaign, params?.date, params?.endDate, params?.period);
 
     const chartRef = useRef();
     const getKeywordId = (dataset: InteractionItem[]) => {
@@ -235,6 +236,11 @@ const DailyMessageGraph = ( props : Props) => {
 
       return (
         <Card>
+          {loadingDailyMessage && (
+          <LinearProgress
+            style={{ width: "100%" }}
+          />
+        )}
           <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
             {
               type === 'message' ?

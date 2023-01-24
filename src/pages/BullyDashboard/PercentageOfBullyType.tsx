@@ -3,7 +3,7 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
-import { Grid } from "@mui/material"
+import { Grid, LinearProgress } from "@mui/material"
 
 // ** Third Party Imports
 
@@ -25,7 +25,7 @@ const PercentageOfBullyType = (props : MessageData) => {
 
   const { params, type, chartId, highlight } = props;
   const colors = BullyTypeColors;
-  const { resultBullyTypePercentage } = BullyTypePercentage(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultBullyTypePercentage, loadingBullyTypePercentage } = BullyTypePercentage(params?.campaign, params?.date, params?.endDate, params?.period);
   const initValue = {
     labels: [],
     datasets: [{
@@ -141,6 +141,11 @@ const PercentageOfBullyType = (props : MessageData) => {
 
   return (
     <Card>
+       {loadingBullyTypePercentage && (
+            <LinearProgress
+                style={{ width: "100%" }} 
+            />
+            )} 
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
             title= {title}

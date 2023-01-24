@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from '@mui/material'
+import { Card, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -22,7 +22,7 @@ const EngagementByDevice = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultMessagesByDevice } = GetMessagesByDevice(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultMessagesByDevice, loadingMessagesByDevice } = GetMessagesByDevice(params?.campaign, params?.date, params?.endDate, params?.period);
 
   const chartRef = useRef();
   const reportNo = '4.2.005';
@@ -177,6 +177,11 @@ const EngagementByDevice = (props: LineProps) => {
 
     return (
       <Card>
+        {loadingMessagesByDevice && (
+          <LinearProgress
+              style={{ width: "100%" }}
+          />
+          )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title="Daily Engagement By Device"

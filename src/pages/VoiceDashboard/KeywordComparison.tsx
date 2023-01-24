@@ -18,6 +18,7 @@ import {
 } from 'chart.js';
 
 import { Radar } from 'react-chartjs-2';
+import { LinearProgress } from '@mui/material'
 
 ChartJS.register(
   RadialLinearScale,
@@ -29,7 +30,7 @@ ChartJS.register(
 );
 
 const KeywordComparisonByChannel = ({params, chartId, highlight} : {params:any, chartId: string, highlight: boolean}) => {
-  const { resultKeywordComparisonByChannel } = GetKeywordComparisonByChannel(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultKeywordComparisonByChannel, loadingKeywordComparisonByChannel } = GetKeywordComparisonByChannel(params?.campaign, params?.date, params?.endDate, params?.period);
     
   const [ charData, setChartData ] = useState(initValue);
   
@@ -49,6 +50,11 @@ const KeywordComparisonByChannel = ({params, chartId, highlight} : {params:any, 
     
     return (
         <Card>
+          {loadingKeywordComparisonByChannel && (
+            <LinearProgress
+              style={{ width: "100%" }}
+            />
+          )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader 
                     title='Percentage of Keyword Comparison By Channel'

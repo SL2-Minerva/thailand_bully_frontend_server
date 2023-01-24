@@ -1,4 +1,4 @@
-import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer, Grid, Button, Box, Pagination } from "@mui/material"; 
+import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer, Grid, Button, Box, Pagination, LinearProgress } from "@mui/material"; 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -15,7 +15,7 @@ const SummaryByAccount = ({ params, chartId, highlight} :
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState<number>(0);
 
-    const { resultSummaryByAccount, total } = GetSummaryByAccount(topAccount, params?.campaign, params?.date, params?.endDate, params?.period);
+    const { resultSummaryByAccount, total, loadingSummaryByAccount } = GetSummaryByAccount(topAccount, params?.campaign, params?.date, params?.endDate, params?.period);
 
     const handleTopAccounts = (data: string) => {
         setTopAccount(data);
@@ -37,6 +37,11 @@ const SummaryByAccount = ({ params, chartId, highlight} :
 
     return (
         <Card>
+            {loadingSummaryByAccount && (
+            <LinearProgress
+                style={{ width: "100%" }}
+            />
+            )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                     title='Summary Sentiment Score by Account'

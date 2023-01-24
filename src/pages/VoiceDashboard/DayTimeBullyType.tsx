@@ -1,7 +1,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid } from '@mui/material'
+import { Grid, LinearProgress } from '@mui/material'
 
 // ** Third Party Imports
 import { ApexOptions } from 'apexcharts'
@@ -26,7 +26,7 @@ const DayTimeBullyType = (props: Props) => {
   const [seriesHour, setSeriesHour ] = useState([{name: '', data:[]}]);
   const [seriesDays, setSeriesDays ] = useState([{name: '', data:[]}]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const { resultDayByBullyType, resultTimeByBullyType } = GetDayTimeByBullyType(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultDayByBullyType, resultTimeByBullyType, loadingDayByBullyType } = GetDayTimeByBullyType(params?.campaign, params?.date, params?.endDate, params?.period);
 
     const options_hours : ApexOptions = {
         chart: {
@@ -94,6 +94,11 @@ const DayTimeBullyType = (props: Props) => {
 
       return (
         <Card>
+          {loadingDayByBullyType && (
+            <LinearProgress
+              style={{ width: "100%" }}
+            />
+          )}
           <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <CardHeader title="Day&Time by Bully Type " titleTypographyProps={{ variant: 'h4',color: highlight ? 'green' : '#4c4e64de' }}/>
               <StyledTooltip arrow title={chartTitle || ""}>
