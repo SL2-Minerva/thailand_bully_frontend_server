@@ -25,7 +25,7 @@ const PercentageOfEngangement = (props : MessageData) => {
 
   const { type, chartId, params, highlight } = props;
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
-  const {resultFilterData, loadingFilterData} = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
+  const {resultFilterData, loadingFilterData} = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
   const initValue = {
     labels: [],
     datasets: [{
@@ -113,7 +113,7 @@ const PercentageOfEngangement = (props : MessageData) => {
       const currentMessageData = resultFilterData?.prcentage_of_engagement_current;
       const previousMessageData = resultFilterData?.prcentage_of_engagement_previous;
       
-      if(currentMessageData) {
+      if(currentMessageData || previousMessageData) {
         const currentDataset = chartDataset(currentMessageData, 'current');
         setCurrentData(currentDataset);
 

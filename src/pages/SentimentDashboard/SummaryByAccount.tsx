@@ -15,7 +15,7 @@ const SummaryByAccount = ({ params, chartId, highlight} :
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState<number>(0);
 
-    const { resultSummaryByAccount, total, loadingSummaryByAccount } = GetSummaryByAccount(topAccount, params?.campaign, params?.date, params?.endDate, params?.period);
+    const { resultSummaryByAccount, total, loadingSummaryByAccount } = GetSummaryByAccount(topAccount, params?.campaign, params?.date, params?.endDate, params?.period, page, params?.keywordIds);
 
     const handleTopAccounts = (data: string) => {
         setTopAccount(data);

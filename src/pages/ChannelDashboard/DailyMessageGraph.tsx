@@ -88,7 +88,7 @@ const DailyMessageGraph = ( props : Props) => {
       campaign_id: null,
       organization_id: null
     });
-    const { resultDailyChannel, loadingDailyChannel } = GetDailyChannel(params?.campaign, params?.date, params?.endDate, params?.period);
+    const { resultDailyChannel, loadingDailyChannel } = GetDailyChannel(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
     const chartRef = useRef();
     const getKeywordId = (dataset: InteractionItem[]) => {

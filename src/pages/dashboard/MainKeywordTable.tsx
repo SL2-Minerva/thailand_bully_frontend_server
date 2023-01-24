@@ -17,7 +17,7 @@ const MainKeyWordTable = ({ params, chartId} : Props) => {
     
     const [showDetail, setShowDetail] = useState<boolean>(false);
     const [keywordId, setKeywordId] = useState<number>();
-    const { resultTopKeywords, loadingFilterData } = GetTopKeywords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const { resultTopKeywords, loadingFilterData } = GetTopKeywords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, params?.keywordIds);
     const reportNo = '1.2.009';
 
     const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";

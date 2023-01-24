@@ -1,7 +1,7 @@
 import moment from 'moment'
 import { CallAPI } from 'src/services/CallAPI'
 
-export const GetPercentageChannel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean) => {
+export const GetPercentageChannel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string) => {
     const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-channel/percentage-of-channel`,
       method: 'GET',
@@ -9,10 +9,8 @@ export const GetPercentageChannel = (campaignId?: string, start_date?: any, end_
         campaign_id: campaignId || "",
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period
-      },
-      data: {
-        reload: reload
+        period: period,
+        fillter_keywords: fillter_keywords
       }
     })
   
@@ -23,7 +21,7 @@ export const GetPercentageChannel = (campaignId?: string, start_date?: any, end_
     }
   }
 
-export const GetDailyChannel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetDailyChannel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-channel/daily-channel`,
       method: 'GET',
@@ -31,10 +29,8 @@ export const GetDailyChannel = (campaignId?: string, start_date?: any, end_date?
         campaign_id: campaignId || "",
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period
-      },
-      data: {
-        reload: reload
+        period: period,
+        fillter_keywords: fillter_keywords
       }
     })
 
@@ -45,7 +41,7 @@ export const GetDailyChannel = (campaignId?: string, start_date?: any, end_date?
     }
 }
 
-export const GetChannelByDay = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetChannelByDay = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-channel/channel-day`,
       method: 'GET',
@@ -53,10 +49,8 @@ export const GetChannelByDay = (campaignId?: string, start_date?: any, end_date?
         campaign_id: campaignId || "",
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period
-      },
-      data: {
-        reload: reload
+        period: period,
+        fillter_keywords: fillter_keywords
       }
     })
     
@@ -68,7 +62,7 @@ export const GetChannelByDay = (campaignId?: string, start_date?: any, end_date?
 }
 
 
-export const GetChannelByTime = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetChannelByTime = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-channel/channel-time`,
@@ -77,10 +71,8 @@ export const GetChannelByTime = (campaignId?: string, start_date?: any, end_date
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   }) 
 
@@ -91,7 +83,7 @@ export const GetChannelByTime = (campaignId?: string, start_date?: any, end_date
   }
 }
 
-export const GetChannelByDevice = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetChannelByDevice = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-channel/channel-device`,
@@ -100,10 +92,8 @@ export const GetChannelByDevice = (campaignId?: string, start_date?: any, end_da
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   })
 
@@ -114,7 +104,7 @@ export const GetChannelByDevice = (campaignId?: string, start_date?: any, end_da
   }
 }
 
-export const GetChannelBySentiment = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetChannelBySentiment = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-channel/channel-sentiment`,
@@ -123,10 +113,8 @@ export const GetChannelBySentiment = (campaignId?: string, start_date?: any, end
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   })
 
@@ -137,7 +125,7 @@ export const GetChannelBySentiment = (campaignId?: string, start_date?: any, end
   }
 }
 
-export const GetChannelByAccount = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetChannelByAccount = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-channel/channel-account`,
@@ -146,10 +134,8 @@ export const GetChannelByAccount = (campaignId?: string, start_date?: any, end_d
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   })
 
@@ -161,7 +147,7 @@ export const GetChannelByAccount = (campaignId?: string, start_date?: any, end_d
 }
 
 
-export const GetChannelByBullyLevel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetChannelByBullyLevel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-channel/channel-bully-level`,
@@ -170,10 +156,8 @@ export const GetChannelByBullyLevel = (campaignId?: string, start_date?: any, en
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   })
 
@@ -184,7 +168,7 @@ export const GetChannelByBullyLevel = (campaignId?: string, start_date?: any, en
   }
 }
 
-export const GetChannelByBullyType = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetChannelByBullyType = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-channel/channel-bully-type`,
@@ -193,10 +177,8 @@ export const GetChannelByBullyType = (campaignId?: string, start_date?: any, end
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   })
 
@@ -207,7 +189,7 @@ export const GetChannelByBullyType = (campaignId?: string, start_date?: any, end
   }
 }
 
-export const GetComparison = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean) => {
+export const GetComparison = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string) => {
 
     const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-channel/period-over-period`,
@@ -216,10 +198,8 @@ export const GetComparison = (campaignId?: string, start_date?: any, end_date?: 
         campaign_id: campaignId || "",
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period
-      },
-      data: {
-        reload: reload
+        period: period,
+        fillter_keywords: fillter_keywords
       }
     })
   
@@ -234,7 +214,7 @@ export const GetComparison = (campaignId?: string, start_date?: any, end_date?: 
     }
 }
 
-export const GetEngagementRate = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetEngagementRate = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-channel/engagement-rate`,
@@ -243,10 +223,8 @@ export const GetEngagementRate = (campaignId?: string, start_date?: any, end_dat
         campaign_id: campaignId || "",
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period
-      },
-      data: {
-        reload: reload
+        period: period,
+        fillter_keywords: fillter_keywords
       }
     })
 
@@ -257,7 +235,7 @@ export const GetEngagementRate = (campaignId?: string, start_date?: any, end_dat
     }
 }
 
-export const GetEngagementRatePrevious = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetEngagementRatePrevious = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-channel/engagement-rate-previous`,
@@ -266,10 +244,8 @@ export const GetEngagementRatePrevious = (campaignId?: string, start_date?: any,
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   })
 
@@ -280,7 +256,7 @@ export const GetEngagementRatePrevious = (campaignId?: string, start_date?: any,
   }
 }
 
-export const GetSentimentScore = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetSentimentScore = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-channel/sentiment-score`,
@@ -289,10 +265,8 @@ export const GetSentimentScore = (campaignId?: string, start_date?: any, end_dat
         campaign_id: campaignId || "",
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period
-      },
-      data: {
-        reload: reload
+        period: period,
+        fillter_keywords: fillter_keywords
       }
     }) 
 
@@ -332,7 +306,7 @@ export const GetSentimentScore = (campaignId?: string, start_date?: any, end_dat
     }
 }
 
-export const GetSentimentScorePrevious = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetSentimentScorePrevious = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-channel/sentiment-score-previous`,
@@ -341,10 +315,8 @@ export const GetSentimentScorePrevious = (campaignId?: string, start_date?: any,
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   }) 
 
@@ -384,7 +356,7 @@ export const GetSentimentScorePrevious = (campaignId?: string, start_date?: any,
   }
 }
 
-export const GetChannelSentimentLevel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any ) => {
+export const GetChannelSentimentLevel = (campaignId?: string, start_date?: any, end_date?: any, period?: any,fillter_keywords?: string, previousDate?: any, previousEndDate?: any ) => {
 
     const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-channel/channel-by-sentiment`,
@@ -394,6 +366,7 @@ export const GetChannelSentimentLevel = (campaignId?: string, start_date?: any, 
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
         period: period,
+        fillter_keywords: fillter_keywords,
         start_date_period : previousDate ? moment(previousDate).format('YYYY-MM-DD') : "",
         end_date_period : previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : "",
       }
@@ -406,7 +379,7 @@ export const GetChannelSentimentLevel = (campaignId?: string, start_date?: any, 
     }
   }
   
-  export const GetSentimentLevel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, previousDate?:any, previousEndDate?:any ) => {
+  export const GetSentimentLevel = (campaignId?: string, start_date?: any, end_date?: any, period?: any,fillter_keywords?: string, previousDate?:any, previousEndDate?:any ) => {
   
     const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-channel/sentiment-level`,
@@ -416,6 +389,7 @@ export const GetChannelSentimentLevel = (campaignId?: string, start_date?: any, 
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
         period: period,
+        fillter_keywords: fillter_keywords,
         start_date_period : previousDate ? moment(previousDate).format('YYYY-MM-DD') : "",
         end_date_period : previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : "",
       }

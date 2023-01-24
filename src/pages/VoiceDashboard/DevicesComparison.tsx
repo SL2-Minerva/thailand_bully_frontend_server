@@ -18,7 +18,7 @@ import { GetDevicesComparison } from 'src/services/api/dashboards/voice/VoiceDas
 
 Chart.register(DoughnutLabel );
 const DevicesComparison  = ({params, chartId, highlight} : {params:any, chartId: string, highlight: boolean}) => {
-  const { resultDevicesComparison, loadingDevicesComparison } = GetDevicesComparison(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultDevicesComparison, loadingDevicesComparison } = GetDevicesComparison(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary

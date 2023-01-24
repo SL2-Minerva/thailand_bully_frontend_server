@@ -30,7 +30,7 @@ ChartJS.register(
 );
 
 const KeywordComparisonByChannel = ({params, chartId, highlight} : {params:any, chartId: string, highlight: boolean}) => {
-  const { resultKeywordComparisonByChannel, loadingKeywordComparisonByChannel } = GetKeywordComparisonByChannel(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultKeywordComparisonByChannel, loadingKeywordComparisonByChannel } = GetKeywordComparisonByChannel(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
     
   const [ charData, setChartData ] = useState(initValue);
   

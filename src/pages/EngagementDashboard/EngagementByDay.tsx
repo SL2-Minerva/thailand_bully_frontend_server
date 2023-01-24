@@ -23,7 +23,7 @@ const EngagementByDay = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultMessagesByDay, loadingMessagesByDay } = GetMessagesByDay(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultMessagesByDay, loadingMessagesByDay } = GetMessagesByDay(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {

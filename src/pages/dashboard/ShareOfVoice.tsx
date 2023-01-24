@@ -37,8 +37,8 @@ const ChartData = (data: any ) => {
 }
 
 const ShareOfVoice  = ({params, chartId} : {params: any, chartId : string}) => {
-  const { resultShareOfVoice, loadingShareOfVoice } = GetShareOfVoice(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
-  const { resultShareOfVoiceChart, loadingShareOfVoiceChart } = GetShareOfVoiceChart(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const { resultShareOfVoice, loadingShareOfVoice } = GetShareOfVoice(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, params?.keywordIds);
+  const { resultShareOfVoiceChart, loadingShareOfVoiceChart } = GetShareOfVoiceChart(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, params?.keywordIds);
   const reportNo = '1.1.020';
 
   const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";

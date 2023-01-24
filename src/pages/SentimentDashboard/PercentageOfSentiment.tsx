@@ -25,7 +25,7 @@ const PercentageOfSentiment = (props : MessageData) => {
 
   const { params, type, chartId, highlight } = props;
   const colors = SentimentColors;
-  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const initValue = {
     labels: [],

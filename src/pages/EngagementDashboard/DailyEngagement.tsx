@@ -84,7 +84,7 @@ const DailyEngagement = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
   
 
   const chartRef = useRef();

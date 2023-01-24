@@ -24,7 +24,7 @@ const EngagementTypeByTime = (props: LineProps) => {
     organization_id: null
   });
 
-  const { resultEngagementTypeByTime, loadingEngagementTypeByTime } = GetEngagementTypeByTime(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultEngagementTypeByTime, loadingEngagementTypeByTime } = GetEngagementTypeByTime(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {

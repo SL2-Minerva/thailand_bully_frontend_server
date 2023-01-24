@@ -1,4 +1,4 @@
-import { Button, Grid } from "@mui/material"
+import { Button, Card, CardContent, CardHeader, Grid } from "@mui/material"
 import { useState } from "react";
 import { GetTotalEngagment } from "src/services/api/dashboards/engagement/EngagementApi";
 import DailyEngagement from "./DailyEngagement";
@@ -26,6 +26,8 @@ import EngagementTypeByDevice from "./EngagementTypeByDevice";
 import EngagementTypeByAccount from "./EngagementTypeByAccount";
 import EngagementTypeByChannel from "./EngagementTypeByChannel";
 import PeriodComparisonChartSentiment from "./PeriodComparisonChartSentiment";
+import { GetKeyWordsList } from "src/services/api/dashboards/overall/overallDashboardApi";
+import { EngagementTransChartColor } from "src/utils/const";
 
 const EngagementDashboard = () => {
     const theme = useTheme()
@@ -46,19 +48,43 @@ const EngagementDashboard = () => {
     const [ campaignType, setCampaignType ] = useState<string>("1")
     const [ topKeyword, setTopKeyword ] = useState<string>('all');
     const [ highlight, setHighlight ] = useState<string>("");
+    const [ keyword, setKeyword ] = useState<string>('all');
+    const [ filterKeyword, setFilterKeyword ] = useState<any>([]);
 
     const { resultReportPermission } = UserPermission();
-    const { resultTotalEngagement, loadingTotalEngagement } = GetTotalEngagment(campaignType, date, endDate, period);
+    const { resultTotalEngagement, loadingTotalEngagement } = GetTotalEngagment(campaignType, date, endDate, period, keyword);
+    const { resultKeywordList } = GetKeyWordsList(campaignType);
+
 
     const params = {
         campaign : campaignType,
         date : date, 
         endDate : endDate,
-        period : period
+        period : period, 
+        keywordIds: keyword
     }
 
     const handleTopKeywords = (data: string) => {
         setTopKeyword(data);
+    }
+
+    const checkKeywordId = (data: any, keywordId : string | number) => {
+        const index = data.indexOf(keywordId);
+        if (index > -1) { 
+            data.splice(index, 1); 
+        } else {
+            data.push(keywordId);
+        }
+
+        setFilterKeyword(data);
+
+        if(data.length === 0) {
+            setKeyword('all');
+        } else {
+            setKeyword(data.join(','));
+        }
+
+        return data;
     }
 
     return (
@@ -82,6 +108,55 @@ const EngagementDashboard = () => {
                     setCampaign={setCampaignType}
                 />
             </Grid> 
+
+            <Grid container spacing={2} mt={2}>
+                <Grid item xs={12}>
+                    <Card>
+                        <CardHeader title="Filter"></CardHeader>
+                        <CardContent>
+                            <Grid container spacing={2}>
+                                <Grid item xs={6} md={1}> 
+                                    <Button
+                                        sx={{ mb: 2 }}
+                                        onClick={() => {
+                                            if(keyword === 'all') {
+                                                setKeyword('')
+                                            } else {
+                                                setKeyword('all')
+                                                setFilterKeyword([]);
+                                            }
+                                            
+                                        }}
+                                        variant='contained'
+                                        color ={keyword === 'all' ? 'primary' : 'secondary'}
+                                    >
+                                        ALL
+                                    </Button>
+                                </Grid>
+
+                                {
+                                    resultKeywordList && (resultKeywordList || []).map((keywords : any, index : number) => {
+                                        return(
+                                            <Grid item xs={6} md={1.2} key={index}> 
+                                                <Button
+                                                    sx={{ mb: 2, bgcolor: filterKeyword?.indexOf(keywords?.id) > -1 ? EngagementTransChartColor[index] : keyword ==='all' ? EngagementTransChartColor[index] : 'grey',
+                                                    ":hover": {bgcolor: filterKeyword?.indexOf(keywords?.id) > -1 ? EngagementTransChartColor[index] : keyword ==='all' ? EngagementTransChartColor[index] : 'grey'} }}
+                                                    onClick={() => {
+                                                        checkKeywordId(filterKeyword, keywords?.id);
+                                                    }}
+                                                    variant='contained'
+                                                >
+                                                    {keywords.name}
+                                                </Button>
+                                            </Grid>
+                                        )
+                                    })
+                                }
+                            </Grid>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            </Grid>
 
             <Grid container spacing={3} mt={2}>
                 {

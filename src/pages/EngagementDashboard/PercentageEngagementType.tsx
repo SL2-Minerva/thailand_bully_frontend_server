@@ -25,7 +25,7 @@ const PercentageOfEngangementType = (props : MessageData) => {
 
   const { type, chartId, params, highlight } = props;
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
-  const {resultEngagementType, loadingEngagementType} = EngagementTypePercetage(params?.campaign, params?.date, params?.endDate, params?.period);
+  const {resultEngagementType, loadingEngagementType} = EngagementTypePercetage(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
   const reportNo = '4.1.011';
   const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
   const initValue = {
@@ -111,7 +111,7 @@ const PercentageOfEngangementType = (props : MessageData) => {
       const currentMessageData = resultEngagementType?.prcentage_of_engagement_current;
       const previousMessageData = resultEngagementType?.prcentage_of_engagement_previous;
       
-      if(currentMessageData) {
+      if(currentMessageData || previousMessageData) {
         const currentDataset = chartDataset(currentMessageData, 'current');
         setCurrentData(currentDataset);
 

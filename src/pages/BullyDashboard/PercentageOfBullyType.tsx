@@ -25,7 +25,7 @@ const PercentageOfBullyType = (props : MessageData) => {
 
   const { params, type, chartId, highlight } = props;
   const colors = BullyTypeColors;
-  const { resultBullyTypePercentage, loadingBullyTypePercentage } = BullyTypePercentage(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultBullyTypePercentage, loadingBullyTypePercentage } = BullyTypePercentage(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
   const initValue = {
     labels: [],
     datasets: [{

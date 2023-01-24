@@ -15,7 +15,7 @@ import { GetDayTimeComparison } from 'src/services/api/dashboards/voice/VoiceDas
 import { LinearProgress } from '@mui/material'
 
 const DayTimeComparison = ({params, chartId, highlight} : { params: any, chartId: string, highlight: boolean}) => {
-  const { resultDayTimeComparison, loadingDayTimeComparison } = GetDayTimeComparison(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultDayTimeComparison, loadingDayTimeComparison } = GetDayTimeComparison(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
     const [series, setSeries] = useState([]) ;
     const [ showDetail , setShowDetail ] = useState<boolean>(false);
   

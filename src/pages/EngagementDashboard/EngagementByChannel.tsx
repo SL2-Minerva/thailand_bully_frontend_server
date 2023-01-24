@@ -23,7 +23,7 @@ const EngagementByChannel = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultMessagesByChannel, loadingMessagesByChannel } = GetMessagesByChannel(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultMessagesByChannel, loadingMessagesByChannel } = GetMessagesByChannel(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
   const reportNo = '4.2.007';
 
   const title = chartId + ", Report Level 2(" + reportNo + ")";

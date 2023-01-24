@@ -11,7 +11,7 @@ import { GetWordCloudsPlatform } from "src/services/api/dashboards/overall/overa
 const WordCloudChannel = ({params, chartId} : {params: any, chartId : string}) => {
     const [ platformId, setPlatformId ] = useState<string>("1")
     const { result_source_list  } = SourceService();
-    const { resultWordCloudsPlatform, loadingWordCloudsPlatform } = GetWordCloudsPlatform(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const { resultWordCloudsPlatform, loadingWordCloudsPlatform } = GetWordCloudsPlatform(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.topKeyword, params?.previousDate, params?.previousEndDate, params?.keywordIds);
 
     const handleSelectList = useCallback((e: SelectChangeEvent) => {
         setPlatformId(e.target.value)

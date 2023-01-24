@@ -37,7 +37,7 @@ const InfluencerGraph = ({ chartId, params, highlight}: {chartId: string, params
         campaign_id: null,
         organization_id: null
       });
-      const { resultNumbersOfAccounts, loadingNumbersOfAccounts } = GetNumbersOfAccounts(params?.campaign, params?.date, params?.endDate, params?.period);
+      const { resultNumbersOfAccounts, loadingNumbersOfAccounts } = GetNumbersOfAccounts(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
   
       const chartRef = useRef();
       const getKeywordId = (dataset: InteractionItem[]) => {

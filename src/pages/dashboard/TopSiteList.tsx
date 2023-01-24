@@ -16,7 +16,7 @@ interface Props {
 const TopSiteList = ({ params, chartId} : Props) => {
     const [showDetail, setShowDetail] = useState<boolean>(false);
     const [keywordId, setKeywordId] = useState<number>();
-    const { resultTopKeywords, loadingFilterData } = GetTopKeywords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const { resultTopKeywords, loadingFilterData } = GetTopKeywords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, params?.keywordIds);
 
     const reportNo = '1.2.012';
 

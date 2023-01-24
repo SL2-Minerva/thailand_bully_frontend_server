@@ -9,7 +9,7 @@ import { GetWordCloudsSentiment } from "src/services/api/dashboards/overall/over
 
 const WordCloudSentiment = ({params, chartId} : {params: any, chartId: string}) => {
     const [ sentiment, setSentiment ] = useState('');
-    const { resultWordCloudsSentiment, loadingWordCloudsSentiment } = GetWordCloudsSentiment(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const { resultWordCloudsSentiment, loadingWordCloudsSentiment } = GetWordCloudsSentiment(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.topKeyword, params?.previousDate, params?.previousEndDate, params?.keywordIds);
 
     const chooseSentiment = (value: string) =>{ 
         setSentiment(value);

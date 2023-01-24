@@ -15,7 +15,7 @@ const SummaryByChannel = ({params, chartId, highlight} :
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState<number>(0);
 
-    const { resultSummaryByChannel, total, loadingSummaryByChannel } = GetSummaryByChannel(topChannel, params?.campaign, params?.date, params?.endDate, params?.period, page);
+    const { resultSummaryByChannel, total, loadingSummaryByChannel } = GetSummaryByChannel(topChannel, params?.campaign, params?.date, params?.endDate, params?.period, page, params?.keywordIds);
     const handleTopChannels = (data: string) => {
         setTopChannel(data);
     }

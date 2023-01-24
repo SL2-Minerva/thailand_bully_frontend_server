@@ -23,7 +23,7 @@ const MessagesByBullyType = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultMessagesByBullyType, loadingMessagesByBullyType } = GetMessagesByBullyType(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultMessagesByBullyType, loadingMessagesByBullyType } = GetMessagesByBullyType(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {

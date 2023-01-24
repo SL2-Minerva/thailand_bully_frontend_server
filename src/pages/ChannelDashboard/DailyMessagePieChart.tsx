@@ -25,7 +25,7 @@ interface Props {
 Chart.register(DoughnutLabel );
 const DailyMessagePieChart  = ( props : Props) => {
   const { params, type, chartId, highlight } = props;
-  const { resultPercentageChannel, loadingPercentageChannel } = GetPercentageChannel(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultPercentageChannel, loadingPercentageChannel } = GetPercentageChannel(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary

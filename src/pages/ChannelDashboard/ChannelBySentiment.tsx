@@ -35,7 +35,7 @@ const ChartData = (data: any ) => {
 }
 
 const ChannelBySentiment  = ({params, chartId, highlight} : {params: any, chartId: string, highlight : boolean}) => {
-  const { resultChannelSentimentLevel, loadingChannelSentimentLevel } = GetChannelSentimentLevel(params?.campaign, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const { resultChannelSentimentLevel, loadingChannelSentimentLevel } = GetChannelSentimentLevel(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds, params?.previousDate, params?.previousEndDate);
 
   const labels = resultChannelSentimentLevel ? ChartLabels(resultChannelSentimentLevel) : [];
   const data = {

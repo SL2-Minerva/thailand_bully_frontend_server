@@ -9,7 +9,7 @@ const AccountList = ({params, chartId, cardHeader} : {params: any, chartId : str
     const [showDetail, setShowDetail] = useState<boolean>(false);
     const [current, setCurrent] = useState<any>({})
 
-    const { resultKeywords, loadingFilterData } = GetKeyWords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const { resultKeywords, loadingFilterData } = GetKeyWords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, params?.keywordIds);
     const reportNo = '1.2.02';
     const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
 

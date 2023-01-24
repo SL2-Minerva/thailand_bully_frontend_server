@@ -41,7 +41,7 @@ import CommentSentiment from "./CommentSentiment"
 import ShareOfVoice from "./ShareOfVoice"
 import SentimentLevelChart from "./SentimentLevelChart"
 import { CampaignList } from "src/services/api/campaign/CampaignAPI"
-import { TotalKeyStats } from "src/services/api/dashboards/overall/overallDashboardApi"
+import { GetKeyWordsList, TotalKeyStats } from "src/services/api/dashboards/overall/overallDashboardApi"
 import SourceService from "src/services/api/source/SourceApi"
 import WordCloud from "./WordCloud"
 import TotalMessageLists from "./TotalMessageLists"
@@ -49,6 +49,7 @@ import WordCloudChannel from "./WordCloudChannel"
 import AccountList from "./AccountList"
 import WordCloudSentiment from "./WordCloudSentiment"
 import { UserPermission } from "src/services/api/users/role"
+import { GraphicColors } from "src/utils/const"
 
 // import QuickView from "./QuickView"
 
@@ -94,6 +95,9 @@ const OverallDashboard = () => {
     const [ period, setPeriod ] = useState<string>('daily')
     const [ topKeyword, setTopKeyword ] = useState<string>('all');
     const [ showPreviousDatepicker, setShowPreviousDatepicker ] = useState<boolean>(false);
+    const [ keyword, setKeyword ] = useState<string>('all');
+    const [ filterKeyword, setFilterKeyword ] = useState<any>([]);
+
     const theme = useTheme()
 
     const whiteColor = '#fff'
@@ -107,7 +111,27 @@ const OverallDashboard = () => {
     const { resultReportPermission } = UserPermission();
     const { resultCampaiganList } = CampaignList();
     const { result_source_list  } = SourceService();
-    const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount, loadingTotalKeystats } = TotalKeyStats(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate);
+    const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount, loadingTotalKeystats } = TotalKeyStats(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate, keyword);
+    const { resultKeywordList } = GetKeyWordsList(campaign);
+
+    const checkKeywordId = (data: any, keywordId : string | number) => {
+        const index = data.indexOf(keywordId);
+        if (index > -1) { 
+            data.splice(index, 1); 
+        } else {
+            data.push(keywordId);
+        }
+
+        setFilterKeyword(data);
+
+        if(data.length === 0) {
+            setKeyword('all');
+        } else {
+            setKeyword(data.join(','));
+        }
+
+        return data;
+    }
 
     const params = {
         campaign: campaign,
@@ -117,7 +141,8 @@ const OverallDashboard = () => {
         period: period, 
         previousDate: previousDate, 
         previousEndDate: previousEndDate,
-        topKeyword : topKeyword
+        topKeyword : topKeyword,
+        keywordIds : keyword
       }
 
     const handleSelectList = useCallback((e: SelectChangeEvent, type:string) => {
@@ -345,6 +370,55 @@ const OverallDashboard = () => {
                         }
                         
                     </Grid>
+                    </CardContent>
+                </Card>
+            </Grid>
+        </Grid>
+
+        <Grid container spacing={2} mt={2}>
+            <Grid item xs={12}>
+                <Card>
+                    <CardHeader title="Filter"></CardHeader>
+                    <CardContent>
+                        <Grid container spacing={2}>
+                            <Grid item xs={6} md={1}> 
+                                <Button
+                                    sx={{ mb: 2 }}
+                                    onClick={() => {
+                                        if(keyword === 'all') {
+                                            setKeyword('')
+                                        } else {
+                                            setKeyword('all')
+                                            setFilterKeyword([]);
+                                        }
+                                        
+                                    }}
+                                    variant='contained'
+                                    color ={keyword === 'all' ? 'primary' : 'secondary'}
+                                >
+                                    ALL
+                                </Button>
+                            </Grid>
+
+                            {
+                                resultKeywordList && (resultKeywordList || []).map((keywords : any, index : number) => {
+                                    return(
+                                        <Grid item xs={6} md={1.2} key={index}> 
+                                            <Button
+                                                sx={{ mb: 2, bgcolor: filterKeyword?.indexOf(keywords?.id) > -1 ? GraphicColors[index] : keyword ==='all' ? GraphicColors[index] : 'grey',
+                                                ":hover": {bgcolor: filterKeyword?.indexOf(keywords?.id) > -1 ? GraphicColors[index] : keyword ==='all' ? GraphicColors[index] : 'grey'} }}
+                                                onClick={() => {
+                                                    checkKeywordId(filterKeyword, keywords?.id);
+                                                }}
+                                                variant='contained'
+                                            >
+                                                {keywords.name}
+                                            </Button>
+                                        </Grid>
+                                    )
+                                })
+                            }
+                        </Grid>
                     </CardContent>
                 </Card>
             </Grid>

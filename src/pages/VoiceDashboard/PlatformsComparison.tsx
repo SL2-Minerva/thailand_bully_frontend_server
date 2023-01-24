@@ -18,7 +18,7 @@ import { GetPlatformsComparison } from 'src/services/api/dashboards/voice/VoiceD
 
 Chart.register(DoughnutLabel );
 const PlatformsComparison  = ({params, chartId, highlight} : {params:any, chartId: string, highlight: boolean}) => {
-  const {  resultPlatformComparison, loadingPlatformComparison } = GetPlatformsComparison(params?.campaign, params?.date, params?.endDate, params?.period);
+  const {  resultPlatformComparison, loadingPlatformComparison } = GetPlatformsComparison(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary

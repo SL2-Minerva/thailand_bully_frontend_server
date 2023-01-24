@@ -17,7 +17,7 @@ const ChannelByDevice = (props: LineProps) => {
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const { resultChannelByDevice, loadingChannelByDevice } = GetChannelByDevice(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultChannelByDevice, loadingChannelByDevice } = GetChannelByDevice(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
   const [ paramsId, setParamsId] = useState<any>({
     keywordId : null,
     sourceId: null,

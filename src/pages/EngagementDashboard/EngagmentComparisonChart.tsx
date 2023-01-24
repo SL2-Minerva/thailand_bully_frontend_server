@@ -52,7 +52,7 @@ const ChartDataEngagement = (data: any, type : string) => {
 }
 
 const EngagmentComparisonChart = ({params, highlight, chartId} : {params: any, highlight:boolean, chartId: string}) => {
-  const { resultComparison, loadingComparison }  = GetComparisonEngagement(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultComparison, loadingComparison }  = GetComparisonEngagement(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
   
   const chartLabels =  Labels(resultComparison);
   const shareData = ChartDataEngagement(resultComparison, 'share');

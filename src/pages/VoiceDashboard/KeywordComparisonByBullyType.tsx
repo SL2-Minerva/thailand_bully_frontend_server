@@ -59,7 +59,7 @@ export const getChartData = (data: any) => {
 
 const KeywordComparisonByBullyType = ({params, chartId, highlight} : {params: any, chartId:string, highlight?:boolean}) => {
   const [ charData, setChartData ] = useState(initValue);
-  const { resultKeywordComparisonByBullyType, loadingKeywordComparisonByBullyType } = GetKeywordComparisonByBullyType(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultKeywordComparisonByBullyType, loadingKeywordComparisonByBullyType } = GetKeywordComparisonByBullyType(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   useEffect(() => {
       if (resultKeywordComparisonByBullyType) {

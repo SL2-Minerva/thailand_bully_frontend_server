@@ -1,4 +1,4 @@
-import { Card, CardHeader, Grid } from "@mui/material"
+import { Button, Card, CardContent, CardHeader, Grid } from "@mui/material"
 import { useState } from "react"
 import DailyMessageGraph from "./DailyMessageGraph"
 import Filter from "../VoiceDashboard/Filter"
@@ -22,6 +22,8 @@ import ChannelByBullyType from "./ChannelByBullyType"
 import EngagementRate from "./EngagementRate"
 import SentimentScore from "./SenitmentScore"
 import SentimentLevelChart from "./SentimentLevelChart"
+import { GetKeyWordsList } from "src/services/api/dashboards/overall/overallDashboardApi"
+import { GraphicColors } from "src/utils/const"
 
 const ChannelDashboard = () => {
     const theme = useTheme()
@@ -42,6 +44,8 @@ const ChannelDashboard = () => {
     const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
     const [ highlight, setHighlight ] = useState<string>("");
+    const [ keyword, setKeyword ] = useState<string>('all');
+    const [ filterKeyword, setFilterKeyword ] = useState<any>([]);
 
     const params = {
         campaign: campaign,
@@ -50,11 +54,32 @@ const ChannelDashboard = () => {
         period: period, 
         previousDate: previousDate, 
         previousEndDate: previousEndDate,
+        keywordIds : keyword
     }
     
     //api call
     const { resultReportPermission } = UserPermission();
-    const { resultFacebookComparison, resultInstagramComparison, resultPantipComparison, resultTwitterComparison, resultYoutubeComparison, loadingTotalComparison } = GetComparison(campaign, date, endDate, period);
+    const { resultFacebookComparison, resultInstagramComparison, resultPantipComparison, resultTwitterComparison, resultYoutubeComparison, loadingTotalComparison } = GetComparison(campaign, date, endDate, period, keyword);
+    const { resultKeywordList } = GetKeyWordsList(campaign);
+
+    const checkKeywordId = (data: any, keywordId : string | number) => {
+        const index = data.indexOf(keywordId);
+        if (index > -1) { 
+            data.splice(index, 1); 
+        } else {
+            data.push(keywordId);
+        }
+
+        setFilterKeyword(data);
+
+        if(data.length === 0) {
+            setKeyword('all');
+        } else {
+            setKeyword(data.join(','));
+        }
+
+        return data;
+    }
 
     return (
         <Grid container spacing={6}>
@@ -75,6 +100,54 @@ const ChannelDashboard = () => {
                 campaign={campaign}
                 setCampaign={setCampaign}
             />
+            <Grid container spacing={2} mt={2} ml={3}>
+                <Grid item xs={12}>
+                    <Card>
+                        <CardHeader title="Filter"></CardHeader>
+                        <CardContent>
+                            <Grid container spacing={2}>
+                                <Grid item xs={6} md={1}> 
+                                    <Button
+                                        sx={{ mb: 2 }}
+                                        onClick={() => {
+                                            if(keyword === 'all') {
+                                                setKeyword('')
+                                            } else {
+                                                setKeyword('all')
+                                                setFilterKeyword([]);
+                                            }
+                                            
+                                        }}
+                                        variant='contained'
+                                        color ={keyword === 'all' ? 'primary' : 'secondary'}
+                                    >
+                                        ALL
+                                    </Button>
+                                </Grid>
+
+                                {
+                                    resultKeywordList && (resultKeywordList || []).map((keywords : any, index : number) => {
+                                        return(
+                                            <Grid item xs={6} md={1.2} key={index}> 
+                                                <Button
+                                                    sx={{ mb: 2, bgcolor: filterKeyword?.indexOf(keywords?.id) > -1 ? GraphicColors[index] : keyword ==='all' ? GraphicColors[index] : 'grey',
+                                                    ":hover": {bgcolor: filterKeyword?.indexOf(keywords?.id) > -1 ? GraphicColors[index] : keyword ==='all' ? GraphicColors[index] : 'grey'} }}
+                                                    onClick={() => {
+                                                        checkKeywordId(filterKeyword, keywords?.id);
+                                                    }}
+                                                    variant='contained'
+                                                >
+                                                    {keywords.name}
+                                                </Button>
+                                            </Grid>
+                                        )
+                                    })
+                                }
+                            </Grid>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            </Grid>
             {
                 resultReportPermission?.includes("44") ?
                 <Grid item xs={12} md={6} id="chart1">

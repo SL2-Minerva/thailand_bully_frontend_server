@@ -12,7 +12,7 @@ import { GetSentimentScore } from 'src/services/api/dashboards/overall/overallDa
 const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
 
 const SentimentGaugeChart = ({params, chartId} : {params:any, chartId: string}) => {
-    const {resultSentimentScore, loadingFilterData} = GetSentimentScore(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const {resultSentimentScore, loadingFilterData} = GetSentimentScore(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, params?.keywordIds);
     const reportNo = '1.1.018';
 
     const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";

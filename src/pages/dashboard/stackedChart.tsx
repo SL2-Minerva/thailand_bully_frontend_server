@@ -67,7 +67,7 @@ const chartLabel = (data:any) => {
 const StackedChart = (props: LineProps) => {
   // ** Props
   const { white, labelColor,  borderColor, gridLineColor, params } = props
-  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, params?.keywordIds);
 
   // const [ chartData, setChartData ] = useState();
 

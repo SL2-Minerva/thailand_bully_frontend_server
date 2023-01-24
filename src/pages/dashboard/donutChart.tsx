@@ -21,7 +21,7 @@ interface MessageData {
 const DonutChart = (props : MessageData) => {
 
   const { params } = props;
-  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, params?.keywordIds);
   const initValue = {
     labels: [],
     datasets: [{

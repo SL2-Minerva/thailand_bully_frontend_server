@@ -1,21 +1,19 @@
 import moment from 'moment'
 import { CallAPI } from 'src/services/CallAPI'
 
-export const FilterByCampaignId = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const FilterByCampaignId = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
       const params = {
         campaign_id: campaignId,
         start_date: start_date? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period
+        period: period,
+        fillter_keywords: fillter_keywords
       };
   
       const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
         url: `/dashboard-engagement/engagement-trnsaction`,
         method: 'GET',
-        params : params,
-        data: {
-          reload: reload
-        }
+        params : params
       })
 
       return {
@@ -25,7 +23,7 @@ export const FilterByCampaignId = (campaignId?: string, start_date?: any, end_da
       }
   }
 
-  export const GetMessagesByDay = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+  export const GetMessagesByDay = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-engagement/engagement-day`,
@@ -34,10 +32,8 @@ export const FilterByCampaignId = (campaignId?: string, start_date?: any, end_da
         campaign_id: campaignId || "",
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period
-      },
-      data: {
-        reload: reload
+        period: period,
+        fillter_keywords: fillter_keywords
       }
     })
 
@@ -48,7 +44,7 @@ export const FilterByCampaignId = (campaignId?: string, start_date?: any, end_da
     }
 }
 
-export const GetMessagesByTime = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetMessagesByTime = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-engagement/engagement-time`,
@@ -57,10 +53,8 @@ export const GetMessagesByTime = (campaignId?: string, start_date?: any, end_dat
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   })
 
@@ -71,7 +65,7 @@ export const GetMessagesByTime = (campaignId?: string, start_date?: any, end_dat
   }
 }
 
-export const GetMessagesByDevice = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetMessagesByDevice = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-engagement/engagement-device`,
@@ -80,10 +74,8 @@ export const GetMessagesByDevice = (campaignId?: string, start_date?: any, end_d
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   })
 
@@ -94,7 +86,7 @@ export const GetMessagesByDevice = (campaignId?: string, start_date?: any, end_d
   }
 }
 
-export const GetMessagesByAccount = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetMessagesByAccount = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-engagement/engagement-account`,
@@ -103,10 +95,8 @@ export const GetMessagesByAccount = (campaignId?: string, start_date?: any, end_
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   })
 
@@ -117,7 +107,7 @@ export const GetMessagesByAccount = (campaignId?: string, start_date?: any, end_
   }
 }
 
-export const GetMessagesByChannel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetMessagesByChannel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-engagement/engagement-channel`,
@@ -126,10 +116,8 @@ export const GetMessagesByChannel = (campaignId?: string, start_date?: any, end_
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   })
 
@@ -140,12 +128,13 @@ export const GetMessagesByChannel = (campaignId?: string, start_date?: any, end_
   }
 }
 
-export const EngagementTypePercetage = (campaignId?: string, start_date?: any, end_date?: any, period?: any) => {
+export const EngagementTypePercetage = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string) => {
     const params = {
       campaign_id: campaignId,
       start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "", 
-      period: period
+      period: period,
+      fillter_keywords: fillter_keywords
     };
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
@@ -161,7 +150,7 @@ export const EngagementTypePercetage = (campaignId?: string, start_date?: any, e
     }
 }
 
-export const GetEngagementTypeByDay = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetEngagementTypeByDay = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-engagement/engagement-type-by-day`,
@@ -170,10 +159,8 @@ export const GetEngagementTypeByDay = (campaignId?: string, start_date?: any, en
         campaign_id: campaignId || "",
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period
-      },
-      data: {
-        reload: reload
+        period: period,
+        fillter_keywords: fillter_keywords
       }
     }) 
 
@@ -184,7 +171,7 @@ export const GetEngagementTypeByDay = (campaignId?: string, start_date?: any, en
     }
 }
 
-export const GetEngagementTypeByTime = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetEngagementTypeByTime = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-engagement/engagement-type-by-time`,
@@ -193,10 +180,8 @@ export const GetEngagementTypeByTime = (campaignId?: string, start_date?: any, e
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   })
 
@@ -207,7 +192,7 @@ export const GetEngagementTypeByTime = (campaignId?: string, start_date?: any, e
   }
 }
 
-export const GetEngagementTypeByDevice = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetEngagementTypeByDevice = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-engagement/engagement-type-by-device`,
@@ -216,10 +201,8 @@ export const GetEngagementTypeByDevice = (campaignId?: string, start_date?: any,
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   })
 
@@ -230,7 +213,7 @@ export const GetEngagementTypeByDevice = (campaignId?: string, start_date?: any,
   }
 }
 
-export const GetEngagementTypeByAccount = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetEngagementTypeByAccount = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-engagement/engagement-type-by-account`,
@@ -239,10 +222,8 @@ export const GetEngagementTypeByAccount = (campaignId?: string, start_date?: any
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   })
 
@@ -253,7 +234,7 @@ export const GetEngagementTypeByAccount = (campaignId?: string, start_date?: any
   }
 }
 
-export const GetEngagementTypeByChannel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetEngagementTypeByChannel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-engagement/engagement-type-by-channel`,
@@ -262,10 +243,8 @@ export const GetEngagementTypeByChannel = (campaignId?: string, start_date?: any
       campaign_id: campaignId || "",
       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      period: period
-    },
-    data: {
-      reload: reload
+      period: period,
+      fillter_keywords: fillter_keywords
     }
   })
 
@@ -276,7 +255,7 @@ export const GetEngagementTypeByChannel = (campaignId?: string, start_date?: any
   }
 }
 
-export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-engagement/engagement-comparison`,
@@ -285,10 +264,8 @@ export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_dat
         campaign_id: campaignId || "",
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period
-      },
-      data: {
-        reload: reload
+        period: period,
+        fillter_keywords: fillter_keywords
       }
     })
 
@@ -299,7 +276,7 @@ export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_dat
     }
   }
 
-  export const GetPeriodComparisonByChannel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+  export const GetPeriodComparisonByChannel = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-engagement/engagement-period-platform`,
@@ -308,10 +285,8 @@ export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_dat
         campaign_id: campaignId || "",
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period
-      },
-      data: {
-        reload: reload
+        period: period,
+        fillter_keywords: fillter_keywords
       }
     }) 
   
@@ -322,7 +297,7 @@ export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_dat
     }
   }
 
-  export const GetPeriodComparisonBySenitment = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+  export const GetPeriodComparisonBySenitment = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-engagement/engagement-period-sentiment`,
@@ -331,10 +306,8 @@ export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_dat
         campaign_id: campaignId || "",
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period
-      },
-      data: {
-        reload: reload
+        period: period,
+        fillter_keywords: fillter_keywords
       }
     })
   
@@ -345,7 +318,7 @@ export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_dat
     }
   }
 
-  export const GetEngagementComparison = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+  export const GetEngagementComparison = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-engagement/engagement-type-comparison`,
@@ -354,10 +327,8 @@ export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_dat
         campaign_id: campaignId || "",
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period
-      },
-      data: {
-        reload: reload
+        period: period,
+        fillter_keywords: fillter_keywords
       }
     })
   
@@ -368,21 +339,19 @@ export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_dat
     }
   }
 
-  export const GetComparisonEngagement = (campaignId?: string, start_date?: any, end_date?: any, period?: any, reload?: boolean ) => {
+  export const GetComparisonEngagement = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
       const params = {
         campaign_id: campaignId,
         start_date: moment(start_date).format('YYYY-MM-DD'),
         end_date: moment(end_date).format('YYYY-MM-DD'), 
-        period: period
+        period: period,
+        fillter_keywords: fillter_keywords
       };
   
     const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-engagement/engagement-action-comparison`,
       method: 'GET',
-      params : params,
-      data: {
-        reload: reload
-      }
+      params : params
     })
 
     return {
@@ -392,7 +361,7 @@ export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_dat
     }
   }
 
-  export const GetSummary = (topKeyword: string, campaignId?: string, start_date?: any, end_date?: any, period?: any, page?: any ) => {
+  export const GetSummary = (topKeyword: string, campaignId?: string, start_date?: any, end_date?: any, period?: any, page?: any, fillter_keywords?: string ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-engagement/engagement-infulencer`,
@@ -402,6 +371,7 @@ export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_dat
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
         period: period,
+        fillter_keywords: fillter_keywords,
         page: page, 
         limit: 10, 
         select: topKeyword

@@ -54,7 +54,7 @@ interface LineProps {
 const PeriodComparisonChartSentiment = (props: LineProps) => {
 
   const { white, labelColor, borderColor, gridLineColor, type, chartTitle, colorType, chartId, params, highlight } = props
-  const { resultPeriodComparisonBySenitment, loadingPeriodComparisonBySenitment }  =GetPeriodComparisonBySenitment(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultPeriodComparisonBySenitment, loadingPeriodComparisonBySenitment }  =GetPeriodComparisonBySenitment(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
