@@ -65,7 +65,7 @@ export const CustomizerSpacing = styled('div')(({ theme }) => ({
   
  
   
-const QuickView = ({setHighlight} : {setHighlight?:any}) => {
+const QuickView = ({setHighlight, setShowQuickView} : {setHighlight?:any, setShowQuickView?: any}) => {
     // ** State
     const [open, setOpen] = useState<boolean>(false)
     const [ highlightText, setHightlightText ] = useState<string>('');
@@ -74,6 +74,7 @@ const QuickView = ({setHighlight} : {setHighlight?:any}) => {
       if(chartId) {
         setHighlight(chartId);
         setHightlightText(chartId);
+        setShowQuickView(true);
       }
       setOpen(false);
     }
@@ -124,12 +125,12 @@ const QuickView = ({setHighlight} : {setHighlight?:any}) => {
                 Charts
               </Typography>
   
-              <Link to="chart1" spy={true} smooth={true}>
+              {/* <Link to="chart1" spy={true} smooth={true}>
                 <Box sx={{ mb: 2 }} onClick={() => {onClose("chart1")}}>
                     <Typography sx={{ color : highlightText === 'chart1' ? 'green' : '#4c4e64de'  }}>Chart 1 : Percentage Of Messages</Typography>
                 </Box>
               </Link>
-              <Divider sx={{ m: 0 }} />
+              <Divider sx={{ m: 0 }} />  */}
 
               <Link to="chart2" spy={true} smooth={true}>
                 <Box sx={{ mb : 2 }} onClick={() => {onClose("chart2")}}>
@@ -194,7 +195,7 @@ const QuickView = ({setHighlight} : {setHighlight?:any}) => {
               </Link>
               <Divider sx={{ m: 0 }} />
 
-              <Link to="chart11" spy={true} smooth={true}>
+              {/* <Link to="chart11" spy={true} smooth={true}>
                 <Box sx={{ mb : 2 }} onClick={() => {onClose("chart11")}}>
                     <Typography sx={{ color : highlightText === 'chart11' ? 'green' : '#4c4e64de'  }}>Chart 11 : Number of Accounts </Typography>
                 </Box>
@@ -290,7 +291,7 @@ const QuickView = ({setHighlight} : {setHighlight?:any}) => {
                     <Typography sx={{ color : highlightText === 'chart24' ? 'green' : '#4c4e64de'  }}>Chart 24 : Percentage of Keyword Comparison By Bully Type </Typography>
                 </Box>
               </Link>
-              <Divider sx={{ m: 0 }} />
+              <Divider sx={{ m: 0 }} /> */}
             </CustomizerSpacing>
   
             <Divider sx={{ m: 0 }} />
