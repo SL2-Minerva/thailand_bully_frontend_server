@@ -26,7 +26,7 @@ const DayTimeBullyType = (props: Props) => {
   const [seriesHour, setSeriesHour ] = useState([{name: '', data:[]}]);
   const [seriesDays, setSeriesDays ] = useState([{name: '', data:[]}]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const { resultDayByBullyType, resultTimeByBullyType, loadingDayByBullyType } = GetDayTimeByBullyType(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultDayByBullyType, resultTimeByBullyType, loadingDayByBullyType } = GetDayTimeByBullyType(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
     const options_hours : ApexOptions = {
         chart: {

@@ -11,7 +11,7 @@ const EngagementSummary = ({ topKeyword, params, chartId, highlight} : {topKeywo
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState<number>(0);
 
-    const { resultSummary, totalSummary, loadingSummary } = GetSummary(topKeyword, params?.campaign, params?.date, params?.endDate, params?.period, page); 
+    const { resultSummary, totalSummary, loadingSummary } = GetSummary(topKeyword, params?.campaign, params?.date, params?.endDate, params?.period, page, params?.keywordIds); 
     const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value-1);
     };

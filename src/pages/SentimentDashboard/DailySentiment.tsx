@@ -65,7 +65,7 @@ const chartLabel = (data:any) => {
 const DailySenitment = (props: LineProps) => {
   // ** Props
   const { white, labelColor,  borderColor, gridLineColor, params, chartId, highlight } = props
-  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   // const [ chartData, setChartData ] = useState();
   const colors = SentimentColors;

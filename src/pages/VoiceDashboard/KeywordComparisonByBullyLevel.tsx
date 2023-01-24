@@ -31,7 +31,7 @@ ChartJS.register(
 const KeywordComparisonByBullyLevel = ({params, chartId, highlight} : {params:any, chartId: string, highlight:boolean}) => {
   const [ charData, setChartData ] = useState(initValue);
 
-  const { resultKeywordComparisonByBullyLevel, loadingKeywordComparisonByBullyLevel } = GetKeywordComparisonByBullyLevel(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultKeywordComparisonByBullyLevel, loadingKeywordComparisonByBullyLevel } = GetKeywordComparisonByBullyLevel(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
       useEffect(() => {
           if (resultKeywordComparisonByBullyLevel) {

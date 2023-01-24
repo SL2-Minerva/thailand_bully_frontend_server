@@ -7,7 +7,7 @@ import { Information } from "mdi-material-ui";
 import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
 
 const TotalMessageLists = ({params, chartId} : {params: any, chartId: string}) => {
-    const { resultKeywords, loadingFilterData } = GetKeyWords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const { resultKeywords, loadingFilterData } = GetKeyWords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, params?.keywordIds);
     const reportNo = '1.2.022';
 
     const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";

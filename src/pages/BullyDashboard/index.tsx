@@ -1,12 +1,14 @@
-import { Button, Grid, useTheme } from "@mui/material"
+import { Button, Card, CardContent, CardHeader, Grid, useTheme } from "@mui/material"
 import { useState } from "react"
 import {
     GetShareOfChannelChart,
     GetShareOfChannelPlatforms,
-    GetShareOfChannelBullyLevel,
+    GetShareOfChannelBullyLevels,
     GetShareOfChannelChartBullyLevel, } from "src/services/api/dashboards/bully/BullyDashboardAPI"
+import { GetKeyWordsList } from "src/services/api/dashboards/overall/overallDashboardApi"
 import { UserPermission } from "src/services/api/users/role"
 import { DateType } from "src/types/forms/reactDatepickerTypes"
+import { BullyLevelColors } from "src/utils/const"
 import Filter from "../VoiceDashboard/Filter"
 import BullyLevelByAccount from "./BullyLevelByAccount"
 import BullyLevelByChannel from "./BullyLevelByChannel"
@@ -47,21 +49,45 @@ const BullyDashboard = () => {
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
     const [ bullyType, setBullyType ] = useState<string>('level');
     const [ highlight, setHighlight ] = useState<string>("");
+    const [ keyword, setKeyword ] = useState<string>('all');
+    const [ filterKeyword, setFilterKeyword ] = useState<any>([]);
 
     const { resultReportPermission } = UserPermission();
-    const { resultShareOfChannelBullyLevel, loadingShareOfChannelBullyLevel } = GetShareOfChannelBullyLevel(campaign, date, endDate, period);
-    const { resultShareOfChannelChartBullyLevel, loadingShareOfChannelChartBullyLevel } = GetShareOfChannelChartBullyLevel(campaign, date, endDate, period);
-    const { resultShareOfChannelPlatform, loadingShareOfChannelPlatform } = GetShareOfChannelPlatforms(campaign, date, endDate, period);
-    const { resultShareOfChannelChart, loadingShareOfChannelChart } = GetShareOfChannelChart(campaign, date, endDate, period);
+    const { resultShareOfChannelBullyLevels, loadingShareOfChannelBullyLevel } = GetShareOfChannelBullyLevels(campaign, date, endDate, period, keyword);
+    const { resultShareOfChannelChartBullyLevel, loadingShareOfChannelChartBullyLevel } = GetShareOfChannelChartBullyLevel(campaign, date, endDate, period, keyword);
+    const { resultShareOfChannelPlatform, loadingShareOfChannelPlatform } = GetShareOfChannelPlatforms(campaign, date, endDate, period, keyword);
+    const { resultShareOfChannelChart, loadingShareOfChannelChart } = GetShareOfChannelChart(campaign, date, endDate, period, keyword);
+    const { resultKeywordList } = GetKeyWordsList(campaign);    
+
     const params = {
         campaign: campaign,
         date : date, 
         endDate : endDate,
-        period : period
+        period : period,
+        keywordIds : keyword
     }
 
     const handleBullyType = (data: string) => {
         setBullyType(data);
+    }
+
+    const checkKeywordId = (data: any, keywordId : string | number) => {
+        const index = data.indexOf(keywordId);
+        if (index > -1) { 
+            data.splice(index, 1); 
+        } else {
+            data.push(keywordId);
+        }
+
+        setFilterKeyword(data);
+
+        if(data.length === 0) {
+            setKeyword('all');
+        } else {
+            setKeyword(data.join(','));
+        }
+
+        return data;
     }
 
     return (
@@ -84,6 +110,54 @@ const BullyDashboard = () => {
                 campaign={campaign}
                 setCampaign={setCampaign}
                 />
+            </Grid>
+            <Grid container spacing={2} mt={2}>
+                <Grid item xs={12}>
+                    <Card>
+                        <CardHeader title="Filter"></CardHeader>
+                        <CardContent>
+                            <Grid container spacing={2}>
+                                <Grid item xs={6} md={1}> 
+                                    <Button
+                                        sx={{ mb: 2 }}
+                                        onClick={() => {
+                                            if(keyword === 'all') {
+                                                setKeyword('')
+                                            } else {
+                                                setKeyword('all')
+                                                setFilterKeyword([]);
+                                            }
+                                            
+                                        }}
+                                        variant='contained'
+                                        color ={keyword === 'all' ? 'primary' : 'secondary'}
+                                    >
+                                        ALL
+                                    </Button>
+                                </Grid>
+
+                                {
+                                    resultKeywordList && (resultKeywordList || []).map((keywords : any, index : number) => {
+                                        return(
+                                            <Grid item xs={6} md={1.2} key={index}> 
+                                                <Button
+                                                    sx={{ mb: 2, bgcolor: filterKeyword?.indexOf(keywords?.id) > -1 ? BullyLevelColors[index] : keyword ==='all' ? BullyLevelColors[index] : 'grey',
+                                                    ":hover": {bgcolor: filterKeyword?.indexOf(keywords?.id) > -1 ? BullyLevelColors[index] : keyword ==='all' ? BullyLevelColors[index] : 'grey'} }}
+                                                    onClick={() => {
+                                                        checkKeywordId(filterKeyword, keywords?.id);
+                                                    }}
+                                                    variant='contained'
+                                                >
+                                                    {keywords.name}
+                                                </Button>
+                                            </Grid>
+                                        )
+                                    })
+                                }
+                            </Grid>
+                        </CardContent>
+                    </Card>
+                </Grid>
             </Grid>
             {
                 resultReportPermission?.includes("93") ? 
@@ -377,7 +451,7 @@ const BullyDashboard = () => {
                     </Grid>
                     <Grid id="chart17" item xs={12} mt={3}>
                         <ShareOfChannel resultShareOfChannel={bullyType !== 'level' ? resultShareOfChannelChartBullyLevel : resultShareOfChannelChart}
-                        resultShareofChannelPlatform={bullyType !== 'level' ? resultShareOfChannelBullyLevel : resultShareOfChannelPlatform}
+                        resultShareofChannelPlatform={bullyType !== 'level' ? resultShareOfChannelBullyLevels : resultShareOfChannelPlatform}
                         loading={bullyType !== 'level' ? loadingShareOfChannelBullyLevel : loadingShareOfChannelPlatform}
                         loadingChannel ={bullyType !== 'level' ? loadingShareOfChannelChartBullyLevel : loadingShareOfChannelChart} 
                         type = {bullyType}

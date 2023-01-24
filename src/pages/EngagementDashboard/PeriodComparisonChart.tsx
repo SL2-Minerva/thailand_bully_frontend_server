@@ -60,7 +60,7 @@ const PeriodComparisonChart = (props: LineProps) => {
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState<number>(0);
 
-  const { resultSentimentComparisonByEngagement, total, loadingSenitmentComparisonByEngagement } = GetSenitmentComparisonByEngagement(params?.campaign, params?.date, params?.endDate, params?.period, page);
+  const { resultSentimentComparisonByEngagement, total, loadingSenitmentComparisonByEngagement } = GetSenitmentComparisonByEngagement(params?.campaign, params?.date, params?.endDate, params?.period, page, params?.keywordIds);
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value-1);

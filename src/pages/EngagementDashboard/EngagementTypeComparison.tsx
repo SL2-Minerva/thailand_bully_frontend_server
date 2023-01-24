@@ -13,7 +13,7 @@ import { Information } from 'mdi-material-ui';
 import { GetEngagementComparison } from 'src/services/api/dashboards/engagement/EngagementApi';
 
 const EngagementTypeComparison  = ({params, chartId, highlight} : {params: any, chartId: string, highlight: boolean}) => {
-  const { resultEngagementComparison, loadingEngagementComparison } = GetEngagementComparison(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultEngagementComparison, loadingEngagementComparison } = GetEngagementComparison(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
   const reportNo = '4.2.023';
 
   const title = chartId + ", Report Level 2(" + reportNo + ")";

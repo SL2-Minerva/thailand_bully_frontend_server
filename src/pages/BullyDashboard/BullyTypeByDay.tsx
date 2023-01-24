@@ -23,7 +23,7 @@ const BullyTypeByDay = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const {resultBullyTypeByDay, loadingBullyTypeByDay} = GetBullyTypeByDay(params?.campaign, params?.date, params?.endDate, params?.period);
+  const {resultBullyTypeByDay, loadingBullyTypeByDay} = GetBullyTypeByDay(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {

@@ -126,6 +126,7 @@ const App = (props: ExtendedAppProps) => {
           
           {/* <meta name='keywords' content='Material Design, MUI, Admin Template, React Admin Template' /> */}
           <meta name='viewport' content='initial-scale=1, width=device-width' />
+          <meta httpEquiv='Content-Security-Policy' content="upgrade-insecure-requests"></meta>
         </Head>
 
         <AuthProvider>

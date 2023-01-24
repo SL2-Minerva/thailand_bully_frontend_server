@@ -72,7 +72,7 @@ const DailyEngagementType = (props: LineProps) => {
 
   // const [ chartData, setChartData ] = useState();
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
-  const { resultEngagementType, loadingEngagementType } = EngagementTypePercetage(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultEngagementType, loadingEngagementType } = EngagementTypePercetage(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);

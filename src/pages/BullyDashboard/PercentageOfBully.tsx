@@ -25,7 +25,7 @@ const PercentageOfBully = (props : MessageData) => {
 
   const { params, type, chartId, highlight } = props;
   const colors = BullyLevelColors;
-  const { resultBullyLevelPercentage, loadingBullyLevelPercentage  } = BullyLevelPercentage(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultBullyLevelPercentage, loadingBullyLevelPercentage  } = BullyLevelPercentage(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const initValue = {
     labels: [],

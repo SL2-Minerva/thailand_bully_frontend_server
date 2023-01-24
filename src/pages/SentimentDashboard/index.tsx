@@ -1,4 +1,4 @@
-import { Card, CardHeader, Grid } from "@mui/material"
+import { Button, Card, CardContent, CardHeader, Grid } from "@mui/material"
 import { useTheme } from '@mui/material/styles'
 import { useState } from "react"
 import Filter from "../VoiceDashboard/Filter"
@@ -26,6 +26,8 @@ import SentimentByBullyLevel from "./SentimentByBullyLevel"
 import SentimentByChannel from "./SentitmentByChannel"
 import SentimentByAccount from "./SentimentByAccount"
 import SentimentComparisonTable from "./SentimentComparison"
+import { GetKeyWordsList } from "src/services/api/dashboards/overall/overallDashboardApi"
+import { SentimentAllColors } from "src/utils/const"
 
 const SentimentDashboard = () => {
     const theme = useTheme()
@@ -45,18 +47,39 @@ const SentimentDashboard = () => {
     const [ campaign, setCampaign ] = useState<string>("1")
     const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
-    
+    const [ keyword, setKeyword ] = useState<string>('all');
+    const [ filterKeyword, setFilterKeyword ] = useState<any>([]);
+
     const [ highlight, setHighlight ] = useState<string>("");
 
     const { resultReportPermission } = UserPermission();
-    const { resultTotalSentiment, loadingTotalSentiment } = GetTotalSentiment(campaign, date, endDate, period);
-
-    
+    const { resultTotalSentiment, loadingTotalSentiment } = GetTotalSentiment(campaign, date, endDate, period, keyword);
+    const { resultKeywordList } = GetKeyWordsList(campaign);    
     const params = {
         campaign: campaign,
         date : date, 
         endDate : endDate,
-        period : period
+        period : period,
+        keywordIds : keyword
+    }
+
+    const checkKeywordId = (data: any, keywordId : string | number) => {
+        const index = data.indexOf(keywordId);
+        if (index > -1) { 
+            data.splice(index, 1); 
+        } else {
+            data.push(keywordId);
+        }
+
+        setFilterKeyword(data);
+
+        if(data.length === 0) {
+            setKeyword('all');
+        } else {
+            setKeyword(data.join(','));
+        }
+
+        return data;
     }
 
     return (
@@ -78,6 +101,54 @@ const SentimentDashboard = () => {
                 campaign={campaign}
                 setCampaign={setCampaign}
             />
+            <Grid container spacing={2} mt={2}>
+                <Grid item xs={12}>
+                    <Card>
+                        <CardHeader title="Filter"></CardHeader>
+                        <CardContent>
+                            <Grid container spacing={2}>
+                                <Grid item xs={6} md={1}> 
+                                    <Button
+                                        sx={{ mb: 2 }}
+                                        onClick={() => {
+                                            if(keyword === 'all') {
+                                                setKeyword('')
+                                            } else {
+                                                setKeyword('all')
+                                                setFilterKeyword([]);
+                                            }
+                                            
+                                        }}
+                                        variant='contained'
+                                        color ={keyword === 'all' ? 'primary' : 'secondary'}
+                                    >
+                                        ALL
+                                    </Button>
+                                </Grid>
+
+                                {
+                                    resultKeywordList && (resultKeywordList || []).map((keywords : any, index : number) => {
+                                        return(
+                                            <Grid item xs={6} md={1.2} key={index}> 
+                                                <Button
+                                                    sx={{ mb: 2, bgcolor: filterKeyword?.indexOf(keywords?.id) > -1 ? SentimentAllColors[index] : keyword ==='all' ? SentimentAllColors[index] : 'grey',
+                                                    ":hover": {bgcolor: filterKeyword?.indexOf(keywords?.id) > -1 ? SentimentAllColors[index] : keyword ==='all' ? SentimentAllColors[index] : 'grey'} }}
+                                                    onClick={() => {
+                                                        checkKeywordId(filterKeyword, keywords?.id);
+                                                    }}
+                                                    variant='contained'
+                                                >
+                                                    {keywords.name}
+                                                </Button>
+                                            </Grid>
+                                        )
+                                    })
+                                }
+                            </Grid>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            </Grid>
             <Grid container spacing={3} mt={2}>
                 {
                     resultReportPermission?.includes("76") ?

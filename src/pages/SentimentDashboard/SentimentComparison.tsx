@@ -17,7 +17,7 @@ const SentimentComparisonTable  = ({params, chartId, highlight} : {params: any, 
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState<number>(0);
 
-  const { resultSentimentComparison, total, loadingSentimentComparison } = GetSentimentComparison(params?.campaign, params?.date, params?.endDate, params?.period, page);
+  const { resultSentimentComparison, total, loadingSentimentComparison } = GetSentimentComparison(params?.campaign, params?.date, params?.endDate, params?.period, page, params?.keywordIds);
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
       setPage(value-1);
   };

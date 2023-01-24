@@ -26,7 +26,7 @@ Chart.register(DoughnutLabel );
 const DailyMessagePieChart  = ( props : Props) => {
   const { chartId, params, highlight } = props;
 
-  const { resultPercentageMessage, loadingPercentageMessage } = GetPercentageMessage(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultPercentageMessage, loadingPercentageMessage } = GetPercentageMessage(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
   const initValue = {

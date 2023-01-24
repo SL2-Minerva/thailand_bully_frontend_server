@@ -23,7 +23,7 @@ const BullyTypeBySentiment = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const {resultBullyTypeBySentiment, loadingBullyTypeBySentiment} = GetBullyTypeBySentiment(params?.campaign, params?.date, params?.endDate, params?.period);
+  const {resultBullyTypeBySentiment, loadingBullyTypeBySentiment} = GetBullyTypeBySentiment(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {

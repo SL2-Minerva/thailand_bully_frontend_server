@@ -14,7 +14,7 @@ import { Information } from 'mdi-material-ui'
 import { GetDeviceVsChannel } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
 const ChannelVsDevice = ({params, chartId, highlight} : {params:any, chartId: string, highlight: boolean}) => {
-  const { resultDeviceVsChannel, loadingDeviceVsChannel } = GetDeviceVsChannel(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultDeviceVsChannel, loadingDeviceVsChannel } = GetDeviceVsChannel(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const [seriesData, setSeriesData ] = useState([]);
   const [labels, setLabels] = useState([]);

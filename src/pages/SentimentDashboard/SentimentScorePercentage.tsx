@@ -52,7 +52,7 @@ const ChartDataSentiment = (data: any, type : string) => {
 }
 
 const SentimentScorePercentage = ({params, highlight} : {params: any, highlight: boolean}) => {
-  const { resultSentimentScorePercentage, loadingSentimentScore } = GetSentimentScore(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultSentimentScorePercentage, loadingSentimentScore } = GetSentimentScore(params?.campaign, params?.date, params?.endDate, 0, params?.period);
   
   const chartLabels =  Labels(resultSentimentScorePercentage);
   const negativeData = ChartDataSentiment(resultSentimentScorePercentage, 'negative');

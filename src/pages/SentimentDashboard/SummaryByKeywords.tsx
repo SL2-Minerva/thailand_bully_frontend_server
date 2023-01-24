@@ -15,7 +15,7 @@ const SummaryByKeywords = ({params, chartId, highlight} :
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState<number>(0);
     
-    const { resultSummaryByKeywords, total, loadingSummaryByKeywords } = GetSummaryByKeywords(topKeyword, params?.campaign, params?.date, params?.endDate, params?.period, page);
+    const { resultSummaryByKeywords, total, loadingSummaryByKeywords } = GetSummaryByKeywords(topKeyword, params?.campaign, params?.date, params?.endDate, params?.period, page, params?.keywordIds);
     const handleTopKeyword = (data: string) => {
         setTopKeyword(data);
     }

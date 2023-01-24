@@ -23,8 +23,8 @@ const SentimentScore = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultSentimentScore, loadingSentimentScore } = GetSentimentScore(params?.campaign, params?.date, params?.endDate, params?.period);
-  const { resultSentimentScorePrevious, loadingSentimentScorePrevious } = GetSentimentScorePrevious(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultSentimentScore, loadingSentimentScore } = GetSentimentScore(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
+  const { resultSentimentScorePrevious, loadingSentimentScorePrevious } = GetSentimentScorePrevious(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {

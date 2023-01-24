@@ -23,7 +23,7 @@ const ChannelByDay = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultChannelByDay, loadingChannelByDay } = GetChannelByDay(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultChannelByDay, loadingChannelByDay } = GetChannelByDay(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
 

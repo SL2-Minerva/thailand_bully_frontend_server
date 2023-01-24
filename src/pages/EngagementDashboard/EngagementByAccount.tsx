@@ -23,7 +23,7 @@ const EngagementByAccounts = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultMessagesByAccount, loadingMessagesByAccount } = GetMessagesByAccount(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultMessagesByAccount, loadingMessagesByAccount } = GetMessagesByAccount(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
   const reportNo = '4.2.006';
 
   const title = chartId + ", Report Level 2(" + reportNo + ")";

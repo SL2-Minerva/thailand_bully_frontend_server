@@ -32,7 +32,7 @@ ChartJS.register(
 const KeywordComparisonBySentiment = ({params, chartId, highlight} : {params:any, chartId: string, highlight?: boolean}) => {
   const [ charData, setChartData ] = useState(initValue);
 
-  const { resultKeywordComparisonBySentiment, loadingKeywordComparisonBySentiment } = GetKeywordComparisonBySentiment(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultKeywordComparisonBySentiment, loadingKeywordComparisonBySentiment } = GetKeywordComparisonBySentiment(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   useEffect(() => {
     if (resultKeywordComparisonBySentiment) {

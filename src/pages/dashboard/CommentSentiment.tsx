@@ -13,7 +13,7 @@ import { StyledTooltip } from './overall'
 import { GetSentimentType } from 'src/services/api/dashboards/overall/overallDashboardApi'
 
 const CommentSentiment  = ({params, chartId} : {params:any, chartId: string}) => {
-  const {resultSentimentType, loadingFilterData} = GetSentimentType(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const {resultSentimentType, loadingFilterData} = GetSentimentType(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, params?.keywordIds);
   const reportNo = '1.1.019';
 
   const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
@@ -74,11 +74,11 @@ const CommentSentiment  = ({params, chartId} : {params:any, chartId: string}) =>
                 <Doughnut data={data} options={options as any} height={194} />
             </Grid>
             <Grid item xs={4} mt={14}>
-                <span><ThumbUp/> { "Positive " + resultSentimentType?.positive_percentage + "%"}</span>
+                <span><ThumbUp/> { resultSentimentType?.positive_percentage ? "Positive " + resultSentimentType?.positive_percentage + "%" : ""}</span>
                 <br/>
-                <span><ThumbsUpDown />  {"Neutral " + resultSentimentType?.neutral_percentage + "%"}</span>
+                <span><ThumbsUpDown />  {resultSentimentType?.neutral_percentage ? "Neutral " + resultSentimentType?.neutral_percentage + "%" : ""}</span>
                 <br/>
-                <span><ThumbDown />  {"Negative " + resultSentimentType?.negative_percentage + "%"}</span>
+                <span><ThumbDown />  {resultSentimentType?.negative_percentage ? "Negative " + resultSentimentType?.negative_percentage + "%" : ""}</span>
                 
             </Grid>  
         </Grid>

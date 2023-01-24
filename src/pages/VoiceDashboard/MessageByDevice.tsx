@@ -23,7 +23,7 @@ const MessagesByDevices = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultMessagesByDevice, loadingMessagesByDevice } = GetMessagesByDevice(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultMessagesByDevice, loadingMessagesByDevice } = GetMessagesByDevice(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
 
   const chartRef = useRef();

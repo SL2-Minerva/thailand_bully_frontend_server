@@ -27,7 +27,7 @@ const DayTimeSentiment = (props : Props) => {
   const [seriesHour, setSeriesHour ] = useState([{name: '', data:[]}]);
   const [seriesDays, setSeriesDays ] = useState([{name: '', data:[]}]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const { resultDayBySentiment, resultTimeBySentiment, loadingBySentiment } = GetDayTimeBySentiment(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultDayBySentiment, resultTimeBySentiment, loadingBySentiment } = GetDayTimeBySentiment(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
     const options_hours : ApexOptions = {
         chart: {

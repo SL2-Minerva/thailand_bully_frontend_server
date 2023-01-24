@@ -82,7 +82,7 @@ const DailyMessgeByBullyType = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const {resultBullyTypeFilterData, loadingBullyTypeFilterData} = FilterBullyTypeByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period);
+  const {resultBullyTypeFilterData, loadingBullyTypeFilterData} = FilterBullyTypeByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {

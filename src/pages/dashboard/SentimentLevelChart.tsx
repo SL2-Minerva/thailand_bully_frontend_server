@@ -51,7 +51,7 @@ const ChartDataPositive = (data: any, type : string) => {
 }
 
 const SentimentLevelChart = ({params} : {params: any}) => {
-  const { resultSentimentLevel, loadingSentimentLevel } = GetSentimentLevel(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+  const { resultSentimentLevel, loadingSentimentLevel } = GetSentimentLevel(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, params?.keywordIds);
   const chartLabels =  Labels(resultSentimentLevel);
   const positiveData = ChartDataPositive(resultSentimentLevel, 'positive');
   const neutralData = ChartDataPositive(resultSentimentLevel, 'neutral');

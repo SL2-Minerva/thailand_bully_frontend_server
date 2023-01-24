@@ -23,7 +23,7 @@ const SentimentByTime = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultSentimentByTime, loadingSentimentByTime  } = GetSentimentByTime(params?.campaign, params?.date, params?.endDate, params?.period);
+  const { resultSentimentByTime, loadingSentimentByTime  } = GetSentimentByTime(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {

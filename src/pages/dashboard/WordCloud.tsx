@@ -7,7 +7,7 @@ import { Information } from "mdi-material-ui";
 import { GetWordClouds } from "src/services/api/dashboards/overall/overallDashboardApi";
 
 const WordCloud = ({params, chartId} : {params: any, chartId: string} ) => {
-    const { resultWordClouds, loadingWordClouds } = GetWordClouds(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate);
+    const { resultWordClouds, loadingWordClouds } = GetWordClouds(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.topKeyword, params?.previousDate, params?.previousEndDate, params?.keywordIds);
     const reportNo = '1.2.021';
 
     const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
