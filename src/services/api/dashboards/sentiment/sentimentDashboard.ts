@@ -299,9 +299,26 @@ export const GetTotalSentiment = (campaignId?: string, start_date?: any, end_dat
         select: topAccount
       }
     })
-  
+
+    const returnData : any = [];
+    if(res?.data) {
+      const data = res?.data;
+      for(let i =0; i < data?.length; i++) {
+        returnData.push({
+          infulencer : data[i].infulencer,
+          keyword_name : data[i].keyword_name,
+          negative: data[i].negative,
+          neutral : data[i].neutral,
+          sentiment_score: data[i].sentiment_score,
+          positive : data[i].positive,
+          total : data[i].total,
+          id: i+ 1
+        })
+      }
+    }
+    
     return {
-      resultSummaryByAccount: res?.data || null,
+      resultSummaryByAccount: returnData || null,
       total : res?.data?.total || 0,
       loadingSummaryByAccount : loading,
       errorSummaryAccount : error
@@ -324,9 +341,26 @@ export const GetTotalSentiment = (campaignId?: string, start_date?: any, end_dat
         select: topChannel
       }
     })
-  
+
+    const returnData : any = [];
+    if(res?.data) {
+      const data = res?.data;
+      for(let i =0; i < data?.length; i++) {
+        returnData.push({
+          channel : data[i].channel,
+          keyword_name : data[i].keyword_name,
+          negative: data[i].negative,
+          neutral : data[i].neutral,
+          sentiment_score: data[i].sentiment_score,
+          positive : data[i].positive,
+          total : data[i].total,
+          id: i+ 1
+        })
+      }
+    }
+
     return {
-        resultSummaryByChannel: res?.data || null,
+        resultSummaryByChannel: returnData || null,
         total : res?.data?.total || 0 , 
         loadingSummaryByChannel : loading,
         errorSummaryByChannel: error
@@ -350,8 +384,25 @@ export const GetTotalSentiment = (campaignId?: string, start_date?: any, end_dat
       }
     })
 
+    const returnData : any = [];
+    if(res?.data) {
+      const data = res?.data;
+      for(let i =0; i < data?.length; i++) {
+        returnData.push({
+          keyword_id : data[i].keyword_id,
+          keyword_name : data[i].keyword_name,
+          negative: data[i].negative,
+          neutral : data[i].neutral,
+          percentage: data[i].percentage,
+          positive : data[i].positive,
+          total_messages : data[i].total_messages,
+          id: i+ 1
+        })
+      }
+    }
+
     return {
-        resultSummaryByKeywords: res?.data || null,
+        resultSummaryByKeywords: returnData || null,
         total : res?.data?.total || 0, 
         loadingSummaryByKeywords : loading,
         errorSummaryByKeywords : error
