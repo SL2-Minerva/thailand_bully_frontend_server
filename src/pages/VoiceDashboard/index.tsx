@@ -33,6 +33,7 @@ import MessagesByBullyLevel from "./MessageByBullyLevel"
 import MessagesByBullyType from "./MessageByBullyType"
 import { GetKeyWordsList } from "src/services/api/dashboards/overall/overallDashboardApi"
 import { GraphicColors } from "src/utils/const"
+import QuickViewModal from "./QuickViewModal"
 
 const VoiceDashboard = () => {
     const theme = useTheme()
@@ -55,6 +56,7 @@ const VoiceDashboard = () => {
     const [ highlight, setHighlight ] = useState<string>("");
     const [ keyword, setKeyword ] = useState<string>('all');
     const [ filterKeyword, setFilterKeyword ] = useState<any>([]);
+    const [ showQuickView, setShowQuickView ] = useState<boolean>(false);
 
     const params = {
         campaign: campaign,
@@ -425,7 +427,8 @@ const VoiceDashboard = () => {
                     <KeywordComparisonByBullyType params={params} chartId="Chart 24" highlight = { highlight==='chart24' ? true : false }/>
                 </Grid> : ""
             }
-            <QuickView setHighlight={setHighlight}/>
+            <QuickView setHighlight={setHighlight} setShowQuickView={setShowQuickView}/>
+            <QuickViewModal show={showQuickView} setShow={setShowQuickView} params={params} chartId={highlight}/>
         </Grid>
     )
 
