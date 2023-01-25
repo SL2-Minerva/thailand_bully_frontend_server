@@ -1,5 +1,5 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
+import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
@@ -129,7 +129,7 @@ const PercentageOfEngangementType = (props : MessageData) => {
   }, [resultEngagementType]);
 
   return (
-    <Card>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
       {loadingEngagementType && (
         <LinearProgress
             style={{ width: "100%" }}
@@ -166,7 +166,7 @@ const PercentageOfEngangementType = (props : MessageData) => {
         </Grid>
         
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

@@ -28,6 +28,7 @@ import SentimentByAccount from "./SentimentByAccount"
 import SentimentComparisonTable from "./SentimentComparison"
 import { GetKeyWordsList } from "src/services/api/dashboards/overall/overallDashboardApi"
 import { SentimentAllColors } from "src/utils/const"
+import QuickViewModal from "./QuickViewModal"
 
 const SentimentDashboard = () => {
     const theme = useTheme()
@@ -49,6 +50,7 @@ const SentimentDashboard = () => {
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
     const [ keyword, setKeyword ] = useState<string>('all');
     const [ filterKeyword, setFilterKeyword ] = useState<any>([]);
+    const [ showQuickView, setShowQuickView ] = useState<boolean>(false);
 
     const [ highlight, setHighlight ] = useState<string>("");
 
@@ -418,7 +420,8 @@ const SentimentDashboard = () => {
                     </Grid> : ""
                 } 
             </Grid>
-            <QuickView setHighlight={setHighlight}/>
+            <QuickView setHighlight={setHighlight} setShowQuickView={setShowQuickView}/>
+            <QuickViewModal show={showQuickView} setShow={setShowQuickView} params={params} chartId={highlight}/>
         </Grid> 
     )
 }

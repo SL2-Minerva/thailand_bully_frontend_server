@@ -29,6 +29,7 @@ import PeriodComparisonChartSentiment from "./PeriodComparisonChartSentiment";
 import { GetKeyWordsList } from "src/services/api/dashboards/overall/overallDashboardApi";
 import { EngagementTransChartColor } from "src/utils/const";
 import EngagementByType from "./EngagementByType";
+import QuickViewModal from "./QuickViewModal";
 
 const EngagementDashboard = () => {
     const theme = useTheme()
@@ -51,6 +52,7 @@ const EngagementDashboard = () => {
     const [ highlight, setHighlight ] = useState<string>("");
     const [ keyword, setKeyword ] = useState<string>('all');
     const [ filterKeyword, setFilterKeyword ] = useState<any>([]);
+    const [ showQuickView, setShowQuickView ] = useState<boolean>(false);
 
     const { resultReportPermission } = UserPermission();
     const { resultTotalEngagement, loadingTotalEngagement } = GetTotalEngagment(campaignType, date, endDate, period, keyword);
@@ -505,7 +507,8 @@ const EngagementDashboard = () => {
                     }
                     
                 </Grid>
-                <QuickView setHighlight={setHighlight}/>
+                <QuickView setHighlight={setHighlight} setShowQuickView={setShowQuickView}/>
+                <QuickViewModal show={showQuickView} setShow={setShowQuickView} params={params} chartId={highlight}/>
 
             </Grid>
         </>

@@ -1,5 +1,4 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
@@ -14,7 +13,7 @@ import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { FilterByCampaignId } from 'src/services/api/dashboards/engagement/EngagementApi'
-import { LinearProgress } from '@mui/material'
+import { LinearProgress, Paper } from '@mui/material'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -31,7 +30,7 @@ interface LineProps {
   params : any
   type: string
   chartId: string,
-  highlight: boolean
+  highlight?: boolean
 }
 
 const chartLabel = (data:any) => {
@@ -243,7 +242,7 @@ const DailyEngagement = (props: LineProps) => {
   const title = chartId + ", Report Level 2(" + reportNo + ")";
 
   return (
-    <Card>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: '300px' }} square variant='outlined'>
       {loadingFilterData && (
         <LinearProgress
             style={{ width: "100%" }}
@@ -275,7 +274,7 @@ const DailyEngagement = (props: LineProps) => {
           /> : ""
          }
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

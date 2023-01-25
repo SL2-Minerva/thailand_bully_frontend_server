@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, LinearProgress } from '@mui/material'
+import { Paper, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -175,7 +175,7 @@ const EngagementByDay = (props: LineProps) => {
   const title = chartId + ", Report Level 2(" + reportNo + ")";
 
     return (
-      <Card>
+      <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: '300px' }} square variant='outlined'>
         {loadingMessagesByDay && (
           <LinearProgress
               style={{ width: "100%" }}
@@ -207,7 +207,7 @@ const EngagementByDay = (props: LineProps) => {
           }
         
       </CardContent>
-    </Card>
+    </Paper>
     )
 }
 

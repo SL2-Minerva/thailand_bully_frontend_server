@@ -33,15 +33,15 @@ const ChartDataPositive = (data: any, type : string) => {
   if(data?.length > 0) {
     if(type === 'positive') {
       for(let i=0; i<data?.length; i++) {
-        value.push(data[i].positive);
+        value.push(data[i].Positive);
       }
     } else if(type==='negative') {
       for(let i=0; i<data?.length; i++) {
-        value.push(data[i].negative);
+        value.push(data[i].Negative);
       }
     } else if (type === 'neutral') {
       for(let i=0; i<data?.length; i++) {
-        value.push(data[i].neutral);
+        value.push(data[i].Neutral);
       }
     }
 

@@ -1,9 +1,8 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
-import { Grid, LinearProgress } from "@mui/material"
+import { Grid, LinearProgress, Paper } from "@mui/material"
 
 // ** Third Party Imports
 
@@ -185,7 +184,7 @@ const DailyMessagePieChart  = ( props : Props) => {
   const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
 
   return (
-    <Card style={{ minHeight: '330px' }}>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: '300px' }} square variant='outlined'>
       {loadingPercentageChannel && (
         <LinearProgress
             style={{ width: "100%" }}
@@ -229,7 +228,7 @@ const DailyMessagePieChart  = ( props : Props) => {
             </Grid>
         </Grid>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

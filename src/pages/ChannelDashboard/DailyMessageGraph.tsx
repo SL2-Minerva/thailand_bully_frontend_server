@@ -1,4 +1,3 @@
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
@@ -15,13 +14,13 @@ import { InteractionItem } from 'chart.js'
 import moment from 'moment'
 import { GetDailyChannel } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
 import MessageDetail from './MessageDetail'
-import { LinearProgress } from '@mui/material'
+import { LinearProgress, Paper } from '@mui/material'
 
 interface Props {
   type: string
   chartId : string
   params: any
-  highlight: boolean
+  highlight?: boolean
 }
 export const getSeries = (seriesData: any) => {
   if(!seriesData) return [];
@@ -235,7 +234,7 @@ const DailyMessageGraph = ( props : Props) => {
       },[resultDailyChannel]);
 
       return (
-        <Card>
+        <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
           {loadingDailyChannel && (
             <LinearProgress
                 style={{ width: "100%" }}
@@ -274,7 +273,7 @@ const DailyMessageGraph = ( props : Props) => {
                 reportNo = {reportNo}
             /> : ""
           }
-        </Card>
+        </Paper>
         
       )
 }

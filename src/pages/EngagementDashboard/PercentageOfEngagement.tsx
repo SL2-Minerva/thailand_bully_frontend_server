@@ -1,9 +1,8 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
-import { Grid, LinearProgress } from "@mui/material"
+import { Grid, LinearProgress, Paper } from "@mui/material"
 
 // ** Third Party Imports
 
@@ -128,7 +127,7 @@ const PercentageOfEngangement = (props : MessageData) => {
   }, [resultFilterData]);
 
   return (
-    <Card>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: '300px' }} square variant='outlined'>
       {loadingFilterData && (
                 <LinearProgress
                     style={{ width: "100%" }}
@@ -165,7 +164,7 @@ const PercentageOfEngangement = (props : MessageData) => {
         </Grid>
         
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

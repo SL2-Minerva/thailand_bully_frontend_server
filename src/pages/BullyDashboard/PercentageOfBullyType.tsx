@@ -1,5 +1,5 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
+import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
@@ -140,7 +140,7 @@ const PercentageOfBullyType = (props : MessageData) => {
   const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
 
   return (
-    <Card>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
        {loadingBullyTypePercentage && (
             <LinearProgress
                 style={{ width: "100%" }} 
@@ -177,7 +177,7 @@ const PercentageOfBullyType = (props : MessageData) => {
         </Grid>
         
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 
