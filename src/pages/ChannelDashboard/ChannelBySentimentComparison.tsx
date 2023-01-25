@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, LinearProgress } from '@mui/material'
+import { Paper, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -183,7 +183,7 @@ const ChannelBySentimentComparison = (props: LineProps) => {
     const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
 
     return (
-      <Card>
+      <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
         {loadingChannelBySentiment && (
           <LinearProgress
               style={{ width: "100%" }}
@@ -216,7 +216,7 @@ const ChannelBySentimentComparison = (props: LineProps) => {
           
         
       </CardContent>
-    </Card>
+    </Paper>
     )
 }
 

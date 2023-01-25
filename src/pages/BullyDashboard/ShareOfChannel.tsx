@@ -1,5 +1,5 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
+import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { Grid, LinearProgress } from "@mui/material"
@@ -52,7 +52,7 @@ const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  c
 };
 
   return (
-    <Card>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
       {loading && loadingChannel && (
             <LinearProgress
                 style={{ width: "100%" }} 
@@ -143,7 +143,7 @@ const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  c
         </Grid>
         
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

@@ -38,7 +38,7 @@ export const CustomizerSpacing = styled('div')(({ theme }) => ({
   
  
   
-const QuickView = ({setHighlight} : {setHighlight?:any}) => {
+const QuickView = ({setHighlight,setShowQuickView} : {setHighlight?:any, setShowQuickView?:any}) => {
   // ** State
   const [open, setOpen] = useState<boolean>(false)
   const [ highlightText, setHightlightText ] = useState<string>('');
@@ -47,6 +47,7 @@ const QuickView = ({setHighlight} : {setHighlight?:any}) => {
     if(chartId) {
       setHighlight(chartId);
       setHightlightText(chartId);
+      setShowQuickView(true)
     }
     setOpen(false);
   }
@@ -97,12 +98,12 @@ const QuickView = ({setHighlight} : {setHighlight?:any}) => {
                 Charts
               </Typography>
   
-              <Link to="chart1" spy={true} smooth={true}>
+              {/* <Link to="chart1" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart1")}}>
                     <Typography sx={{ color : highlightText === 'chart1' ? 'green' : '#4c4e64de'  }}>Chart 1 : Percentage of Bully Level</Typography>
                 </Box>
               </Link>
-              <Divider sx={{ m: 0 }} />
+              <Divider sx={{ m: 0 }} /> */}
 
               <Link to="chart2" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart2")}}>
@@ -153,12 +154,12 @@ const QuickView = ({setHighlight} : {setHighlight?:any}) => {
               </Link>
               <Divider sx={{ m: 0 }} />
 
-              <Link to="chart9" spy={true} smooth={true}>
+              {/* <Link to="chart9" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart9")}}>
                     <Typography sx={{ color : highlightText === 'chart9' ? 'green' : '#4c4e64de'  }}>Chart 9 : Percentage of Bully Type</Typography>
                 </Box>
               </Link>
-              <Divider sx={{ m: 0 }} />
+              <Divider sx={{ m: 0 }} /> */}
 
               <Link to="chart10" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart10")}}>
@@ -209,15 +210,13 @@ const QuickView = ({setHighlight} : {setHighlight?:any}) => {
               </Link>
               <Divider sx={{ m: 0 }} />
 
-              <Link to="chart17" spy={true} smooth={true}>
+              {/* <Link to="chart17" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart17")}}>
                     <Typography sx={{ color : highlightText === 'chart17' ? 'green' : '#4c4e64de'  }}>Chart 17 : Share of Channel(Bully Level / Bully Type)</Typography>
                 </Box>
-              </Link>
+              </Link> */}
 
             </CustomizerSpacing>
-  
-            <Divider sx={{ m: 0 }} />
           </PerfectScrollbar>
         </Drawer>
       </div>

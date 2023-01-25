@@ -24,6 +24,7 @@ import SentimentScore from "./SenitmentScore"
 import SentimentLevelChart from "./SentimentLevelChart"
 import { GetKeyWordsList } from "src/services/api/dashboards/overall/overallDashboardApi"
 import { GraphicColors } from "src/utils/const"
+import QuickViewModal from "./QuickViewModal"
 
 const ChannelDashboard = () => {
     const theme = useTheme()
@@ -46,6 +47,7 @@ const ChannelDashboard = () => {
     const [ highlight, setHighlight ] = useState<string>("");
     const [ keyword, setKeyword ] = useState<string>('all');
     const [ filterKeyword, setFilterKeyword ] = useState<any>([]);
+    const [ showQuickView, setShowQuickView ] = useState<boolean>(false);
 
     const params = {
         campaign: campaign,
@@ -404,7 +406,8 @@ const ChannelDashboard = () => {
                 </Grid> : ""
             }
 
-            <QuickView setHighlight={setHighlight}/>
+            <QuickView setHighlight={setHighlight} setShowQuickView={setShowQuickView}/>
+            <QuickViewModal show={showQuickView} setShow={setShowQuickView} params={params} chartId={highlight}/>
 
         </Grid>
 

@@ -23,10 +23,11 @@ import BullyTypeByDevice from "./BullyTypeByDevice"
 import BullyTypeBySentiment from "./BullyTypeBySentiment"
 import BullyTypeByTime from "./BullyTypeByTime"
 import DailyMessgeByBully from "./DailyMessageByBully"
-import DailyMessgeByBullyType from "./DailyMessageByBullyType"
+import DailyMessgesByBullyType from "./DailyMessageByBullyType"
 import PercentageOfBully from "./PercentageOfBully"
 import PercentageOfBullyType from "./PercentageOfBullyType"
 import QuickView from "./QuickView"
+import QuickViewModal from "./QuickViewModal"
 import ShareOfChannel from "./ShareOfChannel"
 
 const BullyDashboard = () => {
@@ -51,6 +52,7 @@ const BullyDashboard = () => {
     const [ highlight, setHighlight ] = useState<string>("");
     const [ keyword, setKeyword ] = useState<string>('all');
     const [ filterKeyword, setFilterKeyword ] = useState<any>([]);
+    const [ showQuickView, setShowQuickView ] = useState<boolean>(false);
 
     const { resultReportPermission } = UserPermission();
     const { resultShareOfChannelBullyLevels, loadingShareOfChannelBullyLevel } = GetShareOfChannelBullyLevels(campaign, date, endDate, period, keyword);
@@ -111,7 +113,7 @@ const BullyDashboard = () => {
                 setCampaign={setCampaign}
                 />
             </Grid>
-            <Grid container spacing={2} mt={2}>
+            <Grid container spacing={2} mt={2} ml={1}>
                 <Grid item xs={12}>
                     <Card>
                         <CardHeader title="Filter"></CardHeader>
@@ -308,7 +310,7 @@ const BullyDashboard = () => {
             {
                 resultReportPermission?.includes("102") ?
                 <Grid id="chart10" item xs={12} md={8}>
-                    <DailyMessgeByBullyType
+                    <DailyMessgesByBullyType
                         white={whiteColor}
                         labelColor={labelColor}
                         success={lineChartYellow}
@@ -460,7 +462,8 @@ const BullyDashboard = () => {
                 </>
                 : ""
             }
-            <QuickView setHighlight={setHighlight}/>
+           <QuickView setHighlight={setHighlight} setShowQuickView={setShowQuickView}/>
+            <QuickViewModal show={showQuickView} setShow={setShowQuickView} params={params} chartId={highlight}/>
 
         </Grid> 
     )

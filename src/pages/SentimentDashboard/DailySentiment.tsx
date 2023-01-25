@@ -1,5 +1,5 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
+import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
@@ -27,7 +27,7 @@ interface LineProps {
   params : any
   type: string
   chartId: string,
-  highlight: boolean
+  highlight?: boolean
 }
 
 const chartLabel = (data:any) => {
@@ -246,7 +246,7 @@ const DailySenitment = (props: LineProps) => {
   const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
 
   return (
-    <Card>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
       {loadingFilterData && (
             <LinearProgress
                 style={{ width: "100%" }}
@@ -276,7 +276,7 @@ const DailySenitment = (props: LineProps) => {
           /> : ""
          }
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 
