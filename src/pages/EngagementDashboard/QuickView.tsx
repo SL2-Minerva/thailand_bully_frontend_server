@@ -1,9 +1,9 @@
 // ** React Imports
 import { useState } from 'react'
 
-// ** Third Party Components
-import PerfectScrollbar from 'react-perfect-scrollbar'
-import {Link} from 'react-scroll'
+// // ** Third Party Components
+// import PerfectScrollbar from 'react-perfect-scrollbar'
+// import {Link} from 'react-scroll'
 
 // ** MUI Imports
 import Divider from '@mui/material/Divider'
@@ -89,7 +89,6 @@ const QuickView = ({setHighlight, setShowQuickView} : {setHighlight?:any, setSho
               <Close fontSize='small' />
             </IconButton>
           </Box>
-          <PerfectScrollbar options={{ wheelPropagation: false }}>
             <CustomizerSpacing className='customizer-body'>
               <Typography
                 component='p'
@@ -105,54 +104,34 @@ const QuickView = ({setHighlight, setShowQuickView} : {setHighlight?:any, setSho
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} /> */}
-
-              <Link to="chart2" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart2")}}>
                     <Typography sx={{ color : highlightText === 'chart2' ? 'green' : '#4c4e64de'  }}>Chart 2 : Daily Engagement by Date</Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
-
-              <Link to="chart3" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart3")}}>
                     <Typography sx={{ color : highlightText === 'chart3' ? 'green' : '#4c4e64de'  }}>Chart 3 : Daily Engagement by Day</Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
-
-              <Link to="chart4" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart4")}}>
                     <Typography sx={{ color : highlightText === 'chart4' ? 'green' : '#4c4e64de'  }}>Chart 4 : Daily Engagement  by Time</Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
-
-              <Link to="chart5" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart5")}}>
                     <Typography sx={{ color : highlightText === 'chart5' ? 'green' : '#4c4e64de'  }}>Chart 5 : Daily Engagement  by Devices</Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
-
-              <Link to="chart6" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart6")}}>
                     <Typography sx={{ color : highlightText === 'chart6' ? 'green' : '#4c4e64de'  }}>Chart 6 : Daily Engagement  by Account</Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
 
-              <Link to="chart7" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart7")}}>
                     <Typography sx={{ color : highlightText === 'chart7' ? 'green' : '#4c4e64de'  }}>Chart 7 : Daily Engagement  by Channel</Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
-
-              <Link to="chart8" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart8")}}>
                     <Typography sx={{ color : highlightText === 'chart8' ? 'green' : '#4c4e64de'  }}>Chart 8 : Daily Engagement  by Engagement Type</Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
 
               {/* <Link to="chart9" spy={true} smooth={true}>
@@ -162,46 +141,31 @@ const QuickView = ({setHighlight, setShowQuickView} : {setHighlight?:any, setSho
               </Link>
               <Divider sx={{ m: 0 }} /> */}
 
-              <Link to="chart10" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart10")}}>
                     <Typography sx={{ color : highlightText === 'chart10' ? 'green' : '#4c4e64de'  }}>Chart 10 : Daily Engagement Type by Date </Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
 
-              <Link to="chart11" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart11")}}>
                     <Typography sx={{ color : highlightText === 'chart11' ? 'green' : '#4c4e64de'  }}>Chart 11 : Daily Engagement Type by Day </Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
 
-              <Link to="chart12" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart12")}}>
                     <Typography sx={{ color : highlightText === 'chart12' ? 'green' : '#4c4e64de'  }}>Chart 12 : Daily Engagement Type by Time </Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
-
-              <Link to="chart13" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart13")}}>
                     <Typography sx={{ color : highlightText === 'chart13' ? 'green' : '#4c4e64de'  }}>Chart 13 : Daily Engagement Type by Devices </Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
-
-              <Link to="chart14" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart14")}}>
                     <Typography sx={{ color : highlightText === 'chart14' ? 'green' : '#4c4e64de'  }}>Chart 14 : Daily Engagement Type by Account </Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
-
-              <Link to="chart15" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart15")}}>
                     <Typography sx={{ color : highlightText === 'chart15' ? 'green' : '#4c4e64de'  }}>Chart 15 :  Daily Engagement Type by Channel </Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
 
               {/* <Link to="chart16" spy={true} smooth={true}>
@@ -255,7 +219,6 @@ const QuickView = ({setHighlight, setShowQuickView} : {setHighlight?:any, setSho
             </CustomizerSpacing>
   
             <Divider sx={{ m: 0 }} />
-          </PerfectScrollbar>
         </Drawer>
       </div>
     )
