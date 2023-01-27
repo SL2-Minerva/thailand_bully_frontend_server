@@ -48,7 +48,7 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
   const title = totalText === "Messages" ? 'Number of Messages: Period over Period Comparison' : 'Number of Accounts: Period over Period Comparison'
 
   return (
-    <Card>
+    <Card style={{ height: 250 }}>
         {loading && (
           <LinearProgress
             style={{ width: "100%" }}
@@ -64,7 +64,7 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
                 </Grid>
                 <Grid item xs={5} p={4}>
                     <Typography variant='h4'>
-                        {trend === 'plus' ? "+" : "-"}{totalValue}
+                        {trend === 'plus' ? "+" : ""}{totalValue}
                     </Typography>
                     <Typography variant='h6' sx={{ m: 3 }} >
                         <b>{totalText}</b>
@@ -73,7 +73,7 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
                 <Grid item xs={4} p={4}>
                     <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Typography variant='h4' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
+                            <Typography variant='h5' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
                                 {trendNumber + "%"}
                             </Typography>
                             <TrendIcon fontSize='large' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }} />

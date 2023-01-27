@@ -97,7 +97,7 @@ const SentimentLevelChart = ({params} : {params: any}) => {
     tooltip: {
       y: {
         formatter: function (val) {
-          return val + "K"
+          return val + "%"
         }
       }
     },

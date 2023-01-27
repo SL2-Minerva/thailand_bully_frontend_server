@@ -3,23 +3,31 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
-import { Grid, LinearProgress } from "@mui/material"
+import { Grid, LinearProgress } from '@mui/material'
 
 // ** Third Party Imports
 
 import { Doughnut } from 'react-chartjs-2'
-import { Chart} from "chart.js";
-import * as DoughnutLabel from "chartjs-plugin-doughnutlabel-rebourne";
+import { Chart } from 'chart.js'
+import * as DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne'
 import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { GetDevicesComparison } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
+import { GraphicColors } from 'src/utils/const'
 
-
-Chart.register(DoughnutLabel );
-const DevicesComparison  = ({params, chartId, highlight} : {params:any, chartId: string, highlight: boolean}) => {
-  const { resultDevicesComparison, loadingDevicesComparison } = GetDevicesComparison(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
-
+Chart.register(DoughnutLabel)
+const DevicesComparison = ({
+  chartId,
+  highlight,
+  resultDevicesComparison,
+  loadingDevicesComparison
+}: {
+  params: any
+  chartId: string
+  highlight: boolean
+  resultDevicesComparison: any
+  loadingDevicesComparison: boolean
+}) => {
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
   const initValue = {
@@ -27,8 +35,8 @@ const DevicesComparison  = ({params, chartId, highlight} : {params:any, chartId:
     data: [],
     total: 0
   }
-  const [previousData, setPreviousData ] = useState(initValue);
-  const [currentData, setCurrentData] = useState(initValue);
+  const [previousData, setPreviousData] = useState(initValue)
+  const [currentData, setCurrentData] = useState(initValue)
 
   const currentPeriodOptions = {
     responsive: true,
@@ -45,38 +53,42 @@ const DevicesComparison  = ({params, chartId, highlight} : {params:any, chartId:
           usePointStyle: true
         }
       },
-        doughnutlabel: {
-                paddingPercentage: 5,
-                labels: [
-                    {
-                    text: currentData?.total || 0,
-                    font: {
-                        size: '50',
-                        family: 'Arial, Helvetica, sans-serif',
-                        weight: 'bold',
-                    },
-                    color: '#434343',
-                    },
-                ],
+      doughnutlabel: {
+        paddingPercentage: 5,
+        labels: [
+          {
+            text: currentData?.total || 0,
+            font: {
+              size: '50',
+              family: 'Arial, Helvetica, sans-serif',
+              weight: 'bold'
             },
+            color: '#434343'
+          }
+        ]
+      }
     }
   }
 
   const currentPeriodData = {
     labels: currentData?.label || [],
-    datasets: [{
+    datasets: [
+      {
         data: currentData?.data || [],
-      backgroundColor: [
-        "#299b82",
-        "#1640a1c4",
-        "#d8df20",
-        "#e02916",
-        "#ffca25",
-        "#C0D3DF",
-      ],
-      hoverOffset: 3
-    }]
-  };
+        backgroundColor: GraphicColors,
+
+        // backgroundColor: [
+        //   "#299b82",
+        //   "#1640a1c4",
+        //   "#d8df20",
+        //   "#e02916",
+        //   "#ffca25",
+        //   "#C0D3DF",
+        // ],
+        hoverOffset: 3
+      }
+    ]
+  }
 
   const previousPeriodOptions = {
     responsive: true,
@@ -93,84 +105,85 @@ const DevicesComparison  = ({params, chartId, highlight} : {params:any, chartId:
           usePointStyle: true
         }
       },
-        doughnutlabel: {
-                paddingPercentage: 5,
-                labels: [
-                    {
-                    text: previousData?.total || 0,
-                    font: {
-                        size: '50',
-                        family: 'Arial, Helvetica, sans-serif',
-                        weight: 'bold',
-                    },
-                    color: '#434343',
-                    },
-                ],
+      doughnutlabel: {
+        paddingPercentage: 5,
+        labels: [
+          {
+            text: previousData?.total || 0,
+            font: {
+              size: '50',
+              family: 'Arial, Helvetica, sans-serif',
+              weight: 'bold'
             },
+            color: '#434343'
+          }
+        ]
+      }
     }
   }
 
   const previousPeriodData = {
     labels: previousData?.label || [],
-    datasets: [{
+    datasets: [
+      {
         data: previousData?.data || [],
-      backgroundColor: [
-        "#299b82",
-        "#1640a1c4",
-        "#d8df20",
-        "#e02916",
-        "#ffca25",
-        "#C0D3DF",
-      ],
-      hoverOffset: 3
-    }]
-  };
+        backgroundColor: GraphicColors,
 
-  const reportNo = '2.2.023';
+        // backgroundColor: [
+        //   "#299b82",
+        //   "#1640a1c4",
+        //   "#d8df20",
+        //   "#e02916",
+        //   "#ffca25",
+        //   "#C0D3DF",
+        // ],
+        hoverOffset: 3
+      }
+    ]
+  }
 
-  const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+  const reportNo = '2.2.023'
 
-  useEffect(()=>{
-    if(resultDevicesComparison) {
-        setCurrentData(resultDevicesComparison.current_period);
-        setPreviousData(resultDevicesComparison.previous_period);
+  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
+
+  useEffect(() => {
+    if (resultDevicesComparison) {
+      setCurrentData(resultDevicesComparison.current_period)
+      setPreviousData(resultDevicesComparison.previous_period)
     }
-  },[resultDevicesComparison]);
+  }, [resultDevicesComparison])
 
   return (
-    <Card style={{ minHeight: '330px' }}>
-      {loadingDevicesComparison && (
-          <LinearProgress
-            style={{ width: "100%" }}
-          />
-        )}
+    <Card style={{ minHeight: 500 }}>
+      {loadingDevicesComparison && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader title="Devices" titleTypographyProps={{ variant:'h6',color: highlight ? 'green' : '#4c4e64de' }}
-                subheader="Period over Period Comparison"
-                subheaderTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
-            />
-          <StyledTooltip arrow title={chartTitle || ""}>
-              <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
-          </StyledTooltip>
+        <CardHeader
+          title='Devices'
+          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          subheader='Period over Period Comparison'
+          subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+        />
+        <StyledTooltip arrow title={chartTitle || ''}>
+          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+        </StyledTooltip>
       </span>
       <CardContent>
         <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
-                <Doughnut data={currentPeriodData} options={currentPeriodOptions as any} height={290} />
-            </Grid>
-            <Grid item xs={12} md={6}>
-                <Doughnut data={previousPeriodData} options={previousPeriodOptions as any} height={290} />
-            </Grid>
+          <Grid item xs={12} md={6}>
+            <Doughnut data={currentPeriodData} options={currentPeriodOptions as any} height={290} />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Doughnut data={previousPeriodData} options={previousPeriodOptions as any} height={290} />
+          </Grid>
         </Grid>
         <Grid container spacing={3} mt={3}>
-            <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
-               Current Period
-            </Grid>
-            <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
-                Previous Period
-            </Grid>
+          <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
+            Current Period
+          </Grid>
+          <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
+            Previous Period
+          </Grid>
         </Grid>
-        
       </CardContent>
     </Card>
   )
