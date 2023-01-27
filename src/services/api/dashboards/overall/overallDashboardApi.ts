@@ -482,7 +482,7 @@ export const GetKeyWordsList = (campaignId: any ) => {
   })
  
   return {
-    resultKeywordList: response?.data || null,
+    resultKeywordList: response?.data || [],
     loadingKeywordList: loading,
     errorKeywordList: error
   }
