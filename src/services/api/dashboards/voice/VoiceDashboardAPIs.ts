@@ -205,6 +205,26 @@ fillter_keywords: fillter_keywords
   }
 }
 
+export const GetMessagesByAll = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-voice/message-by`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period,
+      fillter_keywords: fillter_keywords
+    }
+  })
+
+  return {
+    resultMessagesByAll: res?.data || null,
+    loadingMessagesByAll : loading,
+    errorMessagesByAll : error
+  }
+}
+
 export const GetNumbersOfAccounts = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({

@@ -2,8 +2,8 @@
 import { useState } from 'react'
 
 // ** Third Party Components
-import PerfectScrollbar from 'react-perfect-scrollbar'
-import {Link} from 'react-scroll'
+// import PerfectScrollbar from 'react-perfect-scrollbar'
+// import {Link} from 'react-scroll'
 
 // ** MUI Imports
 import Divider from '@mui/material/Divider'
@@ -88,7 +88,7 @@ const QuickView = ({setHighlight, setShowQuickView} : {setHighlight?:any, setSho
               <Close fontSize='small' />
             </IconButton>
           </Box>
-          <PerfectScrollbar options={{ wheelPropagation: false }}>
+          
             <CustomizerSpacing className='customizer-body'>
               <Typography
                 component='p'
@@ -104,61 +104,37 @@ const QuickView = ({setHighlight, setShowQuickView} : {setHighlight?:any, setSho
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} /> */}
-
-              <Link to="chart2" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart2")}}>
                     <Typography sx={{ color : highlightText === 'chart2' ? 'green' : '#4c4e64de'  }}>Chart 2 : Daily Sentiment Type by Date</Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
-
-              <Link to="chart3" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart3")}}>
                     <Typography sx={{ color : highlightText === 'chart3' ? 'green' : '#4c4e64de'  }}>Chart 3 : Daily Sentiment by Day</Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
-
-              <Link to="chart4" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart4")}}>
                     <Typography sx={{ color : highlightText === 'chart4' ? 'green' : '#4c4e64de'  }}>Chart 4 : Daily Sentiment by Time</Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
-
-              <Link to="chart5" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart5")}}>
                     <Typography sx={{ color : highlightText === 'chart5' ? 'green' : '#4c4e64de'  }}>Chart 5 : Daily Sentiment by Devices</Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
-
-              <Link to="chart6" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart6")}}>
                     <Typography sx={{ color : highlightText === 'chart6' ? 'green' : '#4c4e64de'  }}>Chart 6 : Daily Sentiment by Account</Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
-
-              <Link to="chart7" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart7")}}>
                     <Typography sx={{ color : highlightText === 'chart7' ? 'green' : '#4c4e64de'  }}>Chart 7 : Daily Sentiment by Channel</Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
-
-              <Link to="chart8" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart8")}}>
                     <Typography sx={{ color : highlightText === 'chart8' ? 'green' : '#4c4e64de'  }}>Chart 8 : Daily Sentiment by Bully Level</Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
-
-              <Link to="chart9" spy={true} smooth={true}>
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart9")}}>
                     <Typography sx={{ color : highlightText === 'chart9' ? 'green' : '#4c4e64de'  }}>Chart 9 : Daily Sentiment by Bully Type</Typography>
                 </Box>
-              </Link>
               <Divider sx={{ m: 0 }} />
 
               {/* <Link to="chart10" spy={true} smooth={true}>
@@ -218,7 +194,6 @@ const QuickView = ({setHighlight, setShowQuickView} : {setHighlight?:any, setSho
               <Divider sx={{ m: 0 }} /> */}
 
             </CustomizerSpacing>
-          </PerfectScrollbar>
         </Drawer>
       </div>
     )

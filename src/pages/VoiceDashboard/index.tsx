@@ -11,7 +11,7 @@ import DayTimeBullyLevel from "./DayTimeBullyLevel"
 import DayTimeBullyType from "./DayTimeBullyType"
 import DailyMessagePieChart from "./DailyMessagesPieChart"
 import { useTheme } from '@mui/material/styles'
-import { GetComparison } from "src/services/api/dashboards/voice/VoiceDashboardAPIs"
+import { GetComparison, GetMessagesByAll } from "src/services/api/dashboards/voice/VoiceDashboardAPIs"
 import PlatformsComparison from "./PlatformsComparison"
 import DevicesComparison from "./DevicesComparison"
 import ChannelVsDevice from "./ChannelVsDevice"
@@ -23,17 +23,17 @@ import Filter from "./Filter"
 import QuickView from "./QuickView"
 import { DateType } from "src/types/forms/reactDatepickerTypes"
 import { UserPermission } from "src/services/api/users/role"
-import MessagesByDays from "./MessageByDays"
-import MessagesByTime from "./MessageByTime"
-import MessagesByDevices from "./MessageByDevice"
-import MessagesByAccount from "./MessageByAccount"
-import MessagesByChannel from "./MessagesByChannel"
-import MessagesBySentiment from "./MessagesBySentiment"
-import MessagesByBullyLevel from "./MessageByBullyLevel"
-import MessagesByBullyType from "./MessageByBullyType"
 import { GetKeyWordsList } from "src/services/api/dashboards/overall/overallDashboardApi"
 import { GraphicColors } from "src/utils/const"
 import QuickViewModal from "./QuickViewModal"
+import MessagesByAccount from "./MessagesBy/MessageByAccount"
+import MessagesByChannel from "./MessagesBy/MessagesByChannel"
+import MessagesBySentiment from "./MessagesBy/MessagesBySentiment"
+import MessagesByBullyLevel from "./MessagesBy/MessageByBullyLevel"
+import MessagesByBullyType from "./MessagesBy/MessageByBullyType"
+import MessagesByDays from "./MessagesBy/MessageByDays"
+import MessagesByTime from "./MessagesBy/MessageByTime"
+import MessagesByDevices from "./MessagesBy/MessageByDevice"
 
 const VoiceDashboard = () => {
     const theme = useTheme()
@@ -70,6 +70,8 @@ const VoiceDashboard = () => {
 
     const { resultReportPermission } = UserPermission();
     const { resultTotalAccount,resultTotalMessages, loadingTotalComparison } = GetComparison(campaign, date, endDate, period, keyword);
+    const { resultMessagesByAll, loadingMessagesByAll } = GetMessagesByAll(campaign, date, endDate, period, keyword);
+    console.log("result message by all", resultMessagesByAll);
     const { resultKeywordList } = GetKeyWordsList(campaign);
 
     const checkKeywordId = (data: any, keywordId : string | number) => {
@@ -185,6 +187,8 @@ const VoiceDashboard = () => {
                         gridLineColor={gridLineColor}
                         chartId="Chart 3"
                         params={params}
+                        result= {resultMessagesByAll?.messageByDay}
+                        loading={loadingMessagesByAll}
                         highlight = { highlight==='chart3' ? true : false }
                     />
                 </Grid> : ""
@@ -202,6 +206,8 @@ const VoiceDashboard = () => {
                         gridLineColor={gridLineColor}
                         chartId="Chart 4"
                         params = {params}
+                        result= {resultMessagesByAll?.messageByTime}
+                        loading={loadingMessagesByAll}
                         highlight = { highlight==='chart4' ? true : false }
                     />
                 </Grid> : ""
@@ -219,6 +225,8 @@ const VoiceDashboard = () => {
                         gridLineColor={gridLineColor}
                         chartId="Chart 5"
                         params={params}
+                        result= {resultMessagesByAll?.messageByDevice}
+                        loading={loadingMessagesByAll}
                         highlight = { highlight==='chart5' ? true : false }
                     />
                 </Grid> : ""
@@ -237,6 +245,8 @@ const VoiceDashboard = () => {
                         gridLineColor={gridLineColor}
                         chartId="Chart 6"
                         params={params}
+                        result= {resultMessagesByAll?.messageByAccount}
+                        loading={loadingMessagesByAll}
                         highlight = { highlight==='chart6' ? true : false }
                     />
                 </Grid> : ""
@@ -255,6 +265,8 @@ const VoiceDashboard = () => {
                         gridLineColor={gridLineColor}
                         params = {params}
                         chartId="Chart 7"
+                        result= {resultMessagesByAll?.messageByChannel}
+                        loading={loadingMessagesByAll}
                         highlight = { highlight==='chart7' ? true : false }
                     />
                 </Grid> : ""
@@ -273,6 +285,8 @@ const VoiceDashboard = () => {
                         gridLineColor={gridLineColor}
                         params={params}
                         chartId="Chart 8"
+                        result= {resultMessagesByAll?.messageBySentiment}
+                        loading={loadingMessagesByAll}
                         highlight = { highlight==='chart8' ? true : false }
                     />
                 </Grid> : ""
@@ -291,6 +305,8 @@ const VoiceDashboard = () => {
                         gridLineColor={gridLineColor}
                         params={params}
                         chartId="Chart 9"
+                        result= {resultMessagesByAll?.messageByLevel}
+                        loading={loadingMessagesByAll}
                         highlight = { highlight==='chart9' ? true : false }
                     />
                 </Grid> : ""
@@ -309,6 +325,8 @@ const VoiceDashboard = () => {
                         gridLineColor={gridLineColor}
                         params = {params}
                         chartId="Chart 10"
+                        result= {resultMessagesByAll?.messageByType}
+                        loading={loadingMessagesByAll}
                         highlight = { highlight==='chart10' ? true : false }
                     />
                 </Grid> : ""
