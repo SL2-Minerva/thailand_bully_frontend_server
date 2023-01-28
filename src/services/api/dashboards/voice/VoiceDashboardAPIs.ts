@@ -494,8 +494,13 @@ export const GetDayTimeByAll = (
   })
 
   return {
-    resultDayByAll: response?.data?.day_value || null,
-    resultTimeByAll: response?.data?.time_value || null,
+    resultDayTimeComparison: response?.data?.DayTimeComparison || null,
+    resultDayBySentiment: response?.data?.DayTimeSentiment?.day_value || null,
+    resultTimeBySentiment: response?.data?.DayTimeSentiment?.time_value || null,
+    resultDayByBullyLevel: response?.data?.DayTimeLevel?.day_value || null,
+    resultTimeByBullyLevel: response?.data?.DayTimeLevel?.time_value || null,
+    resultDayByBullyType: response?.data?.DayTimeType?.day_value || null,
+    resultTimeByBullyType: response?.data?.DayTimeType?.time_value || null,
     loadingDayByAll: loading,
     errorDayByAll: error
   }

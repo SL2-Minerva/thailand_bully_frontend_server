@@ -12,22 +12,23 @@ import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
-import { GetDayTimeBySentiment } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
 interface Props{
   chartId: string,
   params : any,
   highlight: boolean
+  resultDayBySentiment :any
+  resultTimeBySentiment : any
+  loadingBySentiment : boolean
 }
 
 const DayTimeSentiment = (props : Props) => {
 
-  const { chartId, params, highlight } = props;
+  const { chartId, params, highlight, resultDayBySentiment, resultTimeBySentiment, loadingBySentiment } = props;
 
   const [seriesHour, setSeriesHour ] = useState([{name: '', data:[]}]);
   const [seriesDays, setSeriesDays ] = useState([{name: '', data:[]}]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const { resultDayBySentiment, resultTimeBySentiment, loadingBySentiment } = GetDayTimeBySentiment(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
     const options_hours : ApexOptions = {
         chart: {
