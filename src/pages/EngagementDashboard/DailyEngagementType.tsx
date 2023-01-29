@@ -11,7 +11,6 @@ import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const
 import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { EngagementTypePercetage } from 'src/services/api/dashboards/engagement/EngagementApi'
 import MessageDetail from './MessageDetail'
 import { LinearProgress, Paper } from '@mui/material'
 
@@ -31,6 +30,8 @@ interface LineProps {
   type: string
   chartId: string,
   highlight?: boolean
+  resultBy?: any
+  loading? : boolean
 }
 
 const chartLabel = (data:any) => {
@@ -67,11 +68,10 @@ const chartLabel = (data:any) => {
 
 const DailyEngagementType = (props: LineProps) => {
   // ** Props
-  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId, highlight } = props
+  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId, highlight , resultBy, loading} = props
 
   // const [ chartData, setChartData ] = useState();
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
-  const { resultEngagementType, loadingEngagementType } = EngagementTypePercetage(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -89,7 +89,7 @@ const DailyEngagementType = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultEngagementType?.engagement;
+    const dailyMessageData = resultBy?.engagement;
 
     const keywordId : number | null= null;
     let sourceId : number | null = null;
@@ -219,8 +219,8 @@ const DailyEngagementType = (props: LineProps) => {
   }
 
   useEffect(() => {
-    if(resultEngagementType) {
-      const engagementData = resultEngagementType?.engagement;
+    if(resultBy) {
+      const engagementData = resultBy?.engagement;
       if(engagementData) {
         const labels = chartLabel(engagementData);
         setLabel(labels);
@@ -228,7 +228,7 @@ const DailyEngagementType = (props: LineProps) => {
         const dataSets = chartDatasets(engagementData);
         setDataset(dataSets);
       } else {
-        console.log("engagement:", resultEngagementType?.engagement)
+        console.log("engagement:", resultBy?.engagement)
         setLabel([]);
         setDataset([]);
         data = { labels : [], datasets : [] }
@@ -241,7 +241,7 @@ const DailyEngagementType = (props: LineProps) => {
         datasets : []
       }
     }
-  },[resultEngagementType]);
+  },[resultBy]);
 
   
 
@@ -251,7 +251,7 @@ const DailyEngagementType = (props: LineProps) => {
 
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
-      {loadingEngagementType && (
+      {loading && (
         <LinearProgress
             style={{ width: "100%" }}
         />

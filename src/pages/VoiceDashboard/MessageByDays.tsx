@@ -21,6 +21,9 @@ export interface LineProps {
     colorType?: string
     chartId? : string 
     highlight?: boolean
+    resultBy?: any
+    loading?: any
+    resultByPrevious?: any
   }
   
 export const chartLabel = (data:any) => {

@@ -8,6 +8,7 @@ import { Grid, LinearProgress } from "@mui/material"
 import { Bar } from 'react-chartjs-2'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import { GetChannelSentimentLevel } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
 
 const ChartLabels = (data: any) => {
   if (!data) return [];
@@ -33,15 +34,16 @@ const ChartData = (data: any ) => {
   return chartDatas;
 }
 
-const ChannelBySentiment  = ({ chartId, highlight, resultBy, loading} : {params: any, chartId: string, highlight : boolean, resultBy?: any, loading?: boolean}) => {
+const ChannelBySentiment  = ({params, chartId, highlight} : {params: any, chartId: string, highlight : boolean}) => {
+  const { resultChannelSentimentLevel, loadingChannelSentimentLevel } = GetChannelSentimentLevel(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds, params?.previousDate, params?.previousEndDate);
 
-  const labels = resultBy ? ChartLabels(resultBy) : [];
+  const labels = resultChannelSentimentLevel ? ChartLabels(resultChannelSentimentLevel) : [];
   const data = {
   labels: labels,
   datasets: [{
       axis: 'y',
       label: '',
-      data: ChartData(resultBy),
+      data: ChartData(resultChannelSentimentLevel),
       fill: false,
       backgroundColor: ['rgb(54, 162, 235)'],
       borderColor: [
@@ -57,7 +59,7 @@ const ChannelBySentiment  = ({ chartId, highlight, resultBy, loading} : {params:
 
   return (
     <Card>
-      {loading && (
+      {loadingChannelSentimentLevel && (
         <LinearProgress
             style={{ width: "100%" }}
         />

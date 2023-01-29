@@ -2,15 +2,16 @@ import { Paper, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import { BullyTypeColors } from 'src/utils/const'
-import { StyledTooltip } from '../dashboard/overall'
+import { GraphicColors } from 'src/utils/const'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
-import { chartLabel, LineProps } from '../VoiceDashboard/MessageByDays'
-import MessageDetail from '../ChannelDashboard/MessageDetail'
+import { chartLabel, LineProps } from 'src/pages/VoiceDashboard/MessageByDays'
+import MessageDetail from '../MessageDetail'
+import { StyledTooltip } from 'src/pages/dashboard/overall'
 
-const BullyTypeByChannel = (props: LineProps) => {
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight,resultBy, loading } = props
+
+const ChannelByDay = (props: LineProps) => {
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
 
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -23,6 +24,7 @@ const BullyTypeByChannel = (props: LineProps) => {
   })
 
   const chartRef = useRef()
+
   const getKeywordId = (dataset: InteractionItem[]) => {
     if (!dataset.length) return
 
@@ -37,10 +39,10 @@ const BullyTypeByChannel = (props: LineProps) => {
 
     if (dailyMessageData?.length > 0) {
       for (let i = 0; i < dailyMessageData?.length; i++) {
-        if (keywordName === dailyMessageData[i].keyword_name) {
-          sourceId = dailyMessageData[i].source_id || ''
-          campaign_id = dailyMessageData[i].campaign_id || ''
-          organization_id = dailyMessageData[i].organization_id || ''
+        if (keywordName === dailyMessageData[i].source_name) {
+          sourceId = dailyMessageData[i].source_id
+          campaign_id = dailyMessageData[i].campaign_id
+          organization_id = dailyMessageData[i].organization_id
         }
       }
     }
@@ -116,7 +118,7 @@ const BullyTypeByChannel = (props: LineProps) => {
     let totalAmount: number[] = []
     let keywordName = ''
     const returnData: StackChartDataset[] = []
-    const color = BullyTypeColors
+    const color = GraphicColors
     const total = data?.value || data?.data || []
 
     for (let i = 0; i < total?.length; i++) {
@@ -167,7 +169,7 @@ const BullyTypeByChannel = (props: LineProps) => {
     datasets: dataset
   }
 
-  const reportNo = '6.2.017'
+  const reportNo = '3.2.003'
 
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
@@ -176,7 +178,7 @@ const BullyTypeByChannel = (props: LineProps) => {
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Bully Type: Daily Message by Channel'
+          title='Daily Messages By Day'
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
@@ -204,4 +206,4 @@ const BullyTypeByChannel = (props: LineProps) => {
   )
 }
 
-export default BullyTypeByChannel
+export default ChannelByDay

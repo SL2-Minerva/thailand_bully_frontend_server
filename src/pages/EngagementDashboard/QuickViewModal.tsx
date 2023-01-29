@@ -30,10 +30,11 @@ interface DialogInfoProps {
   setShow: any
   params?: any
   chartId?: string
+  quickViewData : any
 }
 
 const QuickViewModal = (props: DialogInfoProps) => {
-    const { show, setShow, params, chartId } = props
+    const { show, setShow, params, chartId, quickViewData } = props
 
     const theme = useTheme()
 
@@ -85,6 +86,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                     params= {params}
                     type="transaction"
                     chartId="Chart 2"
+                    resultFilterData={quickViewData?.resultFilterData}
+                    loadingFilterData={quickViewData?.loadingFilterData}
                 />
                 : chartId === 'chart3' ?
                 <EngagementByDay 
@@ -97,6 +100,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                             gridLineColor={gridLineColor}
                             params ={params}
                             chartId="Chart 3"
+                            resultBy={quickViewData?.resultEngagementByDay}
+                            loading={quickViewData?.loadingEngagementBy}
                         />
                    
                 : chartId === 'chart4' ?
@@ -110,6 +115,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                             gridLineColor={gridLineColor}
                             params= {params}
                             chartId="Chart 4"
+                            resultBy={quickViewData?.resultEngagementByTime}
+                            loading={quickViewData?.loadingEngagementBy}
                         />
                     
                 : chartId === 'chart5' ?
@@ -123,6 +130,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                             gridLineColor={gridLineColor}
                             params={params}
                             chartId="Chart 5"
+                            resultBy={quickViewData?.resultEngagementByDevice}
+                            loading={quickViewData?.loadingEngagementBy}
                         />
                         
                 : chartId === 'chart6' ?
@@ -136,6 +145,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                             gridLineColor={gridLineColor}
                             chartId="Chart 6"
                             params={params}
+                            loading={quickViewData?.loadingEngagementBy}
+                            resultBy={quickViewData?.resultEngagementByAccount}
                         />
                     
                 :chartId === 'chart7' ?
@@ -149,6 +160,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                             gridLineColor={gridLineColor}
                             chartId="Chart 7"
                             params={params}
+                            loading={quickViewData?.loadingEngagementBy}
+                            resultBy={quickViewData?.resultEngagementChannel}
                         />
                 :chartId === 'chart8' ?
                     <EngagementByType
@@ -161,7 +174,9 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         gridLineColor={gridLineColor}
                         params={params}
                         chartId="Chart 8"
-                    />
+                        loading={quickViewData?.loadingEngagementBy}
+                        resultBy={quickViewData?.resultKeywordByEngagementType}
+                        />
                 :chartId === 'chart10' ?
                     <DailyEngagementType
                         white={whiteColor}

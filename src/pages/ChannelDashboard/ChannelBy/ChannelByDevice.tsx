@@ -2,14 +2,14 @@ import { Paper, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import { BullyLevelColors } from 'src/utils/const'
-import { StyledTooltip } from '../dashboard/overall'
+import { GraphicColors } from 'src/utils/const'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
-import { chartLabel, LineProps } from '../VoiceDashboard/MessageByDays'
-import MessageDetail from '../ChannelDashboard/MessageDetail'
+import { chartLabel, LineProps } from 'src/pages/VoiceDashboard/MessageByDays'
+import MessageDetail from '../MessageDetail'
+import { StyledTooltip } from 'src/pages/dashboard/overall'
   
-const BullyLevelBySentiment = (props: LineProps) => {
+const ChannelByDevice = (props: LineProps) => {
 
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
 
@@ -22,51 +22,50 @@ const BullyLevelBySentiment = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-
   const chartRef = useRef();
+
   const getKeywordId = (dataset: InteractionItem[]) => {
-    if (!dataset.length) return;
+      if (!dataset.length) return;
 
-    const datasetIndex = dataset[0].datasetIndex;
-    const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultBy?.value;
+      const datasetIndex = dataset[0].datasetIndex;
+      const keywordName = data.datasets[datasetIndex].label;
+      const dailyMessageData = resultBy?.value;
 
-    const keywordId : number | null= null;
-    let sourceId : number | null = null;
-    let campaign_id : number | null = null;
-    let organization_id : number | null = null;
+      const keywordId : number | null= null;
+      let sourceId : number | null = null;
+      let campaign_id : number | null = null;
+      const organization_id : number | null = null;
 
-    if (dailyMessageData?.length > 0) {
-      for (let i =0; i<dailyMessageData?.length; i++) {
-          if(keywordName === dailyMessageData[i].keyword_name) {
-            sourceId = dailyMessageData[i].source_id || "";
-            campaign_id = dailyMessageData[i].campaign_id || "";
-            organization_id = dailyMessageData[i].organization_id || "";
-          }
+      if (dailyMessageData?.length > 0) {
+        for (let i =0; i<dailyMessageData?.length; i++) {
+            if(keywordName === dailyMessageData[i].source_name) {
+              sourceId = dailyMessageData[i].source_id;
+              campaign_id = dailyMessageData[i].campaign_id;
+            }
+        }
       }
-    }
 
-    const returnData  = {
-      keywordId : keywordId,
-      sourceId: sourceId,
-      campaign_id: campaign_id,
-      organization_id: organization_id
-    }
-    
-    return returnData;
-  };
-  
-  const onClick = (event : any) => {
-    if(chartRef.current) {
-      const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
-
-      if(keyword_id) {
-        setParamsId(keyword_id);
-        setShowDetail(true);
+      const returnData  = {
+        keywordId : keywordId,
+        sourceId: sourceId,
+        campaign_id: campaign_id,
+        organization_id: organization_id
       }
       
+      return returnData;
+    };
+  
+    const onClick = (event : any) => {
+      if(chartRef.current) {
+        const messageDetailIds =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
+  
+        if(messageDetailIds) {
+          setParamsId(messageDetailIds);
+          setShowDetail(true);
+        }
+        
+      }
     }
-  }
 
   const options = {
     responsive: true,
@@ -119,7 +118,7 @@ const BullyLevelBySentiment = (props: LineProps) => {
     let totalAmount : number[] = [];
     let keywordName = "";
     const returnData : StackChartDataset[] = [];
-    const color = BullyLevelColors
+    const color = GraphicColors
     const total = data?.value || data?.data || [];
 
     for(let i = 0 ; i<total?.length; i++) {
@@ -129,7 +128,7 @@ const BullyLevelBySentiment = (props: LineProps) => {
         totalAmount.push(total[i]?.data[j]);
       } 
       
-      keywordName = total[i]?.keyword_name;
+      keywordName = total[i]?.source_name;
       const chartDataset : StackChartDataset  = {
         fill: false,
         tension: 0.5,
@@ -171,25 +170,25 @@ const BullyLevelBySentiment = (props: LineProps) => {
         datasets: dataset
     }
 
-    const reportNo = '6.2.008';
+    const reportNo = '3.2.005';
 
     const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
 
     return (
-      <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
-         {loading && (
-            <LinearProgress
-                style={{ width: "100%" }} 
-            />
-            )} 
+      <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+        {loading && (
+          <LinearProgress
+              style={{ width: "100%" }}
+          />
+        )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Bully Level: Daily Messages by Sentiment"
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+            title="Daily Messages By Device"
+            titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
+            subheaderTypographyProps={{ variant: 'caption',color: highlight ? 'green' : '#4c4e64de' }}
           />
           <StyledTooltip arrow title={chartTitle || ""}>
-              <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
+              <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip>
         </span>
       
@@ -197,14 +196,14 @@ const BullyLevelBySentiment = (props: LineProps) => {
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
           {
             showDetail ?
-              <MessageDetail 
-                  show={showDetail}
-                  setShow={setShowDetail}
-                  params = {params}
-                  paramsId = {paramsId}
-                  setParamsId={setParamsId}
-                  reportNo = {reportNo}
-              /> : ""
+            <MessageDetail 
+                show={showDetail}
+                setShow={setShowDetail}
+                params = {params}
+                paramsId = {paramsId}
+                setParamsId={setParamsId}
+                reportNo = {reportNo}
+            /> : ""
           }
         
       </CardContent>
@@ -212,4 +211,4 @@ const BullyLevelBySentiment = (props: LineProps) => {
     )
 }
 
-export default BullyLevelBySentiment
+export default ChannelByDevice

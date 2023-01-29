@@ -31,10 +31,11 @@ interface DialogInfoProps {
   setShow: any
   params?: any
   chartId?: string
+  quickViewData?: any
 }
 
 const QuickViewModal = (props: DialogInfoProps) => {
-    const { show, setShow, params, chartId } = props
+    const { show, setShow, params, chartId, quickViewData } = props
 
     const theme = useTheme()
 
@@ -86,6 +87,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         params= {params}
                         type="level"
                         chartId="Chart 2"
+                        resultFilterData={quickViewData?.resultFilterData}
+                        loadingFilterData={quickViewData?.loadingFilterData}
                     />
                 
                 : chartId === 'chart3' ?
@@ -100,6 +103,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         params={params}
                         chartId="Chart 3"
                         colorType="bullyDashboard"
+                        resultBy={quickViewData?.resultBullyByDay}
+                        loading={quickViewData?.loadingBullyBy}
                     />
                    
                 : chartId === 'chart4' ?
@@ -114,6 +119,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         params={params}
                         chartId="Chart 4"
                         colorType="bullyDashboard"
+                        resultBy={quickViewData?.resultBullyByTime}
+                        loading={quickViewData?.loadingBullyBy}
                     />    
                 : chartId === 'chart5' ?
                     <BullyLevelByDevice
@@ -127,6 +134,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         chartId="Chart 5"
                         colorType="bullyDashboard"
                         params={params}
+                        loading={quickViewData?.loadingBullyBy}
+                        resultBy={quickViewData?.resultBullyByDevice}
                     />
                         
                 : chartId === 'chart6' ?
@@ -141,6 +150,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         chartId="Chart 6"
                         colorType="bullyDashboard"
                         params={params}
+                        loading={quickViewData?.loadingBullyBy}
+                        resultBy={quickViewData?.resultBullyByAccount}
                     />
                     
                 :chartId === 'chart7' ?
@@ -155,6 +166,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         chartId="Chart 7"
                         colorType="bullyDashboard"
                         params={params}
+                        loading={quickViewData?.loadingBullyBy}
+                        resultBy={quickViewData?.resultBullyByChannel}
                     />
                
                 :chartId === 'chart8' ?
@@ -169,6 +182,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         chartId="Chart 8"
                         colorType="bullyDashboard"
                         params={params}
+                        loading={quickViewData?.loadingBullyBy}
+                        resultBy={quickViewData?.resultBullyBySentiment}
                     />
                 :chartId === 'chart10' ?
                 <DailyMessgesByBullyType 
@@ -196,6 +211,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         chartId="Chart 11"
                         colorType="bullyDashboard"
                         params={params}
+                        loading={quickViewData?.loadingBullyTypeBy}
+                        resultBy={quickViewData?.resultBullyTypeByDay}
                     />
                 :chartId === 'chart12' ?
                 <BullyTypeByTime
@@ -209,7 +226,9 @@ const QuickViewModal = (props: DialogInfoProps) => {
                     chartId="Chart 12"
                     colorType="bullyDashboard"
                     params={params}
-                />
+                    loading={quickViewData?.loadingBullyTypeBy}
+                    resultBy={quickViewData?.resultBullyTypeByTime}
+                    />
                 
                 :chartId === 'chart13' ?
                 <BullyTypeByDevice
@@ -223,6 +242,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         chartId="Chart 13"
                         colorType="bullyDashboard"
                         params={params}
+                        loading={quickViewData?.loadingBullyTypeBy}
+                        resultBy={quickViewData?.resultBullyTypeByDevice}
                     />
                 
                 :chartId === 'chart14' ?
@@ -237,6 +258,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         chartId="Chart 14"
                         colorType="bullyDashboard"
                         params={params}
+                        loading={quickViewData?.loadingBullyTypeBy}
+                        resultBy={quickViewData?.resultBullyTypeByAccount}
                     />
                 
                 :chartId === 'chart15' ?
@@ -251,7 +274,9 @@ const QuickViewModal = (props: DialogInfoProps) => {
                     chartId="Chart 15"
                     colorType="bullyDashboard"
                     params={params}
-                />
+                    loading={quickViewData?.loadingBullyTypeBy}
+                    resultBy={quickViewData?.resultBullyTypeByChannel}
+                    />
                 :chartId === 'chart16' ?
                     <BullyTypeBySentiment
                         white={whiteColor}
@@ -264,7 +289,9 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         params={params}
                         chartId="Chart 16"
                         colorType="bullyDashboard"
-                    />                
+                        loading={quickViewData?.loadingBullyTypeBy}
+                        resultBy={quickViewData?.resultBullyTypeBySenitment}
+                        />                
                 :""
             } 
           </DialogContent>

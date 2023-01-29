@@ -12,7 +12,6 @@ import { InteractionItem } from 'chart.js'
 import { BullyLevelColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { FilterByCampaignId } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { LinearProgress } from '@mui/material'
 
@@ -32,6 +31,8 @@ interface LineProps {
   type: string
   chartId : string
   highlight?: boolean
+  resultFilterData : any
+  loadingFilterData : boolean
 }
 
 const chartLabel = (data:any) => {
@@ -68,7 +69,7 @@ const chartLabel = (data:any) => {
 
 const DailyMessgeByBully = (props: LineProps) => {
   // ** Props
-  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId, highlight } = props
+  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId, highlight,resultFilterData, loadingFilterData  } = props
 
   // const [ chartData, setChartData ] = useState();
   const colors = BullyLevelColors;
@@ -82,7 +83,6 @@ const DailyMessgeByBully = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultFilterData, loadingFilterData  } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {

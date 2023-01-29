@@ -12,20 +12,20 @@ import { useEffect, useState } from 'react'
 import { BullyLevelColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { BullyLevelPercentage } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
 
 interface MessageData {
   params : any,
   type: string,
   chartId: string 
   highlight: boolean
+  resultBullyLevelPercentage:any 
+  loadingBullyLevelPercentage: boolean
 }
 
 const PercentageOfBully = (props : MessageData) => {
 
-  const { params, type, chartId, highlight } = props;
+  const { type, chartId, highlight, resultBullyLevelPercentage, loadingBullyLevelPercentage  } = props;
   const colors = BullyLevelColors;
-  const { resultBullyLevelPercentage, loadingBullyLevelPercentage  } = BullyLevelPercentage(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const initValue = {
     labels: [],

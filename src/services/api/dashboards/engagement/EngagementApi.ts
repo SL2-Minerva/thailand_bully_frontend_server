@@ -23,7 +23,33 @@ export const FilterByCampaignId = (campaignId?: string, start_date?: any, end_da
       }
   }
 
-  export const GetMessagesByDay = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
+  export const GetEngagementBy = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
+
+    const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+      url: `/dashboard-engagement/engagement-by`,
+      method: 'GET',
+      params :{
+        campaign_id: campaignId || "",
+        start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+        end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+        period: period,
+        fillter_keywords: fillter_keywords
+      }
+    })
+
+    return {
+      resultEngagementByDay: res?.data?.EngagementByDay || null,
+      resultEngagementByTime: res?.data?.EngagementByTime || null,
+      resultEngagementByDevice: res?.data?.EngagementByDevice || null,
+      resultEngagementByAccount: res?.data?.EngagementByAccount || null,
+      resultEngagementChannel: res?.data?.EngagementChannel || null,
+      resultKeywordByEngagementType: res?.data?.keywordByEngagementType || null,
+      loadingEngagementBy : loading,
+      errorEngagementBy: error
+    }
+}
+
+export const GetMessagesByDay = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-engagement/engagement-day`,

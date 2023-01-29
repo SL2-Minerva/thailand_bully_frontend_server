@@ -7,12 +7,11 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { chartLabel, LineProps } from '../VoiceDashboard/MessageByDays'
-import { GetBullyByTime } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
   
 const BullyLevelByTime = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -23,7 +22,6 @@ const BullyLevelByTime = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultBullyByTime, loadingBullyByTime } = GetBullyByTime(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -31,7 +29,7 @@ const BullyLevelByTime = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultBullyByTime?.value;
+    const dailyMessageData = resultBy?.value;
 
     const keywordId : number | null= null;
     let sourceId : number | null = null;
@@ -156,8 +154,8 @@ const BullyLevelByTime = (props: LineProps) => {
   }
 
     useEffect(() => {
-        if(resultBullyByTime) {
-        const dailyMessageData = resultBullyByTime;
+        if(resultBy) {
+        const dailyMessageData = resultBy;
         if(dailyMessageData) {
             const labels = chartLabel(dailyMessageData);
             setLabel(labels);
@@ -166,7 +164,7 @@ const BullyLevelByTime = (props: LineProps) => {
             setDataset(dataSets);
         }
         }
-    },[resultBullyByTime]);
+    },[resultBy]);
 
     const data = {
         labels: label || [],
@@ -179,7 +177,7 @@ const BullyLevelByTime = (props: LineProps) => {
 
     return (
       <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
-         {loadingBullyByTime && (
+         {loading && (
             <LinearProgress
                 style={{ width: "100%" }} 
             />

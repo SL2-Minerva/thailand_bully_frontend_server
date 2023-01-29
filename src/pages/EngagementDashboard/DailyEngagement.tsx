@@ -12,7 +12,6 @@ import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const
 import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { FilterByCampaignId } from 'src/services/api/dashboards/engagement/EngagementApi'
 import { LinearProgress, Paper } from '@mui/material'
 
 // import { Button } from '@mui/material'
@@ -31,6 +30,8 @@ interface LineProps {
   type: string
   chartId: string,
   highlight?: boolean
+  resultFilterData:any 
+  loadingFilterData : boolean
 }
 
 const chartLabel = (data:any) => {
@@ -69,7 +70,7 @@ const DailyEngagement = (props: LineProps) => {
   const reportNo = '4.2.002';
 
   // ** Props
-  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId, highlight } = props
+  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId, highlight,resultFilterData, loadingFilterData } = props
 
   // const [ chartData, setChartData ] = useState();
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
@@ -83,7 +84,7 @@ const DailyEngagement = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
+  
   
 
   const chartRef = useRef();

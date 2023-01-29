@@ -7,12 +7,11 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps,chartLabel } from '../VoiceDashboard/MessageByDays'
-import { GetMessagesByChannel } from 'src/services/api/dashboards/engagement/EngagementApi'
 import MessageDetail from './MessageDetail'
   
 const EngagementByChannel = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -23,7 +22,6 @@ const EngagementByChannel = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultMessagesByChannel, loadingMessagesByChannel } = GetMessagesByChannel(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
   const reportNo = '4.2.007';
 
   const title = chartId + ", Report Level 2(" + reportNo + ")";
@@ -33,7 +31,7 @@ const EngagementByChannel = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultMessagesByChannel?.value;
+    const dailyMessageData = resultBy?.value;
 
     let keywordId : number | null= null;
     let sourceId : number | null = null;
@@ -157,8 +155,8 @@ const EngagementByChannel = (props: LineProps) => {
   }
 
     useEffect(() => {
-        if(resultMessagesByChannel) {
-        const dailyMessageData = resultMessagesByChannel;
+        if(resultBy) {
+        const dailyMessageData = resultBy;
         if(dailyMessageData) {
             const labels = chartLabel(dailyMessageData);
             setLabel(labels);
@@ -167,7 +165,7 @@ const EngagementByChannel = (props: LineProps) => {
             setDataset(dataSets);
         }
         }
-    },[resultMessagesByChannel]);
+    },[resultBy]);
 
     const data = {
         labels: label || [],
@@ -176,7 +174,7 @@ const EngagementByChannel = (props: LineProps) => {
 
     return (
       <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
-        {loadingMessagesByChannel && (
+        {loading && (
         <LinearProgress
             style={{ width: "100%" }}
         />

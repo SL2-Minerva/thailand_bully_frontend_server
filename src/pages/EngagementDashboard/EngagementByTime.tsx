@@ -7,13 +7,12 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps,chartLabel } from '../VoiceDashboard/MessageByDays'
-import { GetMessagesByTime } from 'src/services/api/dashboards/engagement/EngagementApi'
 import MessageDetail from './MessageDetail'
 
 const EngagementByTime = (props: LineProps) => {
   const reportNo = '4.2.004';
 
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, loading, resultBy } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -24,7 +23,6 @@ const EngagementByTime = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultMessagesByTime, loadingMessagesByTime } = GetMessagesByTime(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -32,7 +30,7 @@ const EngagementByTime = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultMessagesByTime?.value;
+    const dailyMessageData = resultBy?.value;
 
     let keywordId : number | null= null;
     let sourceId : number | null = null;
@@ -156,8 +154,8 @@ const EngagementByTime = (props: LineProps) => {
   }
 
     useEffect(() => {
-        if(resultMessagesByTime) {
-        const dailyMessageData = resultMessagesByTime;
+        if(resultBy) {
+        const dailyMessageData = resultBy;
         if(dailyMessageData) {
             const labels = chartLabel(dailyMessageData);
             setLabel(labels);
@@ -166,7 +164,7 @@ const EngagementByTime = (props: LineProps) => {
             setDataset(dataSets);
         }
         }
-    },[resultMessagesByTime]);
+    },[resultBy]);
 
     const data = {
         labels: label || [],
@@ -176,7 +174,7 @@ const EngagementByTime = (props: LineProps) => {
 
     return (
       <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
-        {loadingMessagesByTime && (
+        {loading && (
           <LinearProgress
               style={{ width: "100%" }}
           />
