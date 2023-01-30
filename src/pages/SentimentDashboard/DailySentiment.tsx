@@ -4,14 +4,13 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
 // ** Third Party Imports
-import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
+import { Bar, getDatasetAtEvent } from 'react-chartjs-2'
 import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import moment from 'moment';
+import moment from 'moment'
 import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { FilterByCampaignId } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { SentimentColors } from 'src/utils/const'
 import { LinearProgress } from '@mui/material'
@@ -24,106 +23,115 @@ interface LineProps {
   labelColor: string
   borderColor: string
   gridLineColor: string
-  params : any
+  params: any
   type: string
-  chartId: string,
+  chartId: string
   highlight?: boolean
+  resultFilterData: any
+  loadingFilterData : boolean
 }
 
-const chartLabel = (data:any) => {
+export const chartLabel = (data:any) => {
   if(!data) return [];
   
   let labels : any[] = [];
-  let labelsArrayLength; 
+
+  // let labelsArrayLength; 
   const labelValue : string[] = []
+
   for(let i = 0 ; i<data?.length; i++) {
-    const label = data[i]?.value;
-    if(data?.length-1 !== i) {
-        if(label?.length > data[i+1].length) {
-            labelsArrayLength= i
-            labels = data[labelsArrayLength]?.value
-        } else {
-            labelsArrayLength= i+1
-            labels = data[labelsArrayLength]?.value
-        }
-    } else {
-        labels = label;
+    const dataValue = data[i]?.value;
+    const label : any [] = [];
+
+    for (let j=0; j<dataValue?.length; j++) {
+      label.push(dataValue[j]?.date);
+      
     }
     
-  } 
-
-  if (labels?.length > 0) {
-    for (let i =0; i<labels?.length; i++) {
-        labelValue.push(moment(labels[i]?.date_m).format('DD/MM'));
-    }
+    labels = [...labels, ...label];
+    
   }
-  
+
+  if (labels && labels?.length > 0) {
+    const filterArray = [...new Set(labels)]
+    for (let i =0; i<filterArray?.length; i++) {
+      labelValue.push(moment(filterArray[i]).format('DD/MM/YYYY'));
+  }
+  }
 
   return labelValue;
 }
 
 const DailySenitment = (props: LineProps) => {
   // ** Props
-  const { white, labelColor,  borderColor, gridLineColor, params, chartId, highlight } = props
-  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
+  const {
+    white,
+    labelColor,
+    borderColor,
+    gridLineColor,
+    params,
+    chartId,
+    highlight,
+    resultFilterData,
+    loadingFilterData
+  } = props
 
   // const [ chartData, setChartData ] = useState();
-  const colors = SentimentColors;
+  const colors = SentimentColors
 
-  const [ label, setLabel ] = useState<string[]>([]);
-  const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
-  const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const [ paramsId, setParamsId] = useState<any>({
-    keywordId : null,
+  const [label, setLabel] = useState<string[]>([])
+  const [dataset, setDataset] = useState<StackChartDataset[]>([])
+  const [showDetail, setShowDetail] = useState<boolean>(false)
+  const [paramsId, setParamsId] = useState<any>({
+    keywordId: null,
     sourceId: null,
     campaign_id: null,
     organization_id: null
-  });
+  })
 
-  const chartRef = useRef();
+  const chartRef = useRef()
   const getKeywordId = (dataset: InteractionItem[]) => {
-    if (!dataset.length) return;
+    if (!dataset.length) return
 
-    const datasetIndex = dataset[0].datasetIndex;
-    const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultFilterData?.sentiment;
+    const datasetIndex = dataset[0].datasetIndex
+    const keywordName = data.datasets[datasetIndex].label
+    const dailyMessageData = resultFilterData?.sentiment
 
-    const keywordId : number | null= null;
-    let sourceId : number | null = null;
-    let campaign_id : number | null = null;
-    let organization_id : number | null = null;
+    const keywordId: number | null = null
+    let sourceId: number | null = null
+    let campaign_id: number | null = null
+    let organization_id: number | null = null
 
     if (dailyMessageData?.length > 0) {
-      for (let i =0; i<dailyMessageData?.length; i++) {
-          if(keywordName === dailyMessageData[i].keyword_name) {
-            sourceId = dailyMessageData[i].source_id || "";
-            campaign_id = dailyMessageData[i].campaign_id || "";
-            organization_id = dailyMessageData[i].organization_id || "";
+      for (let i = 0; i < dailyMessageData?.length; i++) {
+        if (keywordName === dailyMessageData[i].keyword_name) {
+          sourceId = dailyMessageData[i].source_id || ''
+          campaign_id = dailyMessageData[i].campaign_id || ''
+          organization_id = dailyMessageData[i].organization_id || ''
 
-            // keywordId = dailyMessageData[i].value[i]?.keyword_id;
-          }
+          // keywordId = dailyMessageData[i].value[i]?.keyword_id;
+        }
       }
     }
 
-    const returnData  = {
-      keywordId : keywordId,
+    const returnData = {
+      keywordId: keywordId,
       sourceId: sourceId,
       campaign_id: campaign_id,
       organization_id: organization_id
     }
-    
-    return returnData;
-  };
 
-  const onClick = (event : any) => {
-    if(chartRef.current) {
-      const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
+    return returnData
+  }
 
-      if(keyword_id) {
-        setParamsId(keyword_id);
-        setShowDetail(true);
+  const onClick = (event: any) => {
+    if (chartRef.current) {
+      const keyword_id = getKeywordId(getDatasetAtEvent(chartRef.current, event))
+
+      if (keyword_id) {
+        setParamsId(keyword_id)
+        setShowDetail(true)
       }
-      
     }
   }
 
@@ -144,7 +152,7 @@ const DailySenitment = (props: LineProps) => {
         min: 0,
 
         // max: 5000,
-        
+
         scaleLabel: { display: true },
         ticks: {
           stepSize: 100,
@@ -156,7 +164,6 @@ const DailySenitment = (props: LineProps) => {
         },
 
         stacked: true
-        
       }
     },
     plugins: {
@@ -173,23 +180,23 @@ const DailySenitment = (props: LineProps) => {
     }
   }
 
-  const chartDatasets = (data:any) => {
-    if(!data) return [];
-    let totalAmount : number[] = [];
-    let keywordName = "";
-    const returnData : StackChartDataset[] = [];
+  const chartDatasets = (data: any) => {
+    if (!data) return []
+    let totalAmount: number[] = []
+    let keywordName = ''
+    const returnData: StackChartDataset[] = []
     const color = colors
-    for(let i = 0 ; i<data?.length; i++) {
+    for (let i = 0; i < data?.length; i++) {
       totalAmount = []
-      const total = data[i]?.value;
-    
-      for(let j=0; j<data[i]?.value?.length ; j++ ) {
-        totalAmount.push(total[j].total_at_date);
-      } 
-      
-      keywordName = data[i].keyword_name;
+      const total = data[i]?.value
 
-      const chartDataset : StackChartDataset  = {
+      for (let j = 0; j < data[i]?.value?.length; j++) {
+        totalAmount.push(total[j].total_at_date)
+      }
+
+      keywordName = data[i].keyword_name
+
+      const chartDataset: StackChartDataset = {
         fill: false,
         tension: 0.5,
         pointRadius: 1,
@@ -204,12 +211,11 @@ const DailySenitment = (props: LineProps) => {
         pointHoverBackgroundColor: color[i],
         data: totalAmount
       }
-  
-      returnData.push(chartDataset);
+
+      returnData.push(chartDataset)
     }
 
-    return returnData;
-  
+    return returnData
   }
 
   let data = {
@@ -218,63 +224,59 @@ const DailySenitment = (props: LineProps) => {
   }
 
   useEffect(() => {
-    if(resultFilterData) {
-      const sentimentData = resultFilterData?.sentiment;
-      if(sentimentData) {
-        const labels = chartLabel(sentimentData);
-        setLabel(labels);
-        
-        const dataSets = chartDatasets(sentimentData);
-        setDataset(dataSets);
-      } else  {
-        setLabel([]);
-        setDataset([]);
+    if (resultFilterData) {
+      const sentimentData = resultFilterData?.sentiment
+      if (sentimentData) {
+        const labels = chartLabel(sentimentData)
+        setLabel(labels)
 
-        data = { labels : [], datasets: []}
+        const dataSets = chartDatasets(sentimentData)
+        setDataset(dataSets)
+      } else {
+        setLabel([])
+        setDataset([])
+
+        data = { labels: [], datasets: [] }
       }
-    } else  {
-      setLabel([]);
-      setDataset([]);
+    } else {
+      setLabel([])
+      setDataset([])
 
-      data = { labels : [], datasets: []}
+      data = { labels: [], datasets: [] }
     }
-  },[resultFilterData]);
+  }, [resultFilterData])
 
+  const reportNo = '5.2.002'
 
-  const reportNo = '5.2.002';
-
-  const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
-      {loadingFilterData && (
-            <LinearProgress
-                style={{ width: "100%" }}
-            />
-            )}
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+      {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-            title='Daily Sentiment Type by Date'
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          />
-          <StyledTooltip arrow title={chartTitle || ""}>
-              <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
-          </StyledTooltip>
+          title='Daily Sentiment Type by Date'
+          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+        />
+        <StyledTooltip arrow title={chartTitle || ''}>
+          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+        </StyledTooltip>
       </span>
-      
+
       <CardContent>
-         <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
-         {
-          showDetail ?
-          <MessageDetail 
-              show={showDetail}
-              setShow={setShowDetail}
-              params = {params}
-              paramsId = {paramsId}
-              setParamsId={setParamsId}
-              reportNo= {reportNo}
-          /> : ""
-         }
+        <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        {showDetail ? (
+          <MessageDetail
+            show={showDetail}
+            setShow={setShowDetail}
+            params={params}
+            paramsId={paramsId}
+            setParamsId={setParamsId}
+            reportNo={reportNo}
+          />
+        ) : (
+          ''
+        )}
       </CardContent>
     </Paper>
   )

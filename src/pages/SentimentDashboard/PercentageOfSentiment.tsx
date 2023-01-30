@@ -11,7 +11,6 @@ import { Doughnut } from 'react-chartjs-2'
 import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { FilterByCampaignId } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
 import { SentimentColors } from 'src/utils/const'
 
 interface MessageData {
@@ -19,13 +18,14 @@ interface MessageData {
   chartId: string,
   params: any,
   highlight: boolean
+  resultFilterData: any
+  loadingFilterData : boolean
 }
 
 const PercentageOfSentiment = (props : MessageData) => {
 
-  const { params, type, chartId, highlight } = props;
+  const { type, chartId, highlight,resultFilterData, loadingFilterData } = props;
   const colors = SentimentColors;
-  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const initValue = {
     labels: [],

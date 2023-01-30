@@ -47,30 +47,23 @@ export const chartLabel = (data:any) => {
   const labelValue : string[] = []
 
   for(let i = 0 ; i<data?.length; i++) {
-    const label = data[i]?.value;
+    const dataValue = data[i]?.value;
+    const label : any [] = [];
 
-    // if(data?.length-1 !== i) {
-    //     if(label?.length > data[i+1].length) {
-    //         labelsArrayLength= i
-    //         labels = data[labelsArrayLength]?.value
-    //     } else {
-    //         labelsArrayLength= i+1
-    //         labels = data[labelsArrayLength]?.value
-    //     }
-    // } else {
-    //   labels = label;
-    // }
-    if(labels && label){
-      labels = [...labels, ...label];
+    for (let j=0; j<dataValue?.length; j++) {
+      label.push(dataValue[j]?.date);
+      
     }
+    
+    labels = [...labels, ...label];
     
   }
 
   if (labels && labels?.length > 0) {
     const filterArray = [...new Set(labels)]
     for (let i =0; i<filterArray?.length; i++) {
-        labelValue.push(moment(filterArray[i]?.date_m).format('DD/MM/YYYY'));
-    }
+      labelValue.push(moment(filterArray[i]).format('DD/MM/YYYY'));
+  }
   }
 
   return labelValue;

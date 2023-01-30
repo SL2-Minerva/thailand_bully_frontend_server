@@ -34,34 +34,33 @@ interface LineProps {
   loadingFilterData : boolean
 }
 
-const chartLabel = (data:any) => {
+export const chartLabel = (data:any) => {
   if(!data) return [];
   
   let labels : any[] = [];
-  let labelsArrayLength; 
+
+  // let labelsArrayLength; 
   const labelValue : string[] = []
+
   for(let i = 0 ; i<data?.length; i++) {
-    const label = data[i]?.value;
-    if(data?.length-1 !== i) {
-        if(label?.length > data[i+1].length) {
-            labelsArrayLength= i
-            labels = data[labelsArrayLength]?.value
-        } else {
-            labelsArrayLength= i+1
-            labels = data[labelsArrayLength]?.value
-        }
-    } else {
-        labels = label;
+    const dataValue = data[i]?.value;
+    const label : any [] = [];
+
+    for (let j=0; j<dataValue?.length; j++) {
+      label.push(dataValue[j]?.date);
+      
     }
     
-  } 
-
-  if (labels?.length > 0) {
-    for (let i =0; i<labels?.length; i++) {
-        labelValue.push(moment(labels[i]?.date_m).format('DD/MM'));
-    }
+    labels = [...labels, ...label];
+    
   }
-  
+
+  if (labels && labels?.length > 0) {
+    const filterArray = [...new Set(labels)]
+    for (let i =0; i<filterArray?.length; i++) {
+      labelValue.push(moment(filterArray[i]).format('DD/MM/YYYY'));
+  }
+  }
 
   return labelValue;
 }

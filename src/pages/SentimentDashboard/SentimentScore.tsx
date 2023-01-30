@@ -2,7 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, LinearProgress, Pagination, Typography } from "@mui/material"
+import { Grid, LinearProgress, Typography } from "@mui/material"
 import { Table, TableRow, TableHead, TableCell } from "@mui/material"; 
 
 // ** Icons Imports
@@ -10,23 +10,8 @@ import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { StyledTooltip } from '../dashboard/overall';
 import { Information } from 'mdi-material-ui';
-import { GetSentimentScore } from 'src/services/api/dashboards/sentiment/sentimentDashboard';
-import { useEffect, useState } from 'react';
 
-const SenitmentScore  = ({params, chartId, highlight} : {params: any, chartId: string, highlight: boolean}) => {
-  const [page, setPage] = useState(0);
-  const [pageCount, setPageCount] = useState<number>(0);
-  const { resultSenitmentScore, total, loadingSentimentScore } = GetSentimentScore(params?.campaign, params?.date, params?.endDate, params?.period, page, params?.keywordIds);
-
-  const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-      setPage(value-1);
-  };
-
-    useEffect(()=> {
-        if (total > 0) {
-        setPageCount(Math.ceil(total / 10));
-        }
-    }, [total]);
+const SenitmentScore  = ({ chartId, highlight, resultSenitmentScore, loadingSentimentScore} : {params: any, chartId: string, highlight: boolean, resultSenitmentScore : any, loadingSentimentScore: boolean}) => {
 
     const reportNo = '5.2.015';
 
@@ -97,13 +82,7 @@ const SenitmentScore  = ({params, chartId, highlight} : {params: any, chartId: s
                     }
                     
                 </Table>
-                <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
-                  {
-                      total > 0 ? 
-                      <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
-                      : ""
-                  }
-                </Box>
+                
             </Grid>  
         </Grid>
         

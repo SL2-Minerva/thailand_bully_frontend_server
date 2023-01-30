@@ -189,6 +189,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         params= {params}
                         type="type"
                         chartId="Chart 10"
+                        resultBy={quickViewData?.resultEngagementPercentage}
+                        loading = {quickViewData?.loadingEngagementType}
                     /> 
                 :chartId === 'chart11' ?
                 <EngagementTypeByDay 
@@ -202,7 +204,9 @@ const QuickViewModal = (props: DialogInfoProps) => {
                                 params={params}
                                 colorType="engagementType"
                                 chartId="Chart 11"
-                            />
+                                loading = {quickViewData?.loadingEngagementType}
+                                resultBy={quickViewData?.resultEngagementTypeByDay}
+                        />
                 :chartId === 'chart12' ?
                 <EngagementTypeByTime
                                 white={whiteColor}
@@ -215,6 +219,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                                 params={params}
                                 colorType="engagementType"
                                 chartId="Chart 12"
+                                loading = {quickViewData?.loadingEngagementType}
+                                resultBy={quickViewData?.resultEngagementTypeByTime}
                             />
                 :chartId === 'chart13' ?
                 <EngagementTypeByDevice
@@ -228,6 +234,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                                 params={params}
                                 colorType="engagementType"
                                 chartId="Chart 13"
+                                loading = {quickViewData?.loadingEngagementType}
+                                resultBy={quickViewData?.resultEngagementTypeByDevice}
                             />
                 :chartId === 'chart14' ?
                 <EngagementTypeByAccount
@@ -240,6 +248,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                                 gridLineColor={gridLineColor}
                                 params={params}
                                 chartId="Chart 14"
+                                loading = {quickViewData?.loadingEngagementType}
+                                resultBy={quickViewData?.resultEngagementTypeByAccount}
                             />
                 :chartId === 'chart15' ?
                 <EngagementTypeByChannel
@@ -252,6 +262,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                                 gridLineColor={gridLineColor}
                                 params={params}
                                 chartId="Chart 15"
+                                loading = {quickViewData?.loadingEngagementType}
+                                resultBy={quickViewData?.EngagementTypeByChannel}
                             />
                 :""
             } 

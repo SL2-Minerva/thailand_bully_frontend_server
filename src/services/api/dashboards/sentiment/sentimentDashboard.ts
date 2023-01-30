@@ -21,6 +21,35 @@ export const FilterByCampaignId = (campaignId?: string, start_date?: any, end_da
     }
 }
 
+export const GetSenitmemntBy = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
+
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-sentiment/sentiment-by`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period,
+      fillter_keywords: fillter_keywords
+    }
+  })
+  
+  return {
+    resultSentimentByDay: res?.data?.SentimentByDay || null,
+    resultSentimentByTime: res?.data?.SentimentByTime || null,
+    resultSentimentByDevice: res?.data?.SentimentByDevice || null,
+    resultSentimentByAccount: res?.data?.SentimentByAccount || null,
+    resultSentimentByChannel: res?.data?.SentimentByChannel || null,
+    resultSentimentByBullyLevel: res?.data?.SentimentBullyLevel || null,
+    resultSentimentByBullyType: res?.data?.SentimentBullyType || null,
+    resultSenitmentScore: res?.data?.SentimentScore || null,
+    resultSentimentComparison: res?.data?.sentimentComparison || null,
+    loadingSentimentByDay : loading,
+    errorSentimentByDay: error
+  }
+}
+
 export const GetSenitmemntByDay = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
@@ -259,6 +288,32 @@ export const GetTotalSentiment = (campaignId?: string, start_date?: any, end_dat
     }
   }
 
+  export const GetPeriodComparison = (campaignId?: string, start_date?: any, end_date?: any, period?: any,  fillter_keywords?:string , page?: number,) => {
+
+    const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+      url: `/dashboard-sentiment/period-and-comparison`,
+      method: 'GET',
+      params :{
+        campaign_id: campaignId || "",
+        start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+        end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+        period: period,
+        fillter_keywords: fillter_keywords, 
+        page: page, 
+        limit: 10
+      }
+    })
+  
+    return {
+      resultTotalSentiment: res?.data?.PeriodOverPeriod || null,
+      resultSentimentComparisonByEngagement: res?.data?.ComparisonByEngagementType || null,
+      resultSenitmentComparisonByChannel: res?.data?.ComparisonByChannel || null,
+      total : res?.data?.total || 0,
+      loadingSentimentComparison : loading,
+      errorSenitmentComparison: error
+    }
+  }
+
   export const GetSentimentComparison = (campaignId?: string, start_date?: any, end_date?: any, period?: any, page?: number, fillter_keywords?:string ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
@@ -280,6 +335,87 @@ export const GetTotalSentiment = (campaignId?: string, start_date?: any, end_dat
       total : res?.data?.total || 0,
       loadingSentimentComparison : loading,
       errorSenitmentComparison: error
+    }
+  }
+
+  // "SummaryScoreAccount" => $this->SummaryScoreAccount($request, true),
+  //           "SummaryScoreChannel" => $this->SummaryScoreChannel($request, true),
+  //           "SummaryKeyword" => $this->SummaryKeyword($request, true),
+
+  export const GetSummaryBy = ( campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?:string,  page?: number) => {
+
+    const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+      url: `/dashboard-sentiment/summary-by`,
+      method: 'GET',
+      params :{
+        campaign_id: campaignId || "",
+        start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+        end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+        period: period,
+        fillter_keywords: fillter_keywords, 
+        page: page, 
+        limit: 10
+      }
+    })
+
+    const returnDataSummaryScoreAccount : any = [];
+    if(res?.data?.SummaryScoreAccount) {
+      const data = res?.data;
+      for(let i =0; i < data?.length; i++) {
+        returnDataSummaryScoreAccount.push({
+          infulencer : data[i].infulencer,
+          keyword_name : data[i].keyword_name,
+          negative: data[i].negative,
+          neutral : data[i].neutral,
+          sentiment_score: data[i].sentiment_score,
+          positive : data[i].positive,
+          total : data[i].total,
+          id: i+ 1
+        })
+      }
+    }
+
+    const returnData : any = [];
+    if(res?.data) {
+      const data = res?.data;
+      for(let i =0; i < data?.length; i++) {
+        returnData.push({
+          keyword_id : data[i].keyword_id,
+          keyword_name : data[i].keyword_name,
+          negative: data[i].negative,
+          neutral : data[i].neutral,
+          percentage: data[i].percentage,
+          positive : data[i].positive,
+          total_messages : data[i].total_messages,
+          id: i+ 1
+        })
+      }
+    }
+
+    const returnDataSummaryScoreChannel : any = [];
+    if(res?.data) {
+      const data = res?.data;
+      for(let i =0; i < data?.length; i++) {
+        returnDataSummaryScoreChannel.push({
+          channel : data[i].channel,
+          keyword_name : data[i].keyword_name,
+          negative: data[i].negative,
+          neutral : data[i].neutral,
+          sentiment_score: data[i].sentiment_score,
+          positive : data[i].positive,
+          total : data[i].total,
+          id: i+ 1
+        })
+      }
+    }
+    
+    return {
+      resultSummaryByAccount: returnDataSummaryScoreAccount || null,
+      resultSummaryByChannel: returnDataSummaryScoreChannel || null,
+      resultSummaryByKeywords: returnData || null,
+      total : res?.data?.total || 0,
+      loadingSummaryByAccount : loading,
+      errorSummaryAccount : error
     }
   }
 

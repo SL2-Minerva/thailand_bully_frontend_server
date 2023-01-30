@@ -509,7 +509,8 @@ const ChannelDashboard = () => {
       )}
 
       <QuickView setHighlight={setHighlight} setShowQuickView={setShowQuickView} />
-      <QuickViewModal show={showQuickView} setShow={setShowQuickView} params={params} chartId={highlight} />
+      <QuickViewModal show={showQuickView} setShow={setShowQuickView} params={params} chartId={highlight} resultDailyChannel ={resultDailyChannel}
+            loadingDailyChannel={loadingDailyChannel} />
     </Grid>
   )
 }

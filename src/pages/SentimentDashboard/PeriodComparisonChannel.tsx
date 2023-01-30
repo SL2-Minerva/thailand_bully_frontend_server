@@ -1,70 +1,92 @@
-import { Card, CardContent, CardHeader, Grid, LinearProgress, Paper, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Grid,
+  LinearProgress,
+  Paper,
+  Table,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
+} from '@mui/material'
 import { Information } from 'mdi-material-ui'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
-import { GetSenitmentComparisonByChannel } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { PeriodComparisonChannel } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 
 interface LineProps {
-    white: string
-    warning: string
-    primary: string
-    success: string
-    labelColor: string
-    borderColor: string
-    gridLineColor: string
-    params: any
-    type: string
-    chartTitle: string
-    colorType?: string
-    chartId: string
-    highlight: boolean
-  }
-  
-  const chartLabel = (data:any) => {
-    if(!data) return [];
-    
-    let labels : string[] = [];
-    if(data) {
-      labels = data.labels;
-    }
-  
-    return labels;
+  white: string
+  warning: string
+  primary: string
+  success: string
+  labelColor: string
+  borderColor: string
+  gridLineColor: string
+  params: any
+  type: string
+  chartTitle: string
+  colorType?: string
+  chartId: string
+  highlight: boolean
+  resultSenitmentComparisonByChannel: any
+  loadingSenitmentComparisonByChannel: boolean
+}
+
+const chartLabel = (data: any) => {
+  if (!data) return []
+
+  let labels: string[] = []
+  if (data) {
+    labels = data.labels
   }
 
-  const getTitle = (title: string, chartTitle: string) => {
-    if(!title && !chartTitle) return "";
+  return labels
+}
 
-    let cardTitle = "";
-    if (title === "channel") {
-      cardTitle = chartTitle +" by Channel"
-    } else if (title === "sentiment") {
-      cardTitle = chartTitle +" by Sentiment"
-    } else if (title === "engagementType") {
-      cardTitle = chartTitle +" by Engagement Type"
-    } else {
-      cardTitle = chartTitle
-    }
+const getTitle = (title: string, chartTitle: string) => {
+  if (!title && !chartTitle) return ''
 
-    return cardTitle;
+  let cardTitle = ''
+  if (title === 'channel') {
+    cardTitle = chartTitle + ' by Channel'
+  } else if (title === 'sentiment') {
+    cardTitle = chartTitle + ' by Sentiment'
+  } else if (title === 'engagementType') {
+    cardTitle = chartTitle + ' by Engagement Type'
+  } else {
+    cardTitle = chartTitle
   }
+
+  return cardTitle
+}
 
 const PeriodComparisonChannelChart = (props: LineProps) => {
+  const {
+    white,
+    labelColor,
+    borderColor,
+    gridLineColor,
+    type,
+    chartTitle,
+    chartId,
+    resultSenitmentComparisonByChannel,
+    loadingSenitmentComparisonByChannel,
+    highlight
+  } = props
 
-  const { white, labelColor, borderColor, gridLineColor, type, chartTitle, chartId, params, highlight } = props
-  const { resultSenitmentComparisonByChannel, loadingSenitmentComparisonByChannel } = GetSenitmentComparisonByChannel(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
+  const [label, setLabel] = useState<string[]>([])
+  const [dataset, setDataset] = useState<StackChartDataset[]>([])
 
-  const [ label, setLabel ] = useState<string[]>([]);
-  const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
-
-  const chartRef = useRef();
-  const onClick = (event : any) => {
-    if(chartRef.current) {
-      console.log(getDatasetAtEvent(chartRef.current, event));
-      console.log(getElementAtEvent(chartRef.current, event));
-      console.log(getElementsAtEvent(chartRef.current, event));
+  const chartRef = useRef()
+  const onClick = (event: any) => {
+    if (chartRef.current) {
+      console.log(getDatasetAtEvent(chartRef.current, event))
+      console.log(getElementAtEvent(chartRef.current, event))
+      console.log(getElementsAtEvent(chartRef.current, event))
     }
   }
 
@@ -85,7 +107,7 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
         min: 0,
 
         // max: 5000,
-        
+
         scaleLabel: { display: true },
         ticks: {
           stepSize: 100,
@@ -94,10 +116,9 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
         grid: {
           borderColor,
           color: gridLineColor
-        },
+        }
 
         // stacked: true
-        
       }
     },
     plugins: {
@@ -114,22 +135,22 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
     }
   }
 
-  const chartDatasets = (data:any) => {
-    if(!data) return [];
-    let totalAmount : number[] = [];
-    let keywordName = "";
-    const returnData : StackChartDataset[] = [];
+  const chartDatasets = (data: any) => {
+    if (!data) return []
+    let totalAmount: number[] = []
+    let keywordName = ''
+    const returnData: StackChartDataset[] = []
     const color = PeriodComparisonChannel
-    for(let i = 0 ; i<data?.value?.length; i++) {
+    for (let i = 0; i < data?.value?.length; i++) {
       totalAmount = []
-      const total = data?.value;
-    
-      for(let j=0; j<total[i]?.data?.length ; j++ ) {
-        totalAmount.push(total[i]?.data[j]);
-      } 
-      
-      keywordName = data?.value[i]?.keyword_name;
-      const chartDataset : StackChartDataset  = {
+      const total = data?.value
+
+      for (let j = 0; j < total[i]?.data?.length; j++) {
+        totalAmount.push(total[i]?.data[j])
+      }
+
+      keywordName = data?.value[i]?.keyword_name
+      const chartDataset: StackChartDataset = {
         fill: false,
         tension: 0.5,
         pointRadius: 1,
@@ -144,119 +165,111 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
         pointHoverBackgroundColor: color[i],
         data: totalAmount
       }
-  
-      returnData.push(chartDataset);
+
+      returnData.push(chartDataset)
     }
 
-    return returnData;
-  
+    return returnData
   }
 
-    useEffect(() => {
-        if(resultSenitmentComparisonByChannel) {
-        const dailyMessageData = resultSenitmentComparisonByChannel;
-        if(dailyMessageData) {
-            const labels = chartLabel(dailyMessageData);
-            setLabel(labels);
-            
-            const dataSets = chartDatasets(dailyMessageData);
-            setDataset(dataSets);
-        }
-        }
-    },[resultSenitmentComparisonByChannel]);
+  useEffect(() => {
+    if (resultSenitmentComparisonByChannel) {
+      const dailyMessageData = resultSenitmentComparisonByChannel
+      if (dailyMessageData) {
+        const labels = chartLabel(dailyMessageData)
+        setLabel(labels)
 
-    const data = {
-        labels: label || [],
-        datasets: dataset
+        const dataSets = chartDatasets(dailyMessageData)
+        setDataset(dataSets)
+      }
     }
+  }, [resultSenitmentComparisonByChannel])
 
-    const reportNo = '5.2.013';
+  const data = {
+    labels: label || [],
+    datasets: dataset
+  }
 
-   const title = chartId + ", Report Level 2(" + reportNo + ")";
+  const reportNo = '5.2.013'
 
-    return (
-        <Card>
-          {loadingSenitmentComparisonByChannel && (
-            <LinearProgress
-                style={{ width: "100%" }}
-            />
-            )}
-        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <CardHeader
-              title={getTitle(type, chartTitle)}
-              titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-              subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
-            />
-            <StyledTooltip arrow title={title || ""}>
-                <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
-            </StyledTooltip>
-        </span>
-      
+  const title = chartId + ', Report Level 2(' + reportNo + ')'
+
+  return (
+    <Card>
+      {loadingSenitmentComparisonByChannel && <LinearProgress style={{ width: '100%' }} />}
+      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+        <CardHeader
+          title={getTitle(type, chartTitle)}
+          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+        />
+        <StyledTooltip arrow title={title || ''}>
+          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+        </StyledTooltip>
+      </span>
+
       <CardContent>
-        <Grid container spacing={2} >
-            <Grid item xs={12}> 
-                <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
-            </Grid>
-            <Grid item xs={12}>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-                    <TableHead>
-                        
-                        <TableRow>
-                            <TableCell width={30}>
-                              {
-                                resultSenitmentComparisonByChannel?.share ? "Share" : "Positive"
-                              }
-                            </TableCell>
-                            {
-                                (resultSenitmentComparisonByChannel?.share || resultSenitmentComparisonByChannel?.positive || [])?.map((share : any, index : number) => {
-                                    return(
-                                        <TableCell align='left' key={index}>{share}</TableCell>
-                                    )
-                                })
-                            }
-                            {/* <TableCell align='left'>{resultSenitmentComparisonByChannel?.share || resultSenitmentComparisonByChannel?.positive || ""}</TableCell> */}
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                              {
-                                resultSenitmentComparisonByChannel?.comment ? "Comment" : "Neutral"
-                              }
-                            </TableCell>
-                            {
-                                (resultSenitmentComparisonByChannel?.comment || resultSenitmentComparisonByChannel?.neutral ||  [])?.map((comment : any, index : number) => {
-                                    return(
-                                        <TableCell align='left' key={index}>{comment}</TableCell>
-                                    )
-                                })
-                            }
-                            {/* <TableCell>{resultSenitmentComparisonByChannel?.comment || resultSenitmentComparisonByChannel?.neutral ||  ""}</TableCell> */}
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                              {
-                                resultSenitmentComparisonByChannel?.comment ? "Reaction" : "Negative"
-                              }
-                            </TableCell>
-                            {
-                                (resultSenitmentComparisonByChannel?.reaction || resultSenitmentComparisonByChannel?.negative || [])?.map((reaction : any, index : number) => {
-                                    return(
-                                        <TableCell align='left' key={index}>{reaction}</TableCell>
-                                    )
-                                })
-                            }
-                          {/* <TableCell>{resultSenitmentComparisonByChannel?.reaction || resultSenitmentComparisonByChannel?.negative ||  ""}</TableCell> */}
-
-                        </TableRow>
-                    </TableHead>
-                    </Table>
-              </TableContainer>
-            </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+          </Grid>
+          <Grid item xs={12}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                <TableHead>
+                  <TableRow>
+                    <TableCell width={30}>{resultSenitmentComparisonByChannel?.share ? 'Share' : 'Positive'}</TableCell>
+                    {(
+                      resultSenitmentComparisonByChannel?.share ||
+                      resultSenitmentComparisonByChannel?.positive ||
+                      []
+                    )?.map((share: any, index: number) => {
+                      return (
+                        <TableCell align='left' key={index}>
+                          {share}
+                        </TableCell>
+                      )
+                    })}
+                    {/* <TableCell align='left'>{resultSenitmentComparisonByChannel?.share || resultSenitmentComparisonByChannel?.positive || ""}</TableCell> */}
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>{resultSenitmentComparisonByChannel?.comment ? 'Comment' : 'Neutral'}</TableCell>
+                    {(
+                      resultSenitmentComparisonByChannel?.comment ||
+                      resultSenitmentComparisonByChannel?.neutral ||
+                      []
+                    )?.map((comment: any, index: number) => {
+                      return (
+                        <TableCell align='left' key={index}>
+                          {comment}
+                        </TableCell>
+                      )
+                    })}
+                    {/* <TableCell>{resultSenitmentComparisonByChannel?.comment || resultSenitmentComparisonByChannel?.neutral ||  ""}</TableCell> */}
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>{resultSenitmentComparisonByChannel?.comment ? 'Reaction' : 'Negative'}</TableCell>
+                    {(
+                      resultSenitmentComparisonByChannel?.reaction ||
+                      resultSenitmentComparisonByChannel?.negative ||
+                      []
+                    )?.map((reaction: any, index: number) => {
+                      return (
+                        <TableCell align='left' key={index}>
+                          {reaction}
+                        </TableCell>
+                      )
+                    })}
+                    {/* <TableCell>{resultSenitmentComparisonByChannel?.reaction || resultSenitmentComparisonByChannel?.negative ||  ""}</TableCell> */}
+                  </TableRow>
+                </TableHead>
+              </Table>
+            </TableContainer>
+          </Grid>
         </Grid>
-          
       </CardContent>
     </Card>
-    )
+  )
 }
 
 export default PeriodComparisonChannelChart

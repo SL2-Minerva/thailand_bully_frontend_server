@@ -228,7 +228,6 @@ const DailyEngagementType = (props: LineProps) => {
         const dataSets = chartDatasets(engagementData);
         setDataset(dataSets);
       } else {
-        console.log("engagement:", resultBy?.engagement)
         setLabel([]);
         setDataset([]);
         data = { labels : [], datasets : [] }

@@ -77,11 +77,13 @@ const PercentageOfEngangement = (props : MessageData) => {
     const labels : string[] =[];
     const percentage: number[] = [];
     for(let i =0; i<data?.length; i++ ) {
-      labels.push(data[i].keyword_name);
+      // labels.push(data[i].keyword_name);
 
       const percentageValue = data[i]?.value;
       for(let j = 0 ; j<percentageValue?.length; j++) {
         percentage.push(data[i].value[j]?.percentage);
+          labels.push(data[i].value[j]?.name);
+
         if (type === 'current') {
           setCurrentPeriod(data[i].value[j]?.date)
         } else {

@@ -7,12 +7,11 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps,chartLabel } from '../VoiceDashboard/MessageByDays'
-import {  GetSentimentByChannel } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
   
 const SentimentByChannel = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight,resultBy, loading } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -23,7 +22,6 @@ const SentimentByChannel = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultSentimentByChannel, loadingSentimentByChannel } = GetSentimentByChannel(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -31,7 +29,7 @@ const SentimentByChannel = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultSentimentByChannel?.value;
+    const dailyMessageData = resultBy?.value;
 
     let keywordId : number | null= null;
     let sourceId : number | null = null;
@@ -154,8 +152,8 @@ const SentimentByChannel = (props: LineProps) => {
   }
 
     useEffect(() => {
-        if(resultSentimentByChannel) {
-        const dailyMessageData = resultSentimentByChannel;
+        if(resultBy) {
+        const dailyMessageData = resultBy;
         if(dailyMessageData) {
             const labels = chartLabel(dailyMessageData);
             setLabel(labels);
@@ -164,7 +162,7 @@ const SentimentByChannel = (props: LineProps) => {
             setDataset(dataSets);
         }
         }
-    },[resultSentimentByChannel]);
+    },[resultBy]);
 
     const data = {
         labels: label || [],
@@ -177,7 +175,7 @@ const SentimentByChannel = (props: LineProps) => {
 
     return (
       <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
-        {loadingSentimentByChannel && (
+        {loading && (
             <LinearProgress
                 style={{ width: "100%" }}
             />

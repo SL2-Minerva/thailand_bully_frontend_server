@@ -7,69 +7,79 @@ import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
-import { GetComparisonEngagement } from 'src/services/api/dashboards/engagement/EngagementApi'
 import { StyledTooltip } from '../dashboard/overall'
-import { Information } from 'mdi-material-ui';
+import { Information } from 'mdi-material-ui'
 import { LinearProgress } from '@mui/material'
 
 const Labels = (data: any) => {
-  if(!data) {
-    return [];
+  if (!data) {
+    return []
   }
-  const labels : any[] = []
-  if(data?.length > 0) {
-    for(let i=0; i<data?.length; i++) {
-      labels.push(data[i].keyword_name);
+  const labels: any[] = []
+  if (data?.length > 0) {
+    for (let i = 0; i < data?.length; i++) {
+      labels.push(data[i].keyword_name)
     }
   }
 
-  return labels;
+  return labels
 }
 
-const ChartDataEngagement = (data: any, type : string) => {
-  if(!data) {
-    return [];
+const ChartDataEngagement = (data: any, type: string) => {
+  if (!data) {
+    return []
   }
-  const value : any[] = []
-  if(data?.length > 0) {
-    if(type === 'share') {
-      for(let i=0; i<data?.length; i++) {
-        value.push(data[i].share);
+  const value: any[] = []
+  if (data?.length > 0) {
+    if (type === 'share') {
+      for (let i = 0; i < data?.length; i++) {
+        value.push(data[i].share)
       }
-    } else if(type==='comment') {
-      for(let i=0; i<data?.length; i++) {
-        value.push(data[i].comment);
+    } else if (type === 'comment') {
+      for (let i = 0; i < data?.length; i++) {
+        value.push(data[i].comment)
       }
     } else if (type === 'reaction') {
-      for(let i=0; i<data?.length; i++) {
-        value.push(data[i].reaction);
+      for (let i = 0; i < data?.length; i++) {
+        value.push(data[i].reaction)
       }
     }
-
   }
 
-  return value;
+  return value
 }
 
-const EngagmentComparisonChart = ({params, highlight, chartId} : {params: any, highlight:boolean, chartId: string}) => {
-  const { resultComparison, loadingComparison }  = GetComparisonEngagement(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
-  
-  const chartLabels =  Labels(resultComparison);
-  const shareData = ChartDataEngagement(resultComparison, 'share');
-  const commentData = ChartDataEngagement(resultComparison, 'comment');
-  const reactionData = ChartDataEngagement(resultComparison, 'reaction');
+const EngagmentComparisonChart = ({
+  highlight,
+  chartId,
+  resultComparison,
+  loadingComparison
+}: {
+  params: any
+  highlight: boolean
+  chartId: string
+  resultComparison: any
+  loadingComparison: boolean
+}) => {
+  const chartLabels = Labels(resultComparison)
+  const shareData = ChartDataEngagement(resultComparison, 'share')
+  const commentData = ChartDataEngagement(resultComparison, 'comment')
+  const reactionData = ChartDataEngagement(resultComparison, 'reaction')
 
-
-  const series =  [{
-    name: 'Share',
-    data: shareData
-  }, {
-    name: 'Comment',
-    data: commentData
-  }, {
-    name: 'Reaction',
-    data: reactionData
-  }]
+  const series = [
+    {
+      name: 'Share',
+      data: shareData
+    },
+    {
+      name: 'Comment',
+      data: commentData
+    },
+    {
+      name: 'Reaction',
+      data: reactionData
+    }
+  ]
 
   const options: ApexOptions = {
     chart: {
@@ -77,13 +87,13 @@ const EngagmentComparisonChart = ({params, highlight, chartId} : {params: any, h
       height: 350,
       stacked: true,
       stackType: '100%',
-      toolbar: {show: false}
+      toolbar: { show: false }
     },
     dataLabels: { enabled: false },
     plotOptions: {
       bar: {
-        horizontal: true,
-      },
+        horizontal: true
+      }
     },
     stroke: {
       width: 1,
@@ -92,20 +102,20 @@ const EngagmentComparisonChart = ({params, highlight, chartId} : {params: any, h
     title: {
       text: ''
     },
-    colors: ['#c46627','#ed7d31','#f4b9a4'],
+    colors: ['#c46627', '#ed7d31', '#f4b9a4'],
     xaxis: {
-      categories: chartLabels,
+      categories: chartLabels
     },
     tooltip: {
       y: {
         formatter: function (val) {
-          return val + "K"
+          return val + 'K'
         }
       }
     },
     fill: {
       opacity: 1,
-      colors: ['#c46627','#ed7d31','#f4b9a4'],
+      colors: ['#c46627', '#ed7d31', '#f4b9a4']
     },
     legend: {
       position: 'top',
@@ -114,31 +124,26 @@ const EngagmentComparisonChart = ({params, highlight, chartId} : {params: any, h
     }
   }
 
-  const reportNo = '4.2.024';
+  const reportNo = '4.2.024'
 
-  const title = chartId + ", Report Level 2(" + reportNo + ")";
+  const title = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
     <Card sx={{ minHeight: 560 }}>
-      {loadingComparison && (
-                <LinearProgress
-                    style={{ width: "100%" }}
-                />
-                )}
+      {loadingComparison && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-                title='Engagement Type Proportion'
-                titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          title='Engagement Type Proportion'
+          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
-          <StyledTooltip arrow title={title || ""}>
-              <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
-          </StyledTooltip>
+        <StyledTooltip arrow title={title || ''}>
+          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+        </StyledTooltip>
       </span>
-        
-        
-        <CardContent>
-            <ReactApexcharts type="bar" height={420} series={series} options={options} />
-        </CardContent>
+
+      <CardContent>
+        <ReactApexcharts type='bar' height={420} series={series} options={options} />
+      </CardContent>
     </Card>
   )
 }

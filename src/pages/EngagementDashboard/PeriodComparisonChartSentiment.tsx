@@ -2,7 +2,6 @@ import { Card, CardContent, CardHeader, Grid, LinearProgress, Paper, Table, Tabl
 import { Information } from 'mdi-material-ui'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
-import { GetPeriodComparisonBySenitment } from 'src/services/api/dashboards/engagement/EngagementApi'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { PeriodComparisonChannel, sentimentComparison, SentimentComparisonEngagment } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
@@ -21,6 +20,8 @@ interface LineProps {
     colorType?: string
     chartId: string
     highlight: boolean
+    resultPeriodComparisonBySenitment: any
+    loadingPeriodComparisonBySenitment : boolean
   }
   
   const chartLabel = (data:any) => {
@@ -53,8 +54,7 @@ interface LineProps {
 
 const PeriodComparisonChartSentiment = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, type, chartTitle, colorType, chartId, params, highlight } = props
-  const { resultPeriodComparisonBySenitment, loadingPeriodComparisonBySenitment }  =GetPeriodComparisonBySenitment(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
+  const { white, labelColor, borderColor, gridLineColor, type, chartTitle, colorType, chartId, resultPeriodComparisonBySenitment, loadingPeriodComparisonBySenitment, highlight } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);

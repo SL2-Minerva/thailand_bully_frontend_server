@@ -6,7 +6,7 @@ import { Grid, LinearProgress } from "@mui/material"
 
 // ** Third Party Imports
 import { Bar } from 'react-chartjs-2'
-import { StyledTooltip } from '../dashboard/overall'
+import { StyledTooltip } from 'src/pages/dashboard/overall' 
 import { Information } from 'mdi-material-ui'
 import { GetChannelSentimentLevel } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
 

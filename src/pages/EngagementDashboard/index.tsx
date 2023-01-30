@@ -1,9 +1,10 @@
 import { Button, Card, CardContent, CardHeader, Grid } from '@mui/material'
 import { useState } from 'react'
 import {
+  EngagementTypeBy,
   FilterByCampaignId,
   GetEngagementBy,
-  GetTotalEngagment
+  GetEngagementComparisonBy
 } from 'src/services/api/dashboards/engagement/EngagementApi'
 import DailyEngagement from './DailyEngagement'
 import PercentageOfEngangement from './PercentageOfEngagement'
@@ -71,13 +72,26 @@ const EngagementDashboard = () => {
     resultKeywordByEngagementType,
     loadingEngagementBy
   } = GetEngagementBy(campaignType, date, endDate, period, keyword)
-  const { resultTotalEngagement, loadingTotalEngagement } = GetTotalEngagment(
-    campaignType,
-    date,
-    endDate,
-    period,
-    keyword
-  )
+  
+  const {
+    resultEngagementPercentage,
+    resultEngagementTypeByAccount,
+    resultEngagementTypeByChannel,
+    resultEngagementTypeByDay,
+    resultEngagementTypeByDevice,
+    resultEngagementTypeByTime,
+    loadingEngagementType
+  } = EngagementTypeBy(campaignType, date, endDate, period, keyword)
+
+  const {
+    resultTotalEngagement,
+    resultComparison,
+    resultEngagementComparison,
+    resultPeriodComparisonBySenitment,
+    resultSummary,
+    loadingPeriodComparisonBySenitment,
+    resultPeriodComparisonByChannel,
+  } = GetEngagementComparisonBy(campaignType, date, endDate, period, keyword)
 
   const params = {
     campaign: campaignType,
@@ -90,13 +104,20 @@ const EngagementDashboard = () => {
   const quickViewData = {
     resultFilterData: resultFilterData,
     loadingFilterData: loadingFilterData,
-    resultEngagementByTime : resultEngagementByTime,
-    resultEngagementByAccount : resultEngagementByAccount,
-    resultEngagementByDevice :resultEngagementByDevice,
-    resultEngagementByDay :resultEngagementByDay,
-    resultEngagementChannel :resultEngagementChannel,
-    resultKeywordByEngagementType :resultKeywordByEngagementType,
-    loadingEngagementBy : loadingEngagementBy
+    resultEngagementByTime: resultEngagementByTime,
+    resultEngagementByAccount: resultEngagementByAccount,
+    resultEngagementByDevice: resultEngagementByDevice,
+    resultEngagementByDay: resultEngagementByDay,
+    resultEngagementChannel: resultEngagementChannel,
+    resultKeywordByEngagementType: resultKeywordByEngagementType,
+    loadingEngagementBy: loadingEngagementBy,
+    resultEngagementPercentage: resultEngagementPercentage,
+    resultEngagementTypeByAccount: resultEngagementTypeByAccount,
+    resultEngagementTypeByChannel: resultEngagementTypeByChannel,
+    resultEngagementTypeByDay: resultEngagementTypeByDay,
+    resultEngagementTypeByDevice: resultEngagementTypeByDevice,
+    resultEngagementTypeByTime: resultEngagementTypeByTime,
+    loadingEngagementType: loadingEngagementType
   }
 
   const handleTopKeywords = (data: string) => {
@@ -373,6 +394,8 @@ const EngagementDashboard = () => {
                 type='type'
                 chartId='Chart 9'
                 highlight={highlight === 'chart9' ? true : false}
+                resultEngagementType={resultEngagementPercentage}
+                loadingEngagementType={loadingEngagementType}
               />
             </Grid>
           ) : (
@@ -392,6 +415,8 @@ const EngagementDashboard = () => {
                 type='type'
                 chartId='Chart 10'
                 highlight={highlight === 'chart10' ? true : false}
+                resultBy={resultEngagementPercentage}
+                loading={loadingEngagementType}
               />
             </Grid>
           ) : (
@@ -411,6 +436,8 @@ const EngagementDashboard = () => {
                 colorType='engagementType'
                 chartId='Chart 11'
                 highlight={highlight === 'chart11' ? true : false}
+                resultBy={resultEngagementTypeByDay}
+                loading={loadingEngagementType}
               />
             </Grid>
           ) : (
@@ -430,6 +457,8 @@ const EngagementDashboard = () => {
                 colorType='engagementType'
                 chartId='Chart 12'
                 highlight={highlight === 'chart12' ? true : false}
+                resultBy={resultEngagementByTime}
+                loading={loadingEngagementType}
               />
             </Grid>
           ) : (
@@ -449,6 +478,8 @@ const EngagementDashboard = () => {
                 colorType='engagementType'
                 chartId='Chart 13'
                 highlight={highlight === 'chart13' ? true : false}
+                resultBy={resultEngagementTypeByDevice}
+                loading={loadingEngagementType}
               />
             </Grid>
           ) : (
@@ -467,6 +498,8 @@ const EngagementDashboard = () => {
                 params={params}
                 chartId='Chart 14'
                 highlight={highlight === 'chart14' ? true : false}
+                resultBy={resultEngagementTypeByAccount}
+                loading={loadingEngagementType}
               />
             </Grid>
           ) : (
@@ -486,6 +519,8 @@ const EngagementDashboard = () => {
                 params={params}
                 chartId='Chart 15'
                 highlight={highlight === 'chart15' ? true : false}
+                resultBy={resultEngagementTypeByChannel}
+                loading={loadingEngagementType}
               />
             </Grid>
           ) : (
@@ -511,7 +546,7 @@ const EngagementDashboard = () => {
                 <TotalEngagement
                   totalEngagement={resultTotalEngagement}
                   highlight={highlight === 'chart16' ? true : false}
-                  loading={loadingTotalEngagement}
+                  loading={loadingPeriodComparisonBySenitment}
                 />
               </Grid>
             </>
@@ -535,6 +570,8 @@ const EngagementDashboard = () => {
                 chartId='Chart 17'
                 highlight={highlight === 'chart17' ? true : false}
                 reportNo='4.2.021'
+                loadingSenitmentComparisonByEngagement={loadingPeriodComparisonBySenitment}
+                resultSentimentComparisonByEngagement={resultPeriodComparisonByChannel}
               />
             </Grid>
           ) : (
@@ -556,6 +593,8 @@ const EngagementDashboard = () => {
                 colorType='SentimentComparisonEngagment'
                 chartId='Chart 18'
                 highlight={highlight === 'chart18' ? true : false}
+                resultPeriodComparisonBySenitment={resultPeriodComparisonBySenitment}
+                loadingPeriodComparisonBySenitment={loadingPeriodComparisonBySenitment}
               />
             </Grid>
           ) : (
@@ -568,6 +607,8 @@ const EngagementDashboard = () => {
                   params={params}
                   chartId='Chart 19'
                   highlight={highlight === 'chart19' ? true : false}
+                  resultEngagementComparison={resultEngagementComparison}
+                  loadingEngagementComparison={loadingPeriodComparisonBySenitment}
                 />
               </Grid>
               <Grid item xs={12} md={5} id='chart20'>
@@ -575,6 +616,8 @@ const EngagementDashboard = () => {
                   params={params}
                   chartId='chart 20'
                   highlight={highlight === 'chart20' ? true : false}
+                  resultComparison={resultComparison}
+                  loadingComparison={loadingPeriodComparisonBySenitment}
                 />
               </Grid>
             </>
@@ -654,6 +697,8 @@ const EngagementDashboard = () => {
                   params={params}
                   chartId='Chart 21'
                   highlight={highlight === 'chart21' ? true : false}
+                  resultSummary={resultSummary}
+                  loadingSummary={loadingPeriodComparisonBySenitment}
                 />
               </Grid>
             </>

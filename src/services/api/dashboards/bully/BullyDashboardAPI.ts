@@ -16,7 +16,7 @@ export const GetBullyDailyBy = (campaignId?: string, start_date?: any, end_date?
 
   return {
     resultFilterData: res?.data?.daily_bully || null,
-    resultBullyLevelPercentage: res?.data?.daily_bully || null,
+    resultBullyLevelPercentage: res?.data?.percentage_bully || null,
     loadingFilterData: loading,
     errorFilterData: error
   }
@@ -77,7 +77,7 @@ export const GetBullyBy = (campaignId?: string, start_date?: any, end_date?: any
   })
 
   return {
-    resultBullyByDay: res?.data || null,
+    resultBullyByDay: res?.data?.bully_by_day || null,
     resultBullyByTime : res?.data?.bully_by_time || null,
     resultBullyByDevice : res?.data?.bully_by_device || null,
     resultBullyByAccount : res?.data?.bully_by_account|| null,

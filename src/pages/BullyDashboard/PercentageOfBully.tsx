@@ -83,7 +83,7 @@ const PercentageOfBully = (props : MessageData) => {
         } else  if (data[i].bully_type) {
              labels.push(data[i].bully_type);
         }
-
+      
       percentage.push(data[i].value?.percentage);
         if (type === 'current') {
           setCurrentPeriod(data[i].value?.date)
@@ -113,14 +113,15 @@ const PercentageOfBully = (props : MessageData) => {
       if(currentMessageData) {
         const currentDataset = chartDataset(currentMessageData, 'current');
         setCurrentData(currentDataset);
-
-        const previousDataset = chartDataset(previousMessageData, 'previous');
-        setPreviousData(previousDataset);
-
       } else {
         setCurrentData(initValue);
-        setPreviousData(initValue);
       } 
+      if(previousMessageData) {
+        const previousDataset = chartDataset(previousMessageData, 'previous');
+        setPreviousData(previousDataset);
+      } else {
+        setPreviousData(initValue);
+      }
     } else {
       setCurrentData(initValue);
       setPreviousData(initValue);
