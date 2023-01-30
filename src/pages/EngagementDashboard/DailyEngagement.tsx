@@ -12,7 +12,6 @@ import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const
 import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { FilterByCampaignId } from 'src/services/api/dashboards/engagement/EngagementApi'
 import { LinearProgress, Paper } from '@mui/material'
 
 // import { Button } from '@mui/material'
@@ -31,36 +30,37 @@ interface LineProps {
   type: string
   chartId: string,
   highlight?: boolean
+  resultFilterData:any 
+  loadingFilterData : boolean
 }
 
-const chartLabel = (data:any) => {
+export const chartLabel = (data:any) => {
   if(!data) return [];
   
   let labels : any[] = [];
-  let labelsArrayLength; 
+
+  // let labelsArrayLength; 
   const labelValue : string[] = []
+
   for(let i = 0 ; i<data?.length; i++) {
-    const label = data[i]?.value;
-    if(data?.length-1 !== i) {
-        if(label?.length > data[i+1].length) {
-            labelsArrayLength= i
-            labels = data[labelsArrayLength]?.value
-        } else {
-            labelsArrayLength= i+1
-            labels = data[labelsArrayLength]?.value
-        }
-    } else {
-        labels = label;
+    const dataValue = data[i]?.value;
+    const label : any [] = [];
+
+    for (let j=0; j<dataValue?.length; j++) {
+      label.push(dataValue[j]?.date);
+      
     }
     
-  } 
-
-  if (labels?.length > 0) {
-    for (let i =0; i<labels?.length; i++) {
-        labelValue.push(moment(labels[i]?.date_m).format('DD/MM'));
-    }
+    labels = [...labels, ...label];
+    
   }
-  
+
+  if (labels && labels?.length > 0) {
+    const filterArray = [...new Set(labels)]
+    for (let i =0; i<filterArray?.length; i++) {
+      labelValue.push(moment(filterArray[i]).format('DD/MM/YYYY'));
+  }
+  }
 
   return labelValue;
 }
@@ -69,7 +69,7 @@ const DailyEngagement = (props: LineProps) => {
   const reportNo = '4.2.002';
 
   // ** Props
-  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId, highlight } = props
+  const { white, labelColor,  borderColor, gridLineColor, params, type, chartId, highlight,resultFilterData, loadingFilterData } = props
 
   // const [ chartData, setChartData ] = useState();
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
@@ -83,7 +83,7 @@ const DailyEngagement = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultFilterData, loadingFilterData } = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
+  
   
 
   const chartRef = useRef();

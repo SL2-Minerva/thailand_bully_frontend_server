@@ -7,12 +7,11 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps,chartLabel } from '../VoiceDashboard/MessageByDays'
-import { GetEngagementTypeByTime } from 'src/services/api/dashboards/engagement/EngagementApi'
 import MessageDetail from './MessageDetail'
   
 const EngagementTypeByTime = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -24,15 +23,13 @@ const EngagementTypeByTime = (props: LineProps) => {
     organization_id: null
   });
 
-  const { resultEngagementTypeByTime, loadingEngagementTypeByTime } = GetEngagementTypeByTime(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
-
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
     if (!dataset.length) return;
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultEngagementTypeByTime?.value;
+    const dailyMessageData = resultBy?.value;
 
     let keywordId : number | null= null;
     let sourceId : number | null = null;
@@ -156,8 +153,8 @@ const EngagementTypeByTime = (props: LineProps) => {
   }
 
     useEffect(() => {
-        if(resultEngagementTypeByTime) {
-        const dailyMessageData = resultEngagementTypeByTime;
+        if(resultBy) {
+        const dailyMessageData = resultBy;
         if(dailyMessageData) {
             const labels = chartLabel(dailyMessageData);
             setLabel(labels);
@@ -166,7 +163,7 @@ const EngagementTypeByTime = (props: LineProps) => {
             setDataset(dataSets);
         }
         }
-    },[resultEngagementTypeByTime]);
+    },[resultBy]);
 
     const data = {
         labels: label || [],
@@ -179,7 +176,7 @@ const EngagementTypeByTime = (props: LineProps) => {
 
     return (
       <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
-        {loadingEngagementTypeByTime && (
+        {loading && (
           <LinearProgress
               style={{ width: "100%" }}
           />

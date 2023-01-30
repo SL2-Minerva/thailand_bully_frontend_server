@@ -7,12 +7,11 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps,chartLabel } from '../VoiceDashboard/MessageByDays'
-import { GetEngagementTypeByAccount } from 'src/services/api/dashboards/engagement/EngagementApi'
 import MessageDetail from './MessageDetail'
   
 const EngagementTypeByAccount = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight,resultBy, loading } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -23,7 +22,6 @@ const EngagementTypeByAccount = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultEngagementTypeByAccount, loadingEngagementTypeByAccount } = GetEngagementTypeByAccount(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -31,7 +29,7 @@ const EngagementTypeByAccount = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultEngagementTypeByAccount?.value;
+    const dailyMessageData = resultBy?.value;
 
     let keywordId : number | null= null;
     let sourceId : number | null = null;
@@ -155,8 +153,8 @@ const EngagementTypeByAccount = (props: LineProps) => {
   }
 
     useEffect(() => {
-        if(resultEngagementTypeByAccount) {
-        const dailyMessageData = resultEngagementTypeByAccount;
+        if(resultBy) {
+        const dailyMessageData = resultBy;
         if(dailyMessageData) {
             const labels = chartLabel(dailyMessageData);
             setLabel(labels);
@@ -165,7 +163,7 @@ const EngagementTypeByAccount = (props: LineProps) => {
             setDataset(dataSets);
         }
         }
-    },[resultEngagementTypeByAccount]);
+    },[resultBy]);
 
     const data = {
         labels: label || [],
@@ -178,7 +176,7 @@ const EngagementTypeByAccount = (props: LineProps) => {
 
     return (
       <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
-        {loadingEngagementTypeByAccount && (
+        {loading && (
                 <LinearProgress
                     style={{ width: "100%" }}
                 />

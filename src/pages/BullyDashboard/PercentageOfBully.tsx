@@ -12,20 +12,20 @@ import { useEffect, useState } from 'react'
 import { BullyLevelColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { BullyLevelPercentage } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
 
 interface MessageData {
   params : any,
   type: string,
   chartId: string 
   highlight: boolean
+  resultBullyLevelPercentage:any 
+  loadingBullyLevelPercentage: boolean
 }
 
 const PercentageOfBully = (props : MessageData) => {
 
-  const { params, type, chartId, highlight } = props;
+  const { type, chartId, highlight, resultBullyLevelPercentage, loadingBullyLevelPercentage  } = props;
   const colors = BullyLevelColors;
-  const { resultBullyLevelPercentage, loadingBullyLevelPercentage  } = BullyLevelPercentage(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const initValue = {
     labels: [],
@@ -83,7 +83,7 @@ const PercentageOfBully = (props : MessageData) => {
         } else  if (data[i].bully_type) {
              labels.push(data[i].bully_type);
         }
-
+      
       percentage.push(data[i].value?.percentage);
         if (type === 'current') {
           setCurrentPeriod(data[i].value?.date)
@@ -113,14 +113,15 @@ const PercentageOfBully = (props : MessageData) => {
       if(currentMessageData) {
         const currentDataset = chartDataset(currentMessageData, 'current');
         setCurrentData(currentDataset);
-
-        const previousDataset = chartDataset(previousMessageData, 'previous');
-        setPreviousData(previousDataset);
-
       } else {
         setCurrentData(initValue);
-        setPreviousData(initValue);
       } 
+      if(previousMessageData) {
+        const previousDataset = chartDataset(previousMessageData, 'previous');
+        setPreviousData(previousDataset);
+      } else {
+        setPreviousData(initValue);
+      }
     } else {
       setCurrentData(initValue);
       setPreviousData(initValue);

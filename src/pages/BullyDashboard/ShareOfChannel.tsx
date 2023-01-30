@@ -28,7 +28,7 @@ const ChartData = (data: any ) => {
 
   const chartDatas : any[] = [];
   for (let i = 0; i<data?.length ; i ++) {
-    chartDatas.push(data[i]?.data)
+    chartDatas.push(data[i]?.data || data[i]?.value)
   }
   
   return chartDatas;
@@ -36,7 +36,6 @@ const ChartData = (data: any ) => {
 
 const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  chartId, highlight, type, loading, loadingChannel} : 
   {resultShareOfChannel: any,resultShareofChannelPlatform : any, chartId : string, highlight: boolean, type: string, loading: boolean, loadingChannel: boolean}) => {
-  
   const labels = resultShareOfChannel ? ChartLabels(resultShareOfChannel) : [];
   const data = {
   labels: labels,

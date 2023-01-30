@@ -12,7 +12,6 @@ import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { InteractionItem } from 'chart.js'
 import moment from 'moment'
-import { GetDailyChannel } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
 import MessageDetail from './MessageDetail'
 import { LinearProgress, Paper } from '@mui/material'
 
@@ -21,6 +20,8 @@ interface Props {
   chartId : string
   params: any
   highlight?: boolean
+  resultDailyChannel: any
+  loadingDailyChannel : boolean
 }
 export const getSeries = (seriesData: any) => {
   if(!seriesData) return [];
@@ -77,7 +78,7 @@ export const chartLabel = (data:any) => {
 }
 
 const DailyMessageGraph = ( props : Props) => {
-    const { type, chartId, params, highlight} = props;
+    const { type, chartId, params, highlight, resultDailyChannel, loadingDailyChannel } = props;
     const [ label, setLabel ] = useState<string[]>([]);
     const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
     const [ showDetail , setShowDetail ] = useState<boolean>(false);
@@ -87,7 +88,6 @@ const DailyMessageGraph = ( props : Props) => {
       campaign_id: null,
       organization_id: null
     });
-    const { resultDailyChannel, loadingDailyChannel } = GetDailyChannel(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
     const chartRef = useRef();
     const getKeywordId = (dataset: InteractionItem[]) => {

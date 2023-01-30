@@ -23,7 +23,33 @@ export const FilterByCampaignId = (campaignId?: string, start_date?: any, end_da
       }
   }
 
-  export const GetMessagesByDay = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
+  export const GetEngagementBy = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
+
+    const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+      url: `/dashboard-engagement/engagement-by`,
+      method: 'GET',
+      params :{
+        campaign_id: campaignId || "",
+        start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+        end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+        period: period,
+        fillter_keywords: fillter_keywords
+      }
+    })
+
+    return {
+      resultEngagementByDay: res?.data?.EngagementByDay || null,
+      resultEngagementByTime: res?.data?.EngagementByTime || null,
+      resultEngagementByDevice: res?.data?.EngagementByDevice || null,
+      resultEngagementByAccount: res?.data?.EngagementByAccount || null,
+      resultEngagementChannel: res?.data?.EngagementChannel || null,
+      resultKeywordByEngagementType: res?.data?.keywordByEngagementType || null,
+      loadingEngagementBy : loading,
+      errorEngagementBy: error
+    }
+}
+
+export const GetMessagesByDay = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-engagement/engagement-day`,
@@ -146,6 +172,33 @@ export const GetMessagesByChannel = (campaignId?: string, start_date?: any, end_
     resultMessagesByChannel: res?.data || null,
     loadingMessagesByChannel : loading,
     errorMessagesByChannel: error
+  }
+}
+
+export const EngagementTypeBy = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string) => {
+  const params = {
+    campaign_id: campaignId,
+    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "", 
+    period: period,
+    fillter_keywords: fillter_keywords
+  };
+
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-engagement/engagement-type-by`,
+    method: 'GET',
+    params : params
+  })
+
+  return {
+    resultEngagementPercentage: res?.data?.EngagementType || null,
+    resultEngagementTypeByDay : res?.data?.EngagementByDayKey || null,
+    resultEngagementTypeByTime: res?.data?.EngagementByTimeKey || null,
+    resultEngagementTypeByDevice : res?.data?.EngagementByDeviceKey || null,
+    resultEngagementTypeByAccount : res?.data?.EngagementByAccountKey || null,
+    resultEngagementTypeByChannel : res?.data?.EngagementChannelKey || null,
+    loadingEngagementType: loading,
+    errorEngagementType: error
   }
 }
 
@@ -315,6 +368,32 @@ export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_dat
       resultPeriodComparisonByChannel: res?.data || null,
       loadingPeriodComparisonByChannel : loading,
       errorPeriodComparisonByChannel: error
+    }
+  }
+
+  export const GetEngagementComparisonBy = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
+
+    const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+      url: `/dashboard-engagement/engagement-comparison-by`,
+      method: 'GET',
+      params :{
+        campaign_id: campaignId || "",
+        start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+        end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+        period: period,
+        fillter_keywords: fillter_keywords
+      }
+    })
+  
+    return {
+      resultTotalEngagement: res?.data?.EngagementComparison || null,
+      resultPeriodComparisonByChannel: res?.data?.EngagementPeriodPlarform || null,
+      resultPeriodComparisonBySenitment: res?.data?.EngagementPeriodSentiment || null,
+      resultEngagementComparison: res?.data?.EngagementTypeComparison || null,
+      resultComparison: res?.data?.EngagementActionComparison || null,
+      resultSummary: res?.data?.EngagementByInfulencer || null,
+      loadingPeriodComparisonBySenitment : loading,
+      errorPeriodComparisonBySenitment: error
     }
   }
 

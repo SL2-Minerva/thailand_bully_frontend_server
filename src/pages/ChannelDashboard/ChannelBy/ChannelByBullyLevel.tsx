@@ -1,83 +1,67 @@
-import { Card, CardContent, CardHeader, LinearProgress } from '@mui/material'
+import { Paper, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { GraphicColors } from 'src/utils/const'
-import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
-import { LineProps } from '../VoiceDashboard/MessageByDays'
-import MessageDetail from './MessageDetail'
-
-export const chartLabel = (currentData:any, previousData : any) => {
-  if(!currentData && !previousData) return [];
+import { LineProps } from 'src/pages/VoiceDashboard/MessageByDays'
+import MessageDetail from '../MessageDetail'
+import { StyledTooltip } from 'src/pages/dashboard/overall'
+  
+export const chartLabel = (data:any) => {
+  if(!data) return [];
   
   let labels : string[] = [];
-
-    const currentPeriod = currentData?.labels;
-    const previousPeriod = previousData?.labels;
-
-    if ( currentPeriod?.length > previousPeriod?.length) {
-      labels = currentPeriod;
-    } else {
-      labels = previousPeriod;
-    }
+  if(data) {
+    labels = data.labels;
+  }
 
   return labels;
 }
 
-export const chartDatasets = (currentData:any, previousData: any) => {
-  if(!currentData) return [];
+export const chartDatasets = (data:any) => {
+  if(!data) return [];
+  let totalAmount : number[] = [];
+  let keywordName = "";
   const returnData : StackChartDataset[] = [];
-
   const color = GraphicColors
+  const total = data?.value || data?.data || [];
 
-    const totalCurrent = currentData?.value?.current_period?.data || [];
-    const totalPrevious = previousData?.value?.previous_period?.data || [];
+  for(let i = 0 ; i<total?.length; i++) {
+    totalAmount = []
 
-    const chartDatasetCurrent : StackChartDataset  = {
+    for(let j=0; j<total[i]?.data?.length ; j++ ) {
+      totalAmount.push(total[i]?.data[j]);
+    } 
+    
+    keywordName = total[i]?.source_name;
+    const chartDataset : StackChartDataset  = {
       fill: false,
       tension: 0.5,
       pointRadius: 1,
-      label: "Current Period",
+      label: keywordName,
       pointHoverRadius: 5,
       pointStyle: 'circle',
-      borderColor: color[0],
-      backgroundColor: color[0],
-      pointHoverBorderWidth: 5,
-      pointHoverBorderColor: '#fff',
-      pointBorderColor: 'transparent',
-      pointHoverBackgroundColor: color[0],
-      data: totalCurrent
-    }
-
-    const chartDatasetPrevious : StackChartDataset  = {
-      fill: false,
-      tension: 0.5,
-      pointRadius: 1,
-      label: "Previous Period",
-      pointHoverRadius: 5,
-      pointStyle: 'circle',
-      borderColor: color[1],
-      backgroundColor: color[1],
+      borderColor: color[i],
+      backgroundColor: color[i],
       pointHoverBorderWidth: 5,
       pointHoverBorderColor: "#fff",
       pointBorderColor: 'transparent',
-      pointHoverBackgroundColor: color[1],
-      data: totalPrevious
-   }
+      pointHoverBackgroundColor: color[i],
+      data: totalAmount
+    }
 
-    returnData.push(chartDatasetCurrent);
-    returnData.push(chartDatasetPrevious)
-
+    returnData.push(chartDataset);
+  }
 
   return returnData;
 
 }
-  
-const EngagementRate = (props: LineProps) => {
 
-  const { labelColor, borderColor, gridLineColor, chartId, params, highlight,resultBy, resultByPrevious, loading  } = props
+const ChannelByBullyLevel = (props: LineProps) => {
+
+  const { labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -88,14 +72,14 @@ const EngagementRate = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-
   const chartRef = useRef();
+
   const getKeywordId = (dataset: InteractionItem[]) => {
     if (!dataset.length) return;
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultByPrevious?.value?.previous_period;
+    const dailyMessageData = resultBy?.value;
 
     const keywordId : number | null= null;
     let sourceId : number | null = null;
@@ -105,8 +89,9 @@ const EngagementRate = (props: LineProps) => {
     if (dailyMessageData?.length > 0) {
       for (let i =0; i<dailyMessageData?.length; i++) {
           if(keywordName === dailyMessageData[i].source_name) {
-            sourceId = dailyMessageData[i].source_id || "";
-            campaign_id = dailyMessageData[i].campaign_id || "";          }
+            sourceId = dailyMessageData[i].source_id;
+            campaign_id = dailyMessageData[i].campaign_id;
+          }
       }
     }
 
@@ -178,40 +163,40 @@ const EngagementRate = (props: LineProps) => {
     }
   }
 
+  
+
     useEffect(() => {
         if(resultBy) {
-        const currentEngagementData = resultBy;
-        const previousEngagementData = resultByPrevious;
-
-        if(currentEngagementData) {
-            const labels = chartLabel(currentEngagementData, previousEngagementData);
+        const dailyMessageData = resultBy;
+        if(dailyMessageData) {
+            const labels = chartLabel(dailyMessageData);
             setLabel(labels);
             
-            const dataSets = chartDatasets(currentEngagementData, previousEngagementData);
+            const dataSets = chartDatasets(dailyMessageData);
             setDataset(dataSets);
         }
         }
-    },[resultBy, resultByPrevious]);
+    },[resultBy]);
 
     const data = {
         labels: label || [],
         datasets: dataset
     }
 
-    const reportNo = '3.2.013';
+    const reportNo = '3.2.008';
 
     const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
 
     return (
-      <Card>
-        { loading && (
+      <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+        {loading && (
         <LinearProgress
             style={{ width: "100%" }}
         />
         )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Engagement Rate"
+            title="Daily Messages By Bully Level"
             titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption',color: highlight ? 'green' : '#4c4e64de' }}
           />
@@ -235,8 +220,8 @@ const EngagementRate = (props: LineProps) => {
           }
         
       </CardContent>
-    </Card>
+    </Paper>
     )
 }
 
-export default EngagementRate
+export default ChannelByBullyLevel

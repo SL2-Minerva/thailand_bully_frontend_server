@@ -7,11 +7,10 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { chartLabel, LineProps } from '../VoiceDashboard/MessageByDays'
-import { GetBullyTypeByChannel } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
 
 const BullyTypeByChannel = (props: LineProps) => {
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight,resultBy, loading } = props
 
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -22,13 +21,6 @@ const BullyTypeByChannel = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   })
-  const { resultBullyTypeByChannel, loadingBullyTypeByChannel } = GetBullyTypeByChannel(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds
-  )
 
   const chartRef = useRef()
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -36,7 +28,7 @@ const BullyTypeByChannel = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex
     const keywordName = data.datasets[datasetIndex].label
-    const dailyMessageData = resultBullyTypeByChannel?.value
+    const dailyMessageData = resultBy?.value
 
     const keywordId: number | null = null
     let sourceId: number | null = null
@@ -158,8 +150,8 @@ const BullyTypeByChannel = (props: LineProps) => {
   }
 
   useEffect(() => {
-    if (resultBullyTypeByChannel) {
-      const dailyMessageData = resultBullyTypeByChannel
+    if (resultBy) {
+      const dailyMessageData = resultBy
       if (dailyMessageData) {
         const labels = chartLabel(dailyMessageData)
         setLabel(labels)
@@ -168,7 +160,7 @@ const BullyTypeByChannel = (props: LineProps) => {
         setDataset(dataSets)
       }
     }
-  }, [resultBullyTypeByChannel])
+  }, [resultBy])
 
   const data = {
     labels: label || [],
@@ -181,7 +173,7 @@ const BullyTypeByChannel = (props: LineProps) => {
 
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
-      {loadingBullyTypeByChannel && <LinearProgress style={{ width: '100%' }} />}
+      {loading && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title='Bully Type: Daily Message by Channel'

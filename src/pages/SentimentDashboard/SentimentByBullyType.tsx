@@ -7,12 +7,11 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps,chartLabel } from '../VoiceDashboard/MessageByDays'
-import {  GetSentimentByBullyType } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
   
 const SentimentByBullyType = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight,resultBy, loading } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -23,7 +22,7 @@ const SentimentByBullyType = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultSentimentByBullyType, loadingSentimentByBullyType  } = GetSentimentByBullyType(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
+ 
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -31,7 +30,7 @@ const SentimentByBullyType = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultSentimentByBullyType?.value;
+    const dailyMessageData = resultBy?.value;
 
     let keywordId : number | null= null;
     let sourceId : number | null = null;
@@ -155,8 +154,8 @@ const SentimentByBullyType = (props: LineProps) => {
   }
 
     useEffect(() => {
-        if(resultSentimentByBullyType) {
-        const dailyMessageData = resultSentimentByBullyType;
+        if(resultBy) {
+        const dailyMessageData = resultBy;
         if(dailyMessageData) {
             const labels = chartLabel(dailyMessageData);
             setLabel(labels);
@@ -165,7 +164,7 @@ const SentimentByBullyType = (props: LineProps) => {
             setDataset(dataSets);
         }
         }
-    },[resultSentimentByBullyType]);
+    },[resultBy]);
 
     const data = {
         labels: label || [],
@@ -178,7 +177,7 @@ const SentimentByBullyType = (props: LineProps) => {
 
     return (
       <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
-        {loadingSentimentByBullyType && (
+        {loading && (
             <LinearProgress
                 style={{ width: "100%" }}
             />

@@ -13,18 +13,19 @@ import { useEffect, useState } from 'react'
 import { GraphicColors } from 'src/utils/const' 
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { GetPercentageChannel } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
 
 interface Props {
   params : any
   type : string
   chartId : string,
   highlight: boolean
+  resultPercentageChannelCurrent : any
+  resultPercentageChannelPrevious  : any
+  loadingPercentageChannel : boolean
 }
 Chart.register(DoughnutLabel );
 const DailyMessagePieChart  = ( props : Props) => {
-  const { params, type, chartId, highlight } = props;
-  const { resultPercentageChannel, loadingPercentageChannel } = GetPercentageChannel(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
+  const { type, chartId, highlight,resultPercentageChannelCurrent,resultPercentageChannelPrevious, loadingPercentageChannel } = props;
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -82,70 +83,7 @@ const DailyMessagePieChart  = ( props : Props) => {
     return returnData;
   }
 
-  // const currentPeriodOptions = {
-  //   responsive: true,
-  //   backgroundColor: false,
-  //   maintainAspectRatio: false,
-  //   plugins: {
-  //     legend: {
-  //       align: 'end',
-  //       position: 'top',
-  //       labels: {
-  //         padding: 25,
-  //         boxWidth: 10,
-  //         color: labelColor,
-  //         usePointStyle: true
-  //       }
-  //     },
-  //       doughnutlabel: {
-  //               paddingPercentage: 5,
-  //               labels: [
-  //                   {
-  //                   text: currentData?.total || "",
-  //                   font: {
-  //                       size: '50',
-  //                       family: 'Arial, Helvetica, sans-serif',
-  //                       weight: 'bold',
-  //                   },
-  //                   color: '#434343',
-  //                   },
-  //               ],
-  //           },
-  //   }
-  // }
-
-  // const previousPeriodOptions = {
-  //   responsive: true,
-  //   backgroundColor: false,
-  //   maintainAspectRatio: false,
-  //   plugins: {
-  //     legend: {
-  //       align: 'end',
-  //       position: 'top',
-  //       labels: {
-  //         padding: 25,
-  //         boxWidth: 10,
-  //         color: labelColor,
-  //         usePointStyle: true
-  //       }
-  //     },
-  //       doughnutlabel: {
-  //               paddingPercentage: 5,
-  //               labels: [
-  //                   {
-  //                   text: previousData?.total || "",
-  //                   font: {
-  //                       size: '50',
-  //                       family: 'Arial, Helvetica, sans-serif',
-  //                       weight: 'bold',
-  //                   },
-  //                   color: '#434343',
-  //                   },
-  //               ],
-  //           },
-  //   }
-  // }
-  const options = {
+  const currentPeriodOptions = {
     responsive: true,
     backgroundColor: false,
     maintainAspectRatio: false,
@@ -159,25 +97,94 @@ const DailyMessagePieChart  = ( props : Props) => {
           color: labelColor,
           usePointStyle: true
         }
-      }
+      },
+        doughnutlabel: {
+                paddingPercentage: 5,
+                labels: [
+                    {
+                    text: currentData?.total || "",
+                    font: {
+                        size: '50',
+                        family: 'Arial, Helvetica, sans-serif',
+                        weight: 'bold',
+                    },
+                    color: '#434343',
+                    },
+                ],
+            },
     }
   }
 
+  const previousPeriodOptions = {
+    responsive: true,
+    backgroundColor: false,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        align: 'end',
+        position: 'top',
+        labels: {
+          padding: 25,
+          boxWidth: 10,
+          color: labelColor,
+          usePointStyle: true
+        }
+      },
+        doughnutlabel: {
+                paddingPercentage: 5,
+                labels: [
+                    {
+                    text: previousData?.total || "",
+                    font: {
+                        size: '50',
+                        family: 'Arial, Helvetica, sans-serif',
+                        weight: 'bold',
+                    },
+                    color: '#434343',
+                    },
+                ],
+            },
+    }
+  }
+  
+  // const options = {
+  //   responsive: true,
+  //   backgroundColor: false,
+  //   maintainAspectRatio: false,
+  //   plugins: {
+  //     legend: {
+  //       align: 'end',
+  //       position: 'top',
+  //       labels: {
+  //         padding: 25,
+  //         boxWidth: 10,
+  //         color: labelColor,
+  //         usePointStyle: true
+  //       }
+  //     }
+  //   }
+  // }
+
   useEffect(()=>{
-    if(resultPercentageChannel) {
-      const currentMessageData = resultPercentageChannel?.prcentage_of_messages_current;
-      const previousMessageData = resultPercentageChannel?.prcentage_of_messages_previous;
+    if(resultPercentageChannelCurrent) {
+      const currentMessageData = resultPercentageChannelCurrent;
       const currentDataset = chartDataset(currentMessageData, 'current');
       setCurrentData(currentDataset);
+    } else {
+      setCurrentData(initValue);
+    }
 
+    if(resultPercentageChannelPrevious) {
+      const previousMessageData = resultPercentageChannelPrevious;
       const previousDataset = chartDataset(previousMessageData, 'previous');
       setPreviousData(previousDataset);
     } else {
-      setCurrentData(initValue);
       setPreviousData(initValue);
     }
 
-  },[resultPercentageChannel]);
+    
+
+  },[resultPercentageChannelCurrent, resultPercentageChannelPrevious]);
 
   const reportNo = '3.1.001';
 
@@ -211,10 +218,10 @@ const DailyMessagePieChart  = ( props : Props) => {
       <CardContent>
         <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-              <Doughnut data={currentData} options={options as any} height={270} />
+              <Doughnut data={currentData} options={currentPeriodOptions as any} height={270} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <Doughnut data={previousData} options={options as any} height={270} />
+              <Doughnut data={previousData} options={previousPeriodOptions as any} height={270} />
             </Grid>
         </Grid>
         <Grid container spacing={3} mt={3}>

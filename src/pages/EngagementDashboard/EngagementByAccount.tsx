@@ -7,12 +7,11 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps,chartLabel } from '../VoiceDashboard/MessageByDays'
-import { GetMessagesByAccount } from 'src/services/api/dashboards/engagement/EngagementApi'
 import MessageDetail from './MessageDetail'
   
 const EngagementByAccounts = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -23,7 +22,6 @@ const EngagementByAccounts = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultMessagesByAccount, loadingMessagesByAccount } = GetMessagesByAccount(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
   const reportNo = '4.2.006';
 
   const title = chartId + ", Report Level 2(" + reportNo + ")";
@@ -34,7 +32,7 @@ const EngagementByAccounts = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultMessagesByAccount?.value;
+    const dailyMessageData = resultBy?.value;
 
     let keywordId : number | null= null;
     let sourceId : number | null = null;
@@ -158,8 +156,8 @@ const EngagementByAccounts = (props: LineProps) => {
   }
 
     useEffect(() => {
-        if(resultMessagesByAccount) {
-        const dailyMessageData = resultMessagesByAccount;
+        if(resultBy) {
+        const dailyMessageData = resultBy;
         if(dailyMessageData) {
             const labels = chartLabel(dailyMessageData);
             setLabel(labels);
@@ -168,7 +166,7 @@ const EngagementByAccounts = (props: LineProps) => {
             setDataset(dataSets);
         }
         }
-    },[resultMessagesByAccount]);
+    },[resultBy]);
 
     const data = {
         labels: label || [],
@@ -177,7 +175,7 @@ const EngagementByAccounts = (props: LineProps) => {
 
     return (
       <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
-        {loadingMessagesByAccount && (
+        {loading && (
           <LinearProgress
               style={{ width: "100%" }}
           />

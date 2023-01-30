@@ -11,20 +11,20 @@ import { useEffect, useState } from 'react'
 import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { FilterByCampaignId } from "src/services/api/dashboards/engagement/EngagementApi";
 
 interface MessageData {
   type: string
   chartId : string,
   params: any,
-  highlight: boolean
+  highlight: boolean,
+  resultFilterData:any 
+  loadingFilterData : boolean
 }
 
 const PercentageOfEngangement = (props : MessageData) => {
 
-  const { type, chartId, params, highlight } = props;
+  const { type, chartId, highlight,resultFilterData, loadingFilterData } = props;
   const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
-  const {resultFilterData, loadingFilterData} = FilterByCampaignId(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
   const initValue = {
     labels: [],
     datasets: [{
@@ -77,11 +77,13 @@ const PercentageOfEngangement = (props : MessageData) => {
     const labels : string[] =[];
     const percentage: number[] = [];
     for(let i =0; i<data?.length; i++ ) {
-      labels.push(data[i].keyword_name);
+      // labels.push(data[i].keyword_name);
 
       const percentageValue = data[i]?.value;
       for(let j = 0 ; j<percentageValue?.length; j++) {
         percentage.push(data[i].value[j]?.percentage);
+          labels.push(data[i].value[j]?.name);
+
         if (type === 'current') {
           setCurrentPeriod(data[i].value[j]?.date)
         } else {

@@ -41,6 +41,55 @@ export const GetDailyChannel = (campaignId?: string, start_date?: any, end_date?
     }
 }
 
+export const GetDailyBy = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-channel/daily-by`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period,
+      fillter_keywords: fillter_keywords
+    }
+  })
+
+  return {
+    resultPercentageChannelPrevious: res?.data?.prcentage_of_messages_previous || null,
+    resultPercentageChannelCurrent: res?.data?.prcentage_of_messages_current || null,
+    resultDailyChannel: res?.data?.daily_message || null,
+    loadingDailyChannel: loading,
+    errorDailyChannel: error
+  }
+}
+
+
+export const GetChannelBy = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-channel/channel-by`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period,
+      fillter_keywords: fillter_keywords
+    }
+  })
+  
+  return {
+    resultChannelByDay: res?.data?.channel_by_day || null,
+    resultChannelByTime: res?.data?.channel_by_time || null,
+    resultChannelByDevice: res?.data?.channel_by_device || null,
+    resultChannelByAccount: res?.data?.channel_by_account || null,
+    resultChannelBySentiment: res?.data?.channel_by_sentiment || null,
+    resultChannelByBullyLevel: res?.data?.channel_by_level || null,
+    resultChannelByBullyType: res?.data?.channel_by_bully_type || null,
+    loadingChannelBy : loading,
+    errorChannelBy : error
+  }
+}
+
 export const GetChannelByDay = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-channel/channel-day`,
@@ -189,6 +238,33 @@ export const GetChannelByBullyType = (campaignId?: string, start_date?: any, end
   }
 }
 
+export const GetEngagementBy = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string) => {
+
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-channel/engagement-by`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period,
+      fillter_keywords: fillter_keywords
+    }
+  })
+
+  return {
+    resultEngagementRate: response?.data?.engagement_rate || null,
+    resultEngagementRatePrevious: response?.data?.engagement_rate_previous || null,
+    resultFacebookComparison: response?.data?.period_over_period?.facebook || null,
+    resultInstagramComparison: response?.data?.period_over_period?.instagram || null,
+    resultTwitterComparison: response?.data?.period_over_period?.twitter || null,
+    resultYoutubeComparison: response?.data?.period_over_period?.youtube || null,
+    resultPantipComparison: response?.data?.period_over_period?.pantip || null,
+    loadingEngagementBy: loading,
+    errorEngagementBy: error
+  }
+}
+
 export const GetComparison = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string) => {
 
     const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
@@ -270,35 +346,6 @@ export const GetSentimentScore = (campaignId?: string, start_date?: any, end_dat
       }
     }) 
 
-  //   const data = {
-  //     "status": 200,
-  //     "msg": "success",
-  //     "data": {
-  //         "labels": [
-  //             "facebook",
-  //             "twitter",
-  //             "youtube",
-  //             "instagram",
-  //             "google",
-  //             "pantip"
-  //         ],
-  //         "value": {
-  //             "current_period": {
-  //                 "id": 5,
-  //                 "keyword_name": "current period",
-  //                 "data": [
-  //                     0,
-  //                     16,
-  //                     83,
-  //                     0,
-  //                     0,
-  //                     0
-  //                 ]
-  //             }
-  //         }
-  //     }
-  // }
-
     return {
       resultSentimentScore : res?.data || null,
       loadingSentimentScore: loading,
@@ -319,35 +366,6 @@ export const GetSentimentScorePrevious = (campaignId?: string, start_date?: any,
       fillter_keywords: fillter_keywords
     }
   }) 
-
-//    const data = {
-//     "status": 200,
-//     "msg": "success",
-//     "data": {
-//         "labels": [
-//             "facebook",
-//             "twitter",
-//             "youtube",
-//             "instagram",
-//             "google",
-//             "pantip"
-//         ],
-//         "value": {
-//             "previous_period": {
-//                 "id": 5,
-//                 "keyword_name": "previous period",
-//                 "data": [
-//                     0,
-//                     26,
-//                     112,
-//                     0,
-//                     0,
-//                     0
-//                 ]
-//             }
-//         }
-//     }
-// }
 
   return {
     resultSentimentScorePrevious : res?.data || null,
@@ -399,5 +417,31 @@ export const GetChannelSentimentLevel = (campaignId?: string, start_date?: any, 
       resultSentimentLevel: response?.data || null,
       loadingSentimentLevel: loading,
       errorSentimentLevel: error
+    }
+  }
+
+  export const GetSentimentBy = (campaignId?: string, start_date?: any, end_date?: any, period?: any,fillter_keywords?: string, previousDate?:any, previousEndDate?:any ) => {
+  
+    const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+      url: `/dashboard-channel/sentiment-by`,
+      method: 'GET',
+      params :{
+        campaign_id: campaignId || "",
+        start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+        end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+        period: period,
+        fillter_keywords: fillter_keywords,
+        start_date_period : previousDate ? moment(previousDate).format('YYYY-MM-DD') : "",
+        end_date_period : previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : "",
+      }
+    })
+  
+    return {
+      resultSentimentScore : response?.data?.sentiment_score || null,
+      resultSentimentScorePrevious : response?.data?.sentiment_score_previous || null,
+      resultChannelSentimentLevel: response?.data?.channel_by_sentiment || null,
+      resultSentimentLevel: response?.data?.sentiment_by_level || null,
+      loadingSentimentBy : loading,
+      errorSentimentBy : error
     }
   }

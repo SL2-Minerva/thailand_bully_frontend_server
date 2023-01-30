@@ -7,11 +7,10 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps,chartLabel } from '../VoiceDashboard/MessageByDays'
-import { GetMessagesByEngagementType } from 'src/services/api/dashboards/engagement/EngagementApi'
 import MessageDetail from './MessageDetail'
   
 const EngagementByType = (props: LineProps) => {
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -22,7 +21,6 @@ const EngagementByType = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultMessagesByDevice, loadingMessagesByDevice } = GetMessagesByEngagementType(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const reportNo = '4.2.005';
@@ -34,7 +32,7 @@ const EngagementByType = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultMessagesByDevice?.value;
+    const dailyMessageData = resultBy?.value;
 
     let keywordId : number | null= null;
     let sourceId : number | null = null;
@@ -158,8 +156,8 @@ const EngagementByType = (props: LineProps) => {
   }
 
     useEffect(() => {
-        if(resultMessagesByDevice) {
-        const dailyMessageData = resultMessagesByDevice;
+        if(resultBy) {
+        const dailyMessageData = resultBy;
         if(dailyMessageData) {
             const labels = chartLabel(dailyMessageData);
             setLabel(labels);
@@ -168,7 +166,7 @@ const EngagementByType = (props: LineProps) => {
             setDataset(dataSets);
         }
         }
-    },[resultMessagesByDevice]);
+    },[resultBy]);
 
     const data = {
         labels: label || [],
@@ -177,7 +175,7 @@ const EngagementByType = (props: LineProps) => {
 
     return (
       <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
-        {loadingMessagesByDevice && (
+        {loading && (
           <LinearProgress
               style={{ width: "100%" }}
           />

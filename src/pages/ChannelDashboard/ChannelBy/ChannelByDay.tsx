@@ -1,83 +1,17 @@
-// ** MUI Imports
-import Paper from '@mui/material/Paper'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
-
-// ** Third Party Imports
-import { Bar, getDatasetAtEvent } from 'react-chartjs-2'
+import { Paper, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
+import { Bar, getDatasetAtEvent } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import moment from 'moment'
-import { InteractionItem } from 'chart.js'
-import { StyledTooltip } from '../dashboard/overall'
+import { GraphicColors } from 'src/utils/const'
 import { Information } from 'mdi-material-ui'
-import MessageDetail from '../ChannelDashboard/MessageDetail'
-import { SentimentColors } from 'src/utils/const'
-import { LinearProgress } from '@mui/material'
+import { InteractionItem } from 'chart.js'
+import { chartLabel, LineProps } from 'src/pages/VoiceDashboard/MessageByDays'
+import MessageDetail from '../MessageDetail'
+import { StyledTooltip } from 'src/pages/dashboard/overall'
 
-interface LineProps {
-  white: string
-  warning: string
-  primary: string
-  success: string
-  labelColor: string
-  borderColor: string
-  gridLineColor: string
-  params: any
-  type: string
-  chartId: string
-  highlight?: boolean
-  resultFilterData: any
-  loadingFilterData : boolean
-}
 
-export const chartLabel = (data:any) => {
-  if(!data) return [];
-  
-  let labels : any[] = [];
-
-  // let labelsArrayLength; 
-  const labelValue : string[] = []
-
-  for(let i = 0 ; i<data?.length; i++) {
-    const dataValue = data[i]?.value;
-    const label : any [] = [];
-
-    for (let j=0; j<dataValue?.length; j++) {
-      label.push(dataValue[j]?.date);
-      
-    }
-    
-    labels = [...labels, ...label];
-    
-  }
-
-  if (labels && labels?.length > 0) {
-    const filterArray = [...new Set(labels)]
-    for (let i =0; i<filterArray?.length; i++) {
-      labelValue.push(moment(filterArray[i]).format('DD/MM/YYYY'));
-  }
-  }
-
-  return labelValue;
-}
-
-const DailySenitment = (props: LineProps) => {
-  // ** Props
-  const {
-    white,
-    labelColor,
-    borderColor,
-    gridLineColor,
-    params,
-    chartId,
-    highlight,
-    resultFilterData,
-    loadingFilterData
-  } = props
-
-  // const [ chartData, setChartData ] = useState();
-  const colors = SentimentColors
+const ChannelByDay = (props: LineProps) => {
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
 
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -90,12 +24,13 @@ const DailySenitment = (props: LineProps) => {
   })
 
   const chartRef = useRef()
+
   const getKeywordId = (dataset: InteractionItem[]) => {
     if (!dataset.length) return
 
     const datasetIndex = dataset[0].datasetIndex
     const keywordName = data.datasets[datasetIndex].label
-    const dailyMessageData = resultFilterData?.sentiment
+    const dailyMessageData = resultBy?.value
 
     const keywordId: number | null = null
     let sourceId: number | null = null
@@ -104,12 +39,10 @@ const DailySenitment = (props: LineProps) => {
 
     if (dailyMessageData?.length > 0) {
       for (let i = 0; i < dailyMessageData?.length; i++) {
-        if (keywordName === dailyMessageData[i].keyword_name) {
-          sourceId = dailyMessageData[i].source_id || ''
-          campaign_id = dailyMessageData[i].campaign_id || ''
-          organization_id = dailyMessageData[i].organization_id || ''
-
-          // keywordId = dailyMessageData[i].value[i]?.keyword_id;
+        if (keywordName === dailyMessageData[i].source_name) {
+          sourceId = dailyMessageData[i].source_id
+          campaign_id = dailyMessageData[i].campaign_id
+          organization_id = dailyMessageData[i].organization_id
         }
       }
     }
@@ -146,7 +79,7 @@ const DailySenitment = (props: LineProps) => {
           borderColor,
           color: gridLineColor
         },
-        stacked: true
+        stacked: false
       },
       y: {
         min: 0,
@@ -161,9 +94,9 @@ const DailySenitment = (props: LineProps) => {
         grid: {
           borderColor,
           color: gridLineColor
-        },
+        }
 
-        stacked: true
+        // stacked: true
       }
     },
     plugins: {
@@ -185,17 +118,17 @@ const DailySenitment = (props: LineProps) => {
     let totalAmount: number[] = []
     let keywordName = ''
     const returnData: StackChartDataset[] = []
-    const color = colors
-    for (let i = 0; i < data?.length; i++) {
-      totalAmount = []
-      const total = data[i]?.value
+    const color = GraphicColors
+    const total = data?.value || data?.data || []
 
-      for (let j = 0; j < data[i]?.value?.length; j++) {
-        totalAmount.push(total[j].total_at_date)
+    for (let i = 0; i < total?.length; i++) {
+      totalAmount = []
+
+      for (let j = 0; j < total[i]?.data?.length; j++) {
+        totalAmount.push(total[i]?.data[j])
       }
 
-      keywordName = data[i].keyword_name
-
+      keywordName = total[i]?.keyword_name
       const chartDataset: StackChartDataset = {
         fill: false,
         tension: 0.5,
@@ -218,45 +151,36 @@ const DailySenitment = (props: LineProps) => {
     return returnData
   }
 
-  let data = {
+  useEffect(() => {
+    if (resultBy) {
+      const dailyMessageData = resultBy
+      if (dailyMessageData) {
+        const labels = chartLabel(dailyMessageData)
+        setLabel(labels)
+
+        const dataSets = chartDatasets(dailyMessageData)
+        setDataset(dataSets)
+      }
+    }
+  }, [resultBy])
+
+  const data = {
     labels: label || [],
     datasets: dataset
   }
 
-  useEffect(() => {
-    if (resultFilterData) {
-      const sentimentData = resultFilterData?.sentiment
-      if (sentimentData) {
-        const labels = chartLabel(sentimentData)
-        setLabel(labels)
-
-        const dataSets = chartDatasets(sentimentData)
-        setDataset(dataSets)
-      } else {
-        setLabel([])
-        setDataset([])
-
-        data = { labels: [], datasets: [] }
-      }
-    } else {
-      setLabel([])
-      setDataset([])
-
-      data = { labels: [], datasets: [] }
-    }
-  }, [resultFilterData])
-
-  const reportNo = '5.2.002'
+  const reportNo = '3.2.003'
 
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
-      {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
+      {loading && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Daily Sentiment Type by Date'
+          title='Daily Messages By Day'
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={chartTitle || ''}>
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
@@ -282,4 +206,4 @@ const DailySenitment = (props: LineProps) => {
   )
 }
 
-export default DailySenitment
+export default ChannelByDay

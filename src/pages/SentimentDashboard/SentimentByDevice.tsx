@@ -7,12 +7,11 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps,chartLabel } from '../VoiceDashboard/MessageByDays'
-import {  GetSentimentByDevice } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
   
 const SentimentByDevice = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -23,7 +22,6 @@ const SentimentByDevice = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultSentimentByDevice, loadingSentimentByDevice } = GetSentimentByDevice(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -31,7 +29,7 @@ const SentimentByDevice = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultSentimentByDevice?.value;
+    const dailyMessageData = resultBy?.value;
 
     let keywordId : number | null= null;
     let sourceId : number | null = null;
@@ -155,8 +153,8 @@ const SentimentByDevice = (props: LineProps) => {
   }
 
     useEffect(() => {
-        if(resultSentimentByDevice) {
-        const dailyMessageData = resultSentimentByDevice;
+        if(resultBy) {
+        const dailyMessageData = resultBy;
         if(dailyMessageData) {
             const labels = chartLabel(dailyMessageData);
             setLabel(labels);
@@ -165,7 +163,7 @@ const SentimentByDevice = (props: LineProps) => {
             setDataset(dataSets);
         }
         }
-    },[resultSentimentByDevice]);
+    },[resultBy]);
 
     const data = {
         labels: label || [],
@@ -177,7 +175,7 @@ const SentimentByDevice = (props: LineProps) => {
 
     return (
       <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
-        {loadingSentimentByDevice && (
+        {loading && (
             <LinearProgress
                 style={{ width: "100%" }}
             />

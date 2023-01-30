@@ -6,13 +6,12 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps } from '../VoiceDashboard/MessageByDays'
-import { GetSentimentScore, GetSentimentScorePrevious } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
 import { chartDatasets,chartLabel } from './EngagementRate'
 import MessageDetail from './MessageDetail'
   
 const SentimentScore = (props: LineProps) => {
 
-  const { labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
+  const { labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, resultByPrevious, loading } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -23,8 +22,6 @@ const SentimentScore = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   });
-  const { resultSentimentScore, loadingSentimentScore } = GetSentimentScore(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
-  const { resultSentimentScorePrevious, loadingSentimentScorePrevious } = GetSentimentScorePrevious(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -32,7 +29,7 @@ const SentimentScore = (props: LineProps) => {
 
     const datasetIndex = dataset[0].datasetIndex;
     const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultSentimentScorePrevious?.value?.previous_period;
+    const dailyMessageData = resultByPrevious?.value?.previous_period;
 
     const keywordId : number | null= null;
     let sourceId : number | null = null;
@@ -116,9 +113,9 @@ const SentimentScore = (props: LineProps) => {
   }
 
     useEffect(() => {
-        if(resultSentimentScore) {
-        const currentSentimentScore = resultSentimentScore;
-        const previousSentimentScore = resultSentimentScorePrevious;
+        if(resultBy) {
+        const currentSentimentScore = resultBy;
+        const previousSentimentScore = resultByPrevious;
         if(currentSentimentScore) {
             const labels = chartLabel(currentSentimentScore,previousSentimentScore);
             setLabel(labels);
@@ -127,7 +124,7 @@ const SentimentScore = (props: LineProps) => {
             setDataset(dataSets);
         }
         }
-    },[resultSentimentScore, resultSentimentScorePrevious]);
+    },[resultBy, resultByPrevious]);
 
     const data = {
         labels: label || [],
@@ -140,7 +137,7 @@ const SentimentScore = (props: LineProps) => {
 
     return (
       <Card>
-        {loadingSentimentScore && loadingSentimentScorePrevious && (
+        {loading && (
           <LinearProgress
               style={{ width: "100%" }}
           />

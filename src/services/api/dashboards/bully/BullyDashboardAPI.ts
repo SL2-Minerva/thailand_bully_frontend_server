@@ -1,6 +1,27 @@
 import moment from "moment"
 import { CallAPI } from "src/services/CallAPI"
 
+export const GetBullyDailyBy = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+      url: `/dashboard-bully/daily-by`,
+      method: 'GET',
+      params :{
+          campaign_id: campaignId || "",
+          start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+          end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+          period: period,
+          fillter_keywords: fillter_keywords
+      }
+  })
+
+  return {
+    resultFilterData: res?.data?.daily_bully || null,
+    resultBullyLevelPercentage: res?.data?.percentage_bully || null,
+    loadingFilterData: loading,
+    errorFilterData: error
+  }
+}
+
 export const FilterByCampaignId = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
         url: `/dashboard-bully/bully-daily`,
@@ -38,6 +59,61 @@ export const BullyLevelPercentage = (campaignId?: string, start_date?: any, end_
     resultBullyLevelPercentage: res?.data || null,
     loadingBullyLevelPercentage: loading,
     errorBullyLevelPercentage: error
+  }
+}
+
+export const GetBullyBy = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
+
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-bully/bully-by`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period,
+      fillter_keywords: fillter_keywords
+    }
+  })
+
+  return {
+    resultBullyByDay: res?.data?.bully_by_day || null,
+    resultBullyByTime : res?.data?.bully_by_time || null,
+    resultBullyByDevice : res?.data?.bully_by_device || null,
+    resultBullyByAccount : res?.data?.bully_by_account|| null,
+    resultBullyByChannel : res?.data?.bully_by_channel || null,
+    resultBullyBySentiment : res?.data?.bully_by_sentiment || null,
+    loadingBullyBy : loading,
+    errorBullyBy : error
+  }
+}
+
+export const GetDailyTypeBy = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
+
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-bully/daily-type-by`,
+    method: 'GET',
+    params :{
+      campaign_id: campaignId || "",
+      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+      period: period,
+      fillter_keywords: fillter_keywords
+    }
+  })
+
+  return {
+    // resultBullyTypeByDaily: res?.data?.bully_type_daily || null,
+    // resultBullyTypeByPercentage : res?.data?.bully_type_percentage || null,
+    resultBullyTypeByDay : res?.data?.bully_type_by_day || null,
+    resultBullyTypeByTime : res?.data?.bully_type_by_time || null,
+    resultBullyTypeByDevice : res?.data?.bully_type_by_device || null,
+    resultBullyTypeByAccount : res?.data?.bully_type_by_account || null,
+    resultBullyTypeByChannel : res?.data?.bully_type_by_channel || null,
+    resultBullyTypeBySenitment : res?.data?.bully_type_by_sentiment || null,
+
+    loadingBullyTypeBy : loading,
+    errorBullyTypeBy : error
   }
 }
 
@@ -332,6 +408,35 @@ export const GetBullyTypeBySentiment = (campaignId?: string, start_date?: any, e
       errorBullyTypeBySentiment: error
     }
   }
+
+  // $data['bully_type_by_level'] = $this->BullyChartLevelGroup();
+  //       $data['bully_chart_type'] = $this->BullyChartTypeGroup();
+  //       $data['bully_chart_level'] = $this->BullyLevelLevelGroup();
+  //       $data['bully_table_type'] = $this->BullyTableTypeGroup();
+
+  export const GetBullyTypeBy = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
+    const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+        url: `/dashboard-bully/bully-type-by`,
+        method: 'GET',
+        params :{
+          campaign_id: campaignId || "",
+          start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
+          end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
+          period: period,
+          fillter_keywords: fillter_keywords
+        }
+      })
+
+    return {
+      Response: res?.data,
+        resultShareOfChannelChart: res?.data?.bully_chart_level || null,
+        resultShareOfChannelPlatform: res?.data?.bully_type_by_level || null,
+        resultShareOfChannelChartBullyLevel: res?.data?.bully_chart_type || null,
+        resultShareOfChannelBullyLevels: res?.data?.bully_table_type || null,
+        loadingShareOfChannelChart : loading,
+        errorShareOfChannelChart : error
+      }
+}
 
 export const GetShareOfChannelChart = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
