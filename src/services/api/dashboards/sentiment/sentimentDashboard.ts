@@ -354,13 +354,15 @@ export const GetTotalSentiment = (campaignId?: string, start_date?: any, end_dat
         period: period,
         fillter_keywords: fillter_keywords, 
         page: page, 
-        limit: 10
+        limit: 10,
+        select: 'all'
+
       }
     })
 
     const returnDataSummaryScoreAccount : any = [];
     if(res?.data?.SummaryScoreAccount) {
-      const data = res?.data;
+      const data = res?.data?.SummaryScoreAccount;
       for(let i =0; i < data?.length; i++) {
         returnDataSummaryScoreAccount.push({
           infulencer : data[i].infulencer,
@@ -377,7 +379,7 @@ export const GetTotalSentiment = (campaignId?: string, start_date?: any, end_dat
 
     const returnData : any = [];
     if(res?.data) {
-      const data = res?.data;
+      const data = res?.data?.SummaryKeyword;
       for(let i =0; i < data?.length; i++) {
         returnData.push({
           keyword_id : data[i].keyword_id,
@@ -394,7 +396,7 @@ export const GetTotalSentiment = (campaignId?: string, start_date?: any, end_dat
 
     const returnDataSummaryScoreChannel : any = [];
     if(res?.data) {
-      const data = res?.data;
+      const data = res?.data?.SummaryScoreChannel;
       for(let i =0; i < data?.length; i++) {
         returnDataSummaryScoreChannel.push({
           channel : data[i].channel,
