@@ -3,7 +3,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
 // ** Third Party Imports
-import { Bar, getDatasetAtEvent } from 'react-chartjs-2'
+import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
 
 // ** Custom Components Imports
 // import { chartLabel } from './DailyMessageGraph'
@@ -92,6 +92,12 @@ const InfluencerGraph = ({
 
   const onClick = (event: any) => {
     if (chartRef.current) {
+      const getIndex = getElementAtEvent(chartRef.current, event);
+
+      if(getIndex?.length > 0 ) {
+        const index =  getIndex[0].index;
+        params.label = label[index];
+      }
       const keyword_id = getKeywordId(getDatasetAtEvent(chartRef.current, event))
 
       if (keyword_id) {

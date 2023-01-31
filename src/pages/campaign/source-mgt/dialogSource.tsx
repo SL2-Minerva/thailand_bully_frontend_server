@@ -1,5 +1,5 @@
 // ** React Imports
-import { Ref, forwardRef, ReactElement, useEffect } from 'react'
+import { Ref, forwardRef, ReactElement, useEffect, useState, SyntheticEvent } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -25,6 +25,9 @@ import * as yup from 'yup'
 import FormHelperText from '@mui/material/FormHelperText'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
+import { useDropzone } from 'react-dropzone'
+import { HeadingTypography, Img } from 'src/pages/content/content-mgt/DialogContents'
+import Link from '@mui/material/Link'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -41,6 +44,12 @@ interface DialogInfoProps {
   table: any
 }
 
+interface FileProp {
+  name: string
+  type: string
+  size: number
+}
+
 const DialogSource = (props: DialogInfoProps) => {
   const {  show, setShow, action, current } = props
 
@@ -54,7 +63,41 @@ const DialogSource = (props: DialogInfoProps) => {
     status: boolean
     name: string
     id?: number
+    image?: File
   }
+
+  const [files, setFiles] = useState<File[]>([])
+  const [imagePath, setImagePath] = useState(''); 
+
+  // ** Hook
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    multiple: false,
+    accept: {
+      'image/*': ['.png', '.jpg', '.jpeg', '.gif']
+    },
+    onDrop: (acceptedFiles: File[]) => {
+      setFiles(acceptedFiles.map((file: File) => Object.assign(file)))
+    }
+  })
+
+  const handleLinkClick = (event: SyntheticEvent) => {
+    event.preventDefault()
+  }
+
+  const handleRemoveFile = (file: FileProp) => {
+    const uploadedFiles = files
+    const filtered = uploadedFiles.filter((i: FileProp) => i.name !== file.name)
+    setFiles([...filtered])
+  }
+
+  const img = files.map((file: FileProp) => (
+    <div key={file.name} style={{ display: 'flex', justifyContent:'center' }}>
+      <img key={file.name} alt={file.name} style={{ width: 400, height: 300 }} src={URL.createObjectURL(file as any)} />
+      <IconButton onClick={() => handleRemoveFile(file)} size="small">
+          <Close fontSize='large'/>
+      </IconButton>
+    </div>
+  ))
 
   const {
     control,
@@ -71,36 +114,68 @@ const DialogSource = (props: DialogInfoProps) => {
     setValue('description', current?.description)
     setValue('name', current?.name)
     setValue('status', current?.status === 1 ? true : false)
+    setImagePath('')
     if (action === 'edit') {
       setValue('id', current?.id)
+      setImagePath(current?.image);
     }
   }, [current])
 
   const onSubmit = (data: FormData) => {
-    // console.log('data', data)
+    
     if (action === 'create') {
+      const formData = new FormData();
+      if(files.length>0) {
+        data.image = files[0];
+        formData.append("image", data.image);
+      }
+      formData.append("description", data.description);
+      formData.append('name', data.name);
+      formData.append('status', data.status?.toString() === 'true' ? '1' : '0');
+      
       axios
-      .post(authConfig.createSource, data, {
+      .post(authConfig.createSource, formData, {
         headers: {
-          Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+          Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`,
+          "Content-Type": "multipart/form-data"
         }
       })
       .then(() => {
         // console.log('res', res);
-        setShow(false);
+       onClose();
       });
     } else {
+      const formData = new FormData();
+      if(files.length>0) {
+        data.image = files[0];
+        formData.append("image", data.image);
+      }
+      if(data.id) {
+        formData.append('id', data.id.toString());
+      }
+      formData.append("description", data.description);
+      formData.append('name', data.name);
+      formData.append('status', data.status?.toString() === 'true' ? '1' : '0');
+
       axios
-      .put(authConfig.updateSource, data, {
+      .post(authConfig.updateSource, formData, {
         headers: {
-          Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+          Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`,
+          "Content-Type": "multipart/form-data"
         }
       })
       .then(() => {
         // console.log('res', res);
-        setShow(false);
+
+        onClose()
       });
     }
+  }
+
+  const onClose = () => {
+    setFiles([])
+    acceptedFiles.length = 0
+    setShow(false)
   }
 
   return (
@@ -110,7 +185,7 @@ const DialogSource = (props: DialogInfoProps) => {
         open={show}
         maxWidth='md'
         scroll='body'
-        onClose={() => setShow(false)}
+        onClose={onClose}
         TransitionComponent={Transition}
         onBackdropClick={() => setShow(false)}
       >
@@ -173,6 +248,41 @@ const DialogSource = (props: DialogInfoProps) => {
               </FormControl>
             </Grid>
 
+            <Grid item sm={12} xs={12} mt={5} style={{ border: '1px solid #4c4e6430', borderRadius: '1rem', marginLeft: '1.2rem' }}>
+                <Box {...getRootProps({ className: 'dropzone' })} sx={acceptedFiles.length ? { height: 320 } : {}}>
+                    <input name='image' {...getInputProps()} />
+                    {files.length ? (
+                      img
+                    ) : (
+                    <Box sx={{ display: 'flex', flexDirection: ['column', 'column', 'row'], alignItems: 'center' }}>
+                      {
+                        imagePath ?
+                        
+                        // <Img width={200} alt="image" src={"http://cornea-analysis.com/storage/" +imagePath} />
+
+                        <Img width={200} alt="image" src={"http://202.44.231.31/storage/" +imagePath} />
+                        
+
+                        :
+                        <Img width={200} alt='Upload img' src='/images/misc/upload.png' />
+                      }
+                      
+                      <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: ['center', 'center', 'inherit'] }}>
+                        <HeadingTypography variant='h5'>Drop image file here or click to upload.</HeadingTypography>
+                        <Typography color='textSecondary'>
+                          Drop image file here or click{' '}
+                          <Link href='/' onClick={handleLinkClick}>
+                            browse
+                          </Link>{' '}
+                          thorough your machine
+                        </Typography>
+                        <Typography color='textSecondary'>Allowed *.jpeg, *.jpg, *.png, *.gif</Typography>
+                      </Box>
+                    </Box>
+                  )}
+                </Box>
+              </Grid>
+
             <Grid item sm={6} xs={12}>
               <Grid item sm={6} xs={12}>
                 <FormControl>
@@ -197,7 +307,7 @@ const DialogSource = (props: DialogInfoProps) => {
           <Button variant='contained' sx={{ mr: 2 }} onClick={handleSubmit(onSubmit)}>
             Submit
           </Button>
-          <Button variant='outlined' color='secondary' onClick={() => setShow(false)}>
+          <Button variant='outlined' color='secondary' onClick={onClose}>
             Discard
           </Button>
         </DialogActions>

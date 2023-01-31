@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { CallAPI } from 'src/services/CallAPI'
-import { ContentInput, ContentList } from 'src/types/content/ContentType'
+import { ContentInput } from 'src/types/content/ContentType'
 
 export type FormInput = {
     file: File;
@@ -21,14 +21,14 @@ export const ContentLists = (reload?: boolean, contentId?: string, page?:number 
       }
     }
     
-    const [{ data: response, loading, error }] = CallAPI<{ data?: {data: ContentList[] , total : number} }>({
+    const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
       url: `/organization-content`,
       method: 'GET',
       params: params
     })
 
     return {
-      resultContents: response?.data?.data || [],
+      resultContents: response?.data || [],
       total : response?.data?.total || 0,
       loadingCampaiganList: loading,
       errorCampaiganList: error

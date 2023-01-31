@@ -18,6 +18,8 @@ const ContentPage = () => {
 
     const {resultContents} = ContentLists();
 
+    console.log("result content list : ", resultContents);
+
     return(
         <Grid container spacing={6}>
             <Grid item xs={12} sm={12}>
@@ -26,7 +28,7 @@ const ContentPage = () => {
                 </Card>
             </Grid>
             {
-                    (resultContents || []).map((contents, index) => {
+                    (resultContents || [])?.map((contents :any, index : any) => {
                         return(
                             <Grid item md={6} xs={12} key={index} mt={-5}>
                                     {
@@ -73,7 +75,7 @@ const ContentPage = () => {
             </Grid>
 
                 {
-                    (resultContents || []).map((contents, index) => {
+                    (resultContents || []).map((contents: any, index:any) => {
                         return(
                                 <Grid item md={6} xs={12} key={index} mt={-5}>
                                     {
@@ -119,7 +121,7 @@ const ContentPage = () => {
             </Grid>
 
                 {
-                    (resultContents || []).map((contents, index) => {
+                    (resultContents || []).map((contents:any, index:any) => {
                         return(
                         <Grid item md={6} xs={12} key={index}>
                             {

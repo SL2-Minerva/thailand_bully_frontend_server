@@ -92,6 +92,7 @@ const MessagesByDay = (props: LineProps) => {
   
   const onClick = (event : any) => {
     if(chartRef.current) {
+      
       const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
       setShowDetail(true);
 

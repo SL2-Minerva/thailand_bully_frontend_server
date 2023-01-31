@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Fade, { FadeProps } from '@mui/material/Fade'
-import { Box, Card, Dialog, DialogContent, IconButton, Pagination, Typography } from "@mui/material";
+import { Box, Card, Dialog, DialogContent, IconButton, LinearProgress, Pagination, Typography } from "@mui/material";
 import Close from 'mdi-material-ui/Close'
 import DialogNetworkGraph from "../dashboard/DialogNetworkGraph";
 import { GetMessageDetail } from "src/services/api/dashboards/overall/overallDashboardApi";
@@ -77,7 +77,9 @@ const MessageDetail = (props: DialogInfoProps) => {
             end_date_period : params?.previousEndDate ? moment(params?.previousEndDate).format('YYYY-MM-DD') : "",
             page: page, 
             limit: 10, 
-            report_number: reportNo
+            report_number: reportNo,
+            page_name: params?.page,
+            label : params?.label
         }
     } else  {
         paramData = {
@@ -91,11 +93,13 @@ const MessageDetail = (props: DialogInfoProps) => {
             organization_id: paramsId?.organization_id || "",
             page: page, 
             limit: 10, 
-            report_number: reportNo
+            report_number: reportNo,
+            page_name: params?.page,
+            label : params?.label
         }
     }
 
-    const {resultMessageDetail, totalMessage} = GetMessageDetail(paramData);
+    const {resultMessageDetail, totalMessage, loadingMessageDetail} = GetMessageDetail(paramData);
 
     const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
       setPage(value-1);
@@ -137,6 +141,11 @@ const MessageDetail = (props: DialogInfoProps) => {
             >
               <Close />
             </IconButton>
+            {loadingMessageDetail && (
+                <LinearProgress
+                  style={{ width: "100%" }}
+                />
+              )}
             <Box sx={{ mb: 8, textAlign: 'center' }}>
               <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
                 Message Detail

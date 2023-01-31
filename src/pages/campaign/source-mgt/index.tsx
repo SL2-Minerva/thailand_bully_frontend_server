@@ -44,7 +44,7 @@ const SourceManagement = () => {
   }, [showCreate, showEdit])
 
   function handleChange(index: number, i: number, event: any) {
-    axios.put(
+    axios.post(
       authConfig.updateSource,
       { id: i, status: event.target.checked },
       {

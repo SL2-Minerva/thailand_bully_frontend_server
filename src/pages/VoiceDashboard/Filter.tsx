@@ -73,6 +73,8 @@ const Filter = (props : Props) => {
                 date.getMonth()-1,
                 1
               );
+            
+            console.log("last month", date.getMonth()-1);
             const lastDayofMonth = get1stAndLastDayOfMonth(
                 date.getFullYear(),
                 date.getMonth(),

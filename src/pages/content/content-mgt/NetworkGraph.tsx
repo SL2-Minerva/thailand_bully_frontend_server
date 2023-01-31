@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Card, CardContent, CardHeader, FormControl, Grid, InputLabel, LinearProgress, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import Graph from 'react-graph-vis';
 import 'react-graph-vis/node_modules/vis-network/dist/dist/vis-network.css';
@@ -10,7 +10,7 @@ const NetworkGraph = () => {
 
   const [ campaign, setCampaign ] = useState<string>("1");
   const { resultCampaiganList } = CampaignList();
-  const { resultNetworkGraph } = GetNetworkGraph(campaign);
+  const { resultNetworkGraph, loadingNetworkGraph } = GetNetworkGraph(campaign);
 
   const initialGraph = {
     "nodes": [],
@@ -77,6 +77,11 @@ const NetworkGraph = () => {
       <Grid container spacing={3}>
             <Grid item xs={12}>
                 <Card>
+                {loadingNetworkGraph && (
+                    <LinearProgress
+                      style={{ width: "100%" }}
+                    />
+                  )}
                     <CardHeader title='Network' />
                     <CardContent>
 

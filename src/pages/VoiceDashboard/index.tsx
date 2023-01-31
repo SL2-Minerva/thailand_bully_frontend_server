@@ -41,7 +41,9 @@ const VoiceDashboard = () => {
     period: period,
     previousDate: previousDate,
     previousEndDate: previousEndDate,
-    keywordIds: keyword
+    keywordIds: keyword, 
+    page : 'voiceDashboard',
+    label: ''
   }
 
   const { resultReportPermission } = UserPermission()

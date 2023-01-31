@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
-import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
+import { Bar, getDatasetAtEvent, getElementAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { GraphicColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
@@ -122,6 +122,12 @@ const EngagementRate = (props: LineProps) => {
   
   const onClick = (event : any) => {
     if(chartRef.current) {
+      const getIndex = getElementAtEvent(chartRef.current, event);
+
+      if(getIndex?.length > 0 ) {
+        const index =  getIndex[0].index;
+        params.label = label[index];
+      }
       const messageDetailIds =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
 
       if(messageDetailIds) {

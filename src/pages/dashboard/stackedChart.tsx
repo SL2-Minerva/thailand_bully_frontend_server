@@ -4,7 +4,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
 // ** Third Party Imports
-import { Bar, getDatasetAtEvent} from 'react-chartjs-2'
+import { Bar, getDatasetAtEvent,getElementAtEvent} from 'react-chartjs-2'
 import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment';
@@ -19,7 +19,7 @@ import { LinearProgress } from '@mui/material'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
-// import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
+// import { Bar, getDatasetAtEvent,  } from 'react-chartjs-2'
 
 interface LineProps {
   white: string
@@ -98,10 +98,13 @@ const StackedChart = (props: LineProps) => {
 
   const onClick = (event : any) => {
     if(chartRef.current) {
-      // console.log(getDatasetAtEvent(chartRef.current, event));
-      // console.log(getElementsAtEvent(chartRef.current, event));
-      // console.log(getElementAtEvent(chartRef.current, event));
-
+      const getIndex = getElementAtEvent(chartRef.current, event);
+    
+      if(getIndex?.length > 0 ) {
+        const index =  getIndex[0].index;
+        params.label = label[index];
+      }
+       
       const keyword_id =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
 
       if(keyword_id) {
