@@ -67,7 +67,9 @@ const SentimentDashboard = () => {
     date: date,
     endDate: endDate,
     period: period,
-    keywordIds: keyword
+    keywordIds: keyword, 
+    page: 'sentimentDashboard', 
+    label: ''
   }
 
   const {

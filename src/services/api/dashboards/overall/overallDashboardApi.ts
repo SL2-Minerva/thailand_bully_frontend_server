@@ -1,78 +1,95 @@
 import moment from 'moment'
 import { CallAPI } from 'src/services/CallAPI'
 
-export const GetParams = (data : any) => {
-  if(!data) return null;
-  let params = {};
-  const todayDate = new Date();
+export const GetParams = (data: any) => {
+  if (!data) return null
+  let params = {}
+  const todayDate = new Date()
 
   if (data?.period === 'customrange' && data?.previousDate !== todayDate && data?.previousEndDate !== todayDate) {
     params = {
-      campaign_id : data?.campaignId || "",
-      source: data?.platformId || "",
-      start_date : data?.start_date ? moment(data?.start_date).format('YYYY-MM-DD') : "",
-      end_date: data?.end_date ? moment(data?.end_date).format('YYYY-MM-DD') : "",
+      campaign_id: data?.campaignId || '',
+      source: data?.platformId || '',
+      start_date: data?.start_date ? moment(data?.start_date).format('YYYY-MM-DD') : '',
+      end_date: data?.end_date ? moment(data?.end_date).format('YYYY-MM-DD') : '',
       period: data?.period,
-      start_date_period : data?.previousDate ? moment(data?.previousDate).format('YYYY-MM-DD') : "",
-      end_date_period : data?.previousEndDate ? moment(data?.previousEndDate).format('YYYY-MM-DD') : "",
-      fillter_keywords: data?.fillter_keywords, 
-    } 
-  }else {
-      params = {
-        campaign_id : data?.campaignId || "",
-        source: data?.platformId || "",
-        start_date : data?.start_date ? moment(data?.start_date).format('YYYY-MM-DD') : "",
-        end_date: data?.end_date ? moment(data?.end_date).format('YYYY-MM-DD') : "",
-        period: data?.period, 
-        fillter_keywords: data?.fillter_keywords
-      }
+      start_date_period: data?.previousDate ? moment(data?.previousDate).format('YYYY-MM-DD') : '',
+      end_date_period: data?.previousEndDate ? moment(data?.previousEndDate).format('YYYY-MM-DD') : '',
+      fillter_keywords: data?.fillter_keywords
     }
+  } else {
+    params = {
+      campaign_id: data?.campaignId || '',
+      source: data?.platformId || '',
+      start_date: data?.start_date ? moment(data?.start_date).format('YYYY-MM-DD') : '',
+      end_date: data?.end_date ? moment(data?.end_date).format('YYYY-MM-DD') : '',
+      period: data?.period,
+      fillter_keywords: data?.fillter_keywords
+    }
+  }
 
-  return params;
+  return params
 }
 
-export const FilterByCampaignId = (campaignId?: string, platformId?: string, 
-  start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, keywordIds?: string ) => {
-    const params = {
-      campaignId: campaignId,
-      platformId: platformId, 
-      start_date: start_date,
-      end_date: end_date, 
-      period: period, 
-      previousDate: previousDate, 
-      previousEndDate: previousEndDate,
-      fillter_keywords: keywordIds
-    };
+export const FilterByCampaignId = (
+  campaignId?: string,
+  platformId?: string,
+  start_date?: any,
+  end_date?: any,
+  period?: any,
+  previousDate?: any,
+  previousEndDate?: any,
+  keywordIds?: string
+) => {
+  const params = {
+    campaignId: campaignId,
+    platformId: platformId,
+    start_date: start_date,
+    end_date: end_date,
+    period: period,
+    previousDate: previousDate,
+    previousEndDate: previousEndDate,
+    fillter_keywords: keywordIds
+  }
 
-    const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
-      url: `/dashboard-overall`,
-      method: 'GET',
-      params : GetParams(params)
-    })
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-overall`,
+    method: 'GET',
+    params: GetParams(params)
+  })
 
-    return {
-      resultFilterData: res?.data || null,
-      loadingFilterData: loading,
-      errorFilterData: error
-    }
+  return {
+    resultFilterData: res?.data || null,
+    loadingFilterData: loading,
+    errorFilterData: error
+  }
 }
-export const TotalKeyStats = (campaignId?: string, reload?: boolean, platformId?: string, 
-  start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, keywordIds? : any ) => {
-    const params = {
-      campaignId: campaignId,
-      platformId: platformId, 
-      start_date: start_date,
-      end_date: end_date, 
-      period: period, 
-      previousDate: previousDate, 
-      previousEndDate: previousEndDate, 
-      fillter_keywords: keywordIds
-    };
+export const TotalKeyStats = (
+  campaignId?: string,
+  reload?: boolean,
+  platformId?: string,
+  start_date?: any,
+  end_date?: any,
+  period?: any,
+  previousDate?: any,
+  previousEndDate?: any,
+  keywordIds?: any
+) => {
+  const params = {
+    campaignId: campaignId,
+    platformId: platformId,
+    start_date: start_date,
+    end_date: end_date,
+    period: period,
+    previousDate: previousDate,
+    previousEndDate: previousEndDate,
+    fillter_keywords: keywordIds
+  }
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/key-stats`,
     method: 'GET',
-    params : GetParams(params),
+    params: GetParams(params),
     data: {
       reload: reload
     }
@@ -87,22 +104,30 @@ export const TotalKeyStats = (campaignId?: string, reload?: boolean, platformId?
   }
 }
 
-export const GetKeyWords = (campaignId?: string, platformId?: string, 
-  start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, keywordIds?: string) => {
-    const params = {
-      campaignId: campaignId,
-      platformId: platformId, 
-      start_date: start_date,
-      end_date: end_date, 
-      period: period, 
-      previousDate: previousDate, 
-      previousEndDate: previousEndDate, 
-      fillter_keywords: keywordIds
-    };
+export const GetKeyWords = (
+  campaignId?: string,
+  platformId?: string,
+  start_date?: any,
+  end_date?: any,
+  period?: any,
+  previousDate?: any,
+  previousEndDate?: any,
+  keywordIds?: string
+) => {
+  const params = {
+    campaignId: campaignId,
+    platformId: platformId,
+    start_date: start_date,
+    end_date: end_date,
+    period: period,
+    previousDate: previousDate,
+    previousEndDate: previousEndDate,
+    fillter_keywords: keywordIds
+  }
   const [{ data: response, loading, error }] = CallAPI<{ data: any }>({
     url: `/dashboard-overall/keyword-summary`,
     method: 'GET',
-    params : GetParams(params),
+    params: GetParams(params)
   })
 
   return {
@@ -112,22 +137,30 @@ export const GetKeyWords = (campaignId?: string, platformId?: string,
   }
 }
 
-export const GetTopKeywords = (campaignId?: string, platformId?: string, 
-  start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, fillter_keywords?: string ) => {
-    const params = {
-      campaignId: campaignId,
-      platformId: platformId, 
-      start_date: start_date,
-      end_date: end_date, 
-      period: period, 
-      previousDate: previousDate, 
-      previousEndDate: previousEndDate,
-      fillter_keywords: fillter_keywords
-    };
+export const GetTopKeywords = (
+  campaignId?: string,
+  platformId?: string,
+  start_date?: any,
+  end_date?: any,
+  period?: any,
+  previousDate?: any,
+  previousEndDate?: any,
+  fillter_keywords?: string
+) => {
+  const params = {
+    campaignId: campaignId,
+    platformId: platformId,
+    start_date: start_date,
+    end_date: end_date,
+    period: period,
+    previousDate: previousDate,
+    previousEndDate: previousEndDate,
+    fillter_keywords: fillter_keywords
+  }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/keyword-summary-top`,
     method: 'GET',
-    params : GetParams(params)
+    params: GetParams(params)
   })
 
   return {
@@ -137,23 +170,31 @@ export const GetTopKeywords = (campaignId?: string, platformId?: string,
   }
 }
 
-export const GetSentimentScore = (campaignId?: string, platformId?: string, 
-  start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, fillter_keywords?: string ) => {
-    const params = {
-      campaignId: campaignId,
-      platformId: platformId, 
-      start_date: start_date,
-      end_date: end_date, 
-      period: period, 
-      previousDate: previousDate, 
-      previousEndDate: previousEndDate,
-      fillter_keywords: fillter_keywords
-    };
+export const GetSentimentScore = (
+  campaignId?: string,
+  platformId?: string,
+  start_date?: any,
+  end_date?: any,
+  period?: any,
+  previousDate?: any,
+  previousEndDate?: any,
+  fillter_keywords?: string
+) => {
+  const params = {
+    campaignId: campaignId,
+    platformId: platformId,
+    start_date: start_date,
+    end_date: end_date,
+    period: period,
+    previousDate: previousDate,
+    previousEndDate: previousEndDate,
+    fillter_keywords: fillter_keywords
+  }
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/sentiment-score`,
     method: 'GET',
-    params : GetParams(params)
+    params: GetParams(params)
   })
 
   return {
@@ -163,23 +204,31 @@ export const GetSentimentScore = (campaignId?: string, platformId?: string,
   }
 }
 
-export const GetSentimentType = (campaignId?: string, platformId?: string, 
-  start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, fillter_keywords?: string ) => {
-    const params = {
-      campaignId: campaignId,
-      platformId: platformId, 
-      start_date: start_date,
-      end_date: end_date, 
-      period: period, 
-      previousDate: previousDate, 
-      previousEndDate: previousEndDate,
-      fillter_keywords: fillter_keywords
-    };
+export const GetSentimentType = (
+  campaignId?: string,
+  platformId?: string,
+  start_date?: any,
+  end_date?: any,
+  period?: any,
+  previousDate?: any,
+  previousEndDate?: any,
+  fillter_keywords?: string
+) => {
+  const params = {
+    campaignId: campaignId,
+    platformId: platformId,
+    start_date: start_date,
+    end_date: end_date,
+    period: period,
+    previousDate: previousDate,
+    previousEndDate: previousEndDate,
+    fillter_keywords: fillter_keywords
+  }
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/sentiment-type`,
     method: 'GET',
-    params : GetParams(params),
+    params: GetParams(params)
   })
 
   return {
@@ -189,23 +238,31 @@ export const GetSentimentType = (campaignId?: string, platformId?: string,
   }
 }
 
-export const GetShareOfVoiceChart = (campaignId?: string, platformId?: string, 
-  start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, fillter_keywords?: string ) => {
-    const params = {
-      campaignId: campaignId,
-      platformId: platformId, 
-      start_date: start_date,
-      end_date: end_date, 
-      period: period, 
-      previousDate: previousDate, 
-      previousEndDate: previousEndDate,
-      fillter_keywords: fillter_keywords
-    };
+export const GetShareOfVoiceChart = (
+  campaignId?: string,
+  platformId?: string,
+  start_date?: any,
+  end_date?: any,
+  period?: any,
+  previousDate?: any,
+  previousEndDate?: any,
+  fillter_keywords?: string
+) => {
+  const params = {
+    campaignId: campaignId,
+    platformId: platformId,
+    start_date: start_date,
+    end_date: end_date,
+    period: period,
+    previousDate: previousDate,
+    previousEndDate: previousEndDate,
+    fillter_keywords: fillter_keywords
+  }
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/share-of-voice-number`,
     method: 'GET',
-    params : GetParams(params)
+    params: GetParams(params)
   })
 
   return {
@@ -215,23 +272,31 @@ export const GetShareOfVoiceChart = (campaignId?: string, platformId?: string,
   }
 }
 
-export const GetShareOfVoice = (campaignId?: string, platformId?: string, 
-  start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, fillter_keywords?:string ) => {
-    const params = {
-      campaignId: campaignId,
-      platformId: platformId, 
-      start_date: start_date,
-      end_date: end_date, 
-      period: period, 
-      previousDate: previousDate, 
-      previousEndDate: previousEndDate,
-      fillter_keywords: fillter_keywords
-    };
+export const GetShareOfVoice = (
+  campaignId?: string,
+  platformId?: string,
+  start_date?: any,
+  end_date?: any,
+  period?: any,
+  previousDate?: any,
+  previousEndDate?: any,
+  fillter_keywords?: string
+) => {
+  const params = {
+    campaignId: campaignId,
+    platformId: platformId,
+    start_date: start_date,
+    end_date: end_date,
+    period: period,
+    previousDate: previousDate,
+    previousEndDate: previousEndDate,
+    fillter_keywords: fillter_keywords
+  }
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/share-of-voice`,
     method: 'GET',
-    params : GetParams(params)
+    params: GetParams(params)
   })
 
   return {
@@ -241,23 +306,31 @@ export const GetShareOfVoice = (campaignId?: string, platformId?: string,
   }
 }
 
-export const GetSentimentLevel = (campaignId?: string, platformId?: string, 
-  start_date?: any, end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, fillter_keywords?: string ) => {
-    const params = {
-      campaignId: campaignId,
-      platformId: platformId, 
-      start_date: start_date,
-      end_date: end_date, 
-      period: period, 
-      previousDate: previousDate, 
-      previousEndDate: previousEndDate,
-      fillter_keywords: fillter_keywords
-    };
+export const GetSentimentLevel = (
+  campaignId?: string,
+  platformId?: string,
+  start_date?: any,
+  end_date?: any,
+  period?: any,
+  previousDate?: any,
+  previousEndDate?: any,
+  fillter_keywords?: string
+) => {
+  const params = {
+    campaignId: campaignId,
+    platformId: platformId,
+    start_date: start_date,
+    end_date: end_date,
+    period: period,
+    previousDate: previousDate,
+    previousEndDate: previousEndDate,
+    fillter_keywords: fillter_keywords
+  }
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/sentiment-level`,
     method: 'GET',
-    params : GetParams(params)
+    params: GetParams(params)
   })
 
   return {
@@ -267,37 +340,46 @@ export const GetSentimentLevel = (campaignId?: string, platformId?: string,
   }
 }
 
-export const GetWordClouds = (campaignId?: string, platformId?: string, start_date?: any,
-   end_date?: any, period?: any, select?: string, previousDate?: any, previousEndDate?: any, fillter_keywords?: string ) => {
-    let params = {};
-    const todayDate = new Date();
-    if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate ) {
-      params = {
-        campaign_id: campaignId || "",
-        source: platformId || "",
-        start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
-        end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period,
-        select: select || "top10",
-        start_date_period : previousDate ? moment(previousDate).format('YYYY-MM-DD') : "",
-        end_date_period : previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : "",
-        fillter_keywords: fillter_keywords
-      }
-    } else  {
-      params = {
-        campaign_id: campaignId || "",
-        source: platformId || "",
-        start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
-        end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-        period: period,
-        select: select || "top10",
-        fillter_keywords: fillter_keywords
-      }
+export const GetWordClouds = (
+  campaignId?: string,
+  platformId?: string,
+  start_date?: any,
+  end_date?: any,
+  period?: any,
+  select?: string,
+  previousDate?: any,
+  previousEndDate?: any,
+  fillter_keywords?: string
+) => {
+  let params = {}
+  const todayDate = new Date()
+  if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
+    params = {
+      campaign_id: campaignId || '',
+      source: platformId || '',
+      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
+      period: period,
+      select: select || 'top10',
+      start_date_period: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
+      end_date_period: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
+      fillter_keywords: fillter_keywords
     }
+  } else {
+    params = {
+      campaign_id: campaignId || '',
+      source: platformId || '',
+      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
+      period: period,
+      select: select || 'top10',
+      fillter_keywords: fillter_keywords
+    }
+  }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/word-clouds`,
     method: 'GET',
-    params : params
+    params: params
   })
 
   return {
@@ -307,183 +389,228 @@ export const GetWordClouds = (campaignId?: string, platformId?: string, start_da
   }
 }
 
-export const GetWordCloudsPlatform = (campaignId?: string, platformId?: string, start_date?: any,
-  end_date?: any, period?: any, select?: string, previousDate?: any, previousEndDate?: any, fillter_keywords?: string ) => {
-   let params = {};
-   const todayDate = new Date();
-   if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate ) {
-     params = {
-       campaign_id: campaignId || "",
-       source: platformId || "",
-       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
-       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-       period: period,
-       select: select || "top10",
-       start_date_period : previousDate ? moment(previousDate).format('YYYY-MM-DD') : "",
-       end_date_period : previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : "",
-       fillter_keywords: fillter_keywords
-     }
-   } else  {
-     params = {
-       campaign_id: campaignId || "",
-       source: platformId || "",
-       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
-       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-       period: period,
-       select: select || "top10",
-       fillter_keywords: fillter_keywords
-     }
-   }
- const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-   url: `/dashboard-overall/word-clouds-platform`,
-   method: 'GET',
-   params : params
- })
-
- return {
-   resultWordCloudsPlatform: response?.data || null,
-   loadingWordCloudsPlatform: loading,
-   errorWordCloudsPlatform: error
- }
-}
-
-export const GetWordCloudsSentiment = (campaignId?: string, platformId?: string, start_date?: any,
-  end_date?: any, period?: any, select?: string, previousDate?: any, previousEndDate?: any, fillter_keywords?:string ) => {
-   let params = {};
-   const todayDate = new Date();
-   if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate ) {
-     params = {
-       campaign_id: campaignId || "",
-       source: platformId || "",
-       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
-       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-       period: period,
-       select: select || "top10",
-       start_date_period : previousDate ? moment(previousDate).format('YYYY-MM-DD') : "",
-       end_date_period : previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : "",
-       fillter_keywords: fillter_keywords
-     }
-   } else  {
-     params = {
-       campaign_id: campaignId || "",
-       source: platformId || "",
-       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
-       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-       period: period,
-       select: select || "top10",
-       fillter_keywords: fillter_keywords
-     }
-   }
- const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-   url: `/dashboard-overall/word-clouds-position`,
-   method: 'GET',
-   params : params
- })
-
- return {
-   resultWordCloudsSentiment: response?.data || null,
-   loadingWordCloudsSentiment: loading,
-   errorWordCloudsSentiment: error
- }
-}
-
-export const GetDetailMessage = (campaignId?: string, platformId?: string, start_date?: any,
-  end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, keywordId?: any, page?: number, limit?: number, reportNo?: string ) => {
-   let params = {};
-   const todayDate = new Date();
-   if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate ) {
-     params = {
-       campaign_id: campaignId || "",
-       source: platformId || "",
-       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
-       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-       period: period,
-       keyword_id: keywordId || "",
-       start_date_period : previousDate ? moment(previousDate).format('YYYY-MM-DD') : "",
-       end_date_period : previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : "",
-       page: page, 
-       limit: limit, 
-       report_number: reportNo
-     }
-   } else  {
-     params = {
-       campaign_id: campaignId || "",
-       source: platformId || "",
-       start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
-       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-       period: period,
-       keyword_id: keywordId || "", 
-       page: page, 
-       limit : limit, 
-       report_number: reportNo
-     }
-   }
- const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-   url: `/dashboard-overall/daily-message/level-three/`,
-   method: 'GET',
-   params : params
- })
-
- return {
-   resultMessageDetail: response?.data?.message || null,
-   totalMessage: response?.data?.total || 0, 
-   loadingMessageDetail: loading,
-   errorMessageDetail: error
- }
-}
-
-export const GetNetworkGraph = (campaignId?: string, platformId?: string, start_date?: any,
-  end_date?: any, period?: any, previousDate?: any, previousEndDate?: any, keywordId?: any, messageId?: any, reportNo?: string ) => {
-   let params = {};
+export const GetWordCloudsPlatform = (
+  campaignId?: string,
+  platformId?: string,
+  start_date?: any,
+  end_date?: any,
+  period?: any,
+  select?: string,
+  previousDate?: any,
+  previousEndDate?: any,
+  fillter_keywords?: string
+) => {
+  let params = {}
+  const todayDate = new Date()
+  if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
     params = {
-      campaign_id: campaignId || "",
-      start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
-      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
-      message_id: messageId || "",
-      keyword_id: keywordId || "", 
-      report_number: reportNo ||""
+      campaign_id: campaignId || '',
+      source: platformId || '',
+      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
+      period: period,
+      select: select || 'top10',
+      start_date_period: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
+      end_date_period: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
+      fillter_keywords: fillter_keywords
     }
+  } else {
+    params = {
+      campaign_id: campaignId || '',
+      source: platformId || '',
+      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
+      period: period,
+      select: select || 'top10',
+      fillter_keywords: fillter_keywords
+    }
+  }
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-overall/word-clouds-platform`,
+    method: 'GET',
+    params: params
+  })
 
- const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-   url: `/dashboard-overall/daily-message/level-four/`,
-   method: 'GET',
-   params : params
- })
-
- return {
-   resultNetworkGraph: response?.data || null,
-   loadingNetworkGraph: loading,
-   errorNetworkGraph: error
- }
+  return {
+    resultWordCloudsPlatform: response?.data || null,
+    loadingWordCloudsPlatform: loading,
+    errorWordCloudsPlatform: error
+  }
 }
 
-export const GetMessageDetail = (paramData: any ) => {
- const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-   url: `/dashboard-overall/daily-message/level-three/`,
-   method: 'GET',
-   params : paramData
- })
+export const GetWordCloudsSentiment = (
+  campaignId?: string,
+  platformId?: string,
+  start_date?: any,
+  end_date?: any,
+  period?: any,
+  select?: string,
+  previousDate?: any,
+  previousEndDate?: any,
+  fillter_keywords?: string
+) => {
+  let params = {}
+  const todayDate = new Date()
+  if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
+    params = {
+      campaign_id: campaignId || '',
+      source: platformId || '',
+      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
+      period: period,
+      select: select || 'top10',
+      start_date_period: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
+      end_date_period: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
+      fillter_keywords: fillter_keywords
+    }
+  } else {
+    params = {
+      campaign_id: campaignId || '',
+      source: platformId || '',
+      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
+      period: period,
+      select: select || 'top10',
+      fillter_keywords: fillter_keywords
+    }
+  }
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-overall/word-clouds-position`,
+    method: 'GET',
+    params: params
+  })
 
- return {
-   resultMessageDetail: response?.data?.message || null,
-   totalMessage: response?.data?.total || 0, 
-   loadingMessageDetail: loading,
-   errorMessageDetail: error
- }
+  return {
+    resultWordCloudsSentiment: response?.data || null,
+    loadingWordCloudsSentiment: loading,
+    errorWordCloudsSentiment: error
+  }
 }
 
-export const GetKeyWordsList = (campaignId: any ) => {
+export const GetDetailMessage = (
+  campaignId?: string,
+  platformId?: string,
+  start_date?: any,
+  end_date?: any,
+  period?: any,
+  previousDate?: any,
+  previousEndDate?: any,
+  keywordId?: any,
+  page?: number,
+  limit?: number,
+  reportNo?: string,
+  pageName?: string,
+  label?: string
+) => {
+  let params = {}
+  const todayDate = new Date()
+  if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
+    params = {
+      campaign_id: campaignId || '',
+      source: platformId || '',
+      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
+      period: period,
+      keyword_id: keywordId || '',
+      start_date_period: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
+      end_date_period: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
+      page: page,
+      limit: limit,
+      report_number: reportNo, 
+      page_name: pageName?.toString(), 
+      label: label?.toString()
+    }
+  } else {
+    params = {
+      campaign_id: campaignId || '',
+      source: platformId || '',
+      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
+      period: period,
+      keyword_id: keywordId || '',
+      page: page,
+      limit: limit,
+      report_number: reportNo,
+      page_name: pageName?.toString(), 
+      label: label?.toString()
+    }
+  }
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-overall/daily-message/level-three/`,
+    method: 'GET',
+    params: params
+  })
+
+  return {
+    resultMessageDetail: response?.data?.message || null,
+    totalMessage: response?.data?.total || 0,
+    loadingMessageDetail: loading,
+    errorMessageDetail: error
+  }
+}
+
+export const GetNetworkGraph = (
+  campaignId?: string,
+  platformId?: string,
+  start_date?: any,
+  end_date?: any,
+  period?: any,
+  previousDate?: any,
+  previousEndDate?: any,
+  keywordId?: any,
+  messageId?: any,
+  reportNo?: string
+) => {
+  let params = {}
+  params = {
+    campaign_id: campaignId || '',
+    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
+    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
+    message_id: messageId || '',
+    keyword_id: keywordId || '',
+    report_number: reportNo || ''
+  }
+
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-overall/daily-message/level-four`,
+    method: 'GET',
+    params: params
+  })
+
+  return {
+    resultNetworkGraph: response?.data || null,
+    loadingNetworkGraph: loading,
+    errorNetworkGraph: error
+  }
+}
+
+export const GetMessageDetail = (paramData: any) => {
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-overall/daily-message/level-three/`,
+    method: 'GET',
+    params: paramData
+  })
+
+  return {
+    resultMessageDetail: response?.data?.message || null,
+    totalMessage: response?.data?.total || 0,
+    loadingMessageDetail: loading,
+    errorMessageDetail: error
+  }
+}
+
+export const GetKeyWordsList = (campaignId: any) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/keywords`,
     method: 'GET',
-    params : {
+    params: {
       campaing_id: campaignId
     }
   })
- 
+
   return {
     resultKeywordList: response?.data || [],
     loadingKeywordList: loading,
     errorKeywordList: error
   }
- }
+}

@@ -263,7 +263,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
                                 params={params}
                                 chartId="Chart 15"
                                 loading = {quickViewData?.loadingEngagementType}
-                                resultBy={quickViewData?.EngagementTypeByChannel}
+                                resultBy={quickViewData?.resultEngagementTypeByChannel}
                             />
                 :""
             } 

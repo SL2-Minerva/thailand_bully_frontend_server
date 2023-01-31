@@ -142,7 +142,9 @@ const OverallDashboard = () => {
         previousDate: previousDate, 
         previousEndDate: previousEndDate,
         topKeyword : topKeyword,
-        keywordIds : keyword
+        keywordIds : keyword, 
+        label: '',
+        page: 'overallDashboard'
       }
 
     const handleSelectList = useCallback((e: SelectChangeEvent, type:string) => {

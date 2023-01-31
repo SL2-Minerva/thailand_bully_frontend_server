@@ -98,7 +98,9 @@ const EngagementDashboard = () => {
     date: date,
     endDate: endDate,
     period: period,
-    keywordIds: keyword
+    keywordIds: keyword,
+    page: 'engagementDashboard', 
+    label: ''
   }
 
   const quickViewData = {

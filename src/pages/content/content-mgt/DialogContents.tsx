@@ -51,7 +51,7 @@ interface FileProp {
 }
 
 // Styled component for the upload image inside the dropzone area
-const Img = styled('img')(({ theme }) => ({
+export const Img = styled('img')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     marginRight: theme.spacing(10)
   },
@@ -64,7 +64,7 @@ const Img = styled('img')(({ theme }) => ({
 }))
 
 // Styled component for the heading inside the dropzone area
-const HeadingTypography = styled(Typography)<TypographyProps>(({ theme }) => ({
+export const HeadingTypography = styled(Typography)<TypographyProps>(({ theme }) => ({
   marginBottom: theme.spacing(5),
   [theme.breakpoints.down('sm')]: {
     marginBottom: theme.spacing(4)

@@ -56,7 +56,9 @@ const ChannelDashboard = () => {
     period: period,
     previousDate: previousDate,
     previousEndDate: previousEndDate,
-    keywordIds: keyword
+    keywordIds: keyword,
+    page: 'channelDashboard',
+    label: ''
   }
 
   //api call

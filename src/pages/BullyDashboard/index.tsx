@@ -97,7 +97,9 @@ const BullyDashboard = () => {
     date: date,
     endDate: endDate,
     period: period,
-    keywordIds: keyword
+    keywordIds: keyword, 
+    page: 'bullyDasboard',
+    label: ''
   }
 
   const quickViewData = {
