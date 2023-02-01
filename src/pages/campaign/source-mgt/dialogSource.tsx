@@ -258,9 +258,9 @@ const DialogSource = (props: DialogInfoProps) => {
                       {
                         imagePath ?
                         
-                        // <Img width={200} alt="image" src={"http://cornea-analysis.com/storage/" +imagePath} />
+                        <Img width={200} alt="image" src={"https://cornea-analysis.com/storage/" +imagePath} />
 
-                        <Img width={200} alt="image" src={"http://202.44.231.31/storage/" +imagePath} />
+                        // <Img width={200} alt="image" src={"http://202.44.231.31/storage/" +imagePath} />
                         
 
                         :
