@@ -77,16 +77,16 @@ const NetworkGraph = () => {
       <Grid container spacing={3}>
             <Grid item xs={12}>
                 <Card>
-                {loadingNetworkGraph && (
-                    <LinearProgress
-                      style={{ width: "100%" }}
-                    />
-                  )}
+                
                     <CardHeader title='Network' />
                     <CardContent>
 
                     <Grid container spacing={6} mt={2}>
-                        
+                    {loadingNetworkGraph && (
+                    <LinearProgress
+                      style={{ width: "100%" }}
+                    />
+                  )}
                         <Grid item sm={4} xs={12}>
                             <FormControl fullWidth>
                             <InputLabel id='plan-select'>Select Campaign</InputLabel>

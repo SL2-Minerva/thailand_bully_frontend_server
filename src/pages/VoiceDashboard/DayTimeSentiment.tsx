@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
+import { TimeAxis } from 'src/utils/const'
 
 interface Props{
   chartId: string,
@@ -29,6 +30,11 @@ const DayTimeSentiment = (props : Props) => {
   const [seriesHour, setSeriesHour ] = useState([{name: '', data:[]}]);
   const [seriesDays, setSeriesDays ] = useState([{name: '', data:[]}]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
+  const [yIndex, setYIndex] = useState();
+  const [xIndex, setXIndex] = useState();
+  const [yIndexTime, setYIndexTime ] = useState();
+  const [xIndexTime, setXIndexTime ] = useState();
+  const Days = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]
 
     const options_hours : ApexOptions = {
         chart: {
@@ -36,9 +42,9 @@ const DayTimeSentiment = (props : Props) => {
           type: 'heatmap',
           toolbar: { show: false },
           events: {
-            dataPointSelection: (event, chartContext, config) => {
-              console.log(config.w.config.labels[config.dataPointIndex], "context", chartContext);
-              setShowDetail(true);
+            click(event, chartContext, config) {
+              setYIndexTime(config.seriesIndex); 
+              setXIndexTime(config.dataPointIndex);
             }
           }
         },
@@ -46,7 +52,7 @@ const DayTimeSentiment = (props : Props) => {
           enabled: false
         },
         xaxis: {
-          categories: ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','00'],
+          categories: TimeAxis,
         },
         colors: ["#548235"]
       };
@@ -57,9 +63,9 @@ const DayTimeSentiment = (props : Props) => {
           type: 'heatmap',
           toolbar: { show: false },
           events: {
-            dataPointSelection: (event, chartContext, config) => {
-              console.log(config.w.config.labels[config.dataPointIndex], "context", chartContext);
-              setShowDetail(true);
+            click(event, chartContext, config) {
+              setYIndex(config.seriesIndex); 
+              setXIndex(config.dataPointIndex);
             }
           }
         },
@@ -67,7 +73,7 @@ const DayTimeSentiment = (props : Props) => {
           enabled: false
         },
         xaxis: {
-          categories: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+          categories: Days,
         },
         colors: ["#548235"]
       };
@@ -81,7 +87,7 @@ const DayTimeSentiment = (props : Props) => {
           if(resultTimeBySentiment?.length> 0) {
             for(let i=0; i<resultTimeBySentiment?.length; i++ ) {
               hourValue.push({
-                name: '',
+                name:  i == 0 ? 'Negative' : i == 1 ? "Neutral" : i == 2 ? "Positive" : "",
                 data: resultTimeBySentiment[i]?.data
               })
             }
@@ -89,6 +95,36 @@ const DayTimeSentiment = (props : Props) => {
           setSeriesHour(hourValue);
         }
       }, [resultDayBySentiment, resultTimeBySentiment])
+
+      useEffect(() => {
+        if(yIndex === 0 || yIndex) {
+          params.ylabel = yIndex == 0 ? 'Negative' : yIndex == 1 ? "Neutral" : yIndex == 2 ? "Positive" : "";
+        }
+        
+        if(xIndex === 0 || xIndex) {
+          
+          params.label = Days[xIndex];
+        }
+    
+        if(yIndex || xIndex || yIndex === 0 || xIndex === 0) {
+          setShowDetail(true) 
+        }
+      }, [yIndex, xIndex]);
+
+      useEffect(() => {
+        if(yIndexTime  === 0 || yIndexTime) {
+          params.ylabel = yIndexTime == 0 ? 'Negative' : yIndexTime == 1 ? "Neutral" : yIndexTime == 2 ? "Positive" : "";
+        }
+        
+        if(xIndexTime === 0 || xIndexTime) {
+          console.log("x " , xIndexTime);
+          params.label = TimeAxis[xIndexTime];
+        }
+    
+        if(yIndexTime === 0 || xIndexTime === 0 || yIndexTime || xIndexTime ) {
+          setShowDetail(true) 
+        }
+      }, [yIndexTime, xIndexTime]);
 
       const reportNo = '2.2.017';
 

@@ -43,7 +43,8 @@ const VoiceDashboard = () => {
     previousEndDate: previousEndDate,
     keywordIds: keyword, 
     page : 'voiceDashboard',
-    label: ''
+    label: '',
+    ylabel: ''
   }
 
   const { resultReportPermission } = UserPermission()

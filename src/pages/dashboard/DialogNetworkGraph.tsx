@@ -1,7 +1,7 @@
 import {forwardRef, ReactElement, Ref} from "react";
 import Fade, { FadeProps } from '@mui/material/Fade'
 import { Box, Card, Dialog, DialogContent, IconButton, 
-    Typography,  Grid } from "@mui/material";
+    Typography,  Grid, LinearProgress } from "@mui/material";
 import Close from 'mdi-material-ui/Close'
 import Graph from 'react-graph-vis';
 import 'react-graph-vis/node_modules/vis-network/dist/dist/vis-network.css';
@@ -30,7 +30,7 @@ interface DialogInfoProps {
 
 const DialogNetworkGraph = (props: DialogInfoProps) => {
     const { showDialog, setShowDialog, params, keywordId, messageId, setMessageId, reportNo } = props
-    const { resultNetworkGraph } = GetNetworkGraph(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, keywordId, messageId, reportNo);
+    const { resultNetworkGraph, loadingNetworkGraph } = GetNetworkGraph(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, keywordId, messageId, reportNo);
 
   
     const initialGraph = {
@@ -81,6 +81,8 @@ const DialogNetworkGraph = (props: DialogInfoProps) => {
             >
               <Close />
             </IconButton>
+
+            {loadingNetworkGraph && <LinearProgress style={{ width: '100%' }} />}
             <Box sx={{ mb: 8, textAlign: 'center' }}>
               <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
                   Social Network Analysis

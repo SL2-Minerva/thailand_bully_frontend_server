@@ -12,6 +12,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 import { LinearProgress } from '@mui/material'
+import { TimeAxis } from 'src/utils/const'
 
 const DayTimeComparison = ({
   params,
@@ -28,6 +29,8 @@ const DayTimeComparison = ({
 }) => {
   const [series, setSeries] = useState([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
+  const [yIndex, setYIndex] = useState();
+  const [xIndex, setXIndex] = useState();
 
   const options: ApexOptions = {
     chart: {
@@ -35,9 +38,18 @@ const DayTimeComparison = ({
       type: 'heatmap',
       toolbar: { show: false },
       events: {
-        dataPointSelection: (event, chartContext, config) => {
-          console.log(config.w.config.labels[config.dataPointIndex], 'context', chartContext)
-          setShowDetail(true)
+        // dataPointSelection: (event, chartContext, config) => {
+        //   console.log(config.w.config.labels, 'context', chartContext);
+        //   console.log(event);
+        //   console.log("xaxis", config.w.config.xaxis.categories[config.dataPointIndex]); //value
+        //   console.log("yaxis", config.w.config.series[0].data[config.dataPointIndex]); //
+          
+        //   setShowDetail(true)
+        // }, 
+
+        click(event, chartContext, config) {
+          setYIndex(config.seriesIndex); 
+          setXIndex(config.dataPointIndex);
         }
       }
     },
@@ -46,32 +58,7 @@ const DayTimeComparison = ({
     },
     colors: ['#548235'],
     xaxis: {
-      categories: [
-        '01',
-        '02',
-        '03',
-        '04',
-        '05',
-        '06',
-        '07',
-        '08',
-        '09',
-        '10',
-        '11',
-        '12',
-        '13',
-        '14',
-        '15',
-        '16',
-        '17',
-        '18',
-        '19',
-        '20',
-        '21',
-        '22',
-        '23',
-        '00'
-      ]
+      categories: TimeAxis
     },
     title: {
       text: ''
@@ -83,6 +70,20 @@ const DayTimeComparison = ({
       setSeries(resultDayTimeComparison)
     }
   }, [resultDayTimeComparison])
+
+  useEffect(() => {
+    if(yIndex === 0 || yIndex) {
+      params.ylabel = resultDayTimeComparison[yIndex]?.name;
+    }
+    
+    if(xIndex === 0 || xIndex) {
+      params.label = TimeAxis[xIndex];
+    }
+
+    if(yIndex || xIndex || yIndex === 0 || xIndex === 0) {
+      setShowDetail(true) 
+    }
+  }, [yIndex, xIndex])
 
   const reportNo = '2.2.016'
 
