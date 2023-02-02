@@ -15,6 +15,7 @@ import { Information } from 'mdi-material-ui'
 import { FilterBullyTypeByCampaignId } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { LinearProgress } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -68,8 +69,9 @@ const chartLabel = (data:any) => {
 
 const DailyMessgesByBullyType = (props: LineProps) => {
   // ** Props
+  const {t} = useTranslation();
   const { white, labelColor,  borderColor, gridLineColor, params, type, chartId, highlight } = props
-
+  
   // const [ chartData, setChartData ] = useState();
   const colors = BullyTypeColors;
 
@@ -198,12 +200,12 @@ const DailyMessgesByBullyType = (props: LineProps) => {
       } 
       
       if(data[i].bully_level) {
-        keywordName = data[i].bully_level;
+        keywordName = t(data[i].bully_level);
       } 
 
       
       if(data[i].bully_type) {
-        keywordName = data[i].bully_type;
+        keywordName = t(data[i].bully_type);
       } 
 
       const chartDataset : StackChartDataset  = {
@@ -246,7 +248,7 @@ const DailyMessgesByBullyType = (props: LineProps) => {
       setLabel([]);
       setDataset([]);
     }
-  },[resultBullyTypeFilterData]);
+  },[resultBullyTypeFilterData,t]);
 
   const data = {
     labels: label || [],

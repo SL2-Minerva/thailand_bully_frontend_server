@@ -6,7 +6,7 @@ import { EngagementTypeColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
-import { LineProps,chartLabel } from '../VoiceDashboard/MessageByDays'
+import { LineProps } from '../VoiceDashboard/MessageByDays'
 import MessageDetail from './MessageDetail'
   
 const EngagementTypeByDevice = (props: LineProps) => {
@@ -156,6 +156,19 @@ const EngagementTypeByDevice = (props: LineProps) => {
 
     return returnData;
   
+  }
+  const chartLabel = (data:any) => {
+    if(!data) return [];
+    const labels : any[] = [];
+    
+    if(data) {
+      for(let i =0 ; i<data.labels?.length ; i++) {
+        labels.push(data.labels[i])
+      }
+      
+    }
+  
+    return labels;
   }
 
     useEffect(() => {

@@ -5,11 +5,13 @@ import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { GraphicColors } from 'src/utils/const'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
-import { chartLabel, LineProps } from './MessageByDays'
+import { LineProps } from './MessageByDays'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
 import MessageDetail from 'src/pages/ChannelDashboard/MessageDetail'
-  
+import { useTranslation } from 'react-i18next'
+
 const MessagesByBullyLevel = (props: LineProps) => {
+  const { t } = useTranslation();
 
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, result, loading } = props
 
@@ -158,6 +160,20 @@ const MessagesByBullyLevel = (props: LineProps) => {
   
   }
 
+  const chartLabel = (data:any) => {
+    if(!data) return [];
+    const labels : any[] = [];
+    
+    if(data) {
+      for(let i =0 ; i<data.labels?.length ; i++) {
+        labels.push(t(data.labels[i]))
+      }
+      
+    }
+  
+    return labels;
+  }
+
     useEffect(() => {
         if(result) {
         const dailyMessageData = result;
@@ -170,6 +186,13 @@ const MessagesByBullyLevel = (props: LineProps) => {
         }
         }
     },[result]);
+
+    useEffect(() =>{
+      if(result) {
+        const labels = chartLabel(result);
+        setLabel(labels);
+      }
+    },[t])
 
     const data = {
         labels: label || [],

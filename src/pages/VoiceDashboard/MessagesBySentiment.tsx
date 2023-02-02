@@ -7,11 +7,12 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { GetMessagesBySentiment } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
-import { chartLabel, LineProps } from './MessageByDays'
+import { LineProps } from './MessageByDays'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
+import { useTranslation } from 'react-i18next'
   
 const MessagesBySentiment = (props: LineProps) => {
-
+  const { t } = useTranslation();
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
@@ -159,6 +160,26 @@ const MessagesBySentiment = (props: LineProps) => {
     return returnData;
   
   }
+
+  const chartLabel = (data:any) => {
+    if(!data) return [];
+    const labels : any[] = [];
+    
+    if(data) {
+      for(let i =0 ; i<data.labels?.length ; i++) {
+        labels.push(t(data.labels[i]))
+      }
+      
+    }
+  
+    return labels;
+  }
+  useEffect(() =>{
+    if(resultMessagesBySentiment) {
+      const labels = chartLabel(resultMessagesBySentiment);
+      setLabel(labels);
+    }
+  },[t])
 
     useEffect(() => {
         if(resultMessagesBySentiment) {

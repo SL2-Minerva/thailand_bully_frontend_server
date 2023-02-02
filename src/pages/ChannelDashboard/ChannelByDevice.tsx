@@ -6,7 +6,7 @@ import { GraphicColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
-import { chartLabel, LineProps } from '../VoiceDashboard/MessageByDays'
+import { LineProps } from '../VoiceDashboard/MessageByDays'
 import { GetChannelByDevice } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
 import MessageDetail from './MessageDetail'
   
@@ -159,6 +159,19 @@ const ChannelByDevice = (props: LineProps) => {
 
     return returnData;
   
+  }
+  const chartLabel = (data:any) => {
+    if(!data) return [];
+    const labels : any[] = [];
+    
+    if(data) {
+      for(let i =0 ; i<data.labels?.length ; i++) {
+        labels.push(data.labels[i])
+      }
+      
+    }
+  
+    return labels;
   }
 
     useEffect(() => {

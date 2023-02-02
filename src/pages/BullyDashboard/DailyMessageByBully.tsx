@@ -14,6 +14,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { LinearProgress } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -70,6 +71,7 @@ const chartLabel = (data:any) => {
 const DailyMessgeByBully = (props: LineProps) => {
   // ** Props
   const { white, labelColor,  borderColor, gridLineColor, params, type, chartId, highlight,resultFilterData, loadingFilterData  } = props
+  const {t} = useTranslation();
 
   // const [ chartData, setChartData ] = useState();
   const colors = BullyLevelColors;
@@ -198,12 +200,12 @@ const DailyMessgeByBully = (props: LineProps) => {
       } 
       
       if(data[i].bully_level) {
-        keywordName = data[i].bully_level;
+        keywordName = t(data[i].bully_level);
       } 
 
       
       if(data[i].bully_type) {
-        keywordName = data[i].bully_type;
+        keywordName = t(data[i].bully_type);
       } 
 
       const chartDataset : StackChartDataset  = {
@@ -246,7 +248,7 @@ const DailyMessgeByBully = (props: LineProps) => {
       setLabel([]);
       setDataset([]);
     }
-  },[resultFilterData]);
+  },[t,resultFilterData]);
 
   const data = {
     labels: label || [],
