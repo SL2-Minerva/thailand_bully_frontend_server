@@ -500,10 +500,12 @@ export const GetDetailMessage = (
   limit?: number,
   reportNo?: string,
   pageName?: string,
-  label?: string
+  label?: string,
+  ylabel?: string
 ) => {
-  let params = {}
+  let params : any = {}
   const todayDate = new Date()
+  
   if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
     params = {
       campaign_id: campaignId || '',
@@ -534,6 +536,10 @@ export const GetDetailMessage = (
       page_name: pageName?.toString(), 
       label: label?.toString()
     }
+  }
+
+  if(ylabel) {
+    params.ylabel = encodeURI(ylabel);
   }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/daily-message/level-three/`,

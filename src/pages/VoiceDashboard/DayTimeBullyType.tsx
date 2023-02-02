@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { Information } from 'mdi-material-ui'
 import { StyledTooltip } from '../dashboard/overall'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
+import { TimeAxis } from 'src/utils/const'
 
 interface Props {
   chartId: string
@@ -28,6 +29,13 @@ const DayTimeBullyType = (props: Props) => {
   const [seriesHour, setSeriesHour] = useState([{ name: '', data: [] }])
   const [seriesDays, setSeriesDays] = useState([{ name: '', data: [] }])
   const [showDetail, setShowDetail] = useState<boolean>(false)
+  const [yIndex, setYIndex] = useState();
+  const [xIndex, setXIndex] = useState();
+  const [yIndexTime, setYIndexTime ] = useState();
+  const [xIndexTime, setXIndexTime ] = useState();
+  const Days = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]
+
+  const [ylabels, setYlabels] = useState<any>([]);
 
   const options_hours: ApexOptions = {
     chart: {
@@ -35,9 +43,9 @@ const DayTimeBullyType = (props: Props) => {
       type: 'heatmap',
       toolbar: { show: false },
       events: {
-        dataPointSelection: (event, chartContext, config) => {
-          console.log(config.w.config.labels[config.dataPointIndex], 'context', chartContext)
-          setShowDetail(true)
+        click(event, chartContext, config) {
+          setYIndexTime(config.seriesIndex); 
+          setXIndexTime(config.dataPointIndex);
         }
       }
     },
@@ -46,32 +54,7 @@ const DayTimeBullyType = (props: Props) => {
     },
     colors: ['#548235'],
     xaxis: {
-      categories: [
-        '01',
-        '02',
-        '03',
-        '04',
-        '05',
-        '06',
-        '07',
-        '08',
-        '09',
-        '10',
-        '11',
-        '12',
-        '13',
-        '14',
-        '15',
-        '16',
-        '17',
-        '18',
-        '19',
-        '20',
-        '21',
-        '22',
-        '23',
-        '00'
-      ]
+      categories: TimeAxis
     }
   }
 
@@ -81,9 +64,9 @@ const DayTimeBullyType = (props: Props) => {
       type: 'heatmap',
       toolbar: { show: false },
       events: {
-        dataPointSelection: (event, chartContext, config) => {
-          console.log(config.w.config.labels[config.dataPointIndex], 'context', chartContext)
-          setShowDetail(true)
+        click(event, chartContext, config) {
+          setYIndex(config.seriesIndex); 
+          setXIndex(config.dataPointIndex);
         }
       }
     },
@@ -91,21 +74,30 @@ const DayTimeBullyType = (props: Props) => {
       enabled: false
     },
     xaxis: {
-      categories: ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
+      categories: Days
     },
     colors: ['#548235']
   }
 
   useEffect(() => {
+    const bullyTypeLabels = [];
     if (resultDayByBullyType) {
       setSeriesDays(resultDayByBullyType)
+      
+      if(resultDayByBullyType?.length > 0) {
+       
+        for (let i=0; i<= resultDayByBullyType?.length; i++) {
+          bullyTypeLabels.push(resultDayByBullyType[i]?.name)
+        }
+        setYlabels(bullyTypeLabels);
+      }
     }
     if (resultTimeByBullyType) {
       const hourValue: any[] = []
       if (resultTimeByBullyType?.length > 0) {
         for (let i = 0; i < resultTimeByBullyType?.length; i++) {
           hourValue.push({
-            name: '',
+            name: bullyTypeLabels[i],
             data: resultTimeByBullyType[i]?.data
           })
         }
@@ -113,6 +105,36 @@ const DayTimeBullyType = (props: Props) => {
       setSeriesHour(hourValue)
     }
   }, [resultDayByBullyType, resultTimeByBullyType])
+
+  useEffect(() => {
+    if(yIndex === 0 || yIndex) {
+      params.ylabel = ylabels[yIndex];
+    }
+    
+    if(xIndex === 0 || xIndex) {
+      
+      params.label = Days[xIndex];
+    }
+
+    if(yIndex || xIndex || yIndex === 0 || xIndex === 0) {
+      setShowDetail(true) 
+    }
+  }, [yIndex, xIndex]);
+
+  useEffect(() => {
+    if(yIndexTime  === 0 || yIndexTime) {
+      params.ylabel = ylabels[yIndexTime];
+    }
+    
+    if(xIndexTime === 0 || xIndexTime) {
+      console.log("x " , xIndexTime);
+      params.label = TimeAxis[xIndexTime];
+    }
+
+    if(yIndexTime === 0 || xIndexTime === 0 || yIndexTime || xIndexTime ) {
+      setShowDetail(true) 
+    }
+  }, [yIndexTime, xIndexTime]);
 
   const reportNo = '2.2.019'
 

@@ -76,7 +76,8 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
     10,
     reportNo,
     params?.page,
-    params?.label
+    params?.label, 
+    params?.ylabel
   )
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
