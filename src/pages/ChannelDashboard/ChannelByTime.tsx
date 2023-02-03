@@ -10,6 +10,7 @@ import { LineProps } from '../VoiceDashboard/MessageByDays'
 import { GetChannelByTime } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
 import MessageDetail from './MessageDetail'
 import { useTranslation } from 'react-i18next'
+import Translations from 'src/layouts/components/Translations'
   
 const ChannelByTime = (props: LineProps) => {
   const {t} = useTranslation();
@@ -213,7 +214,7 @@ const ChannelByTime = (props: LineProps) => {
                 )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Daily Messages By Time"
+            title={<Translations text='Daily Messages By Time' />}
             titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption',color: highlight ? 'green' : '#4c4e64de' }}
           />

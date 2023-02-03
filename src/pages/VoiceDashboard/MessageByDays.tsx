@@ -9,6 +9,7 @@ import { InteractionItem } from 'chart.js'
 import { GetMessagesByDay } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { useTranslation } from 'react-i18next'
+import Translations from 'src/layouts/components/Translations'
 
 export interface LineProps {
     white: string
@@ -228,7 +229,7 @@ const MessagesByDays = (props: LineProps) => {
         )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Daily Messages By Day"
+            title={<Translations text="Daily Messages By Day"/>}
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption' }}
           />
@@ -248,6 +249,8 @@ const MessagesByDays = (props: LineProps) => {
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
                 reportNo = {reportNo}
+                title="Daily Messages: Message Transactions"
+                networkTitle="Daily Messages: Social Network Analysis"
             />: ""
           }
         

@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, Grid, LinearProgress, Paper, Table, Tabl
 import { Information } from 'mdi-material-ui'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
+import Translations from 'src/layouts/components/Translations'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { PeriodComparisonChannel, sentimentComparison, SentimentComparisonEngagment } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
@@ -182,7 +183,7 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
             )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <CardHeader
-              title={getTitle(type, chartTitle)}
+              title={<Translations text={getTitle(type, chartTitle)}/>}
               titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
               subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
             />

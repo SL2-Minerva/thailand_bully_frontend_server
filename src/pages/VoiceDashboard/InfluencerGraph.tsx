@@ -17,6 +17,7 @@ import { useEffect, useRef, useState } from 'react'
 import { InteractionItem } from 'chart.js'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { LinearProgress } from '@mui/material'
+import Translations from 'src/layouts/components/Translations'
 
 const chartLabel = (data: any) => {
   if (!data) return []
@@ -187,6 +188,9 @@ const InfluencerGraph = ({
 
       const dataSets = chartDatasets(resultNumbersOfAccounts)
       setDataset(dataSets)
+    } else {
+      setLabel([]);
+      setDataset([]);
     }
   }, [resultNumbersOfAccounts])
 
@@ -199,7 +203,7 @@ const InfluencerGraph = ({
       {loadingNumbersOfAccounts && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Number of Accounts'
+          title={<Translations text='Number of Accounts'/>}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={chartTitle || ''}>

@@ -14,6 +14,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { BullyTypePercentage } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
 import { useTranslation } from 'react-i18next'
+import Translations from 'src/layouts/components/Translations'
 
 interface MessageData {
   params : any,
@@ -149,7 +150,7 @@ const PercentageOfBullyType = (props : MessageData) => {
             )} 
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-            title= {title}
+            title= {<Translations text={title}/>}
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de'  }}
             subheader='Period over Period Comparison'
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de'  }}

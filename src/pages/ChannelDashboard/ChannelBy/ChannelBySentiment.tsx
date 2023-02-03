@@ -9,6 +9,7 @@ import { Bar } from 'react-chartjs-2'
 import { StyledTooltip } from 'src/pages/dashboard/overall' 
 import { Information } from 'mdi-material-ui'
 import { GetChannelSentimentLevel } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
+import Translations from 'src/layouts/components/Translations'
 
 const ChartLabels = (data: any) => {
   if (!data) return [];
@@ -66,7 +67,7 @@ const ChannelBySentiment  = ({params, chartId, highlight} : {params: any, chartI
         )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title='Channel by Sentiment'
+            title={<Translations text='Daily Messages By Sentiment' />}
             titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
           />
           <StyledTooltip arrow title={chartTitle || ""}>

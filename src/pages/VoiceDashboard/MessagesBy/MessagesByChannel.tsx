@@ -8,6 +8,7 @@ import { InteractionItem } from 'chart.js'
 import { chartLabel, LineProps } from './MessageByDays'
 import MessageDetail from 'src/pages/ChannelDashboard/MessageDetail'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
+import Translations from 'src/layouts/components/Translations'
   
 const MessagesByChannel = (props: LineProps) => {
 
@@ -189,7 +190,7 @@ const MessagesByChannel = (props: LineProps) => {
         )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Daily Messages By Channel"
+            title={<Translations text="Daily Messages By Channel" />}
             titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption',color: highlight ? 'green' : '#4c4e64de' }}
           />
@@ -209,6 +210,8 @@ const MessagesByChannel = (props: LineProps) => {
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
                 reportNo = {reportNo}
+                title="Daily Messages: Message Transactions"
+                networkTitle="Daily Messages: Social Network Analysis"
             />: ""
           }
           

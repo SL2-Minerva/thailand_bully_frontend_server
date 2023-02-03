@@ -10,6 +10,7 @@ import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import Translations from 'src/layouts/components/Translations'
 
 const EngagementTypeComparison = ({
   chartId,
@@ -32,7 +33,7 @@ const EngagementTypeComparison = ({
       {loadingEngagementComparison && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Engagement Type Comparison'
+          title={<Translations text='Engagement Type Comparison'/>}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheader='Period over Period'
         />

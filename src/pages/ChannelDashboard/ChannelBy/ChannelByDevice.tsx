@@ -8,6 +8,7 @@ import { InteractionItem } from 'chart.js'
 import { LineProps } from 'src/pages/VoiceDashboard/MessageByDays'
 import MessageDetail from '../MessageDetail'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
+import Translations from 'src/layouts/components/Translations'
   
 const ChannelByDevice = (props: LineProps) => {
 
@@ -202,7 +203,7 @@ const ChannelByDevice = (props: LineProps) => {
         )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Daily Messages By Device"
+            title={<Translations text='Daily Messages By Devices' />}
             titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption',color: highlight ? 'green' : '#4c4e64de' }}
           />

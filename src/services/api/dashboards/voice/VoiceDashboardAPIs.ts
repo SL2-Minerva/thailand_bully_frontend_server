@@ -492,13 +492,23 @@ export const GetDayTimeByAll = (
       fillter_keywords: fillter_keywords
     }
   })
+  let day_value : any = null;
+  let time_value : any = null;
+
+  if(response?.data?.DayTimeLevel) {
+    day_value = response?.data?.DayTimeLevel?.day_value;
+    time_value = response?.data?.DayTimeLevel?.time_value;
+
+    day_value.sort((a :any,b :any)  => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+    time_value.sort((a :any,b :any)  => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+  }
 
   return {
     resultDayTimeComparison: response?.data?.DayTimeComparison || null,
     resultDayBySentiment: response?.data?.DayTimeSentiment?.day_value || null,
     resultTimeBySentiment: response?.data?.DayTimeSentiment?.time_value || null,
-    resultDayByBullyLevel: response?.data?.DayTimeLevel?.day_value || null,
-    resultTimeByBullyLevel: response?.data?.DayTimeLevel?.time_value || null,
+    resultDayByBullyLevel: day_value || null,
+    resultTimeByBullyLevel: time_value || null,
     resultDayByBullyType: response?.data?.DayTimeType?.day_value || null,
     resultTimeByBullyType: response?.data?.DayTimeType?.time_value || null,
     loadingDayByAll: loading,

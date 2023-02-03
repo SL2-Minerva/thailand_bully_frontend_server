@@ -10,6 +10,7 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { LinearProgress } from '@mui/material'
+import Translations from 'src/layouts/components/Translations'
 
 const Labels = (data: any) => {
   if (!data) {
@@ -133,7 +134,7 @@ const EngagmentComparisonChart = ({
       {loadingComparison && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Engagement Type Proportion'
+          title={<Translations text='Engagement Type Proportion'/>}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={title || ''}>

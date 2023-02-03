@@ -12,6 +12,7 @@ import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler,
 import { Radar } from 'react-chartjs-2'
 import { GraphicColors } from 'src/utils/const'
 import { LinearProgress } from '@mui/material'
+import Translations from 'src/layouts/components/Translations'
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend)
 
@@ -74,7 +75,7 @@ const KeywordComparisonByBullyType = ({
       {loadingKeywordComparisonByBullyType && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Percentage of Keyword Comparison By Bully Type'
+          title={<Translations text='Percentage of Keyword Comparison by Bully Type'/>}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={chartTitle || ''}>

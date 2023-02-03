@@ -10,6 +10,7 @@ import { LineProps } from '../VoiceDashboard/MessageByDays'
 import { GetChannelBySentiment } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
 import MessageDetail from './MessageDetail'
 import { useTranslation } from 'react-i18next'
+import Translations from 'src/layouts/components/Translations'
   
 const ChannelBySentimentComparison = (props: LineProps) => {
   const {t} = useTranslation();
@@ -217,7 +218,7 @@ const ChannelBySentimentComparison = (props: LineProps) => {
         )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Daily Messages By Sentiment"
+            title={<Translations text='Daily Messages By Sentiment' />}
             titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption',color: highlight ? 'green' : '#4c4e64de' }}
           />

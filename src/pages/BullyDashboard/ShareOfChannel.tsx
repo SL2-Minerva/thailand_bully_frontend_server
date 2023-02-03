@@ -2,159 +2,143 @@
 import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, LinearProgress } from "@mui/material"
-import { Table, TableRow, TableHead, TableCell } from "@mui/material"; 
+import { Grid, LinearProgress } from '@mui/material'
+import { Table, TableRow, TableHead, TableCell } from '@mui/material'
 
 // ** Third Party Imports
 import { Bar } from 'react-chartjs-2'
-import { StyledTooltip } from '../dashboard/overall'; 
-import { Information } from 'mdi-material-ui';
-import { BullyLevelSummaryColors, BullyTypeSummaryColors } from 'src/utils/const';
-import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
+import { BullyLevelSummaryColors, BullyTypeSummaryColors } from 'src/utils/const'
+import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from 'react'
+import Translations from 'src/layouts/components/Translations'
 
-const ChartData = (data: any ) => {
-  if (!data) return [];
+const ChartData = (data: any) => {
+  if (!data) return []
 
-  const chartDatas : any[] = [];
-  for (let i = 0; i<data?.length ; i ++) {
+  const chartDatas: any[] = []
+  for (let i = 0; i < data?.length; i++) {
     chartDatas.push(data[i]?.data || data[i]?.value)
   }
-  
-  return chartDatas;
+
+  return chartDatas
 }
 
-const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  chartId, highlight, type, loading, loadingChannel} : 
-  {resultShareOfChannel: any,resultShareofChannelPlatform : any, chartId : string, highlight: boolean, type: string, loading: boolean, loadingChannel: boolean}) => {
+const ShareOfChannel = ({
+  resultShareOfChannel,
+  resultShareofChannelPlatform,
+  chartId,
+  highlight,
+  type,
+  loading,
+  loadingChannel, 
+  title
+}: {
+  resultShareOfChannel: any
+  resultShareofChannelPlatform: any
+  chartId: string
+  highlight: boolean
+  type: string
+  loading: boolean
+  loadingChannel: boolean,
+  title?: string
+}) => {
   const [label, setLabel] = useState<any>([])
-  const {t} = useTranslation();
+  const { t } = useTranslation()
 
   const ChartLabels = (data: any) => {
-    if (!data) return [];
-    const keywordData = data;
-  
-    const labels : any[] = [];
-  
-    for (let i = 0; i<keywordData?.length ; i ++) {
+    if (!data) return []
+    const keywordData = data
+
+    const labels: any[] = []
+
+    for (let i = 0; i < keywordData?.length; i++) {
       labels.push(t(keywordData[i].keyword_name))
     }
-    
-    return labels;
+
+    return labels
   }
 
-  useEffect(() =>{
-    if(resultShareOfChannel) {
-      const labels = ChartLabels(resultShareOfChannel);
-      setLabel(labels);
+  useEffect(() => {
+    if (resultShareOfChannel) {
+      const labels = ChartLabels(resultShareOfChannel)
+      setLabel(labels)
     }
-  },[t, resultShareOfChannel])
+  }, [t, resultShareOfChannel])
 
   // const labels = resultShareOfChannel ? ChartLabels(resultShareOfChannel) : [];
   const data = {
-  labels: label,
-  datasets: [{
-      axis: 'y',
-      label: '',
-      data: ChartData(resultShareOfChannel),
-      fill: false,
-      backgroundColor: type ==="level"? BullyLevelSummaryColors : BullyTypeSummaryColors,
-      borderColor: type ==="level" ? BullyLevelSummaryColors : BullyTypeSummaryColors, 
-      borderWidth: 1
-  }]
-};
-
+    labels: label,
+    datasets: [
+      {
+        axis: 'y',
+        label: '',
+        data: ChartData(resultShareOfChannel),
+        fill: false,
+        backgroundColor: type === 'level' ? BullyLevelSummaryColors : BullyTypeSummaryColors,
+        borderColor: type === 'level' ? BullyLevelSummaryColors : BullyTypeSummaryColors,
+        borderWidth: 1
+      }
+    ]
+  }
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
-      {loading && loadingChannel && (
-            <LinearProgress
-                style={{ width: "100%" }} 
-            />
-            )}  
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+      {loading && loadingChannel && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <CardHeader
-            title='Share of Channel'
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          />
-          <StyledTooltip arrow title={chartId}>
-              <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
-          </StyledTooltip>
+        <CardHeader
+          title={<Translations text={title || ""}/>}
+          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+        />
+        <StyledTooltip arrow title={chartId}>
+          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+        </StyledTooltip>
       </span>
       <CardContent>
         <Grid container spacing={3}>
-            <Grid item xs={5}>
-                <Bar data={data} options={{ indexAxis: 'y' }} height={150}/>
-            </Grid>
-            <Grid item xs={7} >
-                <Table size="small">
-                    <TableHead>
-                      <TableRow>
-                      <TableCell variant="head">  
-                          <img
-                            alt={"logo"}
-                            width={34}
-                            height={34}
-                            src={`/images/logos/facebook-round.png`}
-                          />
+          <Grid item xs={5}>
+            <Bar data={data} options={{ indexAxis: 'y' }} height={150} />
+          </Grid>
+          <Grid item xs={7}>
+            <Table size='small'>
+              <TableHead>
+                <TableRow>
+                  <TableCell variant='head'>
+                    <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
+                  </TableCell>
+                  <TableCell variant='head'>
+                    <img alt={'logo'} width={34} height={34} src={`/images/logos/twitter.png`} />
+                  </TableCell>
+                  <TableCell variant='head'>
+                    <img width={34} height={34} alt={'logo'} src={`/images/logos/youtube-text.png`} />
+                  </TableCell>
+                  <TableCell variant='head'>
+                    <img width={34} alt={'logo'} height={34} src={`/images/logos/instagram.png`} />
+                  </TableCell>
+                  <TableCell variant='head'>
+                    <img width={34} alt={'logo'} height={34} src={`/images/logos/pantip.png`} />
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              {(resultShareofChannelPlatform || []).map((shareVoice: any, index: number) => {
+                return (
+                  <TableRow key={index}>
+                    {(shareVoice.value || []).map((value: any, key: number) => {
+                      return (
+                        <TableCell key={key}>
+                          <span style={{ border: value?.highlight ? '1px solid red' : '', padding: '4px' }}>
+                            {value?.percentage + '%'}
+                          </span>
                         </TableCell>
-                        <TableCell variant="head"> 
-                          <img
-                            alt={"logo"}
-                              width={34}
-                              height={34}
-                              src={`/images/logos/twitter.png`}
-                            />
-                        </TableCell>
-                        <TableCell variant="head"> 
-                          <img
-                              width={34}
-                              height={34}
-                              alt={"logo"}
-                            src={`/images/logos/youtube-text.png`} 
-                            />
-                        </TableCell>
-                        <TableCell variant="head">
-                          <img
-                              width={34}
-                            alt={"logo"}
-                            height={34}
-                              src={`/images/logos/instagram.png`}
-                            />
-                        </TableCell>
-                        <TableCell variant="head">
-                          <img
-                              width={34}
-                            alt={"logo"}
-                            height={34}
-                              src={`/images/logos/pantip.png`}
-                            />
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    {
-                      (resultShareofChannelPlatform || []).map((shareVoice : any, index: number) => {
-                        return(
-                          <TableRow key={index}>
-                            {
-                              (shareVoice.value || []).map((value : any, key: number) => {
-                                return (
-                                  <TableCell key={key}>
-                                    <span style={{ border : value?.highlight ? "1px solid red" : "", padding: '4px' }}>
-                                      {value?.percentage + "%"}
-                                    </span>
-                                  </TableCell>
-                                )
-                              })
-                            }
-                          </TableRow>
-                        )
-                      })
-                    }
-                    
-                </Table>
-            </Grid>  
+                      )
+                    })}
+                  </TableRow>
+                )
+              })}
+            </Table>
+          </Grid>
         </Grid>
-        
       </CardContent>
     </Paper>
   )

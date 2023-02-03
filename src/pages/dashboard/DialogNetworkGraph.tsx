@@ -6,6 +6,7 @@ import Close from 'mdi-material-ui/Close'
 import Graph from 'react-graph-vis';
 import 'react-graph-vis/node_modules/vis-network/dist/dist/vis-network.css';
 import { GetNetworkGraph } from "src/services/api/dashboards/overall/overallDashboardApi";
+import Translations from "src/layouts/components/Translations";
 
 // import { CampaignList } from 'src/services/api/campaign/CampaignAPI';
 
@@ -26,10 +27,11 @@ interface DialogInfoProps {
   setKeywordId?: any
   setMessageId?: any
   reportNo? : string
+  title? : string
 }
 
 const DialogNetworkGraph = (props: DialogInfoProps) => {
-    const { showDialog, setShowDialog, params, keywordId, messageId, setMessageId, reportNo } = props
+    const { showDialog, setShowDialog, params, keywordId, messageId, setMessageId, reportNo, title } = props
     const { resultNetworkGraph, loadingNetworkGraph } = GetNetworkGraph(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, keywordId, messageId, reportNo);
 
   
@@ -55,6 +57,8 @@ const DialogNetworkGraph = (props: DialogInfoProps) => {
       setShowDialog(false);
       setMessageId("");
     }
+
+    const cardTitle = title ? title : 'Social Network Analysis'
   
     // useEffect(() => {
     //   if (resultNetworkGraph) {
@@ -85,7 +89,7 @@ const DialogNetworkGraph = (props: DialogInfoProps) => {
             {loadingNetworkGraph && <LinearProgress style={{ width: '100%' }} />}
             <Box sx={{ mb: 8, textAlign: 'center' }}>
               <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-                  Social Network Analysis
+                  <Translations text={cardTitle}/>
               </Typography>
             </Box>
 

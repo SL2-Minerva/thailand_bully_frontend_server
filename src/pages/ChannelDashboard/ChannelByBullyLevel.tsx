@@ -10,6 +10,7 @@ import {  LineProps } from '../VoiceDashboard/MessageByDays'
 import { GetChannelByBullyLevel } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
 import MessageDetail from './MessageDetail'
 import { useTranslation } from 'react-i18next'
+import Translations from 'src/layouts/components/Translations'
   
 export const chartDatasets = (data:any) => {
   if(!data) return [];
@@ -212,7 +213,7 @@ const ChannelByBullyLevel = (props: LineProps) => {
         )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Daily Messages By Bully Level"
+            title={<Translations text='Daily Messages By Bully Level' />}
             titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption',color: highlight ? 'green' : '#4c4e64de' }}
           />

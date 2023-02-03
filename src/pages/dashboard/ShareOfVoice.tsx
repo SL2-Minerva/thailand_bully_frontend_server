@@ -11,6 +11,7 @@ import { StyledTooltip } from './overall';
 import { Information } from 'mdi-material-ui';
 import { GetShareOfVoice, GetShareOfVoiceChart } from 'src/services/api/dashboards/overall/overallDashboardApi';
 import { FacebookIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const';
+import Translations from 'src/layouts/components/Translations';
 
 const ChartLabels = (data: any) => {
   if (!data) return [];
@@ -133,7 +134,7 @@ const ShareOfVoice  = ({params, chartId} : {params: any, chartId : string}) => {
         )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title='Share of Voice'
+            title={<Translations text='Share of Voice'/>}
             titleTypographyProps={{ variant: 'h6' }}
           />
           <StyledTooltip arrow title={chartTitle || ""}>

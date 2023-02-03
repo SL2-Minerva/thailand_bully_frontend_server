@@ -16,6 +16,7 @@ import { Information } from 'mdi-material-ui'
 import { StyledTooltip } from './overall'
 import { FilterByCampaignId } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { LinearProgress } from '@mui/material'
+import Translations from 'src/layouts/components/Translations'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -239,7 +240,7 @@ const StackedChart = (props: LineProps) => {
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title='Daily Message'
+            title={<Translations text='Daily Messages'/>}
             titleTypographyProps={{ variant: 'h6' }}
             subheader='KeyWords'
             subheaderTypographyProps={{ variant: 'caption' }}
@@ -261,7 +262,8 @@ const StackedChart = (props: LineProps) => {
               keywordId = {keywordId}
               setKeywordId={setKeywordId}
               reportNo = {reportNo}
-              title = "Daily Messages:"
+              title = "Daily Messages: Message Transactions"
+              networkTitle="Daily Messages: Social Network Analysis"
           /> : ""
          }
       </CardContent>

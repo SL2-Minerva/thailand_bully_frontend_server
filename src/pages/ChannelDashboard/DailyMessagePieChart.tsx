@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react'
 import { GraphicColors } from 'src/utils/const' 
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import Translations from 'src/layouts/components/Translations'
 
 interface Props {
   params : any
@@ -200,12 +201,12 @@ const DailyMessagePieChart  = ( props : Props) => {
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           {
             type === "message" ?
-            <CardHeader title="Percentage of Message" titleTypographyProps={{ varient:'h6',color: highlight ? 'green' : '#4c4e64de' }}
+            <CardHeader title={<Translations text='Percentage of Channel'/>} titleTypographyProps={{ varient:'h6',color: highlight ? 'green' : '#4c4e64de' }}
                     subheader="Period over Period Comparison"
                     subheaderTypographyProps={{ varient: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
                 />
             :
-            <CardHeader title="Percentage of Channel" titleTypographyProps={{ varient:'h6',color: highlight ? 'green' : '#4c4e64de' }}
+            <CardHeader title={<Translations text='Percentage of Channel'/>} titleTypographyProps={{ varient:'h6',color: highlight ? 'green' : '#4c4e64de' }}
                     subheader="Period over Period Comparison"
                     subheaderTypographyProps={{ varient: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
                 />

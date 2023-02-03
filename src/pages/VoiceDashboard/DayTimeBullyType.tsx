@@ -13,6 +13,7 @@ import { Information } from 'mdi-material-ui'
 import { StyledTooltip } from '../dashboard/overall'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 import { TimeAxis } from 'src/utils/const'
+import Translations from 'src/layouts/components/Translations'
 
 interface Props {
   chartId: string
@@ -91,6 +92,8 @@ const DayTimeBullyType = (props: Props) => {
         }
         setYlabels(bullyTypeLabels);
       }
+    } else {
+      setSeriesDays([{ name: '', data: [] }]);
     }
     if (resultTimeByBullyType) {
       const hourValue: any[] = []
@@ -103,6 +106,8 @@ const DayTimeBullyType = (props: Props) => {
         }
       }
       setSeriesHour(hourValue)
+    } else {
+      setSeriesHour([{ name: '', data: [] }])
     }
   }, [resultDayByBullyType, resultTimeByBullyType])
 
@@ -145,7 +150,7 @@ const DayTimeBullyType = (props: Props) => {
       {loadingDayByBullyType && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Day&Time by Bully Type '
+          title={<Translations text='Day & Time by Bully Type'/>}
           titleTypographyProps={{ variant: 'h4', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={chartTitle || ''}>

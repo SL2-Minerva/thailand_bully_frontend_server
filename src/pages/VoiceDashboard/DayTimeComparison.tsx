@@ -13,6 +13,7 @@ import { Information } from 'mdi-material-ui'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 import { LinearProgress } from '@mui/material'
 import { TimeAxis } from 'src/utils/const'
+import Translations from 'src/layouts/components/Translations'
 
 const DayTimeComparison = ({
   params,
@@ -68,6 +69,8 @@ const DayTimeComparison = ({
   useEffect(() => {
     if (resultDayTimeComparison) {
       setSeries(resultDayTimeComparison)
+    } else {
+      setSeries([])
     }
   }, [resultDayTimeComparison])
 
@@ -94,7 +97,7 @@ const DayTimeComparison = ({
       {loadingDayTimeComparison && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Day&Time '
+          title={<Translations text='Day & Time'/>}
           titleTypographyProps={{ variant: 'h4', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={chartTitle || ''}>

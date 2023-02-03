@@ -9,6 +9,7 @@ import { DataGrid, GridValueGetterParams } from '@mui/x-data-grid'
 import clsx from 'clsx'
 import { createTheme } from '@mui/material'
 import { createStyles, makeStyles } from '@mui/styles'
+import Translations from 'src/layouts/components/Translations'
 
 const defaultTheme = createTheme()
 const useStyles = makeStyles(
@@ -127,7 +128,7 @@ const SummaryByKeywords = ({
       {loadingSummaryByKeywords && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Sentiment Type by Keyword'
+          title={<Translations text='Sentiment Type by Keyword'/>}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={title || ''}>

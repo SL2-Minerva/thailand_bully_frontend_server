@@ -9,10 +9,10 @@ import { LineProps } from 'src/pages/VoiceDashboard/MessageByDays'
 import MessageDetail from '../MessageDetail'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
 import { useTranslation } from 'react-i18next'
-
+import Translations from 'src/layouts/components/Translations'
 
 const ChannelByDay = (props: LineProps) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation()
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
 
   const [label, setLabel] = useState<string[]>([])
@@ -61,11 +61,11 @@ const ChannelByDay = (props: LineProps) => {
 
   const onClick = (event: any) => {
     if (chartRef.current) {
-      const getIndex = getElementAtEvent(chartRef.current, event);
+      const getIndex = getElementAtEvent(chartRef.current, event)
 
-      if(getIndex?.length > 0 ) {
-        const index =  getIndex[0].index;
-        params.label = label[index];
+      if (getIndex?.length > 0) {
+        const index = getIndex[0].index
+        params.label = label[index]
       }
 
       const keyword_id = getKeywordId(getDatasetAtEvent(chartRef.current, event))
@@ -160,25 +160,24 @@ const ChannelByDay = (props: LineProps) => {
     return returnData
   }
 
-  const chartLabel = (data:any) => {
-    if(!data) return [];
-    const labels : any[] = [];
-    
-    if(data) {
-      for(let i =0 ; i<data.labels?.length ; i++) {
+  const chartLabel = (data: any) => {
+    if (!data) return []
+    const labels: any[] = []
+
+    if (data) {
+      for (let i = 0; i < data.labels?.length; i++) {
         labels.push(t(data.labels[i]))
       }
-      
     }
-  
-    return labels;
+
+    return labels
   }
-  useEffect(() =>{
-    if(resultBy) {
-      const labels = chartLabel(resultBy);
-      setLabel(labels);
+  useEffect(() => {
+    if (resultBy) {
+      const labels = chartLabel(resultBy)
+      setLabel(labels)
     }
-  },[t])
+  }, [t])
 
   useEffect(() => {
     if (resultBy) {
@@ -207,7 +206,7 @@ const ChannelByDay = (props: LineProps) => {
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Daily Messages By Day'
+          title={<Translations text='Daily Messages By Day' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />

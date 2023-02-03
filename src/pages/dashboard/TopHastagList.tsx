@@ -71,7 +71,8 @@ const TopHashtagList = ({params, chartId} : Props) => {
                             keywordId={keywordId}
                             setKeywordId = {setKeywordId}
                             reportNo = {reportNo}
-                            title = "Top Hashtag"
+                            title = "Top Hashtag: Messages Transaction"
+                            networkTitle="Top Hashtag: Social Network Analysis"
                         /> : ""
                     }
             </CardContent>

@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { DataGrid, GridValueGetterParams } from '@mui/x-data-grid'
+import Translations from 'src/layouts/components/Translations'
 
 const EngagementSummary = ({
   resultSummary,
@@ -63,7 +64,7 @@ const EngagementSummary = ({
       {loadingSummary && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Summary Engagement by Account'
+          title={<Translations text='Summary Engagement By Account'/>}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={title || ''}>
