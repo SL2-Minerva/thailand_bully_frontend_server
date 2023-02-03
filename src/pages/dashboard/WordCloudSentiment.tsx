@@ -6,6 +6,7 @@ import { useState } from "react";
 import { StyledTooltip } from "./overall";
 import { Information } from "mdi-material-ui";
 import { GetWordCloudsSentiment } from "src/services/api/dashboards/overall/overallDashboardApi";
+import Translations from "src/layouts/components/Translations";
 
 const WordCloudSentiment = ({params, chartId} : {params: any, chartId: string}) => {
     const [ sentiment, setSentiment ] = useState('');
@@ -24,7 +25,7 @@ const WordCloudSentiment = ({params, chartId} : {params: any, chartId: string}) 
                 )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
-                    title='Word Clouds'
+                    title={<Translations text='Word Cloud by Sentiment Type'/>}
                     titleTypographyProps={{ variant: 'h6' }}
                 />
                 <StyledTooltip arrow title={chartId}>

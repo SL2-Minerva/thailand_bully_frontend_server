@@ -10,6 +10,7 @@ import Fade, { FadeProps } from '@mui/material/Fade'
 import { Box, Card, Dialog, DialogContent, IconButton, Typography } from "@mui/material";
 import Close from 'mdi-material-ui/Close'
 import DialogNetworkGraph from "./DialogNetworkGraph";
+import Translations from "src/layouts/components/Translations";
 
 function createData(
   name: string,
@@ -36,11 +37,13 @@ interface DialogInfoProps {
   show: boolean
   setShow: any
   current?: any
+  title?: string
+  networkTitle?: string
 }
 
 const AccountDetail = (props: DialogInfoProps) => {
 
-  const { show, setShow, current } = props
+  const { show, setShow, current, title, networkTitle } = props
     const [ showDialog, setShowDialog ] = useState<boolean>(false);
     const [messageId, setMessageId] = useState<string>('');
 
@@ -64,7 +67,7 @@ const AccountDetail = (props: DialogInfoProps) => {
             </IconButton>
             <Box sx={{ mb: 8, textAlign: 'center' }}>
               <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-                 Message Detail
+                  <Translations text={title || ''} />
               </Typography>
             </Box>
             <TableContainer component={Paper} sx={{ minHeight: 450, maxHeight: 450 }}>
@@ -105,6 +108,7 @@ const AccountDetail = (props: DialogInfoProps) => {
             currentData={current}
             messageId = {messageId}
             setMessageId = {setMessageId}
+            title={networkTitle}
           /> : ""
         }
         

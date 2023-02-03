@@ -9,6 +9,7 @@ import { InteractionItem } from 'chart.js'
 import { GetMessagesByDevice } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 import { LineProps } from './MessageByDays'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
+import Translations from 'src/layouts/components/Translations'
   
 const MessagesByDevices = (props: LineProps) => {
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
@@ -205,7 +206,7 @@ const MessagesByDevices = (props: LineProps) => {
         )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Daily Messages By Devices"
+            title={<Translations text="Daily Messages By Devices"/>}
             titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption',color: highlight ? 'green' : '#4c4e64de' }}
           />
@@ -225,6 +226,8 @@ const MessagesByDevices = (props: LineProps) => {
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
                 reportNo = {reportNo}
+                title="Daily Messages: Message Transactions"
+                networkTitle="Daily Messages: Social Network Analysis"
             />: ""
           }
       </CardContent>

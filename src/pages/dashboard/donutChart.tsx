@@ -13,6 +13,7 @@ import { GraphicColors } from 'src/utils/const'
 import { Information } from 'mdi-material-ui'
 import { StyledTooltip } from './overall'
 import { FilterByCampaignId } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import Translations from 'src/layouts/components/Translations'
 
 interface MessageData {
   params : any
@@ -128,7 +129,7 @@ const DonutChart = (props : MessageData) => {
         )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title='Percentage of Messages'
+            title={<Translations text='Percentage of Messages' />}
             titleTypographyProps={{ variant: 'h6' }}
             subheader='Period over Period Comparison'
             subheaderTypographyProps={{ variant: 'caption' }}

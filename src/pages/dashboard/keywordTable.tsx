@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from "./overall";
 import { Information } from "mdi-material-ui";
 import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
+import Translations from "src/layouts/components/Translations";
 
 const KeywordTable = ({params, chartId} : {params: any, chartId: string}) => {
     const { resultKeywords, loadingFilterData } = GetKeyWords(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, params?.keywordIds);
@@ -22,7 +23,7 @@ const KeywordTable = ({params, chartId} : {params: any, chartId: string}) => {
                 )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
-                    title='KeyWord Summary'
+                    title={<Translations text='Keyword Summary' />}
                     titleTypographyProps={{ variant: 'h6' }}
                 />
                 <StyledTooltip arrow title={chartTitle || ""}>

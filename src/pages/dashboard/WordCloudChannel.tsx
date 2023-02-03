@@ -7,6 +7,7 @@ import SourceService from "src/services/api/source/SourceApi";
 import { StyledTooltip } from "./overall";
 import { Information } from "mdi-material-ui";
 import { GetWordCloudsPlatform } from "src/services/api/dashboards/overall/overallDashboardApi";
+import Translations from "src/layouts/components/Translations";
 
 const WordCloudChannel = ({params, chartId} : {params: any, chartId : string}) => {
     const [ platformId, setPlatformId ] = useState<string>("1")
@@ -30,7 +31,7 @@ const WordCloudChannel = ({params, chartId} : {params: any, chartId : string}) =
                 )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
-                    title='Word Clouds By Channel'
+                    title={<Translations text='Word Cloud by Channel'/>}
                     titleTypographyProps={{ variant: 'h6' }}
                 />
                 <StyledTooltip arrow title={chartTitle}>

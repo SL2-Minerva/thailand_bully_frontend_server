@@ -235,6 +235,8 @@ const MessagesByAccount = (props: LineProps) => {
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
                 reportNo = {reportNo}
+                title="Daily Messages: Message Transactions"
+                networkTitle="Daily Messages: Social Network Analysis"
             />: ""
           }
       </CardContent>

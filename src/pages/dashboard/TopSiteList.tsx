@@ -74,7 +74,8 @@ const TopSiteList = ({ params, chartId} : Props) => {
                             keywordId={keywordId}
                             setKeywordId = {setKeywordId}
                             reportNo = {reportNo}
-                            title = "Top Site:"
+                            title = "Top Site: Messages Transaction"
+                            networkTitle="Top Site: Social Network Analysis"
                         /> : ""
                 }
             </CardContent>

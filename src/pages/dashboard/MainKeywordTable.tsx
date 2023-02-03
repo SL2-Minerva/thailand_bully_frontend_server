@@ -7,6 +7,7 @@ import DailyMessageDetail from "./DailyMessageDetail";
 import { StyledTooltip } from "./overall";
 import { Information } from "mdi-material-ui";
 import { GetTopKeywords } from "src/services/api/dashboards/overall/overallDashboardApi";
+import Translations from "src/layouts/components/Translations";
 
 interface Props {
     params: any
@@ -31,7 +32,7 @@ const MainKeyWordTable = ({ params, chartId} : Props) => {
             )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
-                    title='Main Keyword'
+                    title={<Translations text='Main Keyword' />}
                     titleTypographyProps={{ variant: 'h6' }}
                 />
                 <StyledTooltip arrow title={chartTitle || ""}>
@@ -73,7 +74,8 @@ const MainKeyWordTable = ({ params, chartId} : Props) => {
                     keywordId={keywordId}
                     setKeywordId = {setKeywordId}
                     reportNo = {reportNo}
-                    title = "Main Keyword:"
+                    title = "Main Keyword: Message Transactions"
+                    networkTitle="Main Keyword: Social Network Analysis"
                 /> : ""
             }
             </CardContent>

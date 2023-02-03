@@ -9,6 +9,7 @@ import { LineProps } from './MessageByDays'
 import MessageDetail from 'src/pages/ChannelDashboard/MessageDetail'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
 import { useTranslation } from 'react-i18next'
+import Translations from 'src/layouts/components/Translations'
   
 const MessagesByAccount = (props: LineProps) => {
   const { t } = useTranslation();
@@ -212,7 +213,7 @@ const MessagesByAccount = (props: LineProps) => {
         )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Daily Messages By Accounts"
+            title={<Translations text='Daily Messages By Account'/>}
             titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption',color: highlight ? 'green' : '#4c4e64de' }}
           />
@@ -232,6 +233,8 @@ const MessagesByAccount = (props: LineProps) => {
                 paramsId = {paramsId}
                 setParamsId={setParamsId}
                 reportNo = {reportNo}
+                title="Daily Messages: Message Transactions"
+                networkTitle="Daily Messages: Social Network Analysis"
             />: ""
           }
       </CardContent>

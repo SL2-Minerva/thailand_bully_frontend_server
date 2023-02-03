@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { GraphicColors } from 'src/utils/const'
+import Translations from 'src/layouts/components/Translations'
 
 Chart.register(DoughnutLabel)
 const DevicesComparison = ({
@@ -158,7 +159,7 @@ const DevicesComparison = ({
       {loadingDevicesComparison && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Devices'
+          title={<Translations text="Device: Period over Period Comparison"/>}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheader='Period over Period Comparison'
           subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}

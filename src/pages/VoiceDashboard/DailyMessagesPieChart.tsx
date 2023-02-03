@@ -14,6 +14,7 @@ import { GraphicColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { GetPercentageMessage } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
+import Translations from 'src/layouts/components/Translations'
 
 interface Props {
   params : any
@@ -191,7 +192,7 @@ const DailyMessagePieChart  = ( props : Props) => {
           />
         )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <CardHeader title="Percentage of Message" titleTypographyProps={{ variant:'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          <CardHeader title={<Translations text='Percentage of Messages' />} titleTypographyProps={{ variant:'h6', color: highlight ? 'green' : '#4c4e64de' }}
               subheader="Period over Period Comparison"
               subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           />

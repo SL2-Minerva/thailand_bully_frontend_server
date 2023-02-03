@@ -23,6 +23,7 @@ import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import { LinearProgress } from '@mui/material'
+import Translations from 'src/layouts/components/Translations'
 
 interface KeyStatusProps {
     title: string
@@ -76,7 +77,7 @@ const KeyStatusReport = (props: KeyStatusProps) => {
                 </Grid>
                 <Grid item xs={6}>
                     <Typography variant='body2' sx={{ mt: 7, fontWeight: 'bold' }}>
-                    {totalText}
+                        <Translations text={totalText} />
                     </Typography>
                 </Grid>
                 <Grid item xs={3}>

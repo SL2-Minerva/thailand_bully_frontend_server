@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import { StyledTooltip } from './overall';
 import { Information } from 'mdi-material-ui';
 import { GetSentimentScore } from 'src/services/api/dashboards/overall/overallDashboardApi';
+import Translations from 'src/layouts/components/Translations';
 
 // import GaugeChart from 'react-gauge-chart'
 
@@ -26,7 +27,7 @@ const SentimentGaugeChart = ({params, chartId} : {params:any, chartId: string}) 
                 )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
-                    title='Sentiment Score'
+                    title={<Translations text='Sentiment Score' />}
                     titleTypographyProps={{ variant: 'h6' }}
                 />
                 <StyledTooltip arrow title={chartTitle}>

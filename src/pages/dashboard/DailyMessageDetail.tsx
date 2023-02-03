@@ -12,6 +12,7 @@ import { Box, Card, Dialog, DialogContent, IconButton, LinearProgress, Paginatio
 import Close from 'mdi-material-ui/Close'
 import DialogNetworkGraph from './DialogNetworkGraph'
 import { GetDetailMessage } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import Translations from 'src/layouts/components/Translations'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -52,10 +53,11 @@ interface DialogInfoProps {
   setKeywordId?: any
   reportNo?: any
   title?: any
+  networkTitle?: any
 }
 
 const DailyMessageDetail = (props: DialogInfoProps) => {
-  const { show, setShow, current, params, keywordId, setKeywordId, reportNo, title } = props
+  const { show, setShow, current, params, keywordId, setKeywordId, reportNo, title, networkTitle } = props
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [page, setPage] = useState(0)
   const [messageId, setMessageId] = useState<number | string>()
@@ -99,7 +101,8 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
     }
   }, [totalMessage])
 
-  const cardTitle = title ? title : 'Daily Messages:'
+  const cardTitle = title ? title : 'Daily Messages: Message Transactions'
+  const titleNetwork = networkTitle ? networkTitle : "Daily Messages: Social Network Analysis"
 
   return (
     <Card>
@@ -118,7 +121,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
           {loadingMessageDetail && <LinearProgress style={{ width: '100%' }} />}
           <Box sx={{ mb: 8, textAlign: 'center' }}>
             <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-              {cardTitle} Message Transaction
+              <Translations text={cardTitle} />
             </Typography>
           </Box>
 
@@ -189,6 +192,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
           setKeywordId={setKeywordId}
           setMessageId={setMessageId}
           reportNo={reportNo}
+          title={titleNetwork}
         />
       ) : (
         ''

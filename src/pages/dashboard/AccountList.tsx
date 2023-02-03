@@ -1,11 +1,12 @@
 import { Avatar, Card, CardHeader, Grid, LinearProgress, Typography } from "@mui/material";
 import { Information } from "mdi-material-ui";
 import { useState } from "react";
+import Translations from "src/layouts/components/Translations";
 import { GetKeyWords } from "src/services/api/dashboards/overall/overallDashboardApi";
 import AccountDetail from "./AccountDetail";
 import { StyledTooltip } from "./overall";
 
-const AccountList = ({params, chartId, cardHeader} : {params: any, chartId : string, cardHeader: string}) => {
+const AccountList = ({params, chartId, cardHeader, title, networkTitle} : {params: any, chartId : string, cardHeader: string, title: string, networkTitle : string}) => {
     const [showDetail, setShowDetail] = useState<boolean>(false);
     const [current, setCurrent] = useState<any>({})
 
@@ -22,7 +23,7 @@ const AccountList = ({params, chartId, cardHeader} : {params: any, chartId : str
                 )}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
-                    title={cardHeader}
+                    title={<Translations text={cardHeader}/>}
                     titleTypographyProps={{ variant: 'h6' }}
                 />
                 <StyledTooltip arrow title={chartTitle || ''}>
@@ -62,6 +63,8 @@ const AccountList = ({params, chartId, cardHeader} : {params: any, chartId : str
                 show={showDetail}
                 setShow={setShowDetail}
                 current={current}
+                title ={title}
+                networkTitle ={networkTitle}
                 />
                 
         </Card>

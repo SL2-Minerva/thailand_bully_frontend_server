@@ -23,6 +23,7 @@ import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { LinearProgress } from '@mui/material'
+import Translations from 'src/layouts/components/Translations'
 
 interface InfluencerComparisonProps {
     icon: ReactNode
@@ -45,7 +46,7 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
 
   const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
 
-  const title = totalText === "Messages" ? 'Number of Messages: Period over Period Comparison' : 'Number of Accounts: Period over Period Comparison'
+  const title = totalText === "Messages" ? "Number of Messages: Period over Period Comparison" : "Number of Accounts: Period over Period Comparison"
 
   return (
     <Card style={{ height: 250 }}>
@@ -86,7 +87,7 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
         <Divider sx={{ mt: 2, mb: 7.5 }} />
                 
                 <span style={{ display: 'flex', justifyContent: 'flex-start',color: highlight ? 'green' : '#4c4e64de' }}>
-                    {title}
+                    <Translations text={title}/>
                     <StyledTooltip arrow title={chartTitle || ""}>
                         <Information style={{marginLeft: '10px', fontSize: '29px'}} />
                     </StyledTooltip>
