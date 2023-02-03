@@ -7,11 +7,10 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { GetMessagesByDevice } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
-import { chartLabel, LineProps } from './MessageByDays'
+import { LineProps } from './MessageByDays'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
   
 const MessagesByDevices = (props: LineProps) => {
-
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
@@ -159,6 +158,20 @@ const MessagesByDevices = (props: LineProps) => {
 
     return returnData;
   
+  }
+
+  const chartLabel = (data:any) => {
+    if(!data) return [];
+    const labels : any[] = [];
+    
+    if(data) {
+      for(let i =0 ; i<data.labels?.length ; i++) {
+        labels.push(data.labels[i])
+      }
+      
+    }
+  
+    return labels;
   }
 
     useEffect(() => {

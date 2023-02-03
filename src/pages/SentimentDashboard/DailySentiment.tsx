@@ -14,6 +14,7 @@ import { Information } from 'mdi-material-ui'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { SentimentColors } from 'src/utils/const'
 import { LinearProgress } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 interface LineProps {
   white: string
@@ -78,7 +79,7 @@ const DailySenitment = (props: LineProps) => {
 
   // const [ chartData, setChartData ] = useState();
   const colors = SentimentColors
-
+  const {t} = useTranslation()
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
@@ -200,7 +201,7 @@ const DailySenitment = (props: LineProps) => {
         totalAmount.push(total[j].total_at_date)
       }
 
-      keywordName = data[i].keyword_name
+      keywordName = t(data[i].keyword_name)
 
       const chartDataset: StackChartDataset = {
         fill: false,
@@ -250,7 +251,7 @@ const DailySenitment = (props: LineProps) => {
 
       data = { labels: [], datasets: [] }
     }
-  }, [resultFilterData])
+  }, [resultFilterData,t])
 
   const reportNo = '5.2.002'
 

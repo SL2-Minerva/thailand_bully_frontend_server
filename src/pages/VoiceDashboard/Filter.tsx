@@ -7,6 +7,7 @@ import format from 'date-fns/format'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 import { forwardRef, useCallback, useState } from "react";
 import { DateType } from "src/types/forms/reactDatepickerTypes";
+import Translations from "src/layouts/components/Translations";
 
 interface Props {
     date : DateType
@@ -123,22 +124,22 @@ const Filter = (props : Props) => {
                     <Grid container spacing={2} mt={2}>
                     <Grid item sm={4} xs={12} mb={3}>
                         <FormControl fullWidth>
-                        <InputLabel id='plan-select'>Select Period</InputLabel>
+                        <InputLabel id='plan-select'><Translations text="Period of time" /></InputLabel>
                         <Select
                             fullWidth
                             value={dateSelect}
                             id='select-date'
-                            label='Select Period'
+                            label={<Translations text="Period of time" />}
                             labelId='date-select'
                             onChange={handleDateSelect}
                             inputProps={{ placeholder: 'Select Period' }}
                         >
-                            <MenuItem value="1">Today</MenuItem>
-                            <MenuItem value="2">Yesterday</MenuItem>
-                            <MenuItem value="3">Last 7 days</MenuItem>
-                            <MenuItem value="4">Last 30 days</MenuItem>
-                            <MenuItem value="5">This Month</MenuItem>
-                            <MenuItem value="6">Last Month</MenuItem>
+                            <MenuItem value="1"><Translations text="Today" /></MenuItem>
+                            <MenuItem value="2"><Translations text="Yesterday" /></MenuItem>
+                            <MenuItem value="3"><Translations text="Last 7 Days" /></MenuItem>
+                            <MenuItem value="4"><Translations text="Last 30 Days" /></MenuItem>
+                            <MenuItem value="5"><Translations text="This Month" /></MenuItem>
+                            <MenuItem value="6"><Translations text="Last Month" /></MenuItem>
                             <MenuItem value="7">Custom Date Range</MenuItem>
 
                         </Select>
@@ -197,7 +198,7 @@ const Filter = (props : Props) => {
                     }
                     <Grid item sm={4} xs={12}>
                         <FormControl fullWidth>
-                        <InputLabel id='plan-select'>Select Campaign</InputLabel>
+                        <InputLabel id='plan-select'><Translations text="Campaign Name" /></InputLabel>
                         <Select
                             fullWidth
                             value={campaign}

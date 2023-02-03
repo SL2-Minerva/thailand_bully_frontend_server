@@ -8,6 +8,7 @@ import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { GetMessagesByDay } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
+import { useTranslation } from 'react-i18next'
 
 export interface LineProps {
     white: string
@@ -26,19 +27,8 @@ export interface LineProps {
     resultByPrevious?: any
   }
   
-export const chartLabel = (data:any) => {
-    if(!data) return [];
-    
-    let labels : string[] = [];
-    if(data) {
-      labels = data.labels;
-    }
-  
-    return labels;
-  }
-
 const MessagesByDays = (props: LineProps) => {
-
+  const {t} = useTranslation()
   const { white, labelColor, borderColor, gridLineColor, colorType, chartId, params,highlight } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
@@ -186,6 +176,26 @@ const MessagesByDays = (props: LineProps) => {
     return returnData;
   
   }
+
+  const chartLabel = (data:any) => {
+    if(!data) return [];
+    const labels : any[] = [];
+    
+    if(data) {
+      for(let i =0 ; i<data.labels?.length ; i++) {
+        labels.push(t(data.labels[i]))
+      }
+      
+    }
+  
+    return labels;
+  }
+  useEffect(() =>{
+    if(resultMessagesByDay) {
+      const labels = chartLabel(resultMessagesByDay);
+      setLabel(labels);
+    }
+  },[t])
 
     useEffect(() => {
         if(resultMessagesByDay) {

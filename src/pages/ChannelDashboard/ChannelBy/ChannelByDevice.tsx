@@ -5,7 +5,7 @@ import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { GraphicColors } from 'src/utils/const'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
-import { chartLabel, LineProps } from 'src/pages/VoiceDashboard/MessageByDays'
+import { LineProps } from 'src/pages/VoiceDashboard/MessageByDays'
 import MessageDetail from '../MessageDetail'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
   
@@ -156,6 +156,19 @@ const ChannelByDevice = (props: LineProps) => {
 
     return returnData;
   
+  }
+  const chartLabel = (data:any) => {
+    if(!data) return [];
+    const labels : any[] = [];
+    
+    if(data) {
+      for(let i =0 ; i<data.labels?.length ; i++) {
+        labels.push(data.labels[i])
+      }
+      
+    }
+  
+    return labels;
   }
 
     useEffect(() => {

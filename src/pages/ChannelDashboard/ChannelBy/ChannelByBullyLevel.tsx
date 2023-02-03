@@ -8,18 +8,8 @@ import { InteractionItem } from 'chart.js'
 import { LineProps } from 'src/pages/VoiceDashboard/MessageByDays'
 import MessageDetail from '../MessageDetail'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
+import { useTranslation } from 'react-i18next'
   
-export const chartLabel = (data:any) => {
-  if(!data) return [];
-  
-  let labels : string[] = [];
-  if(data) {
-    labels = data.labels;
-  }
-
-  return labels;
-}
-
 export const chartDatasets = (data:any) => {
   if(!data) return [];
   let totalAmount : number[] = [];
@@ -60,7 +50,7 @@ export const chartDatasets = (data:any) => {
 }
 
 const ChannelByBullyLevel = (props: LineProps) => {
-
+  const {t} = useTranslation();
   const { labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
@@ -170,7 +160,25 @@ const ChannelByBullyLevel = (props: LineProps) => {
     }
   }
 
+  const chartLabel = (data:any) => {
+    if(!data) return [];
+    const labels : any[] = [];
+    
+    if(data) {
+      for(let i =0 ; i<data.labels?.length ; i++) {
+        labels.push(t(data.labels[i]))
+      }
+      
+    }
   
+    return labels;
+  }
+  useEffect(() =>{
+    if(resultBy) {
+      const labels = chartLabel(resultBy);
+      setLabel(labels);
+    }
+  },[t])
 
     useEffect(() => {
         if(resultBy) {

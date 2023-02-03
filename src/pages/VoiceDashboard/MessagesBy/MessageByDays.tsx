@@ -7,6 +7,7 @@ import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import MessageDetail from 'src/pages/ChannelDashboard/MessageDetail'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
+import { useTranslation } from 'react-i18next'
 
 export interface LineProps {
     white: string
@@ -26,16 +27,20 @@ export interface LineProps {
   
 export const chartLabel = (data:any) => {
     if(!data) return [];
+    const labels : any[] = [];
     
-    let labels : string[] = [];
     if(data) {
-      labels = data.labels;
+      for(let i =0 ; i<data.labels?.length ; i++) {
+        labels.push(data.labels[i])
+      }
+      
     }
   
     return labels;
   }
 
 const MessagesByDays = (props: LineProps) => {
+  const { t } = useTranslation();
 
   const { white, labelColor, borderColor, gridLineColor, colorType, chartId, params,highlight, result, loading } = props
 
@@ -183,6 +188,20 @@ const MessagesByDays = (props: LineProps) => {
   
   }
 
+  const chartLabel = (data:any) => {
+    if(!data) return [];
+    const labels : any[] = [];
+    
+    if(data) {
+      for(let i =0 ; i<data.labels?.length ; i++) {
+        labels.push(t(data.labels[i]))
+      }
+      
+    }
+  
+    return labels;
+  }
+
     useEffect(() => {
         if(result) {
         const dailyMessageData = result;
@@ -195,6 +214,13 @@ const MessagesByDays = (props: LineProps) => {
         }
         }
     },[result]);
+
+    useEffect(() =>{
+      if(result) {
+        const labels = chartLabel(result);
+        setLabel(labels);
+      }
+    },[t])
 
     const data = {
         labels: label || [],

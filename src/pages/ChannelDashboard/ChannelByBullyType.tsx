@@ -7,11 +7,12 @@ import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps } from '../VoiceDashboard/MessageByDays'
 import { GetChannelByBullyType } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
-import { chartDatasets, chartLabel } from './ChannelByBullyLevel'
+import { chartDatasets } from './ChannelByBullyLevel'
 import MessageDetail from './MessageDetail'
+import { useTranslation } from 'react-i18next'
   
 const ChannelByBullyType = (props: LineProps) => {
-
+  const {t} = useTranslation();
   const { labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
@@ -120,6 +121,26 @@ const ChannelByBullyType = (props: LineProps) => {
       }
     }
   }
+
+  const chartLabel = (data:any) => {
+    if(!data) return [];
+    const labels : any[] = [];
+    
+    if(data) {
+      for(let i =0 ; i<data.labels?.length ; i++) {
+        labels.push(t(data.labels[i]))
+      }
+      
+    }
+  
+    return labels;
+  }
+  useEffect(() =>{
+    if(resultChannelByBullyType) {
+      const labels = chartLabel(resultChannelByBullyType);
+      setLabel(labels);
+    }
+  },[t])
 
     useEffect(() => {
         if(resultChannelByBullyType) {

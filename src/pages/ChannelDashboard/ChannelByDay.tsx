@@ -6,12 +6,13 @@ import { GraphicColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
-import { chartLabel, LineProps } from '../VoiceDashboard/MessageByDays'
+import { LineProps } from '../VoiceDashboard/MessageByDays'
 import { GetChannelByDay } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
 import MessageDetail from './MessageDetail'
+import { useTranslation } from 'react-i18next'
   
 const ChannelByDay = (props: LineProps) => {
-
+  const {t} = useTranslation();
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
@@ -161,6 +162,25 @@ const ChannelByDay = (props: LineProps) => {
     return returnData;
   
   }
+  const chartLabel = (data:any) => {
+    if(!data) return [];
+    const labels : any[] = [];
+    
+    if(data) {
+      for(let i =0 ; i<data.labels?.length ; i++) {
+        labels.push(t(data.labels[i]))
+      }
+      
+    }
+  
+    return labels;
+  }
+  useEffect(() =>{
+    if(resultChannelByDay) {
+      const labels = chartLabel(resultChannelByDay);
+      setLabel(labels);
+    }
+  },[t])
 
     useEffect(() => {
         if(resultChannelByDay) {

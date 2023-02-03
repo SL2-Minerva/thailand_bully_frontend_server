@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { BullyLevelColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import { useTranslation } from 'react-i18next'
 
 interface MessageData {
   params : any,
@@ -23,7 +24,7 @@ interface MessageData {
 }
 
 const PercentageOfBully = (props : MessageData) => {
-
+  const {t} = useTranslation()
   const { type, chartId, highlight, resultBullyLevelPercentage, loadingBullyLevelPercentage  } = props;
   const colors = BullyLevelColors;
 
@@ -79,9 +80,9 @@ const PercentageOfBully = (props : MessageData) => {
     const percentage: number[] = [];
     for(let i =0; i<data?.length; i++ ) {
         if(data[i].bully_level) {
-            labels.push(data[i].bully_level);  
+            labels.push(t(data[i].bully_level));  
         } else  if (data[i].bully_type) {
-             labels.push(data[i].bully_type);
+             labels.push(t(data[i].bully_type));
         }
       
       percentage.push(data[i].value?.percentage);
@@ -126,7 +127,7 @@ const PercentageOfBully = (props : MessageData) => {
       setCurrentData(initValue);
       setPreviousData(initValue);
     }
-  }, [resultBullyLevelPercentage]);
+  }, [t,resultBullyLevelPercentage]);
 
   const reportNo = '6.1.001';
 

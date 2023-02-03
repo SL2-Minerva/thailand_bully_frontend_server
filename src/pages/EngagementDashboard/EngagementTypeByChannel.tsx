@@ -6,11 +6,10 @@ import { EngagementTypeColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
-import { LineProps,chartLabel } from '../VoiceDashboard/MessageByDays'
+import { LineProps } from '../VoiceDashboard/MessageByDays'
 import MessageDetail from './MessageDetail'
   
 const EngagementTypeByChannel = (props: LineProps) => {
-
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
@@ -158,6 +157,19 @@ const EngagementTypeByChannel = (props: LineProps) => {
   
   }
 
+  const chartLabel = (data:any) => {
+    if(!data) return [];
+    const labels : any[] = [];
+    
+    if(data) {
+      for(let i =0 ; i<data.labels?.length ; i++) {
+        labels.push(data.labels[i])
+      }
+      
+    }
+  
+    return labels;
+  }
     useEffect(() => {
         if(resultBy) {
         const dailyMessageData = resultBy;

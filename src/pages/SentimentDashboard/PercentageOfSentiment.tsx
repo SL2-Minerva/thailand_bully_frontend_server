@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { SentimentColors } from 'src/utils/const'
+import { useTranslation } from 'react-i18next'
 
 interface MessageData {
   type: string
@@ -26,7 +27,7 @@ const PercentageOfSentiment = (props : MessageData) => {
 
   const { type, chartId, highlight,resultFilterData, loadingFilterData } = props;
   const colors = SentimentColors;
-
+  const {t} = useTranslation()
   const initValue = {
     labels: [],
     datasets: [{
@@ -79,7 +80,7 @@ const PercentageOfSentiment = (props : MessageData) => {
     const labels : string[] =[];
     const percentage: number[] = [];
     for(let i =0; i<data?.length; i++ ) {
-      labels.push(data[i].keyword_name);
+      labels.push(t(data[i].keyword_name));
 
       const percentageValue = data[i]?.value;
       for(let j = 0 ; j<percentageValue?.length; j++) {
@@ -133,7 +134,7 @@ const PercentageOfSentiment = (props : MessageData) => {
       setPreviousData(initValue);
 
     }
-  }, [resultFilterData]);
+  }, [resultFilterData,t]);
 
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>

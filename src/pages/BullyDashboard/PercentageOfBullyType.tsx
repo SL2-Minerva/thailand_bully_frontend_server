@@ -13,6 +13,7 @@ import { BullyTypeColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { BullyTypePercentage } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
+import { useTranslation } from 'react-i18next'
 
 interface MessageData {
   params : any,
@@ -22,7 +23,7 @@ interface MessageData {
 }
 
 const PercentageOfBullyType = (props : MessageData) => {
-
+  const {t} = useTranslation()
   const { params, type, chartId, highlight } = props;
   const colors = BullyTypeColors;
   const { resultBullyTypePercentage, loadingBullyTypePercentage } = BullyTypePercentage(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
@@ -79,9 +80,9 @@ const PercentageOfBullyType = (props : MessageData) => {
     const percentage: number[] = [];
     for(let i =0; i<data?.length; i++ ) {
         if(data[i].bully_level) {
-            labels.push(data[i].bully_level);  
+            labels.push(t(data[i].bully_level));  
         } else  if (data[i].bully_type) {
-             labels.push(data[i].bully_type);
+             labels.push(t(data[i].bully_type));
         }
 
       // const percentageValue = data[i]?.value;
@@ -133,7 +134,7 @@ const PercentageOfBullyType = (props : MessageData) => {
       setCurrentData(initValue);
       setPreviousData(initValue);
     }
-  }, [resultBullyTypePercentage]);
+  }, [resultBullyTypePercentage,t]);
 
   const reportNo = '6.1.011';
 

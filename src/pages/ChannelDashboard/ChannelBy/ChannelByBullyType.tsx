@@ -1,75 +1,75 @@
 import { Paper, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
-import { Bar, getDatasetAtEvent, getElementAtEvent} from 'react-chartjs-2'
+import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
-import { chartDatasets, chartLabel } from './ChannelByBullyLevel'
+import { chartDatasets } from './ChannelByBullyLevel'
 import { LineProps } from 'src/pages/VoiceDashboard/MessageByDays'
 import MessageDetail from '../MessageDetail'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
-  
-const ChannelByBullyType = (props: LineProps) => {
+import { useTranslation } from 'react-i18next'
 
+const ChannelByBullyType = (props: LineProps) => {
+  const { t } = useTranslation()
   const { labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
 
-  const [ label, setLabel ] = useState<string[]>([]);
-  const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
-  const [ showDetail , setShowDetail ] = useState<boolean>(false);
-  const [ paramsId, setParamsId] = useState<any>({
-    keywordId : null,
+  const [label, setLabel] = useState<string[]>([])
+  const [dataset, setDataset] = useState<StackChartDataset[]>([])
+  const [showDetail, setShowDetail] = useState<boolean>(false)
+  const [paramsId, setParamsId] = useState<any>({
+    keywordId: null,
     sourceId: null,
     campaign_id: null,
     organization_id: null
-  });
-  const chartRef = useRef();
+  })
+  const chartRef = useRef()
 
   const getKeywordId = (dataset: InteractionItem[]) => {
-    if (!dataset.length) return;
+    if (!dataset.length) return
 
-    const datasetIndex = dataset[0].datasetIndex;
-    const keywordName = data.datasets[datasetIndex].label;
-    const dailyMessageData = resultBy?.value;
+    const datasetIndex = dataset[0].datasetIndex
+    const keywordName = data.datasets[datasetIndex].label
+    const dailyMessageData = resultBy?.value
 
-    const keywordId : number | null= null;
-    let sourceId : number | null = null;
-    let campaign_id : number | null = null;
-    const organization_id : number | null = null;
+    const keywordId: number | null = null
+    let sourceId: number | null = null
+    let campaign_id: number | null = null
+    const organization_id: number | null = null
 
     if (dailyMessageData?.length > 0) {
-      for (let i =0; i<dailyMessageData?.length; i++) {
-          if(keywordName === dailyMessageData[i].source_name) {
-            sourceId = dailyMessageData[i].source_id;
-            campaign_id = dailyMessageData[i].campaign_id;
-          }
+      for (let i = 0; i < dailyMessageData?.length; i++) {
+        if (keywordName === dailyMessageData[i].source_name) {
+          sourceId = dailyMessageData[i].source_id
+          campaign_id = dailyMessageData[i].campaign_id
+        }
       }
     }
 
-    const returnData  = {
-      keywordId : keywordId,
+    const returnData = {
+      keywordId: keywordId,
       sourceId: sourceId,
       campaign_id: campaign_id,
       organization_id: organization_id
     }
-    
-    return returnData;
-  };
-  
-  const onClick = (event : any) => {
-    if(chartRef.current) {
-      const getIndex = getElementAtEvent(chartRef.current, event);
 
-      if(getIndex?.length > 0 ) {
-        const index =  getIndex[0].index;
-        params.label = label[index];
-      }
-      const messageDetailIds =  getKeywordId(getDatasetAtEvent(chartRef.current, event));
+    return returnData
+  }
 
-      if(messageDetailIds) {
-        setParamsId(messageDetailIds);
-        setShowDetail(true);
+  const onClick = (event: any) => {
+    if (chartRef.current) {
+      const getIndex = getElementAtEvent(chartRef.current, event)
+
+      if (getIndex?.length > 0) {
+        const index = getIndex[0].index
+        params.label = label[index]
       }
-      
+      const messageDetailIds = getKeywordId(getDatasetAtEvent(chartRef.current, event))
+
+      if (messageDetailIds) {
+        setParamsId(messageDetailIds)
+        setShowDetail(true)
+      }
     }
   }
 
@@ -90,7 +90,7 @@ const ChannelByBullyType = (props: LineProps) => {
         min: 0,
 
         // max: 5000,
-        
+
         scaleLabel: { display: true },
         ticks: {
           stepSize: 100,
@@ -99,10 +99,9 @@ const ChannelByBullyType = (props: LineProps) => {
         grid: {
           borderColor,
           color: gridLineColor
-        },
+        }
 
         // stacked: true
-        
       }
     },
     plugins: {
@@ -118,64 +117,78 @@ const ChannelByBullyType = (props: LineProps) => {
       }
     }
   }
+  const chartLabel = (data: any) => {
+    if (!data) return []
+    const labels: any[] = []
 
-    useEffect(() => {
-        if(resultBy) {
-        const dailyMessageData = resultBy;
-        if(dailyMessageData) {
-            const labels = chartLabel(dailyMessageData);
-            setLabel(labels);
-            
-            const dataSets = chartDatasets(dailyMessageData);
-            setDataset(dataSets);
-        }
-        }
-    },[resultBy]);
-
-    const data = {
-        labels: label || [],
-        datasets: dataset
+    if (data) {
+      for (let i = 0; i < data.labels?.length; i++) {
+        labels.push(t(data.labels[i]))
+      }
     }
 
-    const reportNo = '3.2.009';
+    return labels
+  }
+  useEffect(() => {
+    if (resultBy) {
+      const labels = chartLabel(resultBy)
+      setLabel(labels)
+    }
+  }, [t])
 
-    const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+  useEffect(() => {
+    if (resultBy) {
+      const dailyMessageData = resultBy
+      if (dailyMessageData) {
+        const labels = chartLabel(dailyMessageData)
+        setLabel(labels)
 
-    return (
-      <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
-        {loading && (
-        <LinearProgress
-            style={{ width: "100%" }}
+        const dataSets = chartDatasets(dailyMessageData)
+        setDataset(dataSets)
+      }
+    }
+  }, [resultBy])
+
+  const data = {
+    labels: label || [],
+    datasets: dataset
+  }
+
+  const reportNo = '3.2.009'
+
+  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
+
+  return (
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+      {loading && <LinearProgress style={{ width: '100%' }} />}
+      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+        <CardHeader
+          title='Daily Messages By Bully Type'
+          titleTypographyProps={{ variant: 'h6' }}
+          subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        )}
-        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <CardHeader
-            title="Daily Messages By Bully Type"
-            titleTypographyProps={{ variant: 'h6' }}
-            subheaderTypographyProps={{ variant: 'caption',color: highlight ? 'green' : '#4c4e64de' }}
-          />
-          <StyledTooltip arrow title={chartTitle || ""}>
-              <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
-          </StyledTooltip>
-        </span>
-      
+        <StyledTooltip arrow title={chartTitle || ''}>
+          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+        </StyledTooltip>
+      </span>
+
       <CardContent>
-          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
-          {
-            showDetail ?
-            <MessageDetail 
-                show={showDetail}
-                setShow={setShowDetail}
-                params = {params}
-                paramsId = {paramsId}
-                setParamsId={setParamsId}
-                reportNo = {reportNo}
-            /> : ""
-          }
-        
+        <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        {showDetail ? (
+          <MessageDetail
+            show={showDetail}
+            setShow={setShowDetail}
+            params={params}
+            paramsId={paramsId}
+            setParamsId={setParamsId}
+            reportNo={reportNo}
+          />
+        ) : (
+          ''
+        )}
       </CardContent>
     </Paper>
-    )
+  )
 }
 
 export default ChannelByBullyType

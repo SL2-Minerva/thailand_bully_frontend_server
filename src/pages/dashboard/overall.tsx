@@ -50,6 +50,7 @@ import AccountList from "./AccountList"
 import WordCloudSentiment from "./WordCloudSentiment"
 import { UserPermission } from "src/services/api/users/role"
 import { GraphicColors } from "src/utils/const"
+import Translations from 'src/layouts/components/Translations'
 
 // import QuickView from "./QuickView"
 
@@ -248,22 +249,22 @@ const OverallDashboard = () => {
                     <Grid container spacing={6} mt={2}>
                         <Grid item sm={4} xs={12}>
                             <FormControl fullWidth>
-                            <InputLabel id='plan-select'>Select Period</InputLabel>
+                            <InputLabel id='plan-select'><Translations text="Period of time" /></InputLabel>
                             <Select
                                 fullWidth
                                 value={dateSelect}
                                 id='select-date'
-                                label='Select Period'
+                                label={<Translations text="Period of time" />}
                                 labelId='date-select'
                                 onChange={(e:SelectChangeEvent) => {handleDateSelect(e)}}
                                 inputProps={{ placeholder: 'Select Period' }}
                             >
-                                <MenuItem value="1">Today</MenuItem>
-                                <MenuItem value="2">Yesterday</MenuItem>
-                                <MenuItem value="3">Last 7 days</MenuItem>
-                                <MenuItem value="4">Last 30 days</MenuItem>
-                                <MenuItem value="5">This Month</MenuItem>
-                                <MenuItem value="6">Last Month</MenuItem>
+                                <MenuItem value="1"><Translations text="Today" /></MenuItem>
+                                <MenuItem value="2"><Translations text="Yesterday" /></MenuItem>
+                                <MenuItem value="3"><Translations text="Last 7 Days" /></MenuItem>
+                                <MenuItem value="4"><Translations text="Last 30 Days" /></MenuItem>
+                                <MenuItem value="5"><Translations text="This Month" /></MenuItem>
+                                <MenuItem value="6"><Translations text="Last Month" /></MenuItem>
                                 <MenuItem value="7">Custom Date Range</MenuItem>
 
                             </Select>
@@ -271,7 +272,7 @@ const OverallDashboard = () => {
                         </Grid>
                         <Grid item sm={4} xs={12}>
                             <FormControl fullWidth>
-                            <InputLabel id='plan-select'>Select Campaign</InputLabel>
+                            <InputLabel id='plan-select'><Translations text="Campaign Name" /></InputLabel>
                             <Select
                                 fullWidth
                                 value={campaign}
@@ -295,7 +296,7 @@ const OverallDashboard = () => {
                         </Grid>
                         <Grid item sm={4} xs={12}>
                             <FormControl fullWidth>
-                            <InputLabel id='plan-select'>Select Platform</InputLabel>
+                            <InputLabel id='plan-select'><Translations text="Channel"/></InputLabel>
                             <Select
                                 fullWidth
                                 value={platformId}

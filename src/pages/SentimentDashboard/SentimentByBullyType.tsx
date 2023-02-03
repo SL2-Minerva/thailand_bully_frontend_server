@@ -6,11 +6,12 @@ import { SentimentAllColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
-import { LineProps,chartLabel } from '../VoiceDashboard/MessageByDays'
+import { LineProps } from '../VoiceDashboard/MessageByDays'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
+import { useTranslation } from 'react-i18next'
   
 const SentimentByBullyType = (props: LineProps) => {
-
+  const {t} = useTranslation()
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight,resultBy, loading } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
@@ -136,7 +137,7 @@ const SentimentByBullyType = (props: LineProps) => {
         totalAmount.push(total[i]?.data[j]);
       } 
       
-      keywordName = total[i]?.keyword_name;
+      keywordName = t(total[i]?.keyword_name);
       const chartDataset : StackChartDataset  = {
         fill: false,
         tension: 0.5,
@@ -160,6 +161,20 @@ const SentimentByBullyType = (props: LineProps) => {
   
   }
 
+  const chartLabel = (data:any) => {
+    if(!data) return [];
+    const labels : any[] = [];
+    
+    if(data) {
+      for(let i =0 ; i<data.labels?.length ; i++) {
+        labels.push(t(data.labels[i]))
+      }
+      
+    }
+  
+    return labels;
+  }
+
     useEffect(() => {
         if(resultBy) {
         const dailyMessageData = resultBy;
@@ -171,7 +186,7 @@ const SentimentByBullyType = (props: LineProps) => {
             setDataset(dataSets);
         }
         }
-    },[resultBy]);
+    },[resultBy,t]);
 
     const data = {
         labels: label || [],

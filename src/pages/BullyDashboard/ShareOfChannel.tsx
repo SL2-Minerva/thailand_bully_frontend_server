@@ -10,19 +10,9 @@ import { Bar } from 'react-chartjs-2'
 import { StyledTooltip } from '../dashboard/overall'; 
 import { Information } from 'mdi-material-ui';
 import { BullyLevelSummaryColors, BullyTypeSummaryColors } from 'src/utils/const';
+import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
 
-const ChartLabels = (data: any) => {
-  if (!data) return [];
-  const keywordData = data;
-
-  const labels : any[] = [];
-
-  for (let i = 0; i<keywordData?.length ; i ++) {
-    labels.push(keywordData[i].keyword_name)
-  }
-  
-  return labels;
-}
 const ChartData = (data: any ) => {
   if (!data) return [];
 
@@ -36,9 +26,32 @@ const ChartData = (data: any ) => {
 
 const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  chartId, highlight, type, loading, loadingChannel} : 
   {resultShareOfChannel: any,resultShareofChannelPlatform : any, chartId : string, highlight: boolean, type: string, loading: boolean, loadingChannel: boolean}) => {
-  const labels = resultShareOfChannel ? ChartLabels(resultShareOfChannel) : [];
+  const [label, setLabel] = useState<any>([])
+  const {t} = useTranslation();
+
+  const ChartLabels = (data: any) => {
+    if (!data) return [];
+    const keywordData = data;
+  
+    const labels : any[] = [];
+  
+    for (let i = 0; i<keywordData?.length ; i ++) {
+      labels.push(t(keywordData[i].keyword_name))
+    }
+    
+    return labels;
+  }
+
+  useEffect(() =>{
+    if(resultShareOfChannel) {
+      const labels = ChartLabels(resultShareOfChannel);
+      setLabel(labels);
+    }
+  },[t, resultShareOfChannel])
+
+  // const labels = resultShareOfChannel ? ChartLabels(resultShareOfChannel) : [];
   const data = {
-  labels: labels,
+  labels: label,
   datasets: [{
       axis: 'y',
       label: '',
@@ -49,6 +62,7 @@ const ShareOfChannel  = ({resultShareOfChannel, resultShareofChannelPlatform,  c
       borderWidth: 1
   }]
 };
+
 
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
