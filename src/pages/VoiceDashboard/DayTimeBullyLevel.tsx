@@ -91,6 +91,8 @@ const DayTimeBullyLevel = (props: Props) => {
         }
         setYlabels(bullyLevelLabels);
       }
+    } else {
+      setSeriesDays([{ name: '', data: [] }])
     }
     if (resultTimeByBullyLevel) {
       const hourValue: any[] = []
@@ -103,6 +105,8 @@ const DayTimeBullyLevel = (props: Props) => {
         }
       }
       setSeriesHour(hourValue)
+    } else {
+      setSeriesHour([{ name: '', data: [] }])
     }
   }, [resultTimeByBullyLevel, resultDayByBullyLevel])
   const reportNo = '2.2.018'

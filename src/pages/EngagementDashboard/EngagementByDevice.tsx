@@ -8,6 +8,7 @@ import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps } from '../VoiceDashboard/MessageByDays'
 import MessageDetail from './MessageDetail'
+import Translations from 'src/layouts/components/Translations'
   
 const EngagementByDevice = (props: LineProps) => {
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
@@ -202,7 +203,7 @@ const EngagementByDevice = (props: LineProps) => {
           )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Daily Engagement By Device"
+            title={<Translations text="Daily Engagement Trans By Devices"/>}
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />

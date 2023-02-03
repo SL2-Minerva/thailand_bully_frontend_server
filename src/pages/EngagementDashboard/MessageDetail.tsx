@@ -13,6 +13,7 @@ import Close from 'mdi-material-ui/Close'
 import DialogNetworkGraph from "../dashboard/DialogNetworkGraph"; 
 import { GetMessageDetail } from "src/services/api/dashboards/overall/overallDashboardApi";
 import moment from "moment";
+import Translations from "src/layouts/components/Translations";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -52,10 +53,12 @@ interface DialogInfoProps {
   paramsId?: any
   setParamsId?: any
   reportNo?: string
+  title?: string
+  networkTitle?: string
 }
 
 const MessageDetail = (props: DialogInfoProps) => {
-    const { show, setShow, current, params, paramsId, setParamsId, reportNo } = props
+    const { show, setShow, current, params, paramsId, setParamsId, reportNo, title, networkTitle } = props
     const [ showDialog, setShowDialog ] = useState<boolean>(false);
     const [page, setPage] = useState(0);
     const [messageId, setMessageId ] = useState<number | string>();
@@ -143,7 +146,7 @@ const MessageDetail = (props: DialogInfoProps) => {
             </IconButton>
             <Box sx={{ mb: 8, textAlign: 'center' }}>
               <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-                Message Detail
+                <Translations text={title || "Daily Messages: Message Transactions"} />
               </Typography>
             </Box>
 
@@ -199,6 +202,7 @@ const MessageDetail = (props: DialogInfoProps) => {
             setKeywordId = {setParamsId}
             setMessageId = {setMessageId}
             reportNo= {reportNo}
+            title={networkTitle || "Daily Messages: Social Network Analysis"}
           />
           :
           ""

@@ -8,6 +8,7 @@ import { Grid, LinearProgress } from "@mui/material"
 import { Bar } from 'react-chartjs-2'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import Translations from 'src/layouts/components/Translations'
 
 const ChartLabels = (data: any) => {
   if (!data) return [];
@@ -64,7 +65,7 @@ const ChannelBySentiment  = ({ chartId, highlight, resultBy, loading} : {params:
         )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title='Channel by Sentiment'
+            title={<Translations text='Channel by Sentiement'/>}
             titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
           />
           <StyledTooltip arrow title={chartTitle || ""}>

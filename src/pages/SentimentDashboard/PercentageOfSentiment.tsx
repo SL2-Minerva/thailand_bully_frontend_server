@@ -13,6 +13,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { SentimentColors } from 'src/utils/const'
 import { useTranslation } from 'react-i18next'
+import Translations from 'src/layouts/components/Translations'
 
 interface MessageData {
   type: string
@@ -23,9 +24,9 @@ interface MessageData {
   loadingFilterData : boolean
 }
 
-const PercentageOfSentiment = (props : MessageData) => {
+const PercentageOfSentiments = (props : MessageData) => {
 
-  const { type, chartId, highlight,resultFilterData, loadingFilterData } = props;
+  const { chartId, highlight,resultFilterData, loadingFilterData } = props;
   const colors = SentimentColors;
   const {t} = useTranslation()
   const initValue = {
@@ -104,7 +105,6 @@ const PercentageOfSentiment = (props : MessageData) => {
     return returnData;
   }
 
-  const title =  type === 'transaction' ? 'Percentage of Sentiment' : "Percentage of Sentiment Type";
   const reportNo = '5.1.001';
 
   const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
@@ -145,7 +145,7 @@ const PercentageOfSentiment = (props : MessageData) => {
             )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title= {title}
+            title={<Translations text='Percentage of Sentiment Type'/>}
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheader='Period over Period Comparison'
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
@@ -178,4 +178,4 @@ const PercentageOfSentiment = (props : MessageData) => {
   )
 }
 
-export default PercentageOfSentiment
+export default PercentageOfSentiments

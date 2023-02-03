@@ -92,6 +92,8 @@ const DayTimeBullyType = (props: Props) => {
         }
         setYlabels(bullyTypeLabels);
       }
+    } else {
+      setSeriesDays([{ name: '', data: [] }]);
     }
     if (resultTimeByBullyType) {
       const hourValue: any[] = []
@@ -104,6 +106,8 @@ const DayTimeBullyType = (props: Props) => {
         }
       }
       setSeriesHour(hourValue)
+    } else {
+      setSeriesHour([{ name: '', data: [] }])
     }
   }, [resultDayByBullyType, resultTimeByBullyType])
 

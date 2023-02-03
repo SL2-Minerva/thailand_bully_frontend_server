@@ -81,24 +81,28 @@ const DayTimeSentiment = (props: Props) => {
   useEffect(() => {
     if (resultDayBySentiment) {
       setSeriesDays(resultDayBySentiment)
+    } else {
+      setSeriesDays([{ name: '', data: [] }])
     }
     if (resultTimeBySentiment) {
       const hourValue: any[] = []
       if (resultTimeBySentiment?.length > 0) {
         for (let i = 0; i < resultTimeBySentiment?.length; i++) {
           hourValue.push({
-            name: i == 0 ? 'Negative' : i == 1 ? 'Neutral' : i == 2 ? 'Positive' : '',
+            name: resultDayBySentiment[i]?.name,
             data: resultTimeBySentiment[i]?.data
           })
         }
       }
       setSeriesHour(hourValue)
+    } else {
+      setSeriesHour([{ name: '', data: [] }]);
     }
   }, [resultDayBySentiment, resultTimeBySentiment])
 
   useEffect(() => {
     if (yIndex === 0 || yIndex) {
-      params.ylabel = yIndex == 0 ? 'Negative' : yIndex == 1 ? 'Neutral' : yIndex == 2 ? 'Positive' : ''
+      params.ylabel = resultDayBySentiment[yIndex]?.name
     }
 
     if (xIndex === 0 || xIndex) {
@@ -112,7 +116,7 @@ const DayTimeSentiment = (props: Props) => {
 
   useEffect(() => {
     if (yIndexTime === 0 || yIndexTime) {
-      params.ylabel = yIndexTime == 0 ? 'Negative' : yIndexTime == 1 ? 'Neutral' : yIndexTime == 2 ? 'Positive' : ''
+      params.ylabel = resultDayBySentiment[yIndexTime]?.name
     }
 
     if (xIndexTime === 0 || xIndexTime) {

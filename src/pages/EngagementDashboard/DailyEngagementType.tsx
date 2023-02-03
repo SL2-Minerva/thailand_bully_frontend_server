@@ -13,6 +13,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import MessageDetail from './MessageDetail'
 import { LinearProgress, Paper } from '@mui/material'
+import Translations from 'src/layouts/components/Translations'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -263,7 +264,7 @@ const DailyEngagementType = (props: LineProps) => {
         )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-              title='Daily Engagement Type By Date'
+              title={<Translations text='Daily Engagement Type By Date'/>}
               titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
               subheader='KeyWords'
               subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}

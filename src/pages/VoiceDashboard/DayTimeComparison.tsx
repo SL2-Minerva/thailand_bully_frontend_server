@@ -69,6 +69,8 @@ const DayTimeComparison = ({
   useEffect(() => {
     if (resultDayTimeComparison) {
       setSeries(resultDayTimeComparison)
+    } else {
+      setSeries([])
     }
   }, [resultDayTimeComparison])
 

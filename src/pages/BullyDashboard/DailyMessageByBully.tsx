@@ -15,6 +15,7 @@ import { Information } from 'mdi-material-ui'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { LinearProgress } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import Translations from 'src/layouts/components/Translations'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -270,7 +271,7 @@ const DailyMessgeByBully = (props: LineProps) => {
             )} 
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-            title= {title}
+            title= {<Translations text={title}/>}
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheader='Period over Period Comparison'
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}

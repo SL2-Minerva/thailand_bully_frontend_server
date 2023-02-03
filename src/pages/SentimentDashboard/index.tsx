@@ -11,7 +11,6 @@ import {
   GetSummaryBy
 } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
 import DailySenitment from './DailySentiment'
-import PercentageOfSentiment from './PercentageOfSentiment'
 import TotalMessage from './TotalMessage'
 import PeriodComparisonChart from '../EngagementDashboard/PeriodComparisonChart'
 import SentimentScore from './SentimentScore'
@@ -34,6 +33,8 @@ import SentimentComparisonTable from './SentimentComparison'
 import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { SentimentAllColors } from 'src/utils/const'
 import QuickViewModal from './QuickViewModal'
+import PercentageOfSentiments from './PercentageOfSentiment'
+import Translations from 'src/layouts/components/Translations'
 
 const SentimentDashboard = () => {
   const theme = useTheme()
@@ -212,7 +213,7 @@ const SentimentDashboard = () => {
       <Grid container spacing={3} mt={2}>
         {resultReportPermission?.includes('76') ? (
           <Grid id='chart1' item xs={12} md={4}>
-            <PercentageOfSentiment
+            <PercentageOfSentiments
               resultFilterData={resultFilterData}
               loadingFilterData={loadingFilterData}
               params={params}
@@ -392,7 +393,7 @@ const SentimentDashboard = () => {
               <Card id='chart10'>
                 <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                   <CardHeader
-                    title='Total Messages by Engagement Type'
+                    title={<Translations text='Total Messages by Engagement Type'/>}
                     titleTypographyProps={{ variant: 'h6', color: highlight === 'chart10' ? 'green' : '#4c4e64de' }}
                   />
                   <StyledTooltip arrow title='Chart 10, Report Level 2(5.2.012)'>

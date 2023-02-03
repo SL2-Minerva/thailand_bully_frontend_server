@@ -10,6 +10,7 @@ import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { StyledTooltip } from '../dashboard/overall';
 import { Information } from 'mdi-material-ui';
+import Translations from 'src/layouts/components/Translations';
 
 const SenitmentScore  = ({ chartId, highlight, resultSenitmentScore, loadingSentimentScore} : {params: any, chartId: string, highlight: boolean, resultSenitmentScore : any, loadingSentimentScore: boolean}) => {
 
@@ -26,7 +27,7 @@ const SenitmentScore  = ({ chartId, highlight, resultSenitmentScore, loadingSent
             )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title='Sentiment Score'
+            title={<Translations text='Sentiment Score'/>}
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           />
           <StyledTooltip arrow title={title || ""}>

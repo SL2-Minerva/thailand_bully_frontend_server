@@ -12,6 +12,7 @@ import { StyledTooltip } from '../dashboard/overall';
 import { Information } from 'mdi-material-ui';
 import { GetSentimentComparison } from 'src/services/api/dashboards/sentiment/sentimentDashboard';
 import { useEffect, useState } from 'react';
+import Translations from 'src/layouts/components/Translations';
 
 const SentimentComparisonTable  = ({params, chartId, highlight} : {params: any, chartId: string, highlight:boolean}) => {
   const [page, setPage] = useState(0);
@@ -41,7 +42,7 @@ const SentimentComparisonTable  = ({params, chartId, highlight} : {params: any, 
             )}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title='Sentiment Type Comparison: Period over Period'
+            title={<Translations text='Sentiment Type Comparison: Period over Period'/>}
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheader="Period over Period"
           />

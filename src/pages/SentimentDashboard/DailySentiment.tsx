@@ -15,6 +15,7 @@ import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { SentimentColors } from 'src/utils/const'
 import { LinearProgress } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import Translations from 'src/layouts/components/Translations'
 
 interface LineProps {
   white: string
@@ -262,7 +263,7 @@ const DailySenitment = (props: LineProps) => {
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Daily Sentiment Type by Date'
+          title={<Translations text='Daily Sentiment Type by Date'/>}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={chartTitle || ''}>

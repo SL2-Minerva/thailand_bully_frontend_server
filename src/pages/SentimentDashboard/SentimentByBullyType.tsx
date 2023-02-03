@@ -9,6 +9,7 @@ import { InteractionItem } from 'chart.js'
 import { LineProps } from '../VoiceDashboard/MessageByDays'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { useTranslation } from 'react-i18next'
+import Translations from 'src/layouts/components/Translations'
   
 const SentimentByBullyType = (props: LineProps) => {
   const {t} = useTranslation()
@@ -206,7 +207,7 @@ const SentimentByBullyType = (props: LineProps) => {
             )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Daily Sentiment By BullyType"
+            title={<Translations text="Daily Sentiment Type By Bully Type"/>}
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />

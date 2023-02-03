@@ -8,6 +8,7 @@ import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps } from '../VoiceDashboard/MessageByDays'
 import MessageDetail from './MessageDetail'
+import Translations from 'src/layouts/components/Translations'
 
 export const chartLabel = (currentData:any, previousData : any) => {
   if(!currentData && !previousData) return [];
@@ -217,7 +218,7 @@ const EngagementRate = (props: LineProps) => {
         )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Engagement Rate"
+            title={<Translations text="Engagement Rate"/>}
             titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption',color: highlight ? 'green' : '#4c4e64de' }}
           />

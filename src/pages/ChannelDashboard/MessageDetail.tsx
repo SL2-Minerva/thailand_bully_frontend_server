@@ -151,7 +151,7 @@ const MessageDetail = (props: DialogInfoProps) => {
               )}
             <Box sx={{ mb: 8, textAlign: 'center' }}>
               <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-                <Translations text={title || "Messages Detail"} />
+                <Translations text={title || "Daily Messages: Message Transactions"} />
               </Typography>
             </Box>
 
@@ -214,7 +214,7 @@ const MessageDetail = (props: DialogInfoProps) => {
             setKeywordId = {setParamsId}
             setMessageId = {setMessageId}
             reportNo = { reportNo}
-            title ={networkTitle}
+            title ={networkTitle || "Daily Messages: Social Network Analysis"}
           />
           :
           ""

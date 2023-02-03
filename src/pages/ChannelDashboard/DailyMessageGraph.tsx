@@ -14,6 +14,7 @@ import { InteractionItem } from 'chart.js'
 import moment from 'moment'
 import MessageDetail from './MessageDetail'
 import { LinearProgress, Paper } from '@mui/material'
+import Translations from 'src/layouts/components/Translations'
 
 interface Props {
   type: string
@@ -250,13 +251,13 @@ const DailyMessageGraph = ( props : Props) => {
             {
               type === 'message' ?
               <CardHeader 
-                  title='Daily Messages by Date'
+                  title={<Translations text='Daily Messages by Date'/>}
                   titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
               />
               :
               type === 'channel' ?
               <CardHeader 
-                  title='Daily Messages by Date'
+              title={<Translations text='Daily Messages by Date'/>}
                   titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
               />
               : ""

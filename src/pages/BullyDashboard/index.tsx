@@ -588,6 +588,7 @@ const BullyDashboard = () => {
                 type={bullyType}
                 chartId={'Chart 17, Report Level 2(6.2.021)'}
                 highlight={highlight === 'chart17' ? true : false}
+                title="Bully Level: Share of Channel"
               />
             ) : (
               <ShareOfChannel
@@ -598,6 +599,7 @@ const BullyDashboard = () => {
                 type={bullyType}
                 chartId={'Chart 18, Report Level 2(6.2.022)'}
                 highlight={highlight === 'chart17' ? true : false}
+                title = "Bully Type: Share of Channel"
               />
             )}
           </Grid>

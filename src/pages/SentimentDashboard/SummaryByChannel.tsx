@@ -7,6 +7,7 @@ import { Information } from 'mdi-material-ui'
 import { useEffect, useState } from 'react'
 import { renderProgress } from './SummaryByKeywords'
 import { DataGrid } from '@mui/x-data-grid'
+import Translations from 'src/layouts/components/Translations'
 
 const SummaryByChannel = ({
   resultSummaryByChannel,
@@ -57,7 +58,7 @@ const SummaryByChannel = ({
       {loadingSummaryByChannel && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Summary Sentiment Score by Channel'
+          title={<Translations text='Summary Sentiment Score by Channel'/>}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={title || ''}>

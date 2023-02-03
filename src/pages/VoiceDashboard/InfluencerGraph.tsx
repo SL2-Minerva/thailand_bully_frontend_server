@@ -188,6 +188,9 @@ const InfluencerGraph = ({
 
       const dataSets = chartDatasets(resultNumbersOfAccounts)
       setDataset(dataSets)
+    } else {
+      setLabel([]);
+      setDataset([]);
     }
   }, [resultNumbersOfAccounts])
 

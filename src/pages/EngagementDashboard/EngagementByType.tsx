@@ -9,6 +9,7 @@ import { InteractionItem } from 'chart.js'
 import { LineProps } from '../VoiceDashboard/MessageByDays'
 import MessageDetail from './MessageDetail'
 import { useTranslation } from 'react-i18next'
+import Translations from 'src/layouts/components/Translations'
   
 const EngagementByType = (props: LineProps) => {
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
@@ -209,7 +210,7 @@ const EngagementByType = (props: LineProps) => {
           )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title="Daily Engagement By Engagement Type"
+            title={<Translations text="Daily Engagement Trans By Engagement Type"/>}
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />

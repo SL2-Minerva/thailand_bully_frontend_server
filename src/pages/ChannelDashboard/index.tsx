@@ -25,6 +25,7 @@ import ChannelByAccount from './ChannelBy/ChannelByAccount'
 import ChannelBySentimentComparison from './ChannelBy/ChannelBySentimentComparison'
 import ChannelByBullyLevel from './ChannelBy/ChannelByBullyLevel'
 import ChannelByBullyType from './ChannelBy/ChannelByBullyType'
+import Translations from 'src/layouts/components/Translations'
 
 const ChannelDashboard = () => {
   const theme = useTheme()
@@ -376,7 +377,7 @@ const ChannelDashboard = () => {
             <Card>
               <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
-                  title='Channel Comparison: Period over Period'
+                  title={<Translations text="Channel Comparison: Period over Period"/>}
                   titleTypographyProps={{ variant: 'h6', color: highlight === 'chart10' ? 'green' : '#4c4e64de' }}
                 />
                 <StyledTooltip arrow title='Chart 10, Report Level 2(3.3.012)'>

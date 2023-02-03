@@ -9,6 +9,7 @@ import { LineProps } from 'src/pages/VoiceDashboard/MessageByDays'
 import MessageDetail from '../MessageDetail'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
 import { useTranslation } from 'react-i18next'
+import Translations from 'src/layouts/components/Translations'
 
 const ChannelByBullyType = (props: LineProps) => {
   const { t } = useTranslation()
@@ -163,7 +164,7 @@ const ChannelByBullyType = (props: LineProps) => {
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title='Daily Messages By Bully Type'
+          title={<Translations text='Daily Messages By Bully Type' />}
           titleTypographyProps={{ variant: 'h6' }}
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
