@@ -124,7 +124,7 @@
   "Daily Engagement Trans By Time":	"จำนวนการมีส่วนร่วมแบ่งตามช่วงเวลา",
   "Daily Engagement Trans By Device"	: "จำนวนการมีส่วนร่วมแบ่งตามอุปกรณ์",
   "Daily Engagement Trans By Account" :	"จำนวนการมีส่วนร่วมแบ่งตามผู้ใช้งาน",
- " Daily Engagement Trans By Channel" :	"จำนวนการมีส่วนร่วมแบ่งตามช่องทาง",
+  "Daily Engagement Trans By Channel" :	"จำนวนการมีส่วนร่วมแบ่งตามช่องทาง",
   "Daily Engagement Trans By Engagement Type"	: "จำนวนการมีส่วนร่วมแบ่งตามประเภทการมีส่วนร่วม",
   "Percentage of Engagement Type" : "จำนวนการมีส่วนร่วมแบ่งตามประเภท",
   "Daily Engagement Type By Date" :	"ประเภทการมีส่วนร่วมรายวัน",

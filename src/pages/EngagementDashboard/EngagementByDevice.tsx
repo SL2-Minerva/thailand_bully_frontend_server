@@ -203,7 +203,7 @@ const EngagementByDevice = (props: LineProps) => {
           )}
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title={<Translations text="Daily Engagement Trans By Devices"/>}
+            title={<Translations text="Daily Engagement Trans By Device"/>}
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />
