@@ -50,9 +50,19 @@ const LanguageDropdown = ({ settings, saveSettings }: Props) => {
   }
 
   const handleLangItemClick = (lang: 'en' | 'fr' | 'ar' | 'th') => {
+    localStorage.setItem('language', lang);
     i18n.changeLanguage(lang)
     handleLangDropdownClose()
   }
+
+  useEffect (() => {
+    const lang = localStorage.getItem('language');
+    if (lang) {
+      i18n.changeLanguage(lang)
+    } else {
+      i18n.changeLanguage('en');
+    }
+  },[i18n])
 
   return (
     <Fragment>

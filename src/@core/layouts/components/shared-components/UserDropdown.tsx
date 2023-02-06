@@ -86,6 +86,7 @@ const UserDropdown = (props: Props) => {
   const handleLogout = () => {
     logout()
     handleDropdownClose()
+    localStorage.removeItem('language');
   }
 
   return (

@@ -17,6 +17,7 @@ import MuiDrawer, { DrawerProps } from '@mui/material/Drawer'
 import Close from 'mdi-material-ui/Close'
 import { ArrowLeftDropCircle, ArrowRightDropCircle } from 'mdi-material-ui'
 import { Toggler, TogglerOpen } from '../VoiceDashboard/QuickView'
+import Translations from 'src/layouts/components/Translations'
   
 export const Drawer = styled(MuiDrawer)<DrawerProps>(({ theme }) => ({
     width: 400,
@@ -105,35 +106,35 @@ const QuickView = ({setHighlight, setShowQuickView} : {setHighlight?:any, setSho
               </Link>
               <Divider sx={{ m: 0 }} /> */}
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart2")}}>
-                    <Typography sx={{ color : highlightText === 'chart2' ? 'green' : '#4c4e64de'  }}>Chart 2 : Daily Sentiment Type by Date</Typography>
+                    <Typography sx={{ color : highlightText === 'chart2' ? 'green' : '#4c4e64de'  }}>Chart 2 : <Translations text='Daily Sentiment Type by Date'/></Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart3")}}>
-                    <Typography sx={{ color : highlightText === 'chart3' ? 'green' : '#4c4e64de'  }}>Chart 3 : Daily Sentiment by Day</Typography>
+                    <Typography sx={{ color : highlightText === 'chart3' ? 'green' : '#4c4e64de'  }}>Chart 3 : <Translations text='Daily Sentiment Type By Day'/></Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart4")}}>
-                    <Typography sx={{ color : highlightText === 'chart4' ? 'green' : '#4c4e64de'  }}>Chart 4 : Daily Sentiment by Time</Typography>
+                    <Typography sx={{ color : highlightText === 'chart4' ? 'green' : '#4c4e64de'  }}>Chart 4 : <Translations text='Daily Sentiment Type By Time'/></Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart5")}}>
-                    <Typography sx={{ color : highlightText === 'chart5' ? 'green' : '#4c4e64de'  }}>Chart 5 : Daily Sentiment by Devices</Typography>
+                    <Typography sx={{ color : highlightText === 'chart5' ? 'green' : '#4c4e64de'  }}>Chart 5 : <Translations text='Daily Sentiment Type By Device'/></Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart6")}}>
-                    <Typography sx={{ color : highlightText === 'chart6' ? 'green' : '#4c4e64de'  }}>Chart 6 : Daily Sentiment by Account</Typography>
+                    <Typography sx={{ color : highlightText === 'chart6' ? 'green' : '#4c4e64de'  }}>Chart 6 : <Translations text='Daily Sentiment Type By Account'/></Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart7")}}>
-                    <Typography sx={{ color : highlightText === 'chart7' ? 'green' : '#4c4e64de'  }}>Chart 7 : Daily Sentiment by Channel</Typography>
+                    <Typography sx={{ color : highlightText === 'chart7' ? 'green' : '#4c4e64de'  }}>Chart 7 : <Translations text='Daily Sentiment Type By Channel'/></Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart8")}}>
-                    <Typography sx={{ color : highlightText === 'chart8' ? 'green' : '#4c4e64de'  }}>Chart 8 : Daily Sentiment by Bully Level</Typography>
+                    <Typography sx={{ color : highlightText === 'chart8' ? 'green' : '#4c4e64de'  }}>Chart 8 : <Translations text='Daily Sentiment Type By Bully Level'/></Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 4 }} onClick={() => {onClose("chart9")}}>
-                    <Typography sx={{ color : highlightText === 'chart9' ? 'green' : '#4c4e64de'  }}>Chart 9 : Daily Sentiment by Bully Type</Typography>
+                    <Typography sx={{ color : highlightText === 'chart9' ? 'green' : '#4c4e64de'  }}>Chart 9 : <Translations text='Daily Sentiment Type By Bully Type'/></Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
 
