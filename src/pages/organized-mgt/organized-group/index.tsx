@@ -18,9 +18,11 @@ import Button from '@mui/material/Button'
 import DialogOrganizationInfo from './dialogOrganizationInfo'
 import { OrganzationGroupServiceList } from 'src/services/api/organization/OrganizationApi';
 import authConfig from '../../../configs/auth'
+import { useRouter } from 'next/router';
 
 
 const OrganizationGroup = () => {
+  const router = useRouter()
   const [ showEdit , setShowEdit ] = useState<boolean>(false)
   const [ showCreate, setShowCreate ] = useState<boolean>(false)
   const [reload, setReload] = useState<boolean>(false)
@@ -30,7 +32,7 @@ const OrganizationGroup = () => {
   const [pageCount, setPageCount] = useState<number>(0);
 
   const toggleCreate = ()=>{setAction('create');setShowCreate(true); setCurrent({})}
-  const { result_organization_group_list, total } = OrganzationGroupServiceList(reload, page);
+  const { result_organization_group_list, total, error_organization_group_list } = OrganzationGroupServiceList(reload, page);
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
       setPage(value-1);
@@ -70,6 +72,12 @@ const OrganizationGroup = () => {
     // values[index].status = event.target.checked
   }
 
+  useEffect(()=> {
+    if(error_organization_group_list) {
+      window.localStorage.removeItem('userData')
+      router.push('/login')
+    }
+  }, [error_organization_group_list])
 
   return (
     <Grid container spacing={6}>

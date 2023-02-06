@@ -19,6 +19,7 @@ import SourceService from 'src/services/api/source/SourceApi'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { UserPermission } from 'src/services/api/users/role'
+import { useRouter } from 'next/router'
 
 const SourceManagement = () => {
   const [showEdit, setShowEdit] = useState<boolean>(false)
@@ -29,14 +30,14 @@ const SourceManagement = () => {
   const [action, setAction] = useState<string>('create')
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState<number>(0);
-
+  const router = useRouter()
   const toggleCreate = () => {
     setAction('create')
     setShowCreate(!showCreate)
     setCurrent({})
   }
 
-  const { result_source_list, total } = SourceService(reload, page)
+  const { result_source_list, total} = SourceService(reload, page)
 
   useEffect(() => {
     setReload(!reload)
@@ -67,7 +68,7 @@ const SourceManagement = () => {
     setTableData(result_source_list)
   }
   const [tableData, setTableData] = useState(result_source_list)
-  const { resultPermission } = UserPermission();
+  const { resultPermission, errorUserPermission } = UserPermission();
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value-1);
@@ -78,6 +79,13 @@ const SourceManagement = () => {
       setPageCount(Math.ceil(total / 10));
       }
   }, [total]);
+
+  useEffect(()=> {
+    if(errorUserPermission) {
+      window.localStorage.removeItem('userData')
+      router.push('/login')
+    }
+  }, [errorUserPermission])
 
   return (
     <Grid container spacing={6}>

@@ -19,8 +19,10 @@ import DomainList from 'src/services/api/domains/DomainAPI'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { UserPermission } from 'src/services/api/users/role'
+import { useRouter } from 'next/router'
 
 const DomainManagement = () => {
+  const router = useRouter()
   const [showEdit, setShowEdit] = useState<boolean>(false)
   const [showCreate, setShowCreate] = useState<boolean>(false)
   const [reload, setReload] = useState<boolean>(false)
@@ -36,12 +38,19 @@ const DomainManagement = () => {
   }
 
   const { result_domain_list, total } = DomainList(reload, page)
-  const { resultPermission } = UserPermission();
+  const { resultPermission, errorUserPermission } = UserPermission();
 
   useEffect(() => {
     setReload(!reload)
     setTableData(result_domain_list)
   }, [showCreate, showEdit])
+
+  useEffect(()=> {
+    if(errorUserPermission) {
+      window.localStorage.removeItem('userData')
+      router.push('/login')
+    }
+  }, [errorUserPermission])
 
   function handleChange(index: number, i: number, event: any) {
     axios.put(

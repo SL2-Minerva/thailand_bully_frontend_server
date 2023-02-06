@@ -226,7 +226,7 @@ const DailyEngagement = (props: LineProps) => {
   }
 
   useEffect(() => {
-    if(resultFilterData) {
+    if(resultFilterData?.engagement) {
       const engagementData = resultFilterData?.engagement;
       if(engagementData) {
         const labels = chartLabel(engagementData);

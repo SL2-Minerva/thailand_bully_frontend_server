@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Card, CardContent, CardHeader, Grid } from '@mui/material'
 import DailyMessageGraph from './DailyMessageGraph'
 import InfluencerGraph from './InfluencerGraph'
@@ -20,8 +20,10 @@ import KeywordBy from './KeywordBy'
 import DayTimeBy from './DayTimeBy'
 import MessageByAll from './MessageByAll'
 import Comparison from './Comparision'
+import { useRouter } from 'next/router'
 
 const VoiceDashboard = () => {
+  const router = useRouter()
   const [date, setDate] = useState<DateType>(new Date())
   const [endDate, setEndDate] = useState<DateType>(new Date())
   const [period, setPeriod] = useState<string>('daily')
@@ -47,7 +49,7 @@ const VoiceDashboard = () => {
     ylabel: ''
   }
 
-  const { resultReportPermission } = UserPermission()
+  const { resultReportPermission, errorUserPermission } = UserPermission()
   const { resultNumbersOfAccounts, resultTotalAccounts, resultTotalMessages, loadingNumbersOfAccountsComparison } =
     GetNumbersOfAccountsComparison(campaign, date, endDate, period, keyword)
 
@@ -72,6 +74,13 @@ const VoiceDashboard = () => {
 
     return data
   }
+
+  useEffect(()=> {
+    if(errorUserPermission) {
+      window.localStorage.removeItem('userData')
+      router.push('/login')
+    }
+  }, [errorUserPermission])
 
   return (
     <Grid container spacing={6}>

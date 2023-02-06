@@ -58,6 +58,7 @@ import authConfig from '../../../../configs/auth'
 import { API_PATH } from 'src/utils/const'
 import { UserPermission } from 'src/services/api/users/role'
 import moment from 'moment'
+import { useRouter } from 'next/router'
 
 interface UserRoleType {
   [key: string]: ReactElement
@@ -227,10 +228,11 @@ const UserList = () => {
   const [ refreshDelete, setRefreshDelete ] = useState<boolean>(false);
 
   //user permission 
-  const { resultPermission } = UserPermission();
+  const { resultPermission, errorUserPermission } = UserPermission();
 
   // ** Hooks
   const { list } = Organization.getList(reload)
+  const router = useRouter()
 
   useEffect(() => {
     handleList()
@@ -238,6 +240,13 @@ const UserList = () => {
 
     setUsers([])
   }, [organization, role, status, value, userName, date, endDate])
+
+  useEffect(()=> {
+    if(errorUserPermission) {
+      window.localStorage.removeItem('userData')
+      router.push('/login')
+    }
+  }, [errorUserPermission])
 
   const handleList = () => {
     axios

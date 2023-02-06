@@ -138,7 +138,7 @@ const VerticalNavHeader = (props: Props) => {
           <StyledLink>
               {
                 navCollapsed ? 
-                  <img src='/images/Logo_notext.png' alt='logo' width={50}  height={50} />
+                  <img src='/images/Logo_notext.png' alt='logo' width={35}  height={35} />
                 :
                 ""
               }

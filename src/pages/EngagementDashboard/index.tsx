@@ -1,5 +1,5 @@
 import { Button, Card, CardContent, CardHeader, Grid } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   EngagementTypeBy,
   FilterByCampaignId,
@@ -35,9 +35,11 @@ import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDash
 import { EngagementTransChartColor } from 'src/utils/const'
 import EngagementByType from './EngagementByType'
 import QuickViewModal from './QuickViewModal'
+import { useRouter } from 'next/router'
 
 const EngagementDashboard = () => {
   const theme = useTheme()
+  const router = useRouter()
   const whiteColor = '#fff'
   const lineChartYellow = '#d4e157'
   const lineChartPrimary = '#787EFF'
@@ -59,7 +61,7 @@ const EngagementDashboard = () => {
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
 
-  const { resultReportPermission } = UserPermission()
+  const { resultReportPermission, errorUserPermission } = UserPermission()
   const { resultKeywordList } = GetKeyWordsList(campaignType)
 
   const { resultFilterData, loadingFilterData } = FilterByCampaignId(campaignType, date, endDate, period, keyword)
@@ -144,6 +146,13 @@ const EngagementDashboard = () => {
 
     return data
   }
+
+  useEffect(()=> {
+    if(errorUserPermission) {
+      window.localStorage.removeItem('userData')
+      router.push('/login')
+    }
+  }, [errorUserPermission])
 
   return (
     <>

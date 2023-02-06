@@ -14,7 +14,10 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
+import { Chart} from "chart.js";
+import * as DoughnutLabel from "chartjs-plugin-doughnutlabel-rebourne";
 
+Chart.register(DoughnutLabel );
 interface MessageData {
   params : any,
   type: string,
@@ -42,6 +45,9 @@ const PercentageOfBully = (props : MessageData) => {
   const [ currentPeriod, setCurrentPeriod ] = useState<string>('');
   const [ previousPeriod, setPreviousPeriod ] = useState<string>('');
 
+  const [ currentTotal, setCurrentTotal ] = useState<number>();
+  const [ previousTotal, setPreviousTotal ] = useState<number>();
+
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
   
@@ -59,6 +65,52 @@ const PercentageOfBully = (props : MessageData) => {
           color: labelColor,
           usePointStyle: true
         }
+      },
+      doughnutlabel: {
+        paddingPercentage: 5,
+        labels: [
+          {
+            text: currentTotal|| "",
+            font: {
+              size: '50',
+              family: 'Arial, Helvetica, sans-serif',
+              weight: 'bold'
+            },
+            color: '#434343'
+          }
+        ]
+      }
+    }
+  }
+
+  const optionsPrevious = {
+    responsive: true,
+    backgroundColor: false,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        align: 'end',
+        position: 'top',
+        labels: {
+          padding: 25,
+          boxWidth: 10,
+          color: labelColor,
+          usePointStyle: true
+        }
+      },
+      doughnutlabel: {
+        paddingPercentage: 5,
+        labels: [
+          {
+            text: previousTotal|| "",
+            font: {
+              size: '50',
+              family: 'Arial, Helvetica, sans-serif',
+              weight: 'bold'
+            },
+            color: '#434343'
+          }
+        ]
       }
     }
   }
@@ -115,14 +167,26 @@ const PercentageOfBully = (props : MessageData) => {
       if(currentMessageData) {
         const currentDataset = chartDataset(currentMessageData, 'current');
         setCurrentData(currentDataset);
+        if(currentMessageData?.length > 0){
+          setCurrentTotal(currentMessageData[0]?.value?.total);
+        } else {
+          setCurrentTotal(0)
+        }
       } else {
         setCurrentData(initValue);
+        setCurrentTotal(0);
       } 
       if(previousMessageData) {
         const previousDataset = chartDataset(previousMessageData, 'previous');
         setPreviousData(previousDataset);
+        if(previousMessageData?.length > 0){
+          setPreviousTotal(previousMessageData[0]?.value?.total);
+        } else {
+          setPreviousTotal(0)
+        }
       } else {
         setPreviousData(initValue);
+        setPreviousTotal(0);
       }
     } else {
       setCurrentData(initValue);
@@ -158,7 +222,7 @@ const PercentageOfBully = (props : MessageData) => {
                 <Doughnut data={currentData} options={options as any} height={330} />
             </Grid>
             <Grid item xs={12} md={6}>
-                <Doughnut data={previousData} options={options as any} height={330} />
+                <Doughnut data={previousData} options={optionsPrevious as any} height={330} />
             </Grid>  
             <Grid item xs={12} md={6}>  
                 <p style={{ fontSize:'10px' }}> Current Period :</p>  

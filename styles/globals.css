@@ -33,6 +33,15 @@ code[class*='language-'] {
   height: auto;
 }
 
+.logo-login {
+  margin: auto;
+}
+
+.logo-login img{
+  width: 60%;
+  height: auto;
+}
+
 .logo-sidebar-noText {
   margin: auto;
 }

@@ -1,5 +1,7 @@
 import { Grid, Card, CardContent, Typography, CardHeader } from '@mui/material'
 import { styled } from '@mui/material/styles'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import { ContentLists } from 'src/services/api/content/ContentAPI'
 
 const Img = styled('img')(({ theme }) => ({
@@ -16,7 +18,15 @@ const Img = styled('img')(({ theme }) => ({
 
 const ContentPage = () => {
 
-    const {resultContents} = ContentLists();
+    const {resultContents, errorCampaiganList} = ContentLists();
+    const router = useRouter();
+    
+    useEffect(()=> {
+        if(errorCampaiganList) {
+          window.localStorage.removeItem('userData')
+          router.push('/login')
+        }
+      }, [errorCampaiganList])
 
     console.log("result content list : ", resultContents);
 
