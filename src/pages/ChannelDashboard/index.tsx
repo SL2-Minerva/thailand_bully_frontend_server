@@ -43,7 +43,7 @@ const ChannelDashboard = () => {
   const [date, setDate] = useState<DateType>(new Date())
   const [endDate, setEndDate] = useState<DateType>(new Date())
   const [period, setPeriod] = useState<string>('daily')
-  const [dateSelect, setDateSelect] = useState<string>('1')
+  const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || "3")
   const [campaign, setCampaign] = useState<string>('1')
   const [previousDate, setPreviousDate] = useState<DateType>(new Date())
   const [previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
@@ -120,6 +120,7 @@ const ChannelDashboard = () => {
   useEffect(()=> {
     if(errorUserPermission) {
       window.localStorage.removeItem('userData')
+      localStorage.clear()
       router.push('/login')
     }
   }, [errorUserPermission])

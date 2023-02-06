@@ -92,7 +92,7 @@ const OverallDashboard = () => {
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
     const [ campaign, setCampaign ] = useState<string>("1")
     const [ platformId, setPlatformId ] = useState<string>("all")
-    const [ dateSelect, setDateSelect ] = useState<string>("1")
+    const [ dateSelect, setDateSelect ] = useState<string>(localStorage.getItem('dateSelect') || "3")
     const [ reload ] = useState<boolean>(false);
     const [ period, setPeriod ] = useState<string>('daily')
     const [ topKeyword, setTopKeyword ] = useState<string>('all');
@@ -166,6 +166,11 @@ const OverallDashboard = () => {
         const value = e.target?.value ? e.target?.value : e; 
         setDateSelect(value);
         setShowPreviousDatepicker(false);
+        localStorage.setItem('dateSelect', value);
+        periodSet(value)
+    }, [])
+
+    const periodSet = (value: any) => {
         if (value === '1') {
             setPeriod('daily');
             setDate(new Date());
@@ -216,7 +221,7 @@ const OverallDashboard = () => {
             setPeriod('customrange');
             setShowPreviousDatepicker(true);
         }
-    }, [])
+    }
 
     const handleOnChangeDate = (dates: any) => {
         handleDateSelect("7")
@@ -243,9 +248,17 @@ const OverallDashboard = () => {
     useEffect(()=> {
         if(errorUserPermission) {
           window.localStorage.removeItem('userData')
+          localStorage.clear()
           router.push('/login')
         }
       }, [errorUserPermission])
+
+    useEffect(()=> {
+        if(localStorage.getItem('dateSelect')) {
+            const value = localStorage.getItem('dateSelect') 
+            periodSet(value)
+        }
+    }, [])
 
   return (
     <>
