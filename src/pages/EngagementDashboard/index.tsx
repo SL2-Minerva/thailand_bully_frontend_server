@@ -53,7 +53,7 @@ const EngagementDashboard = () => {
   const [previousDate, setPreviousDate] = useState<DateType>(new Date())
   const [previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
   const [period, setPeriod] = useState<string>('daily')
-  const [dateSelect, setDateSelect] = useState<string>('1')
+  const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || "3")
   const [campaignType, setCampaignType] = useState<string>('1')
   const [topKeyword, setTopKeyword] = useState<string>('all')
   const [highlight, setHighlight] = useState<string>('')
@@ -150,6 +150,7 @@ const EngagementDashboard = () => {
   useEffect(()=> {
     if(errorUserPermission) {
       window.localStorage.removeItem('userData')
+      localStorage.clear()
       router.push('/login')
     }
   }, [errorUserPermission])

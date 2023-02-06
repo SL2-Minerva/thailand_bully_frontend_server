@@ -10,7 +10,7 @@ import {
 import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { UserPermission } from 'src/services/api/users/role'
 import { DateType } from 'src/types/forms/reactDatepickerTypes'
-import { BullyLevelColors } from 'src/utils/const'
+import { GraphicColors } from 'src/utils/const'
 import Filter from '../VoiceDashboard/Filter'
 import BullyLevelByAccount from './BullyLevelByAccount'
 import BullyLevelByChannel from './BullyLevelByChannel'
@@ -47,7 +47,7 @@ const BullyDashboard = () => {
   const [date, setDate] = useState<DateType>(new Date())
   const [endDate, setEndDate] = useState<DateType>(new Date())
   const [period, setPeriod] = useState<string>('daily')
-  const [dateSelect, setDateSelect] = useState<string>('1')
+  const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || "3")
   const [campaign, setCampaign] = useState<string>('1')
   const [previousDate, setPreviousDate] = useState<DateType>(new Date())
   const [previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
@@ -153,6 +153,7 @@ const BullyDashboard = () => {
   useEffect(()=> {
     if(errorUserPermission) {
       window.localStorage.removeItem('userData')
+      localStorage.clear();
       router.push('/login')
     }
   }, [errorUserPermission])
@@ -211,16 +212,16 @@ const BullyDashboard = () => {
                             mb: 2,
                             bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1
-                                ? BullyLevelColors[index]
+                                ? GraphicColors[index]
                                 : keyword === 'all'
-                                ? BullyLevelColors[index]
+                                ? GraphicColors[index]
                                 : 'grey',
                             ':hover': {
                               bgcolor:
                                 filterKeyword?.indexOf(keywords?.id) > -1
-                                  ? BullyLevelColors[index]
+                                  ? GraphicColors[index]
                                   : keyword === 'all'
-                                  ? BullyLevelColors[index]
+                                  ? GraphicColors[index]
                                   : 'grey'
                             }
                           }}

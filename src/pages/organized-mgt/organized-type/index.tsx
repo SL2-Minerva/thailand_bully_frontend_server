@@ -50,6 +50,7 @@ const OrganizationType = () => {
   useEffect(()=> {
     if(error_domain_list) {
       window.localStorage.removeItem('userData')
+      localStorage.clear()
       router.push('/login')
     }
   }, [error_domain_list])

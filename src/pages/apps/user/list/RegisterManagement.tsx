@@ -71,6 +71,7 @@ const RegisterManagement = () => {
   useEffect(()=> {
     if(errorUserlist) {
       window.localStorage.removeItem('userData')
+      localStorage.clear()
       router.push('/login')
     }
   }, [errorUserlist])

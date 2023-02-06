@@ -51,6 +51,7 @@ const RoleManagement = () => {
   useEffect(()=> {
     if(errorUserPermission) {
       window.localStorage.removeItem('userData')
+      localStorage.clear()
       router.push('/login')
     }
   }, [errorUserPermission])

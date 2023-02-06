@@ -5,7 +5,7 @@ import { calculateDate, get1stAndLastDayOfMonth, PickerProps } from "../dashboar
 import DatePicker from 'react-datepicker'
 import format from 'date-fns/format'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
-import { forwardRef, useCallback, useState } from "react";
+import { forwardRef, useCallback, useEffect, useState } from "react";
 import { DateType } from "src/types/forms/reactDatepickerTypes";
 import Translations from "src/layouts/components/Translations";
 
@@ -36,7 +36,11 @@ const Filter = (props : Props) => {
         const value = e.target?.value ? e.target?.value : e; 
         setDateSelect(value);
         setShowPreviousDatepicker(false);
+        localStorage.setItem('dateSelect', value);
+        periodSet(value)
+    }
 
+    const periodSet = (value : any) => {
         if (value === '1') {
             setPeriod('daily');
             setDate(new Date());
@@ -114,6 +118,13 @@ const Filter = (props : Props) => {
     
         return <FormControl fullWidth><TextField inputRef={ref} label={props.label || ''} {...props} value={value} /></FormControl>
     })
+
+    useEffect(() => {
+        if(localStorage.getItem('dateSelect')) {
+            const value = localStorage.getItem('dateSelect') 
+            periodSet(value)
+        }
+    }, [])
 
     return (
         <Grid item xs={12}>

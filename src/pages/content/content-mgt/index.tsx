@@ -85,6 +85,7 @@ const ContentManagement = () => {
     useEffect(()=> {
         if(errorCampaiganList) {
           window.localStorage.removeItem('userData')
+          localStorage.clear()
           router.push('/login')
         }
       }, [errorCampaiganList])
