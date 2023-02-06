@@ -131,7 +131,7 @@ const MessageDetail = (props: DialogInfoProps) => {
         <Dialog
           fullWidth
           open={show}
-          maxWidth='md'
+          maxWidth='lg'
           scroll='body'
           onClose={onCloseDialog}
           TransitionComponent={Transition}
