@@ -1,11 +1,12 @@
 // ** MUI Import
 import Box from '@mui/material/Box'
-import { useTheme } from '@mui/material/styles'
 import CircularProgress from '@mui/material/CircularProgress'
+
+// import { useTheme } from '@mui/material/styles'
 
 const FallbackSpinner = () => {
   // ** Hook
-  const theme = useTheme()
+  // const theme = useTheme()
 
   return (
     <Box
@@ -17,7 +18,7 @@ const FallbackSpinner = () => {
         justifyContent: 'center'
       }}
     >
-      <svg width={80} fill='none' height={44} viewBox='0 0 268 150' xmlns='http://www.w3.org/2000/svg'>
+      {/* <svg width={80} fill='none' height={44} viewBox='0 0 268 150' xmlns='http://www.w3.org/2000/svg'>
         <rect
           rx='25.1443'
           width='50.2886'
@@ -86,7 +87,9 @@ const FallbackSpinner = () => {
             <stop offset='1' stopOpacity='0' />
           </linearGradient>
         </defs>
-      </svg>
+      </svg> */}
+
+      <img src='/images/Logo_notext.png' alt='logo' width={50}  height={50} />
       <CircularProgress disableShrink sx={{ mt: 6 }} />
     </Box>
   )

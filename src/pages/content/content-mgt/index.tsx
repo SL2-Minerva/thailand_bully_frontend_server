@@ -13,9 +13,10 @@ import { PencilOutline } from 'mdi-material-ui';
 import { ContentList } from 'src/types/content/ContentType';
 import axios from 'axios';
 import authConfig from '../../../configs/auth'
+import { useRouter } from 'next/router';
 
 const ContentManagement = () => {
-
+    const router = useRouter()
     const [ contentName, setContentName ] = useState<string>('');
     const [ content, setContent ] = useState<string>('');
     const [ status, setStatus ] = useState<string>('');
@@ -30,7 +31,7 @@ const ContentManagement = () => {
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState<number>(0);
 
-    const {resultContents, total} = ContentLists(reload, content, page);
+    const {resultContents, total, errorCampaiganList} = ContentLists(reload, content, page);
 
     const handleStatusChange = useCallback((e: SelectChangeEvent) => {
         setStatus(e.target.value)
@@ -80,6 +81,13 @@ const ContentManagement = () => {
     useEffect(() => {
         setReload(!reload);
     },[showEdit, showCreate, updateStatus]);
+
+    useEffect(()=> {
+        if(errorCampaiganList) {
+          window.localStorage.removeItem('userData')
+          router.push('/login')
+        }
+      }, [errorCampaiganList])
 
     return(
         <Grid container spacing={6}>

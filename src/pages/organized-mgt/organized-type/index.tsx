@@ -18,6 +18,7 @@ import DialogOrganizationType from './typeDialog'
 import OrganizationTypeService from 'src/services/api/organization/OrganizationApi'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
+import { useRouter } from 'next/router'
 
 const OrganizationType = () => {
   const [showEdit, setShowEdit] = useState<boolean>(false)
@@ -34,8 +35,8 @@ const OrganizationType = () => {
     setCurrent({})
   }
 
-  const { result_organization_type_list, total } = OrganizationTypeService(reload, page)
-
+  const { result_organization_type_list, total, error_domain_list } = OrganizationTypeService(reload, page)
+  const router = useRouter()
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value-1);
   };
@@ -45,6 +46,13 @@ const OrganizationType = () => {
       setPageCount(Math.ceil(total / 10));
       }
   }, [total]);
+
+  useEffect(()=> {
+    if(error_domain_list) {
+      window.localStorage.removeItem('userData')
+      router.push('/login')
+    }
+  }, [error_domain_list])
 
   useEffect(() => {
     setReload(!reload)

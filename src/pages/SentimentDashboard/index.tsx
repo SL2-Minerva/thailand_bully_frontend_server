@@ -1,6 +1,6 @@
 import { Button, Card, CardContent, CardHeader, Grid } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Filter from '../VoiceDashboard/Filter'
 import { DateType } from 'src/types/forms/reactDatepickerTypes'
 import { StyledTooltip } from '../dashboard/overall'
@@ -35,10 +35,11 @@ import { SentimentAllColors } from 'src/utils/const'
 import QuickViewModal from './QuickViewModal'
 import PercentageOfSentiments from './PercentageOfSentiment'
 import Translations from 'src/layouts/components/Translations'
+import { useRouter } from 'next/router'
 
 const SentimentDashboard = () => {
   const theme = useTheme()
-
+  const router = useRouter()
   const whiteColor = '#fff'
   const lineChartYellow = '#d4e157'
   const lineChartPrimary = '#787EFF'
@@ -60,7 +61,7 @@ const SentimentDashboard = () => {
 
   const [highlight, setHighlight] = useState<string>('')
 
-  const { resultReportPermission } = UserPermission()
+  const { resultReportPermission, errorUserPermission } = UserPermission()
   const { resultFilterData, loadingFilterData } = FilterByCampaignId(campaign, date, endDate, period, keyword)
   const { resultKeywordList } = GetKeyWordsList(campaign)
   const params = {
@@ -129,6 +130,13 @@ const SentimentDashboard = () => {
     resultFilterData: resultFilterData,
     loadingFilterData: loadingFilterData
   }
+
+  useEffect(()=> {
+    if(errorUserPermission) {
+      window.localStorage.removeItem('userData')
+      router.push('/login')
+    }
+  }, [errorUserPermission])
 
   return (
     <Grid container spacing={2}>

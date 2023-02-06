@@ -18,8 +18,10 @@ import Button from '@mui/material/Button'
 import { role_list, UserPermission } from '../../../../services/api/users/role'
 import axios from 'axios'
 import authConfig from '../../../../configs/auth'
+import { useRouter } from 'next/router'
 
 const RoleManagement = () => {
+  const router = useRouter()
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [current, setCurrent] = useState<any>({})
   const [action, setAction] = useState<string>('create')
@@ -27,7 +29,7 @@ const RoleManagement = () => {
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState<number>(0);
 
-  const { resultPermission } = UserPermission();
+  const { resultPermission, errorUserPermission } = UserPermission();
   const { resultRoleList, total } = role_list(showDialog, page)
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -45,6 +47,13 @@ const RoleManagement = () => {
 
     setTableData(resultRoleList)
   }, [showDialog])
+
+  useEffect(()=> {
+    if(errorUserPermission) {
+      window.localStorage.removeItem('userData')
+      router.push('/login')
+    }
+  }, [errorUserPermission])
 
 
   function handleChange(index: number, i: number, event: any) {

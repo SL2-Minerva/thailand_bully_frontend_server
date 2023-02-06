@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
 // ** MUI Imports
 import { Grid, Card, CardHeader, CardContent } from '@mui/material'
@@ -26,6 +26,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import { ThemeColor } from 'src/@core/layouts/types'
 import CustomChip from 'src/@core/components/mui/chip'
 import UserService, {userlist} from "../../../../services/api/users/users";
+import { useRouter } from 'next/router'
 
 
 interface StatusType {
@@ -38,6 +39,7 @@ const StatusObj: StatusType = {
 }
 
 const RegisterManagement = () => {
+  const router = useRouter()
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [addRoleOpen, setAddRoleOpen] = useState<boolean>(false)
 
@@ -64,10 +66,14 @@ const RegisterManagement = () => {
 
   //call service
   const {  update_user } = UserService();
-  const {resultUserList } = userlist();
+  const {resultUserList, errorUserlist } = userlist();
 
-
-  console.log('list', resultUserList);
+  useEffect(()=> {
+    if(errorUserlist) {
+      window.localStorage.removeItem('userData')
+      router.push('/login')
+    }
+  }, [errorUserlist])
 
   return (
     <Grid container>

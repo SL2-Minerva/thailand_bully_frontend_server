@@ -1,4 +1,5 @@
 import { Button, Card, CardContent, CardHeader, Grid, useTheme } from '@mui/material'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import {
   GetBullyDailyBy,
@@ -33,6 +34,7 @@ import ShareOfChannel from './ShareOfChannel'
 
 const BullyDashboard = () => {
   const theme = useTheme()
+  const router = useRouter()
 
   const whiteColor = '#fff'
   const lineChartYellow = '#d4e157'
@@ -55,7 +57,7 @@ const BullyDashboard = () => {
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
 
-  const { resultReportPermission } = UserPermission()
+  const { resultReportPermission, errorUserPermission } = UserPermission()
   const { resultBullyLevelPercentage, resultFilterData, loadingFilterData } = GetBullyDailyBy(
     campaign,
     date,
@@ -147,6 +149,13 @@ const BullyDashboard = () => {
   useEffect(() => {
     setBullyType('level')
   }, [resultShareOfChannelChart, resultShareOfChannelPlatform])
+
+  useEffect(()=> {
+    if(errorUserPermission) {
+      window.localStorage.removeItem('userData')
+      router.push('/login')
+    }
+  }, [errorUserPermission])
 
   return (
     <Grid container spacing={2}>

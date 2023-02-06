@@ -29,12 +29,13 @@ import DomainList from 'src/services/api/domains/DomainAPI'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { UserPermission } from 'src/services/api/users/role'
+import { useRouter } from 'next/router'
 
 const CampaignManagement = () => {
   
-
+  
   // const [campaignName, setCampaignName] = useState<string>('')
-
+  const router = useRouter()
   const [campaignName, setCampaignName] = useState<string>('')
 
   const [organization, setOrganization] = useState<string>('')
@@ -61,7 +62,7 @@ const CampaignManagement = () => {
 
   const { list } = Organization.getList(reload)
 
-  const { resultPermission } = UserPermission();
+  const { resultPermission, errorUserPermission } = UserPermission();
 
   const handleOrganization = useCallback((e: SelectChangeEvent) => {
     setOrganization(e.target.value)
@@ -122,6 +123,13 @@ const CampaignManagement = () => {
   useEffect(() => {
     setReload(!reload)
   }, [showCreate, showEdit])
+
+  useEffect(()=> {
+    if(errorUserPermission) {
+      window.localStorage.removeItem('userData')
+      router.push('/login')
+    }
+  }, [errorUserPermission])
 
   useEffect(()=> {
     setTableData(resultCampaiganList)

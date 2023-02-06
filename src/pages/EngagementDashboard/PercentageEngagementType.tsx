@@ -13,6 +13,10 @@ import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
+import { Chart} from "chart.js";
+import * as DoughnutLabel from "chartjs-plugin-doughnutlabel-rebourne";
+
+Chart.register(DoughnutLabel );
 
 interface MessageData {
   type: string
@@ -42,6 +46,8 @@ const PercentageOfEngangementType = (props : MessageData) => {
   const [ currentData, setCurrentData ] = useState<any>(initValue);
   const [ currentPeriod, setCurrentPeriod ] = useState<string>('');
   const [ previousPeriod, setPreviousPeriod ] = useState<string>('');
+  const [ currentTotal, setCurrentTotal ] = useState<number>();
+  const [ previousTotal, setPreviousTotal ] = useState<number>();
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -60,6 +66,52 @@ const PercentageOfEngangementType = (props : MessageData) => {
           color: labelColor,
           usePointStyle: true
         }
+      },
+      doughnutlabel: {
+        paddingPercentage: 5,
+        labels: [
+          {
+            text: currentTotal || "",
+            font: {
+              size: '50',
+              family: 'Arial, Helvetica, sans-serif',
+              weight: 'bold'
+            },
+            color: '#434343'
+          }
+        ]
+      }
+    }
+  }
+
+  const optionsPrevious = {
+    responsive: true,
+    backgroundColor: false,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        align: 'end',
+        position: 'top',
+        labels: {
+          padding: 25,
+          boxWidth: 10,
+          color: labelColor,
+          usePointStyle: true
+        }
+      },
+      doughnutlabel: {
+        paddingPercentage: 5,
+        labels: [
+          {
+            text: previousTotal || "",
+            font: {
+              size: '50',
+              family: 'Arial, Helvetica, sans-serif',
+              weight: 'bold'
+            },
+            color: '#434343'
+          }
+        ]
       }
     }
   }
@@ -81,7 +133,7 @@ const PercentageOfEngangementType = (props : MessageData) => {
     const labels : string[] =[];
     const percentage: number[] = [];
     for(let i =0; i<data?.length; i++ ) {
-      labels.push(data[i].name);
+      if(data[i].name) labels.push(data[i].name);
       const percentageValue = data[i]?.value;
       percentage.push(percentageValue?.percentage)
       if (type === 'current') {
@@ -118,6 +170,14 @@ const PercentageOfEngangementType = (props : MessageData) => {
         const previousDataset = chartDataset(previousMessageData, 'previous');
         setPreviousData(previousDataset);
 
+        if(currentMessageData?.length > 0){
+          setCurrentTotal(currentMessageData[0]?.total);
+        }
+
+        if(previousMessageData?.length > 0){
+          setPreviousTotal(previousMessageData[0]?.total);
+        }
+
       } else {
         setCurrentData(initValue);
         setPreviousData(initValue);
@@ -125,6 +185,8 @@ const PercentageOfEngangementType = (props : MessageData) => {
     } else {
       setCurrentData(initValue);
       setPreviousData(initValue);
+      setCurrentTotal(0);
+      setPreviousTotal(0);
     }
   }, [resultEngagementType]);
 
@@ -152,7 +214,7 @@ const PercentageOfEngangementType = (props : MessageData) => {
                 <Doughnut data={currentData} options={options as any} height={343} />
             </Grid>
             <Grid item xs={12} md={6}>
-                <Doughnut data={previousData} options={options as any} height={343} />
+                <Doughnut data={previousData} options={optionsPrevious as any} height={343} />
             </Grid>  
             <Grid item xs={12} md={6}>  
                 <p style={{ fontSize:'10px' }}> Current Period :</p>  

@@ -41,6 +41,8 @@ const DailyMessagePieChart  = ( props : Props) => {
   const [currentData, setCurrentData] = useState<any>(initValue);
   const [ currentPeriod, setCurrentPeriod ] = useState<string>('');
   const [ previousPeriod, setPreviousPeriod ] = useState<string>('');
+  const [ currentTotal, setCurrentTotal ] = useState<number>();
+  const [ previousTotal, setPreviousTotal ] = useState<number>();
 
   const chartDataset = (data:any, type: string) => {
     if (!data) 
@@ -83,70 +85,7 @@ const DailyMessagePieChart  = ( props : Props) => {
     return returnData;
   }
 
-  // const currentPeriodOptions = {
-  //   responsive: true,
-  //   backgroundColor: false,
-  //   maintainAspectRatio: false,
-  //   plugins: {
-  //     legend: {
-  //       align: 'end',
-  //       position: 'top',
-  //       labels: {
-  //         padding: 25,
-  //         boxWidth: 10,
-  //         color: labelColor,
-  //         usePointStyle: true
-  //       }
-  //     },
-  //       doughnutlabel: {
-  //               paddingPercentage: 5,
-  //               labels: [
-  //                   {
-  //                   text: currentData?.total || "",
-  //                   font: {
-  //                       size: '50',
-  //                       family: 'Arial, Helvetica, sans-serif',
-  //                       weight: 'bold',
-  //                   },
-  //                   color: '#434343',
-  //                   },
-  //               ],
-  //           },
-  //   }
-  // }
-
-  // const previousPeriodOptions = {
-  //   responsive: true,
-  //   backgroundColor: false,
-  //   maintainAspectRatio: false,
-  //   plugins: {
-  //     legend: {
-  //       align: 'end',
-  //       position: 'top',
-  //       labels: {
-  //         padding: 25,
-  //         boxWidth: 10,
-  //         color: labelColor,
-  //         usePointStyle: true
-  //       }
-  //     },
-  //       doughnutlabel: {
-  //               paddingPercentage: 5,
-  //               labels: [
-  //                   {
-  //                   text: previousData?.total || "",
-  //                   font: {
-  //                       size: '50',
-  //                       family: 'Arial, Helvetica, sans-serif',
-  //                       weight: 'bold',
-  //                   },
-  //                   color: '#434343',
-  //                   },
-  //               ],
-  //           },
-  //   }
-  // }
-  const options = {
+  const currentPeriodOptions = {
     responsive: true,
     backgroundColor: false,
     maintainAspectRatio: false,
@@ -160,6 +99,52 @@ const DailyMessagePieChart  = ( props : Props) => {
           color: labelColor,
           usePointStyle: true
         }
+      },
+      doughnutlabel: {
+        paddingPercentage: 5,
+        labels: [
+          {
+            text: currentTotal || "",
+            font: {
+              size: '50',
+              family: 'Arial, Helvetica, sans-serif',
+              weight: 'bold'
+            },
+            color: '#434343'
+          }
+        ]
+      }
+    }
+  }
+
+  const previousPeriodOptions = {
+    responsive: true,
+    backgroundColor: false,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        align: 'end',
+        position: 'top',
+        labels: {
+          padding: 25,
+          boxWidth: 10,
+          color: labelColor,
+          usePointStyle: true
+        }
+      },
+      doughnutlabel: {
+        paddingPercentage: 5,
+        labels: [
+          {
+            text: previousTotal || "",
+            font: {
+              size: '50',
+              family: 'Arial, Helvetica, sans-serif',
+              weight: 'bold'
+            },
+            color: '#434343'
+          }
+        ]
       }
     }
   }
@@ -173,9 +158,22 @@ const DailyMessagePieChart  = ( props : Props) => {
 
       const previousDataset = chartDataset(previousMessageData, 'previous');
       setPreviousData(previousDataset);
+
+      if(currentMessageData?.length > 0){
+        setCurrentTotal(currentMessageData[0]?.total);
+      } else {
+        setCurrentTotal(0)
+      }
+      if(previousMessageData?.length > 0){
+        setPreviousTotal(previousMessageData[0]?.total);
+      } else {
+        setPreviousTotal(0)
+      }
     }else {
       setCurrentData(initValue);
       setPreviousData(initValue);
+      setPreviousTotal(0);
+      setCurrentTotal(0);
     }
 
   },[resultPercentageMessage]);
@@ -204,10 +202,10 @@ const DailyMessagePieChart  = ( props : Props) => {
       <CardContent>
         <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-              <Doughnut data={currentData} options={options as any} height={270} />
+              <Doughnut data={currentData} options={currentPeriodOptions as any} height={270} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <Doughnut data={previousData} options={options as any} height={270} />
+              <Doughnut data={previousData} options={previousPeriodOptions as any} height={270} />
             </Grid>
         </Grid>
         <Grid container spacing={3} mt={3}>

@@ -43,6 +43,9 @@ const DailyMessagePieChart  = ( props : Props) => {
   const [ currentPeriod, setCurrentPeriod ] = useState<string>('');
   const [ previousPeriod, setPreviousPeriod ] = useState<string>('');
 
+  const [ currentTotal, setCurrentTotal ] = useState<number>();
+  const [ previousTotal, setPreviousTotal ] = useState<number>();
+
   const chartDataset = (data:any, type: string) => {
     if (!data) 
     {
@@ -99,20 +102,20 @@ const DailyMessagePieChart  = ( props : Props) => {
           usePointStyle: true
         }
       },
-        doughnutlabel: {
-                paddingPercentage: 5,
-                labels: [
-                    {
-                    text: currentData?.total || "",
-                    font: {
-                        size: '50',
-                        family: 'Arial, Helvetica, sans-serif',
-                        weight: 'bold',
-                    },
-                    color: '#434343',
-                    },
-                ],
+      doughnutlabel: {
+        paddingPercentage: 5,
+        labels: [
+          {
+            text: currentTotal || "",
+            font: {
+              size: '50',
+              family: 'Arial, Helvetica, sans-serif',
+              weight: 'bold'
             },
+            color: '#434343'
+          }
+        ]
+      }
     }
   }
 
@@ -131,20 +134,20 @@ const DailyMessagePieChart  = ( props : Props) => {
           usePointStyle: true
         }
       },
-        doughnutlabel: {
-                paddingPercentage: 5,
-                labels: [
-                    {
-                    text: previousData?.total || "",
-                    font: {
-                        size: '50',
-                        family: 'Arial, Helvetica, sans-serif',
-                        weight: 'bold',
-                    },
-                    color: '#434343',
-                    },
-                ],
+      doughnutlabel: {
+        paddingPercentage: 5,
+        labels: [
+          {
+            text: previousTotal || "",
+            font: {
+              size: '50',
+              family: 'Arial, Helvetica, sans-serif',
+              weight: 'bold'
             },
+            color: '#434343'
+          }
+        ]
+      }
     }
   }
   
@@ -171,16 +174,29 @@ const DailyMessagePieChart  = ( props : Props) => {
       const currentMessageData = resultPercentageChannelCurrent;
       const currentDataset = chartDataset(currentMessageData, 'current');
       setCurrentData(currentDataset);
+      if(currentMessageData?.length > 0){
+        setCurrentTotal(currentMessageData[0]?.total);
+      } else {
+        setCurrentTotal(0)
+      }
+     
     } else {
       setCurrentData(initValue);
+      setCurrentTotal(0);
     }
 
     if(resultPercentageChannelPrevious) {
       const previousMessageData = resultPercentageChannelPrevious;
       const previousDataset = chartDataset(previousMessageData, 'previous');
       setPreviousData(previousDataset);
+      if(previousMessageData?.length > 0){
+        setPreviousTotal(previousMessageData[0]?.total);
+      } else {
+        setPreviousTotal(0);
+      }
     } else {
       setPreviousData(initValue);
+      setPreviousTotal(0);
     }
 
     

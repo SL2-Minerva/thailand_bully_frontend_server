@@ -1,5 +1,5 @@
 import { Button, Card, CardContent, CardHeader, Grid } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import DailyMessageGraph from './DailyMessageGraph'
 import Filter from '../VoiceDashboard/Filter'
 import { StyledTooltip } from '../dashboard/overall'
@@ -26,9 +26,11 @@ import ChannelBySentimentComparison from './ChannelBy/ChannelBySentimentComparis
 import ChannelByBullyLevel from './ChannelBy/ChannelByBullyLevel'
 import ChannelByBullyType from './ChannelBy/ChannelByBullyType'
 import Translations from 'src/layouts/components/Translations'
+import { useRouter } from 'next/router'
 
 const ChannelDashboard = () => {
   const theme = useTheme()
+  const router = useRouter()
 
   const whiteColor = '#fff'
   const lineChartYellow = '#d4e157'
@@ -63,7 +65,7 @@ const ChannelDashboard = () => {
   }
 
   //api call
-  const { resultReportPermission } = UserPermission()
+  const { resultReportPermission, errorUserPermission } = UserPermission()
   const { resultKeywordList } = GetKeyWordsList(campaign)
   const { resultDailyChannel, resultPercentageChannelCurrent, resultPercentageChannelPrevious, loadingDailyChannel } = GetDailyBy(campaign, date, endDate, period, keyword)
   const {
@@ -114,6 +116,13 @@ const ChannelDashboard = () => {
 
     return data
   }
+
+  useEffect(()=> {
+    if(errorUserPermission) {
+      window.localStorage.removeItem('userData')
+      router.push('/login')
+    }
+  }, [errorUserPermission])
 
   return (
     <Grid container spacing={6}>

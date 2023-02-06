@@ -26,6 +26,7 @@ import OrganizationTypeService from 'src/services/api/organization/OrganizationA
 import { OrganizationSearchList } from 'src/services/api/organization/organization'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
+import { useRouter } from 'next/router'
 
 const OrganizedManagement = () => {
   const [showEdit, setShowEdit] = useState<boolean>(false)
@@ -39,11 +40,12 @@ const OrganizedManagement = () => {
   const [action, setAction] = useState<string>('create')
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState<number>(0);
+  const router = useRouter()
 
   // const { list, total } = Organization.getList(reload, page)
   const { result_organization_group_list } = OrganzationGroupServiceList(reload);
   const { result_organization_type_list } = OrganizationTypeService(reload)
-  const { resultOrganizationSearch, total } = OrganizationSearchList(reload, page, name, organization, organizationType,status )
+  const { resultOrganizationSearch, total, errorOrganizationSearch } = OrganizationSearchList(reload, page, name, organization, organizationType,status )
 
   const [tableData, setTableData] = useState(resultOrganizationSearch)
 
@@ -74,6 +76,13 @@ const OrganizedManagement = () => {
       setPageCount(Math.ceil(total / 10));
       }
   }, [total]);
+
+  useEffect(()=> {
+    if(errorOrganizationSearch) {
+      window.localStorage.removeItem('userData')
+      router.push('/login')
+    }
+  }, [errorOrganizationSearch])
 
   useEffect(() => {
     setReload(!reload)

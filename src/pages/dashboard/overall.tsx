@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useState } from "react"
+import { forwardRef, useCallback, useEffect, useState } from "react"
 import { Grid , Card, CardHeader, CardContent, InputLabel, MenuItem, Button, Box, Tooltip, tooltipClasses, TooltipProps } from "@mui/material"
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
@@ -51,6 +51,7 @@ import WordCloudSentiment from "./WordCloudSentiment"
 import { UserPermission } from "src/services/api/users/role"
 import { GraphicColors } from "src/utils/const"
 import Translations from 'src/layouts/components/Translations'
+import { useRouter } from "next/router"
 
 // import QuickView from "./QuickView"
 
@@ -100,6 +101,7 @@ const OverallDashboard = () => {
     const [ filterKeyword, setFilterKeyword ] = useState<any>([]);
 
     const theme = useTheme()
+    const router = useRouter()
 
     const whiteColor = '#fff'
     const lineChartYellow = '#d4e157'
@@ -109,7 +111,7 @@ const OverallDashboard = () => {
     const borderColor = theme.palette.action.focus
     const gridLineColor = theme.palette.action.focus
 
-    const { resultReportPermission } = UserPermission();
+    const { resultReportPermission, errorUserPermission } = UserPermission();
     const { resultCampaiganList } = CampaignList();
     const { result_source_list  } = SourceService();
     const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount, loadingTotalKeystats } = TotalKeyStats(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate, keyword);
@@ -237,6 +239,13 @@ const OverallDashboard = () => {
     
         return <FormControl fullWidth><TextField inputRef={ref} label={props.label || ''} {...props} value={value} /></FormControl>
     })
+
+    useEffect(()=> {
+        if(errorUserPermission) {
+          window.localStorage.removeItem('userData')
+          router.push('/login')
+        }
+      }, [errorUserPermission])
 
   return (
     <>
