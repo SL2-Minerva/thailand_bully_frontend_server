@@ -16,72 +16,106 @@ import Grid from '@mui/material/Grid'
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { Avatar, Chip, LinearProgress } from '@mui/material'
-import { FacebookIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const'
+import { FacebookIcon, googleIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const'
 
 interface InfluencerComparisonProps {
-    icon?: ReactNode
-    color?: string
-    trendNumber: string
-    trend?: string
-    totalText: string,
-    totalValue : number,
-    loading?: boolean
-  }
+  icon?: ReactNode
+  color?: string
+  trendNumber: number
+  trend?: string
+  totalText: string
+  totalValue: number
+  loading?: boolean
+}
 
 const ChannelComparison = (props: InfluencerComparisonProps) => {
-    // ** Props
-    const { color, trend, trendNumber, totalText, totalValue, loading } = props
+  // ** Props
+  const { color, trend, trendNumber, totalText, totalValue, loading } = props
 
-    const TrendIcon = trend === 'plus' ? ChevronUp : ChevronDown
-    const imgPath = totalText === "Facebook" ? FacebookIcon : totalText === "Twitter" ? TwitterIcon :
-                    totalText === "Instagram" ? InstagramIcon : totalText === "Youtube" ? YoutubeIcon :
-                    totalText === "Pantip" ? PantipIcon : FacebookIcon;
+  const TrendIcon = trend === 'plus' ? ChevronUp : ChevronDown
+  const imgPath =
+    totalText === 'Facebook'
+      ? FacebookIcon
+      : totalText === 'Twitter'
+      ? TwitterIcon
+      : totalText === 'Instagram'
+      ? InstagramIcon
+      : totalText === 'Youtube'
+      ? YoutubeIcon
+      : totalText === 'Pantip'
+      ? PantipIcon
+      : totalText === 'Google'
+      ? googleIcon
+      : FacebookIcon
 
   return (
     <>
-        <Card>
-        {loading && (
-            <LinearProgress
-                style={{ width: "100%" }}
-            />
-            )}
-            <CardContent>
-                <Box>
-                    <Grid container spacing={6}>
-                        <Grid item xs={12}>
-                            <span style={{ display: 'flex', justifyContent: 'center' }}>
-                                <Avatar sx={{ width: 60, height: 60 }}>
-                                    <img src={imgPath} width={50} height={50}  />
-                                </Avatar>
-                                <Chip label={totalText} sx={{ ml:2, mt:'0.8rem', display:'flex', justifyContent: 'center', 
-                                        backgroundColor: color, color: 'white', fontSize: '24px'}} />
-                                {/* <Typography variant='h4'>
+      <Card>
+        {loading && <LinearProgress style={{ width: '100%' }} />}
+        <CardContent>
+          <Box>
+            <Grid container spacing={6}>
+              <Grid item xs={12}>
+                <span style={{ display: 'flex', justifyContent: 'center' }}>
+                  <Avatar sx={{ width: 60, height: 60 }}>
+                    <img src={imgPath} width={50} height={50} />
+                  </Avatar>
+                  <Chip
+                    label={totalText}
+                    sx={{
+                      ml: 2,
+                      mt: '0.8rem',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      backgroundColor: color,
+                      color: 'white',
+                      fontSize: '24px'
+                    }}
+                  />
+                  {/* <Typography variant='h4'>
                                     
                                 </Typography> */}
-                            </span>
-                            <Grid mt={4}>
-                                <Typography variant='h4' sx={{ display:'flex', justifyContent: 'center' }}>
-                                    {trend === 'plus' ? "+" : ""}{totalValue}
+                </span>
+                <Grid mt={4}>
+                  {totalValue != 0 ? (
+                    <Typography variant='h4' sx={{ display: 'flex', justifyContent: 'center' }}>
+                      {trend === 'plus' ? '+' : ''}
+                      {totalValue}
+                    </Typography>
+                  ) : (
+                    <Typography variant='h4' sx={{ display: 'flex', justifyContent: 'center' }}>
+                      {totalValue}
+                    </Typography>
+                  )}
+                </Grid>
+                <Grid mt={4}>
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        {
+                            trendNumber !=  0 ?
+                            <>
+                                <TrendIcon fontSize='large' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }} />
+
+                                <Typography variant='h4' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
+                                    {trendNumber + '%'}
                                 </Typography>
-                            </Grid>
-                            <Grid mt={4}>
-                                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                        <TrendIcon fontSize='large' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }} />
+                            </>
 
-                                        <Typography variant='h4' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
-                                            {trendNumber + "%"}
-                                        </Typography>
-                                    </Box>
-                                </Box>
-                                
-                            </Grid>
-                        </Grid>
+                            :
+                            <Typography variant='h4'>
+                                {0 + '%'}
+                            </Typography>
 
-                    </Grid>
-                </Box>
-            </CardContent>
-        </Card>
+                        }
+                      
+                    </Box>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Box>
+        </CardContent>
+      </Card>
     </>
   )
 }

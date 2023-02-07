@@ -2,7 +2,7 @@
 import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, LinearProgress } from '@mui/material'
+import { Grid, LinearProgress, TableBody } from '@mui/material'
 import { Table, TableRow, TableHead, TableCell } from '@mui/material'
 
 // ** Third Party Imports
@@ -32,7 +32,7 @@ const ShareOfChannel = ({
   highlight,
   type,
   loading,
-  loadingChannel, 
+  loadingChannel,
   title
 }: {
   resultShareOfChannel: any
@@ -41,7 +41,7 @@ const ShareOfChannel = ({
   highlight: boolean
   type: string
   loading: boolean
-  loadingChannel: boolean,
+  loadingChannel: boolean
   title?: string
 }) => {
   const [label, setLabel] = useState<any>([])
@@ -88,7 +88,7 @@ const ShareOfChannel = ({
       {loading && loadingChannel && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text={title || ""}/>}
+          title={<Translations text={title || ''} />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={chartId}>
@@ -103,39 +103,59 @@ const ShareOfChannel = ({
           <Grid item xs={7}>
             <Table size='small'>
               <TableHead>
-                <TableRow>
-                  <TableCell variant='head'>
-                    <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
-                  </TableCell>
-                  <TableCell variant='head'>
-                    <img alt={'logo'} width={34} height={34} src={`/images/logos/twitter.png`} />
-                  </TableCell>
-                  <TableCell variant='head'>
-                    <img width={34} height={34} alt={'logo'} src={`/images/logos/youtube-text.png`} />
-                  </TableCell>
-                  <TableCell variant='head'>
-                    <img width={34} alt={'logo'} height={34} src={`/images/logos/instagram.png`} />
-                  </TableCell>
-                  <TableCell variant='head'>
-                    <img width={34} alt={'logo'} height={34} src={`/images/logos/pantip.png`} />
-                  </TableCell>
-                </TableRow>
+                {(resultShareofChannelPlatform || []).map((shareVoice: any, index: number) => {
+                  return (
+                    <TableRow key={index}>
+                      {index == 0 ? (
+                        <>
+                          {(shareVoice.value || []).map((value: any, key: number) => {
+                            return (
+                              <TableCell variant='head' key={key}>
+                                {value?.channel === 'facebook' ? (
+                                  <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
+                                ) : value?.channel === 'twitter' ? (
+                                  <img alt={'logo'} width={34} height={34} src={`/images/logos/twitter.png`} />
+                                ) : value?.channel === 'youtube' ? (
+                                  <img width={34} height={34} alt={'logo'} src={`/images/logos/youtube-text.png`} />
+                                ) : value?.channel === 'instagram' ? (
+                                  <img width={34} alt={'logo'} height={34} src={`/images/logos/instagram.png`} />
+                                ) : value?.channel === 'pantip' ? (
+                                  <img width={34} alt={'logo'} height={34} src={`/images/logos/pantip.png`} />
+                                ) : value?.channel === 'google' ? (
+                                  <img width={34} alt={'logo'} height={34} src={`/images/logos/google.png`} />
+                                ) 
+                                : 
+                                (
+                                  <span style={{ textTransform: 'uppercase' }}>{value?.channel}</span>
+                                )}
+                              </TableCell>
+                            )
+                          })}
+                        </>
+                      ) : (
+                        ''
+                      )}
+                    </TableRow>
+                  )
+                })}
               </TableHead>
-              {(resultShareofChannelPlatform || []).map((shareVoice: any, index: number) => {
-                return (
-                  <TableRow key={index}>
-                    {(shareVoice.value || []).map((value: any, key: number) => {
-                      return (
-                        <TableCell key={key}>
-                          <span style={{ border: value?.highlight ? '1px solid red' : '', padding: '4px' }}>
-                            {value?.percentage + '%'}
-                          </span>
-                        </TableCell>
-                      )
-                    })}
-                  </TableRow>
-                )
-              })}
+              <TableBody>
+                {(resultShareofChannelPlatform || []).map((shareVoice: any, index: number) => {
+                  return (
+                    <TableRow key={index}>
+                      {(shareVoice.value || []).map((value: any, key: number) => {
+                        return (
+                          <TableCell key={key}>
+                            <span style={{ border: value?.highlight ? '1px solid red' : '', padding: '4px' }}>
+                              {value?.percentage + '%'}
+                            </span>
+                          </TableCell>
+                        )
+                      })}
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
             </Table>
           </Grid>
         </Grid>

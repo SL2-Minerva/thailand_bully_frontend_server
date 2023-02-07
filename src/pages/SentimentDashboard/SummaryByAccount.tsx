@@ -4,7 +4,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { renderProgress } from './SummaryByKeywords'
 import { DataGrid } from '@mui/x-data-grid'
 import Translations from 'src/layouts/components/Translations'
@@ -14,7 +14,9 @@ const SummaryByAccount = ({
   total,
   loadingSummaryByAccount,
   chartId,
-  highlight
+  highlight,
+  topAccount,
+  setTopAccount
 }: {
   params: any
   chartId: string
@@ -22,9 +24,9 @@ const SummaryByAccount = ({
   resultSummaryByAccount: any
   total: number
   loadingSummaryByAccount: boolean
+  topAccount: string
+  setTopAccount: any
 }) => {
-  const [topAccount, setTopAccount] = useState<string>('all')
-
   // const [page, setPage] = useState(0);
   // const [pageCount, setPageCount] = useState<number>(0);
 
@@ -59,7 +61,7 @@ const SummaryByAccount = ({
       {loadingSummaryByAccount && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text='Summary Sentiment Score by Account'/>}
+          title={<Translations text='Summary Sentiment Score by Account' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={title || ''}>

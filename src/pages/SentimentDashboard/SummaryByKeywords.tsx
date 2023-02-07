@@ -4,7 +4,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { DataGrid, GridValueGetterParams } from '@mui/x-data-grid'
 import clsx from 'clsx'
 import { createTheme } from '@mui/material'
@@ -77,7 +77,9 @@ const SummaryByKeywords = ({
   total,
   loadingSummaryByKeywords,
   chartId,
-  highlight
+  highlight,
+  topKeyword,
+  setTopKeyword
 }: {
   params: any
   chartId: string
@@ -85,9 +87,9 @@ const SummaryByKeywords = ({
   resultSummaryByKeywords: any
   total: number
   loadingSummaryByKeywords: boolean
+  topKeyword: string
+  setTopKeyword: any
 }) => {
-  const [topKeyword, setTopKeyword] = useState<string>('all')
-
   // const [page, setPage] = useState(0);
   // const [pageCount, setPageCount] = useState<number>(0);
 
@@ -128,7 +130,7 @@ const SummaryByKeywords = ({
       {loadingSummaryByKeywords && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text='Sentiment Type by Keyword'/>}
+          title={<Translations text='Sentiment Type by Keyword' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={title || ''}>

@@ -93,7 +93,7 @@ const EngagementDashboard = () => {
     resultSummary,
     loadingPeriodComparisonBySenitment,
     resultPeriodComparisonByChannel,
-  } = GetEngagementComparisonBy(campaignType, date, endDate, period, keyword)
+  } = GetEngagementComparisonBy(campaignType, date, endDate, period, keyword, topKeyword)
 
   const params = {
     campaign: campaignType,
