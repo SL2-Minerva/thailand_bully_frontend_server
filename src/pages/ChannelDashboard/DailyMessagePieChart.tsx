@@ -208,7 +208,7 @@ const DailyMessagePieChart  = ( props : Props) => {
   const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: '300px' }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
       {loadingPercentageChannel && (
         <LinearProgress
             style={{ width: "100%" }}
@@ -242,14 +242,14 @@ const DailyMessagePieChart  = ( props : Props) => {
             </Grid>
         </Grid>
         <Grid container spacing={3} mt={3}>
-            <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <p style={{ fontSize:'12px' }}> Current Period :</p>  
-                <p style={{ fontSize:'12px' }}> {currentPeriod} </p>
-            </Grid>
-            <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <p style={{ fontSize:'12px' }}> Previous Period : </p>  
-                <p style={{ fontSize:'12px' }}>  {previousPeriod} </p>  
-            </Grid>
+          <Grid item xs={12} md={6}>
+            <p style={{ fontSize: '10px' }}> Current Period :</p>
+            <p style={{ fontSize: '10px' }}> {currentPeriod} </p>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <p style={{ fontSize: '10px' }}> Previous Period : </p>
+            <p style={{ fontSize: '10px' }}> {previousPeriod} </p>
+          </Grid>
         </Grid>
       </CardContent>
     </Paper>

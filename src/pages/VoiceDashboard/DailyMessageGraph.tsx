@@ -65,6 +65,7 @@ export const chartLabel = (data:any) => {
     for (let i =0; i<filterArray?.length; i++) {
       labelValue.push(moment(filterArray[i]).format('DD/MM/YYYY'));
   }
+    labelValue.sort();
   }
 
   return labelValue;
@@ -174,7 +175,7 @@ const DailyMessageGraph = ( props : Props) => {
       }
     }
 
-    const chartDatasets = (data:any) => {
+    const chartDatasets = (data:any, labels: any) => {
       if(!data) return [];
       let totalAmount : number[] = [];
       let keywordName = "";
@@ -184,9 +185,22 @@ const DailyMessageGraph = ( props : Props) => {
         totalAmount = []
         const total = data[i]?.value;
       
-        for(let j=0; j<data[i]?.value?.length ; j++ ) {
-          totalAmount.push(total[j].total_at_date);
-        } 
+        const modifiedData = labels.map((node: any) => {
+          const oldInfo = total.find((item: any) => moment(item?.date).format('DD/MM/YYYY') === node)
+          if (oldInfo) {
+            return {
+              ...node,
+              total_at_date: oldInfo?.total_at_date || 0,
+              date: oldInfo?.date || node
+            }
+          } else {
+            return { ...node, total_at_date: 0, date: node }
+          }
+        })
+  
+        for(let i=0; i<modifiedData?.length; i++) {
+          totalAmount.push(modifiedData[i].total_at_date);
+        }
         
         keywordName = data[i].keyword_name ? data[i].keyword_name : data[i].source_name ? data[i].source_name : "";
   
@@ -223,8 +237,10 @@ const DailyMessageGraph = ( props : Props) => {
             const labels = chartLabel(resultDailyMessage);
             setLabel(labels);
             
-            const dataSets = chartDatasets(resultDailyMessage);
-            setDataset(dataSets);
+            if (labels?.length > 0) {
+              const dataSets = chartDatasets(resultDailyMessage, labels);
+              setDataset(dataSets);
+            }
         } else {
           setLabel([]);
           setDataset([]);
@@ -236,7 +252,7 @@ const DailyMessageGraph = ( props : Props) => {
       const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
 
       return (
-        <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+        <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
           {loadingDailyMessage && (
           <LinearProgress
             style={{ width: "100%" }}

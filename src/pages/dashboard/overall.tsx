@@ -41,7 +41,7 @@ import CommentSentiment from "./CommentSentiment"
 import ShareOfVoice from "./ShareOfVoice"
 import SentimentLevelChart from "./SentimentLevelChart"
 import { CampaignList } from "src/services/api/campaign/CampaignAPI"
-import { GetKeyWordsList, TotalKeyStats } from "src/services/api/dashboards/overall/overallDashboardApi"
+import { FilterByCampaignId, GetKeyWordsList, TotalKeyStats } from "src/services/api/dashboards/overall/overallDashboardApi"
 import SourceService from "src/services/api/source/SourceApi"
 import WordCloud from "./WordCloud"
 import TotalMessageLists from "./TotalMessageLists"
@@ -116,7 +116,7 @@ const OverallDashboard = () => {
     const { result_source_list  } = SourceService();
     const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount, loadingTotalKeystats } = TotalKeyStats(campaign, reload, platformId, date, endDate, period, previousDate, previousEndDate, keyword);
     const { resultKeywordList } = GetKeyWordsList(campaign);
-
+    const { resultFilterData, loadingFilterData } = FilterByCampaignId(campaign, platformId, date, endDate, period, previousDate, previousEndDate, keyword);
     const checkKeywordId = (data: any, keywordId : string | number) => {
         const index = data.indexOf(keywordId);
         if (index > -1) { 
@@ -453,7 +453,7 @@ const OverallDashboard = () => {
             {
                 resultReportPermission?.includes("1") ?
                 <Grid id="chart1" item xs={12} md={4}>
-                    <DonutChart params={params} />
+                    <DonutChart params={params} resultFilterData={resultFilterData} loadingFilterData={loadingFilterData} />
                 </Grid> : ""
             }
             {
@@ -468,6 +468,8 @@ const OverallDashboard = () => {
                         warning={lineChartWarning}
                         gridLineColor={gridLineColor}
                         params= {params}
+                        loadingFilterData={loadingFilterData}
+                        resultFilterData={resultFilterData}
                     />
                 </Grid> : ''
             }

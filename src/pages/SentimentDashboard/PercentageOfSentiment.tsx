@@ -203,7 +203,7 @@ const PercentageOfSentiments = (props : MessageData) => {
   }, [resultFilterData,t]);
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550}} square variant='outlined'>
       {loadingFilterData && (
             <LinearProgress
                 style={{ width: "100%" }}

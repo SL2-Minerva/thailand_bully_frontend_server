@@ -191,7 +191,7 @@ const PercentageOfEngangementType = (props : MessageData) => {
   }, [resultEngagementType]);
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550}} square variant='outlined'>
       {loadingEngagementType && (
         <LinearProgress
             style={{ width: "100%" }}

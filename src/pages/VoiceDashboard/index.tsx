@@ -164,7 +164,7 @@ const VoiceDashboard = () => {
         </Grid>
       </Grid>
       {resultReportPermission?.includes('20') ? (
-        <Grid item xs={12} md={6} id='chart1'>
+        <Grid item xs={12} md={4} id='chart1'>
           <DailyMessagePieChart
             params={params}
             type='message'
@@ -177,7 +177,7 @@ const VoiceDashboard = () => {
       )}
 
       {resultReportPermission?.includes('21') ? (
-        <Grid item xs={12} md={6} id='chart2'>
+        <Grid item xs={12} md={8} id='chart2'>
           <DailyMessageGraph
             type='message'
             params={params}

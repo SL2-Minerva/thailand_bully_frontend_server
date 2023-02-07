@@ -207,7 +207,7 @@ const ChannelDashboard = () => {
         </Grid>
       </Grid>
       {resultReportPermission?.includes('44') ? (
-        <Grid item xs={12} md={6} id='chart1'>
+        <Grid item xs={12} md={4} id='chart1'>
           <DailyMessagePieChart
             params={params}
             type='channel'
@@ -223,7 +223,7 @@ const ChannelDashboard = () => {
       )}
 
       {resultReportPermission?.includes('45') ? (
-        <Grid item xs={12} md={6} id='chart2'>
+        <Grid item xs={12} md={8} id='chart2'>
           <DailyMessageGraph
             params={params}
             type='channel'
