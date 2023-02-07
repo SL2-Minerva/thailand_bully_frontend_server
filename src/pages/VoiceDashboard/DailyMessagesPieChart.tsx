@@ -2,87 +2,98 @@
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
-import { Grid, LinearProgress, Paper } from "@mui/material"
+import { Grid, LinearProgress, Paper } from '@mui/material'
 
 // ** Third Party Imports
 
 import { Doughnut } from 'react-chartjs-2'
-import { Chart} from "chart.js";
-import * as DoughnutLabel from "chartjs-plugin-doughnutlabel-rebourne";
+import { Chart } from 'chart.js'
+import * as DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne'
 import { useEffect, useState } from 'react'
-import { GraphicColors } from 'src/utils/const' 
+import { GraphicColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { GetPercentageMessage } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 import Translations from 'src/layouts/components/Translations'
 
 interface Props {
-  params : any
-  type : string
-  chartId : string
+  params: any
+  type: string
+  chartId: string
   highlight?: boolean
 }
-Chart.register(DoughnutLabel );
-const DailyMessagePieChart  = ( props : Props) => {
-  const { chartId, params, highlight } = props;
+Chart.register(DoughnutLabel)
+const DailyMessagePieChart = (props: Props) => {
+  const { chartId, params, highlight } = props
 
-  const { resultPercentageMessage, loadingPercentageMessage } = GetPercentageMessage(params?.campaign, params?.date, params?.endDate, params?.period, params?.keywordIds);
+  const { resultPercentageMessage, loadingPercentageMessage } = GetPercentageMessage(
+    params?.campaign,
+    params?.date,
+    params?.endDate,
+    params?.period,
+    params?.keywordIds
+  )
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
   const initValue = {
     labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: GraphicColors,
-      hoverOffset: 4
-    }],
+    datasets: [
+      {
+        data: [],
+        backgroundColor: GraphicColors,
+        hoverOffset: 4
+      }
+    ]
   }
-  const [previousData, setPreviousData ] = useState<any>(initValue);
-  const [currentData, setCurrentData] = useState<any>(initValue);
-  const [ currentPeriod, setCurrentPeriod ] = useState<string>('');
-  const [ previousPeriod, setPreviousPeriod ] = useState<string>('');
-  const [ currentTotal, setCurrentTotal ] = useState<number>();
-  const [ previousTotal, setPreviousTotal ] = useState<number>();
+  const [previousData, setPreviousData] = useState<any>(initValue)
+  const [currentData, setCurrentData] = useState<any>(initValue)
+  const [currentPeriod, setCurrentPeriod] = useState<string>('')
+  const [previousPeriod, setPreviousPeriod] = useState<string>('')
+  const [currentTotal, setCurrentTotal] = useState<number>()
+  const [previousTotal, setPreviousTotal] = useState<number>()
 
-  const chartDataset = (data:any, type: string) => {
-    if (!data) 
-    {
+  const chartDataset = (data: any, type: string) => {
+    if (!data) {
       const chartData = {
         labels: [],
-        datasets: [{
-          data: [],
-          backgroundColor: GraphicColors,
-          hoverOffset: 4
-        }]
-      };
+        datasets: [
+          {
+            data: [],
+            backgroundColor: GraphicColors,
+            hoverOffset: 4
+          }
+        ]
+      }
 
-      return chartData;
+      return chartData
     }
-    const labels : any[] = [];
-    const percentage: number[] = [];
-    for(let i =0; i<data?.length; i++ ) {
-      labels.push(data[i].keyword_name);
+    const labels: any[] = []
+    const percentage: number[] = []
+    for (let i = 0; i < data?.length; i++) {
+      labels.push(data[i].keyword_name)
 
-      const percentageValue = data[i]?.value;
-      for(let j = 0 ; j<percentageValue?.length; j++) {
-        percentage.push(data[i].value[j]?.percentage);
+      const percentageValue = data[i]?.value
+      for (let j = 0; j < percentageValue?.length; j++) {
+        percentage.push(data[i].value[j]?.percentage)
         if (type === 'current') {
           setCurrentPeriod(data[i].value[j]?.date)
         } else {
-          setPreviousPeriod(data[i].value[j]?.date);
+          setPreviousPeriod(data[i].value[j]?.date)
         }
       }
     }
     const returnData = {
       labels: labels,
-      datasets: [{
-        data: percentage,
-        backgroundColor: GraphicColors,
-        hoverOffset: 4
-      }]
-    };
-    
-    return returnData;
+      datasets: [
+        {
+          data: percentage,
+          backgroundColor: GraphicColors,
+          hoverOffset: 4
+        }
+      ]
+    }
+
+    return returnData
   }
 
   const currentPeriodOptions = {
@@ -104,7 +115,7 @@ const DailyMessagePieChart  = ( props : Props) => {
         paddingPercentage: 5,
         labels: [
           {
-            text: currentTotal || "",
+            text: currentTotal || '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',
@@ -136,7 +147,7 @@ const DailyMessagePieChart  = ( props : Props) => {
         paddingPercentage: 5,
         labels: [
           {
-            text: previousTotal || "",
+            text: previousTotal || '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',
@@ -149,77 +160,74 @@ const DailyMessagePieChart  = ( props : Props) => {
     }
   }
 
-  useEffect(()=>{
-    if(resultPercentageMessage) {
-      const currentMessageData = resultPercentageMessage?.prcentage_of_messages_current;
-      const previousMessageData = resultPercentageMessage?.prcentage_of_messages_previous;
-      const currentDataset = chartDataset(currentMessageData, 'current');
-      setCurrentData(currentDataset);
+  useEffect(() => {
+    if (resultPercentageMessage) {
+      const currentMessageData = resultPercentageMessage?.prcentage_of_messages_current
+      const previousMessageData = resultPercentageMessage?.prcentage_of_messages_previous
+      const currentDataset = chartDataset(currentMessageData, 'current')
+      setCurrentData(currentDataset)
 
-      const previousDataset = chartDataset(previousMessageData, 'previous');
-      setPreviousData(previousDataset);
+      const previousDataset = chartDataset(previousMessageData, 'previous')
+      setPreviousData(previousDataset)
 
-      if(currentMessageData?.length > 0){
-        setCurrentTotal(currentMessageData[0]?.total);
+      if (currentMessageData?.length > 0) {
+        setCurrentTotal(currentMessageData[0]?.total)
       } else {
         setCurrentTotal(0)
       }
-      if(previousMessageData?.length > 0){
-        setPreviousTotal(previousMessageData[0]?.total);
+      if (previousMessageData?.length > 0) {
+        setPreviousTotal(previousMessageData[0]?.total)
       } else {
         setPreviousTotal(0)
       }
-    }else {
-      setCurrentData(initValue);
-      setPreviousData(initValue);
-      setPreviousTotal(0);
-      setCurrentTotal(0);
+    } else {
+      setCurrentData(initValue)
+      setPreviousData(initValue)
+      setPreviousTotal(0)
+      setCurrentTotal(0)
     }
+  }, [resultPercentageMessage])
 
-  },[resultPercentageMessage]);
+  const reportNo = '2.1.001'
 
-  const reportNo = '2.1.001';
-
-  const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
+  const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: '330px'  }} square variant='outlined'>
-      {loadingPercentageMessage && (
-          <LinearProgress
-            style={{ width: "100%" }}
-          />
-        )}
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
+      {loadingPercentageMessage && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <CardHeader title={<Translations text='Percentage of Messages' />} titleTypographyProps={{ variant:'h6', color: highlight ? 'green' : '#4c4e64de' }}
-              subheader="Period over Period Comparison"
-              subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          />
-          <StyledTooltip arrow title={chartTitle || ""}>
-              <Information  style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-          </StyledTooltip>
+        <CardHeader
+          title={<Translations text='Percentage of Messages' />}
+          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          subheader='Period over Period Comparison'
+          subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+        />
+        <StyledTooltip arrow title={chartTitle || ''}>
+          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+        </StyledTooltip>
       </span>
-      
+
       <CardContent>
         <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
-              <Doughnut data={currentData} options={currentPeriodOptions as any} height={270} />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Doughnut data={previousData} options={previousPeriodOptions as any} height={270} />
-            </Grid>
+          <Grid item xs={12} md={6}>
+            <Doughnut data={currentData} options={currentPeriodOptions as any} height={270} />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Doughnut data={previousData} options={previousPeriodOptions as any} height={270} />
+          </Grid>
         </Grid>
         <Grid container spacing={3} mt={3}>
-            <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <p style={{ fontSize:'12px' }}> Current Period :</p>  
-                <p style={{ fontSize:'12px' }}> {currentPeriod} </p>
-            </Grid>
-            <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <p style={{ fontSize:'12px' }}> Previous Period : </p>  
-                <p style={{ fontSize:'12px' }}>  {previousPeriod} </p>  
-            </Grid>
+          <Grid item xs={12} md={6}>
+            <p style={{ fontSize: '10px' }}> Current Period :</p>
+            <p style={{ fontSize: '10px' }}> {currentPeriod} </p>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <p style={{ fontSize: '10px' }}> Previous Period : </p>
+            <p style={{ fontSize: '10px' }}> {previousPeriod} </p>
+          </Grid>
         </Grid>
       </CardContent>
-      </Paper>
+    </Paper>
   )
 }
 

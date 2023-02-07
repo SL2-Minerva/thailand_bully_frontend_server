@@ -30,38 +30,37 @@ interface LineProps {
   chartId: string
   highlight?: boolean
   resultFilterData: any
-  loadingFilterData : boolean
+  loadingFilterData: boolean
 }
 
-export const chartLabel = (data:any) => {
-  if(!data) return [];
-  
-  let labels : any[] = [];
+export const chartLabel = (data: any) => {
+  if (!data) return []
 
-  // let labelsArrayLength; 
-  const labelValue : string[] = []
+  let labels: any[] = []
 
-  for(let i = 0 ; i<data?.length; i++) {
-    const dataValue = data[i]?.value;
-    const label : any [] = [];
+  // let labelsArrayLength;
+  const labelValue: string[] = []
 
-    for (let j=0; j<dataValue?.length; j++) {
-      label.push(dataValue[j]?.date);
-      
+  for (let i = 0; i < data?.length; i++) {
+    const dataValue = data[i]?.value
+    const label: any[] = []
+
+    for (let j = 0; j < dataValue?.length; j++) {
+      label.push(dataValue[j]?.date)
     }
-    
-    labels = [...labels, ...label];
-    
+
+    labels = [...labels, ...label]
   }
 
   if (labels && labels?.length > 0) {
     const filterArray = [...new Set(labels)]
-    for (let i =0; i<filterArray?.length; i++) {
-      labelValue.push(moment(filterArray[i]).format('DD/MM/YYYY'));
-  }
+    for (let i = 0; i < filterArray?.length; i++) {
+      labelValue.push(moment(filterArray[i]).format('DD/MM/YYYY'))
+    }
+    labelValue.sort()
   }
 
-  return labelValue;
+  return labelValue
 }
 
 const DailySenitment = (props: LineProps) => {
@@ -80,7 +79,7 @@ const DailySenitment = (props: LineProps) => {
 
   // const [ chartData, setChartData ] = useState();
   const colors = SentimentColors
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
@@ -128,11 +127,11 @@ const DailySenitment = (props: LineProps) => {
 
   const onClick = (event: any) => {
     if (chartRef.current) {
-      const getIndex = getElementAtEvent(chartRef.current, event);
+      const getIndex = getElementAtEvent(chartRef.current, event)
 
-      if(getIndex?.length > 0 ) {
-        const index =  getIndex[0].index;
-        params.label = label[index];
+      if (getIndex?.length > 0) {
+        const index = getIndex[0].index
+        params.label = label[index]
       }
       const keyword_id = getKeywordId(getDatasetAtEvent(chartRef.current, event))
 
@@ -188,7 +187,7 @@ const DailySenitment = (props: LineProps) => {
     }
   }
 
-  const chartDatasets = (data: any) => {
+  const chartDatasets = (data: any, labels: any) => {
     if (!data) return []
     let totalAmount: number[] = []
     let keywordName = ''
@@ -198,8 +197,21 @@ const DailySenitment = (props: LineProps) => {
       totalAmount = []
       const total = data[i]?.value
 
-      for (let j = 0; j < data[i]?.value?.length; j++) {
-        totalAmount.push(total[j].total_at_date)
+      const modifiedData = labels.map((node: any) => {
+        const oldInfo = total.find((item: any) => moment(item?.date).format('DD/MM/YYYY') === node)
+        if (oldInfo) {
+          return {
+            ...node,
+            total_at_date: oldInfo?.total_at_date || 0,
+            date: oldInfo?.date || node
+          }
+        } else {
+          return { ...node, total_at_date: 0, date: node }
+        }
+      })
+
+      for (let i = 0; i < modifiedData?.length; i++) {
+        totalAmount.push(modifiedData[i].total_at_date)
       }
 
       keywordName = t(data[i].keyword_name)
@@ -238,8 +250,10 @@ const DailySenitment = (props: LineProps) => {
         const labels = chartLabel(sentimentData)
         setLabel(labels)
 
-        const dataSets = chartDatasets(sentimentData)
-        setDataset(dataSets)
+        if (labels?.length > 0) {
+          const dataSets = chartDatasets(sentimentData, labels)
+          setDataset(dataSets)
+        }
       } else {
         setLabel([])
         setDataset([])
@@ -252,18 +266,18 @@ const DailySenitment = (props: LineProps) => {
 
       data = { labels: [], datasets: [] }
     }
-  }, [resultFilterData,t])
+  }, [resultFilterData, t])
 
   const reportNo = '5.2.002'
 
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} square variant='outlined'>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text='Daily Sentiment Type by Date'/>}
+          title={<Translations text='Daily Sentiment Type by Date' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={chartTitle || ''}>

@@ -210,7 +210,7 @@ const PercentageOfBullyType = (props : MessageData) => {
   const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1}} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550}} square variant='outlined'>
        {loadingBullyTypePercentage && (
             <LinearProgress
                 style={{ width: "100%" }} 
