@@ -57,7 +57,7 @@ const ChannelBySentiment  = ({ chartId, highlight, resultBy, loading} : {params:
   const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
 
   return (
-    <Card>
+    <Card sx={{minHeight: 460}}>
       {loading && (
         <LinearProgress
             style={{ width: "100%" }}

@@ -196,6 +196,7 @@ export const YoutubeIcon = '/images/logos/youtube-text.png';
 export const InstagramIcon = '/images/logos/instagram.png';
 export const PantipIcon = '/images/logos/pantip.png';
 export const gitHubIcon = '/images/logos/github.png';
+export const googleIcon = '/images/logos/google.png';
 
 export const ReportOptions = [
   {

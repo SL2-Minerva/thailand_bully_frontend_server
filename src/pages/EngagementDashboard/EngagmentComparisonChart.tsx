@@ -34,15 +34,15 @@ const ChartDataEngagement = (data: any, type: string) => {
   if (data?.length > 0) {
     if (type === 'share') {
       for (let i = 0; i < data?.length; i++) {
-        value.push(data[i].share)
+        value.push(data[i].share_r)
       }
     } else if (type === 'comment') {
       for (let i = 0; i < data?.length; i++) {
-        value.push(data[i].comment)
+        value.push(data[i].comment_r)
       }
     } else if (type === 'reaction') {
       for (let i = 0; i < data?.length; i++) {
-        value.push(data[i].reaction)
+        value.push(data[i].reaction_r)
       }
     }
   }
@@ -110,7 +110,7 @@ const EngagmentComparisonChart = ({
     tooltip: {
       y: {
         formatter: function (val) {
-          return val + 'K'
+          return val + ""
         }
       }
     },

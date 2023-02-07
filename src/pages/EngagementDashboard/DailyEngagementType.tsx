@@ -59,7 +59,7 @@ const chartLabel = (data:any) => {
 
   if (labels?.length > 0) {
     for (let i =0; i<labels?.length; i++) {
-        labelValue.push(moment(labels[i]?.date_m).format('DD/MM'));
+        labelValue.push(moment(labels[i]?.date_m).format('DD/MM/YYYY'));
     }
   }
   

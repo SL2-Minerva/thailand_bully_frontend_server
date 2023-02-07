@@ -4,7 +4,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { renderProgress } from './SummaryByKeywords'
 import { DataGrid } from '@mui/x-data-grid'
 import Translations from 'src/layouts/components/Translations'
@@ -14,7 +14,9 @@ const SummaryByChannel = ({
   total,
   loadingSummaryByChannel,
   chartId,
-  highlight
+  highlight,
+  topChannel,
+  setTopChannel
 }: {
   params: any
   chartId: string
@@ -22,9 +24,9 @@ const SummaryByChannel = ({
   resultSummaryByChannel: any
   total: number
   loadingSummaryByChannel: boolean
+  topChannel: string
+  setTopChannel: any
 }) => {
-  const [topChannel, setTopChannel] = useState<string>('all')
-
   // const [page, setPage] = useState(0);
   // const [pageCount, setPageCount] = useState<number>(0);
   const handleTopChannels = (data: string) => {
@@ -58,7 +60,7 @@ const SummaryByChannel = ({
       {loadingSummaryByChannel && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text='Summary Sentiment Score by Channel'/>}
+          title={<Translations text='Summary Sentiment Score by Channel' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={title || ''}>

@@ -87,6 +87,7 @@ const ChannelDashboard = () => {
     resultTwitterComparison,
     resultPantipComparison,
     resultYoutubeComparison,
+    resultGoogleComparison,
     loadingEngagementBy
   } = GetEngagementBy(campaign, date, endDate, period, keyword)
 
@@ -404,7 +405,7 @@ const ChannelDashboard = () => {
           </Grid>
 
           <Grid container spacing={4} ml={3} mt={2}>
-            <Grid item xs={6} md={2.4}>
+            <Grid item xs={6} md={2}>
               <ChannelComparison
                 color='#44546a'
                 trendNumber={resultFacebookComparison?.percentage}
@@ -414,7 +415,7 @@ const ChannelDashboard = () => {
                 loading={loadingEngagementBy}
               />
             </Grid>
-            <Grid item xs={6} md={2.4}>
+            <Grid item xs={6} md={2}>
               <ChannelComparison
                 color='#4472c4'
                 trendNumber={resultTwitterComparison?.percentage}
@@ -424,7 +425,7 @@ const ChannelDashboard = () => {
                 loading={loadingEngagementBy}
               />
             </Grid>
-            <Grid item xs={6} md={2.4}>
+            <Grid item xs={6} md={2}>
               <ChannelComparison
                 color='#c92d27'
                 trendNumber={resultYoutubeComparison?.percentage}
@@ -434,7 +435,7 @@ const ChannelDashboard = () => {
                 loading={loadingEngagementBy}
               />
             </Grid>
-            <Grid item xs={6} md={2.4}>
+            <Grid item xs={6} md={2}>
               <ChannelComparison
                 color='#a5a5a5'
                 trendNumber={resultInstagramComparison?.percentage}
@@ -444,7 +445,17 @@ const ChannelDashboard = () => {
                 loading={loadingEngagementBy}
               />
             </Grid>
-            <Grid item xs={6} md={2.4}>
+            <Grid item xs={6} md={2}>
+              <ChannelComparison
+                color='#36a853'
+                trendNumber={resultGoogleComparison?.percentage}
+                trend={resultGoogleComparison?.type}
+                totalText='Google'
+                totalValue={resultGoogleComparison?.comparison_value}
+                loading={loadingEngagementBy}
+              />
+            </Grid>
+            <Grid item xs={6} md={2}>
               <ChannelComparison
                 color='#ffc000'
                 trendNumber={resultPantipComparison?.percentage}

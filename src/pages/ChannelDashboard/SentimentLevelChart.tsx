@@ -113,7 +113,7 @@ const SentimentLevelChart = ({ highlight, resultSentimentLevel, loading} : {para
   }
 
   return (
-    <Card>
+    <Card sx={{minHeight: 460}}>
         {loading && (
         <LinearProgress
             style={{ width: "100%" }}

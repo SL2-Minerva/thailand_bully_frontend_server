@@ -58,6 +58,9 @@ const SentimentDashboard = () => {
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
+  const [topAccount, setTopAccount] = useState<string>(' ')
+  const [topChannel, setTopChannel] = useState<string>('all')
+  const [topKeyword, setTopKeyword] = useState<string>('all')
 
   const [highlight, setHighlight] = useState<string>('')
 
@@ -95,7 +98,7 @@ const SentimentDashboard = () => {
   } = GetPeriodComparison(campaign, date, endDate, period, keyword)
 
   const { resultSummaryByAccount, resultSummaryByChannel, resultSummaryByKeywords, total, loadingSummaryByAccount } =
-    GetSummaryBy(campaign, date, endDate, period, keyword)
+    GetSummaryBy(campaign, date, endDate, period, keyword, topAccount, topChannel, topKeyword)
 
   const checkKeywordId = (data: any, keywordId: string | number) => {
     const index = data.indexOf(keywordId)
@@ -514,6 +517,8 @@ const SentimentDashboard = () => {
               params={params}
               chartId='Chart 15'
               highlight={highlight === 'chart15' ? true : false}
+              topAccount = {topAccount}
+              setTopAccount ={setTopAccount}
             />
           </Grid>
         ) : (
@@ -528,6 +533,8 @@ const SentimentDashboard = () => {
               params={params}
               chartId='Chart 16'
               highlight={highlight === 'chart16' ? true : false}
+              topChannel={topChannel}
+              setTopChannel={setTopChannel}
             />
           </Grid>
         ) : (
@@ -542,6 +549,8 @@ const SentimentDashboard = () => {
               params={params}
               chartId='Chart 17'
               highlight={highlight === 'chart17' ? true : false}
+              topKeyword={topKeyword}
+              setTopKeyword={setTopKeyword}
             />
           </Grid>
         ) : (

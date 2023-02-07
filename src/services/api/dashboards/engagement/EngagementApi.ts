@@ -371,7 +371,7 @@ export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_dat
     }
   }
 
-  export const GetEngagementComparisonBy = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string ) => {
+  export const GetEngagementComparisonBy = (campaignId?: string, start_date?: any, end_date?: any, period?: any, fillter_keywords?: string, topKeyword?: string ) => {
 
     const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
       url: `/dashboard-engagement/engagement-comparison-by`,
@@ -381,7 +381,8 @@ export const GetTotalEngagment = (campaignId?: string, start_date?: any, end_dat
         start_date : start_date ? moment(start_date).format('YYYY-MM-DD') : "",
         end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : "",
         period: period,
-        fillter_keywords: fillter_keywords
+        fillter_keywords: fillter_keywords,
+        select: topKeyword
       }
     })
   

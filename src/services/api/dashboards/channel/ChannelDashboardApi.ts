@@ -260,6 +260,7 @@ export const GetEngagementBy = (campaignId?: string, start_date?: any, end_date?
     resultTwitterComparison: response?.data?.period_over_period?.twitter || null,
     resultYoutubeComparison: response?.data?.period_over_period?.youtube || null,
     resultPantipComparison: response?.data?.period_over_period?.pantip || null,
+    resultGoogleComparison: response?.data?.period_over_period?.google || null,
     loadingEngagementBy: loading,
     errorEngagementBy: error
   }
