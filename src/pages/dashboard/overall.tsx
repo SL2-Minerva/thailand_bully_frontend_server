@@ -94,7 +94,7 @@ const OverallDashboard = () => {
     const [ platformId, setPlatformId ] = useState<string>("all")
     const [ dateSelect, setDateSelect ] = useState<string>(localStorage.getItem('dateSelect') || "3")
     const [ reload ] = useState<boolean>(false);
-    const [ period, setPeriod ] = useState<string>('daily')
+    const [ period, setPeriod ] = useState<string>('last7days')
     const [ topKeyword, setTopKeyword ] = useState<string>('all');
     const [ showPreviousDatepicker, setShowPreviousDatepicker ] = useState<boolean>(false);
     const [ keyword, setKeyword ] = useState<string>('all');
@@ -259,6 +259,12 @@ const OverallDashboard = () => {
         if(localStorage.getItem('dateSelect')) {
             const value = localStorage.getItem('dateSelect') 
             periodSet(value)
+        }
+
+        if(period === 'last7days') {
+            const lastSevenDays = calculateDate(6);
+            setDate(lastSevenDays);
+            setEndDate(new Date());
         }
     }, [])
 

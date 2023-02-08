@@ -52,7 +52,7 @@ const EngagementDashboard = () => {
   const [endDate, setEndDate] = useState<DateType>(new Date())
   const [previousDate, setPreviousDate] = useState<DateType>(new Date())
   const [previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
-  const [period, setPeriod] = useState<string>('daily')
+  const [period, setPeriod] = useState<string>('last7days')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
   const [campaignType, setCampaignType] = useState<string>('1')
   const [topKeyword, setTopKeyword] = useState<string>('all')
