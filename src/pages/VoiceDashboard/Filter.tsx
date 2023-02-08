@@ -49,7 +49,6 @@ const Filter = (props: Props) => {
     setPreviousDate,
     previousEndDate,
     setPreviousEndDate,
-    period,
     setPeriod,
     dateSelect,
     setDateSelect,
@@ -143,11 +142,6 @@ const Filter = (props: Props) => {
     if (localStorage.getItem('dateSelect')) {
       const value = localStorage.getItem('dateSelect')
       periodSet(value)
-    }
-    if (period === 'last7days') {
-      const lastSevenDays = calculateDate(6)
-      setDate(lastSevenDays)
-      setEndDate(new Date())
     }
   }, [])
 

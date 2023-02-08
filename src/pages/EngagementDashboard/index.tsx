@@ -36,6 +36,7 @@ import { EngagementTransChartColor } from 'src/utils/const'
 import EngagementByType from './EngagementByType'
 import QuickViewModal from './QuickViewModal'
 import { useRouter } from 'next/router'
+import { calculateDate } from '../dashboard/overall'
 
 const EngagementDashboard = () => {
   const theme = useTheme()
@@ -48,7 +49,7 @@ const EngagementDashboard = () => {
   const borderColor = theme.palette.action.focus
   const gridLineColor = theme.palette.action.focus
 
-  const [date, setDate] = useState<DateType>(new Date())
+  const [date, setDate] = useState<DateType>(calculateDate(6))
   const [endDate, setEndDate] = useState<DateType>(new Date())
   const [previousDate, setPreviousDate] = useState<DateType>(new Date())
   const [previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())

@@ -2,7 +2,7 @@ import { Button, Card, CardContent, CardHeader, Grid } from '@mui/material'
 import { useEffect, useState } from 'react'
 import DailyMessageGraph from './DailyMessageGraph'
 import Filter from '../VoiceDashboard/Filter'
-import { StyledTooltip } from '../dashboard/overall'
+import { calculateDate, StyledTooltip } from '../dashboard/overall'
 import { useTheme } from '@mui/material/styles'
 import ChannelComparison from './ChannelComparison'
 import {
@@ -45,7 +45,7 @@ const ChannelDashboard = () => {
   const borderColor = theme.palette.action.focus
   const gridLineColor = theme.palette.action.focus
 
-  const [date, setDate] = useState<DateType>(new Date())
+  const [date, setDate] = useState<DateType>(calculateDate(6))
   const [endDate, setEndDate] = useState<DateType>(new Date())
   const [period, setPeriod] = useState<string>('last7days')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')

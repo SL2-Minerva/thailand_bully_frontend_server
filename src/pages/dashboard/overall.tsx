@@ -86,7 +86,7 @@ export interface PickerProps {
   }));
 
 const OverallDashboard = () => {
-    const [date, setDate] = useState<DateType>(new Date())
+    const [date, setDate] = useState<DateType>(calculateDate(6))
     const [endDate, setEndDate] = useState<DateType>(new Date())
     const [ previousDate, setPreviousDate] = useState<DateType>(new Date())
     const [ previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
@@ -259,12 +259,6 @@ const OverallDashboard = () => {
         if(localStorage.getItem('dateSelect')) {
             const value = localStorage.getItem('dateSelect') 
             periodSet(value)
-        }
-
-        if(period === 'last7days') {
-            const lastSevenDays = calculateDate(6);
-            setDate(lastSevenDays);
-            setEndDate(new Date());
         }
     }, [])
 

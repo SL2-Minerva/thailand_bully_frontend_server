@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
 import Filter from '../VoiceDashboard/Filter'
 import { DateType } from 'src/types/forms/reactDatepickerTypes'
-import { StyledTooltip } from '../dashboard/overall'
+import { calculateDate, StyledTooltip } from '../dashboard/overall'
 import {
   FilterByCampaignId,
   GetPeriodComparison,
@@ -48,7 +48,7 @@ const SentimentDashboard = () => {
   const borderColor = theme.palette.action.focus
   const gridLineColor = theme.palette.action.focus
 
-  const [date, setDate] = useState<DateType>(new Date())
+  const [date, setDate] = useState<DateType>(calculateDate(6))
   const [endDate, setEndDate] = useState<DateType>(new Date())
   const [period, setPeriod] = useState<string>('last7days')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
