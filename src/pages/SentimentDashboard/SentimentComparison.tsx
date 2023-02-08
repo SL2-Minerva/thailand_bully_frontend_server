@@ -32,7 +32,9 @@ const SentimentComparisonTable = ({
     params?.endDate,
     params?.period,
     page,
-    params?.keywordIds
+    params?.keywordIds,
+    params?.previousDate,
+    params?.previousEndDate
   )
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value - 1)

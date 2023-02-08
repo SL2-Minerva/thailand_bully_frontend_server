@@ -24,7 +24,9 @@ const MessageByAll = ({
     params?.date,
     params?.endDate,
     params?.period,
-    params?.keyword
+    params?.keyword,
+    params?.previousDate,
+    params?.previousEndDate
   )
 
   const theme = useTheme()

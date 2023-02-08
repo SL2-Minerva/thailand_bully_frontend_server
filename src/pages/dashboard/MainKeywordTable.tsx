@@ -54,7 +54,7 @@ const MainKeyWordTable = ({ params, chartId} : Props) => {
                         {
                             (resultTopKeywords?.main_keyword || [])?.map((keyword : any, index: any) => {
                                 return(
-                                    <TableRow key={index} onClick={()=>{setShowDetail(true); setKeywordId(keyword?.keyword_id)}}>
+                                    <TableRow style={{ cursor: 'pointer' }} key={index} onClick={()=>{setShowDetail(true); setKeywordId(keyword?.keyword_id)}}>
                                         <TableCell sx={{ backgroundColor: "lightslategrey !important", color:'white' }}>{keyword?.keyword}</TableCell>
                                         <TableCell>{keyword?.no_of_message}</TableCell>
                                         <TableCell>{keyword?.percentage}</TableCell>

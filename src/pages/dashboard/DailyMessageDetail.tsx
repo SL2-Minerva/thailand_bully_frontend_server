@@ -148,6 +148,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                     onClick={() => {
                       setShowDialog(true), setMessageId(messageDetail.message_id)
                     }}
+                    style={{ cursor: 'pointer' }}
                   >
                     <StyledTableCell align='center'>{messageDetail.message_id}</StyledTableCell>
                     <StyledTableCell component='th' scope='row'>

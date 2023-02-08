@@ -4,17 +4,21 @@ import { CallAPI } from 'src/services/CallAPI'
 export const GetParams = (data: any) => {
   if (!data) return null
   let params = {}
-  const todayDate = new Date()
+  const todayDate = moment(new Date()).format('YYYY-MM-DD');
 
-  if (data?.period === 'customrange' && data?.previousDate !== todayDate && data?.previousEndDate !== todayDate) {
+  const previousDate = data?.previousDate ? moment(data?.previousDate).format('YYYY-MM-DD') : ''
+  const previousEndDate = data?.previousEndDate ? moment(data?.previousEndDate).format('YYYY-MM-DD') : ''
+
+
+  if (data?.period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
     params = {
       campaign_id: data?.campaignId || '',
       source: data?.platformId || '',
       start_date: data?.start_date ? moment(data?.start_date).format('YYYY-MM-DD') : '',
       end_date: data?.end_date ? moment(data?.end_date).format('YYYY-MM-DD') : '',
       period: data?.period,
-      start_date_period: data?.previousDate ? moment(data?.previousDate).format('YYYY-MM-DD') : '',
-      end_date_period: data?.previousEndDate ? moment(data?.previousEndDate).format('YYYY-MM-DD') : '',
+      start_date_period: previousDate,
+      end_date_period: previousEndDate,
       fillter_keywords: data?.fillter_keywords
     }
   } else {

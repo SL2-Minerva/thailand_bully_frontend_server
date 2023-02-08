@@ -35,7 +35,7 @@ const AccountList = ({params, chartId, cardHeader, title, networkTitle} : {param
 
                         return(
                             <div key={index}>
-                                <Card sx={{ margin: '1rem' }} onClick={()=>{setShowDetail(true); setCurrent({})}}>
+                                <Card sx={{ margin: '1rem', cursor: 'pointer' }} onClick={()=>{setShowDetail(true); setCurrent({})}}>
                                     <Grid container spacing={2}>
 
                                         <Grid item sm={2} xs={2}>
