@@ -51,29 +51,37 @@ const SentimentDashboard = () => {
   const [date, setDate] = useState<DateType>(new Date())
   const [endDate, setEndDate] = useState<DateType>(new Date())
   const [period, setPeriod] = useState<string>('daily')
-  const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || "3")
+  const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
   const [campaign, setCampaign] = useState<string>('1')
   const [previousDate, setPreviousDate] = useState<DateType>(new Date())
   const [previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
-  const [topAccount, setTopAccount] = useState<string>(' ')
+  const [topAccount, setTopAccount] = useState<string>('all')
   const [topChannel, setTopChannel] = useState<string>('all')
   const [topKeyword, setTopKeyword] = useState<string>('all')
 
   const [highlight, setHighlight] = useState<string>('')
 
   const { resultReportPermission, errorUserPermission } = UserPermission()
-  const { resultFilterData, loadingFilterData } = FilterByCampaignId(campaign, date, endDate, period, keyword)
+  const { resultFilterData, loadingFilterData } = FilterByCampaignId(
+    campaign,
+    date,
+    endDate,
+    period,
+    keyword,
+    previousDate,
+    previousEndDate
+  )
   const { resultKeywordList } = GetKeyWordsList(campaign)
   const params = {
     campaign: campaign,
     date: date,
     endDate: endDate,
     period: period,
-    keywordIds: keyword, 
-    page: 'sentimentDashboard', 
+    keywordIds: keyword,
+    page: 'sentimentDashboard',
     label: ''
   }
 
@@ -88,17 +96,17 @@ const SentimentDashboard = () => {
     resultSentimentByTime,
     resultSentimentComparison,
     loadingSentimentByDay
-  } = GetSenitmemntBy(campaign, date, endDate, period, keyword)
+  } = GetSenitmemntBy(campaign, date, endDate, period, keyword, previousDate, previousEndDate)
 
   const {
     resultSenitmentComparisonByChannel,
     resultSentimentComparisonByEngagement,
     resultTotalSentiment,
     loadingSentimentComparison
-  } = GetPeriodComparison(campaign, date, endDate, period, keyword)
+  } = GetPeriodComparison(campaign, date, endDate, period, keyword, previousDate, previousEndDate)
 
   const { resultSummaryByAccount, resultSummaryByChannel, resultSummaryByKeywords, total, loadingSummaryByAccount } =
-    GetSummaryBy(campaign, date, endDate, period, keyword, topAccount, topChannel, topKeyword)
+    GetSummaryBy(campaign, date, endDate, period, keyword, topAccount, topChannel, topKeyword, previousDate, previousEndDate)
 
   const checkKeywordId = (data: any, keywordId: string | number) => {
     const index = data.indexOf(keywordId)
@@ -134,8 +142,8 @@ const SentimentDashboard = () => {
     loadingFilterData: loadingFilterData
   }
 
-  useEffect(()=> {
-    if(errorUserPermission) {
+  useEffect(() => {
+    if (errorUserPermission) {
       window.localStorage.removeItem('userData')
       localStorage.clear()
       router.push('/login')
@@ -405,7 +413,7 @@ const SentimentDashboard = () => {
               <Card id='chart10'>
                 <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                   <CardHeader
-                    title={<Translations text='Total Messages by Engagement Type'/>}
+                    title={<Translations text='Total Messages by Engagement Type' />}
                     titleTypographyProps={{ variant: 'h6', color: highlight === 'chart10' ? 'green' : '#4c4e64de' }}
                   />
                   <StyledTooltip arrow title='Chart 10, Report Level 2(5.2.012)'>
@@ -517,8 +525,8 @@ const SentimentDashboard = () => {
               params={params}
               chartId='Chart 15'
               highlight={highlight === 'chart15' ? true : false}
-              topAccount = {topAccount}
-              setTopAccount ={setTopAccount}
+              topAccount={topAccount}
+              setTopAccount={setTopAccount}
             />
           </Grid>
         ) : (

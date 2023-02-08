@@ -73,18 +73,19 @@ const Filter = (props : Props) => {
         } else if (value === '6') {
             setPeriod('lastmonth');
             const date = new Date();
+            const lastDayofMonth = get1stAndLastDayOfMonth(
+                date.getFullYear(),
+                date.getMonth()-1,
+                date.getDate()
+            );
+
             const firstDayofLastMonth = get1stAndLastDayOfMonth(
                 date.getFullYear(),
                 date.getMonth()-1,
                 1
               );
+
             
-            console.log("last month", date.getMonth()-1);
-            const lastDayofMonth = get1stAndLastDayOfMonth(
-                date.getFullYear(),
-                date.getMonth(),
-                0
-            );
             setDate(firstDayofLastMonth);
             setEndDate(lastDayofMonth);
         } else {

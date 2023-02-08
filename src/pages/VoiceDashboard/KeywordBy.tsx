@@ -20,7 +20,15 @@ const KeywordBy = ({
     resultKeywordComparisonBySentiment,
     resultKeywordComparisonByChannel,
     loadingKeywordComparisonByAll
-  } = GetKeywordComparisonByAll(params?.campaign, params?.date, params?.endDate, params?.period, params?.keyword)
+  } = GetKeywordComparisonByAll(
+    params?.campaign,
+    params?.date,
+    params?.endDate,
+    params?.period,
+    params?.keyword,
+    params?.previousDate,
+    params?.previousEndDate
+  )
 
   return (
     <>

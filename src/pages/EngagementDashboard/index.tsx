@@ -53,7 +53,7 @@ const EngagementDashboard = () => {
   const [previousDate, setPreviousDate] = useState<DateType>(new Date())
   const [previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
   const [period, setPeriod] = useState<string>('daily')
-  const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || "3")
+  const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
   const [campaignType, setCampaignType] = useState<string>('1')
   const [topKeyword, setTopKeyword] = useState<string>('all')
   const [highlight, setHighlight] = useState<string>('')
@@ -64,7 +64,15 @@ const EngagementDashboard = () => {
   const { resultReportPermission, errorUserPermission } = UserPermission()
   const { resultKeywordList } = GetKeyWordsList(campaignType)
 
-  const { resultFilterData, loadingFilterData } = FilterByCampaignId(campaignType, date, endDate, period, keyword)
+  const { resultFilterData, loadingFilterData } = FilterByCampaignId(
+    campaignType,
+    date,
+    endDate,
+    period,
+    keyword,
+    previousDate,
+    previousEndDate
+  )
   const {
     resultEngagementByTime,
     resultEngagementByAccount,
@@ -73,8 +81,10 @@ const EngagementDashboard = () => {
     resultEngagementChannel,
     resultKeywordByEngagementType,
     loadingEngagementBy
-  } = GetEngagementBy(campaignType, date, endDate, period, keyword)
-  
+  } = GetEngagementBy(campaignType, date, endDate, period, keyword,
+    previousDate,
+    previousEndDate)
+
   const {
     resultEngagementPercentage,
     resultEngagementTypeByAccount,
@@ -83,7 +93,9 @@ const EngagementDashboard = () => {
     resultEngagementTypeByDevice,
     resultEngagementTypeByTime,
     loadingEngagementType
-  } = EngagementTypeBy(campaignType, date, endDate, period, keyword)
+  } = EngagementTypeBy(campaignType, date, endDate, period, keyword,
+    previousDate,
+    previousEndDate)
 
   const {
     resultTotalEngagement,
@@ -92,8 +104,10 @@ const EngagementDashboard = () => {
     resultPeriodComparisonBySenitment,
     resultSummary,
     loadingPeriodComparisonBySenitment,
-    resultPeriodComparisonByChannel,
-  } = GetEngagementComparisonBy(campaignType, date, endDate, period, keyword, topKeyword)
+    resultPeriodComparisonByChannel
+  } = GetEngagementComparisonBy(campaignType, date, endDate, period, keyword, topKeyword,
+    previousDate,
+    previousEndDate)
 
   const params = {
     campaign: campaignType,
@@ -101,7 +115,7 @@ const EngagementDashboard = () => {
     endDate: endDate,
     period: period,
     keywordIds: keyword,
-    page: 'engagementDashboard', 
+    page: 'engagementDashboard',
     label: ''
   }
 
@@ -147,8 +161,8 @@ const EngagementDashboard = () => {
     return data
   }
 
-  useEffect(()=> {
-    if(errorUserPermission) {
+  useEffect(() => {
+    if (errorUserPermission) {
       window.localStorage.removeItem('userData')
       localStorage.clear()
       router.push('/login')

@@ -19,7 +19,7 @@ const SentimentGaugeChart = ({params, chartId} : {params:any, chartId: string}) 
     const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
 
     return(
-        <Card style={{ maxHeight: '340px' }}>
+        <Card style={{ minHeight: 410, maxHeight: 500 }}>
             {loadingFilterData && (
                 <LinearProgress
                     style={{ width: "100%" }}

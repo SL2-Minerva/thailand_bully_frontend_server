@@ -23,7 +23,15 @@ const DayTimeBy = ({
     resultTimeByBullyType,
     resultTimeBySentiment,
     loadingDayByAll
-  } = GetDayTimeByAll(params?.campaign, params?.date, params?.endDate, params?.period, params?.keyword)
+  } = GetDayTimeByAll(
+    params?.campaign,
+    params?.date,
+    params?.endDate,
+    params?.period,
+    params?.keyword,
+    params?.previousDate,
+    params?.previousEndDate
+  )
 
   return (
     <>

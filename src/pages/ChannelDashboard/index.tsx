@@ -5,7 +5,12 @@ import Filter from '../VoiceDashboard/Filter'
 import { StyledTooltip } from '../dashboard/overall'
 import { useTheme } from '@mui/material/styles'
 import ChannelComparison from './ChannelComparison'
-import { GetChannelBy, GetDailyBy, GetEngagementBy, GetSentimentBy } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
+import {
+  GetChannelBy,
+  GetDailyBy,
+  GetEngagementBy,
+  GetSentimentBy
+} from 'src/services/api/dashboards/channel/ChannelDashboardApi'
 import ChannelBySentiment from './ChannelBySentiment'
 import QuickView from './QuickView'
 import { DateType } from 'src/types/forms/reactDatepickerTypes'
@@ -43,7 +48,7 @@ const ChannelDashboard = () => {
   const [date, setDate] = useState<DateType>(new Date())
   const [endDate, setEndDate] = useState<DateType>(new Date())
   const [period, setPeriod] = useState<string>('daily')
-  const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || "3")
+  const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
   const [campaign, setCampaign] = useState<string>('1')
   const [previousDate, setPreviousDate] = useState<DateType>(new Date())
   const [previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
@@ -67,7 +72,8 @@ const ChannelDashboard = () => {
   //api call
   const { resultReportPermission, errorUserPermission } = UserPermission()
   const { resultKeywordList } = GetKeyWordsList(campaign)
-  const { resultDailyChannel, resultPercentageChannelCurrent, resultPercentageChannelPrevious, loadingDailyChannel } = GetDailyBy(campaign, date, endDate, period, keyword)
+  const { resultDailyChannel, resultPercentageChannelCurrent, resultPercentageChannelPrevious, loadingDailyChannel } =
+    GetDailyBy(campaign, date, endDate, period, keyword, previousDate, previousEndDate)
   const {
     resultChannelByDay,
     resultChannelByAccount,
@@ -77,7 +83,7 @@ const ChannelDashboard = () => {
     resultChannelBySentiment,
     resultChannelByTime,
     loadingChannelBy
-  } = GetChannelBy(campaign, date, endDate, period, keyword)
+  } = GetChannelBy(campaign, date, endDate, period, keyword, previousDate, previousEndDate)
 
   const {
     resultEngagementRate,
@@ -89,7 +95,7 @@ const ChannelDashboard = () => {
     resultYoutubeComparison,
     resultGoogleComparison,
     loadingEngagementBy
-  } = GetEngagementBy(campaign, date, endDate, period, keyword)
+  } = GetEngagementBy(campaign, date, endDate, period, keyword, previousDate, previousEndDate)
 
   const {
     resultChannelSentimentLevel,
@@ -97,7 +103,7 @@ const ChannelDashboard = () => {
     resultSentimentScore,
     resultSentimentScorePrevious,
     loadingSentimentBy
-  } = GetSentimentBy(campaign, date, endDate, period, keyword)
+  } = GetSentimentBy(campaign, date, endDate, period, keyword, previousDate, previousEndDate)
 
   const checkKeywordId = (data: any, keywordId: string | number) => {
     const index = data.indexOf(keywordId)
@@ -118,8 +124,8 @@ const ChannelDashboard = () => {
     return data
   }
 
-  useEffect(()=> {
-    if(errorUserPermission) {
+  useEffect(() => {
+    if (errorUserPermission) {
       window.localStorage.removeItem('userData')
       localStorage.clear()
       router.push('/login')
@@ -214,8 +220,8 @@ const ChannelDashboard = () => {
             chartId='Chart 1'
             highlight={highlight === 'chart1' ? true : false}
             resultPercentageChannelCurrent={resultPercentageChannelCurrent}
-            resultPercentageChannelPrevious ={resultPercentageChannelPrevious}
-            loadingPercentageChannel ={loadingDailyChannel}
+            resultPercentageChannelPrevious={resultPercentageChannelPrevious}
+            loadingPercentageChannel={loadingDailyChannel}
           />
         </Grid>
       ) : (
@@ -229,7 +235,7 @@ const ChannelDashboard = () => {
             type='channel'
             chartId='Chart 2'
             highlight={highlight === 'chart2' ? true : false}
-            resultDailyChannel ={resultDailyChannel}
+            resultDailyChannel={resultDailyChannel}
             loadingDailyChannel={loadingDailyChannel}
           />
         </Grid>
@@ -388,7 +394,7 @@ const ChannelDashboard = () => {
             <Card>
               <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
-                  title={<Translations text="Channel Comparison: Period over Period"/>}
+                  title={<Translations text='Channel Comparison: Period over Period' />}
                   titleTypographyProps={{ variant: 'h6', color: highlight === 'chart10' ? 'green' : '#4c4e64de' }}
                 />
                 <StyledTooltip arrow title='Chart 10, Report Level 2(3.3.012)'>
@@ -506,7 +512,7 @@ const ChannelDashboard = () => {
             chartId='Chart 12'
             highlight={highlight === 'chart12' ? true : false}
             resultBy={resultSentimentScore}
-            resultByPrevious = {resultSentimentScorePrevious}
+            resultByPrevious={resultSentimentScorePrevious}
             loading={loadingSentimentBy}
           />
         </Grid>
@@ -516,7 +522,13 @@ const ChannelDashboard = () => {
       {resultReportPermission?.includes('56') ? (
         <Grid container spacing={4} ml={3} mt={2} id='chart13'>
           <Grid item xs={12} md={6}>
-            <ChannelBySentiment params={params} chartId='Chart 13' highlight={highlight === 'chart13' ? true : false} resultBy={resultChannelSentimentLevel} loading={loadingSentimentBy} />
+            <ChannelBySentiment
+              params={params}
+              chartId='Chart 13'
+              highlight={highlight === 'chart13' ? true : false}
+              resultBy={resultChannelSentimentLevel}
+              loading={loadingSentimentBy}
+            />
           </Grid>
           <Grid item xs={12} md={6}>
             <SentimentLevelChart
@@ -533,8 +545,14 @@ const ChannelDashboard = () => {
       )}
 
       <QuickView setHighlight={setHighlight} setShowQuickView={setShowQuickView} />
-      <QuickViewModal show={showQuickView} setShow={setShowQuickView} params={params} chartId={highlight} resultDailyChannel ={resultDailyChannel}
-            loadingDailyChannel={loadingDailyChannel} />
+      <QuickViewModal
+        show={showQuickView}
+        setShow={setShowQuickView}
+        params={params}
+        chartId={highlight}
+        resultDailyChannel={resultDailyChannel}
+        loadingDailyChannel={loadingDailyChannel}
+      />
     </Grid>
   )
 }

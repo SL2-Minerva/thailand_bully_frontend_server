@@ -31,7 +31,9 @@ const DailyMessagePieChart = (props: Props) => {
     params?.date,
     params?.endDate,
     params?.period,
-    params?.keywordIds
+    params?.keywordIds,
+    params?.previousDate,
+    params?.previousEndDate
   )
   const theme = useTheme()
   const labelColor = theme.palette.text.primary

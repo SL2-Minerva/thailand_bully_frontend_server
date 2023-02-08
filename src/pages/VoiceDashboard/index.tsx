@@ -7,7 +7,7 @@ import MessageText from 'mdi-material-ui/MessageText'
 import { AccountGroup } from 'mdi-material-ui'
 import DailyMessagePieChart from './DailyMessagesPieChart'
 import {
-  GetNumbersOfAccountsComparison
+  GetNumbersOfAccountComparison
 } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 import Filter from './Filter'
 import QuickView from './QuickView'
@@ -51,7 +51,7 @@ const VoiceDashboard = () => {
 
   const { resultReportPermission, errorUserPermission } = UserPermission()
   const { resultNumbersOfAccounts, resultTotalAccounts, resultTotalMessages, loadingNumbersOfAccountsComparison } =
-    GetNumbersOfAccountsComparison(campaign, date, endDate, period, keyword)
+    GetNumbersOfAccountComparison(campaign, date, endDate, period, keyword, previousDate, previousEndDate)
 
   // const { resultTotalAccount,resultTotalMessages, loadingTotalComparison } = GetComparison(campaign, date, endDate, period, keyword);
   const { resultKeywordList } = GetKeyWordsList(campaign)

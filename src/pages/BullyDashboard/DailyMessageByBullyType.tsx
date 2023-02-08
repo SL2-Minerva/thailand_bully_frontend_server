@@ -89,7 +89,9 @@ const DailyMessgesByBullyType = (props: LineProps) => {
     params?.date,
     params?.endDate,
     params?.period,
-    params?.keywordIds
+    params?.keywordIds,
+    params?.previousDate,
+    params?.previousEndDate
   )
 
   const chartRef = useRef()

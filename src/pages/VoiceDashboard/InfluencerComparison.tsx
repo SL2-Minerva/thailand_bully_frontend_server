@@ -26,17 +26,17 @@ import { LinearProgress } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 
 interface InfluencerComparisonProps {
-    icon: ReactNode
-    color?: ThemeColor
-    trendNumber: string
-    trend?: string
-    totalText: string
-    totalValue : number
-    chartId: string
-    highlight: boolean
-    reportNo : string
-    loading: boolean
-  }
+  icon: ReactNode
+  color?: ThemeColor
+  trendNumber: string
+  trend?: string
+  totalText: string
+  totalValue: number
+  chartId: string
+  highlight: boolean
+  reportNo: string
+  loading: boolean
+}
 
 const InfluencerComparison = (props: InfluencerComparisonProps) => {
   // ** Props
@@ -44,56 +44,54 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
 
   const TrendIcon = trend === 'plus' ? ChevronUp : ChevronDown
 
-  const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
+  const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
 
-  const title = totalText === "Messages" ? "Number of Messages: Period over Period Comparison" : "Number of Accounts: Period over Period Comparison"
+  const title =
+    totalText === 'Messages'
+      ? 'Number of Messages: Period over Period Comparison'
+      : 'Number of Accounts: Period over Period Comparison'
 
   return (
     <Card style={{ height: 250 }}>
-        {loading && (
-          <LinearProgress
-            style={{ width: "100%" }}
-          />
-        )}
+      {loading && <LinearProgress style={{ width: '100%' }} />}
       <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box>
-            <Grid container spacing={6}>
-                <Grid item xs={3}>
-                    <CustomAvatar skin='light' variant='rounded' color={color} sx={{ mt: 5 }}>
-                        {icon}
-                    </CustomAvatar>
-                </Grid>
-                <Grid item xs={5} p={4}>
-                    <Typography variant='h4'>
-                        {trend === 'plus' ? "+" : ""}{totalValue}
-                    </Typography>
-                    <Typography variant='h6' sx={{ m: 3 }} >
-                        <b>{totalText}</b>
-                    </Typography>
-                </Grid>
-                <Grid item xs={4} p={4}>
-                    <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Typography variant='h5' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
-                                {trendNumber + "%"}
-                            </Typography>
-                            <TrendIcon fontSize='large' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }} />
-                        </Box>
-                    </Box>
-                </Grid>
+          <Grid container spacing={6}>
+            <Grid item xs={3}>
+              <CustomAvatar skin='light' variant='rounded' color={color} sx={{ mt: 5 }}>
+                {icon}
+              </CustomAvatar>
             </Grid>
+            <Grid item xs={5} p={4}>
+              <Typography variant='h4'>
+                {trend === 'plus' ? '+' : ''}
+                {totalValue}
+              </Typography>
+              <Typography variant='h6' sx={{ m: 3 }}>
+                <b>{totalText}</b>
+              </Typography>
+            </Grid>
+            <Grid item xs={4} p={4}>
+              <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Typography variant='h5' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
+                    {trendNumber + '%'}
+                  </Typography>
+                  <TrendIcon fontSize='large' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }} />
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
         </Box>
 
         <Divider sx={{ mt: 2, mb: 7.5 }} />
-                
-                <span style={{ display: 'flex', justifyContent: 'flex-start',color: highlight ? 'green' : '#4c4e64de' }}>
-                    <Translations text={title}/>
-                    <StyledTooltip arrow title={chartTitle || ""}>
-                        <Information style={{marginLeft: '10px', fontSize: '29px'}} />
-                    </StyledTooltip>
-                </span>
 
-         
+        <span style={{ display: 'flex', justifyContent: 'flex-start', color: highlight ? 'green' : '#4c4e64de' }}>
+          <Translations text={title} />
+          <StyledTooltip arrow title={chartTitle || ''}>
+            <Information style={{ marginLeft: '10px', fontSize: '29px' }} />
+          </StyledTooltip>
+        </span>
       </CardContent>
     </Card>
   )

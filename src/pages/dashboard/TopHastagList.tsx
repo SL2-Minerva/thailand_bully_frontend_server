@@ -51,7 +51,7 @@ const TopHashtagList = ({params, chartId} : Props) => {
                             {
                                 (resultTopKeywords?.top_hastag || [])?.map((hashtag:any, index:any) => {
                                     return(
-                                        <TableRow key={index} onClick={()=>{setShowDetail(true);setKeywordId(hashtag?.keyword_id)}}>
+                                        <TableRow style={{ cursor: 'pointer' }} key={index} onClick={()=>{setShowDetail(true);setKeywordId(hashtag?.keyword_id)}}>
                                             <TableCell sx={{ backgroundColor: "lightslategrey !important", color:'white'}}>{hashtag?.hashtag}</TableCell>
                                             <TableCell>{hashtag?.no_of_message}</TableCell>
                                             <TableCell>{hashtag?.percentage}</TableCell>

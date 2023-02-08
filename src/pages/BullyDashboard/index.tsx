@@ -63,7 +63,9 @@ const BullyDashboard = () => {
     date,
     endDate,
     period,
-    keyword
+    keyword,
+    previousDate, 
+    previousEndDate
   )
   const {
     resultBullyByAccount,
@@ -73,7 +75,7 @@ const BullyDashboard = () => {
     resultBullyBySentiment,
     resultBullyByTime,
     loadingBullyBy
-  } = GetBullyBy(campaign, date, endDate, period, keyword)
+  } = GetBullyBy(campaign, date, endDate, period, keyword, previousDate, previousEndDate)
 
   const {
     resultBullyTypeByAccount,
@@ -83,7 +85,7 @@ const BullyDashboard = () => {
     resultBullyTypeBySenitment,
     resultBullyTypeByTime,
     loadingBullyTypeBy
-  } = GetDailyTypeBy(campaign, date, endDate, period, keyword)
+  } = GetDailyTypeBy(campaign, date, endDate, period, keyword, previousDate, previousEndDate)
 
   const {
     resultShareOfChannelBullyLevels,
@@ -91,7 +93,7 @@ const BullyDashboard = () => {
     resultShareOfChannelChartBullyLevel,
     resultShareOfChannelPlatform,
     loadingShareOfChannelChart
-  } = GetBullyTypeBy(campaign, date, endDate, period, keyword)
+  } = GetBullyTypeBy(campaign, date, endDate, period, keyword, previousDate, previousEndDate)
   const { resultKeywordList } = GetKeyWordsList(campaign)
 
   const params = {
@@ -101,7 +103,9 @@ const BullyDashboard = () => {
     period: period,
     keywordIds: keyword, 
     page: 'bullyDasboard',
-    label: ''
+    label: '',
+    previousDate: previousDate,
+    previousEndDate: previousEndDate
   }
 
   const quickViewData = {
