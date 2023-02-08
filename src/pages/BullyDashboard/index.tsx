@@ -46,7 +46,7 @@ const BullyDashboard = () => {
 
   const [date, setDate] = useState<DateType>(new Date())
   const [endDate, setEndDate] = useState<DateType>(new Date())
-  const [period, setPeriod] = useState<string>('daily')
+  const [period, setPeriod] = useState<string>('last7days')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || "3")
   const [campaign, setCampaign] = useState<string>('1')
   const [previousDate, setPreviousDate] = useState<DateType>(new Date())
