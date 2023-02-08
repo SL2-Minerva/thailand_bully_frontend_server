@@ -21,10 +21,11 @@ import DayTimeBy from './DayTimeBy'
 import MessageByAll from './MessageByAll'
 import Comparison from './Comparision'
 import { useRouter } from 'next/router'
+import { calculateDate } from '../dashboard/overall'
 
 const VoiceDashboard = () => {
   const router = useRouter()
-  const [date, setDate] = useState<DateType>(new Date())
+  const [date, setDate] = useState<DateType>(calculateDate(6))
   const [endDate, setEndDate] = useState<DateType>(new Date())
   const [period, setPeriod] = useState<string>('last7days')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || "3")

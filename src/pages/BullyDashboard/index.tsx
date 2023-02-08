@@ -11,6 +11,7 @@ import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDash
 import { UserPermission } from 'src/services/api/users/role'
 import { DateType } from 'src/types/forms/reactDatepickerTypes'
 import { GraphicColors } from 'src/utils/const'
+import { calculateDate } from '../dashboard/overall'
 import Filter from '../VoiceDashboard/Filter'
 import BullyLevelByAccount from './BullyLevelByAccount'
 import BullyLevelByChannel from './BullyLevelByChannel'
@@ -44,7 +45,7 @@ const BullyDashboard = () => {
   const borderColor = theme.palette.action.focus
   const gridLineColor = theme.palette.action.focus
 
-  const [date, setDate] = useState<DateType>(new Date())
+  const [date, setDate] = useState<DateType>(calculateDate(6))
   const [endDate, setEndDate] = useState<DateType>(new Date())
   const [period, setPeriod] = useState<string>('last7days')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || "3")
