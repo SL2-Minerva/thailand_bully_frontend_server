@@ -8,7 +8,7 @@ import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps } from '../VoiceDashboard/MessageByDays'
 import { GetChannelByTime } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
-import MessageDetail from './MessageDetail'
+import MessageDetail from '../VoiceDashboard/MessageDetail'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
 

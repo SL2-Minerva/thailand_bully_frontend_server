@@ -6,7 +6,7 @@ import { BullyDashboardColors, EngagementTypeColors, GraphicColors } from 'src/u
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import {  LineProps } from './MessageByDays'
-import MessageDetail from 'src/pages/ChannelDashboard/MessageDetail'
+import MessageDetail from '../MessageDetail'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'

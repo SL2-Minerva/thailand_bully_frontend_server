@@ -10,7 +10,7 @@ import { Bar } from 'react-chartjs-2'
 import { StyledTooltip } from './overall';
 import { Information } from 'mdi-material-ui';
 import { GetShareOfVoice, GetShareOfVoiceChart } from 'src/services/api/dashboards/overall/overallDashboardApi';
-import { FacebookIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const';
+import { FacebookIcon, googleIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const';
 import Translations from 'src/layouts/components/Translations';
 
 const ChartLabels = (data: any) => {
@@ -91,7 +91,7 @@ const ShareOfVoice  = ({params, chartId} : {params: any, chartId : string}) => {
     for(let i=0; i<headerData?.length ; i++) {
       const value = headerData[i]?.value ; 
       for(let j=0; j<value?.length; j++) {
-        tableHeader.push(value[i]?.channel);
+        tableHeader.push(value[j]?.channel);
       }
     }
 
@@ -102,7 +102,7 @@ const ShareOfVoice  = ({params, chartId} : {params: any, chartId : string}) => {
           {
             (filterData || []).map((title :any, i :number) => {
               const imgPath = title === 'twitter' ? TwitterIcon : title === 'youtube' ? YoutubeIcon : title === 'facebook' ? FacebookIcon
-                              :  title === 'instagram' ? InstagramIcon :  title === 'pantip' ? PantipIcon : ""; 
+                              :  title === 'instagram' ? InstagramIcon :  title === 'pantip' ? PantipIcon :  title === 'google' ? googleIcon  : ""; 
 
                 return (
                   <TableCell key={i}>
@@ -126,7 +126,7 @@ const ShareOfVoice  = ({params, chartId} : {params: any, chartId : string}) => {
 
 
   return (
-    <Card sx={{ minHeight: 380 }}>
+    <Card sx={{ height: 450 }}>
       {loadingShareOfVoice && loadingShareOfVoiceChart && (
           <LinearProgress
             style={{ width: "100%" }}

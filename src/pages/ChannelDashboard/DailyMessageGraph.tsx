@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { InteractionItem } from 'chart.js'
 import moment from 'moment'
-import MessageDetail from './MessageDetail'
+import MessageDetail from '../VoiceDashboard/MessageDetail'
 import { LinearProgress, Paper } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 

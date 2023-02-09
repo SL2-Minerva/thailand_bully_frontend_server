@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Plus from 'mdi-material-ui/Plus'
 import Close from 'mdi-material-ui/Close'
+import { Color, ColorPicker, createColor } from 'material-ui-color'
 
 // interface KeywordsProps {
 //   indexNumber: number
@@ -21,11 +22,17 @@ const KeywordForm = (props: any) => {
 
   const { keyword_and, keyword_or, keyword_exclude } = value
 
-
   function handleChangeLabel(i: number, event: any) {
-
     const values = [...keywords]
     values[i].name = event.target.value
+    setKeywords(values)
+  }
+
+  function handleChangeColor(event: any, i: number) {
+    const values = [...keywords]
+    values[i].colors = '#' + event.hex
+
+    console.log('color list:', values)
     setKeywords(values)
   }
 
@@ -53,9 +60,8 @@ const KeywordForm = (props: any) => {
   }
 
   function removeTextKeyword(i: number, indexValue: number, list: any, type: any) {
-
-    const values = [...keywords];
-    const news = list.filter((item:any, index:number) => index !== i);
+    const values = [...keywords]
+    const news = list.filter((item: any, index: number) => index !== i)
     if (type === 'keyword_or') {
       values[indexValue].keyword_or = news
     }
@@ -68,8 +74,7 @@ const KeywordForm = (props: any) => {
       values[indexValue].keyword_exclude = news
     }
 
-
-    setKeywords(values);
+    setKeywords(values)
   }
 
   function handleTextKeyword(i: number, e: any, list: any, current: any, type: any, indexValue: number) {
@@ -98,11 +103,21 @@ const KeywordForm = (props: any) => {
     setKeywords(values)
   }
 
+  // const handleChangeColor = (newValue: Color) => {
+  //   console.log('change', newValue)
+
+  //   // setColor(`#${newValue.hex}`);
+  //   setLabelColor(newValue)
+
+  //   console.log("hex value", newValue.hex);
+
+  //   // action('changed')(newValue);
+  // }
 
   return (
     <>
       <Grid container sx={{ py: 4, width: '100%' }}>
-        <Grid item xs={12} sx={{ px: 4 }} style={{marginBottom: '15px'}}>
+        <Grid item xs={11} sx={{ px: 4 }} style={{ marginBottom: '15px' }}>
           <Typography variant='subtitle2' className='col-title' sx={{ mb: { md: 2, xs: 0 }, color: 'text.primary' }}>
             <Close
               fontSize='small'
@@ -125,50 +140,68 @@ const KeywordForm = (props: any) => {
           />
         </Grid>
 
-        <Grid item sm={4} xs={12} sx={{ px: 4 }}>
+        <Grid item xs={1} sx={{ mt: 12 }}>
+          {keyword_and.length > 0 && !keyword_and[0] && !keyword_or[0] && !keyword_exclude[0] ? (
+            <ColorPicker
+              hideTextfield={true}
+              value={keywords[indexNumber]?.colors || createColor('white')}
+              onChange={(color: Color) => {
+                handleChangeColor(color, indexNumber)
+              }}
+            />
+          ) : (
+            ''
+          )}
+        </Grid>
 
-          {keyword_and && keyword_and.length > 0 &&
-          keyword_and.map((text:any, index:number) => {
-            return (
-            
+        <Grid item sm={4} xs={12} sx={{ px: 4 }}>
+          {keyword_and &&
+            keyword_and.length > 0 &&
+            keyword_and.map((text: any, index: number) => {
+              return (
+                <InputKeyword
+                  value={value}
+                  key={index}
+                  textValue={text}
+                  handleTextKeyword={handleTextKeyword}
+                  addMoreKeyword={addMoreKeyword}
+                  removeTextKeyword={removeTextKeyword}
+                  list={keyword_and}
+                  type={'keyword_and'}
+                  index={index}
+                  indexValue={indexNumber}
+                  label={'คำที่ต้องมี (AND)'}
+                />
+              )
+            })}
+
+          {!keyword_and ||
+            (keyword_and.length <= 0 && (
               <InputKeyword
                 value={value}
-                key={index}
-                textValue={text}
+                textValue={''}
                 handleTextKeyword={handleTextKeyword}
-                addMoreKeyword={addMoreKeyword}
                 removeTextKeyword={removeTextKeyword}
+                addMoreKeyword={addMoreKeyword}
                 list={keyword_and}
                 type={'keyword_and'}
-                index={index}
+                index={0}
                 indexValue={indexNumber}
                 label={'คำที่ต้องมี (AND)'}
               />
-            )
-          })}
-
-          {!keyword_and || keyword_and.length <= 0 && (
-            <InputKeyword
-              value={value}
-              textValue={''}
-              handleTextKeyword={handleTextKeyword}
-              removeTextKeyword={removeTextKeyword}
-              addMoreKeyword={addMoreKeyword}
-              list={keyword_and}
-              type={'keyword_and'}
-              index={0}
-              indexValue={indexNumber}
-              label={'คำที่ต้องมี (AND)'}
-            />
-          )}
-
+            ))}
         </Grid>
-         
-        <Grid item sm={4} xs={12} sx={{ px: 4 }} style={{borderLeft: '1px solid #000', borderRight: '1px solid #000'}}>
-          {keyword_or && keyword_or.length > 0 &&
-            keyword_or.map((text:any, index:number) => {
 
-          
+        <Grid
+          item
+          sm={4}
+          xs={12}
+          sx={{ px: 4 }}
+          style={{ borderLeft: '1px solid #000', borderRight: '1px solid #000' }}
+        >
+          {keyword_or &&
+            keyword_or.length > 0 &&
+            keyword_or.map((text: any, index: number) => {
               return (
                 <InputKeyword
                   key={index}
@@ -202,43 +235,42 @@ const KeywordForm = (props: any) => {
           )}
         </Grid>
         <Grid item sm={4} xs={12} sx={{ px: 4 }}>
+          {keyword_exclude &&
+            keyword_exclude.length > 0 &&
+            keyword_exclude.map((text: any, index: number) => {
+              return (
+                <InputKeyword
+                  value={value}
+                  key={index}
+                  textValue={text}
+                  handleTextKeyword={handleTextKeyword}
+                  addMoreKeyword={addMoreKeyword}
+                  removeTextKeyword={removeTextKeyword}
+                  list={keyword_exclude}
+                  type={'keyword_exclude'}
+                  index={index}
+                  indexValue={indexNumber}
+                  label={'คำที่ห้ามมี (Exclude)'}
+                />
+              )
+            })}
 
-          {keyword_exclude && keyword_exclude.length > 0 &&
-          keyword_exclude.map((text:any, index:number) => {
-            return (
-              
+          {!keyword_exclude ||
+            (keyword_exclude.length <= 0 && (
               <InputKeyword
                 value={value}
-                key={index}
-                textValue={text}
+                textValue={''}
                 handleTextKeyword={handleTextKeyword}
-                addMoreKeyword={addMoreKeyword}
                 removeTextKeyword={removeTextKeyword}
+                addMoreKeyword={addMoreKeyword}
                 list={keyword_exclude}
                 type={'keyword_exclude'}
-                index={index}
+                index={0}
                 indexValue={indexNumber}
                 label={'คำที่ห้ามมี (Exclude)'}
               />
-            )
-          })}
-
-          {!keyword_exclude || keyword_exclude.length <= 0 && (
-            <InputKeyword
-              value={value}
-              textValue={''}
-              handleTextKeyword={handleTextKeyword}
-              removeTextKeyword={removeTextKeyword}
-              addMoreKeyword={addMoreKeyword}
-              list={keyword_exclude}
-              type={'keyword_exclude'}
-              index={0}
-              indexValue={indexNumber}
-              label={'คำที่ห้ามมี (Exclude)'}
-            />
-          )}
+            ))}
         </Grid>
-
       </Grid>
     </>
   )
@@ -255,15 +287,17 @@ const InputKeyword = (props: any) => {
     indexValue,
     type,
     label,
-    index
+    index,
+    color
   } = props
   const [text, setText] = useState(textValue)
-
+  const [keywordColor, setKeywordColor] = useState(color || createColor('#ED5D5D'))
+  const [keywordColors, setKeywordColors] = useState(createColor('#70D477'))
   useEffect(() => {
     setText(textValue)
-   }, [textValue])
+  }, [textValue])
 
-  function handleChangeText(e:any, index:any, indexValue:any) {
+  function handleChangeText(e: any, index: any, indexValue: any) {
     setText(e.target.value)
     handleTextKeyword(index, e, list, value, type, indexValue)
   }
@@ -271,34 +305,88 @@ const InputKeyword = (props: any) => {
   return (
     <>
       <span style={{ display: 'flex' }}>
-        <TextField
-          fullWidth
-          multiline
-          size='small'
-          sx={{ mt: 3.5 }}
-          placeholder={label}
-          label={label}
-          value={text}
-          onChange={e => handleChangeText(e, index, indexValue)}
-        />
+        {label === 'คำที่สนใจ (OR)' ? (
+          <Grid sx={{ display: 'flex' }}>
+            <span style={{ marginTop: 15 }}>
+              <ColorPicker
+                hideTextfield={true}
+                value={keywordColors}
+                onChange={(color: Color) => {
+                  setKeywordColors(color)
+                }}
+              />
+            </span>
+
+            <TextField
+              fullWidth
+              multiline
+              size='small'
+              sx={{ mt: 3.5 }}
+              placeholder={label}
+              label={label}
+              value={text}
+              onChange={e => handleChangeText(e, index, indexValue)}
+            />
+          </Grid>
+        ) : (
+          <>
+            <TextField
+              fullWidth
+              multiline
+              size='small'
+              sx={{ mt: 3.5 }}
+              placeholder={label}
+              label={label}
+              value={text}
+              onChange={e => handleChangeText(e, index, indexValue)}
+            />
+          </>
+        )}
+
         {list.length > 1 && (
           <Close fontSize='small' sx={{ mt: 5.5 }} onClick={() => removeTextKeyword(index, indexValue, list, type)} />
         )}
         <br />
       </span>
 
-      {
-        list.length === index + 1 && <Button
-        sx={{ mt: '3%', p: '0px' }}
-        size='small'
-        variant='contained'
-        startIcon={<Plus fontSize='small' />}
-        onClick={() => {
-          addMoreKeyword(indexValue, list, value, type)
-        }}
-      ></Button>
-      }
-      
+      {list.length === index + 1 && (
+        <>
+          {label === 'คำที่สนใจ (OR)' ? (
+            <Grid sx={{ display: 'flex', mt: 3 }}>
+              <Button
+                sx={{ mt: '3%', p: '0px' }}
+                size='small'
+                variant='contained'
+                startIcon={<Plus fontSize='small' />}
+                onClick={() => {
+                  addMoreKeyword(indexValue, list, value, type)
+                }}
+              ></Button>
+            </Grid>
+          ) : (
+            <Grid sx={{ display: 'flex', mt: 3 }}>
+              <Button
+                sx={{ mt: '3%', p: '0px', mr: 4 }}
+                size='small'
+                variant='contained'
+                startIcon={<Plus fontSize='small' />}
+                onClick={() => {
+                  addMoreKeyword(indexValue, list, value, type)
+                }}
+              ></Button>
+              <span style={{ marginTop: 5 }}>
+                <ColorPicker
+                  hideTextfield={true}
+                  value={keywordColor}
+                  onChange={(color: Color) => {
+                    setKeywordColor(color)
+                  }}
+                />
+              </span>
+            </Grid>
+          )}
+        </>
+      )}
     </>
   )
 }

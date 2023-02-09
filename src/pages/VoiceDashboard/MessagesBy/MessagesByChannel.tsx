@@ -6,7 +6,7 @@ import { GraphicColors } from 'src/utils/const'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { chartLabel, LineProps } from './MessageByDays'
-import MessageDetail from 'src/pages/ChannelDashboard/MessageDetail'
+import MessageDetail from '../MessageDetail'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
 import Translations from 'src/layouts/components/Translations'
   

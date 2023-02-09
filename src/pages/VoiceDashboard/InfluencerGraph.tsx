@@ -15,9 +15,9 @@ import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { GraphicColors } from 'src/utils/const'
 import { useEffect, useRef, useState } from 'react'
 import { InteractionItem } from 'chart.js'
-import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { LinearProgress } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
+import MessageDetail from './MessageDetail'
 
 const chartLabel = (data: any) => {
   if (!data) return []

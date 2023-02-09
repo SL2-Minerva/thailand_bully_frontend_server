@@ -6,10 +6,10 @@ import { GraphicColors } from 'src/utils/const'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps } from './MessageByDays'
-import MessageDetail from 'src/pages/ChannelDashboard/MessageDetail'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
+import MessageDetail from '../MessageDetail'
   
 const MessagesByAccount = (props: LineProps) => {
   const { t } = useTranslation();
