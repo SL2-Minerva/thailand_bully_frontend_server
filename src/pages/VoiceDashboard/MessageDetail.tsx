@@ -10,9 +10,10 @@ import Paper from '@mui/material/Paper'
 import Fade, { FadeProps } from '@mui/material/Fade'
 import { Box, Card, Dialog, DialogContent, IconButton, LinearProgress, Pagination, Typography } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
-import { GetDetailMessage } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import { GetMessageDetail } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
-import DialogNetworkGraphByFitler from './DialogNetworkGraphByFilter'
+import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -49,38 +50,59 @@ interface DialogInfoProps {
   current?: any
   table?: any
   params?: any
-  keywordId?: number
-  setKeywordId?: any
-  reportNo?: any
-  title?: any
-  networkTitle?: any
+  paramsId?: any
+  setParamsId?: any
+  reportNo?: string
+  title?: string
+  networkTitle?: string
 }
 
-const DailyMessageDetail = (props: DialogInfoProps) => {
-  const { show, setShow, current, params, keywordId, setKeywordId, reportNo, title, networkTitle } = props
+const MessageDetail = (props: DialogInfoProps) => {
+  const { show, setShow, current, params, paramsId, setParamsId, reportNo, title, networkTitle } = props
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [page, setPage] = useState(0)
   const [messageId, setMessageId] = useState<number | string>()
   const [pageCount, setPageCount] = useState<number>(0)
 
-  const platformId = params?.platformId || ''
+  let paramData = {}
+  const todayDate = new Date()
+  if (params?.period === 'customrange' && params?.previousDate !== todayDate && params?.previousEndDate !== todayDate) {
+    paramData = {
+      campaign_id: params?.campaign || '',
+      source: paramsId?.sourceId || '',
+      start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
+      end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
+      period: params?.period,
+      keyword_id: paramsId?.keywordId || '',
+      organization_id: paramsId?.organization_id || '',
+      classification_id: paramsId?.classification_id || '',
+      start_date_period: params?.previousDate ? moment(params?.previousDate).format('YYYY-MM-DD') : '',
+      end_date_period: params?.previousEndDate ? moment(params?.previousEndDate).format('YYYY-MM-DD') : '',
+      page: page,
+      limit: 10,
+      report_number: reportNo,
+      page_name: params?.page,
+      label: params?.label
+    }
+  } else {
+    paramData = {
+      campaign_id: params?.campaign || '',
+      source: paramsId?.sourceId || '',
+      start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
+      end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
+      period: params?.period,
+      keyword_id: paramsId?.keywordId || '',
+      classification_id: paramsId?.classification_id || '',
+      organization_id: paramsId?.organization_id || '',
+      page: page,
+      limit: 10,
+      report_number: reportNo,
+      page_name: params?.page,
+      label: params?.label
+    }
+  }
 
-  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetDetailMessage(
-    params?.campaign,
-    platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.previousDate,
-    params?.previousEndDate,
-    keywordId,
-    page,
-    10,
-    reportNo,
-    params?.page,
-    params?.label, 
-    params?.ylabel
-  )
+  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetail(paramData)
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value - 1)
@@ -90,9 +112,12 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
     setShow(false)
     setPage(0)
     setPageCount(0)
-    if (keywordId) {
-      setKeywordId('')
-    }
+    setParamsId({
+      keywordId: null,
+      sourceId: null,
+      campaign_id: null,
+      organization_id: null
+    })
   }
 
   useEffect(() => {
@@ -100,9 +125,6 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
       setPageCount(Math.ceil(totalMessage / 10))
     }
   }, [totalMessage])
-
-  const cardTitle = title ? title : 'Daily Messages: Message Transactions'
-  const titleNetwork = networkTitle ? networkTitle : "Daily Messages: Social Network Analysis"
 
   return (
     <Card>
@@ -121,12 +143,12 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
           {loadingMessageDetail && <LinearProgress style={{ width: '100%' }} />}
           <Box sx={{ mb: 8, textAlign: 'center' }}>
             <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-              <Translations text={cardTitle} />
+              <Translations text={title || 'Daily Messages: Message Transactions'} />
             </Typography>
           </Box>
 
           <TableContainer component={Paper}>
-            <Table style={{ minWidth: '00px' }} aria-label='customized table'>
+            <Table style={{ minWidth: '00px'}} aria-label='customized table'>
               <TableHead>
                 <TableRow>
                   <StyledTableCell>Message ID</StyledTableCell>
@@ -142,28 +164,29 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {(resultMessageDetail || []).map((messageDetail: any, index: number) => (
-                  <StyledTableRow
-                    key={index}
-                    onClick={() => {
-                      setShowDialog(true), setMessageId(messageDetail.message_id)
-                    }}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <StyledTableCell align='center'>{messageDetail.message_id}</StyledTableCell>
-                    <StyledTableCell component='th' scope='row'>
-                      {messageDetail.message_detail}
-                    </StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.account_name}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.post_date}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.post_time}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.day}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.device}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.channel}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.bully_level}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
-                  </StyledTableRow>
-                ))}
+                  {(resultMessageDetail || []).map((messageDetail: any, index: number) => (
+                    <StyledTableRow
+                      key={index}
+                      hover={true}
+                      onClick={() => {
+                        setShowDialog(true), setMessageId(messageDetail.message_id)
+                      }}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <StyledTableCell align='center'>{messageDetail.message_id}</StyledTableCell>
+                      <StyledTableCell component='th' scope='row'>
+                        {messageDetail.message_detail}
+                      </StyledTableCell>
+                      <StyledTableCell align='center'>{messageDetail.account_name}</StyledTableCell>
+                      <StyledTableCell align='center'>{messageDetail.post_date}</StyledTableCell>
+                      <StyledTableCell align='center'>{messageDetail.post_time}</StyledTableCell>
+                      <StyledTableCell align='center'>{messageDetail.day}</StyledTableCell>
+                      <StyledTableCell align='center'>{messageDetail.device}</StyledTableCell>
+                      <StyledTableCell align='center'>{messageDetail.channel}</StyledTableCell>
+                      <StyledTableCell align='center'>{messageDetail.bully_level}</StyledTableCell>
+                      <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
+                    </StyledTableRow>
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>
@@ -188,12 +211,12 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
           setShowDialog={setShowDialog}
           currentData={current}
           params={params}
-          keywordId={keywordId}
+          keywordId={paramsId?.keywordId}
           messageId={messageId}
-          setKeywordId={setKeywordId}
+          setKeywordId={setParamsId}
           setMessageId={setMessageId}
           reportNo={reportNo}
-          title={titleNetwork}
+          title={networkTitle || 'Daily Messages: Social Network Analysis'}
         />
       ) : (
         ''
@@ -202,4 +225,4 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
   )
 }
 
-export default DailyMessageDetail
+export default MessageDetail

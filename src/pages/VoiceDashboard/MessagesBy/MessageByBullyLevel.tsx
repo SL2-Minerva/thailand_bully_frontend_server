@@ -7,7 +7,7 @@ import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps } from './MessageByDays'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
-import MessageDetail from 'src/pages/ChannelDashboard/MessageDetail'
+import MessageDetail from '../MessageDetail'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
 

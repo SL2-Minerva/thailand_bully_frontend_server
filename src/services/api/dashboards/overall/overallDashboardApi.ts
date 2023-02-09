@@ -569,16 +569,21 @@ export const GetNetworkGraph = (
   previousEndDate?: any,
   keywordId?: any,
   messageId?: any,
-  reportNo?: string
+  reportNo?: string,
+  filterBy?: string
 ) => {
-  let params = {}
+  let params : any = {}
   params = {
     campaign_id: campaignId || '',
     start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
     message_id: messageId || '',
     keyword_id: keywordId || '',
-    report_number: reportNo || ''
+    report_number: reportNo || '',
+  }
+
+  if(filterBy) {
+    params.filterBy = filterBy
   }
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({

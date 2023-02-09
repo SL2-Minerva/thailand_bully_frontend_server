@@ -7,7 +7,7 @@ import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps } from '../VoiceDashboard/MessageByDays'
 import { chartDatasets,chartLabel } from './EngagementRate'
-import MessageDetail from './MessageDetail'
+import MessageDetail from '../VoiceDashboard/MessageDetail'
 import Translations from 'src/layouts/components/Translations'
   
 const SentimentScore = (props: LineProps) => {

@@ -13,9 +13,9 @@ import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { InteractionItem } from 'chart.js'
 import moment from 'moment'
 import { GetDailyMessages } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
-import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { LinearProgress, Paper } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
+import MessageDetail from './MessageDetail'
 
 interface Props {
   type: string
