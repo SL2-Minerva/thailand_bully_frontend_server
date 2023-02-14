@@ -35,7 +35,6 @@ import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { API_PATH } from 'src/utils/const'
 
-
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
   ref: Ref<unknown>
@@ -49,6 +48,7 @@ interface DialogInfoProps {
   action: string
   current?: any
   table: any
+  keywordLimit: number
 }
 
 const RepeaterWrapper = styled(CardContent)<CardContentProps>(({ theme }) => ({
@@ -60,7 +60,7 @@ const RepeaterWrapper = styled(CardContent)<CardContentProps>(({ theme }) => ({
 }))
 
 const DialogCampaign = (props: DialogInfoProps) => {
-  const { show, setShow, action, current } = props
+  const { show, setShow, action, current, keywordLimit } = props
 
   const [domain, setDomain] = useState<string>('')
   const [frequency, setFrequency] = useState<string>('')
@@ -78,7 +78,10 @@ const DialogCampaign = (props: DialogInfoProps) => {
       keyword_or: [''],
       keyword_and: [''],
       keyword_exclude: [''],
-      colors:['']
+      colors: [''],
+      keyword_or_color: [''],
+      keyword_and_color: [''],
+      keyword_exclude_color: ['']
     }
   ])
 
@@ -91,7 +94,10 @@ const DialogCampaign = (props: DialogInfoProps) => {
         keyword_or: [''],
         keyword_and: [''],
         keyword_exclude: [''],
-        colors:['']
+        colors: [''],
+        keyword_or_color: [''],
+        keyword_and_color: [''],
+        keyword_exclude_color: ['']
       }
     ]
     setKeywords(news)
@@ -209,7 +215,10 @@ const DialogCampaign = (props: DialogInfoProps) => {
           keyword_or: [''],
           keyword_and: [''],
           keyword_exclude: [''],
-          colors : ['']
+          colors: [''],
+          keyword_or_color: [''],
+          keyword_and_color: [''],
+          keyword_exclude_color: ['']
         }
       ])
       setDate(null)
@@ -229,8 +238,6 @@ const DialogCampaign = (props: DialogInfoProps) => {
   //     setKeywords(current.keywords)
   //   }
   // }, [current])
-
-  
 
   return (
     <Card>
@@ -323,9 +330,18 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
                 <Grid container sx={{ mt: 4.75 }}>
                   <Grid item xs={12} sx={{ px: 0 }}>
-                    <Button size='small' variant='contained' startIcon={<Plus fontSize='small' />} onClick={addKeyword}>
-                      Add Keyword
-                    </Button>
+                    {keywords?.length === keywordLimit ? (
+                      ''
+                    ) : (
+                      <Button
+                        size='small'
+                        variant='contained'
+                        startIcon={<Plus fontSize='small' />}
+                        onClick={addKeyword}
+                      >
+                        Add Keyword
+                      </Button>
+                    )}
                   </Grid>
                 </Grid>
               </RepeaterWrapper>

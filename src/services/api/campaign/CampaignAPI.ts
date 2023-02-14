@@ -1,7 +1,5 @@
-import { init } from 'i18next'
 import moment from 'moment'
 import { CallAPI } from 'src/services/CallAPI'
-import { number } from 'yup'
 
 const CreateCampaign = () => {
   const [{ data, loading, error }, store] = CallAPI<{
@@ -21,7 +19,7 @@ const CreateCampaign = () => {
     loading_campaign_create: loading,
     error_campaign_create: error,
     create_campaign: (userInput: any) => {
-      let inputData = userInput
+      const inputData = userInput
 
       return new Promise((resolve, reject) => {
         store({
@@ -59,7 +57,7 @@ export const CampaignList = (reload?: boolean, is_fillter?: boolean, fillter?: a
       }
     }
 
-  const [{ data: res, loading, error }, refetch] = CallAPI<{ data?: any }>({
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/campaign/list/${query}`,
     method: 'GET',
     params: params,
@@ -79,7 +77,7 @@ export const CampaignList = (reload?: boolean, is_fillter?: boolean, fillter?: a
 export const CampaignSearchList = (reload?: boolean, page?: number, name?: string, status?: string, organization_id?: string, start_at?: any, end_at?:any) => {
   const params = {
     page: page,
-    limit : 10,
+    limit : 100,
     name : name, 
     status : status, 
     organization_id : organization_id,
@@ -101,6 +99,7 @@ export const CampaignSearchList = (reload?: boolean, page?: number, name?: strin
   return {
     resultCampaiganList: res?.data || null,
     total: res?.data?.total || 0,
+    keyword_limit : res?.data?.keyword_limit || 3,
     loadingCampaiganList: loading,
     errorCampaiganList: error
   }

@@ -56,7 +56,7 @@ const CampaignManagement = () => {
     setCurrent({})
   }
 
-  const { resultCampaiganList, total } = CampaignSearchList(reload, page, campaignName, status, organization, date, endDate)
+  const { resultCampaiganList, total, keyword_limit } = CampaignSearchList(reload, page, campaignName, status, organization, date, endDate)
 
   const { result_domain_list } = DomainList();
 
@@ -350,7 +350,9 @@ const CampaignManagement = () => {
                 show={action === 'create' ? showCreate : showEdit}
                 setShow={action === 'create' ? setShowCreate : setShowEdit}
                 action={action}
-                current={current} />
+                current={current} 
+                keywordLimit = {keyword_limit}
+                />
         
       </Grid>
     </Grid>
