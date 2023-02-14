@@ -48,6 +48,8 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
       ? googleIcon
       : FacebookIcon
 
+  const percentageValue = trendNumber ? trendNumber + '%' : '';
+
   return (
     <>
       <Card>
@@ -58,7 +60,7 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
               <Grid item xs={12}>
                 <span style={{ display: 'flex', justifyContent: 'center' }}>
                   <Avatar sx={{ width: 60, height: 60 }}>
-                    <img src={imgPath} width={50} height={50} />
+                    <img src={imgPath} width={50} height={50} alt=""/>
                   </Avatar>
                   <Chip
                     label={totalText}
@@ -97,7 +99,7 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
                                 <TrendIcon fontSize='large' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }} />
 
                                 <Typography variant='h4' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
-                                    {trendNumber + '%'}
+                                    {percentageValue}
                                 </Typography>
                             </>
 

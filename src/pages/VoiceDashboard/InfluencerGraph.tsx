@@ -18,12 +18,22 @@ import { InteractionItem } from 'chart.js'
 import { LinearProgress } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import MessageDetail from './MessageDetail'
+import moment from 'moment'
 
 const chartLabel = (data: any) => {
   if (!data) return []
 
-  let labels: any[] = []
-  if (data.length > 0) labels = data[0]?.date
+  const labels: any[] = []
+  if (data.length > 0) 
+  {
+    for (let i=0; i < data[0]?.date?.length; i++) {
+      labels.push(moment(data[0]?.date[i]).format('DD/MM/YYYY'))
+    }
+  }
+
+  // labels = data[0]?.date
+
+  
 
   return labels
 }

@@ -124,6 +124,18 @@ const EngagementRate = (props: LineProps) => {
   const onClick = (event : any) => {
     if(chartRef.current) {
       const getIndex = getElementAtEvent(chartRef.current, event);
+      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event);
+
+      if(getDatasetIndex?.length > 0) {
+        const datasetIndex = getDatasetIndex[0]?.datasetIndex;
+
+        if(datasetIndex === 0) {
+          params.select_period = 'current'
+        } else if (datasetIndex === 1) {
+          params.select_period = 'previous'
+        }
+
+      }
 
       if(getIndex?.length > 0 ) {
         const index =  getIndex[0].index;
