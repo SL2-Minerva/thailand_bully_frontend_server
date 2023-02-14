@@ -20,7 +20,7 @@ import { Color, ColorPicker, createColor } from 'material-ui-color'
 const KeywordForm = (props: any) => {
   const { indexNumber, keywords, setKeywords, removeKeyword, value } = props
 
-  const { keyword_and, keyword_or, keyword_exclude, keyword_or_color, keyword_and_color, keyword_exclude_color } = value
+  const { keyword_and, keyword_or, keyword_exclude, keyword_or_color, keyword_and_color } = value
 
   function handleChangeLabel(i: number, event: any) {
     const values = [...keywords]
@@ -76,7 +76,7 @@ const KeywordForm = (props: any) => {
   }
 
   const addMoreKeywordColors = (i: number, colorList: any, current: any, type: any) => {
-    console.log("colorlist", colorList)
+    console.log('colorlist', colorList)
     const newKeywordColor = [...colorList, '']
 
     const values = [...keywords]
@@ -141,7 +141,7 @@ const KeywordForm = (props: any) => {
     setKeywords(values)
   }
 
-  function handlChangeKeywordColors(i: number, e: any,colorList: any, current: any,  type: any, indexValue: number) {
+  function handlChangeKeywordColors(i: number, e: any, colorList: any, current: any, type: any, indexValue: number) {
     let keywordsColor
     const hashColor = '#' + e.hex
     if (colorList.length <= 0) {
@@ -152,7 +152,6 @@ const KeywordForm = (props: any) => {
     }
 
     const values = [...keywords]
-    
 
     setKeywords(values)
 
@@ -163,11 +162,6 @@ const KeywordForm = (props: any) => {
     if (type === 'keyword_and') {
       values[indexValue].keyword_and_color = keywordsColor
     }
-
-    if (type === 'keyword_exclude') {
-      values[indexValue].keyword_exclude_color = keywordsColor
-    }
-
     setKeywords(values)
   }
 
@@ -324,7 +318,7 @@ const KeywordForm = (props: any) => {
                   index={index}
                   indexValue={indexNumber}
                   label={'คำที่ห้ามมี (Exclude)'}
-                  colorList={keyword_exclude_color || []}
+                  colorList={[]}
                   handlChangeKeywordColors={handlChangeKeywordColors}
                   addMoreKeywordColors={addMoreKeywordColors}
                   removeKeywordColors={removeKeywordColors}
@@ -345,7 +339,7 @@ const KeywordForm = (props: any) => {
                 index={0}
                 indexValue={indexNumber}
                 label={'คำที่ห้ามมี (Exclude)'}
-                colorList={keyword_exclude_color || []}
+                colorList={[]}
                 handlChangeKeywordColors={handlChangeKeywordColors}
                 addMoreKeywordColors={addMoreKeywordColors}
                 removeKeywordColors={removeKeywordColors}
@@ -461,7 +455,7 @@ const InputKeyword = (props: any) => {
                 }}
               ></Button>
             </Grid>
-          ) : (
+          ) : label === 'คำที่ต้องมี (AND)' ? (
             <Grid sx={{ display: 'flex', mt: 3 }}>
               <Button
                 sx={{ mt: '3%', p: '0px', mr: 4 }}
@@ -473,7 +467,7 @@ const InputKeyword = (props: any) => {
                 }}
               ></Button>
               <span style={{ marginTop: 5 }}>
-                {(text && index==0) || index > 0? (
+                {(text && index == 0) || index > 0 ? (
                   <ColorPicker
                     hideTextfield={true}
                     value={keywordColor}
@@ -486,6 +480,18 @@ const InputKeyword = (props: any) => {
                   ''
                 )}
               </span>
+            </Grid>
+          ) : (
+            <Grid sx={{ display: 'flex', mt: 3 }}>
+              <Button
+                sx={{ mt: '3%', p: '0px', mr: 4 }}
+                size='small'
+                variant='contained'
+                startIcon={<Plus fontSize='small' />}
+                onClick={() => {
+                  addMoreKeyword(indexValue, list, value, type)
+                }}
+              ></Button>
             </Grid>
           )}
         </>

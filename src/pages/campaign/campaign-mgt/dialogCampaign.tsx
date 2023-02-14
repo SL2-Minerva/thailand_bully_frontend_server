@@ -80,8 +80,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
       keyword_exclude: [''],
       colors: [''],
       keyword_or_color: [''],
-      keyword_and_color: [''],
-      keyword_exclude_color: ['']
+      keyword_and_color: ['']
     }
   ])
 
@@ -96,8 +95,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
         keyword_exclude: [''],
         colors: [''],
         keyword_or_color: [''],
-        keyword_and_color: [''],
-        keyword_exclude_color: ['']
+        keyword_and_color: ['']
       }
     ]
     setKeywords(news)
@@ -217,8 +215,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
           keyword_exclude: [''],
           colors: [''],
           keyword_or_color: [''],
-          keyword_and_color: [''],
-          keyword_exclude_color: ['']
+          keyword_and_color: ['']
         }
       ])
       setDate(null)
