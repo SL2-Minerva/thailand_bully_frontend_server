@@ -80,7 +80,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       end_date_period: params?.previousEndDate ? moment(params?.previousEndDate).format('YYYY-MM-DD') : '',
       page: page,
       limit: 10,
-      report_nubmer: reportNo,
+      report_number: reportNo,
       page_name: params?.page,
       label: params?.label
     }
@@ -96,7 +96,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       organization_id: paramsId?.organization_id || '',
       page: page,
       limit: 10,
-      report_nubmer: reportNo,
+      report_number: reportNo,
       page_name: params?.page,
       label: params?.label
     }
