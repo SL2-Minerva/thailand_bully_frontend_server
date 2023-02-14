@@ -2,11 +2,12 @@ import { Table, TableRow, TableHead, TableCell, TableContainer, TableBody, Linea
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { useState } from 'react'
-import DailyMessageDetail from './DailyMessageDetail'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import { GetTopKeywords } from 'src/services/api/dashboards/overall/overallDashboardApi'
+
+// import { useState } from 'react'
+// import DailyMessageDetail from './DailyMessageDetail'
 
 interface Props {
   params: any
@@ -14,8 +15,8 @@ interface Props {
 }
 
 const TopSiteList = ({ params, chartId }: Props) => {
-  const [showDetail, setShowDetail] = useState<boolean>(false)
-  const [keywordId, setKeywordId] = useState<number>()
+  // const [showDetail, setShowDetail] = useState<boolean>(false)
+  // const [keywordId, setKeywordId] = useState<number>()
   const { resultTopKeywords, loadingFilterData } = GetTopKeywords(
     params?.campaign,
     params?.platformId,
@@ -58,10 +59,11 @@ const TopSiteList = ({ params, chartId }: Props) => {
                   <TableRow
                     key={index}
                     onClick={() => {
-                      setShowDetail(true)
-                      setKeywordId(topsite?.keyword_id)
+                      // setShowDetail(true)
+                      // setKeywordId(topsite?.keyword_id)
                     }}
-                    style={{ cursor: 'pointer' }}
+                    
+                    // style={{ cursor: 'pointer' }}
                   >
                     <TableCell sx={{ backgroundColor: 'lightslategrey !important', color: 'white' }}>
                       {topsite?.site_domain}
@@ -74,7 +76,7 @@ const TopSiteList = ({ params, chartId }: Props) => {
             </TableBody>
           </Table>
         </TableContainer>
-        {params?.campaign ? (
+        {/* {params?.campaign ? (
           <DailyMessageDetail
             show={showDetail}
             setShow={setShowDetail}
@@ -87,7 +89,7 @@ const TopSiteList = ({ params, chartId }: Props) => {
           />
         ) : (
           ''
-        )}
+        )} */}
       </CardContent>
     </Card>
   )

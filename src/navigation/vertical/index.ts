@@ -43,6 +43,11 @@ const navigation = (): VerticalNavItemsType => {
     "path": "/BullyDashboard"
   };
 
+  const sna = {
+    "title" : "SNA",
+    "path" : '/SNA'
+  }
+
   const reportDashboardList : any[] = [];
 
   if(showOverallDashboard) {
@@ -63,6 +68,8 @@ const navigation = (): VerticalNavItemsType => {
   if(showBullyDashboard) {
     reportDashboardList.push(bullyDashboard);
   }
+
+  reportDashboardList.push(sna);
 
   const UserPermissionData = resultPermission?.user?.authorized_view ? {
     title: 'User Permission',
@@ -287,3 +294,4 @@ const navigation = (): VerticalNavItemsType => {
 }
 
 export default navigation
+

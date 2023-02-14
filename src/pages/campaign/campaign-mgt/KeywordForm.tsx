@@ -20,7 +20,7 @@ import { Color, ColorPicker, createColor } from 'material-ui-color'
 const KeywordForm = (props: any) => {
   const { indexNumber, keywords, setKeywords, removeKeyword, value } = props
 
-  const { keyword_and, keyword_or, keyword_exclude } = value
+  const { keyword_and, keyword_or, keyword_exclude, keyword_or_color, keyword_and_color, keyword_exclude_color } = value
 
   function handleChangeLabel(i: number, event: any) {
     const values = [...keywords]
@@ -31,8 +31,6 @@ const KeywordForm = (props: any) => {
   function handleChangeColor(event: any, i: number) {
     const values = [...keywords]
     values[i].colors = '#' + event.hex
-
-    console.log('color list:', values)
     setKeywords(values)
   }
 
@@ -77,6 +75,46 @@ const KeywordForm = (props: any) => {
     setKeywords(values)
   }
 
+  const addMoreKeywordColors = (i: number, colorList: any, current: any, type: any) => {
+    console.log("colorlist", colorList)
+    const newKeywordColor = [...colorList, '']
+
+    const values = [...keywords]
+
+    if (type === 'keyword_or') {
+      // console.log(values, i, values[i])
+      values[i].keyword_or_color = newKeywordColor
+    }
+
+    if (type === 'keyword_and') {
+      values[i].keyword_and_color = [...colorList, '']
+    }
+
+    if (type === 'keyword_exclude') {
+      values[i].keyword_exclude_color = [...colorList, '']
+    }
+
+    setKeywords(values)
+  }
+
+  const removeKeywordColors = (i: number, indexValue: number, colorList: any, type: any) => {
+    const values = [...keywords]
+    const news = colorList.filter((item: any, index: number) => index !== i)
+    if (type === 'keyword_or') {
+      values[indexValue].keyword_or_color = news
+    }
+
+    if (type === 'keyword_and') {
+      values[indexValue].keyword_and_color = news
+    }
+
+    if (type === 'keyword_exclude') {
+      values[indexValue].keyword_exclude_color = news
+    }
+
+    setKeywords(values)
+  }
+
   function handleTextKeyword(i: number, e: any, list: any, current: any, type: any, indexValue: number) {
     let textKeywords
     if (list.length <= 0) {
@@ -103,16 +141,35 @@ const KeywordForm = (props: any) => {
     setKeywords(values)
   }
 
-  // const handleChangeColor = (newValue: Color) => {
-  //   console.log('change', newValue)
+  function handlChangeKeywordColors(i: number, e: any,colorList: any, current: any,  type: any, indexValue: number) {
+    let keywordsColor
+    const hashColor = '#' + e.hex
+    if (colorList.length <= 0) {
+      keywordsColor = [...colorList, hashColor]
+    } else {
+      keywordsColor = [...colorList]
+      keywordsColor[i] = hashColor
+    }
 
-  //   // setColor(`#${newValue.hex}`);
-  //   setLabelColor(newValue)
+    const values = [...keywords]
+    
 
-  //   console.log("hex value", newValue.hex);
+    setKeywords(values)
 
-  //   // action('changed')(newValue);
-  // }
+    if (type === 'keyword_or') {
+      values[indexValue].keyword_or_color = keywordsColor
+    }
+
+    if (type === 'keyword_and') {
+      values[indexValue].keyword_and_color = keywordsColor
+    }
+
+    if (type === 'keyword_exclude') {
+      values[indexValue].keyword_exclude_color = keywordsColor
+    }
+
+    setKeywords(values)
+  }
 
   return (
     <>
@@ -144,7 +201,7 @@ const KeywordForm = (props: any) => {
           {keyword_and.length > 0 && !keyword_and[0] && !keyword_or[0] && !keyword_exclude[0] ? (
             <ColorPicker
               hideTextfield={true}
-              value={keywords[indexNumber]?.colors || createColor('white')}
+              value={keywords[indexNumber]?.colors ? keywords[indexNumber]?.colors : createColor('#fff')}
               onChange={(color: Color) => {
                 handleChangeColor(color, indexNumber)
               }}
@@ -171,6 +228,10 @@ const KeywordForm = (props: any) => {
                   index={index}
                   indexValue={indexNumber}
                   label={'คำที่ต้องมี (AND)'}
+                  colorList={keyword_and_color || []}
+                  handlChangeKeywordColors={handlChangeKeywordColors}
+                  addMoreKeywordColors={addMoreKeywordColors}
+                  removeKeywordColors={removeKeywordColors}
                 />
               )
             })}
@@ -188,6 +249,10 @@ const KeywordForm = (props: any) => {
                 index={0}
                 indexValue={indexNumber}
                 label={'คำที่ต้องมี (AND)'}
+                colorList={keyword_and_color || []}
+                handlChangeKeywordColors={handlChangeKeywordColors}
+                addMoreKeywordColors={addMoreKeywordColors}
+                removeKeywordColors={removeKeywordColors}
               />
             ))}
         </Grid>
@@ -215,6 +280,10 @@ const KeywordForm = (props: any) => {
                   index={index}
                   indexValue={indexNumber}
                   label={'คำที่สนใจ (OR)'}
+                  colorList={keyword_or_color || []}
+                  handlChangeKeywordColors={handlChangeKeywordColors}
+                  addMoreKeywordColors={addMoreKeywordColors}
+                  removeKeywordColors={removeKeywordColors}
                 />
               )
             })}
@@ -231,6 +300,10 @@ const KeywordForm = (props: any) => {
               index={0}
               indexValue={indexNumber}
               label={'คำที่สนใจ (OR)'}
+              colorList={keyword_or_color || []}
+              handlChangeKeywordColors={handlChangeKeywordColors}
+              addMoreKeywordColors={addMoreKeywordColors}
+              removeKeywordColors={removeKeywordColors}
             />
           )}
         </Grid>
@@ -251,6 +324,10 @@ const KeywordForm = (props: any) => {
                   index={index}
                   indexValue={indexNumber}
                   label={'คำที่ห้ามมี (Exclude)'}
+                  colorList={keyword_exclude_color || []}
+                  handlChangeKeywordColors={handlChangeKeywordColors}
+                  addMoreKeywordColors={addMoreKeywordColors}
+                  removeKeywordColors={removeKeywordColors}
                 />
               )
             })}
@@ -268,6 +345,10 @@ const KeywordForm = (props: any) => {
                 index={0}
                 indexValue={indexNumber}
                 label={'คำที่ห้ามมี (Exclude)'}
+                colorList={keyword_exclude_color || []}
+                handlChangeKeywordColors={handlChangeKeywordColors}
+                addMoreKeywordColors={addMoreKeywordColors}
+                removeKeywordColors={removeKeywordColors}
               />
             ))}
         </Grid>
@@ -288,7 +369,11 @@ const InputKeyword = (props: any) => {
     type,
     label,
     index,
-    color
+    color,
+    handlChangeKeywordColors,
+    addMoreKeywordColors,
+    removeKeywordColors,
+    colorList
   } = props
   const [text, setText] = useState(textValue)
   const [keywordColor, setKeywordColor] = useState(color || createColor('#ED5D5D'))
@@ -308,13 +393,18 @@ const InputKeyword = (props: any) => {
         {label === 'คำที่สนใจ (OR)' ? (
           <Grid sx={{ display: 'flex' }}>
             <span style={{ marginTop: 15 }}>
-              <ColorPicker
-                hideTextfield={true}
-                value={keywordColors}
-                onChange={(color: Color) => {
-                  setKeywordColors(color)
-                }}
-              />
+              {text ? (
+                <ColorPicker
+                  hideTextfield={true}
+                  value={keywordColors}
+                  onChange={(color: Color) => {
+                    setKeywordColors(color)
+                    handlChangeKeywordColors(index, color, colorList, value, type, indexValue)
+                  }}
+                />
+              ) : (
+                ''
+              )}
             </span>
 
             <TextField
@@ -344,7 +434,14 @@ const InputKeyword = (props: any) => {
         )}
 
         {list.length > 1 && (
-          <Close fontSize='small' sx={{ mt: 5.5 }} onClick={() => removeTextKeyword(index, indexValue, list, type)} />
+          <Close
+            fontSize='small'
+            sx={{ mt: 5.5 }}
+            onClick={() => {
+              removeTextKeyword(index, indexValue, list, type)
+              removeKeywordColors(index, indexValue, colorList, type)
+            }}
+          />
         )}
         <br />
       </span>
@@ -360,6 +457,7 @@ const InputKeyword = (props: any) => {
                 startIcon={<Plus fontSize='small' />}
                 onClick={() => {
                   addMoreKeyword(indexValue, list, value, type)
+                  addMoreKeywordColors(indexValue, colorList, value, type)
                 }}
               ></Button>
             </Grid>
@@ -375,13 +473,18 @@ const InputKeyword = (props: any) => {
                 }}
               ></Button>
               <span style={{ marginTop: 5 }}>
-                <ColorPicker
-                  hideTextfield={true}
-                  value={keywordColor}
-                  onChange={(color: Color) => {
-                    setKeywordColor(color)
-                  }}
-                />
+                {(text && index==0) || index > 0? (
+                  <ColorPicker
+                    hideTextfield={true}
+                    value={keywordColor}
+                    onChange={(color: Color) => {
+                      setKeywordColor(color)
+                      handlChangeKeywordColors(index, color, colorList, value, type, indexValue)
+                    }}
+                  />
+                ) : (
+                  ''
+                )}
               </span>
             </Grid>
           )}
