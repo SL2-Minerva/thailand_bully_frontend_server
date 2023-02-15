@@ -80,7 +80,10 @@ const DialogCampaign = (props: DialogInfoProps) => {
       keyword_exclude: [''],
       colors: [''],
       keyword_or_color: [''],
-      keyword_and_color: ['']
+      keyword_and_color: [''],
+      delete_keyword_or: [''],
+      delete_keyword_and: [''],
+      delete_keyword_exclude: ['']
     }
   ])
 
@@ -93,9 +96,12 @@ const DialogCampaign = (props: DialogInfoProps) => {
         keyword_or: [''],
         keyword_and: [''],
         keyword_exclude: [''],
-        colors: [''],
-        keyword_or_color: [''],
-        keyword_and_color: ['']
+        colors: ['#fff'],
+        keyword_or_color: ['#70d477'],
+        keyword_and_color: ['#ed5d5e'],
+        delete_keyword_or: [''],
+        delete_keyword_and: [''],
+        delete_keyword_exclude: ['']
       }
     ]
     setKeywords(news)
@@ -125,6 +131,21 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
   function closeDialogBox() {
     setShow(false)
+    setKeywords([
+      {
+        id: 1,
+        name: '',
+        keyword_or: [''],
+        keyword_and: [''],
+        keyword_exclude: [''],
+        colors: [''],
+        keyword_or_color: [''],
+        keyword_and_color: [''],
+        delete_keyword_or: [''],
+        delete_keyword_and: [''],
+        delete_keyword_exclude: ['']
+      }
+    ])
   }
 
   const createNewCampaign = async () => {
@@ -215,7 +236,10 @@ const DialogCampaign = (props: DialogInfoProps) => {
           keyword_exclude: [''],
           colors: [''],
           keyword_or_color: [''],
-          keyword_and_color: ['']
+          keyword_and_color: [''],
+          delete_keyword_or: [''],
+          delete_keyword_and: [''],
+          delete_keyword_exclude: ['']
         }
       ])
       setDate(null)

@@ -2,7 +2,7 @@ import { Button, Card, CardContent, CardHeader, Grid } from '@mui/material'
 import { useEffect, useState } from 'react'
 import DailyMessageGraph from './DailyMessageGraph'
 import Filter from '../VoiceDashboard/Filter'
-import { calculateDate, StyledTooltip } from '../dashboard/overall'
+import { calculateDate, StyledTooltip, wordBreaks } from '../dashboard/overall'
 import { useTheme } from '@mui/material/styles'
 import ChannelComparison from './ChannelComparison'
 import {
@@ -71,7 +71,7 @@ const ChannelDashboard = () => {
 
   //api call
   const { resultReportPermission, errorUserPermission } = UserPermission()
-  const { resultKeywordList } = GetKeyWordsList(campaign)
+  const { resultKeywordList,loadingKeywordList, keywordsColor } = GetKeyWordsList(campaign)
   const { resultDailyChannel, resultPercentageChannelCurrent, resultPercentageChannelPrevious, loadingDailyChannel } =
     GetDailyBy(campaign, date, endDate, period, keyword, previousDate, previousEndDate)
   const {
@@ -184,16 +184,16 @@ const ChannelDashboard = () => {
                             mb: 2,
                             bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1
-                                ? GraphicColors[index]
+                                ? keywordsColor && keywordsColor[index]
                                 : keyword === 'all'
-                                ? GraphicColors[index]
+                                ? keywordsColor && keywordsColor[index]
                                 : 'grey',
                             ':hover': {
                               bgcolor:
                                 filterKeyword?.indexOf(keywords?.id) > -1
-                                  ? GraphicColors[index]
+                                  ? keywordsColor && keywordsColor[index]
                                   : keyword === 'all'
-                                  ? GraphicColors[index]
+                                  ? keywordsColor && keywordsColor[index]
                                   : 'grey'
                             }
                           }}
@@ -202,7 +202,7 @@ const ChannelDashboard = () => {
                           }}
                           variant='contained'
                         >
-                          {keywords.name}
+                          <span style={{ wordWrap: 'break-word' }}>{wordBreaks(keywords.name)}</span>
                         </Button>
                       </Grid>
                     )
@@ -222,6 +222,7 @@ const ChannelDashboard = () => {
             resultPercentageChannelCurrent={resultPercentageChannelCurrent}
             resultPercentageChannelPrevious={resultPercentageChannelPrevious}
             loadingPercentageChannel={loadingDailyChannel}
+            keywordsColor = {loadingDailyChannel && loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors}
           />
         </Grid>
       ) : (
@@ -237,6 +238,7 @@ const ChannelDashboard = () => {
             highlight={highlight === 'chart2' ? true : false}
             resultDailyChannel={resultDailyChannel}
             loadingDailyChannel={loadingDailyChannel}
+            keywordsColor = {loadingDailyChannel && loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors}
           />
         </Grid>
       ) : (
@@ -258,6 +260,7 @@ const ChannelDashboard = () => {
             highlight={highlight === 'chart3' ? true : false}
             resultBy={resultChannelByDay}
             loading={loadingChannelBy}
+            keywordsColor = {loadingChannelBy && loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors}
           />
         </Grid>
       ) : (
@@ -279,6 +282,8 @@ const ChannelDashboard = () => {
             highlight={highlight === 'chart4' ? true : false}
             resultBy={resultChannelByTime}
             loading={loadingChannelBy}
+            keywordsColor = {loadingChannelBy && loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors}
+
           />
         </Grid>
       ) : (
@@ -300,6 +305,8 @@ const ChannelDashboard = () => {
             highlight={highlight === 'chart5' ? true : false}
             resultBy={resultChannelByDevice}
             loading={loadingChannelBy}
+            keywordsColor = {loadingChannelBy && loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors}
+
           />
         </Grid>
       ) : (
@@ -321,6 +328,8 @@ const ChannelDashboard = () => {
             highlight={highlight === 'chart6' ? true : false}
             resultBy={resultChannelByAccount}
             loading={loadingChannelBy}
+            keywordsColor = {loadingChannelBy && loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors}
+
           />
         </Grid>
       ) : (
@@ -342,6 +351,8 @@ const ChannelDashboard = () => {
             highlight={highlight === 'chart7' ? true : false}
             resultBy={resultChannelBySentiment}
             loading={loadingChannelBy}
+            keywordsColor = {loadingChannelBy && loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors}
+
           />
         </Grid>
       ) : (
@@ -362,6 +373,8 @@ const ChannelDashboard = () => {
             highlight={highlight === 'chart8' ? true : false}
             resultBy={resultChannelByBullyLevel}
             loading={loadingChannelBy}
+            keywordsColor = {loadingChannelBy && loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors}
+
           />
         </Grid>
       ) : (
@@ -382,6 +395,8 @@ const ChannelDashboard = () => {
             highlight={highlight === 'chart9' ? true : false}
             resultBy={resultChannelByBullyType}
             loading={loadingChannelBy}
+            keywordsColor = {loadingChannelBy && loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors}
+
           />
         </Grid>
       ) : (
@@ -552,6 +567,7 @@ const ChannelDashboard = () => {
         chartId={highlight}
         resultDailyChannel={resultDailyChannel}
         loadingDailyChannel={loadingDailyChannel}
+        keywordsColor = {loadingDailyChannel && loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors}
       />
     </Grid>
   )

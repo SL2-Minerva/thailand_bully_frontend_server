@@ -32,11 +32,11 @@ import EngagementTypeByAccount from './EngagementTypeByAccount'
 import EngagementTypeByChannel from './EngagementTypeByChannel'
 import PeriodComparisonChartSentiment from './PeriodComparisonChartSentiment'
 import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDashboardApi'
-import { EngagementTransChartColor } from 'src/utils/const'
+import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const'
 import EngagementByType from './EngagementByType'
 import QuickViewModal from './QuickViewModal'
 import { useRouter } from 'next/router'
-import { calculateDate } from '../dashboard/overall'
+import { calculateDate, wordBreaks } from '../dashboard/overall'
 
 const EngagementDashboard = () => {
   const theme = useTheme()
@@ -63,7 +63,7 @@ const EngagementDashboard = () => {
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
 
   const { resultReportPermission, errorUserPermission } = UserPermission()
-  const { resultKeywordList } = GetKeyWordsList(campaignType)
+  const { resultKeywordList, loadingKeywordList, keywordsColor } = GetKeyWordsList(campaignType)
 
   const { resultFilterData, loadingFilterData } = FilterByCampaignId(
     campaignType,
@@ -82,9 +82,7 @@ const EngagementDashboard = () => {
     resultEngagementChannel,
     resultKeywordByEngagementType,
     loadingEngagementBy
-  } = GetEngagementBy(campaignType, date, endDate, period, keyword,
-    previousDate,
-    previousEndDate)
+  } = GetEngagementBy(campaignType, date, endDate, period, keyword, previousDate, previousEndDate)
 
   const {
     resultEngagementPercentage,
@@ -94,9 +92,7 @@ const EngagementDashboard = () => {
     resultEngagementTypeByDevice,
     resultEngagementTypeByTime,
     loadingEngagementType
-  } = EngagementTypeBy(campaignType, date, endDate, period, keyword,
-    previousDate,
-    previousEndDate)
+  } = EngagementTypeBy(campaignType, date, endDate, period, keyword, previousDate, previousEndDate)
 
   const {
     resultTotalEngagement,
@@ -106,9 +102,7 @@ const EngagementDashboard = () => {
     resultSummary,
     loadingPeriodComparisonBySenitment,
     resultPeriodComparisonByChannel
-  } = GetEngagementComparisonBy(campaignType, date, endDate, period, keyword, topKeyword,
-    previousDate,
-    previousEndDate)
+  } = GetEngagementComparisonBy(campaignType, date, endDate, period, keyword, topKeyword, previousDate, previousEndDate)
 
   const params = {
     campaign: campaignType,
@@ -225,16 +219,16 @@ const EngagementDashboard = () => {
                             mb: 2,
                             bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1
-                                ? EngagementTransChartColor[index]
+                                ? keywordsColor && keywordsColor[index]
                                 : keyword === 'all'
-                                ? EngagementTransChartColor[index]
+                                ? keywordsColor && keywordsColor[index]
                                 : 'grey',
                             ':hover': {
                               bgcolor:
                                 filterKeyword?.indexOf(keywords?.id) > -1
-                                  ? EngagementTransChartColor[index]
+                                  ? keywordsColor && keywordsColor[index]
                                   : keyword === 'all'
-                                  ? EngagementTransChartColor[index]
+                                  ? keywordsColor && keywordsColor[index]
                                   : 'grey'
                             }
                           }}
@@ -243,7 +237,7 @@ const EngagementDashboard = () => {
                           }}
                           variant='contained'
                         >
-                          {keywords.name}
+                          <span style={{ wordWrap: 'break-word' }}>{wordBreaks(keywords.name)}</span>
                         </Button>
                       </Grid>
                     )
@@ -264,6 +258,9 @@ const EngagementDashboard = () => {
               type='transaction'
               chartId='Chart 1'
               highlight={highlight === 'chart1' ? true : false}
+              keywordsColor={
+                loadingFilterData && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
+              }
             />
           </Grid>
         ) : (
@@ -285,6 +282,9 @@ const EngagementDashboard = () => {
               highlight={highlight === 'chart2' ? true : false}
               resultFilterData={resultFilterData}
               loadingFilterData={loadingFilterData}
+              keywordsColor={
+                loadingFilterData && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
+              }
             />
           </Grid>
         ) : (
@@ -305,6 +305,9 @@ const EngagementDashboard = () => {
               highlight={highlight === 'chart3' ? true : false}
               resultBy={resultEngagementByDay}
               loading={loadingEngagementBy}
+              keywordsColor={
+                loadingEngagementBy && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
+              }
             />
           </Grid>
         ) : (
@@ -325,6 +328,9 @@ const EngagementDashboard = () => {
               highlight={highlight === 'chart4' ? true : false}
               resultBy={resultEngagementByTime}
               loading={loadingEngagementBy}
+              keywordsColor={
+                loadingEngagementBy && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
+              }
             />
           </Grid>
         ) : (
@@ -345,6 +351,9 @@ const EngagementDashboard = () => {
               highlight={highlight === 'chart5' ? true : false}
               resultBy={resultEngagementByDevice}
               loading={loadingEngagementBy}
+              keywordsColor={
+                loadingEngagementBy && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
+              }
             />
           </Grid>
         ) : (
@@ -365,6 +374,9 @@ const EngagementDashboard = () => {
               highlight={highlight === 'chart6' ? true : false}
               loading={loadingEngagementBy}
               resultBy={resultEngagementByAccount}
+              keywordsColor={
+                loadingEngagementBy && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
+              }
             />
           </Grid>
         ) : (
@@ -385,6 +397,9 @@ const EngagementDashboard = () => {
               highlight={highlight === 'chart7' ? true : false}
               loading={loadingEngagementBy}
               resultBy={resultEngagementChannel}
+              keywordsColor={
+                loadingEngagementBy && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
+              }
             />
           </Grid>
         ) : (
@@ -405,6 +420,9 @@ const EngagementDashboard = () => {
               highlight={highlight === 'chart8' ? true : false}
               loading={loadingEngagementBy}
               resultBy={resultKeywordByEngagementType}
+              keywordsColor={
+                loadingEngagementBy && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
+              }
             />
           </Grid>
         ) : (
@@ -423,6 +441,9 @@ const EngagementDashboard = () => {
                 highlight={highlight === 'chart9' ? true : false}
                 resultEngagementType={resultEngagementPercentage}
                 loadingEngagementType={loadingEngagementType}
+                keywordsColor={
+                  loadingEngagementType && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTypeColors
+                }
               />
             </Grid>
           ) : (
@@ -444,6 +465,9 @@ const EngagementDashboard = () => {
                 highlight={highlight === 'chart10' ? true : false}
                 resultBy={resultEngagementPercentage}
                 loading={loadingEngagementType}
+                keywordsColor={
+                  loadingEngagementType && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTypeColors
+                }
               />
             </Grid>
           ) : (
@@ -465,7 +489,9 @@ const EngagementDashboard = () => {
                 highlight={highlight === 'chart11' ? true : false}
                 resultBy={resultEngagementTypeByDay}
                 loading={loadingEngagementType}
-              />
+                keywordsColor={
+                  loadingEngagementType && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTypeColors
+                }/>
             </Grid>
           ) : (
             ''
@@ -486,7 +512,9 @@ const EngagementDashboard = () => {
                 highlight={highlight === 'chart12' ? true : false}
                 resultBy={resultEngagementByTime}
                 loading={loadingEngagementType}
-              />
+                keywordsColor={
+                  loadingEngagementType && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTypeColors
+                }/>
             </Grid>
           ) : (
             ''
@@ -507,7 +535,9 @@ const EngagementDashboard = () => {
                 highlight={highlight === 'chart13' ? true : false}
                 resultBy={resultEngagementTypeByDevice}
                 loading={loadingEngagementType}
-              />
+                keywordsColor={
+                  loadingEngagementType && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTypeColors
+                }/>
             </Grid>
           ) : (
             ''
@@ -527,7 +557,9 @@ const EngagementDashboard = () => {
                 highlight={highlight === 'chart14' ? true : false}
                 resultBy={resultEngagementTypeByAccount}
                 loading={loadingEngagementType}
-              />
+                keywordsColor={
+                  loadingEngagementType && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTypeColors
+                }/>
             </Grid>
           ) : (
             ''
@@ -548,7 +580,9 @@ const EngagementDashboard = () => {
                 highlight={highlight === 'chart15' ? true : false}
                 resultBy={resultEngagementTypeByChannel}
                 loading={loadingEngagementType}
-              />
+                keywordsColor={
+                  loadingEngagementType && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTypeColors
+                }/>
             </Grid>
           ) : (
             ''
@@ -740,6 +774,7 @@ const EngagementDashboard = () => {
           params={params}
           chartId={highlight}
           quickViewData={quickViewData}
+          keywordsColor={keywordsColor}
         />
       </Grid>
     </>

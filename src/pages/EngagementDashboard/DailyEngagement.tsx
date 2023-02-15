@@ -8,7 +8,6 @@ import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment'
 import MessageDetail from './MessageDetail'
-import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const'
 import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
@@ -33,6 +32,7 @@ interface LineProps {
   highlight?: boolean
   resultFilterData: any
   loadingFilterData: boolean
+  keywordsColor: any
 }
 
 export const chartLabel = (data: any) => {
@@ -75,15 +75,15 @@ const DailyEngagement = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    type,
     chartId,
     highlight,
     resultFilterData,
-    loadingFilterData
+    loadingFilterData,
+    keywordsColor
   } = props
 
   // const [ chartData, setChartData ] = useState();
-  const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors
+  const colors = keywordsColor
 
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])

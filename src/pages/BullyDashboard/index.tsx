@@ -10,8 +10,7 @@ import {
 import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { UserPermission } from 'src/services/api/users/role'
 import { DateType } from 'src/types/forms/reactDatepickerTypes'
-import { GraphicColors } from 'src/utils/const'
-import { calculateDate } from '../dashboard/overall'
+import { calculateDate, wordBreaks } from '../dashboard/overall'
 import Filter from '../VoiceDashboard/Filter'
 import BullyLevelByAccount from './BullyLevelByAccount'
 import BullyLevelByChannel from './BullyLevelByChannel'
@@ -95,8 +94,7 @@ const BullyDashboard = () => {
     resultShareOfChannelPlatform,
     loadingShareOfChannelChart
   } = GetBullyTypeBy(campaign, date, endDate, period, keyword, previousDate, previousEndDate)
-  const { resultKeywordList } = GetKeyWordsList(campaign)
-
+  const { resultKeywordList, keywordsColor } = GetKeyWordsList(campaign)
   const params = {
     campaign: campaign,
     date: date,
@@ -217,16 +215,16 @@ const BullyDashboard = () => {
                             mb: 2,
                             bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1
-                                ? GraphicColors[index]
+                                ? keywordsColor && keywordsColor[index]
                                 : keyword === 'all'
-                                ? GraphicColors[index]
+                                ? keywordsColor && keywordsColor[index]
                                 : 'grey',
                             ':hover': {
                               bgcolor:
                                 filterKeyword?.indexOf(keywords?.id) > -1
-                                  ? GraphicColors[index]
+                                  ? keywordsColor && keywordsColor[index]
                                   : keyword === 'all'
-                                  ? GraphicColors[index]
+                                  ? keywordsColor && keywordsColor[index]
                                   : 'grey'
                             }
                           }}
@@ -235,7 +233,7 @@ const BullyDashboard = () => {
                           }}
                           variant='contained'
                         >
-                          {keywords.name}
+                          <span style={{ wordWrap: 'break-word' }}>{wordBreaks(keywords.name)}</span>
                         </Button>
                       </Grid>
                     )

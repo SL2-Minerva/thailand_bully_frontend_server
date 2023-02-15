@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
 import Filter from '../VoiceDashboard/Filter'
 import { DateType } from 'src/types/forms/reactDatepickerTypes'
-import { calculateDate, StyledTooltip } from '../dashboard/overall'
+import { calculateDate, StyledTooltip, wordBreaks } from '../dashboard/overall'
 import {
   FilterByCampaignId,
   GetPeriodComparison,
@@ -31,7 +31,6 @@ import SentimentByChannel from './SentitmentByChannel'
 import SentimentByAccount from './SentimentByAccount'
 import SentimentComparisonTable from './SentimentComparison'
 import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDashboardApi'
-import { SentimentAllColors } from 'src/utils/const'
 import QuickViewModal from './QuickViewModal'
 import PercentageOfSentiments from './PercentageOfSentiment'
 import Translations from 'src/layouts/components/Translations'
@@ -74,7 +73,8 @@ const SentimentDashboard = () => {
     previousDate,
     previousEndDate
   )
-  const { resultKeywordList } = GetKeyWordsList(campaign)
+  const { resultKeywordList, keywordsColor } = GetKeyWordsList(campaign)
+
   const params = {
     campaign: campaign,
     date: date,
@@ -202,16 +202,16 @@ const SentimentDashboard = () => {
                             mb: 2,
                             bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1
-                                ? SentimentAllColors[index]
+                                ? keywordsColor && keywordsColor[index]
                                 : keyword === 'all'
-                                ? SentimentAllColors[index]
+                                ? keywordsColor && keywordsColor[index]
                                 : 'grey',
                             ':hover': {
                               bgcolor:
                                 filterKeyword?.indexOf(keywords?.id) > -1
-                                  ? SentimentAllColors[index]
+                                  ? keywordsColor && keywordsColor[index]
                                   : keyword === 'all'
-                                  ? SentimentAllColors[index]
+                                  ? keywordsColor && keywordsColor[index]
                                   : 'grey'
                             }
                           }}
@@ -220,7 +220,7 @@ const SentimentDashboard = () => {
                           }}
                           variant='contained'
                         >
-                          {keywords.name}
+                         <span style={{ wordWrap: 'break-word' }}>{wordBreaks(keywords.name)}</span>
                         </Button>
                       </Grid>
                     )

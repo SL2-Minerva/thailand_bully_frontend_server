@@ -2,7 +2,6 @@ import { CardContent, CardHeader, LinearProgress, Paper } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import { GraphicColors } from 'src/utils/const'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { chartLabel, LineProps } from './MessageByDays'
@@ -12,7 +11,7 @@ import Translations from 'src/layouts/components/Translations'
   
 const MessagesByChannel = (props: LineProps) => {
 
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, result, loading } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, result, loading, keywordsColor } = props
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -125,7 +124,7 @@ const MessagesByChannel = (props: LineProps) => {
     let totalAmount : number[] = [];
     let keywordName = "";
     const returnData : StackChartDataset[] = [];
-    const color = GraphicColors
+    const color = keywordsColor
     const total = data?.value || data?.data || [];
 
     for(let i = 0 ; i<total?.length; i++) {

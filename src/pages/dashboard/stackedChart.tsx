@@ -9,7 +9,6 @@ import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment'
 import DailyMessageDetail from './DailyMessageDetail'
-import { GraphicColors } from 'src/utils/const'
 import { InteractionItem } from 'chart.js'
 
 import { Information } from 'mdi-material-ui'
@@ -32,6 +31,7 @@ interface LineProps {
   params: any
   resultFilterData: any
   loadingFilterData: boolean
+  keywordsColor: any
 }
 
 const chartLabel = (data: any) => {
@@ -58,7 +58,7 @@ const chartLabel = (data: any) => {
     for (let i = 0; i < filterArray?.length; i++) {
       labelValue.push(moment(filterArray[i]).format('DD/MM/YYYY'))
     }
-    labelValue.sort();
+    labelValue.sort()
   }
 
   return labelValue
@@ -66,7 +66,8 @@ const chartLabel = (data: any) => {
 
 const StackedChart = (props: LineProps) => {
   // ** Props
-  const { white, labelColor, borderColor, gridLineColor, params, resultFilterData, loadingFilterData } = props
+  const { white, labelColor, borderColor, gridLineColor, params, resultFilterData, loadingFilterData, keywordsColor } =
+    props
 
   // const [ chartData, setChartData ] = useState();
 
@@ -166,7 +167,7 @@ const StackedChart = (props: LineProps) => {
     let totalAmount: number[] = []
     let keywordName = ''
     const returnData: StackChartDataset[] = []
-    const color = GraphicColors
+    const color = keywordsColor
     for (let i = 0; i < data?.length; i++) {
       totalAmount = []
       const total = data[i]?.value
@@ -184,8 +185,8 @@ const StackedChart = (props: LineProps) => {
         }
       })
 
-      for(let i=0; i<modifiedData?.length; i++) {
-        totalAmount.push(modifiedData[i].total_at_date);
+      for (let i = 0; i < modifiedData?.length; i++) {
+        totalAmount.push(modifiedData[i].total_at_date)
       }
 
       keywordName = data[i].keyword_name

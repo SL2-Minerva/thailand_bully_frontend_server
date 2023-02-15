@@ -13,6 +13,7 @@ const KeywordBy = ({
   params: any
   highlight: string
   resultReportPermission: any
+  keywordsColor : any
 }) => {
   const {
     resultKeywordComparisonByBullyLevel,

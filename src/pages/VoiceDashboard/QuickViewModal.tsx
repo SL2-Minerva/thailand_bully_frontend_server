@@ -26,10 +26,11 @@ interface DialogInfoProps {
   setShow: any
   params?: any
   chartId?: string
+  keywordsColor?: any
 }
 
 const QuickViewModal = (props: DialogInfoProps) => {
-    const { show, setShow, params, chartId } = props
+    const { show, setShow, params, chartId, keywordsColor } = props
 
     const theme = useTheme()
 
@@ -70,7 +71,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
             </Box>
             {
                 chartId === 'chart2' ?
-                    <DailyMessageGraph type="message" params={params} chartId="Chart 2"/>
+                    <DailyMessageGraph type="message" params={params} chartId="Chart 2" keywordsColor={keywordsColor}/>
                 : chartId === 'chart3' ?
                     <MessagesByDays 
                         white={whiteColor}
@@ -82,6 +83,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         gridLineColor={gridLineColor}
                         chartId="Chart 3"
                         params={params}
+                        keywordsColor={keywordsColor}
                     />
                 : chartId === 'chart4' ?
                         <MessagesByTime
@@ -94,6 +96,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
                             gridLineColor={gridLineColor}
                             chartId="Chart 4"
                             params = {params}
+                            keywordsColor={keywordsColor}
                         />
                     : chartId === 'chart5' ?
                         <MessagesByDevices
@@ -106,6 +109,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
                             gridLineColor={gridLineColor}
                             chartId="Chart 5"
                             params={params}
+                            keywordsColor={keywordsColor}
                         />
                 : chartId === 'chart6' ?
                             <MessagesByAccount
@@ -118,6 +122,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
                                 gridLineColor={gridLineColor}
                                 chartId="Chart 6"
                                 params={params}
+                                keywordsColor={keywordsColor}
                             />
                 :chartId === 'chart7' ?
                     <MessagesByChannel
@@ -130,6 +135,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         gridLineColor={gridLineColor}
                         params = {params}
                         chartId="Chart 7"
+                        keywordsColor={keywordsColor}
                     />
                 :chartId === 'chart8' ?
                     <MessagesBySentiment
@@ -142,6 +148,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         gridLineColor={gridLineColor}
                         params={params}
                         chartId="Chart 8"
+                        keywordsColor={keywordsColor}
                     />
                 :chartId === 'chart9' ?
                     <MessagesByBullyLevel
@@ -154,6 +161,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         gridLineColor={gridLineColor}
                         params={params}
                         chartId="Chart 9"
+                        keywordsColor={keywordsColor}
                     />
                 :chartId === 'chart10' ?
                     <MessagesByBullyType
@@ -166,6 +174,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         gridLineColor={gridLineColor}
                         params = {params}
                         chartId="Chart 10"
+                        keywordsColor={keywordsColor}
                     />
                 :""
             } 

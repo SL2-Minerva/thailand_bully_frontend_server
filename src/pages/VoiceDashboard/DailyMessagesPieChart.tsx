@@ -10,21 +10,22 @@ import { Doughnut } from 'react-chartjs-2'
 import { Chart } from 'chart.js'
 import * as DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne'
 import { useEffect, useState } from 'react'
-import { GraphicColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { GetPercentageMessage } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 import Translations from 'src/layouts/components/Translations'
+import { GraphicColors } from 'src/utils/const'
 
 interface Props {
   params: any
   type: string
   chartId: string
   highlight?: boolean
+  keywordsColor : any
 }
 Chart.register(DoughnutLabel)
 const DailyMessagePieChart = (props: Props) => {
-  const { chartId, params, highlight } = props
+  const { chartId, params, highlight, keywordsColor } = props
 
   const { resultPercentageMessage, loadingPercentageMessage } = GetPercentageMessage(
     params?.campaign,
@@ -42,7 +43,7 @@ const DailyMessagePieChart = (props: Props) => {
     datasets: [
       {
         data: [],
-        backgroundColor: GraphicColors,
+        backgroundColor: loadingPercentageMessage && keywordsColor ? keywordsColor : GraphicColors,
         hoverOffset: 4
       }
     ]
@@ -61,7 +62,7 @@ const DailyMessagePieChart = (props: Props) => {
         datasets: [
           {
             data: [],
-            backgroundColor: GraphicColors,
+            backgroundColor: loadingPercentageMessage && keywordsColor ? keywordsColor : GraphicColors,
             hoverOffset: 4
           }
         ]
@@ -89,7 +90,7 @@ const DailyMessagePieChart = (props: Props) => {
       datasets: [
         {
           data: percentage,
-          backgroundColor: GraphicColors,
+          backgroundColor: loadingPercentageMessage && keywordsColor ? keywordsColor : GraphicColors,
           hoverOffset: 4
         }
       ]
@@ -173,12 +174,12 @@ const DailyMessagePieChart = (props: Props) => {
       setPreviousData(previousDataset)
 
       if (currentMessageData?.length > 0) {
-        setCurrentTotal(currentMessageData[0]?.total)
+        setCurrentTotal(currentMessageData[0]?.value[0]?.total)
       } else {
         setCurrentTotal(0)
       }
       if (previousMessageData?.length > 0) {
-        setPreviousTotal(previousMessageData[0]?.total)
+        setPreviousTotal(previousMessageData[0]?.value[0]?.total)
       } else {
         setPreviousTotal(0)
       }

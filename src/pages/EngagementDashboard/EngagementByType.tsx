@@ -2,7 +2,6 @@ import { Paper, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import { GraphicColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
@@ -12,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
   
 const EngagementByType = (props: LineProps) => {
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading, keywordsColor } = props
   const {t} = useTranslation()
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -25,7 +24,7 @@ const EngagementByType = (props: LineProps) => {
   });
 
   const chartRef = useRef();
-  const reportNo = '4.2.005';
+  const reportNo = '4.2.008';
 
   const title = chartId + ", Report Level 2(" + reportNo + ")";
 
@@ -129,7 +128,7 @@ const EngagementByType = (props: LineProps) => {
     let totalAmount : number[] = [];
     let keywordName = "";
     const returnData : StackChartDataset[] = [];
-    const color = GraphicColors
+    const color = keywordsColor
     const total = data?.value || data?.data || [];
 
     for(let i = 0 ; i<total?.length; i++) {

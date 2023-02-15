@@ -1,4 +1,4 @@
-import React, { forwardRef, ReactElement, Ref } from 'react'
+import React, { forwardRef, ReactElement, Ref, useState } from 'react'
 import Fade, { FadeProps } from '@mui/material/Fade'
 import { Box, Card, Dialog, DialogContent, IconButton, Typography, Grid, LinearProgress } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
@@ -34,10 +34,15 @@ interface DialogInfoProps {
   title?: string
 }
 
+const initialGraph = {
+  nodes: [],
+  edges: []
+}
+
 const DialogNetworkGraphByFitler = (props: DialogInfoProps) => {
   const { showDialog, setShowDialog, params, keywordId, messageId, setMessageId, reportNo, title } = props
-  const [selectedValue, setSelectedValue] = React.useState('byEngagement')
-  const { resultNetworkGraph, loadingNetworkGraph } = GetNetworkGraph(
+  const [selectedValue, setSelectedValue] = useState('bySentiment')
+  const { resultNetworkGraph, resultBullyLevelNetwork, resultBullyTypeNetwork, resultSentimentNetwork, loadingNetworkGraph } = GetNetworkGraph(
     params?.campaign,
     params?.platformId,
     params?.date,
@@ -47,15 +52,8 @@ const DialogNetworkGraphByFitler = (props: DialogInfoProps) => {
     params?.previousEndDate,
     keywordId,
     messageId,
-    reportNo,
-    selectedValue
+    reportNo
   )
-  
-
-  const initialGraph = {
-    nodes: [],
-    edges: []
-  }
 
   // const [ graph, setGraph ] = useState(initialGraph);
 
@@ -114,27 +112,38 @@ const DialogNetworkGraphByFitler = (props: DialogInfoProps) => {
               {/* <FormLabel id='demo-row-radio-buttons-group-label'>Filter</FormLabel> */}
               <RadioGroup row aria-labelledby='demo-row-radio-buttons-group-label' name='row-radio-buttons-group'>
                 <FormControlLabel
-                  value='byEngagement'
-                  control={<Radio value='byEngagement' checked={selectedValue === 'byEngagement'} onChange={handleChange} />}
-                  label='By Engagement'
-                />
-                <FormControlLabel
                   value='bySentiment'
                   control={<Radio value='bySentiment' checked={selectedValue === 'bySentiment'} onChange={handleChange} />}
                   label='By Sentiment'
                 />
                 <FormControlLabel
-                  value='byBully'
+                  value='byBullyLevel'
                   control={<Radio value='byBully' checked={selectedValue === 'byBully'} onChange={handleChange} />}
-                  label='By Bully'
+                  label='By Bully Level'
+                />
+                <FormControlLabel
+                  value='ByBullyType'
+                  control={<Radio value='byEngagement' checked={selectedValue === 'byEngagement'} onChange={handleChange} />}
+                  label='By Bully Type'
                 />
               </RadioGroup>
             </FormControl>
           </Grid>
 
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Graph graph={resultNetworkGraph ? resultNetworkGraph : initialGraph} options={options} />
+            <Grid item xs={12}> 
+            {
+               selectedValue === 'bySentiment' ? 
+               <Graph graph={resultSentimentNetwork ? resultSentimentNetwork : initialGraph} options={options} />
+               : selectedValue === 'byBullyLevel' ? 
+               <Graph graph={resultBullyLevelNetwork ? resultBullyLevelNetwork : initialGraph} options={options} />
+               : selectedValue === 'buBullyType' ?
+               <Graph graph={resultBullyTypeNetwork ? resultBullyTypeNetwork : initialGraph} options={options} />
+               :
+               <Graph graph={resultNetworkGraph ? resultNetworkGraph : initialGraph} options={options} />
+
+            }
+              
             </Grid>
           </Grid>
         </DialogContent>

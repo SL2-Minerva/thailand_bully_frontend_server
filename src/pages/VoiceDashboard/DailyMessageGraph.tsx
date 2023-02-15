@@ -5,7 +5,6 @@ import CardContent from '@mui/material/CardContent'
 import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
 
 // ** Custom Components Imports
-import { GraphicColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { useEffect, useRef, useState } from 'react'
@@ -16,11 +15,13 @@ import { GetDailyMessages } from 'src/services/api/dashboards/voice/VoiceDashboa
 import { LinearProgress, Paper } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import MessageDetail from './MessageDetail'
+import { GraphicColors } from 'src/utils/const'
 
 interface Props {
   type: string
   chartId: string
   params: any
+  keywordsColor: any
   highlight?: boolean
 }
 export const getSeries = (seriesData: any) => {
@@ -70,7 +71,7 @@ export const chartLabel = (data: any) => {
 }
 
 const DailyMessageGraph = (props: Props) => {
-  const { type, chartId, params, highlight } = props
+  const { type, chartId, params, highlight, keywordsColor } = props
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
@@ -183,7 +184,7 @@ const DailyMessageGraph = (props: Props) => {
     let totalAmount: number[] = []
     let keywordName = ''
     const returnData: StackChartDataset[] = []
-    const color = GraphicColors
+    const color = loadingDailyMessage && keywordsColor ? keywordsColor : GraphicColors
     for (let i = 0; i < data?.length; i++) {
       totalAmount = []
       const total = data[i]?.value

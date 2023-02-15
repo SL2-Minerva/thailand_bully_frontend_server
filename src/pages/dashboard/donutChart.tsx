@@ -9,7 +9,6 @@ import { Grid, LinearProgress } from '@mui/material'
 
 import { Doughnut } from 'react-chartjs-2'
 import { useEffect, useState } from 'react'
-import { GraphicColors } from 'src/utils/const'
 import { Information } from 'mdi-material-ui'
 import { StyledTooltip } from './overall'
 import Translations from 'src/layouts/components/Translations'
@@ -22,17 +21,18 @@ interface MessageData {
   params: any
   resultFilterData: any
   loadingFilterData: boolean
+  keywordsColor: any
 }
 
 const DonutChart = (props: MessageData) => {
-  const {resultFilterData, loadingFilterData } = props
+  const {resultFilterData, loadingFilterData, keywordsColor } = props
 
   const initValue = {
     labels: [],
     datasets: [
       {
         data: [],
-        backgroundColor: GraphicColors,
+        backgroundColor: keywordsColor,
         hoverOffset: 4
       }
     ]
@@ -119,7 +119,7 @@ const DonutChart = (props: MessageData) => {
         datasets: [
           {
             data: [],
-            backgroundColor: GraphicColors,
+            backgroundColor: keywordsColor,
             hoverOffset: 4
           }
         ]
@@ -147,7 +147,7 @@ const DonutChart = (props: MessageData) => {
       datasets: [
         {
           data: percentage,
-          backgroundColor: GraphicColors,
+          backgroundColor: keywordsColor,
           hoverOffset: 4
         }
       ]
