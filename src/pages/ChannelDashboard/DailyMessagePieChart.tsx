@@ -10,7 +10,6 @@ import { Doughnut } from 'react-chartjs-2'
 import { Chart } from 'chart.js'
 import * as DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne'
 import { useEffect, useState } from 'react'
-import { GraphicColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
@@ -23,6 +22,7 @@ interface Props {
   resultPercentageChannelCurrent: any
   resultPercentageChannelPrevious: any
   loadingPercentageChannel: boolean
+  keywordsColor: any
 }
 Chart.register(DoughnutLabel)
 const DailyMessagePieChart = (props: Props) => {
@@ -32,7 +32,8 @@ const DailyMessagePieChart = (props: Props) => {
     highlight,
     resultPercentageChannelCurrent,
     resultPercentageChannelPrevious,
-    loadingPercentageChannel
+    loadingPercentageChannel,
+    keywordsColor
   } = props
 
   const theme = useTheme()
@@ -42,7 +43,7 @@ const DailyMessagePieChart = (props: Props) => {
     datasets: [
       {
         data: [],
-        backgroundColor: GraphicColors,
+        backgroundColor: keywordsColor,
         hoverOffset: 4
       }
     ]
@@ -62,7 +63,7 @@ const DailyMessagePieChart = (props: Props) => {
         datasets: [
           {
             data: [],
-            backgroundColor: GraphicColors,
+            backgroundColor: keywordsColor,
             hoverOffset: 4
           }
         ]
@@ -90,7 +91,7 @@ const DailyMessagePieChart = (props: Props) => {
       datasets: [
         {
           data: percentage,
-          backgroundColor: GraphicColors,
+          backgroundColor: keywordsColor,
           hoverOffset: 4
         }
       ]

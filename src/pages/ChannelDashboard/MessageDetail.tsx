@@ -148,7 +148,7 @@ const MessageDetail = (props: DialogInfoProps) => {
           </Box>
 
           <TableContainer component={Paper}>
-            <Table style={{ minWidth: '00px'}} aria-label='customized table'>
+            <Table style={{ minWidth: '00px' }} aria-label='customized table'>
               <TableHead>
                 <TableRow>
                   <StyledTableCell>Message ID</StyledTableCell>
@@ -161,32 +161,42 @@ const MessageDetail = (props: DialogInfoProps) => {
                   <StyledTableCell>Channel</StyledTableCell>
                   <StyledTableCell>Bully Level</StyledTableCell>
                   <StyledTableCell>Bully Type</StyledTableCell>
+                  {resultMessageDetail?.length > 0 && resultMessageDetail[0]?.parent ? (
+                    <StyledTableCell>Parent</StyledTableCell>
+                  ) : (
+                    ''
+                  )}
                 </TableRow>
               </TableHead>
               <TableBody>
-                  {(resultMessageDetail || []).map((messageDetail: any, index: number) => (
-                    <StyledTableRow
-                      key={index}
-                      hover={true}
-                      onClick={() => {
-                        setShowDialog(true), setMessageId(messageDetail.message_id)
-                      }}
-                      style={{ cursor: 'pointer' }}
-                    >
-                      <StyledTableCell align='center'>{messageDetail.message_id}</StyledTableCell>
-                      <StyledTableCell component='th' scope='row'>
-                        {messageDetail.message_detail}
-                      </StyledTableCell>
-                      <StyledTableCell align='center'>{messageDetail.account_name}</StyledTableCell>
-                      <StyledTableCell align='center'>{messageDetail.post_date}</StyledTableCell>
-                      <StyledTableCell align='center'>{messageDetail.post_time}</StyledTableCell>
-                      <StyledTableCell align='center'>{messageDetail.day}</StyledTableCell>
-                      <StyledTableCell align='center'>{messageDetail.device}</StyledTableCell>
-                      <StyledTableCell align='center'>{messageDetail.channel}</StyledTableCell>
-                      <StyledTableCell align='center'>{messageDetail.bully_level}</StyledTableCell>
+                {(resultMessageDetail || []).map((messageDetail: any, index: number) => (
+                  <StyledTableRow
+                    key={index}
+                    hover={true}
+                    onClick={() => {
+                      setShowDialog(true), setMessageId(messageDetail.message_id)
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <StyledTableCell align='center'>{messageDetail.message_id}</StyledTableCell>
+                    <StyledTableCell component='th' scope='row'>
+                      {messageDetail.message_detail}
+                    </StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.account_name}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.post_date}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.post_time}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.day}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.device}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.channel}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.bully_level}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
+                    {messageDetail.parent ? (
                       <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
-                    </StyledTableRow>
-                  ))}
+                    ) : (
+                      ''
+                    )}
+                  </StyledTableRow>
+                ))}
               </TableBody>
             </Table>
           </TableContainer>

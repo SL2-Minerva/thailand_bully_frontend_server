@@ -21,7 +21,7 @@ import DayTimeBy from './DayTimeBy'
 import MessageByAll from './MessageByAll'
 import Comparison from './Comparision'
 import { useRouter } from 'next/router'
-import { calculateDate } from '../dashboard/overall'
+import { calculateDate, wordBreaks } from '../dashboard/overall'
 
 const VoiceDashboard = () => {
   const router = useRouter()
@@ -55,7 +55,7 @@ const VoiceDashboard = () => {
     GetNumbersOfAccountComparison(campaign, date, endDate, period, keyword, previousDate, previousEndDate)
 
   // const { resultTotalAccount,resultTotalMessages, loadingTotalComparison } = GetComparison(campaign, date, endDate, period, keyword);
-  const { resultKeywordList } = GetKeyWordsList(campaign)
+  const { resultKeywordList, loadingKeywordList, keywordsColor } = GetKeyWordsList(campaign)
 
   const checkKeywordId = (data: any, keywordId: string | number) => {
     const index = data.indexOf(keywordId)
@@ -136,16 +136,16 @@ const VoiceDashboard = () => {
                             mb: 2,
                             bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1
-                                ? GraphicColors[index]
+                                ? keywordsColor && keywordsColor[index]
                                 : keyword === 'all'
-                                ? GraphicColors[index]
+                                ? keywordsColor && keywordsColor[index]
                                 : 'grey',
                             ':hover': {
                               bgcolor:
                                 filterKeyword?.indexOf(keywords?.id) > -1
-                                  ? GraphicColors[index]
+                                  ? keywordsColor && keywordsColor[index]
                                   : keyword === 'all'
-                                  ? GraphicColors[index]
+                                  ? keywordsColor && keywordsColor[index]
                                   : 'grey'
                             }
                           }}
@@ -154,7 +154,7 @@ const VoiceDashboard = () => {
                           }}
                           variant='contained'
                         >
-                          {keywords.name}
+                          <span style={{ wordWrap: 'break-word' }}>{wordBreaks(keywords.name)}</span>
                         </Button>
                       </Grid>
                     )
@@ -167,10 +167,12 @@ const VoiceDashboard = () => {
       {resultReportPermission?.includes('20') ? (
         <Grid item xs={12} md={4} id='chart1'>
           <DailyMessagePieChart
+           keywordsColor={loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors}
             params={params}
             type='message'
             chartId='Chart 1'
             highlight={highlight === 'chart1' ? true : false}
+
           />
         </Grid>
       ) : (
@@ -180,6 +182,7 @@ const VoiceDashboard = () => {
       {resultReportPermission?.includes('21') ? (
         <Grid item xs={12} md={8} id='chart2'>
           <DailyMessageGraph
+            keywordsColor={loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors}
             type='message'
             params={params}
             chartId='Chart 2'
@@ -190,7 +193,7 @@ const VoiceDashboard = () => {
         ''
       )}
       
-      <MessageByAll resultReportPermission={resultReportPermission} highlight={highlight} params={params} />
+      <MessageByAll keywordsColor={keywordsColor} resultReportPermission={resultReportPermission} highlight={highlight} params={params} />
       
       {resultReportPermission?.includes('30') ? (
         <Grid item xs={12} md={8} id='chart11'>
@@ -249,10 +252,10 @@ const VoiceDashboard = () => {
 
       <Comparison resultReportPermission={resultReportPermission} params={params} highlight={highlight} />
       
-      <KeywordBy highlight={highlight} resultReportPermission={resultReportPermission} params={params} />
+      <KeywordBy highlight={highlight} resultReportPermission={resultReportPermission} params={params} keywordsColor={loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors} />
 
       <QuickView setHighlight={setHighlight} setShowQuickView={setShowQuickView} />
-      <QuickViewModal show={showQuickView} setShow={setShowQuickView} params={params} chartId={highlight} />
+      <QuickViewModal show={showQuickView} setShow={setShowQuickView} params={params} chartId={highlight} keywordsColor={loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors} />
     </Grid>
   )
 }

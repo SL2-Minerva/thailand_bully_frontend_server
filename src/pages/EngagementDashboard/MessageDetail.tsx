@@ -160,6 +160,11 @@ const MessageDetail = (props: DialogInfoProps) => {
                   <StyledTableCell>Share</StyledTableCell>
                   <StyledTableCell>Comments</StyledTableCell>
                   <StyledTableCell>Reaction</StyledTableCell>
+                  {resultMessageDetail?.length > 0 && resultMessageDetail[0]?.parent ? (
+                    <StyledTableCell>Parent</StyledTableCell>
+                  ) : (
+                    ''
+                  )}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -182,6 +187,11 @@ const MessageDetail = (props: DialogInfoProps) => {
                     <StyledTableCell align='center'>{messageDetail.day}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.device}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.channel}</StyledTableCell>
+                    {messageDetail.parent ? (
+                      <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
+                    ) : (
+                      ''
+                    )}
                   </StyledTableRow>
                 ))}
               </TableBody>

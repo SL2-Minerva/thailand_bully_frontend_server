@@ -13,7 +13,7 @@ import Translations from 'src/layouts/components/Translations'
 
 const ChannelByBullyType = (props: LineProps) => {
   const { t } = useTranslation()
-  const { labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
+  const { labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading, keywordsColor } = props
 
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -144,7 +144,7 @@ const ChannelByBullyType = (props: LineProps) => {
         const labels = chartLabel(dailyMessageData)
         setLabel(labels)
 
-        const dataSets = chartDatasets(dailyMessageData)
+        const dataSets = chartDatasets(dailyMessageData, keywordsColor)
         setDataset(dataSets)
       }
     }

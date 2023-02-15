@@ -9,15 +9,18 @@ import MessagesByTime from './MessagesBy/MessageByTime'
 import MessagesByDevices from './MessagesBy/MessageByDevice'
 import { useTheme } from '@mui/material/styles'
 import { GetMessagesByAll } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
+import { GraphicColors } from 'src/utils/const'
 
 const MessageByAll = ({
   params,
   highlight,
-  resultReportPermission
+  resultReportPermission,
+  keywordsColor
 }: {
   params: any
   highlight: string
   resultReportPermission: any
+  keywordsColor: any
 }) => {
   const { resultMessagesByAll, loadingMessagesByAll } = GetMessagesByAll(
     params?.campaign,
@@ -38,7 +41,7 @@ const MessageByAll = ({
   const labelColor = theme.palette.text.primary
   const borderColor = theme.palette.action.focus
   const gridLineColor = theme.palette.action.focus
-  
+
   return (
     <>
       {resultReportPermission?.includes('22') ? (
@@ -56,6 +59,7 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageByDay}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart3' ? true : false}
+            keywordsColor = {loadingMessagesByAll && keywordsColor ? keywordsColor : GraphicColors}
           />
         </Grid>
       ) : (
@@ -76,6 +80,8 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageByTime}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart4' ? true : false}
+            keywordsColor = {loadingMessagesByAll && keywordsColor ? keywordsColor : GraphicColors}
+
           />
         </Grid>
       ) : (
@@ -96,6 +102,7 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageByDevice}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart5' ? true : false}
+            keywordsColor = {loadingMessagesByAll && keywordsColor ? keywordsColor : GraphicColors}
           />
         </Grid>
       ) : (
@@ -117,6 +124,7 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageByAccount}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart6' ? true : false}
+            keywordsColor = {loadingMessagesByAll && keywordsColor ? keywordsColor : GraphicColors}
           />
         </Grid>
       ) : (
@@ -138,6 +146,7 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageByChannel}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart7' ? true : false}
+            keywordsColor = {loadingMessagesByAll && keywordsColor ? keywordsColor : GraphicColors}
           />
         </Grid>
       ) : (
@@ -159,6 +168,7 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageBySentiment}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart8' ? true : false}
+            keywordsColor = {loadingMessagesByAll && keywordsColor ? keywordsColor : GraphicColors}
           />
         </Grid>
       ) : (
@@ -180,6 +190,7 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageByLevel}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart9' ? true : false}
+            keywordsColor = {loadingMessagesByAll && keywordsColor ? keywordsColor : GraphicColors}
           />
         </Grid>
       ) : (
@@ -201,6 +212,7 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageByType}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart10' ? true : false}
+            keywordsColor = {loadingMessagesByAll && keywordsColor ? keywordsColor : GraphicColors}
           />
         </Grid>
       ) : (

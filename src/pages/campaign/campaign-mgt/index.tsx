@@ -121,8 +121,16 @@ const CampaignManagement = () => {
   }, [total]);
 
   useEffect(() => {
-    setReload(!reload)
-  }, [showCreate, showEdit])
+    if(!showCreate) {
+      setReload(!reload)
+    } 
+  }, [showCreate])
+
+  useEffect(() => {
+    if(!showEdit) {
+      setReload(!reload)
+    }
+  }, [showEdit])
 
   useEffect(()=> {
     if(errorUserPermission) {

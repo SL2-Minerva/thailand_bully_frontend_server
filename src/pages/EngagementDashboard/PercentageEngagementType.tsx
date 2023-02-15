@@ -9,7 +9,6 @@ import { Grid, LinearProgress } from "@mui/material"
 
 import { Doughnut } from 'react-chartjs-2'
 import { useEffect, useState } from 'react'
-import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
@@ -25,12 +24,13 @@ interface MessageData {
   highlight: boolean
   resultEngagementType: any
   loadingEngagementType : boolean
+  keywordsColor :any
 }
 
 const PercentageOfEngangementType = (props : MessageData) => {
 
-  const { type, chartId, highlight,resultEngagementType, loadingEngagementType } = props;
-  const colors = type === 'transaction' ? EngagementTransChartColor : EngagementTypeColors;
+  const { type, chartId, highlight,resultEngagementType, loadingEngagementType, keywordsColor } = props;
+  const colors = keywordsColor;
   const reportNo = '4.1.011';
   const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
   const initValue = {

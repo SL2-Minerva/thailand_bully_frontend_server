@@ -2,7 +2,7 @@ import { Paper, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import { BullyDashboardColors, EngagementTypeColors, GraphicColors } from 'src/utils/const'
+import { GraphicColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
@@ -14,7 +14,7 @@ import Translations from 'src/layouts/components/Translations'
 
 const MessagesByTime = (props: LineProps) => {
   const { t } = useTranslation()
-  const { white, labelColor, borderColor, gridLineColor, colorType, chartId, params, highlight } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, keywordsColor } = props
 
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -134,12 +134,7 @@ const MessagesByTime = (props: LineProps) => {
     let totalAmount: number[] = []
     let keywordName = ''
     const returnData: StackChartDataset[] = []
-    const color =
-      colorType === 'engagementType'
-        ? EngagementTypeColors
-        : colorType === 'bullyDashboard'
-        ? BullyDashboardColors
-        : GraphicColors
+    const color = loadingMessagesByTime && keywordsColor ? keywordsColor : GraphicColors
     const total = data?.value || data?.data || []
 
     for (let i = 0; i < total?.length; i++) {

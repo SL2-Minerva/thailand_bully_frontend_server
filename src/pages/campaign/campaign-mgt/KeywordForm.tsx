@@ -20,7 +20,16 @@ import { Color, ColorPicker, createColor } from 'material-ui-color'
 const KeywordForm = (props: any) => {
   const { indexNumber, keywords, setKeywords, removeKeyword, value } = props
 
-  const { keyword_and, keyword_or, keyword_exclude, keyword_or_color, keyword_and_color } = value
+  const {
+    keyword_and,
+    keyword_or,
+    keyword_exclude,
+    keyword_or_color,
+    keyword_and_color,
+    delete_keyword_and,
+    delete_keyword_or,
+    delete_keyword_exclude
+  } = value
 
   function handleChangeLabel(i: number, event: any) {
     const values = [...keywords]
@@ -60,16 +69,21 @@ const KeywordForm = (props: any) => {
   function removeTextKeyword(i: number, indexValue: number, list: any, type: any) {
     const values = [...keywords]
     const news = list.filter((item: any, index: number) => index !== i)
+    const removed = list.filter((item: any, index: number) => index === i)
+
     if (type === 'keyword_or') {
       values[indexValue].keyword_or = news
+      values[indexValue].delete_keyword_or =  delete_keyword_or ? [...delete_keyword_or , removed[0]] : removed
     }
 
     if (type === 'keyword_and') {
       values[indexValue].keyword_and = news
+      values[indexValue].delete_keyword_and =  delete_keyword_and ? [...delete_keyword_and , removed[0]] : removed
     }
 
     if (type === 'keyword_exclude') {
       values[indexValue].keyword_exclude = news
+      values[indexValue].delete_keyword_exclude =  delete_keyword_exclude ? [...delete_keyword_exclude , removed[0]] : removed
     }
 
     setKeywords(values)
@@ -77,7 +91,7 @@ const KeywordForm = (props: any) => {
 
   const addMoreKeywordColors = (i: number, colorList: any, current: any, type: any) => {
     console.log('colorlist', colorList)
-    const newKeywordColor = [...colorList, '']
+    const newKeywordColor = [...colorList, '#70d477']
 
     const values = [...keywords]
 
@@ -87,11 +101,11 @@ const KeywordForm = (props: any) => {
     }
 
     if (type === 'keyword_and') {
-      values[i].keyword_and_color = [...colorList, '']
+      values[i].keyword_and_color = [...colorList, '#ed5d5e']
     }
 
     if (type === 'keyword_exclude') {
-      values[i].keyword_exclude_color = [...colorList, '']
+      values[i].keyword_exclude_color = [...colorList, '#700077']
     }
 
     setKeywords(values)
@@ -318,7 +332,6 @@ const KeywordForm = (props: any) => {
                   index={index}
                   indexValue={indexNumber}
                   label={'คำที่ห้ามมี (Exclude)'}
-                  colorList={[]}
                   handlChangeKeywordColors={handlChangeKeywordColors}
                   addMoreKeywordColors={addMoreKeywordColors}
                   removeKeywordColors={removeKeywordColors}
@@ -339,7 +352,6 @@ const KeywordForm = (props: any) => {
                 index={0}
                 indexValue={indexNumber}
                 label={'คำที่ห้ามมี (Exclude)'}
-                colorList={[]}
                 handlChangeKeywordColors={handlChangeKeywordColors}
                 addMoreKeywordColors={addMoreKeywordColors}
                 removeKeywordColors={removeKeywordColors}
@@ -363,15 +375,14 @@ const InputKeyword = (props: any) => {
     type,
     label,
     index,
-    color,
     handlChangeKeywordColors,
     addMoreKeywordColors,
     removeKeywordColors,
     colorList
   } = props
   const [text, setText] = useState(textValue)
-  const [keywordColor, setKeywordColor] = useState(color || createColor('#ED5D5D'))
-  const [keywordColors, setKeywordColors] = useState(createColor('#70D477'))
+  const [keywordColor, setKeywordColor] = useState(colorList || createColor('#ED5D5D'))
+  const [keywordColors, setKeywordColors] = useState(colorList &&  colorList[index] || createColor('#70D477'))
   useEffect(() => {
     setText(textValue)
   }, [textValue])

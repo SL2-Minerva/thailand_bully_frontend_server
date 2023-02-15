@@ -1,5 +1,18 @@
 import { forwardRef, useCallback, useEffect, useState } from 'react'
-import { Grid, Card, CardHeader, CardContent, InputLabel, MenuItem, Box, LinearProgress, Typography } from '@mui/material'
+import {
+  Grid,
+  Card,
+  CardHeader,
+  CardContent,
+  InputLabel,
+  MenuItem,
+  Box,
+  LinearProgress,
+  Typography,
+  RadioGroup,
+  FormControlLabel,
+  Radio
+} from '@mui/material'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
 import TextField from '@mui/material/TextField'
@@ -18,8 +31,8 @@ import Translations from 'src/layouts/components/Translations'
 import { useRouter } from 'next/router'
 import { calculateDate, get1stAndLastDayOfMonth, PickerProps } from '../dashboard/overall'
 import { UserPermission } from 'src/services/api/users/role'
-import Graph from 'react-graph-vis';
-import 'react-graph-vis/node_modules/vis-network/dist/dist/vis-network.css';
+import Graph from 'react-graph-vis'
+import 'react-graph-vis/node_modules/vis-network/dist/dist/vis-network.css'
 
 const SNA = () => {
   const [date, setDate] = useState<DateType>(calculateDate(6))
@@ -31,6 +44,7 @@ const SNA = () => {
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
   const [period, setPeriod] = useState<string>('last7days')
   const [showPreviousDatepicker, setShowPreviousDatepicker] = useState<boolean>(false)
+  const [selectedValue, setSelectedValue] = useState('bySentiment')
 
   const router = useRouter()
 
@@ -44,7 +58,10 @@ const SNA = () => {
     endDate,
     period,
     previousDate,
-    previousEndDate
+    previousEndDate,
+    '',
+    '',
+    'sna'
   )
 
   const CustomInput = forwardRef((props: PickerProps, ref) => {
@@ -131,9 +148,9 @@ const SNA = () => {
   }
 
   const initialGraph = {
-    "nodes": [],
-    "edges": []
-  };
+    nodes: [],
+    edges: []
+  }
 
   // const [ graph, setGraph ] = useState(initialGraph);
 
@@ -142,14 +159,18 @@ const SNA = () => {
       hierarchical: false
     },
     edges: {
-      color: "#000000",
+      color: '#000000',
       dashes: false
     },
-    height: "520px"
-  };
+    height: '520px'
+  }
 
-  useEffect(()=> {
-    if(errorUserPermission) {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedValue(event.target.value)
+  }
+
+  useEffect(() => {
+    if (errorUserPermission) {
       window.localStorage.removeItem('userData')
       localStorage.clear()
       router.push('/login')
@@ -312,18 +333,46 @@ const SNA = () => {
       </Grid>
       <Grid item xs={12}>
         <Card>
-              {loadingNetworkGraph && <LinearProgress style={{ width: '100%' }} />}
-              <Box sx={{ mb: 8, textAlign: 'center' }}>
-                <Typography variant='h5' sx={{mt:4, mb: 3, lineHeight: '2rem' }}>
-                  <Translations text="Social Network Analysis" />
-                </Typography>
-              </Box>
+          {loadingNetworkGraph && <LinearProgress style={{ width: '100%' }} />}
 
-              <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <Graph graph={resultNetworkGraph ? resultNetworkGraph : initialGraph} options={options} />
-                </Grid>
-              </Grid>
+          <Box sx={{ mb: 8, textAlign: 'center' }}>
+            <Typography variant='h5' sx={{ mt: 4, mb: 3, lineHeight: '2rem' }}>
+              <Translations text='Social Network Analysis' />
+            </Typography>
+          </Box>
+
+          <Grid container spacing={1}>
+            <FormControl sx={{ mt: 3, ml: 5 }}>
+              {/* <FormLabel id='demo-row-radio-buttons-group-label'>Filter</FormLabel> */}
+              <RadioGroup row aria-labelledby='demo-row-radio-buttons-group-label' name='row-radio-buttons-group'>
+                <FormControlLabel
+                  value='bySentiment'
+                  control={
+                    <Radio value='bySentiment' checked={selectedValue === 'bySentiment'} onChange={handleChange} />
+                  }
+                  label='By Sentiment'
+                />
+                <FormControlLabel
+                  value='byBullyLevel'
+                  control={<Radio value='byBully' checked={selectedValue === 'byBully'} onChange={handleChange} />}
+                  label='By Bully Level'
+                />
+                <FormControlLabel
+                  value='ByBullyType'
+                  control={
+                    <Radio value='byEngagement' checked={selectedValue === 'byEngagement'} onChange={handleChange} />
+                  }
+                  label='By Bully Type'
+                />
+              </RadioGroup>
+            </FormControl>
+          </Grid>
+
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Graph graph={resultNetworkGraph ? resultNetworkGraph : initialGraph} options={options} />
+            </Grid>
+          </Grid>
         </Card>
       </Grid>
     </Grid>
@@ -331,4 +380,3 @@ const SNA = () => {
 }
 
 export default SNA
-

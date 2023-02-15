@@ -14,7 +14,7 @@ import Translations from 'src/layouts/components/Translations'
 
 const MessagesBySentiment = (props: LineProps) => {
   const { t } = useTranslation()
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, keywordsColor } = props
 
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -134,7 +134,7 @@ const MessagesBySentiment = (props: LineProps) => {
     let totalAmount: number[] = []
     let keywordName = ''
     const returnData: StackChartDataset[] = []
-    const color = GraphicColors
+    const color = loadingMessagesBySentiment && keywordsColor ? keywordsColor  : GraphicColors
     const total = data?.value || data?.data || []
 
     for (let i = 0; i < total?.length; i++) {

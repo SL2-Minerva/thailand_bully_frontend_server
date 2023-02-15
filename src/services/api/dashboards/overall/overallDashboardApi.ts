@@ -569,8 +569,7 @@ export const GetNetworkGraph = (
   previousEndDate?: any,
   keywordId?: any,
   messageId?: any,
-  reportNo?: string,
-  filterBy?: string
+  reportNo?: string
 ) => {
   let params : any = {}
   params = {
@@ -582,8 +581,8 @@ export const GetNetworkGraph = (
     report_number: reportNo || '',
   }
 
-  if(filterBy) {
-    params.filterBy = filterBy
+  if(platformId) {
+    params.source_id = platformId;
   }
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
@@ -594,6 +593,9 @@ export const GetNetworkGraph = (
 
   return {
     resultNetworkGraph: response?.data || null,
+    resultSentimentNetwork: response?.data?.sentiment || response?.data || null,
+    resultBullyLevelNetwork: response?.data?.bullyLevel || response?.data || null,
+    resultBullyTypeNetwork: response?.data?.bullyType || response?.data || null,
     loadingNetworkGraph: loading,
     errorNetworkGraph: error
   }
@@ -623,8 +625,17 @@ export const GetKeyWordsList = (campaignId: any) => {
     }
   })
 
+  const resultData = response?.data; 
+  const keywordsColor = [];
+  if (resultData && resultData?.length > 0) {
+    for(let i=0; i<resultData?.length; i++) {
+      keywordsColor.push(resultData[i]?.color)
+    }
+  }
+
   return {
     resultKeywordList: response?.data || [],
+    keywordsColor : keywordsColor?.length > 0 ? keywordsColor : null,
     loadingKeywordList: loading,
     errorKeywordList: error
   }
