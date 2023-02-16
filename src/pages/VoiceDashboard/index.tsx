@@ -37,6 +37,7 @@ const VoiceDashboard = () => {
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
   const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
+  const [filterColors, setFilterColor] = useState<any>([])
 
   const params = {
     campaign: campaign,
@@ -58,21 +59,30 @@ const VoiceDashboard = () => {
   // const { resultTotalAccount,resultTotalMessages, loadingTotalComparison } = GetComparison(campaign, date, endDate, period, keyword);
   const { resultKeywordList, loadingKeywordList, keywordsColor } = GetKeyWordsList(campaign)
 
-  const checkKeywordId = (data: any, keywordId: string | number) => {
+  const checkKeywordId = (data: any, keywordId: string | number, keywordColor: any, color: any) => {
     const index = data.indexOf(keywordId)
+    const colorIndex = keywordColor?.indexOf(color)
     if (index > -1) {
       data.splice(index, 1)
     } else {
       data.push(keywordId)
     }
+    if (colorIndex > -1) {
+      keywordColor?.splice(colorIndex, 1)
+    } else {
+      keywordColor?.push(color)
+    }
 
     setFilterKeyword(data)
-
+    setFilterColor(keywordColor)
     if (data.length === 0) {
       setKeyword('all')
+      setKeywordGraphColor(keywordsColor || GraphicColors)
     } else {
       setKeyword(data.join(','))
+      setKeywordGraphColor(keywordColor)
     }
+    console.log("keywordColor", keywordColor)
 
     return data
   }
@@ -86,12 +96,19 @@ const VoiceDashboard = () => {
   }, [errorUserPermission])
 
   useEffect(() => {
-    if(keywordsColor) {
+    if (keywordsColor) {
       setKeywordGraphColor(keywordsColor)
     } else {
       setKeywordGraphColor(GraphicColors)
     }
-  },[loadingKeywordList])
+  }, [loadingKeywordList])
+
+  useEffect(() => {
+    if (filterKeyword?.length>0) {
+      setKeywordGraphColor(filterKeyword)
+      console.log("hello")
+    } 
+  },[filterKeyword])
 
   return (
     <Grid container spacing={6}>
@@ -124,9 +141,12 @@ const VoiceDashboard = () => {
                     onClick={() => {
                       if (keyword === 'all') {
                         setKeyword('')
+                        setKeywordGraphColor(keywordsColor || GraphicColors)
                       } else {
                         setKeyword('all')
                         setFilterKeyword([])
+                        setFilterColor([])
+                        setKeywordGraphColor(keywordsColor || GraphicColors)
                       }
                     }}
                     variant='contained'
@@ -159,7 +179,12 @@ const VoiceDashboard = () => {
                             }
                           }}
                           onClick={() => {
-                            checkKeywordId(filterKeyword, keywords?.id)
+                            checkKeywordId(
+                              filterKeyword,
+                              keywords?.id,
+                              filterColors,
+                              (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                            )
                           }}
                           variant='contained'
                         >
@@ -191,7 +216,7 @@ const VoiceDashboard = () => {
       {resultReportPermission?.includes('21') ? (
         <Grid item xs={12} md={8} id='chart2'>
           <DailyMessageGraph
-            keywordsColor={keywordGraphColors ?? GraphicColors}
+            keywordsColor={!loadingKeywordList ? keywordGraphColors : GraphicColors}
             type='message'
             params={params}
             chartId='Chart 2'
@@ -202,7 +227,7 @@ const VoiceDashboard = () => {
         ''
       )}
       
-      <MessageByAll keywordsColor={keywordsColor} resultReportPermission={resultReportPermission} highlight={highlight} params={params} />
+      <MessageByAll keywordsColor={!loadingKeywordList ? keywordGraphColors : GraphicColors} resultReportPermission={resultReportPermission} highlight={highlight} params={params} />
       
       {resultReportPermission?.includes('30') ? (
         <Grid item xs={12} md={8} id='chart11'>

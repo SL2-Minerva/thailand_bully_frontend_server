@@ -123,6 +123,8 @@ const OverallDashboard = () => {
   const [showPreviousDatepicker, setShowPreviousDatepicker] = useState<boolean>(false)
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
+  const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
+  const [filterColors, setFilterColor] = useState<any>([])
 
   const theme = useTheme()
   const router = useRouter()
@@ -134,8 +136,7 @@ const OverallDashboard = () => {
   const labelColor = theme.palette.text.primary
   const borderColor = theme.palette.action.focus
   const gridLineColor = theme.palette.action.focus
-  const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
-
+  
   const { resultReportPermission, errorUserPermission } = UserPermission()
   const { resultCampaiganList } = CampaignList()
   const { result_source_list } = SourceService()
@@ -161,20 +162,28 @@ const OverallDashboard = () => {
     previousEndDate,
     keyword
   )
-  const checkKeywordId = (data: any, keywordId: string | number) => {
+  const checkKeywordId = (data: any, keywordId: string | number, keywordColor: any, color: any) => {
     const index = data.indexOf(keywordId)
+    const colorIndex = keywordColor?.indexOf(color)
     if (index > -1) {
       data.splice(index, 1)
     } else {
       data.push(keywordId)
     }
+    if (colorIndex > -1) {
+      keywordColor?.splice(colorIndex, 1)
+    } else {
+      keywordColor?.push(color)
+    }
 
     setFilterKeyword(data)
-
+    setFilterColor(keywordColor)
     if (data.length === 0) {
       setKeyword('all')
+      setKeywordGraphColor(keywordsColor || GraphicColors)
     } else {
       setKeyword(data.join(','))
+      setKeywordGraphColor(keywordColor)
     }
 
     return data
@@ -297,13 +306,12 @@ const OverallDashboard = () => {
     }
   }, [])
   useEffect(() => {
-    if(keywordsColor) {
+    if (keywordsColor) {
       setKeywordGraphColor(keywordsColor)
     } else {
       setKeywordGraphColor(GraphicColors)
     }
-  },[loadingKeywordList])
-  
+  }, [loadingKeywordList])
 
   return (
     <>
@@ -474,9 +482,12 @@ const OverallDashboard = () => {
                     onClick={() => {
                       if (keyword === 'all') {
                         setKeyword('')
+                        setKeywordGraphColor(keywordsColor || GraphicColors)
                       } else {
                         setKeyword('all')
                         setFilterKeyword([])
+                        setFilterColor([])
+                        setKeywordGraphColor(keywordsColor || GraphicColors)
                       }
                     }}
                     variant='contained'
@@ -509,7 +520,12 @@ const OverallDashboard = () => {
                             }
                           }}
                           onClick={() => {
-                            checkKeywordId(filterKeyword, keywords?.id)
+                            checkKeywordId(
+                              filterKeyword,
+                              keywords?.id,
+                              filterColors,
+                              (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                            )
                           }}
                           variant='contained'
                         >

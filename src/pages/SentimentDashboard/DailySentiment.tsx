@@ -138,15 +138,10 @@ const DailySenitment = (props: LineProps) => {
 
       if(getDatasetIndex?.length > 0) {
         const datasetIndex = getDatasetIndex[0]?.datasetIndex;
-
-        if(datasetIndex === 0) {
-          params.Llabel = 'negative'
-        } else if (datasetIndex === 1) {
-          params.Llabel = 'positive'
-        } else if (datasetIndex === 2) {
-          params.Llabel = 'neutral'
+       
+        if(datasetIndex === 0 || datasetIndex) {
+          params.Llabel = dataset[datasetIndex]?.label
         }
-
       }
 
       if (keyword_id) {
