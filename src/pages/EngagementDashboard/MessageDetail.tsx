@@ -64,7 +64,8 @@ const MessageDetail = (props: DialogInfoProps) => {
   const [messageId, setMessageId] = useState<number | string>()
   const [pageCount, setPageCount] = useState<number>(0)
 
-  let paramData = {}
+  let paramData : any = {}
+  paramData.Llabel = ""
   const todayDate = new Date()
   if (params?.period === 'customrange' && params?.previousDate !== todayDate && params?.previousEndDate !== todayDate) {
     paramData = {
@@ -100,6 +101,10 @@ const MessageDetail = (props: DialogInfoProps) => {
       page_name: params?.page,
       label: params?.label
     }
+  }
+
+  if(params?.Llabel) {
+    paramData.Llabel = params.Llabel
   }
 
   const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetail(paramData)

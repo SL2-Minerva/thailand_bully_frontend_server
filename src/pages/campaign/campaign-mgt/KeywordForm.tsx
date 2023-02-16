@@ -161,8 +161,16 @@ const KeywordForm = (props: any) => {
     if (colorList.length <= 0) {
       keywordsColor = [...colorList, hashColor]
     } else {
-      keywordsColor = [...colorList]
-      keywordsColor[i] = hashColor
+      
+      if (type === 'keyword_or') {
+        keywordsColor = [...colorList]
+        keywordsColor[i] = hashColor
+      }
+  
+      if (type === 'keyword_and') {
+        keywordsColor = [...colorList]
+        keywordsColor = [hashColor]
+      }
     }
 
     const values = [...keywords]
@@ -382,10 +390,17 @@ const InputKeyword = (props: any) => {
   } = props
   const [text, setText] = useState(textValue)
   const [keywordColor, setKeywordColor] = useState(colorList || createColor('#ED5D5D'))
-  const [keywordColors, setKeywordColors] = useState(colorList &&  colorList[index] || createColor('#70D477'))
+  const [keywordColors, setKeywordColors] = useState(createColor('#70D477'))
   useEffect(() => {
     setText(textValue)
+    if(index === 0 && colorList) {
+      console.log(colorList[0])
+      setKeywordColors(colorList[0]|| createColor('#70D477'))
+    } else if ( index && colorList) {
+      setKeywordColors((colorList && colorList[index])|| createColor('#70D477'))
+    }
   }, [textValue])
+
 
   function handleChangeText(e: any, index: any, indexValue: any) {
     setText(e.target.value)

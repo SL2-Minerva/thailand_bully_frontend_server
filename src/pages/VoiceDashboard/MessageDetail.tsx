@@ -102,6 +102,10 @@ const MessageDetail = (props: DialogInfoProps) => {
     }
   }
 
+  if(params?.Llabel) {
+    paramData.Llabel =params?.Llabel
+  }
+
   if (params.select_period) {
     paramData.select_period = params?.select_period
   }

@@ -51,7 +51,7 @@ const SNA = () => {
   const { errorUserPermission } = UserPermission()
   const { resultCampaiganList } = CampaignList()
   const { result_source_list } = SourceService()
-  const { resultNetworkGraph, loadingNetworkGraph } = GetNetworkGraph(
+  const { resultNetworkGraph, resultBullyLevelNetwork, resultBullyTypeNetwork, resultSentimentNetwork, loadingNetworkGraph }  = GetNetworkGraph(
     campaign,
     platformId,
     date,
@@ -370,7 +370,17 @@ const SNA = () => {
 
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Graph graph={resultNetworkGraph ? resultNetworkGraph : initialGraph} options={options} />
+            {
+               selectedValue === 'bySentiment' ? 
+               <Graph graph={resultSentimentNetwork ? resultSentimentNetwork : initialGraph} options={options} />
+               : selectedValue === 'byBullyLevel' ? 
+               <Graph graph={resultBullyLevelNetwork ? resultBullyLevelNetwork : initialGraph} options={options} />
+               : selectedValue === 'buBullyType' ?
+               <Graph graph={resultBullyTypeNetwork ? resultBullyTypeNetwork : initialGraph} options={options} />
+               :
+               <Graph graph={resultNetworkGraph ? resultNetworkGraph : initialGraph} options={options} />
+
+            }
             </Grid>
           </Grid>
         </Card>

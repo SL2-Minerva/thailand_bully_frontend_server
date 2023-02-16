@@ -35,6 +35,7 @@ import QuickViewModal from './QuickViewModal'
 import PercentageOfSentiments from './PercentageOfSentiment'
 import Translations from 'src/layouts/components/Translations'
 import { useRouter } from 'next/router'
+import { SentimentAllColors } from 'src/utils/const'
 
 const SentimentDashboard = () => {
   const theme = useTheme()
@@ -202,16 +203,16 @@ const SentimentDashboard = () => {
                             mb: 2,
                             bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1
-                                ? keywordsColor && keywordsColor[index]
+                                ? (keywordsColor && keywordsColor[index]) || SentimentAllColors[index]
                                 : keyword === 'all'
-                                ? keywordsColor && keywordsColor[index]
+                                ? (keywordsColor && keywordsColor[index]) || SentimentAllColors[index]
                                 : 'grey',
                             ':hover': {
                               bgcolor:
                                 filterKeyword?.indexOf(keywords?.id) > -1
-                                  ? keywordsColor && keywordsColor[index]
+                                  ? (keywordsColor && keywordsColor[index]) || SentimentAllColors[index]
                                   : keyword === 'all'
-                                  ? keywordsColor && keywordsColor[index]
+                                  ? (keywordsColor && keywordsColor[index]) || SentimentAllColors[index]
                                   : 'grey'
                             }
                           }}

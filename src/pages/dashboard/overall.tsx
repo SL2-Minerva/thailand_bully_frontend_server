@@ -123,6 +123,8 @@ const OverallDashboard = () => {
   const [showPreviousDatepicker, setShowPreviousDatepicker] = useState<boolean>(false)
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
+  const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
+  const [filterColors, setFilterColor] = useState<any>([])
 
   const theme = useTheme()
   const router = useRouter()
@@ -134,7 +136,7 @@ const OverallDashboard = () => {
   const labelColor = theme.palette.text.primary
   const borderColor = theme.palette.action.focus
   const gridLineColor = theme.palette.action.focus
-
+  
   const { resultReportPermission, errorUserPermission } = UserPermission()
   const { resultCampaiganList } = CampaignList()
   const { result_source_list } = SourceService()
@@ -160,20 +162,28 @@ const OverallDashboard = () => {
     previousEndDate,
     keyword
   )
-  const checkKeywordId = (data: any, keywordId: string | number) => {
+  const checkKeywordId = (data: any, keywordId: string | number, keywordColor: any, color: any) => {
     const index = data.indexOf(keywordId)
+    const colorIndex = keywordColor?.indexOf(color)
     if (index > -1) {
       data.splice(index, 1)
     } else {
       data.push(keywordId)
     }
+    if (colorIndex > -1) {
+      keywordColor?.splice(colorIndex, 1)
+    } else {
+      keywordColor?.push(color)
+    }
 
     setFilterKeyword(data)
-
+    setFilterColor(keywordColor)
     if (data.length === 0) {
       setKeyword('all')
+      setKeywordGraphColor(keywordsColor || GraphicColors)
     } else {
       setKeyword(data.join(','))
+      setKeywordGraphColor(keywordColor)
     }
 
     return data
@@ -262,7 +272,7 @@ const OverallDashboard = () => {
     setEndDate(end)
   }
 
-  const handleOnChangePreviousDate = (dates: any) => {
+  const handleOnChangePreviousDates = (dates: any) => {
     const [start, end] = dates
     setPreviousDate(start)
     setPreviousEndDate(end)
@@ -295,8 +305,13 @@ const OverallDashboard = () => {
       periodSet(value)
     }
   }, [])
-
-  
+  useEffect(() => {
+    if (keywordsColor) {
+      setKeywordGraphColor(keywordsColor)
+    } else {
+      setKeywordGraphColor(GraphicColors)
+    }
+  }, [loadingKeywordList])
 
   return (
     <>
@@ -434,7 +449,7 @@ const OverallDashboard = () => {
                           startDate={previousDate}
                           shouldCloseOnSelect={false}
                           id='date-range-picker-months'
-                          onChange={handleOnChangePreviousDate}
+                          onChange={handleOnChangePreviousDates}
                           customInput={
                             <CustomInput
                               label='Previous Period'
@@ -467,9 +482,12 @@ const OverallDashboard = () => {
                     onClick={() => {
                       if (keyword === 'all') {
                         setKeyword('')
+                        setKeywordGraphColor(keywordsColor || GraphicColors)
                       } else {
                         setKeyword('all')
                         setFilterKeyword([])
+                        setFilterColor([])
+                        setKeywordGraphColor(keywordsColor || GraphicColors)
                       }
                     }}
                     variant='contained'
@@ -488,21 +506,26 @@ const OverallDashboard = () => {
                             mb: 2,
                             bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1
-                                ? keywordsColor && keywordsColor[index]
+                                ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
                                 : keyword === 'all'
-                                ? keywordsColor && keywordsColor[index]
+                                ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
                                 : 'grey',
                             ':hover': {
                               bgcolor:
                                 filterKeyword?.indexOf(keywords?.id) > -1
-                                  ? keywordsColor && keywordsColor[index]
+                                  ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
                                   : keyword === 'all'
-                                  ? keywordsColor && keywordsColor[index]
+                                  ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
                                   : 'grey'
                             }
                           }}
                           onClick={() => {
-                            checkKeywordId(filterKeyword, keywords?.id)
+                            checkKeywordId(
+                              filterKeyword,
+                              keywords?.id,
+                              filterColors,
+                              (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                            )
                           }}
                           variant='contained'
                         >
@@ -521,7 +544,7 @@ const OverallDashboard = () => {
         {resultReportPermission?.includes('1') ? (
           <Grid id='chart1' item xs={12} md={4}>
             <DonutChart
-              keywordsColor={loadingFilterData && loadingKeywordList ? keywordsColor : GraphicColors}
+              keywordsColor={keywordGraphColors ?? GraphicColors}
               params={params}
               resultFilterData={resultFilterData}
               loadingFilterData={loadingFilterData}
@@ -543,7 +566,7 @@ const OverallDashboard = () => {
               params={params}
               loadingFilterData={loadingFilterData}
               resultFilterData={resultFilterData}
-              keywordsColor={loadingFilterData && loadingKeywordList ? keywordsColor : GraphicColors}
+              keywordsColor={keywordGraphColors ?? GraphicColors}
             />
           </Grid>
         ) : (

@@ -64,8 +64,9 @@ const MessageDetail = (props: DialogInfoProps) => {
   const [messageId, setMessageId] = useState<number | string>()
   const [pageCount, setPageCount] = useState<number>(0)
 
-  let paramData = {}
+  let paramData : any = {}
   const todayDate = new Date()
+  paramData.Llabel = "";
   if (params?.period === 'customrange' && params?.previousDate !== todayDate && params?.previousEndDate !== todayDate) {
     paramData = {
       campaign_id: params?.campaign || '',
@@ -101,7 +102,9 @@ const MessageDetail = (props: DialogInfoProps) => {
       label: params?.label
     }
   }
-
+  if(params?.Llabel) {
+    paramData.Llabel = params?.Llabel
+  }
   const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetail(paramData)
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
