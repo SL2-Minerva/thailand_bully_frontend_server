@@ -123,7 +123,27 @@ export const BullyLevelColors = [
   "#EDF2F4",
   "#8D99AE",
   "#4C4B63",
-  "#7A0010"
+  "#7A0010",
+  "#F0F0F0",
+  "#EFD4DC",
+  "#EA638C",
+  "#89023E",
+  "#521130",
+  "#34213E",
+  '#ed7d31',
+  '#ffc000',
+  '#70ad47',
+  '#9e480e',
+  '#997300',
+  "#4472c4",
+  "#a5a5a5",
+  "#5b9bd5",
+  "#299b82",
+  "#1640a1c4",
+  "#d8df20",
+  "#e02916",
+  "#ffca25",
+  "#C0D3DF",
 ]
 
 export const BullyTypeColors = [

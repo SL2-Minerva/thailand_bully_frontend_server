@@ -10,6 +10,7 @@ import {
 import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { UserPermission } from 'src/services/api/users/role'
 import { DateType } from 'src/types/forms/reactDatepickerTypes'
+import {  GraphicColors } from 'src/utils/const'
 import { calculateDate, wordBreaks } from '../dashboard/overall'
 import Filter from '../VoiceDashboard/Filter'
 import BullyLevelByAccount from './BullyLevelByAccount'
@@ -214,18 +215,18 @@ const BullyDashboard = () => {
                           sx={{
                             mb: 2,
                             bgcolor:
+                            filterKeyword?.indexOf(keywords?.id) > -1
+                              ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                              : keyword === 'all'
+                              ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                              : 'grey',
+                          ':hover': {
+                            bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1
-                                ? keywordsColor && keywordsColor[index]
+                                ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
                                 : keyword === 'all'
-                                ? keywordsColor && keywordsColor[index]
-                                : 'grey',
-                            ':hover': {
-                              bgcolor:
-                                filterKeyword?.indexOf(keywords?.id) > -1
-                                  ? keywordsColor && keywordsColor[index]
-                                  : keyword === 'all'
-                                  ? keywordsColor && keywordsColor[index]
-                                  : 'grey'
+                                ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                                : 'grey'
                             }
                           }}
                           onClick={() => {

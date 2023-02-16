@@ -70,6 +70,21 @@ const EngagementTypeByTime = (props: LineProps) => {
         setParamsId(keyword_id);
         setShowDetail(true);
       }
+
+      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event);
+
+      if(getDatasetIndex?.length > 0) {
+        const datasetIndex = getDatasetIndex[0]?.datasetIndex;
+
+        if(datasetIndex === 0) {
+          params.Llabel = 'share'
+        } else if (datasetIndex === 1) {
+          params.Llabel = 'comment'
+        } else if (datasetIndex === 2) {
+          params.Llabel = 'reactions'
+        }
+
+      }
       
     }
   }

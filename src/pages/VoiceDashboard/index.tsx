@@ -36,6 +36,7 @@ const VoiceDashboard = () => {
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
+  const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
 
   const params = {
     campaign: campaign,
@@ -83,6 +84,14 @@ const VoiceDashboard = () => {
       router.push('/login')
     }
   }, [errorUserPermission])
+
+  useEffect(() => {
+    if(keywordsColor) {
+      setKeywordGraphColor(keywordsColor)
+    } else {
+      setKeywordGraphColor(GraphicColors)
+    }
+  },[loadingKeywordList])
 
   return (
     <Grid container spacing={6}>
@@ -136,16 +145,16 @@ const VoiceDashboard = () => {
                             mb: 2,
                             bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1
-                                ? keywordsColor && keywordsColor[index]
+                                ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
                                 : keyword === 'all'
-                                ? keywordsColor && keywordsColor[index]
+                                ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
                                 : 'grey',
                             ':hover': {
                               bgcolor:
                                 filterKeyword?.indexOf(keywords?.id) > -1
-                                  ? keywordsColor && keywordsColor[index]
+                                  ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
                                   : keyword === 'all'
-                                  ? keywordsColor && keywordsColor[index]
+                                  ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
                                   : 'grey'
                             }
                           }}
@@ -167,7 +176,7 @@ const VoiceDashboard = () => {
       {resultReportPermission?.includes('20') ? (
         <Grid item xs={12} md={4} id='chart1'>
           <DailyMessagePieChart
-           keywordsColor={loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors}
+           keywordsColor={keywordGraphColors ?? GraphicColors}
             params={params}
             type='message'
             chartId='Chart 1'
@@ -182,7 +191,7 @@ const VoiceDashboard = () => {
       {resultReportPermission?.includes('21') ? (
         <Grid item xs={12} md={8} id='chart2'>
           <DailyMessageGraph
-            keywordsColor={loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors}
+            keywordsColor={keywordGraphColors ?? GraphicColors}
             type='message'
             params={params}
             chartId='Chart 2'
@@ -252,10 +261,10 @@ const VoiceDashboard = () => {
 
       <Comparison resultReportPermission={resultReportPermission} params={params} highlight={highlight} />
       
-      <KeywordBy highlight={highlight} resultReportPermission={resultReportPermission} params={params} keywordsColor={loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors} />
+      <KeywordBy highlight={highlight} resultReportPermission={resultReportPermission} params={params} keywordsColor={keywordGraphColors ?? GraphicColors} />
 
       <QuickView setHighlight={setHighlight} setShowQuickView={setShowQuickView} />
-      <QuickViewModal show={showQuickView} setShow={setShowQuickView} params={params} chartId={highlight} keywordsColor={loadingKeywordList && keywordsColor ? keywordsColor : GraphicColors} />
+      <QuickViewModal show={showQuickView} setShow={setShowQuickView} params={params} chartId={highlight} keywordsColor={keywordGraphColors ?? GraphicColors} />
     </Grid>
   )
 }

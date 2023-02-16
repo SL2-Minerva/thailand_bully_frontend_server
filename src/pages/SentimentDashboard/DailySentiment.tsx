@@ -134,6 +134,20 @@ const DailySenitment = (props: LineProps) => {
         params.label = label[index]
       }
       const keyword_id = getKeywordId(getDatasetAtEvent(chartRef.current, event))
+      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event);
+
+      if(getDatasetIndex?.length > 0) {
+        const datasetIndex = getDatasetIndex[0]?.datasetIndex;
+
+        if(datasetIndex === 0) {
+          params.Llabel = 'negative'
+        } else if (datasetIndex === 1) {
+          params.Llabel = 'positive'
+        } else if (datasetIndex === 2) {
+          params.Llabel = 'neutral'
+        }
+
+      }
 
       if (keyword_id) {
         setParamsId(keyword_id)

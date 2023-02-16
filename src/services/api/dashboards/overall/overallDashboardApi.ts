@@ -4,11 +4,10 @@ import { CallAPI } from 'src/services/CallAPI'
 export const GetParams = (data: any) => {
   if (!data) return null
   let params = {}
-  const todayDate = moment(new Date()).format('YYYY-MM-DD');
+  const todayDate = moment(new Date()).format('YYYY-MM-DD')
 
   const previousDate = data?.previousDate ? moment(data?.previousDate).format('YYYY-MM-DD') : ''
   const previousEndDate = data?.previousEndDate ? moment(data?.previousEndDate).format('YYYY-MM-DD') : ''
-
 
   if (data?.period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
     params = {
@@ -507,9 +506,9 @@ export const GetDetailMessage = (
   label?: string,
   ylabel?: string
 ) => {
-  let params : any = {}
+  let params: any = {}
   const todayDate = new Date()
-  
+
   if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
     params = {
       campaign_id: campaignId || '',
@@ -522,8 +521,8 @@ export const GetDetailMessage = (
       end_date_period: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
       page: page,
       limit: limit,
-      report_number: reportNo, 
-      page_name: pageName?.toString(), 
+      report_number: reportNo,
+      page_name: pageName?.toString(),
       label: label?.toString()
     }
   } else {
@@ -537,13 +536,13 @@ export const GetDetailMessage = (
       page: page,
       limit: limit,
       report_number: reportNo,
-      page_name: pageName?.toString(), 
+      page_name: pageName?.toString(),
       label: label?.toString()
     }
   }
 
-  if(ylabel) {
-    params.ylabel = encodeURI(ylabel);
+  if (ylabel) {
+    params.ylabel = encodeURI(ylabel)
   }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/daily-message/level-three/`,
@@ -571,18 +570,18 @@ export const GetNetworkGraph = (
   messageId?: any,
   reportNo?: string
 ) => {
-  let params : any = {}
+  let params: any = {}
   params = {
     campaign_id: campaignId || '',
     start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
     message_id: messageId || '',
     keyword_id: keywordId || '',
-    report_number: reportNo || '',
+    report_number: reportNo || ''
   }
 
-  if(platformId) {
-    params.source_id = platformId;
+  if (platformId) {
+    params.source_id = platformId
   }
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
@@ -625,17 +624,22 @@ export const GetKeyWordsList = (campaignId: any) => {
     }
   })
 
-  const resultData = response?.data; 
-  const keywordsColor = [];
+  const resultData = response?.data
+  const keywordsColor = []
   if (resultData && resultData?.length > 0) {
-    for(let i=0; i<resultData?.length; i++) {
-      keywordsColor.push(resultData[i]?.color)
+    for (let i = 0; i < resultData?.length; i++) {
+      if (resultData[i]?.color) {
+        keywordsColor.push(resultData[i]?.color)
+      }
+
+      // keywordsColor.push(SentimentAllColors[i])
+      
     }
   }
 
   return {
     resultKeywordList: response?.data || [],
-    keywordsColor : keywordsColor?.length > 0 ? keywordsColor : null,
+    keywordsColor: keywordsColor?.length > 0 ? keywordsColor : null,
     loadingKeywordList: loading,
     errorKeywordList: error
   }

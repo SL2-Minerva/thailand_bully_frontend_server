@@ -61,6 +61,7 @@ const EngagementDashboard = () => {
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
+  const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
 
   const { resultReportPermission, errorUserPermission } = UserPermission()
   const { resultKeywordList, loadingKeywordList, keywordsColor } = GetKeyWordsList(campaignType)
@@ -149,6 +150,7 @@ const EngagementDashboard = () => {
 
     if (data.length === 0) {
       setKeyword('all')
+      setKeywordGraphColor(keywordsColor)
     } else {
       setKeyword(data.join(','))
     }
@@ -163,6 +165,14 @@ const EngagementDashboard = () => {
       router.push('/login')
     }
   }, [errorUserPermission])
+
+  useEffect(() => {
+    if(keywordsColor) {
+      setKeywordGraphColor(keywordsColor)
+    } else {
+      setKeywordGraphColor(EngagementTransChartColor)
+    }
+  },[loadingKeywordList])
 
   return (
     <>
@@ -219,21 +229,21 @@ const EngagementDashboard = () => {
                             mb: 2,
                             bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1
-                                ? keywordsColor && keywordsColor[index]
+                                ? (keywordsColor && keywordsColor[index]) || EngagementTransChartColor[index]
                                 : keyword === 'all'
-                                ? keywordsColor && keywordsColor[index]
+                                ? (keywordsColor && keywordsColor[index]) || EngagementTransChartColor[index]
                                 : 'grey',
                             ':hover': {
                               bgcolor:
                                 filterKeyword?.indexOf(keywords?.id) > -1
-                                  ? keywordsColor && keywordsColor[index]
+                                  ? (keywordsColor && keywordsColor[index]) || EngagementTransChartColor[index]
                                   : keyword === 'all'
-                                  ? keywordsColor && keywordsColor[index]
+                                  ? (keywordsColor && keywordsColor[index]) || EngagementTransChartColor[index]
                                   : 'grey'
                             }
                           }}
                           onClick={() => {
-                            checkKeywordId(filterKeyword, keywords?.id)
+                            checkKeywordId(filterKeyword, keywords?.id )
                           }}
                           variant='contained'
                         >
@@ -258,9 +268,7 @@ const EngagementDashboard = () => {
               type='transaction'
               chartId='Chart 1'
               highlight={highlight === 'chart1' ? true : false}
-              keywordsColor={
-                loadingFilterData && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
-              }
+              keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
             />
           </Grid>
         ) : (
@@ -282,9 +290,7 @@ const EngagementDashboard = () => {
               highlight={highlight === 'chart2' ? true : false}
               resultFilterData={resultFilterData}
               loadingFilterData={loadingFilterData}
-              keywordsColor={
-                loadingFilterData && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
-              }
+              keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
             />
           </Grid>
         ) : (
@@ -305,9 +311,7 @@ const EngagementDashboard = () => {
               highlight={highlight === 'chart3' ? true : false}
               resultBy={resultEngagementByDay}
               loading={loadingEngagementBy}
-              keywordsColor={
-                loadingEngagementBy && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
-              }
+              keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
             />
           </Grid>
         ) : (
@@ -328,9 +332,7 @@ const EngagementDashboard = () => {
               highlight={highlight === 'chart4' ? true : false}
               resultBy={resultEngagementByTime}
               loading={loadingEngagementBy}
-              keywordsColor={
-                loadingEngagementBy && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
-              }
+              keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
             />
           </Grid>
         ) : (
@@ -351,9 +353,7 @@ const EngagementDashboard = () => {
               highlight={highlight === 'chart5' ? true : false}
               resultBy={resultEngagementByDevice}
               loading={loadingEngagementBy}
-              keywordsColor={
-                loadingEngagementBy && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
-              }
+              keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
             />
           </Grid>
         ) : (
@@ -374,9 +374,7 @@ const EngagementDashboard = () => {
               highlight={highlight === 'chart6' ? true : false}
               loading={loadingEngagementBy}
               resultBy={resultEngagementByAccount}
-              keywordsColor={
-                loadingEngagementBy && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
-              }
+              keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
             />
           </Grid>
         ) : (
@@ -397,9 +395,7 @@ const EngagementDashboard = () => {
               highlight={highlight === 'chart7' ? true : false}
               loading={loadingEngagementBy}
               resultBy={resultEngagementChannel}
-              keywordsColor={
-                loadingEngagementBy && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
-              }
+              keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
             />
           </Grid>
         ) : (
@@ -420,9 +416,7 @@ const EngagementDashboard = () => {
               highlight={highlight === 'chart8' ? true : false}
               loading={loadingEngagementBy}
               resultBy={resultKeywordByEngagementType}
-              keywordsColor={
-                loadingEngagementBy && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTransChartColor
-              }
+              keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
             />
           </Grid>
         ) : (
@@ -441,9 +435,7 @@ const EngagementDashboard = () => {
                 highlight={highlight === 'chart9' ? true : false}
                 resultEngagementType={resultEngagementPercentage}
                 loadingEngagementType={loadingEngagementType}
-                keywordsColor={
-                  loadingEngagementType && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTypeColors
-                }
+                keywordsColor={ EngagementTypeColors}
               />
             </Grid>
           ) : (
@@ -465,9 +457,7 @@ const EngagementDashboard = () => {
                 highlight={highlight === 'chart10' ? true : false}
                 resultBy={resultEngagementPercentage}
                 loading={loadingEngagementType}
-                keywordsColor={
-                  loadingEngagementType && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTypeColors
-                }
+                keywordsColor={ EngagementTypeColors}
               />
             </Grid>
           ) : (
@@ -489,9 +479,8 @@ const EngagementDashboard = () => {
                 highlight={highlight === 'chart11' ? true : false}
                 resultBy={resultEngagementTypeByDay}
                 loading={loadingEngagementType}
-                keywordsColor={
-                  loadingEngagementType && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTypeColors
-                }/>
+                keywordsColor={ EngagementTypeColors}
+              />
             </Grid>
           ) : (
             ''
@@ -510,11 +499,10 @@ const EngagementDashboard = () => {
                 colorType='engagementType'
                 chartId='Chart 12'
                 highlight={highlight === 'chart12' ? true : false}
-                resultBy={resultEngagementByTime}
+                resultBy={resultEngagementTypeByTime}
                 loading={loadingEngagementType}
-                keywordsColor={
-                  loadingEngagementType && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTypeColors
-                }/>
+                keywordsColor={ EngagementTypeColors}
+              />
             </Grid>
           ) : (
             ''
@@ -535,9 +523,8 @@ const EngagementDashboard = () => {
                 highlight={highlight === 'chart13' ? true : false}
                 resultBy={resultEngagementTypeByDevice}
                 loading={loadingEngagementType}
-                keywordsColor={
-                  loadingEngagementType && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTypeColors
-                }/>
+                keywordsColor={ EngagementTypeColors}
+              />
             </Grid>
           ) : (
             ''
@@ -557,9 +544,8 @@ const EngagementDashboard = () => {
                 highlight={highlight === 'chart14' ? true : false}
                 resultBy={resultEngagementTypeByAccount}
                 loading={loadingEngagementType}
-                keywordsColor={
-                  loadingEngagementType && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTypeColors
-                }/>
+                keywordsColor={ EngagementTypeColors}
+              />
             </Grid>
           ) : (
             ''
@@ -580,9 +566,8 @@ const EngagementDashboard = () => {
                 highlight={highlight === 'chart15' ? true : false}
                 resultBy={resultEngagementTypeByChannel}
                 loading={loadingEngagementType}
-                keywordsColor={
-                  loadingEngagementType && loadingKeywordList && keywordsColor ? keywordsColor : EngagementTypeColors
-                }/>
+                keywordsColor={ EngagementTypeColors}
+              />
             </Grid>
           ) : (
             ''
