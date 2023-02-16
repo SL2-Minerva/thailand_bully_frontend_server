@@ -169,7 +169,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                     <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
                     {
                       messageDetail.parent ? 
-                      <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
+                      <StyledTableCell align='center'>{messageDetail.parent}</StyledTableCell>
                       : ""
                     }
                   </StyledTableRow>

@@ -194,7 +194,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                     <StyledTableCell align='center'>{messageDetail.bully_level}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
                     {messageDetail.parent ? (
-                      <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
+                      <StyledTableCell align='center'>{messageDetail.parent}</StyledTableCell>
                     ) : (
                       ''
                     )}
