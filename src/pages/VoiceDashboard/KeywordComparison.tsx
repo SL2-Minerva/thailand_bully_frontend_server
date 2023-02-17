@@ -26,19 +26,23 @@ const KeywordComparisonByChannel = ({
   highlight: boolean
   resultKeywordComparisonByChannel: any
   loadingKeywordComparisonByChannel: boolean
-  keywordColors : any
+  keywordColors: any
 }) => {
   const [charData, setChartData] = useState(initValue)
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   useEffect(() => {
     if (resultKeywordComparisonByChannel) {
-      const seriesData = getChartData(resultKeywordComparisonByChannel?.value,keywordColors)
+      const seriesData = getChartData(resultKeywordComparisonByChannel?.value, keywordColors)
       setChartData({
         labels: resultKeywordComparisonByChannel?.labels ? resultKeywordComparisonByChannel?.labels : [],
         datasets: seriesData
       })
     }
-  }, [resultKeywordComparisonByChannel,keywordColors])
+    if (resultKeywordComparisonByChannel?.value) {
+      setShowNoDataText(false)
+    } else {setShowNoDataText(true)}
+  }, [resultKeywordComparisonByChannel, keywordColors])
 
   const reportNo = '2.2.025'
 
@@ -49,7 +53,7 @@ const KeywordComparisonByChannel = ({
       {loadingKeywordComparisonByChannel && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text="Percentage of Keyword Comparison by Channel"/>}
+          title={<Translations text='Percentage of Keyword Comparison by Channel' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={chartTitle || ''}>
@@ -57,7 +61,21 @@ const KeywordComparisonByChannel = ({
         </StyledTooltip>
       </span>
       <CardContent>
-        <Radar data={charData} height={100} />
+        {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            There is no data
+          </div>
+        ) : (
+          <Radar data={charData} height={100} />
+        )}
       </CardContent>
     </Card>
   )

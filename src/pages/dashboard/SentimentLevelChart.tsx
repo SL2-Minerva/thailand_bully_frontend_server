@@ -10,64 +10,74 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { GetSentimentLevel } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { LinearProgress } from '@mui/material'
 
-
 const Labels = (data: any) => {
-  if(!data) {
-    return [];
+  if (!data) {
+    return []
   }
-  const labels : any[] = []
-  if(data?.length > 0) {
-    for(let i=0; i<data?.length; i++) {
-      labels.push(data[i].keyword_name);
+  const labels: any[] = []
+  if (data?.length > 0) {
+    for (let i = 0; i < data?.length; i++) {
+      labels.push(data[i].keyword_name)
     }
   }
 
-  return labels;
+  return labels
 }
 
-const ChartDataPositive = (data: any, type : string) => {
-  if(!data) {
-    return [];
+const ChartDataPositive = (data: any, type: string) => {
+  if (!data) {
+    return []
   }
-  const value : any[] = []
-  if(data?.length > 0) {
-    if(type === 'positive') {
-      for(let i=0; i<data?.length; i++) {
-        value.push(data[i].Positive);
+  const value: any[] = []
+  if (data?.length > 0) {
+    if (type === 'positive') {
+      for (let i = 0; i < data?.length; i++) {
+        value.push(data[i].Positive)
       }
-    } else if(type==='negative') {
-      for(let i=0; i<data?.length; i++) {
-        value.push(data[i].Negative);
+    } else if (type === 'negative') {
+      for (let i = 0; i < data?.length; i++) {
+        value.push(data[i].Negative)
       }
     } else if (type === 'neutral') {
-      for(let i=0; i<data?.length; i++) {
-        value.push(data[i].Neutral);
+      for (let i = 0; i < data?.length; i++) {
+        value.push(data[i].Neutral)
       }
     }
-
   }
 
-  return value;
+  return value
 }
 
-const SentimentLevelChart = ({params} : {params: any}) => {
-  const { resultSentimentLevel, loadingSentimentLevel } = GetSentimentLevel(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, params?.keywordIds);
-  const chartLabels =  Labels(resultSentimentLevel);
-  const positiveData = ChartDataPositive(resultSentimentLevel, 'positive');
-  const neutralData = ChartDataPositive(resultSentimentLevel, 'neutral');
-  const negativeData = ChartDataPositive(resultSentimentLevel, 'negative');
+const SentimentLevelChart = ({ params }: { params: any }) => {
+  const { resultSentimentLevel, loadingSentimentLevel } = GetSentimentLevel(
+    params?.campaign,
+    params?.platformId,
+    params?.date,
+    params?.endDate,
+    params?.period,
+    params?.previousDate,
+    params?.previousEndDate,
+    params?.keywordIds
+  )
+  const chartLabels = Labels(resultSentimentLevel)
+  const positiveData = ChartDataPositive(resultSentimentLevel, 'positive')
+  const neutralData = ChartDataPositive(resultSentimentLevel, 'neutral')
+  const negativeData = ChartDataPositive(resultSentimentLevel, 'negative')
 
-
-  const series =  [{
-    name: 'Negative',
-    data: negativeData
-  }, {
-    name: 'Neutral',
-    data: neutralData
-  }, {
-    name: 'Positive',
-    data: positiveData
-  }]
+  const series = [
+    {
+      name: 'Negative',
+      data: negativeData
+    },
+    {
+      name: 'Neutral',
+      data: neutralData
+    },
+    {
+      name: 'Positive',
+      data: positiveData
+    }
+  ]
 
   const options: ApexOptions = {
     chart: {
@@ -75,13 +85,13 @@ const SentimentLevelChart = ({params} : {params: any}) => {
       height: 350,
       stacked: true,
       stackType: '100%',
-      toolbar: {show: false}
+      toolbar: { show: false }
     },
     dataLabels: { enabled: false },
     plotOptions: {
       bar: {
-        horizontal: true,
-      },
+        horizontal: true
+      }
     },
     stroke: {
       width: 1,
@@ -92,18 +102,18 @@ const SentimentLevelChart = ({params} : {params: any}) => {
     },
     colors: ['#C73E1D', '#FEB95F', '#63A375'],
     xaxis: {
-      categories: chartLabels,
+      categories: chartLabels
     },
     tooltip: {
       y: {
         formatter: function (val) {
-          return val + "%"
+          return val + '%'
         }
       }
     },
     fill: {
       opacity: 1,
-      colors: ['#C73E1D', '#FEB95F', '#63A375'],
+      colors: ['#C73E1D', '#FEB95F', '#63A375']
     },
     legend: {
       position: 'top',
@@ -114,20 +124,27 @@ const SentimentLevelChart = ({params} : {params: any}) => {
 
   return (
     <Card sx={{ height: 450 }}>
-      {loadingSentimentLevel && (
-          <LinearProgress
-            style={{ width: "100%" }}
-          />
+      {loadingSentimentLevel && <LinearProgress style={{ width: '100%' }} />}
+      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+        <CardHeader title='Sentiment Level' titleTypographyProps={{ variant: 'h6' }} />
+      </span>
+      <CardContent>
+        {resultSentimentLevel ? (
+          <ReactApexcharts type='bar' series={series} options={options} />
+        ) : (
+          <div
+            style={{
+              height: 300,
+              padding: '70px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            There is no data
+          </div>
         )}
-        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <CardHeader
-                  title='Sentiment Level'
-                  titleTypographyProps={{ variant: 'h6' }}
-          />
-        </span>
-        <CardContent>
-            <ReactApexcharts type="bar"  series={series} options={options} />
-        </CardContent>
+      </CardContent>
     </Card>
   )
 }

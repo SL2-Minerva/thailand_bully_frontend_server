@@ -55,6 +55,7 @@ const DailyMessagePieChart = (props: Props) => {
 
   const [currentTotal, setCurrentTotal] = useState<number>()
   const [previousTotal, setPreviousTotal] = useState<number>()
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const chartDataset = (data: any, type: string) => {
     if (!data) {
@@ -192,9 +193,11 @@ const DailyMessagePieChart = (props: Props) => {
       } else {
         setCurrentTotal(0)
       }
+      setShowNoDataText(false)
     } else {
       setCurrentData(initValue)
       setCurrentTotal(0)
+      setShowNoDataText(true)
     }
 
     if (resultPercentageChannelPrevious) {
@@ -206,9 +209,11 @@ const DailyMessagePieChart = (props: Props) => {
       } else {
         setPreviousTotal(0)
       }
+      setShowNoDataText(false)
     } else {
       setPreviousData(initValue)
       setPreviousTotal(0)
+      setShowNoDataText(true)
     }
   }, [resultPercentageChannelCurrent, resultPercentageChannelPrevious])
 
@@ -243,10 +248,38 @@ const DailyMessagePieChart = (props: Props) => {
       <CardContent>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
-            <Doughnut data={currentData} options={currentPeriodOptions as any} height={270} />
+            {showNoDataText ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '70px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                There is no data
+              </div>
+            ) : (
+              <Doughnut data={currentData} options={currentPeriodOptions as any} height={270} />
+            )}
           </Grid>
           <Grid item xs={12} md={6}>
-            <Doughnut data={previousData} options={previousPeriodOptions as any} height={270} />
+            {showNoDataText ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '70px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                There is no data
+              </div>
+            ) : (
+              <Doughnut data={previousData} options={previousPeriodOptions as any} height={270} />
+            )}
           </Grid>
         </Grid>
         <Grid container spacing={3} mt={3}>

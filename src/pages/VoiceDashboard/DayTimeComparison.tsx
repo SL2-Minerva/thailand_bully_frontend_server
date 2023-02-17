@@ -25,13 +25,14 @@ const DayTimeComparison = ({
   params: any
   chartId: string
   highlight: boolean
-  resultDayTimeComparison : any
-  loadingDayTimeComparison : boolean
+  resultDayTimeComparison: any
+  loadingDayTimeComparison: boolean
 }) => {
   const [series, setSeries] = useState([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
-  const [yIndex, setYIndex] = useState();
-  const [xIndex, setXIndex] = useState();
+  const [yIndex, setYIndex] = useState()
+  const [xIndex, setXIndex] = useState()
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const options: ApexOptions = {
     chart: {
@@ -44,13 +45,13 @@ const DayTimeComparison = ({
         //   console.log(event);
         //   console.log("xaxis", config.w.config.xaxis.categories[config.dataPointIndex]); //value
         //   console.log("yaxis", config.w.config.series[0].data[config.dataPointIndex]); //
-          
+
         //   setShowDetail(true)
-        // }, 
+        // },
 
         click(event, chartContext, config) {
-          setYIndex(config.seriesIndex); 
-          setXIndex(config.dataPointIndex);
+          setYIndex(config.seriesIndex)
+          setXIndex(config.dataPointIndex)
         }
       }
     },
@@ -69,22 +70,24 @@ const DayTimeComparison = ({
   useEffect(() => {
     if (resultDayTimeComparison) {
       setSeries(resultDayTimeComparison)
+      setShowNoDataText(false)
     } else {
       setSeries([])
+      setShowNoDataText(true)
     }
   }, [resultDayTimeComparison])
 
   useEffect(() => {
-    if(yIndex === 0 || yIndex) {
-      params.ylabel = resultDayTimeComparison[yIndex]?.name;
-    }
-    
-    if(xIndex === 0 || xIndex) {
-      params.label = TimeAxis[xIndex];
+    if (yIndex === 0 || yIndex) {
+      params.ylabel = resultDayTimeComparison[yIndex]?.name
     }
 
-    if(yIndex || xIndex || yIndex === 0 || xIndex === 0) {
-      setShowDetail(true) 
+    if (xIndex === 0 || xIndex) {
+      params.label = TimeAxis[xIndex]
+    }
+
+    if (yIndex || xIndex || yIndex === 0 || xIndex === 0) {
+      setShowDetail(true)
     }
   }, [yIndex, xIndex])
 
@@ -97,7 +100,7 @@ const DayTimeComparison = ({
       {loadingDayTimeComparison && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text='Day & Time'/>}
+          title={<Translations text='Day & Time' />}
           titleTypographyProps={{ variant: 'h4', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={chartTitle || ''}>
@@ -105,7 +108,21 @@ const DayTimeComparison = ({
         </StyledTooltip>
       </span>
       <CardContent>
-        <ReactApexcharts options={options} series={series} type='heatmap' height={350} />
+        {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            There is no data
+          </div>
+        ) : (
+          <ReactApexcharts options={options} series={series} type='heatmap' height={350} />
+        )}
         {showDetail ? (
           <DailyMessageDetail
             show={showDetail}

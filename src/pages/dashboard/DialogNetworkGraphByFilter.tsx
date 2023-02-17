@@ -118,12 +118,12 @@ const DialogNetworkGraphByFitler = (props: DialogInfoProps) => {
                 />
                 <FormControlLabel
                   value='byBullyLevel'
-                  control={<Radio value='byBully' checked={selectedValue === 'byBully'} onChange={handleChange} />}
+                  control={<Radio value='byBullyLevel' checked={selectedValue === 'byBullyLevel'} onChange={handleChange} />}
                   label='By Bully Level'
                 />
                 <FormControlLabel
-                  value='ByBullyType'
-                  control={<Radio value='byEngagement' checked={selectedValue === 'byEngagement'} onChange={handleChange} />}
+                  value='byBullyType'
+                  control={<Radio value='byBullyType' checked={selectedValue === 'byBullyType'} onChange={handleChange} />}
                   label='By Bully Type'
                 />
               </RadioGroup>
@@ -137,7 +137,7 @@ const DialogNetworkGraphByFitler = (props: DialogInfoProps) => {
                <Graph graph={resultSentimentNetwork ? resultSentimentNetwork : initialGraph} options={options} />
                : selectedValue === 'byBullyLevel' ? 
                <Graph graph={resultBullyLevelNetwork ? resultBullyLevelNetwork : initialGraph} options={options} />
-               : selectedValue === 'buBullyType' ?
+               : selectedValue === 'byBullyType' ?
                <Graph graph={resultBullyTypeNetwork ? resultBullyTypeNetwork : initialGraph} options={options} />
                :
                <Graph graph={resultNetworkGraph ? resultNetworkGraph : initialGraph} options={options} />

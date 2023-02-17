@@ -73,6 +73,15 @@ const TopSiteList = ({ params, chartId }: Props) => {
                   </TableRow>
                 )
               })}
+               {!resultTopKeywords?.top_sites || resultTopKeywords?.top_sites?.length ==0 ? (
+                <TableRow>
+                  <TableCell colSpan={3} sx={{ textAlign: 'center' }}>
+                    There is no data
+                  </TableCell>
+                </TableRow>
+              ) : (
+                ''
+              )}
             </TableBody>
           </Table>
         </TableContainer>

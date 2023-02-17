@@ -23,16 +23,13 @@ const chartLabel = (data: any) => {
   if (!data) return []
 
   const labels: any[] = []
-  if (data.length > 0) 
-  {
-    for (let i=0; i < data[0]?.date?.length; i++) {
+  if (data.length > 0) {
+    for (let i = 0; i < data[0]?.date?.length; i++) {
       labels.push(moment(data[0]?.date[i]).format('DD/MM/YYYY'))
     }
   }
 
   // labels = data[0]?.date
-
-  
 
   return labels
 }
@@ -50,11 +47,13 @@ const InfluencerGraph = ({
   highlight: boolean
   resultNumbersOfAccounts: any
   loadingNumbersOfAccounts: boolean
-  keywordsColor:any
+  keywordsColor: any
 }) => {
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+
   const [paramsId, setParamsId] = useState<any>({
     keywordId: null,
     sourceId: null,
@@ -104,11 +103,11 @@ const InfluencerGraph = ({
 
   const onClick = (event: any) => {
     if (chartRef.current) {
-      const getIndex = getElementAtEvent(chartRef.current, event);
+      const getIndex = getElementAtEvent(chartRef.current, event)
 
-      if(getIndex?.length > 0 ) {
-        const index =  getIndex[0].index;
-        params.label = label[index];
+      if (getIndex?.length > 0) {
+        const index = getIndex[0].index
+        params.label = label[index]
       }
       const keyword_id = getKeywordId(getDatasetAtEvent(chartRef.current, event))
 
@@ -155,7 +154,7 @@ const InfluencerGraph = ({
     }
   }
 
-  const chartDatasets = (data: any, keywordColor:any) => {
+  const chartDatasets = (data: any, keywordColor: any) => {
     if (!data) return []
     let totalAmount: number[] = []
     let keywordName = ''
@@ -164,8 +163,8 @@ const InfluencerGraph = ({
     for (let i = 0; i < data?.length; i++) {
       totalAmount = data[i].data
       keywordName = data[i].name
-      for(let j =0; j<keywordColor?.length; j++) {
-        if(keywordColor[j]?.keywordName === keywordName) {
+      for (let j = 0; j < keywordColor?.length; j++) {
+        if (keywordColor[j]?.keywordName === keywordName) {
           color.push(keywordColor[j]?.color)
         }
       }
@@ -203,11 +202,13 @@ const InfluencerGraph = ({
 
       const dataSets = chartDatasets(resultNumbersOfAccounts, keywordsColor)
       setDataset(dataSets)
+      setShowNoDataText(false)
     } else {
-      setLabel([]);
-      setDataset([]);
+      setLabel([])
+      setDataset([])
+      setShowNoDataText(true)
     }
-  }, [resultNumbersOfAccounts,keywordsColor])
+  }, [resultNumbersOfAccounts, keywordsColor])
 
   const reportNo = '2.2.013'
 
@@ -218,7 +219,7 @@ const InfluencerGraph = ({
       {loadingNumbersOfAccounts && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text='Number of Accounts'/>}
+          title={<Translations text='Number of Accounts' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={chartTitle || ''}>
@@ -226,7 +227,21 @@ const InfluencerGraph = ({
         </StyledTooltip>
       </span>
       <CardContent>
-        <Bar ref={chartRef} data={data} options={options as any} height={353} onClick={onClick} />
+        {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            There is no data
+          </div>
+        ) : (
+          <Bar ref={chartRef} data={data} options={options as any} height={353} onClick={onClick} />
+        )}
       </CardContent>
       {showDetail ? (
         <MessageDetail

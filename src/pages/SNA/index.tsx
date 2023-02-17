@@ -51,18 +51,13 @@ const SNA = () => {
   const { errorUserPermission } = UserPermission()
   const { resultCampaiganList } = CampaignList()
   const { result_source_list } = SourceService()
-  const { resultNetworkGraph, resultBullyLevelNetwork, resultBullyTypeNetwork, resultSentimentNetwork, loadingNetworkGraph }  = GetNetworkGraph(
-    campaign,
-    platformId,
-    date,
-    endDate,
-    period,
-    previousDate,
-    previousEndDate,
-    '',
-    '',
-    'sna'
-  )
+  const {
+    resultNetworkGraph,
+    resultBullyLevelNetwork,
+    resultBullyTypeNetwork,
+    resultSentimentNetwork,
+    loadingNetworkGraph
+  } = GetNetworkGraph(campaign, platformId, date, endDate, period, previousDate, previousEndDate, '', '', 'sna')
 
   const CustomInput = forwardRef((props: PickerProps, ref) => {
     const startDate = format(props.start, 'dd/MM/yyyy')
@@ -162,7 +157,8 @@ const SNA = () => {
       color: '#000000',
       dashes: false
     },
-    height: '520px'
+    height: '700px',
+    autoResize: false
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -177,6 +173,12 @@ const SNA = () => {
     }
   }, [errorUserPermission])
 
+  useEffect(() => {
+    if(resultCampaiganList?.length>0) {
+     setCampaign(resultCampaiganList[0]?.id)
+    }
+  },[resultCampaiganList])
+  
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -354,13 +356,15 @@ const SNA = () => {
                 />
                 <FormControlLabel
                   value='byBullyLevel'
-                  control={<Radio value='byBully' checked={selectedValue === 'byBully'} onChange={handleChange} />}
+                  control={
+                    <Radio value='byBullyLevel' checked={selectedValue === 'byBullyLevel'} onChange={handleChange} />
+                  }
                   label='By Bully Level'
                 />
                 <FormControlLabel
                   value='ByBullyType'
                   control={
-                    <Radio value='byEngagement' checked={selectedValue === 'byEngagement'} onChange={handleChange} />
+                    <Radio value='byBullyType' checked={selectedValue === 'byBullyType'} onChange={handleChange} />
                   }
                   label='By Bully Type'
                 />
@@ -370,17 +374,53 @@ const SNA = () => {
 
           <Grid container spacing={3}>
             <Grid item xs={12}>
-            {
-               selectedValue === 'bySentiment' ? 
-               <Graph graph={resultSentimentNetwork ? resultSentimentNetwork : initialGraph} options={options} />
-               : selectedValue === 'byBullyLevel' ? 
-               <Graph graph={resultBullyLevelNetwork ? resultBullyLevelNetwork : initialGraph} options={options} />
-               : selectedValue === 'buBullyType' ?
-               <Graph graph={resultBullyTypeNetwork ? resultBullyTypeNetwork : initialGraph} options={options} />
-               :
-               <Graph graph={resultNetworkGraph ? resultNetworkGraph : initialGraph} options={options} />
-
-            }
+              {resultNetworkGraph ? (
+                <>
+                  {selectedValue === 'bySentiment' ? (
+                    <Graph
+                      graph={
+                        resultSentimentNetwork
+                          ? resultSentimentNetwork
+                          : initialGraph
+                      }
+                      options={options}
+                    />
+                  ) : selectedValue === 'byBullyLevel' ? (
+                    <Graph
+                      graph={
+                        resultBullyLevelNetwork
+                          ? resultBullyLevelNetwork
+                          : initialGraph
+                      }
+                      options={options}
+                      
+                    />
+                  ) : selectedValue === 'byBullyType' ? (
+                    <Graph
+                      graph={
+                        resultBullyTypeNetwork 
+                          ? resultBullyTypeNetwork
+                          : initialGraph
+                      }
+                      options={options}
+                    />
+                  ) : (
+                    ''
+                  )}
+                </>
+              ) : (
+                <div
+                  style={{
+                    height: 400,
+                    padding: '70px 0',
+                    textAlign: 'center',
+                    verticalAlign: 'middle',
+                    color: '#80808059'
+                  }}
+                >
+                  There is no data
+                </div>
+              )}
             </Grid>
           </Grid>
         </Card>

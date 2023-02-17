@@ -63,6 +63,7 @@ const KeywordComparisonByBullyType = ({
   keywordsColor:any
 }) => {
   const [charData, setChartData] = useState(initValue)
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   useEffect(() => {
     if (resultKeywordComparisonByBullyType) {
@@ -72,6 +73,9 @@ const KeywordComparisonByBullyType = ({
         datasets: seriesData
       })
     }
+    if (resultKeywordComparisonByBullyType?.value) {
+      setShowNoDataText(false)
+    } else {setShowNoDataText(true)}
   }, [resultKeywordComparisonByBullyType, keywordsColor])
 
   const reportNo = '2.2.028'
@@ -91,7 +95,21 @@ const KeywordComparisonByBullyType = ({
         </StyledTooltip>
       </span>
       <CardContent>
-        <Radar data={charData} height={100} />
+      {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            There is no data
+          </div>
+        ) : (
+          <Radar data={charData} height={100} />
+        )}
       </CardContent>
     </Card>
   )

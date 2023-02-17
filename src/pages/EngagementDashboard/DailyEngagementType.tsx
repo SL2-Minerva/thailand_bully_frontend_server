@@ -68,13 +68,26 @@ const chartLabel = (data: any) => {
 
 const DailyEngagementType = (props: LineProps) => {
   // ** Props
-  const { white, labelColor, borderColor, gridLineColor, params, chartId, highlight, resultBy, loading , keywordsColor} = props
+  const {
+    white,
+    labelColor,
+    borderColor,
+    gridLineColor,
+    params,
+    chartId,
+    highlight,
+    resultBy,
+    loading,
+    keywordsColor
+  } = props
 
   // const [ chartData, setChartData ] = useState();
   const colors = keywordsColor
 
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [paramsId, setParamsId] = useState<any>({
     keywordId: null,
@@ -125,12 +138,12 @@ const DailyEngagementType = (props: LineProps) => {
         params.label = label[index]
       }
       const keyword_id = getKeywordId(getDatasetAtEvent(chartRef.current, event))
-      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event);
+      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event)
 
-      if(getDatasetIndex?.length > 0) {
-        const datasetIndex = getDatasetIndex[0]?.datasetIndex;
-       
-        if(datasetIndex === 0 || datasetIndex) {
+      if (getDatasetIndex?.length > 0) {
+        const datasetIndex = getDatasetIndex[0]?.datasetIndex
+
+        if (datasetIndex === 0 || datasetIndex) {
           params.Llabel = dataset[datasetIndex]?.label
         }
       }
@@ -250,13 +263,15 @@ const DailyEngagementType = (props: LineProps) => {
         setLabel(labels)
 
         if (labels?.length > 0) {
-          const dataSets = chartDatasets(engagementData, labels);
+          const dataSets = chartDatasets(engagementData, labels)
           setDataset(dataSets)
         }
+        setShowNoDataText(false)
       } else {
         setLabel([])
         setDataset([])
         data = { labels: [], datasets: [] }
+        setShowNoDataText(true)
       }
     } else {
       setLabel([])
@@ -265,6 +280,7 @@ const DailyEngagementType = (props: LineProps) => {
         labels: [],
         datasets: []
       }
+      setShowNoDataText(true)
     }
   }, [resultBy])
 
@@ -288,7 +304,21 @@ const DailyEngagementType = (props: LineProps) => {
       </span>
 
       <CardContent>
-        <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            There is no data
+          </div>
+        ) : (
+          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        )}
         {showDetail ? (
           <MessageDetail
             show={showDetail}

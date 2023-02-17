@@ -590,11 +590,26 @@ export const GetNetworkGraph = (
     params: params
   })
 
+  const sentiment = {
+    nodes : response?.data?.sentiment?.nodes ?? [],
+    edges : response?.data?.sentiment?.edges ??[]
+  }
+
+  const bullyLevel = {
+    nodes : response?.data?.bullyLevel?.nodes ?? [],
+    edges : response?.data?.bullyLevel?.edges ??[]
+  }
+
+  const bullyType = {
+    nodes : response?.data?.bullyType?.nodes ?? [],
+    edges : response?.data?.bullyType?.edges ??[]
+  }
+
   return {
     resultNetworkGraph: response?.data || null,
-    resultSentimentNetwork: response?.data?.sentiment || response?.data || null,
-    resultBullyLevelNetwork: response?.data?.bullyLevel || response?.data || null,
-    resultBullyTypeNetwork: response?.data?.bullyType || response?.data || null,
+    resultSentimentNetwork: sentiment|| null,
+    resultBullyLevelNetwork: bullyLevel || null,
+    resultBullyTypeNetwork: bullyType || null,
     loadingNetworkGraph: loading,
     errorNetworkGraph: error
   }

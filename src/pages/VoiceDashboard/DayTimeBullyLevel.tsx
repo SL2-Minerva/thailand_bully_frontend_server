@@ -30,13 +30,13 @@ const DayTimeBullyLevel = (props: Props) => {
   const [seriesHour, setSeriesHour] = useState([{ name: '', data: [] }])
   const [seriesDays, setSeriesDays] = useState([{ name: '', data: [] }])
   const [showDetail, setShowDetail] = useState<boolean>(false)
-  const [yIndex, setYIndex] = useState();
-  const [xIndex, setXIndex] = useState();
-  const [yIndexTime, setYIndexTime ] = useState();
-  const [xIndexTime, setXIndexTime ] = useState();
-  const [ylabels, setYlabels] = useState<any>([]);
+  const [yIndex, setYIndex] = useState()
+  const [xIndex, setXIndex] = useState()
+  const [yIndexTime, setYIndexTime] = useState()
+  const [xIndexTime, setXIndexTime] = useState()
+  const [ylabels, setYlabels] = useState<any>([])
 
-  const Days = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]
+  const Days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
 
   const options_hours: ApexOptions = {
     chart: {
@@ -45,8 +45,8 @@ const DayTimeBullyLevel = (props: Props) => {
       toolbar: { show: false },
       events: {
         click(event, chartContext, config) {
-          setYIndexTime(config.seriesIndex); 
-          setXIndexTime(config.dataPointIndex);
+          setYIndexTime(config.seriesIndex)
+          setXIndexTime(config.dataPointIndex)
         }
       }
     },
@@ -66,8 +66,8 @@ const DayTimeBullyLevel = (props: Props) => {
       toolbar: { show: false },
       events: {
         click(event, chartContext, config) {
-          setYIndex(config.seriesIndex); 
-          setXIndex(config.dataPointIndex);
+          setYIndex(config.seriesIndex)
+          setXIndex(config.dataPointIndex)
         }
       }
     },
@@ -81,15 +81,14 @@ const DayTimeBullyLevel = (props: Props) => {
   }
 
   useEffect(() => {
-    const bullyLevelLabels = [];
+    const bullyLevelLabels = []
     if (resultDayByBullyLevel) {
       setSeriesDays(resultDayByBullyLevel)
-      if(resultDayByBullyLevel?.length > 0) {
-       
-        for (let i=0; i<= resultDayByBullyLevel?.length; i++) {
+      if (resultDayByBullyLevel?.length > 0) {
+        for (let i = 0; i <= resultDayByBullyLevel?.length; i++) {
           bullyLevelLabels.push(resultDayByBullyLevel[i]?.name)
         }
-        setYlabels(bullyLevelLabels);
+        setYlabels(bullyLevelLabels)
       }
     } else {
       setSeriesDays([{ name: '', data: [] }])
@@ -114,41 +113,40 @@ const DayTimeBullyLevel = (props: Props) => {
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   useEffect(() => {
-    if(yIndex === 0 || yIndex) {
-      params.ylabel = ylabels[yIndex];
-    }
-    
-    if(xIndex === 0 || xIndex) {
-      
-      params.label = Days[xIndex];
+    if (yIndex === 0 || yIndex) {
+      params.ylabel = ylabels[yIndex]
     }
 
-    if(yIndex || xIndex || yIndex === 0 || xIndex === 0) {
-      setShowDetail(true) 
+    if (xIndex === 0 || xIndex) {
+      params.label = Days[xIndex]
     }
-  }, [yIndex, xIndex]);
+
+    if (yIndex || xIndex || yIndex === 0 || xIndex === 0) {
+      setShowDetail(true)
+    }
+  }, [yIndex, xIndex])
 
   useEffect(() => {
-    if(yIndexTime  === 0 || yIndexTime) {
+    if (yIndexTime === 0 || yIndexTime) {
       params.ylabel = ylabels[yIndexTime]
     }
-    
-    if(xIndexTime === 0 || xIndexTime) {
-      console.log("x " , xIndexTime);
-      params.label = TimeAxis[xIndexTime];
+
+    if (xIndexTime === 0 || xIndexTime) {
+      console.log('x ', xIndexTime)
+      params.label = TimeAxis[xIndexTime]
     }
 
-    if(yIndexTime === 0 || xIndexTime === 0 || yIndexTime || xIndexTime ) {
-      setShowDetail(true) 
+    if (yIndexTime === 0 || xIndexTime === 0 || yIndexTime || xIndexTime) {
+      setShowDetail(true)
     }
-  }, [yIndexTime, xIndexTime]);
+  }, [yIndexTime, xIndexTime])
 
   return (
     <Card>
       {loadingByBullyLevel && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text="Day & Time by Bully Level"/>}
+          title={<Translations text='Day & Time by Bully Level' />}
           titleTypographyProps={{ variant: 'h4', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={chartTitle || ''}>
@@ -158,10 +156,38 @@ const DayTimeBullyLevel = (props: Props) => {
       <CardContent>
         <Grid container spacing={3}>
           <Grid item xs={4}>
-            <ReactApexcharts options={options_level} series={seriesDays} type='heatmap' height={200} />
+            {!resultDayByBullyLevel ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '100px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                There is no data
+              </div>
+            ) : (
+              <ReactApexcharts options={options_level} series={seriesDays} type='heatmap' height={200} />
+            )}
           </Grid>
           <Grid item xs={8}>
-            <ReactApexcharts options={options_hours} series={seriesHour} type='heatmap' height={200} />
+            {!resultTimeByBullyLevel ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '100px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                There is no data
+              </div>
+            ) : (
+              <ReactApexcharts options={options_hours} series={seriesHour} type='heatmap' height={200} />
+            )}
           </Grid>
         </Grid>
         {showDetail ? (
