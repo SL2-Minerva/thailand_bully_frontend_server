@@ -10,10 +10,10 @@ import Paper from '@mui/material/Paper'
 import Fade, { FadeProps } from '@mui/material/Fade'
 import { Box, Card, Dialog, DialogContent, IconButton, LinearProgress, Pagination, Typography } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
-import DialogNetworkGraph from '../dashboard/DialogNetworkGraph'
 import { GetMessageDetail } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
+import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -206,7 +206,7 @@ const MessageDetail = (props: DialogInfoProps) => {
         </DialogContent>
       </Dialog>
       {messageId && params?.campaign ? (
-        <DialogNetworkGraph
+        <DialogNetworkGraphByFitler
           showDialog={showDialog}
           setShowDialog={setShowDialog}
           currentData={current}

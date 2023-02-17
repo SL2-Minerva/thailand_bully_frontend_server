@@ -16,7 +16,7 @@ import EngagementTypeByDevice from './EngagementTypeByDevice'
 import EngagementTypeByAccount from './EngagementTypeByAccount'
 import EngagementTypeByChannel from './EngagementTypeByChannel'
 import EngagementTypeByTime from './EngagementTypeByTime'
-import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const'
+import { EngagementTypeColors } from 'src/utils/const'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -85,7 +85,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
               resultFilterData={quickViewData?.resultFilterData}
               loadingFilterData={quickViewData?.loadingFilterData}
               keywordsColor={
-                quickViewData?.loadingFilterData && keywordsColor ? keywordsColor : EngagementTransChartColor
+                keywordsColor
               }
             />
           ) : chartId === 'chart3' ? (
@@ -102,7 +102,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
               resultBy={quickViewData?.resultEngagementByDay}
               loading={quickViewData?.loadingEngagementBy}
               keywordsColor={
-                quickViewData?.loadingEngagementBy && keywordsColor ? keywordsColor : EngagementTransChartColor
+                keywordsColor
               }
             />
           ) : chartId === 'chart4' ? (
@@ -119,7 +119,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
               resultBy={quickViewData?.resultEngagementByTime}
               loading={quickViewData?.loadingEngagementBy}
               keywordsColor={
-                quickViewData?.loadingEngagementBy && keywordsColor ? keywordsColor : EngagementTransChartColor
+                keywordsColor
               }/>
           ) : chartId === 'chart5' ? (
             <EngagementByDevice
@@ -135,7 +135,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
               resultBy={quickViewData?.resultEngagementByDevice}
               loading={quickViewData?.loadingEngagementBy}
               keywordsColor={
-                quickViewData?.loadingEngagementBy && keywordsColor ? keywordsColor : EngagementTransChartColor
+                keywordsColor
               }/>
           ) : chartId === 'chart6' ? (
             <EngagementByAccounts
@@ -151,7 +151,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
               loading={quickViewData?.loadingEngagementBy}
               resultBy={quickViewData?.resultEngagementByAccount}
               keywordsColor={
-                quickViewData?.loadingEngagementBy && keywordsColor ? keywordsColor : EngagementTransChartColor
+                keywordsColor
               }/>
           ) : chartId === 'chart7' ? (
             <EngagementByChannel
@@ -167,7 +167,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
               loading={quickViewData?.loadingEngagementBy}
               resultBy={quickViewData?.resultEngagementChannel}
               keywordsColor={
-                quickViewData?.loadingEngagementBy && keywordsColor ? keywordsColor : EngagementTransChartColor
+                keywordsColor
               }/>
           ) : chartId === 'chart8' ? (
             <EngagementByType
@@ -183,7 +183,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
               loading={quickViewData?.loadingEngagementBy}
               resultBy={quickViewData?.resultKeywordByEngagementType}
               keywordsColor={
-                quickViewData?.loadingEngagementBy && keywordsColor ? keywordsColor : EngagementTransChartColor
+                keywordsColor
               }/>
           ) : chartId === 'chart10' ? (
             <DailyEngagementType
