@@ -17,25 +17,27 @@ const KeywordComparisonByBullyLevel = ({
   chartId,
   highlight,
   resultKeywordComparisonByBullyLevel,
-  loadingKeywordComparisonByBullyLevel
+  loadingKeywordComparisonByBullyLevel,
+  keywordsColor
 }: {
   params: any
   chartId: string
   highlight: boolean
   resultKeywordComparisonByBullyLevel: any
   loadingKeywordComparisonByBullyLevel: boolean
+  keywordsColor:any
 }) => {
   const [charData, setChartData] = useState(initValue)
 
   useEffect(() => {
     if (resultKeywordComparisonByBullyLevel) {
-      const seriesData = getChartData(resultKeywordComparisonByBullyLevel?.value)
+      const seriesData = getChartData(resultKeywordComparisonByBullyLevel?.value,keywordsColor)
       setChartData({
         labels: resultKeywordComparisonByBullyLevel?.labels ? resultKeywordComparisonByBullyLevel?.labels : [],
         datasets: seriesData
       })
     }
-  }, [resultKeywordComparisonByBullyLevel])
+  }, [resultKeywordComparisonByBullyLevel,keywordsColor])
 
   const reportNo = '2.2.027'
 

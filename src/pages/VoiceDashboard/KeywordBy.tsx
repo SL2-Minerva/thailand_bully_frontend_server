@@ -8,7 +8,8 @@ import KeywordComparisonBySentiment from './KeywordComparisonBySentiment'
 const KeywordBy = ({
   params,
   highlight,
-  resultReportPermission
+  resultReportPermission,
+  keywordsColor
 }: {
   params: any
   highlight: string
@@ -41,6 +42,7 @@ const KeywordBy = ({
             highlight={highlight === 'chart21' ? true : false}
             resultKeywordComparisonByChannel={resultKeywordComparisonByChannel}
             loadingKeywordComparisonByChannel={loadingKeywordComparisonByAll}
+            keywordColors ={keywordsColor}
           />
         </Grid>
       ) : (
@@ -54,6 +56,7 @@ const KeywordBy = ({
             highlight={highlight === 'chart23' ? true : false}
             resultKeywordComparisonBySentiment={resultKeywordComparisonBySentiment}
             loadingKeywordComparisonBySentiment={loadingKeywordComparisonByAll}
+            keywordsColor={keywordsColor}
           />
         </Grid>
       ) : (
@@ -67,6 +70,7 @@ const KeywordBy = ({
             highlight={highlight === 'chart23' ? true : false}
             resultKeywordComparisonByBullyLevel={resultKeywordComparisonByBullyLevel}
             loadingKeywordComparisonByBullyLevel={loadingKeywordComparisonByAll}
+            keywordsColor={keywordsColor}
           />
         </Grid>
       ) : (
@@ -80,6 +84,7 @@ const KeywordBy = ({
             highlight={highlight === 'chart24' ? true : false}
             resultKeywordComparisonByBullyType={resultKeywordComparisonByBullyType}
             loadingKeywordComparisonByBullyType={loadingKeywordComparisonByAll}
+            keywordsColor={keywordsColor}
           />
         </Grid>
       ) : (

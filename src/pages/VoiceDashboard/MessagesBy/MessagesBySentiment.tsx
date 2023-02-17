@@ -121,12 +121,12 @@ const MessagesBySentiment = (props: LineProps) => {
     }
   }
 
-  const chartDatasets = (data:any) => {
+  const chartDatasets = (data:any, keywordColor: any) => {
     if(!data) return [];
     let totalAmount : number[] = [];
     let keywordName = "";
     const returnData : StackChartDataset[] = [];
-    const color = keywordsColor
+    const color = []
     const total = data?.value || data?.data || [];
 
     for(let i = 0 ; i<total?.length; i++) {
@@ -137,6 +137,12 @@ const MessagesBySentiment = (props: LineProps) => {
       } 
       
       keywordName = total[i]?.keyword_name;
+      for(let j =0; j<keywordColor?.length; j++) {
+        if(keywordColor[j]?.keywordName === total[i].keyword_name) {
+          color.push(keywordColor[j]?.color)
+        }
+      }
+
       const chartDataset : StackChartDataset  = {
         fill: false,
         tension: 0.5,
@@ -186,11 +192,11 @@ const MessagesBySentiment = (props: LineProps) => {
             const labels = chartLabel(dailyMessageData);
             setLabel(labels);
             
-            const dataSets = chartDatasets(dailyMessageData);
+            const dataSets = chartDatasets(dailyMessageData, keywordsColor);
             setDataset(dataSets);
         }
         }
-    },[result]);
+    },[result, keywordsColor]);
 
     
 

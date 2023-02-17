@@ -255,7 +255,7 @@ const DailyMessageGraph = (props: Props) => {
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 706 }} square variant='outlined'>
       {loadingDailyMessage && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         {type === 'message' ? (
@@ -276,7 +276,7 @@ const DailyMessageGraph = (props: Props) => {
         </StyledTooltip>
       </span>
       <CardContent>
-        <Bar ref={chartRef} data={data} options={options as any} height={366} onClick={onClick} />
+        <Bar ref={chartRef} data={data} options={options as any} height={500} onClick={onClick} />
       </CardContent>
       {showDetail ? (
         <MessageDetail

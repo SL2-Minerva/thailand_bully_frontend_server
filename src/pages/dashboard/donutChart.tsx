@@ -14,6 +14,7 @@ import { StyledTooltip } from './overall'
 import Translations from 'src/layouts/components/Translations'
 import { Chart } from 'chart.js'
 import * as DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne'
+import { GraphicColors } from 'src/utils/const'
 
 Chart.register(DoughnutLabel)
 
@@ -112,14 +113,14 @@ const DonutChart = (props: MessageData) => {
     }
   }
 
-  const chartDataset = (data: any, type: string) => {
+  const chartDataset = (data: any, type: string, keywordColor:any) => {
     if (!data) {
       const chartData = {
         labels: [],
         datasets: [
           {
             data: [],
-            backgroundColor: keywordsColor,
+            backgroundColor: GraphicColors,
             hoverOffset: 4
           }
         ]
@@ -129,8 +130,15 @@ const DonutChart = (props: MessageData) => {
     }
     const labels: string[] = []
     const percentage: number[] = []
+    const colors = []
     for (let i = 0; i < data?.length; i++) {
       labels.push(data[i].keyword_name)
+
+      for(let j =0; j<keywordColor?.length; j++) {
+        if(keywordColor[j]?.keywordName === data[i].keyword_name) {
+          colors.push(keywordColor[j]?.color)
+        }
+      }
 
       const percentageValue = data[i]?.value
       for (let j = 0; j < percentageValue?.length; j++) {
@@ -147,7 +155,7 @@ const DonutChart = (props: MessageData) => {
       datasets: [
         {
           data: percentage,
-          backgroundColor: keywordsColor,
+          backgroundColor: colors,
           hoverOffset: 4
         }
       ]
@@ -162,7 +170,7 @@ const DonutChart = (props: MessageData) => {
       const previousMessageData = resultFilterData?.prcentage_of_messages_previous
 
       if (currentMessageData) {
-        const currentDataset = chartDataset(currentMessageData, 'current')
+        const currentDataset = chartDataset(currentMessageData, 'current', keywordsColor)
         setCurrentData(currentDataset)
 
         if (currentMessageData?.length > 0) {
@@ -174,7 +182,7 @@ const DonutChart = (props: MessageData) => {
       }
 
       if (previousMessageData) {
-        const previousDataset = chartDataset(previousMessageData, 'previous')
+        const previousDataset = chartDataset(previousMessageData, 'previous', keywordsColor)
         setPreviousData(previousDataset)
         if (previousMessageData?.length > 0) {
           setPreviousTotal(previousMessageData[0]?.total)
@@ -184,7 +192,7 @@ const DonutChart = (props: MessageData) => {
         setPreviousTotal(0)
       }
     }
-  }, [resultFilterData])
+  }, [resultFilterData, keywordsColor])
 
   return (
     <Card sx={{ minHeight: 550, maxHeight: 550 }}>

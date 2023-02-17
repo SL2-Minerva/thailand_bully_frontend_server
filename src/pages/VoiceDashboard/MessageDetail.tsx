@@ -169,11 +169,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                   <StyledTableCell>Channel</StyledTableCell>
                   <StyledTableCell>Bully Level</StyledTableCell>
                   <StyledTableCell>Bully Type</StyledTableCell>
-                  {resultMessageDetail?.length > 0 && resultMessageDetail[0]?.parent ? (
-                    <StyledTableCell>Parent</StyledTableCell>
-                  ) : (
-                    ''
-                  )}
+                  <StyledTableCell>Parent</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -198,11 +194,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                     <StyledTableCell align='center'>{messageDetail.channel}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.bully_level}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
-                    {messageDetail.parent ? (
-                      <StyledTableCell align='center'>{messageDetail.parent}</StyledTableCell>
-                    ) : (
-                      ''
-                    )}
+                    <StyledTableCell align='center'>{messageDetail.parent}</StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>

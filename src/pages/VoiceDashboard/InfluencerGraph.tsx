@@ -12,7 +12,6 @@ import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import { GraphicColors } from 'src/utils/const'
 import { useEffect, useRef, useState } from 'react'
 import { InteractionItem } from 'chart.js'
 import { LinearProgress } from '@mui/material'
@@ -43,13 +42,15 @@ const InfluencerGraph = ({
   params,
   highlight,
   resultNumbersOfAccounts,
-  loadingNumbersOfAccounts
+  loadingNumbersOfAccounts,
+  keywordsColor
 }: {
   chartId: string
   params: any
   highlight: boolean
   resultNumbersOfAccounts: any
   loadingNumbersOfAccounts: boolean
+  keywordsColor:any
 }) => {
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -154,16 +155,20 @@ const InfluencerGraph = ({
     }
   }
 
-  const chartDatasets = (data: any) => {
+  const chartDatasets = (data: any, keywordColor:any) => {
     if (!data) return []
     let totalAmount: number[] = []
     let keywordName = ''
     const returnData: StackChartDataset[] = []
-    const color = GraphicColors
+    const color = []
     for (let i = 0; i < data?.length; i++) {
       totalAmount = data[i].data
       keywordName = data[i].name
-
+      for(let j =0; j<keywordColor?.length; j++) {
+        if(keywordColor[j]?.keywordName === keywordName) {
+          color.push(keywordColor[j]?.color)
+        }
+      }
       const chartDataset: StackChartDataset = {
         fill: false,
         tension: 0.5,
@@ -196,13 +201,13 @@ const InfluencerGraph = ({
       const labels = chartLabel(resultNumbersOfAccounts)
       setLabel(labels)
 
-      const dataSets = chartDatasets(resultNumbersOfAccounts)
+      const dataSets = chartDatasets(resultNumbersOfAccounts, keywordsColor)
       setDataset(dataSets)
     } else {
       setLabel([]);
       setDataset([]);
     }
-  }, [resultNumbersOfAccounts])
+  }, [resultNumbersOfAccounts,keywordsColor])
 
   const reportNo = '2.2.013'
 

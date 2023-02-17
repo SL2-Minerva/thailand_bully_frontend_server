@@ -162,12 +162,12 @@ const StackedChart = (props: LineProps) => {
     }
   }
 
-  const chartDatasets = (data: any, labels: any) => {
+  const chartDatasets = (data: any, labels: any, keywordColor:any) => {
     if (!data) return []
     let totalAmount: number[] = []
     let keywordName = ''
     const returnData: StackChartDataset[] = []
-    const color = keywordsColor
+    const color = []
     for (let i = 0; i < data?.length; i++) {
       totalAmount = []
       const total = data[i]?.value
@@ -190,6 +190,11 @@ const StackedChart = (props: LineProps) => {
       }
 
       keywordName = data[i].keyword_name
+      for(let j =0; j<keywordColor?.length; j++) {
+        if(keywordColor[j]?.keywordName === data[i].keyword_name) {
+          color.push(keywordColor[j]?.color)
+        }
+      }
 
       const chartDataset: StackChartDataset = {
         fill: false,
@@ -221,7 +226,7 @@ const StackedChart = (props: LineProps) => {
         setLabel(labels)
 
         if (labels?.length > 0) {
-          const dataSets = chartDatasets(dailyMessageData, labels)
+          const dataSets = chartDatasets(dailyMessageData, labels, keywordsColor)
           setDataset(dataSets)
         }
       } else {
@@ -229,7 +234,7 @@ const StackedChart = (props: LineProps) => {
         setDataset([])
       }
     }
-  }, [resultFilterData])
+  }, [resultFilterData, keywordsColor])
 
   const data = {
     labels: label || [],

@@ -146,11 +146,11 @@ const navigation = (): VerticalNavItemsType => {
   };
 
   const LinkOut = {
-    title: 'LinkOut',
+    title: 'Corpus',
     icon: VectorArrangeBelow,
     openInNewTab: true,
     externalLink: true,
-    path: 'https://www.google.com/'
+    path: 'http://onlinecorpus.net'
   };
 
   const sideMenuBar: any [] = [];
