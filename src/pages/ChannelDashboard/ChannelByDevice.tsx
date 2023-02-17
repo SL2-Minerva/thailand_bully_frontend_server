@@ -12,6 +12,7 @@ import Translations from 'src/layouts/components/Translations'
 
 const ChannelByDevice = (props: LineProps) => {
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, keywordsColor } = props
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -74,12 +75,12 @@ const ChannelByDevice = (props: LineProps) => {
       }
 
       const messageDetailIds = getKeywordId(getDatasetAtEvent(chartRef.current, event))
-      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event);
+      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event)
 
-      if(getDatasetIndex?.length > 0) {
-        const datasetIndex = getDatasetIndex[0]?.datasetIndex;
-       
-        if(datasetIndex === 0 || datasetIndex) {
+      if (getDatasetIndex?.length > 0) {
+        const datasetIndex = getDatasetIndex[0]?.datasetIndex
+
+        if (datasetIndex === 0 || datasetIndex) {
           params.Llabel = dataset[datasetIndex]?.label
         }
       }
@@ -195,6 +196,11 @@ const ChannelByDevice = (props: LineProps) => {
         const dataSets = chartDatasets(dailyMessageData)
         setDataset(dataSets)
       }
+      if (!dailyMessageData?.value) {
+        setShowNoDataText(true)
+      } else {
+        setShowNoDataText(false)
+      }
     }
   }, [resultChannelByDevice])
 
@@ -222,7 +228,21 @@ const ChannelByDevice = (props: LineProps) => {
       </span>
 
       <CardContent>
-        <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            There is no data
+          </div>
+        ) : (
+          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        )}
         {showDetail ? (
           <MessageDetail
             show={showDetail}

@@ -58,8 +58,8 @@ const TopHashtagList = ({ params, chartId }: Props) => {
                   <TableRow
                     key={index}
                     onClick={() => {
-                    //   setShowDetail(true)
-                    //   setKeywordId(hashtag?.keyword_id)
+                      //   setShowDetail(true)
+                      //   setKeywordId(hashtag?.keyword_id)
                     }}
                   >
                     <TableCell sx={{ backgroundColor: 'lightslategrey !important', color: 'white' }}>
@@ -70,6 +70,16 @@ const TopHashtagList = ({ params, chartId }: Props) => {
                   </TableRow>
                 )
               })}
+
+              {!resultTopKeywords?.top_hastag || resultTopKeywords?.top_hastag?.length ==0 ? (
+                <TableRow>
+                  <TableCell colSpan={3} sx={{ textAlign: 'center' }}>
+                    There is no data
+                  </TableCell>
+                </TableRow>
+              ) : (
+                ''
+              )}
             </TableBody>
           </Table>
         </TableContainer>

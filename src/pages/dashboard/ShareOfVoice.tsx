@@ -2,172 +2,202 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, LinearProgress, TableBody, Typography } from "@mui/material"
-import { Table, TableRow, TableHead, TableCell } from "@mui/material"; 
+import { Grid, LinearProgress, TableBody, Typography } from '@mui/material'
+import { Table, TableRow, TableHead, TableCell } from '@mui/material'
 
 // ** Third Party Imports
 import { Bar } from 'react-chartjs-2'
-import { StyledTooltip } from './overall';
-import { Information } from 'mdi-material-ui';
-import { GetShareOfVoice, GetShareOfVoiceChart } from 'src/services/api/dashboards/overall/overallDashboardApi';
-import { FacebookIcon, googleIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const';
-import Translations from 'src/layouts/components/Translations';
+import { StyledTooltip } from './overall'
+import { Information } from 'mdi-material-ui'
+import { GetShareOfVoice, GetShareOfVoiceChart } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import { FacebookIcon, googleIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const'
+import Translations from 'src/layouts/components/Translations'
 
 const ChartLabels = (data: any) => {
-  if (!data) return [];
-  const keywordData = data;
+  if (!data) return []
+  const keywordData = data
 
-  const labels : any[] = [];
+  const labels: any[] = []
 
-  for (let i = 0; i<keywordData?.length ; i ++) {
+  for (let i = 0; i < keywordData?.length; i++) {
     labels.push(keywordData[i].keyword_name)
   }
-  
-  return labels;
+
+  return labels
 }
 
-const ChartData = (data: any ) => {
-  if (!data) return [];
+const ChartData = (data: any) => {
+  if (!data) return []
 
-  const chartDatas : any[] = [];
-  for (let i = 0; i<data?.length ; i ++) {
+  const chartDatas: any[] = []
+  for (let i = 0; i < data?.length; i++) {
     chartDatas.push(data[i]?.number_of_massage)
   }
-  
-  return chartDatas;
+
+  return chartDatas
 }
 
-const ShareOfVoice  = ({params, chartId} : {params: any, chartId : string}) => {
-  const { resultShareOfVoice, loadingShareOfVoice } = GetShareOfVoice(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, params?.keywordIds);
-  const { resultShareOfVoiceChart, loadingShareOfVoiceChart } = GetShareOfVoiceChart(params?.campaign, params?.platformId, params?.date, params?.endDate, params?.period, params?.previousDate, params?.previousEndDate, params?.keywordIds);
-  const reportNo = '1.1.020';
+const ShareOfVoice = ({ params, chartId }: { params: any; chartId: string }) => {
+  const { resultShareOfVoice, loadingShareOfVoice } = GetShareOfVoice(
+    params?.campaign,
+    params?.platformId,
+    params?.date,
+    params?.endDate,
+    params?.period,
+    params?.previousDate,
+    params?.previousEndDate,
+    params?.keywordIds
+  )
+  const { resultShareOfVoiceChart, loadingShareOfVoiceChart } = GetShareOfVoiceChart(
+    params?.campaign,
+    params?.platformId,
+    params?.date,
+    params?.endDate,
+    params?.period,
+    params?.previousDate,
+    params?.previousEndDate,
+    params?.keywordIds
+  )
+  const reportNo = '1.1.020'
 
-  const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
+  const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
 
-  const labels = resultShareOfVoiceChart ? ChartLabels(resultShareOfVoiceChart) : [];
+  const labels = resultShareOfVoiceChart ? ChartLabels(resultShareOfVoiceChart) : []
   const data = {
-  labels: labels,
-  datasets: [{
-      axis: 'y',
-      label: 'Number of Messages',
-      data: ChartData(resultShareOfVoiceChart),
-      fill: false,
-      backgroundColor: ['rgb(54, 162, 235)'],
-      borderColor: [
-      'rgb(54, 162, 235)'
-      ],
-      borderWidth: 1
-  }]
-  };  
-
-  const ShareOfVoiceTable = (data: any) => {
-    if(!data) return null;
-  
-    const percentageData = data?.data?.value;
-
-    return (
-       <>
-              {
-                (percentageData || []).map((percentage : any , index: number) => {
-                  return (
-                    <TableCell key={index}>
-                        <span style={{ border : percentage?.highlight ? "1px solid red" : "", padding: '4px' }}>
-                            { percentage?.percentage  + "%"} 
-                          </span>
-                    </TableCell>
-                  )
-                })
-              }
-       </> 
-    );
+    labels: labels,
+    datasets: [
+      {
+        axis: 'y',
+        label: 'Number of Messages',
+        data: ChartData(resultShareOfVoiceChart),
+        fill: false,
+        backgroundColor: ['rgb(54, 162, 235)'],
+        borderColor: ['rgb(54, 162, 235)'],
+        borderWidth: 1
+      }
+    ]
   }
 
-  const ShareOfVoiceTableHead = (data: any) => {
-    if(!data) return null; 
-    const tableHeader : any[] = [];
+  const ShareOfVoiceTable = (data: any) => {
+    if (!data) return null
 
-    const headerData = data?.data;
-
-    for(let i=0; i<headerData?.length ; i++) {
-      const value = headerData[i]?.value ; 
-      for(let j=0; j<value?.length; j++) {
-        tableHeader.push(value[j]?.channel);
-      }
-    }
-
-    const filterData = [...new Set(tableHeader)];
+    const percentageData = data?.data?.value
 
     return (
       <>
-          {
-            (filterData || []).map((title :any, i :number) => {
-              const imgPath = title === 'twitter' ? TwitterIcon : title === 'youtube' ? YoutubeIcon : title === 'facebook' ? FacebookIcon
-                              :  title === 'instagram' ? InstagramIcon :  title === 'pantip' ? PantipIcon :  title === 'google' ? googleIcon  : ""; 
-
-                return (
-                  <TableCell key={i}>
-                    
-                      {
-                        imgPath ? 
-                        <img alt="logo" width={34} height={34} src={imgPath}/>
-                        : 
-                        <Typography variant="caption" textTransform="uppercase">
-                            {title}
-                        </Typography>
-                      }
-                  </TableCell>
-                )
-            })
-          }
+        {(percentageData || []).map((percentage: any, index: number) => {
+          return (
+            <TableCell key={index}>
+              <span style={{ border: percentage?.highlight ? '1px solid red' : '', padding: '4px' }}>
+                {percentage?.percentage + '%'}
+              </span>
+            </TableCell>
+          )
+        })}
       </>
     )
-    
   }
 
+  const ShareOfVoiceTableHead = (data: any) => {
+    if (!data) return null
+    const tableHeader: any[] = []
+
+    const headerData = data?.data
+
+    for (let i = 0; i < headerData?.length; i++) {
+      const value = headerData[i]?.value
+      for (let j = 0; j < value?.length; j++) {
+        tableHeader.push(value[j]?.channel)
+      }
+    }
+
+    const filterData = [...new Set(tableHeader)]
+
+    return (
+      <>
+        {(filterData || []).map((title: any, i: number) => {
+          const imgPath =
+            title === 'twitter'
+              ? TwitterIcon
+              : title === 'youtube'
+              ? YoutubeIcon
+              : title === 'facebook'
+              ? FacebookIcon
+              : title === 'instagram'
+              ? InstagramIcon
+              : title === 'pantip'
+              ? PantipIcon
+              : title === 'google'
+              ? googleIcon
+              : ''
+
+          return (
+            <TableCell key={i}>
+              {imgPath ? (
+                <img alt='logo' width={34} height={34} src={imgPath} />
+              ) : (
+                <Typography variant='caption' textTransform='uppercase'>
+                  {title}
+                </Typography>
+              )}
+            </TableCell>
+          )
+        })}
+      </>
+    )
+  }
 
   return (
     <Card sx={{ height: 450 }}>
-      {loadingShareOfVoice && loadingShareOfVoiceChart && (
-          <LinearProgress
-            style={{ width: "100%" }}
-          />
-        )}
+      {loadingShareOfVoice && loadingShareOfVoiceChart && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <CardHeader
-            title={<Translations text='Share of Voice'/>}
-            titleTypographyProps={{ variant: 'h6' }}
-          />
-          <StyledTooltip arrow title={chartTitle || ""}>
-              <Information style={{marginTop: '22px', fontSize: '29px'}} />
-          </StyledTooltip>
+        <CardHeader title={<Translations text='Share of Voice' />} titleTypographyProps={{ variant: 'h6' }} />
+        <StyledTooltip arrow title={chartTitle || ''}>
+          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
+        </StyledTooltip>
       </span>
       <CardContent>
         <Grid container spacing={3}>
-            <Grid item xs={5}>
-                <Bar data={data} options={{ indexAxis: 'y' }} height={245}/>
-            </Grid>
-            <Grid item xs={7} >
-            <Table size="small">  
-                <TableHead>
+          <Grid item xs={5}>
+            {resultShareOfVoiceChart ? (
+              <Bar data={data} options={{ indexAxis: 'y' }} height={245} />
+            ) : (
+              <div
+                style={{
+                  height: 300,
+                  padding: '70px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                There is no data
+              </div>
+            )}
+          </Grid>
+          <Grid item xs={7}>
+            <Table size='small'>
+              <TableHead>
+                <TableRow>
+                  {resultShareOfVoice ? (
+                    <ShareOfVoiceTableHead data={resultShareOfVoice} />
+                  ) : (
+                    ''
+                  )}
+                </TableRow>
+              </TableHead>
+              {(resultShareOfVoice || []).map((shareVoice: any, index: number) => {
+                return (
+                  <TableBody key={index}>
                     <TableRow>
-                        <ShareOfVoiceTableHead data={resultShareOfVoice} />
+                      <ShareOfVoiceTable data={shareVoice} />
                     </TableRow>
-                </TableHead>
-                {
-                  (resultShareOfVoice || []).map((shareVoice : any, index: number) => {
-                    return(
-                      <TableBody key={index}>
-                          <TableRow>
-                              <ShareOfVoiceTable data={shareVoice} />
-                          </TableRow>
-                      </TableBody>
-                    )
-                  })
-                }
-              </Table>
-            </Grid>  
+                  </TableBody>
+                )
+              })}
+            </Table>
+          </Grid>
         </Grid>
-        
       </CardContent>
     </Card>
   )

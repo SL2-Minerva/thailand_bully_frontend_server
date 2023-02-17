@@ -26,10 +26,9 @@ const PlatformsComparison = ({
   params: any
   chartId: string
   highlight: boolean
-  resultPlatformComparison : any
-  loadingPlatformComparison : boolean
+  resultPlatformComparison: any
+  loadingPlatformComparison: boolean
 }) => {
-
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
   const initValue = {
@@ -39,6 +38,7 @@ const PlatformsComparison = ({
   }
   const [previousData, setPreviousData] = useState(initValue)
   const [currentData, setCurrentData] = useState(initValue)
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const currentPeriodOptions = {
     responsive: true,
@@ -148,6 +148,12 @@ const PlatformsComparison = ({
     if (resultPlatformComparison) {
       setCurrentData(resultPlatformComparison.current_period)
       setPreviousData(resultPlatformComparison.previous_period)
+
+      if (resultPlatformComparison.current_period?.total || resultPlatformComparison.previous_period?.total) {
+        setShowNoDataText(false)
+      } else {
+        setShowNoDataText(true)
+      }
     }
   }, [resultPlatformComparison])
 
@@ -160,7 +166,7 @@ const PlatformsComparison = ({
       {loadingPlatformComparison && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text='Channel/Platform: Period over Period Comparison'/>}
+          title={<Translations text='Channel/Platform: Period over Period Comparison' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheader='Period over Period Comparison'
           subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
@@ -173,10 +179,38 @@ const PlatformsComparison = ({
       <CardContent>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
-            <Doughnut data={currentPeriodData} options={currentPeriodOptions as any} height={290} />
+            {showNoDataText ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '70px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                There is no data
+              </div>
+            ) : (
+              <Doughnut data={currentPeriodData} options={currentPeriodOptions as any} height={290} />
+            )}
           </Grid>
           <Grid item xs={12} md={6}>
-            <Doughnut data={previousPeriodData} options={previousPeriodOptions as any} height={290} />
+            {showNoDataText ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '70px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                There is no data
+              </div>
+            ) : (
+              <Doughnut data={previousPeriodData} options={previousPeriodOptions as any} height={290} />
+            )}
           </Grid>
         </Grid>
         <Grid container spacing={3} mt={3}>

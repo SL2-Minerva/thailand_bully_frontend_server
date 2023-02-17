@@ -26,7 +26,7 @@ interface MessageData {
 }
 
 const DonutChart = (props: MessageData) => {
-  const {resultFilterData, loadingFilterData, keywordsColor } = props
+  const { resultFilterData, loadingFilterData, keywordsColor } = props
 
   const initValue = {
     labels: [],
@@ -45,6 +45,7 @@ const DonutChart = (props: MessageData) => {
   const [previousPeriod, setPreviousPeriod] = useState<string>('')
   const [currentTotal, setCurrentTotal] = useState<number>()
   const [previousTotal, setPreviousTotal] = useState<number>()
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -113,7 +114,7 @@ const DonutChart = (props: MessageData) => {
     }
   }
 
-  const chartDataset = (data: any, type: string, keywordColor:any) => {
+  const chartDataset = (data: any, type: string, keywordColor: any) => {
     if (!data) {
       const chartData = {
         labels: [],
@@ -134,8 +135,8 @@ const DonutChart = (props: MessageData) => {
     for (let i = 0; i < data?.length; i++) {
       labels.push(data[i].keyword_name)
 
-      for(let j =0; j<keywordColor?.length; j++) {
-        if(keywordColor[j]?.keywordName === data[i].keyword_name) {
+      for (let j = 0; j < keywordColor?.length; j++) {
+        if (keywordColor[j]?.keywordName === data[i].keyword_name) {
           colors.push(keywordColor[j]?.color)
         }
       }
@@ -176,7 +177,9 @@ const DonutChart = (props: MessageData) => {
         if (currentMessageData?.length > 0) {
           setCurrentTotal(currentMessageData[0]?.total)
         }
+        setShowNoDataText(false)
       } else {
+        setShowNoDataText(true)
         setCurrentData(initValue)
         setCurrentTotal(0)
       }
@@ -187,7 +190,9 @@ const DonutChart = (props: MessageData) => {
         if (previousMessageData?.length > 0) {
           setPreviousTotal(previousMessageData[0]?.total)
         }
+        setShowNoDataText(false)
       } else {
+        setShowNoDataText(true)
         setPreviousData(initValue)
         setPreviousTotal(0)
       }
@@ -212,10 +217,38 @@ const DonutChart = (props: MessageData) => {
       <CardContent>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
-            <Doughnut data={currentData} options={options as any} height={343} />
+            {showNoDataText ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '70px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                There is no data
+              </div>
+            ) : (
+              <Doughnut data={currentData} options={options as any} height={343} />
+            )}
           </Grid>
           <Grid item xs={12} md={6}>
-            <Doughnut data={previousData} options={optionsPrevious as any} height={343} />
+            {showNoDataText ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '70px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                There is no data
+              </div>
+            ) : (
+              <Doughnut data={previousData} options={optionsPrevious as any} height={343} />
+            )}
           </Grid>
           <Grid item xs={12} md={6}>
             <p style={{ fontSize: '10px' }}> Current Period :</p>

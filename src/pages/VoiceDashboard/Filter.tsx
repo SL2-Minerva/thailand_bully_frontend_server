@@ -145,6 +145,12 @@ const Filter = (props: Props) => {
     }
   }, [])
 
+  useEffect(() => {
+    if(resultCampaiganList?.length>0) {
+     setCampaign(resultCampaiganList[0]?.id)
+    }
+  },[resultCampaiganList])
+
   return (
     <Grid item xs={12}>
       <Card>

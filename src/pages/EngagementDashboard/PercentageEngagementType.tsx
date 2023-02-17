@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
-import { Grid, LinearProgress } from "@mui/material"
+import { Grid, LinearProgress } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -12,46 +12,48 @@ import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
-import { Chart} from "chart.js";
-import * as DoughnutLabel from "chartjs-plugin-doughnutlabel-rebourne";
+import { Chart } from 'chart.js'
+import * as DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne'
 
-Chart.register(DoughnutLabel );
+Chart.register(DoughnutLabel)
 
 interface MessageData {
   type: string
-  chartId : string,
-  params: any,
+  chartId: string
+  params: any
   highlight: boolean
   resultEngagementType: any
-  loadingEngagementType : boolean
-  keywordsColor :any
+  loadingEngagementType: boolean
+  keywordsColor: any
 }
 
-const PercentageOfEngangementType = (props : MessageData) => {
-
-  const { type, chartId, highlight,resultEngagementType, loadingEngagementType, keywordsColor } = props;
-  const colors = keywordsColor;
-  const reportNo = '4.1.011';
-  const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
+const PercentageOfEngangementType = (props: MessageData) => {
+  const { type, chartId, highlight, resultEngagementType, loadingEngagementType, keywordsColor } = props
+  const colors = keywordsColor
+  const reportNo = '4.1.011'
+  const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
   const initValue = {
     labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: colors,
-      hoverOffset: 4
-    }]
-  };
+    datasets: [
+      {
+        data: [],
+        backgroundColor: colors,
+        hoverOffset: 4
+      }
+    ]
+  }
 
-  const [ previousData, setPreviousData ] = useState<any>(initValue);
-  const [ currentData, setCurrentData ] = useState<any>(initValue);
-  const [ currentPeriod, setCurrentPeriod ] = useState<string>('');
-  const [ previousPeriod, setPreviousPeriod ] = useState<string>('');
-  const [ currentTotal, setCurrentTotal ] = useState<number>();
-  const [ previousTotal, setPreviousTotal ] = useState<number>();
+  const [previousData, setPreviousData] = useState<any>(initValue)
+  const [currentData, setCurrentData] = useState<any>(initValue)
+  const [currentPeriod, setCurrentPeriod] = useState<string>('')
+  const [previousPeriod, setPreviousPeriod] = useState<string>('')
+  const [currentTotal, setCurrentTotal] = useState<number>()
+  const [previousTotal, setPreviousTotal] = useState<number>()
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
-  
+
   const options = {
     responsive: true,
     backgroundColor: false,
@@ -71,7 +73,7 @@ const PercentageOfEngangementType = (props : MessageData) => {
         paddingPercentage: 5,
         labels: [
           {
-            text: currentTotal || "",
+            text: currentTotal || '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',
@@ -103,7 +105,7 @@ const PercentageOfEngangementType = (props : MessageData) => {
         paddingPercentage: 5,
         labels: [
           {
-            text: previousTotal || "",
+            text: previousTotal || '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',
@@ -116,117 +118,143 @@ const PercentageOfEngangementType = (props : MessageData) => {
     }
   }
 
-  const chartDataset = (data:any, type: string) => {
-    if (!data) 
-    {
+  const chartDataset = (data: any, type: string) => {
+    if (!data) {
       const chartData = {
         labels: [],
-        datasets: [{
-          data: [],
-          backgroundColor: colors,
-          hoverOffset: 4
-        }]
-      };
+        datasets: [
+          {
+            data: [],
+            backgroundColor: colors,
+            hoverOffset: 4
+          }
+        ]
+      }
 
-      return chartData;
+      return chartData
     }
-    const labels : string[] =[];
-    const percentage: number[] = [];
-    for(let i =0; i<data?.length; i++ ) {
-      if(data[i].name) labels.push(data[i].name);
-      const percentageValue = data[i]?.value;
+    const labels: string[] = []
+    const percentage: number[] = []
+    for (let i = 0; i < data?.length; i++) {
+      if (data[i].name) labels.push(data[i].name)
+      const percentageValue = data[i]?.value
       percentage.push(percentageValue?.percentage)
       if (type === 'current') {
         setCurrentPeriod(percentageValue?.date)
-        
       } else {
-        setPreviousPeriod(percentageValue?.date);
-
+        setPreviousPeriod(percentageValue?.date)
       }
     }
     const returnData = {
       labels: labels,
-      datasets: [{
-        data:percentage,
-        backgroundColor: colors,
-        hoverOffset: 4
-      }]
-    };
-    
-    return returnData;
+      datasets: [
+        {
+          data: percentage,
+          backgroundColor: colors,
+          hoverOffset: 4
+        }
+      ]
+    }
+
+    return returnData
   }
 
-  const title =  type === 'transaction' ? 'Percentage of Engagement Trans' : "Percentage of Engagement Type";
+  const title = type === 'transaction' ? 'Percentage of Engagement Trans' : 'Percentage of Engagement Type'
 
-  useEffect(() =>{
+  useEffect(() => {
     if (resultEngagementType) {
-      const currentMessageData = resultEngagementType?.prcentage_of_engagement_current;
-      const previousMessageData = resultEngagementType?.prcentage_of_engagement_previous;
-      
-      if(currentMessageData || previousMessageData) {
-        const currentDataset = chartDataset(currentMessageData, 'current');
-        setCurrentData(currentDataset);
+      const currentMessageData = resultEngagementType?.prcentage_of_engagement_current
+      const previousMessageData = resultEngagementType?.prcentage_of_engagement_previous
 
-        const previousDataset = chartDataset(previousMessageData, 'previous');
-        setPreviousData(previousDataset);
+      if (currentMessageData || previousMessageData) {
+        const currentDataset = chartDataset(currentMessageData, 'current')
+        setCurrentData(currentDataset)
 
-        if(currentMessageData?.length > 0){
-          setCurrentTotal(currentMessageData[0]?.total);
+        const previousDataset = chartDataset(previousMessageData, 'previous')
+        setPreviousData(previousDataset)
+
+        if (currentMessageData?.length > 0) {
+          setCurrentTotal(currentMessageData[0]?.total)
         }
 
-        if(previousMessageData?.length > 0){
-          setPreviousTotal(previousMessageData[0]?.total);
+        if (previousMessageData?.length > 0) {
+          setPreviousTotal(previousMessageData[0]?.total)
         }
 
+        setShowNoDataText(false)
       } else {
-        setCurrentData(initValue);
-        setPreviousData(initValue);
+        setCurrentData(initValue)
+        setPreviousData(initValue)
+        setShowNoDataText(true)
       }
     } else {
-      setCurrentData(initValue);
-      setPreviousData(initValue);
-      setCurrentTotal(0);
-      setPreviousTotal(0);
+      setCurrentData(initValue)
+      setPreviousData(initValue)
+      setCurrentTotal(0)
+      setPreviousTotal(0)
+      setShowNoDataText(true)
     }
-  }, [resultEngagementType]);
+  }, [resultEngagementType])
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550}} square variant='outlined'>
-      {loadingEngagementType && (
-        <LinearProgress
-            style={{ width: "100%" }}
-        />
-        )}
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
+      {loadingEngagementType && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <CardHeader
-            title={<Translations text={title}/>}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-            subheader='Period over Period Comparison'
-            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
-          />
-          <StyledTooltip arrow title={chartTitle || ""}>
-              <Information style={{marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de'}} />
-          </StyledTooltip>
+        <CardHeader
+          title={<Translations text={title} />}
+          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          subheader='Period over Period Comparison'
+          subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+        />
+        <StyledTooltip arrow title={chartTitle || ''}>
+          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+        </StyledTooltip>
       </span>
       <CardContent>
         <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
-                <Doughnut data={currentData} options={options as any} height={343} />
-            </Grid>
-            <Grid item xs={12} md={6}>
-                <Doughnut data={previousData} options={optionsPrevious as any} height={343} />
-            </Grid>  
-            <Grid item xs={12} md={6}>  
-                <p style={{ fontSize:'10px' }}> Current Period :</p>  
-                <p style={{ fontSize:'10px' }}> {currentPeriod} </p>                  
-            </Grid>
-            <Grid item xs={12} md={6}>
-                 <p style={{ fontSize:'10px' }}> Previous Period : </p>  
-                 <p style={{ fontSize:'10px' }}>  {previousPeriod} </p>  
-
-            </Grid>  
+          <Grid item xs={12} md={6}>
+            {showNoDataText ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '70px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                There is no data
+              </div>
+            ) : (
+              <Doughnut data={currentData} options={options as any} height={343} />
+            )}
+          </Grid>
+          <Grid item xs={12} md={6}>
+            {showNoDataText ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '70px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                There is no data
+              </div>
+            ) : (
+              <Doughnut data={previousData} options={optionsPrevious as any} height={343} />
+            )}
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <p style={{ fontSize: '10px' }}> Current Period :</p>
+            <p style={{ fontSize: '10px' }}> {currentPeriod} </p>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <p style={{ fontSize: '10px' }}> Previous Period : </p>
+            <p style={{ fontSize: '10px' }}> {previousPeriod} </p>
+          </Grid>
         </Grid>
-        
       </CardContent>
     </Paper>
   )

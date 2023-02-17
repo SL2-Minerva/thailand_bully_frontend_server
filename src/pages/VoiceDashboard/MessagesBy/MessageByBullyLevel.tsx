@@ -19,6 +19,8 @@ const MessagesByBullyLevel = (props: LineProps) => {
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+
   const [paramsId, setParamsId] = useState<any>({
     keywordId: null,
     sourceId: null,
@@ -186,6 +188,11 @@ const MessagesByBullyLevel = (props: LineProps) => {
         const dataSets = chartDatasets(dailyMessageData, keywordsColor)
         setDataset(dataSets)
       }
+      if (!dailyMessageData?.value) {
+        setShowNoDataText(true)
+      } else {
+        setShowNoDataText(false)
+      }
     }
   }, [result, keywordsColor])
 
@@ -220,7 +227,22 @@ const MessagesByBullyLevel = (props: LineProps) => {
       </span>
 
       <CardContent>
-        <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            There is no data
+          </div>
+        ) : (
+          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        )}
+
         {showDetail ? (
           <MessageDetail
             show={showDetail}

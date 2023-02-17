@@ -116,7 +116,7 @@ const OverallDashboard = () => {
   const [endDate, setEndDate] = useState<DateType>(new Date())
   const [previousDate, setPreviousDate] = useState<DateType>(new Date())
   const [previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
-  const [campaign, setCampaign] = useState<string>('1')
+  const [campaign, setCampaign] = useState<string>('')
   const [platformId, setPlatformId] = useState<string>('all')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
   const [reload] = useState<boolean>(false)
@@ -297,6 +297,12 @@ const OverallDashboard = () => {
       periodSet(value)
     }
   }, [])
+
+  useEffect(() => {
+    if(resultCampaiganList?.length>0) {
+     setCampaign(resultCampaiganList[0]?.id)
+    }
+  },[resultCampaiganList])
 
   useEffect(() => {
     axios

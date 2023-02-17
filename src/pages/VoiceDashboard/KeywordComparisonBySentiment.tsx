@@ -29,13 +29,19 @@ const KeywordComparisonBySentiment = ({
   keywordsColor: any
 }) => {
   const [charData, setChartData] = useState(initValue)
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+
   useEffect(() => {
     if (resultKeywordComparisonBySentiment) {
-      const seriesData = getChartData(resultKeywordComparisonBySentiment?.value,keywordsColor)
+      const seriesData = getChartData(resultKeywordComparisonBySentiment?.value, keywordsColor)
       setChartData({
         labels: resultKeywordComparisonBySentiment?.labels ? resultKeywordComparisonBySentiment?.labels : [],
         datasets: seriesData
       })
+
+      if (resultKeywordComparisonBySentiment?.value) {
+        setShowNoDataText(false)
+      } else {setShowNoDataText(true)}
     }
   }, [resultKeywordComparisonBySentiment, keywordsColor])
 
@@ -48,7 +54,7 @@ const KeywordComparisonBySentiment = ({
       {loadingKeywordComparisonBySentiment && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text='Percentage of Keyword Comparison by Sentiment'/>}
+          title={<Translations text='Percentage of Keyword Comparison by Sentiment' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={chartTitle || ''}>
@@ -56,7 +62,21 @@ const KeywordComparisonBySentiment = ({
         </StyledTooltip>
       </span>
       <CardContent>
-        <Radar data={charData} height={100} />
+        {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            There is no data
+          </div>
+        ) : (
+          <Radar data={charData} height={100} />
+        )}
       </CardContent>
     </Card>
   )

@@ -81,6 +81,8 @@ const DailyMessageGraph = (props: Props) => {
     campaign_id: null,
     organization_id: null
   })
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+
   const { resultDailyMessage, loadingDailyMessage } = GetDailyMessages(
     params?.campaign,
     params?.date,
@@ -243,10 +245,12 @@ const DailyMessageGraph = (props: Props) => {
       if (labels?.length > 0) {
         const dataSets = chartDatasets(resultDailyMessage, labels)
         setDataset(dataSets)
+        setShowNoDataText(false)
       }
     } else {
       setLabel([])
       setDataset([])
+      setShowNoDataText(true)
     }
   }, [resultDailyMessage])
 
@@ -276,7 +280,21 @@ const DailyMessageGraph = (props: Props) => {
         </StyledTooltip>
       </span>
       <CardContent>
-        <Bar ref={chartRef} data={data} options={options as any} height={500} onClick={onClick} />
+        {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            There is no data
+          </div>
+        ) : (
+          <Bar ref={chartRef} data={data} options={options as any} height={500} onClick={onClick} />
+        )}
       </CardContent>
       {showDetail ? (
         <MessageDetail

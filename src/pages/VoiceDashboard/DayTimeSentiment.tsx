@@ -96,7 +96,7 @@ const DayTimeSentiment = (props: Props) => {
       }
       setSeriesHour(hourValue)
     } else {
-      setSeriesHour([{ name: '', data: [] }]);
+      setSeriesHour([{ name: '', data: [] }])
     }
   }, [resultDayBySentiment, resultTimeBySentiment])
 
@@ -148,10 +148,38 @@ const DayTimeSentiment = (props: Props) => {
       <CardContent>
         <Grid container spacing={3}>
           <Grid item xs={4}>
-            <ReactApexcharts options={options_days} series={seriesDays} type='heatmap' height={170} />
+            {!resultDayBySentiment ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '100px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                There is no data
+              </div>
+            ) : (
+              <ReactApexcharts options={options_days} series={seriesDays} type='heatmap' height={170} />
+            )}
           </Grid>
           <Grid item xs={8}>
-            <ReactApexcharts options={options_hours} series={seriesHour} type='heatmap' height={170} />
+            {!resultTimeBySentiment ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '100px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                There is no data
+              </div>
+            ) : (
+              <ReactApexcharts options={options_hours} series={seriesHour} type='heatmap' height={170} />
+            )}
           </Grid>
         </Grid>
         {showDetail ? (

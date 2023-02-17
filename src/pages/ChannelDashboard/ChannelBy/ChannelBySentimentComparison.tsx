@@ -13,6 +13,7 @@ import Translations from 'src/layouts/components/Translations'
 const ChannelBySentimentComparison = (props: LineProps) => {
   const {t} = useTranslation()
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading, keywordsColor } = props
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
@@ -203,6 +204,11 @@ const ChannelBySentimentComparison = (props: LineProps) => {
             const dataSets = chartDatasets(dailyMessageData);
             setDataset(dataSets);
         }
+        if (!dailyMessageData?.value) {
+          setShowNoDataText(true)
+        } else {
+          setShowNoDataText(false)
+        }
         }
     },[resultBy]);
 
@@ -234,7 +240,21 @@ const ChannelBySentimentComparison = (props: LineProps) => {
         </span>
       
       <CardContent>
+      {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            There is no data
+          </div>
+        ) : (
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        )}
           {
             showDetail ?
             <MessageDetail 

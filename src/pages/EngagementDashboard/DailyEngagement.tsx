@@ -85,6 +85,8 @@ const DailyEngagement = (props: LineProps) => {
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+
   const [paramsId, setParamsId] = useState<any>({
     keywordId: null,
     sourceId: null,
@@ -136,12 +138,12 @@ const DailyEngagement = (props: LineProps) => {
         params.label = label[index]
       }
       const keyword_id = getKeywordId(getDatasetAtEvent(chartRef.current, event))
-      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event);
+      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event)
 
-      if(getDatasetIndex?.length > 0) {
-        const datasetIndex = getDatasetIndex[0]?.datasetIndex;
-       
-        if(datasetIndex === 0 || datasetIndex) {
+      if (getDatasetIndex?.length > 0) {
+        const datasetIndex = getDatasetIndex[0]?.datasetIndex
+
+        if (datasetIndex === 0 || datasetIndex) {
           params.Llabel = dataset[datasetIndex]?.label
         }
       }
@@ -198,7 +200,7 @@ const DailyEngagement = (props: LineProps) => {
     }
   }
 
-  const chartDatasets = (data: any, labels:any, keywordColor:any) => {
+  const chartDatasets = (data: any, labels: any, keywordColor: any) => {
     if (!data) return []
     let totalAmount: number[] = []
     let keywordName = ''
@@ -221,13 +223,13 @@ const DailyEngagement = (props: LineProps) => {
         }
       })
 
-      for(let i=0; i<modifiedData?.length; i++) {
-        totalAmount.push(modifiedData[i].total_at_date);
+      for (let i = 0; i < modifiedData?.length; i++) {
+        totalAmount.push(modifiedData[i].total_at_date)
       }
 
       keywordName = data[i].keyword_name
-      for(let j =0; j<keywordColor?.length; j++) {
-        if(keywordColor[j]?.keywordName === data[i].keyword_name) {
+      for (let j = 0; j < keywordColor?.length; j++) {
+        if (keywordColor[j]?.keywordName === data[i].keyword_name) {
           color.push(keywordColor[j]?.color)
         }
       }
@@ -266,9 +268,11 @@ const DailyEngagement = (props: LineProps) => {
           setDataset(dataSets)
         }
       }
+      setShowNoDataText(false)
     } else {
       setLabel([])
       setDataset([])
+      setShowNoDataText(true)
     }
   }, [resultFilterData, keywordsColor])
 
@@ -295,7 +299,22 @@ const DailyEngagement = (props: LineProps) => {
       </span>
 
       <CardContent>
-        <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            There is no data
+          </div>
+        ) : (
+          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        )}
+
         {showDetail ? (
           <MessageDetail
             show={showDetail}

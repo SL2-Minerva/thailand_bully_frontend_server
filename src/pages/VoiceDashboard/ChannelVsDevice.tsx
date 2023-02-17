@@ -88,7 +88,7 @@ const ChannelVsDevice = ({
       {loadingDeviceVsChannel && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text="Channel vs. Device: Period over Period Comparison"/>}
+          title={<Translations text='Channel vs. Device: Period over Period Comparison' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheader='Period over Period Comparison'
           subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
@@ -100,7 +100,21 @@ const ChannelVsDevice = ({
       <CardContent>
         <Grid container spacing={1}>
           <Grid item xs={12} height={315}>
-            <ReactApexcharts type='bar' options={options} series={series} height={305} />
+            {!resultDeviceVsChannel ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '70px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                There is no data
+              </div>
+            ) : (
+              <ReactApexcharts type='bar' options={options} series={series} height={305} />
+            )}
           </Grid>
         </Grid>
       </CardContent>

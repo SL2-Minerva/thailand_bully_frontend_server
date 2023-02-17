@@ -75,6 +75,7 @@ const StackedChart = (props: LineProps) => {
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [keywordId, setKeywordId] = useState<any>()
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const chartRef = useRef()
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -162,7 +163,7 @@ const StackedChart = (props: LineProps) => {
     }
   }
 
-  const chartDatasets = (data: any, labels: any, keywordColor:any) => {
+  const chartDatasets = (data: any, labels: any, keywordColor: any) => {
     if (!data) return []
     let totalAmount: number[] = []
     let keywordName = ''
@@ -190,8 +191,8 @@ const StackedChart = (props: LineProps) => {
       }
 
       keywordName = data[i].keyword_name
-      for(let j =0; j<keywordColor?.length; j++) {
-        if(keywordColor[j]?.keywordName === data[i].keyword_name) {
+      for (let j = 0; j < keywordColor?.length; j++) {
+        if (keywordColor[j]?.keywordName === data[i].keyword_name) {
           color.push(keywordColor[j]?.color)
         }
       }
@@ -229,9 +230,11 @@ const StackedChart = (props: LineProps) => {
           const dataSets = chartDatasets(dailyMessageData, labels, keywordsColor)
           setDataset(dataSets)
         }
+        setShowNoDataText(false)
       } else {
         setLabel([])
         setDataset([])
+        setShowNoDataText(true)
       }
     }
   }, [resultFilterData, keywordsColor])
@@ -263,7 +266,21 @@ const StackedChart = (props: LineProps) => {
       </div>
 
       <CardContent>
-        <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            There is no data
+          </div>
+        ) : (
+          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        )}
         {keywordId && params?.campaign ? (
           <DailyMessageDetail
             show={showDetail}
