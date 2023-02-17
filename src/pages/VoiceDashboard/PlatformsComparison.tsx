@@ -149,7 +149,7 @@ const PlatformsComparison = ({
       setCurrentData(resultPlatformComparison.current_period)
       setPreviousData(resultPlatformComparison.previous_period)
 
-      if (resultPlatformComparison.current_period?.total || resultPlatformComparison.previous_period?.total) {
+      if (resultPlatformComparison?.current_period?.total || resultPlatformComparison?.previous_period?.total) {
         setShowNoDataText(false)
       } else {
         setShowNoDataText(true)

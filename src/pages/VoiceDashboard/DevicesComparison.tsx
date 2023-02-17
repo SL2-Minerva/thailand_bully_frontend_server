@@ -153,7 +153,7 @@ const DevicesComparison = ({
       setCurrentData(resultDevicesComparison.current_period)
       setPreviousData(resultDevicesComparison.previous_period)
     }
-    if (resultDevicesComparison.current_period?.total || resultDevicesComparison.previous_period?.total) {
+    if (resultDevicesComparison?.current_period?.total || resultDevicesComparison?.previous_period?.total) {
       setShowNoDataText(false)
     } else {
       setShowNoDataText(true)
