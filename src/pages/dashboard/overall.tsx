@@ -64,9 +64,11 @@ import WordCloudChannel from './WordCloudChannel'
 import AccountList from './AccountList'
 import WordCloudSentiment from './WordCloudSentiment'
 import { UserPermission } from 'src/services/api/users/role'
-import { GraphicColors } from 'src/utils/const'
+import { API_PATH, GraphicColors } from 'src/utils/const'
 import Translations from 'src/layouts/components/Translations'
 import { useRouter } from 'next/router'
+import axios from 'axios'
+import authConfig from 'src/configs/auth'
 
 // import QuickView from "./QuickView"
 
@@ -124,7 +126,6 @@ const OverallDashboard = () => {
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
-  const [filterColors, setFilterColor] = useState<any>([])
 
   const theme = useTheme()
   const router = useRouter()
@@ -151,7 +152,7 @@ const OverallDashboard = () => {
     previousEndDate,
     keyword
   )
-  const { resultKeywordList, keywordsColor, loadingKeywordList } = GetKeyWordsList(campaign)
+  const { resultKeywordList, keywordsColor } = GetKeyWordsList(campaign)
   const { resultFilterData, loadingFilterData } = FilterByCampaignId(
     campaign,
     platformId,
@@ -162,28 +163,19 @@ const OverallDashboard = () => {
     previousEndDate,
     keyword
   )
-  const checkKeywordId = (data: any, keywordId: string | number, keywordColor: any, color: any) => {
+  const checkKeywordId = (data: any, keywordId: string | number) => {
     const index = data.indexOf(keywordId)
-    const colorIndex = keywordColor?.indexOf(color)
+    
     if (index > -1) {
       data.splice(index, 1)
     } else {
       data.push(keywordId)
     }
-    if (colorIndex > -1) {
-      keywordColor?.splice(colorIndex, 1)
-    } else {
-      keywordColor?.push(color)
-    }
-
     setFilterKeyword(data)
-    setFilterColor(keywordColor)
     if (data.length === 0) {
       setKeyword('all')
-      setKeywordGraphColor(keywordsColor || GraphicColors)
     } else {
       setKeyword(data.join(','))
-      setKeywordGraphColor(keywordColor)
     }
 
     return data
@@ -305,13 +297,37 @@ const OverallDashboard = () => {
       periodSet(value)
     }
   }, [])
+
   useEffect(() => {
-    if (keywordsColor) {
-      setKeywordGraphColor(keywordsColor)
-    } else {
-      setKeywordGraphColor(GraphicColors)
-    }
-  }, [loadingKeywordList])
+    axios
+      .get(`${API_PATH}/keywords?campaing_id=${campaign}`, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+        }
+      })
+      .then(async response => {
+        const resultData = response?.data?.data
+        const keywordsColor = []
+        if (resultData && resultData?.length > 0) {
+          for (let i = 0; i < resultData?.length; i++) {
+            if (resultData[i]?.color) {
+              keywordsColor.push({
+                keywordName : resultData[i]?.name,
+                color: resultData[i]?.color
+              })
+            }
+          }
+        }
+        setKeywordGraphColor(keywordsColor)
+
+        if(keywordsColor.length == 0) {
+          setKeywordGraphColor(GraphicColors)
+        }
+      })
+      .catch((ex: any) => {
+        console.log(ex)
+      })
+  }, [campaign])
 
   return (
     <>
@@ -482,12 +498,9 @@ const OverallDashboard = () => {
                     onClick={() => {
                       if (keyword === 'all') {
                         setKeyword('')
-                        setKeywordGraphColor(keywordsColor || GraphicColors)
                       } else {
                         setKeyword('all')
                         setFilterKeyword([])
-                        setFilterColor([])
-                        setKeywordGraphColor(keywordsColor || GraphicColors)
                       }
                     }}
                     variant='contained'
@@ -522,9 +535,7 @@ const OverallDashboard = () => {
                           onClick={() => {
                             checkKeywordId(
                               filterKeyword,
-                              keywords?.id,
-                              filterColors,
-                              (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                              keywords?.id
                             )
                           }}
                           variant='contained'
@@ -544,7 +555,7 @@ const OverallDashboard = () => {
         {resultReportPermission?.includes('1') ? (
           <Grid id='chart1' item xs={12} md={4}>
             <DonutChart
-              keywordsColor={keywordGraphColors ?? GraphicColors}
+              keywordsColor={keywordGraphColors}
               params={params}
               resultFilterData={resultFilterData}
               loadingFilterData={loadingFilterData}
@@ -566,7 +577,7 @@ const OverallDashboard = () => {
               params={params}
               loadingFilterData={loadingFilterData}
               resultFilterData={resultFilterData}
-              keywordsColor={keywordGraphColors ?? GraphicColors}
+              keywordsColor={keywordGraphColors}
             />
           </Grid>
         ) : (

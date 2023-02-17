@@ -22,18 +22,24 @@ export const initValue = {
   datasets: datasets
 }
 
-export const getChartData = (data: any) => {
+export const getChartData = (data: any, keywordColor: any) => {
   if (!data) return []
 
   const seriesData: any[] = []
 
   if (data) {
     for (let i = 0; i < data?.length; i++) {
+      let color = "";
+      for(let j =0; j<keywordColor?.length; j++) {
+        if(keywordColor[j]?.keywordName === data[i].keyword_name ) {
+          color = keywordColor[j]?.color
+        }
+      }
       seriesData.push({
         label: data[i].keyword_name || '',
         data: data[i].data || [],
         backgroundColor: 'rgba(0,0,0,0.01)',
-        borderColor: GraphicColors[i],
+        borderColor: color || GraphicColors[i],
         borderWidth: 1
       })
     }
@@ -46,25 +52,27 @@ const KeywordComparisonByBullyType = ({
   chartId,
   highlight,
   resultKeywordComparisonByBullyType,
-  loadingKeywordComparisonByBullyType
+  loadingKeywordComparisonByBullyType,
+  keywordsColor
 }: {
   params: any
   chartId: string
   highlight?: boolean
   resultKeywordComparisonByBullyType: any
   loadingKeywordComparisonByBullyType: boolean
+  keywordsColor:any
 }) => {
   const [charData, setChartData] = useState(initValue)
 
   useEffect(() => {
     if (resultKeywordComparisonByBullyType) {
-      const seriesData = getChartData(resultKeywordComparisonByBullyType?.value)
+      const seriesData = getChartData(resultKeywordComparisonByBullyType?.value, keywordsColor)
       setChartData({
         labels: resultKeywordComparisonByBullyType?.labels ? resultKeywordComparisonByBullyType?.labels : [],
         datasets: seriesData
       })
     }
-  }, [resultKeywordComparisonByBullyType])
+  }, [resultKeywordComparisonByBullyType, keywordsColor])
 
   const reportNo = '2.2.028'
 

@@ -43,7 +43,7 @@ const DailyMessagePieChart = (props: Props) => {
     datasets: [
       {
         data: [],
-        backgroundColor: loadingPercentageMessage && keywordsColor ? keywordsColor : GraphicColors,
+        backgroundColor: keywordsColor,
         hoverOffset: 4
       }
     ]
@@ -54,15 +54,14 @@ const DailyMessagePieChart = (props: Props) => {
   const [previousPeriod, setPreviousPeriod] = useState<string>('')
   const [currentTotal, setCurrentTotal] = useState<number>()
   const [previousTotal, setPreviousTotal] = useState<number>()
-
-  const chartDataset = (data: any, type: string) => {
+  const chartDataset = (data: any, type: string, keywordColor: any) => {
     if (!data) {
       const chartData = {
         labels: [],
         datasets: [
           {
             data: [],
-            backgroundColor: loadingPercentageMessage && keywordsColor ? keywordsColor : GraphicColors,
+            backgroundColor: GraphicColors,
             hoverOffset: 4
           }
         ]
@@ -72,12 +71,20 @@ const DailyMessagePieChart = (props: Props) => {
     }
     const labels: any[] = []
     const percentage: number[] = []
+    const colors : any[] = []
     for (let i = 0; i < data?.length; i++) {
       labels.push(data[i].keyword_name)
+
+      for(let j =0; j<keywordColor?.length; j++) {
+        if(keywordColor[j]?.keywordName === data[i].keyword_name) {
+          colors.push(keywordColor[j]?.color)
+        }
+      }
 
       const percentageValue = data[i]?.value
       for (let j = 0; j < percentageValue?.length; j++) {
         percentage.push(data[i].value[j]?.percentage)
+
         if (type === 'current') {
           setCurrentPeriod(data[i].value[j]?.date)
         } else {
@@ -90,7 +97,7 @@ const DailyMessagePieChart = (props: Props) => {
       datasets: [
         {
           data: percentage,
-          backgroundColor: loadingPercentageMessage && keywordsColor ? keywordsColor : GraphicColors,
+          backgroundColor: colors,
           hoverOffset: 4
         }
       ]
@@ -167,10 +174,10 @@ const DailyMessagePieChart = (props: Props) => {
     if (resultPercentageMessage) {
       const currentMessageData = resultPercentageMessage?.prcentage_of_messages_current
       const previousMessageData = resultPercentageMessage?.prcentage_of_messages_previous
-      const currentDataset = chartDataset(currentMessageData, 'current')
+      const currentDataset = chartDataset(currentMessageData, 'current', keywordsColor)
       setCurrentData(currentDataset)
 
-      const previousDataset = chartDataset(previousMessageData, 'previous')
+      const previousDataset = chartDataset(previousMessageData, 'previous', keywordsColor)
       setPreviousData(previousDataset)
 
       if (currentMessageData?.length > 0) {
@@ -189,14 +196,15 @@ const DailyMessagePieChart = (props: Props) => {
       setPreviousTotal(0)
       setCurrentTotal(0)
     }
-  }, [resultPercentageMessage])
+  }, [resultPercentageMessage, keywordsColor])
+
 
   const reportNo = '2.1.001'
 
   const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550}} square variant='outlined'>
       {loadingPercentageMessage && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -213,10 +221,10 @@ const DailyMessagePieChart = (props: Props) => {
       <CardContent>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
-            <Doughnut data={currentData} options={currentPeriodOptions as any} height={270} />
+            <Doughnut data={currentData} options={currentPeriodOptions as any} height={500} />
           </Grid>
           <Grid item xs={12} md={6}>
-            <Doughnut data={previousData} options={previousPeriodOptions as any} height={270} />
+            <Doughnut data={previousData} options={previousPeriodOptions as any} height={500} />
           </Grid>
         </Grid>
         <Grid container spacing={3} mt={3}>

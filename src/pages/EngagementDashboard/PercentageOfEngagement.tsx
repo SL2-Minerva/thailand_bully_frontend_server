@@ -13,6 +13,7 @@ import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
 import { Chart} from "chart.js";
 import * as DoughnutLabel from "chartjs-plugin-doughnutlabel-rebourne";
+import { EngagementTransChartColor } from 'src/utils/const'
 
 Chart.register(DoughnutLabel );
 
@@ -29,7 +30,7 @@ interface MessageData {
 const PercentageOfEngangement = (props : MessageData) => {
 
   const { type, chartId, highlight,resultFilterData, loadingFilterData, keywordsColor } = props;
-  const colors = keywordsColor
+  const colors = keywordsColor ?? EngagementTransChartColor
   const initValue = {
     labels: [],
     datasets: [{
@@ -113,14 +114,14 @@ const PercentageOfEngangement = (props : MessageData) => {
     }
   }
 
-  const chartDataset = (data:any, type: string) => {
+  const chartDataset = (data:any, type: string, keywordColor:any) => {
     if (!data) 
     {
       const chartData = {
         labels: [],
         datasets: [{
           data: [],
-          backgroundColor: colors,
+          backgroundColor: EngagementTransChartColor,
           hoverOffset: 4
         }]
       };
@@ -129,6 +130,8 @@ const PercentageOfEngangement = (props : MessageData) => {
     }
     const labels : string[] =[];
     const percentage: number[] = [];
+    const colors = []
+
     for(let i =0; i<data?.length; i++ ) {
       // labels.push(data[i].keyword_name);
 
@@ -144,6 +147,14 @@ const PercentageOfEngangement = (props : MessageData) => {
         }
       }
     }
+    for(let i = 0; i<labels?.length; i++) {
+      for(let j =0; j<keywordColor?.length; j++) {
+        if(keywordColor[j]?.keywordName === labels[i]) {
+          colors.push(keywordColor[j]?.color)
+        }
+      }
+    }
+    
     const returnData = {
       labels: labels,
       datasets: [{
@@ -168,7 +179,7 @@ const PercentageOfEngangement = (props : MessageData) => {
       const previousMessageData = resultFilterData?.prcentage_of_engagement_previous;
       
       if(currentMessageData) {
-        const currentDataset = chartDataset(currentMessageData, 'current');
+        const currentDataset = chartDataset(currentMessageData, 'current',keywordsColor);
         setCurrentData(currentDataset);
 
         if(currentMessageData?.length > 0){
@@ -182,7 +193,7 @@ const PercentageOfEngangement = (props : MessageData) => {
       }
 
       if (previousMessageData) {
-        const previousDataset = chartDataset(previousMessageData, 'previous');
+        const previousDataset = chartDataset(previousMessageData, 'previous',keywordsColor);
         setPreviousData(previousDataset);
 
         if(previousMessageData?.length > 0){
@@ -202,7 +213,7 @@ const PercentageOfEngangement = (props : MessageData) => {
         setPreviousTotal(0);
         setCurrentTotal(0);
     }
-  }, [resultFilterData]);
+  }, [resultFilterData,keywordsColor]);
 
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>

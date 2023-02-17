@@ -18,25 +18,27 @@ const KeywordComparisonByChannel = ({
   chartId,
   highlight,
   resultKeywordComparisonByChannel,
-  loadingKeywordComparisonByChannel
+  loadingKeywordComparisonByChannel,
+  keywordColors
 }: {
   params: any
   chartId: string
   highlight: boolean
   resultKeywordComparisonByChannel: any
   loadingKeywordComparisonByChannel: boolean
+  keywordColors : any
 }) => {
   const [charData, setChartData] = useState(initValue)
 
   useEffect(() => {
     if (resultKeywordComparisonByChannel) {
-      const seriesData = getChartData(resultKeywordComparisonByChannel?.value)
+      const seriesData = getChartData(resultKeywordComparisonByChannel?.value,keywordColors)
       setChartData({
         labels: resultKeywordComparisonByChannel?.labels ? resultKeywordComparisonByChannel?.labels : [],
         datasets: seriesData
       })
     }
-  }, [resultKeywordComparisonByChannel])
+  }, [resultKeywordComparisonByChannel,keywordColors])
 
   const reportNo = '2.2.025'
 

@@ -32,11 +32,13 @@ import EngagementTypeByAccount from './EngagementTypeByAccount'
 import EngagementTypeByChannel from './EngagementTypeByChannel'
 import PeriodComparisonChartSentiment from './PeriodComparisonChartSentiment'
 import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDashboardApi'
-import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const'
+import { API_PATH, EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const'
 import EngagementByType from './EngagementByType'
 import QuickViewModal from './QuickViewModal'
 import { useRouter } from 'next/router'
 import { calculateDate, wordBreaks } from '../dashboard/overall'
+import axios from 'axios'
+import authConfig from 'src/configs/auth'
 
 const EngagementDashboard = () => {
   const theme = useTheme()
@@ -64,7 +66,7 @@ const EngagementDashboard = () => {
   const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
 
   const { resultReportPermission, errorUserPermission } = UserPermission()
-  const { resultKeywordList, loadingKeywordList, keywordsColor } = GetKeyWordsList(campaignType)
+  const { resultKeywordList, keywordsColor } = GetKeyWordsList(campaignType)
 
   const { resultFilterData, loadingFilterData } = FilterByCampaignId(
     campaignType,
@@ -140,17 +142,15 @@ const EngagementDashboard = () => {
 
   const checkKeywordId = (data: any, keywordId: string | number) => {
     const index = data.indexOf(keywordId)
+    
     if (index > -1) {
       data.splice(index, 1)
     } else {
       data.push(keywordId)
     }
-
     setFilterKeyword(data)
-
     if (data.length === 0) {
       setKeyword('all')
-      setKeywordGraphColor(keywordsColor)
     } else {
       setKeyword(data.join(','))
     }
@@ -167,12 +167,35 @@ const EngagementDashboard = () => {
   }, [errorUserPermission])
 
   useEffect(() => {
-    if(keywordsColor) {
-      setKeywordGraphColor(keywordsColor)
-    } else {
-      setKeywordGraphColor(EngagementTransChartColor)
-    }
-  },[loadingKeywordList])
+    axios
+      .get(`${API_PATH}/keywords?campaing_id=${campaignType}`, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+        }
+      })
+      .then(async response => {
+        const resultData = response?.data?.data
+        const keywordsColor = []
+        if (resultData && resultData?.length > 0) {
+          for (let i = 0; i < resultData?.length; i++) {
+            if (resultData[i]?.color) {
+              keywordsColor.push({
+                keywordName : resultData[i]?.name,
+                color: resultData[i]?.color
+              })
+            }
+          }
+        }
+        setKeywordGraphColor(keywordsColor)
+
+        if(keywordsColor.length == 0) {
+          setKeywordGraphColor(EngagementTransChartColor)
+        }
+      })
+      .catch((ex: any) => {
+        console.log(ex)
+      })
+  }, [campaignType])
 
   return (
     <>
@@ -268,7 +291,7 @@ const EngagementDashboard = () => {
               type='transaction'
               chartId='Chart 1'
               highlight={highlight === 'chart1' ? true : false}
-              keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
+              keywordsColor={keywordGraphColors}
             />
           </Grid>
         ) : (
@@ -290,7 +313,7 @@ const EngagementDashboard = () => {
               highlight={highlight === 'chart2' ? true : false}
               resultFilterData={resultFilterData}
               loadingFilterData={loadingFilterData}
-              keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
+              keywordsColor={keywordGraphColors}
             />
           </Grid>
         ) : (

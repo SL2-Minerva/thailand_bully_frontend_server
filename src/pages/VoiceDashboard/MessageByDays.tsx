@@ -2,7 +2,6 @@ import { Paper, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import {  GraphicColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
@@ -146,12 +145,12 @@ const MessagesByDays = (props: LineProps) => {
     }
   }
 
-  const chartDatasets = (data: any) => {
+  const chartDatasets = (data: any, keywordColor:any) => {
     if (!data) return []
     let totalAmount: number[] = []
     let keywordName = ''
     const returnData: StackChartDataset[] = []
-    const color = loadingMessagesByDay && keywordsColor ? keywordsColor : GraphicColors
+    const color = []
     const total = data?.value || data?.data || []
 
     for (let i = 0; i < total?.length; i++) {
@@ -162,6 +161,12 @@ const MessagesByDays = (props: LineProps) => {
       }
 
       keywordName = total[i]?.keyword_name
+      for(let j =0; j<keywordColor?.length; j++) {
+        if(keywordColor[j]?.keywordName === total[i].keyword_name) {
+          color.push(keywordColor[j]?.color)
+        }
+      }
+
       const chartDataset: StackChartDataset = {
         fill: false,
         tension: 0.5,
@@ -210,11 +215,11 @@ const MessagesByDays = (props: LineProps) => {
         const labels = chartLabel(dailyMessageData)
         setLabel(labels)
 
-        const dataSets = chartDatasets(dailyMessageData)
+        const dataSets = chartDatasets(dailyMessageData, keywordsColor)
         setDataset(dataSets)
       }
     }
-  }, [resultMessagesByDay])
+  }, [resultMessagesByDay, keywordsColor])
 
   const data = {
     labels: label || [],

@@ -18,24 +18,26 @@ const KeywordComparisonBySentiment = ({
   chartId,
   highlight,
   resultKeywordComparisonBySentiment,
-  loadingKeywordComparisonBySentiment
+  loadingKeywordComparisonBySentiment,
+  keywordsColor
 }: {
   params: any
   chartId: string
   highlight?: boolean
   resultKeywordComparisonBySentiment: any
   loadingKeywordComparisonBySentiment: boolean
+  keywordsColor: any
 }) => {
   const [charData, setChartData] = useState(initValue)
   useEffect(() => {
     if (resultKeywordComparisonBySentiment) {
-      const seriesData = getChartData(resultKeywordComparisonBySentiment?.value)
+      const seriesData = getChartData(resultKeywordComparisonBySentiment?.value,keywordsColor)
       setChartData({
         labels: resultKeywordComparisonBySentiment?.labels ? resultKeywordComparisonBySentiment?.labels : [],
         datasets: seriesData
       })
     }
-  }, [resultKeywordComparisonBySentiment])
+  }, [resultKeywordComparisonBySentiment, keywordsColor])
 
   const reportNo = '2.2.026'
 

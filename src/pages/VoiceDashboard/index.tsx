@@ -6,15 +6,13 @@ import InfluencerComparison from './InfluencerComparison'
 import MessageText from 'mdi-material-ui/MessageText'
 import { AccountGroup } from 'mdi-material-ui'
 import DailyMessagePieChart from './DailyMessagesPieChart'
-import {
-  GetNumbersOfAccountComparison
-} from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
+import { GetNumbersOfAccountComparison } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 import Filter from './Filter'
 import QuickView from './QuickView'
 import { DateType } from 'src/types/forms/reactDatepickerTypes'
 import { UserPermission } from 'src/services/api/users/role'
 import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDashboardApi'
-import { GraphicColors } from 'src/utils/const'
+import { API_PATH, GraphicColors } from 'src/utils/const'
 import QuickViewModal from './QuickViewModal'
 import KeywordBy from './KeywordBy'
 import DayTimeBy from './DayTimeBy'
@@ -22,13 +20,15 @@ import MessageByAll from './MessageByAll'
 import Comparison from './Comparision'
 import { useRouter } from 'next/router'
 import { calculateDate, wordBreaks } from '../dashboard/overall'
+import axios from 'axios'
+import authConfig from 'src/configs/auth'
 
 const VoiceDashboard = () => {
   const router = useRouter()
   const [date, setDate] = useState<DateType>(calculateDate(6))
   const [endDate, setEndDate] = useState<DateType>(new Date())
   const [period, setPeriod] = useState<string>('last7days')
-  const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || "3")
+  const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
   const [campaign, setCampaign] = useState<string>('1')
   const [previousDate, setPreviousDate] = useState<DateType>(new Date())
   const [previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
@@ -37,7 +37,8 @@ const VoiceDashboard = () => {
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
   const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
-  const [filterColors, setFilterColor] = useState<any>([])
+  
+  // const [filterColors, setFilterColor] = useState<any>([])
 
   const params = {
     campaign: campaign,
@@ -46,8 +47,8 @@ const VoiceDashboard = () => {
     period: period,
     previousDate: previousDate,
     previousEndDate: previousEndDate,
-    keywordIds: keyword, 
-    page : 'voiceDashboard',
+    keywordIds: keyword,
+    page: 'voiceDashboard',
     label: '',
     ylabel: ''
   }
@@ -59,56 +60,63 @@ const VoiceDashboard = () => {
   // const { resultTotalAccount,resultTotalMessages, loadingTotalComparison } = GetComparison(campaign, date, endDate, period, keyword);
   const { resultKeywordList, loadingKeywordList, keywordsColor } = GetKeyWordsList(campaign)
 
-  const checkKeywordId = (data: any, keywordId: string | number, keywordColor: any, color: any) => {
+  const checkKeywordId = (data: any, keywordId: string | number) => {
     const index = data.indexOf(keywordId)
-    const colorIndex = keywordColor?.indexOf(color)
+    
     if (index > -1) {
       data.splice(index, 1)
     } else {
       data.push(keywordId)
     }
-    if (colorIndex > -1) {
-      keywordColor?.splice(colorIndex, 1)
-    } else {
-      keywordColor?.push(color)
-    }
-
     setFilterKeyword(data)
-    setFilterColor(keywordColor)
     if (data.length === 0) {
       setKeyword('all')
-      setKeywordGraphColor(keywordsColor || GraphicColors)
     } else {
       setKeyword(data.join(','))
-      setKeywordGraphColor(keywordColor)
     }
-    console.log("keywordColor", keywordColor)
 
     return data
   }
 
-  useEffect(()=> {
-    if(errorUserPermission) {
+  useEffect(() => {
+    if (errorUserPermission) {
       window.localStorage.removeItem('userData')
       localStorage.clear()
       router.push('/login')
     }
   }, [errorUserPermission])
 
-  useEffect(() => {
-    if (keywordsColor) {
-      setKeywordGraphColor(keywordsColor)
-    } else {
-      setKeywordGraphColor(GraphicColors)
-    }
-  }, [loadingKeywordList])
 
   useEffect(() => {
-    if (filterKeyword?.length>0) {
-      setKeywordGraphColor(filterKeyword)
-      console.log("hello")
-    } 
-  },[filterKeyword])
+    axios
+      .get(`${API_PATH}/keywords?campaing_id=${campaign}`, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+        }
+      })
+      .then(async response => {
+        const resultData = response?.data?.data
+        const keywordsColor = []
+        if (resultData && resultData?.length > 0) {
+          for (let i = 0; i < resultData?.length; i++) {
+            if (resultData[i]?.color) {
+              keywordsColor.push({
+                keywordName : resultData[i]?.name,
+                color: resultData[i]?.color
+              })
+            }
+          }
+        }
+        setKeywordGraphColor(keywordsColor)
+
+        if(keywordsColor.length == 0) {
+          setKeywordGraphColor(GraphicColors)
+        }
+      })
+      .catch((ex: any) => {
+        console.log(ex)
+      })
+  }, [campaign])
 
   return (
     <Grid container spacing={6}>
@@ -141,12 +149,14 @@ const VoiceDashboard = () => {
                     onClick={() => {
                       if (keyword === 'all') {
                         setKeyword('')
-                        setKeywordGraphColor(keywordsColor || GraphicColors)
+
+                        // setKeywordGraphColor(keywordsColor || GraphicColors)
                       } else {
                         setKeyword('all')
                         setFilterKeyword([])
-                        setFilterColor([])
-                        setKeywordGraphColor(keywordsColor || GraphicColors)
+
+                        // setFilterColor([])
+                        // setKeywordGraphColor(keywordsColor || GraphicColors)
                       }
                     }}
                     variant='contained'
@@ -181,9 +191,7 @@ const VoiceDashboard = () => {
                           onClick={() => {
                             checkKeywordId(
                               filterKeyword,
-                              keywords?.id,
-                              filterColors,
-                              (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                              keywords?.id
                             )
                           }}
                           variant='contained'
@@ -201,12 +209,11 @@ const VoiceDashboard = () => {
       {resultReportPermission?.includes('20') ? (
         <Grid item xs={12} md={4} id='chart1'>
           <DailyMessagePieChart
-           keywordsColor={keywordGraphColors ?? GraphicColors}
+            keywordsColor={keywordGraphColors}
             params={params}
             type='message'
             chartId='Chart 1'
             highlight={highlight === 'chart1' ? true : false}
-
           />
         </Grid>
       ) : (
@@ -226,9 +233,14 @@ const VoiceDashboard = () => {
       ) : (
         ''
       )}
-      
-      <MessageByAll keywordsColor={!loadingKeywordList ? keywordGraphColors : GraphicColors} resultReportPermission={resultReportPermission} highlight={highlight} params={params} />
-      
+
+      <MessageByAll
+        keywordsColor={keywordGraphColors}
+        resultReportPermission={resultReportPermission}
+        highlight={highlight}
+        params={params}
+      />
+
       {resultReportPermission?.includes('30') ? (
         <Grid item xs={12} md={8} id='chart11'>
           <InfluencerGraph
@@ -237,6 +249,7 @@ const VoiceDashboard = () => {
             highlight={highlight === 'chart11' ? true : false}
             resultNumbersOfAccounts={resultNumbersOfAccounts}
             loadingNumbersOfAccounts={loadingNumbersOfAccountsComparison}
+            keywordsColor={keywordGraphColors}
           />
         </Grid>
       ) : (
@@ -285,11 +298,22 @@ const VoiceDashboard = () => {
       <DayTimeBy resultReportPermission={resultReportPermission} params={params} highlight={highlight} />
 
       <Comparison resultReportPermission={resultReportPermission} params={params} highlight={highlight} />
-      
-      <KeywordBy highlight={highlight} resultReportPermission={resultReportPermission} params={params} keywordsColor={keywordGraphColors ?? GraphicColors} />
+
+      <KeywordBy
+        highlight={highlight}
+        resultReportPermission={resultReportPermission}
+        params={params}
+        keywordsColor={keywordGraphColors}
+      />
 
       <QuickView setHighlight={setHighlight} setShowQuickView={setShowQuickView} />
-      <QuickViewModal show={showQuickView} setShow={setShowQuickView} params={params} chartId={highlight} keywordsColor={keywordGraphColors ?? GraphicColors} />
+      <QuickViewModal
+        show={showQuickView}
+        setShow={setShowQuickView}
+        params={params}
+        chartId={highlight}
+        keywordsColor={keywordGraphColors}
+      />
     </Grid>
   )
 }

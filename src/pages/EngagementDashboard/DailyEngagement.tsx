@@ -82,9 +82,6 @@ const DailyEngagement = (props: LineProps) => {
     keywordsColor
   } = props
 
-  // const [ chartData, setChartData ] = useState();
-  const colors = keywordsColor
-
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
@@ -201,12 +198,12 @@ const DailyEngagement = (props: LineProps) => {
     }
   }
 
-  const chartDatasets = (data: any, labels:any) => {
+  const chartDatasets = (data: any, labels:any, keywordColor:any) => {
     if (!data) return []
     let totalAmount: number[] = []
     let keywordName = ''
     const returnData: StackChartDataset[] = []
-    const color = colors
+    const color = []
     for (let i = 0; i < data?.length; i++) {
       totalAmount = []
       const total = data[i]?.value
@@ -229,6 +226,11 @@ const DailyEngagement = (props: LineProps) => {
       }
 
       keywordName = data[i].keyword_name
+      for(let j =0; j<keywordColor?.length; j++) {
+        if(keywordColor[j]?.keywordName === data[i].keyword_name) {
+          color.push(keywordColor[j]?.color)
+        }
+      }
 
       const chartDataset: StackChartDataset = {
         fill: false,
@@ -260,7 +262,7 @@ const DailyEngagement = (props: LineProps) => {
         setLabel(labels)
 
         if (labels?.length > 0) {
-          const dataSets = chartDatasets(engagementData, labels)
+          const dataSets = chartDatasets(engagementData, labels, keywordsColor)
           setDataset(dataSets)
         }
       }
@@ -268,7 +270,7 @@ const DailyEngagement = (props: LineProps) => {
       setLabel([])
       setDataset([])
     }
-  }, [resultFilterData])
+  }, [resultFilterData, keywordsColor])
 
   const data = {
     labels: label || [],
