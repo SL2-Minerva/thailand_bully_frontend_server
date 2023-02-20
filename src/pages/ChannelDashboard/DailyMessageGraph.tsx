@@ -285,7 +285,7 @@ const DailyMessageGraph = (props: Props) => {
               color: '#80808059'
             }}
           >
-            There is no data
+            <Translations text='no data' />
           </div>
         ) : (
           <Bar ref={chartRef} data={data} options={options as any} height={366} onClick={onClick} />

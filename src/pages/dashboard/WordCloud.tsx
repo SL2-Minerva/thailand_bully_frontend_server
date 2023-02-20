@@ -5,6 +5,7 @@ import { Card, CardHeader, LinearProgress } from '@mui/material'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import { GetWordClouds } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import Translations from 'src/layouts/components/Translations'
 
 const WordCloud = ({ params, chartId }: { params: any; chartId: string }) => {
   const { resultWordClouds, loadingWordClouds } = GetWordClouds(
@@ -41,7 +42,7 @@ const WordCloud = ({ params, chartId }: { params: any; chartId: string }) => {
               color: '#80808059'
             }}
           >
-            There is no data
+            <Translations text='no data' />
           </div>
         ) : (
           <ReactWordcloud words={resultWordClouds?.word_clouds || []} />

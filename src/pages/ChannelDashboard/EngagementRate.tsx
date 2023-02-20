@@ -213,6 +213,8 @@ const EngagementRate = (props: LineProps) => {
           setShowNoDataText(true)
         }
       }
+    } else {
+      setShowNoDataText(true)
     }
   }, [resultBy, resultByPrevious])
 
@@ -226,7 +228,7 @@ const EngagementRate = (props: LineProps) => {
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Card>
+    <Card sx={{ minHeight: 518}}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -250,7 +252,7 @@ const EngagementRate = (props: LineProps) => {
               color: '#80808059'
             }}
           >
-            There is no data
+            <Translations text='no data' />
           </div>
         ) : (
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />

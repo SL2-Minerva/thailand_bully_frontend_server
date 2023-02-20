@@ -134,11 +134,11 @@ const DialogNetworkGraphByFitler = (props: DialogInfoProps) => {
             <Grid item xs={12}> 
             {
                selectedValue === 'bySentiment' ? 
-               <Graph graph={resultSentimentNetwork ? resultSentimentNetwork : initialGraph} options={options} />
+               <Graph graph={resultNetworkGraph?.sentiment ? resultSentimentNetwork : resultNetworkGraph ? resultNetworkGraph :initialGraph} options={options} />
                : selectedValue === 'byBullyLevel' ? 
-               <Graph graph={resultBullyLevelNetwork ? resultBullyLevelNetwork : initialGraph} options={options} />
+               <Graph graph={resultNetworkGraph?.bullyLevel ? resultBullyLevelNetwork : resultNetworkGraph ? resultNetworkGraph :initialGraph} options={options} />
                : selectedValue === 'byBullyType' ?
-               <Graph graph={resultBullyTypeNetwork ? resultBullyTypeNetwork : initialGraph} options={options} />
+               <Graph graph={resultNetworkGraph?.bullyType ? resultBullyTypeNetwork : resultNetworkGraph ? resultNetworkGraph : initialGraph} options={options} />
                :
                <Graph graph={resultNetworkGraph ? resultNetworkGraph : initialGraph} options={options} />
 

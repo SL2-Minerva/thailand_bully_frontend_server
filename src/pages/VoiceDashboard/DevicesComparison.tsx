@@ -153,7 +153,7 @@ const DevicesComparison = ({
       setCurrentData(resultDevicesComparison.current_period)
       setPreviousData(resultDevicesComparison.previous_period)
     }
-    if (resultDevicesComparison.current_period?.total || resultDevicesComparison.previous_period?.total) {
+    if (resultDevicesComparison?.current_period?.total || resultDevicesComparison?.previous_period?.total) {
       setShowNoDataText(false)
     } else {
       setShowNoDataText(true)
@@ -187,7 +187,7 @@ const DevicesComparison = ({
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <Doughnut data={currentPeriodData} options={currentPeriodOptions as any} height={290} />
@@ -204,7 +204,7 @@ const DevicesComparison = ({
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <Doughnut data={previousPeriodData} options={previousPeriodOptions as any} height={290} />

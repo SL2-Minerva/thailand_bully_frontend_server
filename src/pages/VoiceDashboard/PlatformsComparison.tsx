@@ -149,7 +149,7 @@ const PlatformsComparison = ({
       setCurrentData(resultPlatformComparison.current_period)
       setPreviousData(resultPlatformComparison.previous_period)
 
-      if (resultPlatformComparison.current_period?.total || resultPlatformComparison.previous_period?.total) {
+      if (resultPlatformComparison?.current_period?.total || resultPlatformComparison?.previous_period?.total) {
         setShowNoDataText(false)
       } else {
         setShowNoDataText(true)
@@ -189,7 +189,7 @@ const PlatformsComparison = ({
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <Doughnut data={currentPeriodData} options={currentPeriodOptions as any} height={290} />
@@ -206,7 +206,7 @@ const PlatformsComparison = ({
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <Doughnut data={previousPeriodData} options={previousPeriodOptions as any} height={290} />

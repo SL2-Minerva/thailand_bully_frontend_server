@@ -385,8 +385,24 @@ export const GetWordClouds = (
     params: params
   })
 
+  const wordCloudTable: any = []
+  if (response?.data?.word_clouds_table) {
+    const wordcloudData = response?.data?.word_clouds_table
+    for (let i = 0; i < wordcloudData?.length; i++) {
+      wordCloudTable.push({
+        id: i + 1,
+        keyword: wordcloudData[i].keyword,
+        keyword_id: wordcloudData[i].keyword_id,
+        keyword_name: wordcloudData[i].keyword_name,
+        percent: wordcloudData[i].percent,
+        total: wordcloudData[i].total
+      })
+    }
+  }
+
   return {
     resultWordClouds: response?.data || null,
+    wordCloudTable: wordCloudTable,
     loadingWordClouds: loading,
     errorWordClouds: error
   }
@@ -401,7 +417,8 @@ export const GetWordCloudsPlatform = (
   select?: string,
   previousDate?: any,
   previousEndDate?: any,
-  fillter_keywords?: string
+  fillter_keywords?: string,
+  wordCloudPlatform?:string
 ) => {
   let params = {}
   const todayDate = new Date()
@@ -415,7 +432,8 @@ export const GetWordCloudsPlatform = (
       select: select || 'top10',
       start_date_period: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
       end_date_period: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
-      fillter_keywords: fillter_keywords
+      fillter_keywords: fillter_keywords,
+      platform_id: wordCloudPlatform
     }
   } else {
     params = {
@@ -425,7 +443,8 @@ export const GetWordCloudsPlatform = (
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
       period: period,
       select: select || 'top10',
-      fillter_keywords: fillter_keywords
+      fillter_keywords: fillter_keywords,
+      platform_id: wordCloudPlatform
     }
   }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
@@ -450,7 +469,8 @@ export const GetWordCloudsSentiment = (
   select?: string,
   previousDate?: any,
   previousEndDate?: any,
-  fillter_keywords?: string
+  fillter_keywords?: string,
+  sentiment_select?: string
 ) => {
   let params = {}
   const todayDate = new Date()
@@ -464,7 +484,8 @@ export const GetWordCloudsSentiment = (
       select: select || 'top10',
       start_date_period: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
       end_date_period: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
-      fillter_keywords: fillter_keywords
+      fillter_keywords: fillter_keywords,
+      sentiment_type: sentiment_select
     }
   } else {
     params = {
@@ -474,7 +495,8 @@ export const GetWordCloudsSentiment = (
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
       period: period,
       select: select || 'top10',
-      fillter_keywords: fillter_keywords
+      fillter_keywords: fillter_keywords,
+      sentiment_type: sentiment_select
     }
   }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
@@ -591,23 +613,23 @@ export const GetNetworkGraph = (
   })
 
   const sentiment = {
-    nodes : response?.data?.sentiment?.nodes ?? [],
-    edges : response?.data?.sentiment?.edges ??[]
+    nodes: response?.data?.sentiment?.nodes ?? [],
+    edges: response?.data?.sentiment?.edges ?? []
   }
 
   const bullyLevel = {
-    nodes : response?.data?.bullyLevel?.nodes ?? [],
-    edges : response?.data?.bullyLevel?.edges ??[]
+    nodes: response?.data?.bullyLevel?.nodes ?? [],
+    edges: response?.data?.bullyLevel?.edges ?? []
   }
 
   const bullyType = {
-    nodes : response?.data?.bullyType?.nodes ?? [],
-    edges : response?.data?.bullyType?.edges ??[]
+    nodes: response?.data?.bullyType?.nodes ?? [],
+    edges: response?.data?.bullyType?.edges ?? []
   }
 
   return {
     resultNetworkGraph: response?.data || null,
-    resultSentimentNetwork: sentiment|| null,
+    resultSentimentNetwork: sentiment || null,
     resultBullyLevelNetwork: bullyLevel || null,
     resultBullyTypeNetwork: bullyType || null,
     loadingNetworkGraph: loading,
@@ -648,7 +670,6 @@ export const GetKeyWordsList = (campaignId: any) => {
       }
 
       // keywordsColor.push(SentimentAllColors[i])
-      
     }
   }
 

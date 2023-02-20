@@ -782,7 +782,7 @@ const EngagementDashboard = () => {
           params={params}
           chartId={highlight}
           quickViewData={quickViewData}
-          keywordsColor={keywordsColor}
+          keywordsColor={keywordGraphColors}
         />
       </Grid>
     </>

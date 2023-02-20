@@ -253,7 +253,7 @@ const PercentageOfEngangement = (props: MessageData) => {
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <Doughnut data={currentData} options={options as any} height={343} />
@@ -270,7 +270,7 @@ const PercentageOfEngangement = (props: MessageData) => {
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <Doughnut data={previousData} options={optionsPrevious as any} height={343} />

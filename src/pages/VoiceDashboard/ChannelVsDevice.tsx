@@ -110,7 +110,7 @@ const ChannelVsDevice = ({
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <ReactApexcharts type='bar' options={options} series={series} height={305} />

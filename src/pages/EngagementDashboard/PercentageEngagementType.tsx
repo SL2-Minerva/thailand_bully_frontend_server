@@ -162,6 +162,7 @@ const PercentageOfEngangementType = (props: MessageData) => {
   const title = type === 'transaction' ? 'Percentage of Engagement Trans' : 'Percentage of Engagement Type'
 
   useEffect(() => {
+    console.log("enggagementtype", resultEngagementType)
     if (resultEngagementType) {
       const currentMessageData = resultEngagementType?.prcentage_of_engagement_current
       const previousMessageData = resultEngagementType?.prcentage_of_engagement_previous
@@ -223,7 +224,7 @@ const PercentageOfEngangementType = (props: MessageData) => {
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <Doughnut data={currentData} options={options as any} height={343} />
@@ -240,7 +241,7 @@ const PercentageOfEngangementType = (props: MessageData) => {
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <Doughnut data={previousData} options={optionsPrevious as any} height={343} />

@@ -11,6 +11,7 @@ import { Doughnut } from 'react-chartjs-2'
 import { ThumbUp, ThumbDown, ThumbsUpDown, Information } from 'mdi-material-ui'
 import { StyledTooltip } from './overall'
 import { GetSentimentType } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import Translations from 'src/layouts/components/Translations'
 
 const CommentSentiment = ({ params, chartId }: { params: any; chartId: string }) => {
   const { resultSentimentType, loadingFilterData } = GetSentimentType(
@@ -89,7 +90,7 @@ const CommentSentiment = ({ params, chartId }: { params: any; chartId: string })
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             )}
           </Grid>

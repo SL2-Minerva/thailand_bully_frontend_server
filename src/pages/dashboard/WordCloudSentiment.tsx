@@ -19,7 +19,8 @@ const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string 
     params?.topKeyword,
     params?.previousDate,
     params?.previousEndDate,
-    params?.keywordIds
+    params?.keywordIds,
+    sentiment
   )
 
   const chooseSentiment = (value: string) => {
@@ -74,7 +75,7 @@ const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string 
               color: '#80808059'
             }}
           >
-            There is no data
+            <Translations text='no data'/>
           </div>
         ) : (
           <ReactWordcloud words={resultWordCloudsSentiment?.word_clouds_position || []} />

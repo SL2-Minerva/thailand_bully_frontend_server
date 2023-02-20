@@ -187,7 +187,7 @@ const SummaryByAccount = ({
             getRowId={row => row.id}
           />
         ) : (
-          ''
+          'There is no data'
         )}
       </CardContent>
     </Card>

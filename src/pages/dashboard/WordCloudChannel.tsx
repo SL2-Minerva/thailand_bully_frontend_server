@@ -31,7 +31,8 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
     params?.topKeyword,
     params?.previousDate,
     params?.previousEndDate,
-    params?.keywordIds
+    params?.keywordIds,
+    platformId
   )
 
   const handleSelectList = useCallback((e: SelectChangeEvent) => {
@@ -79,7 +80,8 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
         </Grid>
       </Grid>
       <div style={{ height: 400, width: 600 }}>
-        {!resultWordCloudsPlatform?.word_clouds_platform || resultWordCloudsPlatform?.word_clouds_platform?.length == 0 ? (
+        {!resultWordCloudsPlatform?.word_clouds_platform ||
+        resultWordCloudsPlatform?.word_clouds_platform?.length == 0 ? (
           <div
             style={{
               padding: '130px 0',
@@ -88,12 +90,11 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
               color: '#80808059'
             }}
           >
-            There is no data
+            <Translations text='no data' />
           </div>
         ) : (
-            <ReactWordcloud words={resultWordCloudsPlatform?.word_clouds_platform || []} />
+          <ReactWordcloud words={resultWordCloudsPlatform?.word_clouds_platform || []} />
         )}
-        
       </div>
     </Card>
   )
