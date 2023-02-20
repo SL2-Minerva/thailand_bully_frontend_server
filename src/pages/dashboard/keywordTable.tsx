@@ -63,9 +63,11 @@ const KeywordTable = ({ params, chartId }: { params: any; chartId: string }) => 
                 )
               })}
 
-              {!resultKeywords || resultKeywords.length ==0  ? (
+              {!resultKeywords || resultKeywords.length == 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} sx={{textAlign: 'center'}}>There is no data</TableCell>
+                  <TableCell colSpan={6} sx={{ textAlign: 'center' }}>
+                    <Translations text='no data' />
+                  </TableCell>
                 </TableRow>
               ) : (
                 ''

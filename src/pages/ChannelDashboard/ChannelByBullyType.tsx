@@ -77,12 +77,12 @@ const ChannelByBullyType = (props: LineProps) => {
         params.label = label[index]
       }
       const messageDetailIds = getKeywordId(getDatasetAtEvent(chartRef.current, event))
-      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event);
+      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event)
 
-      if(getDatasetIndex?.length > 0) {
-        const datasetIndex = getDatasetIndex[0]?.datasetIndex;
-       
-        if(datasetIndex === 0 || datasetIndex) {
+      if (getDatasetIndex?.length > 0) {
+        const datasetIndex = getDatasetIndex[0]?.datasetIndex
+
+        if (datasetIndex === 0 || datasetIndex) {
           params.Llabel = dataset[datasetIndex]?.label
         }
       }
@@ -199,7 +199,7 @@ const ChannelByBullyType = (props: LineProps) => {
       </span>
 
       <CardContent>
-      {showNoDataText ? (
+        {showNoDataText ? (
           <div
             style={{
               height: 300,
@@ -209,7 +209,7 @@ const ChannelByBullyType = (props: LineProps) => {
               color: '#80808059'
             }}
           >
-            There is no data
+            <Translations text='no data' />
           </div>
         ) : (
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />

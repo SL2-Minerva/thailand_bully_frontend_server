@@ -242,7 +242,7 @@ const EngagementByChannel = (props: LineProps) => {
               color: '#80808059'
             }}
           >
-            There is no data
+            <Translations text='no data' />
           </div>
         ) : (
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />

@@ -14,6 +14,7 @@ import Translations from 'src/layouts/components/Translations'
 const MessagesByBullyLevel = (props: LineProps) => {
   const { t } = useTranslation()
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, keywordsColor } = props
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -129,12 +130,12 @@ const MessagesByBullyLevel = (props: LineProps) => {
     }
   }
 
-  const chartDatasets = (data: any,keywordColor:any) => {
+  const chartDatasets = (data: any, keywordColor: any) => {
     if (!data) return []
     let totalAmount: number[] = []
     let keywordName = ''
     const returnData: StackChartDataset[] = []
-    const color =[]
+    const color = []
     const total = data?.value || data?.data || []
 
     for (let i = 0; i < total?.length; i++) {
@@ -145,8 +146,8 @@ const MessagesByBullyLevel = (props: LineProps) => {
       }
 
       keywordName = total[i]?.keyword_name
-      for(let j =0; j<keywordColor?.length; j++) {
-        if(keywordColor[j]?.keywordName === total[i].keyword_name) {
+      for (let j = 0; j < keywordColor?.length; j++) {
+        if (keywordColor[j]?.keywordName === total[i].keyword_name) {
           color.push(keywordColor[j]?.color)
         }
       }
@@ -198,11 +199,17 @@ const MessagesByBullyLevel = (props: LineProps) => {
         const labels = chartLabel(dailyMessageData)
         setLabel(labels)
 
-        const dataSets = chartDatasets(dailyMessageData,keywordsColor)
+        const dataSets = chartDatasets(dailyMessageData, keywordsColor)
         setDataset(dataSets)
+
+        if (!dailyMessageData?.value) {
+          setShowNoDataText(true)
+        } else {
+          setShowNoDataText(false)
+        }
       }
     }
-  }, [resultMessagesByBullyLevel,keywordsColor])
+  }, [resultMessagesByBullyLevel, keywordsColor])
 
   const data = {
     labels: label || [],
@@ -228,7 +235,21 @@ const MessagesByBullyLevel = (props: LineProps) => {
       </span>
 
       <CardContent>
-        <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            <Translations text='no data' />
+          </div>
+        ) : (
+          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        )}
         {showDetail ? (
           <MessageDetail
             show={showDetail}

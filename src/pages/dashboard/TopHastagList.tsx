@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import { GetTopKeywords } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import Translations from 'src/layouts/components/Translations'
 
 // import { useState } from "react";
 // import DailyMessageDetail from "./DailyMessageDetail";
@@ -71,10 +72,10 @@ const TopHashtagList = ({ params, chartId }: Props) => {
                 )
               })}
 
-              {!resultTopKeywords?.top_hastag || resultTopKeywords?.top_hastag?.length ==0 ? (
+              {!resultTopKeywords?.top_hastag || resultTopKeywords?.top_hastag?.length == 0 ? (
                 <TableRow>
                   <TableCell colSpan={3} sx={{ textAlign: 'center' }}>
-                    There is no data
+                    <Translations text='no data' />
                   </TableCell>
                 </TableRow>
               ) : (

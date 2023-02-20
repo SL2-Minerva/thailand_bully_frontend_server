@@ -172,5 +172,6 @@
   "Bully Type: Daily Message by Channel"	:	"Bully Type: Daily Message by Channel",
   "Bully Type: Daily Message by Sentiment"	:	"Bully Type: Daily Message by Sentiment",
   "Bully Level: Share of Channel"	:	"Bully Level: Share of Channel",
-  "Bully Type: Share of Channel"	:	"Bully Type: Share of Channel"
+  "Bully Type: Share of Channel"	:	"Bully Type: Share of Channel",
+  "no data": "There is no data"
 }

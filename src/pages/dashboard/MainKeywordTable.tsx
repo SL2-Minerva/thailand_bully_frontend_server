@@ -73,10 +73,10 @@ const MainKeyWordTable = ({ params, chartId }: Props) => {
                 )
               })}
 
-              {!resultTopKeywords?.main_keyword || resultTopKeywords?.main_keyword?.length ==0  ? (
+              {!resultTopKeywords?.main_keyword || resultTopKeywords?.main_keyword?.length == 0 ? (
                 <TableRow>
                   <TableCell colSpan={3} sx={{ textAlign: 'center' }}>
-                    There is no data
+                    <Translations text='no data' />
                   </TableCell>
                 </TableRow>
               ) : (

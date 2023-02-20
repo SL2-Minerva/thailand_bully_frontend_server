@@ -83,6 +83,7 @@ const PeriodComparisonChart = (props: LineProps) => {
   } = props
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   //   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
   //     setPage(value-1);
@@ -199,7 +200,15 @@ const PeriodComparisonChart = (props: LineProps) => {
 
         const dataSets = chartDatasets(dailyMessageData)
         setDataset(dataSets)
+
+        if (dailyMessageData?.value) {
+          setShowNoDataText(false)
+        } else {
+          setShowNoDataText(true)
+        }
       }
+    } else {
+      setShowNoDataText(true)
     }
   }, [resultSentimentComparisonByEngagement])
 
@@ -209,14 +218,14 @@ const PeriodComparisonChart = (props: LineProps) => {
   }
 
   const title = chartId + ', Report Level 2(' + reportNo + ')'
-  const cardTitle = getTitle(type, chartTitle);
+  const cardTitle = getTitle(type, chartTitle)
 
   return (
     <Card>
       {loadingSenitmentComparisonByEngagement && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text={cardTitle}/>}
+          title={<Translations text={cardTitle} />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
@@ -228,62 +237,80 @@ const PeriodComparisonChart = (props: LineProps) => {
       <CardContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+            {showNoDataText ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '170px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                <Translations text='no data' />
+              </div>
+            ) : (
+              <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+            )}
           </Grid>
           <Grid item xs={12}>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-                <TableHead>
-                  <TableRow>
-                    <TableCell width={30}>
-                      {resultSentimentComparisonByEngagement?.share ? 'Share' : 'Positive'}
-                    </TableCell>
-                    {(
-                      resultSentimentComparisonByEngagement?.share ||
-                      resultSentimentComparisonByEngagement?.positive ||
-                      []
-                    )?.map((share: any, index: number) => {
-                      return (
-                        <TableCell align='left' key={index}>
-                          {share}
-                        </TableCell>
-                      )
-                    })}
-                    {/* <TableCell align='left'>{resultSentimentComparisonByEngagement?.share || resultSentimentComparisonByEngagement?.positive || ""}</TableCell> */}
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>{resultSentimentComparisonByEngagement?.comment ? 'Comment' : 'Neutral'}</TableCell>
-                    {(
-                      resultSentimentComparisonByEngagement?.comment ||
-                      resultSentimentComparisonByEngagement?.neutral ||
-                      []
-                    )?.map((comment: any, index: number) => {
-                      return (
-                        <TableCell align='left' key={index}>
-                          {comment}
-                        </TableCell>
-                      )
-                    })}
-                    {/* <TableCell align='left'>{resultSentimentComparisonByEngagement?.comment || resultSentimentComparisonByEngagement?.neutral || ""}</TableCell> */}
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>{resultSentimentComparisonByEngagement?.comment ? 'Reaction' : 'Negative'}</TableCell>
-                    {(
-                      resultSentimentComparisonByEngagement?.reaction ||
-                      resultSentimentComparisonByEngagement?.negative ||
-                      []
-                    )?.map((reaction: any, index: number) => {
-                      return (
-                        <TableCell align='left' key={index}>
-                          {reaction}
-                        </TableCell>
-                      )
-                    })}
-                    {/* <TableCell align='left'>{resultSentimentComparisonByEngagement?.reaction || resultSentimentComparisonByEngagement?.negative || ""}</TableCell> */}
-                  </TableRow>
-                </TableHead>
-              </Table>
-            </TableContainer>
+            {resultSentimentComparisonByEngagement?.value ? (
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell width={30}>
+                        {resultSentimentComparisonByEngagement?.share ? 'Share' : 'Positive'}
+                      </TableCell>
+                      {(
+                        resultSentimentComparisonByEngagement?.share ||
+                        resultSentimentComparisonByEngagement?.positive ||
+                        []
+                      )?.map((share: any, index: number) => {
+                        return (
+                          <TableCell align='left' key={index}>
+                            {share}
+                          </TableCell>
+                        )
+                      })}
+                      {/* <TableCell align='left'>{resultSentimentComparisonByEngagement?.share || resultSentimentComparisonByEngagement?.positive || ""}</TableCell> */}
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>{resultSentimentComparisonByEngagement?.comment ? 'Comment' : 'Neutral'}</TableCell>
+                      {(
+                        resultSentimentComparisonByEngagement?.comment ||
+                        resultSentimentComparisonByEngagement?.neutral ||
+                        []
+                      )?.map((comment: any, index: number) => {
+                        return (
+                          <TableCell align='left' key={index}>
+                            {comment}
+                          </TableCell>
+                        )
+                      })}
+                      {/* <TableCell align='left'>{resultSentimentComparisonByEngagement?.comment || resultSentimentComparisonByEngagement?.neutral || ""}</TableCell> */}
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>{resultSentimentComparisonByEngagement?.comment ? 'Reaction' : 'Negative'}</TableCell>
+                      {(
+                        resultSentimentComparisonByEngagement?.reaction ||
+                        resultSentimentComparisonByEngagement?.negative ||
+                        []
+                      )?.map((reaction: any, index: number) => {
+                        return (
+                          <TableCell align='left' key={index}>
+                            {reaction}
+                          </TableCell>
+                        )
+                      })}
+                      {/* <TableCell align='left'>{resultSentimentComparisonByEngagement?.reaction || resultSentimentComparisonByEngagement?.negative || ""}</TableCell> */}
+                    </TableRow>
+                  </TableHead>
+                </Table>
+              </TableContainer>
+            ) : (
+              ''
+            )}
           </Grid>
         </Grid>
       </CardContent>

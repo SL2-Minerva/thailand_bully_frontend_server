@@ -7,6 +7,7 @@ import { BullyDashboardColors, EngagementTypeColors, GraphicColors } from 'src/u
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
+import Translations from 'src/layouts/components/Translations'
 
 interface LineProps {
     white: string
@@ -70,6 +71,7 @@ const MessagesByDay = (props: LineProps) => {
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
   const [current, setCurrent] = useState<any>({})
   const [keywordId, setKeywordId] = useState<any>();
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const chartRef = useRef();
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -198,6 +200,12 @@ const MessagesByDay = (props: LineProps) => {
             
             const dataSets = chartDatasets(dailyMessageData);
             setDataset(dataSets);
+
+            if (!dailyMessageData?.value) {
+              setShowNoDataText(true)
+            } else {
+              setShowNoDataText(false)
+            }
         }
         }
     },[filterData]);
@@ -221,7 +229,21 @@ const MessagesByDay = (props: LineProps) => {
         </span>
       
       <CardContent>
+          {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            <Translations text='no data' />
+          </div>
+        ) : (
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        )}
           <DailyMessageDetail 
             show={showDetail}
             setShow={setShowDetail}

@@ -105,7 +105,7 @@ const KeywordComparisonByBullyType = ({
               color: '#80808059'
             }}
           >
-            There is no data
+            <Translations text='no data' />
           </div>
         ) : (
           <Radar data={charData} height={100} />

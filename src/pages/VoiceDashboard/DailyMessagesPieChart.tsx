@@ -237,7 +237,7 @@ const DailyMessagePieChart = (props: Props) => {
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <Doughnut data={currentData} options={currentPeriodOptions as any} height={500} />
@@ -254,7 +254,7 @@ const DailyMessagePieChart = (props: Props) => {
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <Doughnut data={previousData} options={previousPeriodOptions as any} height={500} />

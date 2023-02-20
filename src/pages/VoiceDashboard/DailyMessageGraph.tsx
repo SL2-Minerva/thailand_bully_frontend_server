@@ -15,7 +15,6 @@ import { GetDailyMessages } from 'src/services/api/dashboards/voice/VoiceDashboa
 import { LinearProgress, Paper } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import MessageDetail from './MessageDetail'
-import { GraphicColors } from 'src/utils/const'
 
 interface Props {
   type: string
@@ -181,12 +180,12 @@ const DailyMessageGraph = (props: Props) => {
     }
   }
 
-  const chartDatasets = (data: any, labels: any) => {
+  const chartDatasets = (data: any, labels: any, keywordColor: any) => {
     if (!data) return []
     let totalAmount: number[] = []
     let keywordName = ''
     const returnData: StackChartDataset[] = []
-    const color = loadingDailyMessage && keywordsColor ? keywordsColor : GraphicColors
+    const color = []
     for (let i = 0; i < data?.length; i++) {
       totalAmount = []
       const total = data[i]?.value
@@ -197,18 +196,24 @@ const DailyMessageGraph = (props: Props) => {
           return {
             ...node,
             total_at_date: oldInfo?.total_at_date || 0,
-            date: oldInfo?.date || node
+            date: oldInfo?.date || node,
+            keyword_name : oldInfo?.keyword_name || ""
           }
         } else {
-          return { ...node, total_at_date: 0, date: node }
+          return { ...node, total_at_date: 0, date: node, keyword_name : oldInfo?.keyword_name || "" }
         }
       })
 
-      for (let i = 0; i < modifiedData?.length; i++) {
-        totalAmount.push(modifiedData[i].total_at_date)
+      for (let j = 0; j < modifiedData?.length; j++) {
+        totalAmount.push(modifiedData[j].total_at_date)
+        keywordName = modifiedData[j].keyword_name ? modifiedData[j].keyword_name : ''
       }
 
-      keywordName = data[i].keyword_name ? data[i].keyword_name : data[i].source_name ? data[i].source_name : ''
+      for (let j = 0; j < keywordColor?.length; j++) {
+        if (keywordColor[j]?.keywordName === keywordName) {
+          color.push(keywordColor[j]?.color)
+        }
+      }
 
       const chartDataset: StackChartDataset = {
         fill: false,
@@ -238,12 +243,12 @@ const DailyMessageGraph = (props: Props) => {
   }
 
   useEffect(() => {
-    if (resultDailyMessage) {
+    if (resultDailyMessage && resultDailyMessage?.length>0) {
       const labels = chartLabel(resultDailyMessage)
       setLabel(labels)
 
       if (labels?.length > 0) {
-        const dataSets = chartDatasets(resultDailyMessage, labels)
+        const dataSets = chartDatasets(resultDailyMessage, labels, keywordsColor)
         setDataset(dataSets)
         setShowNoDataText(false)
       }
@@ -252,7 +257,7 @@ const DailyMessageGraph = (props: Props) => {
       setDataset([])
       setShowNoDataText(true)
     }
-  }, [resultDailyMessage])
+  }, [resultDailyMessage, keywordsColor])
 
   const reportNo = '2.2.002'
 
@@ -290,7 +295,7 @@ const DailyMessageGraph = (props: Props) => {
               color: '#80808059'
             }}
           >
-            There is no data
+            <Translations text='no data'/>
           </div>
         ) : (
           <Bar ref={chartRef} data={data} options={options as any} height={500} onClick={onClick} />

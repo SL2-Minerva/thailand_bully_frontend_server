@@ -158,7 +158,7 @@ const DayTimeSentiment = (props: Props) => {
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <ReactApexcharts options={options_days} series={seriesDays} type='heatmap' height={170} />
@@ -175,7 +175,7 @@ const DayTimeSentiment = (props: Props) => {
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <ReactApexcharts options={options_hours} series={seriesHour} type='heatmap' height={170} />

@@ -164,27 +164,20 @@ const ShareOfVoice = ({ params, chartId }: { params: any; chartId: string }) => 
             ) : (
               <div
                 style={{
-                  height: 300,
-                  padding: '70px 0',
+                  padding: '130px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             )}
           </Grid>
           <Grid item xs={7}>
             <Table size='small'>
               <TableHead>
-                <TableRow>
-                  {resultShareOfVoice ? (
-                    <ShareOfVoiceTableHead data={resultShareOfVoice} />
-                  ) : (
-                    ''
-                  )}
-                </TableRow>
+                <TableRow>{resultShareOfVoice ? <ShareOfVoiceTableHead data={resultShareOfVoice} /> : ''}</TableRow>
               </TableHead>
               {(resultShareOfVoice || []).map((shareVoice: any, index: number) => {
                 return (

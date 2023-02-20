@@ -10,6 +10,7 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { SentimentAllColors } from 'src/utils/const'
 import { LinearProgress } from '@mui/material'
 import { useEffect, useState } from 'react'
+import Translations from 'src/layouts/components/Translations'
 
 const Labels = (data: any) => {
   if (!data) {
@@ -154,7 +155,7 @@ const SentimentLevelChart = ({
               color: '#80808059'
             }}
           >
-            There is no data
+            <Translations text='no data' />
           </div>
         ) : (
           <ReactApexcharts type='bar' height={276} series={series} options={options} />

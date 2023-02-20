@@ -31,6 +31,7 @@ export interface LineProps {
 const MessagesByDays = (props: LineProps) => {
   const { t } = useTranslation()
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, keywordsColor } = props
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -145,7 +146,7 @@ const MessagesByDays = (props: LineProps) => {
     }
   }
 
-  const chartDatasets = (data: any, keywordColor:any) => {
+  const chartDatasets = (data: any, keywordColor: any) => {
     if (!data) return []
     let totalAmount: number[] = []
     let keywordName = ''
@@ -161,8 +162,8 @@ const MessagesByDays = (props: LineProps) => {
       }
 
       keywordName = total[i]?.keyword_name
-      for(let j =0; j<keywordColor?.length; j++) {
-        if(keywordColor[j]?.keywordName === total[i].keyword_name) {
+      for (let j = 0; j < keywordColor?.length; j++) {
+        if (keywordColor[j]?.keywordName === total[i].keyword_name) {
           color.push(keywordColor[j]?.color)
         }
       }
@@ -217,6 +218,12 @@ const MessagesByDays = (props: LineProps) => {
 
         const dataSets = chartDatasets(dailyMessageData, keywordsColor)
         setDataset(dataSets)
+
+        if (!dailyMessageData?.value) {
+          setShowNoDataText(true)
+        } else {
+          setShowNoDataText(false)
+        }
       }
     }
   }, [resultMessagesByDay, keywordsColor])
@@ -245,7 +252,21 @@ const MessagesByDays = (props: LineProps) => {
       </span>
 
       <CardContent>
-        <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            <Translations text='no data' />
+          </div>
+        ) : (
+          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        )}
         {showDetail ? (
           <MessageDetail
             show={showDetail}

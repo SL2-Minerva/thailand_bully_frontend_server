@@ -118,7 +118,7 @@ const DayTimeComparison = ({
               color: '#80808059'
             }}
           >
-            There is no data
+            <Translations text='no data' />
           </div>
         ) : (
           <ReactApexcharts options={options} series={series} type='heatmap' height={350} />

@@ -166,7 +166,7 @@ const DayTimeBullyLevel = (props: Props) => {
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <ReactApexcharts options={options_level} series={seriesDays} type='heatmap' height={200} />
@@ -183,7 +183,7 @@ const DayTimeBullyLevel = (props: Props) => {
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <ReactApexcharts options={options_hours} series={seriesHour} type='heatmap' height={200} />

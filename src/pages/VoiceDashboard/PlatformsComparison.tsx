@@ -189,7 +189,7 @@ const PlatformsComparison = ({
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <Doughnut data={currentPeriodData} options={currentPeriodOptions as any} height={290} />
@@ -206,7 +206,7 @@ const PlatformsComparison = ({
                   color: '#80808059'
                 }}
               >
-                There is no data
+                <Translations text='no data' />
               </div>
             ) : (
               <Doughnut data={previousPeriodData} options={previousPeriodOptions as any} height={290} />

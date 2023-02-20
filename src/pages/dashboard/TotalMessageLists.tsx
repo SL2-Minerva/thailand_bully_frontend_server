@@ -1,4 +1,4 @@
-import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer, LinearProgress } from '@mui/material'
+import { LinearProgress } from '@mui/material'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -6,9 +6,10 @@ import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import { GetWordClouds } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
+import { DataGrid } from '@mui/x-data-grid'
 
 const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }) => {
-  const { resultWordClouds, loadingWordClouds } = GetWordClouds(
+  const { loadingWordClouds, wordCloudTable } = GetWordClouds(
     params?.campaign,
     params?.platformId,
     params?.date,
@@ -22,6 +23,12 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
   const reportNo = '1.2.022'
 
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 90 },
+    { field: 'keyword', headerName: 'Keyword', flex: 1 },
+    { field: 'total', headerName: ' จํานวน Keyword ', flex: 1 },
+    { field: 'percent', headerName: ' %', flex: 1 }
+  ]
 
   return (
     <Card sx={{ maxHeight: 450, minHeight: 450 }}>
@@ -36,7 +43,7 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
         </StyledTooltip>
       </span>
       <CardContent>
-        <TableContainer sx={{ maxHeight: 400 }}>
+        {/* <TableContainer sx={{ maxHeight: 300 , p: 4}}>
           <Table size='small' stickyHeader={true}>
             <TableHead sx={{ backgroundColor: 'lightgrey !important' }}>
               <TableRow>
@@ -70,7 +77,29 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
               )}
             </TableBody>
           </Table>
-        </TableContainer>
+        </TableContainer> */}
+
+        {wordCloudTable.length > 0 ? (
+          <DataGrid
+            autoHeight
+            rows={wordCloudTable}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            getRowId={row => row.id}
+          />
+        ) : (
+          <div
+            style={{
+              padding: '130px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            <Translations text='no data' />
+          </div>
+        )}
       </CardContent>
     </Card>
   )

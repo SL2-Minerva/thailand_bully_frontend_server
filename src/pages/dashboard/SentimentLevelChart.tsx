@@ -9,6 +9,7 @@ import { ApexOptions } from 'apexcharts'
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { GetSentimentLevel } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { LinearProgress } from '@mui/material'
+import Translations from 'src/layouts/components/Translations'
 
 const Labels = (data: any) => {
   if (!data) {
@@ -134,14 +135,13 @@ const SentimentLevelChart = ({ params }: { params: any }) => {
         ) : (
           <div
             style={{
-              height: 300,
-              padding: '70px 0',
+              padding: '130px 0',
               textAlign: 'center',
               verticalAlign: 'middle',
               color: '#80808059'
             }}
           >
-            There is no data
+            <Translations text='no data' />
           </div>
         )}
       </CardContent>

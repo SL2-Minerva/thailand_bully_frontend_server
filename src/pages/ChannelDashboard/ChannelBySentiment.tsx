@@ -2,7 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, LinearProgress } from "@mui/material"
+import { Grid, LinearProgress } from '@mui/material'
 
 // ** Third Party Imports
 import { Bar } from 'react-chartjs-2'
@@ -11,72 +11,92 @@ import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
 
 const ChartLabels = (data: any) => {
-  if (!data) return [];
-  const keywordData = data;
+  if (!data) return []
+  const keywordData = data
 
-  const labels : any[] = [];
+  const labels: any[] = []
 
-  for (let i = 0; i<keywordData?.length ; i ++) {
+  for (let i = 0; i < keywordData?.length; i++) {
     labels.push(keywordData[i].keyword_name)
   }
-  
-  return labels;
+
+  return labels
 }
 
-const ChartData = (data: any ) => {
-  if (!data) return [];
+const ChartData = (data: any) => {
+  if (!data) return []
 
-  const chartDatas : any[] = [];
-  for (let i = 0; i<data?.length ; i ++) {
+  const chartDatas: any[] = []
+  for (let i = 0; i < data?.length; i++) {
     chartDatas.push(data[i]?.total_value)
   }
-  
-  return chartDatas;
+
+  return chartDatas
 }
 
-const ChannelBySentiment  = ({ chartId, highlight, resultBy, loading} : {params: any, chartId: string, highlight : boolean, resultBy?: any, loading?: boolean}) => {
-
-  const labels = resultBy ? ChartLabels(resultBy) : [];
+const ChannelBySentiment = ({
+  chartId,
+  highlight,
+  resultBy,
+  loading
+}: {
+  params: any
+  chartId: string
+  highlight: boolean
+  resultBy?: any
+  loading?: boolean
+}) => {
+  const labels = resultBy ? ChartLabels(resultBy) : []
   const data = {
-  labels: labels,
-  datasets: [{
-      axis: 'y',
-      label: '',
-      data: ChartData(resultBy),
-      fill: false,
-      backgroundColor: ['rgb(54, 162, 235)'],
-      borderColor: [
-      'rgb(54, 162, 235)'
-      ],
-      borderWidth: 1
-  }]
-  };  
+    labels: labels,
+    datasets: [
+      {
+        axis: 'y',
+        label: '',
+        data: ChartData(resultBy),
+        fill: false,
+        backgroundColor: ['rgb(54, 162, 235)'],
+        borderColor: ['rgb(54, 162, 235)'],
+        borderWidth: 1
+      }
+    ]
+  }
 
-  const reportNo = '3.2.015';
+  const reportNo = '3.2.015'
 
-  const chartTitle = chartId + ", Report Level 2(" + reportNo + ")";
+  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Card sx={{minHeight: 460}}>
-      {loading && (
-        <LinearProgress
-            style={{ width: "100%" }}
+    <Card sx={{ minHeight: 460 }}>
+      {loading && <LinearProgress style={{ width: '100%' }} />}
+      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+        <CardHeader
+          title={<Translations text='Channel by Sentiement' />}
+          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        )}
-        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <CardHeader
-            title={<Translations text='Channel by Sentiement'/>}
-            titleTypographyProps={{ variant: 'h6',color: highlight ? 'green' : '#4c4e64de' }}
-          />
-          <StyledTooltip arrow title={chartTitle || ""}>
-              <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
-          </StyledTooltip>
-        </span>
+        <StyledTooltip arrow title={chartTitle || ''}>
+          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+        </StyledTooltip>
+      </span>
       <CardContent>
         <Grid container spacing={3}>
-            <Bar data={data} options={{ indexAxis: 'y' }} height={140}/>
+          {resultBy ? (
+            <div
+              style={{
+                height: 200,
+                padding: '170px 0',
+                textAlign: 'center',
+                verticalAlign: 'middle',
+                color: '#80808059',
+                alignItems: 'center'
+              }}
+            >
+              <Translations text='no data' />
+            </div>
+          ) : (
+            <Bar data={data} options={{ indexAxis: 'y' }} height={140} />
+          )}
         </Grid>
-        
       </CardContent>
     </Card>
   )
