@@ -184,7 +184,14 @@ const PercentageOfSentiments = (props: MessageData) => {
           setCurrentTotal(0)
           setShowNoDataText(true)
         }
-
+      }else {
+        setCurrentData(initValue)
+        setCurrentTotal(0)
+        setShowNoDataText(true)
+      }
+      
+      
+      if(previousMessageData) {
         const previousDataset = chartDataset(previousMessageData, 'previous')
         setPreviousData(previousDataset)
 
@@ -194,13 +201,17 @@ const PercentageOfSentiments = (props: MessageData) => {
         } else {
           setPreviousTotal(0)
           setShowNoDataText(true)
+          if(currentMessageData) {
+            setShowNoDataText(false)
+          }
         }
-      } else {
-        setCurrentData(initValue)
+      }else {
         setPreviousData(initValue)
         setPreviousTotal(0)
-        setCurrentTotal(0)
         setShowNoDataText(true)
+        if(currentMessageData) {
+          setShowNoDataText(false)
+        }
       }
     } else {
       setCurrentData(initValue)

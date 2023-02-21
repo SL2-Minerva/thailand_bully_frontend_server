@@ -210,11 +210,17 @@ const PercentageOfBullyType = (props: MessageData) => {
         } else {
           setShowNoDataText(true)
           setPreviousTotal(0)
+          if (currentMessageData) {
+            setShowNoDataText(false)
+          }
         }
       } else {
         setPreviousTotal(0)
         setShowNoDataText(true)
         setPreviousData(initValue)
+        if (currentMessageData) {
+          setShowNoDataText(false)
+        }
       }
     } else {
       setCurrentData(initValue)
