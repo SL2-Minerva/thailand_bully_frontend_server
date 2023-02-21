@@ -25,7 +25,7 @@ const AccountList = ({
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [current, setCurrent] = useState<any>({})
   const [keywordId, setKeywordId] = useState<any>()
-
+  const [authorName, setAuthorName] = useState<string>('');
   const reportNo = '1.2.02'
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
@@ -46,6 +46,7 @@ const AccountList = ({
               onClick={() => {
                 setShowDetail(true)
                 setCurrent({})
+                setAuthorName(keyword.author)
               }}
             >
               <Grid container spacing={2}>
@@ -104,6 +105,8 @@ const AccountList = ({
           keywordId={keywordId}
           setKeywordId={setKeywordId}
           reportNo={reportNo}
+          authorName={authorName}
+          setAuthorName={setAuthorName}
         />
       ) : (
         ''

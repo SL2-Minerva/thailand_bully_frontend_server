@@ -335,7 +335,7 @@ const SNA = () => {
 
           <Box sx={{ mb: 8, textAlign: 'center' }}>
             <Typography variant='h5' sx={{ mt: 4, mb: 3, lineHeight: '2rem' }}>
-              <Translations text='Social Network Analysis' /> (By Sentiment)
+              <Translations text='Social Network Analysis' /> By Sentiment
             </Typography>
           </Box>
 

@@ -13,8 +13,6 @@ import Translations from 'src/layouts/components/Translations'
 import { GetDetailMessage } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import DialogNetworkGraphByFitler from './DialogNetworkGraphByFilter'
 
-
-
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
   ref: Ref<unknown>
@@ -34,10 +32,24 @@ interface DialogInfoProps {
   reportNo?: any
   title?: any
   networkTitle?: any
+  authorName: string
+  setAuthorName: any
 }
 
 const AccountDetail = (props: DialogInfoProps) => {
-  const { show, setShow, current, title, networkTitle, params, reportNo, keywordId, setKeywordId } = props
+  const {
+    show,
+    setShow,
+    current,
+    title,
+    networkTitle,
+    params,
+    reportNo,
+    keywordId,
+    setKeywordId,
+    authorName,
+    setAuthorName
+  } = props
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [pageCount, setPageCount] = useState<number>(0)
   const [page, setPage] = useState(0)
@@ -59,7 +71,8 @@ const AccountDetail = (props: DialogInfoProps) => {
     params?.page,
     params?.label,
     params?.ylabel,
-    'level3'
+    'level3', 
+    authorName
   )
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -74,6 +87,7 @@ const AccountDetail = (props: DialogInfoProps) => {
     if (keywordId) {
       setKeywordId('')
     }
+    setAuthorName('')
   }
 
   useEffect(() => {
@@ -93,11 +107,7 @@ const AccountDetail = (props: DialogInfoProps) => {
         TransitionComponent={Transition}
       >
         <DialogContent sx={{ pb: 6, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
-          <IconButton
-            size='small'
-            onClick={onCloseDialog}
-            sx={{ position: 'absolute', right: '1rem', top: '1rem' }}
-          >
+          <IconButton size='small' onClick={onCloseDialog} sx={{ position: 'absolute', right: '1rem', top: '1rem' }}>
             <Close />
           </IconButton>
           {loadingMessageDetail && <LinearProgress style={{ width: '100%' }} />}
@@ -119,7 +129,7 @@ const AccountDetail = (props: DialogInfoProps) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {(resultMessageDetail || []).map((row :any, index :number) => (
+                {(resultMessageDetail || []).map((row: any, index: number) => (
                   <TableRow
                     key={index}
                     onClick={() => {
@@ -127,9 +137,7 @@ const AccountDetail = (props: DialogInfoProps) => {
                     }}
                   >
                     <TableCell>{row.message_id}</TableCell>
-                    <TableCell style={{ whiteSpace: 'normal', width: 300 }}>
-                      {row.message_detail}
-                    </TableCell>
+                    <TableCell style={{ whiteSpace: 'normal', width: 300 }}>{row.message_detail}</TableCell>
                     <TableCell>{row.account_name}</TableCell>
                     <TableCell>{row.channel}</TableCell>
                     <TableCell>{row.post_date}</TableCell>
@@ -147,7 +155,6 @@ const AccountDetail = (props: DialogInfoProps) => {
               variant='outlined'
               color='primary'
             />
-
           </Box>
         </DialogContent>
       </Dialog>
