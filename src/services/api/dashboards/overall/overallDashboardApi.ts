@@ -516,7 +516,8 @@ export const GetDetailMessage = (
   reportNo?: string,
   pageName?: string,
   label?: string,
-  ylabel?: string
+  ylabel?: string,
+  wordCloud?: string
 ) => {
   let params: any = {}
   const todayDate = new Date()
@@ -555,6 +556,9 @@ export const GetDetailMessage = (
 
   if (ylabel) {
     params.ylabel = encodeURI(ylabel)
+  }
+  if(wordCloud) {
+    params.wordColud = wordCloud
   }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/daily-message/level-three/`,

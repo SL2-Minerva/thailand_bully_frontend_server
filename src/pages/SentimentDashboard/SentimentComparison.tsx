@@ -47,7 +47,6 @@ const SentimentComparisonTable = ({
     }
   }, [total])
   const reportNo = '5.2.016'
-
   const title = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
