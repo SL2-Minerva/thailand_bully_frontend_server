@@ -11,7 +11,8 @@ const AccountList = ({
   title,
   networkTitle,
   accountList,
-  loading
+  loading,
+  params
 }: {
   chartId: string
   cardHeader: string
@@ -19,20 +20,12 @@ const AccountList = ({
   networkTitle: string
   accountList: any
   loading: boolean
+  params: any
 }) => {
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [current, setCurrent] = useState<any>({})
+  const [keywordId, setKeywordId] = useState<any>()
 
-  // const { resultKeywords, loadingFilterData } = GetKeyWords(
-  //   params?.campaign,
-  //   params?.platformId,
-  //   params?.date,
-  //   params?.endDate,
-  //   params?.period,
-  //   params?.previousDate,
-  //   params?.previousEndDate,
-  //   params?.keywordIds
-  // )
   const reportNo = '1.2.02'
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
@@ -100,13 +93,21 @@ const AccountList = ({
       ) : (
         ''
       )}
-      <AccountDetail
-        show={showDetail}
-        setShow={setShowDetail}
-        current={current}
-        title={title}
-        networkTitle={networkTitle}
-      />
+      {showDetail && params?.campaign ? (
+        <AccountDetail
+          show={showDetail}
+          setShow={setShowDetail}
+          current={current}
+          title={title}
+          networkTitle={networkTitle}
+          params={params}
+          keywordId={keywordId}
+          setKeywordId={setKeywordId}
+          reportNo={reportNo}
+        />
+      ) : (
+        ''
+      )}
     </Card>
   )
 }

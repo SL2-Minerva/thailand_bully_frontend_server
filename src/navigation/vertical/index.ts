@@ -45,7 +45,20 @@ const navigation = (): VerticalNavItemsType => {
 
   const sna = {
     "title" : "SNA",
-    "path" : '/SNA'
+    children: [
+      {
+        title: 'By Sentiment',
+        path : '/SNA'
+      },
+      {
+        title: 'By Bully Level',
+        path : '/SNA/SNAByBullyLevel'
+      },
+      {
+        title: 'By Bully Type',
+        path : '/SNA/SNAByBullyType'
+      },
+    ]
   }
 
   const reportDashboardList : any[] = [];

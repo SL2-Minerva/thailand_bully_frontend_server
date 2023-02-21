@@ -31,7 +31,7 @@ import { UserPermission } from 'src/services/api/users/role'
 import Graph from 'react-graph-vis'
 import 'react-graph-vis/node_modules/vis-network/dist/dist/vis-network.css'
 
-const SNA = () => {
+const SNAByBullyLevel = () => {
   const [date, setDate] = useState<DateType>(calculateDate(6))
   const [endDate, setEndDate] = useState<DateType>(new Date())
   const [previousDate, setPreviousDate] = useState<DateType>(new Date())
@@ -42,8 +42,6 @@ const SNA = () => {
   const [period, setPeriod] = useState<string>('last7days')
   const [showPreviousDatepicker, setShowPreviousDatepicker] = useState<boolean>(false)
 
-  // const [selectedValue, setSelectedValue] = useState('bySentiment')
-
   const router = useRouter()
 
   const { errorUserPermission } = UserPermission()
@@ -51,7 +49,7 @@ const SNA = () => {
   const { result_source_list } = SourceService()
   const {
     resultNetworkGraph,
-    resultSentimentNetwork,
+    resultBullyLevelNetwork,
     loadingNetworkGraph
   } = GetNetworkGraph(campaign, platformId, date, endDate, period, previousDate, previousEndDate, '', '', 'sna')
 
@@ -156,10 +154,6 @@ const SNA = () => {
     height: '700px',
     autoResize: false
   }
-
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setSelectedValue(event.target.value)
-  // }
 
   useEffect(() => {
     if (errorUserPermission) {
@@ -335,43 +329,22 @@ const SNA = () => {
 
           <Box sx={{ mb: 8, textAlign: 'center' }}>
             <Typography variant='h5' sx={{ mt: 4, mb: 3, lineHeight: '2rem' }}>
-              <Translations text='Social Network Analysis' /> (By Sentiment)
+              <Translations text='Social Network Analysis' /> By Bully Level
             </Typography>
           </Box>
-
-          {/* <Grid container spacing={1}>
-            <FormControl sx={{ mt: 3, ml: 5 }}>
-              <RadioGroup row aria-labelledby='demo-row-radio-buttons-group-label' name='row-radio-buttons-group'>
-                <FormControlLabel
-                  value='bySentiment'
-                  control={
-                    <Radio value='bySentiment' checked={selectedValue === 'bySentiment'} onChange={handleChange} />
-                  }
-                  label='By Sentiment'
-                />
-                <FormControlLabel
-                  value='byBullyLevel'
-                  control={
-                    <Radio value='byBullyLevel' checked={selectedValue === 'byBullyLevel'} onChange={handleChange} />
-                  }
-                  label='By Bully Level'
-                />
-                <FormControlLabel
-                  value='ByBullyType'
-                  control={
-                    <Radio value='byBullyType' checked={selectedValue === 'byBullyType'} onChange={handleChange} />
-                  }
-                  label='By Bully Type'
-                />
-              </RadioGroup>
-            </FormControl>
-          </Grid> */}
 
           <Grid container spacing={3}>
             <Grid item xs={12}>
               {resultNetworkGraph ? (
                 <>
-                  <Graph graph={resultSentimentNetwork ? resultSentimentNetwork : initialGraph} options={options} />
+                  <Graph
+                    graph={
+                        resultBullyLevelNetwork
+                        ? resultBullyLevelNetwork
+                        : initialGraph
+                    }
+                    options={options}
+                  />
                 </>
               ) : (
                 <div
@@ -394,4 +367,4 @@ const SNA = () => {
   )
 }
 
-export default SNA
+export default SNAByBullyLevel
