@@ -94,6 +94,7 @@ const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string 
           cardHeader='Word Cloud by Sentiment Type'
           title='Word Cloud by Sentiment Type: Message Transaction'
           networkTitle='Word Cloud by Sentiment Type: Social Network Analysis'
+          params={params}
         />
       </Grid>
     </Grid>

@@ -112,6 +112,7 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
               cardHeader='Word Cloud by Account'
               title='Word Cloud by Account: Message Transaction'
               networkTitle='Word Cloud by Account: Social Network Analysis'
+              params={params}
             />
           </Grid>
     </Grid>
