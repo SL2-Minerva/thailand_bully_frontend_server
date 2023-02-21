@@ -58,7 +58,8 @@ const AccountDetail = (props: DialogInfoProps) => {
     reportNo,
     params?.page,
     params?.label,
-    params?.ylabel
+    params?.ylabel,
+    'level3'
   )
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {

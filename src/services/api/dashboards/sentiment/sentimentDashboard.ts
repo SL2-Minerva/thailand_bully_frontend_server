@@ -543,7 +543,7 @@ export const GetSentimentComparison = (
   })
 
   return {
-    resultSentimentComparison: res?.data || null,
+    resultSentimentComparison: res?.data || [],
     total: res?.data?.total || 0,
     loadingSentimentComparison: loading,
     errorSenitmentComparison: error

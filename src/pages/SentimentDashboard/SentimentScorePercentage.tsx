@@ -123,11 +123,11 @@ const SentimentScorePercentage = ({
   }
 
   return (
-    <Card sx={{minHeight: 455}}>
+    <Card sx={{minHeight: 470}}>
       {loadingSentimentScore && <LinearProgress style={{ width: '100%' }} />}
       <CardHeader title='' titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }} />
       <CardContent>
-        {resultSentimentScorePercentage ? (
+        {resultSentimentScorePercentage?.length === 0 ? (
           <div
             style={{
               height: 300,

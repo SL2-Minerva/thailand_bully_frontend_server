@@ -498,7 +498,7 @@ const SentimentDashboard = () => {
               <SentimentScorePercentage
                 params={params}
                 highlight={highlight === 'chart13' ? true : false}
-                resultSentimentScorePercentage={resultSenitmentScore?.senitment_score_percentage}
+                resultSentimentScorePercentage={resultSenitmentScore?.senitment_score_percentage || []}
                 loadingSentimentScore={loadingSentimentByDay}
               />
             </Grid>
