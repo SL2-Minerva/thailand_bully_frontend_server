@@ -25,6 +25,7 @@ const SentimentAccountList = ({
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [current, setCurrent] = useState<any>({})
   const [keywordId, setKeywordId] = useState<any>()
+  const [authorName, setAuthorName] = useState<string>('');
 
   // const { resultKeywords, loadingFilterData } = GetKeyWords(
   //   params?.campaign,
@@ -56,6 +57,7 @@ const SentimentAccountList = ({
               onClick={() => {
                 setShowDetail(true)
                 setCurrent({})
+                setAuthorName(keyword.author)
               }}
             >
               <Grid container spacing={2}>
@@ -114,6 +116,8 @@ const SentimentAccountList = ({
           keywordId={keywordId}
           setKeywordId={setKeywordId}
           reportNo={reportNo}
+          authorName={authorName}
+          setAuthorName={setAuthorName}
         />
       ) : (
         ''
