@@ -64,7 +64,7 @@ const EngagementSummary = ({
       {loadingSummary && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text='Summary Engagement By Account'/>}
+          title={<Translations text='Summary Engagement By Account' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={title || ''}>
@@ -72,47 +72,6 @@ const EngagementSummary = ({
         </StyledTooltip>
       </span>
       <CardContent>
-        {/* <TableContainer sx={{ maxHeight: 250 }}>
-            <Table size="small" stickyHeader={true}>
-                    <TableHead style={{ backgroundColor: "green"}}>
-                        <TableRow>
-                            <TableCell variant="head"> Influencer </TableCell>
-                            <TableCell variant="head"> Total </TableCell>
-                            <TableCell variant="head"> Share </TableCell>
-                            <TableCell variant="head"> Comment </TableCell>
-                            <TableCell variant="head"> Reaction </TableCell>
-                            <TableCell variant="head"> Period over Period </TableCell>
-                            <TableCell variant="head"> Period over Period (%) </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {
-                            (resultSummary||[])?.map((summary: any, index:any) => {
-                                return(
-                                    <TableRow key={index}>
-                                        <TableCell><b>{summary.infulencer}</b></TableCell>
-                                        <TableCell>{summary.total}</TableCell>
-                                        <TableCell>{summary.share}</TableCell>
-                                        <TableCell>{summary.comment}</TableCell>
-                                        <TableCell>{summary.reaction}</TableCell>
-                                        <TableCell>{summary.period_over_preiod}</TableCell>
-                                        <TableCell>{summary.period_over_period_percentage} %</TableCell>
-
-                                    </TableRow>
-                                )
-                            })
-                        }
-                    </TableBody>
-                    
-            </Table>
-            </TableContainer>
-            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
-            {
-                totalSummary > 0 ? 
-                <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
-                : ""
-            }
-            </Box> */}
         {resultSummary ? (
           <DataGrid
             autoHeight
@@ -123,7 +82,17 @@ const EngagementSummary = ({
             getRowId={row => row.message_id}
           />
         ) : (
-          ''
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            <Translations text='no data' />
+          </div>
         )}
       </CardContent>
     </Card>

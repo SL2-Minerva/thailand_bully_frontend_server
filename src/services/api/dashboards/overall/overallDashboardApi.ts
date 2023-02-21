@@ -352,7 +352,8 @@ export const GetWordClouds = (
   select?: string,
   previousDate?: any,
   previousEndDate?: any,
-  fillter_keywords?: string
+  fillter_keywords?: string,
+  page?: number
 ) => {
   let params = {}
   const todayDate = new Date()
@@ -366,7 +367,9 @@ export const GetWordClouds = (
       select: select || 'top10',
       start_date_period: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
       end_date_period: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
-      fillter_keywords: fillter_keywords
+      fillter_keywords: fillter_keywords,
+      page: page,
+      limit: 7
     }
   } else {
     params = {
@@ -376,7 +379,9 @@ export const GetWordClouds = (
       end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
       period: period,
       select: select || 'top10',
-      fillter_keywords: fillter_keywords
+      fillter_keywords: fillter_keywords,
+      page: page,
+      limit: 7
     }
   }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
@@ -385,24 +390,9 @@ export const GetWordClouds = (
     params: params
   })
 
-  const wordCloudTable: any = []
-  if (response?.data?.word_clouds_table) {
-    const wordcloudData = response?.data?.word_clouds_table
-    for (let i = 0; i < wordcloudData?.length; i++) {
-      wordCloudTable.push({
-        id: i + 1,
-        keyword: wordcloudData[i].keyword,
-        keyword_id: wordcloudData[i].keyword_id,
-        keyword_name: wordcloudData[i].keyword_name,
-        percent: wordcloudData[i].percent,
-        total: wordcloudData[i].total
-      })
-    }
-  }
-
   return {
     resultWordClouds: response?.data || null,
-    wordCloudTable: wordCloudTable,
+    total: response?.data?.total || 0,
     loadingWordClouds: loading,
     errorWordClouds: error
   }
@@ -418,7 +408,7 @@ export const GetWordCloudsPlatform = (
   previousDate?: any,
   previousEndDate?: any,
   fillter_keywords?: string,
-  wordCloudPlatform?:string
+  wordCloudPlatform?: string
 ) => {
   let params = {}
   const todayDate = new Date()

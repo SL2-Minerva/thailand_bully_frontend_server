@@ -14,6 +14,7 @@ import Translations from 'src/layouts/components/Translations'
 const BullyTypeByAccount = (props: LineProps) => {
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
   const {t} = useTranslation()
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
@@ -188,6 +189,12 @@ const BullyTypeByAccount = (props: LineProps) => {
 
         const dataSets = chartDatasets(dailyMessageData)
         setDataset(dataSets)
+
+        if (!dailyMessageData?.value) {
+          setShowNoDataText(true)
+        } else {
+          setShowNoDataText(false)
+        }
       }
     }
   }, [resultBy,t])
@@ -215,7 +222,21 @@ const BullyTypeByAccount = (props: LineProps) => {
       </span>
 
       <CardContent>
-        <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            <Translations text='no data' />
+          </div>
+        ) : (
+          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        )}
         {showDetail ? (
           <MessageDetail
             show={showDetail}

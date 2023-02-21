@@ -15,6 +15,7 @@ const BullyLevelByDevice = (props: LineProps) => {
   const {t} = useTranslation()
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
 
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [ label, setLabel ] = useState<string[]>([]);
   const [ dataset, setDataset ] = useState<StackChartDataset[]>([]);
   const [ showDetail , setShowDetail ] = useState<boolean>(false);
@@ -190,7 +191,13 @@ const BullyLevelByDevice = (props: LineProps) => {
             setLabel(labels);
             
             const dataSets = chartDatasets(dailyMessageData);
-            setDataset(dataSets);
+            setDataset(dataSets)
+
+            if (!dailyMessageData?.value) {
+              setShowNoDataText(true)
+            } else {
+              setShowNoDataText(false)
+            }
         }
         }
     },[resultBy,t]);
@@ -223,7 +230,21 @@ const BullyLevelByDevice = (props: LineProps) => {
         </span>
       
       <CardContent>
+          {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            <Translations text='no data' />
+          </div>
+        ) : (
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        )}
           {
             showDetail ?
               <MessageDetail 

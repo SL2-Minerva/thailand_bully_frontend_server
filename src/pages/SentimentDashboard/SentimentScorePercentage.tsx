@@ -9,65 +9,75 @@ import { ApexOptions } from 'apexcharts'
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { SentimentAllColors } from 'src/utils/const'
 import { LinearProgress } from '@mui/material'
-
+import Translations from 'src/layouts/components/Translations'
 
 const Labels = (data: any) => {
-  if(!data) {
-    return [];
+  if (!data) {
+    return []
   }
-  const labels : any[] = []
-  if(data?.length > 0) {
-    for(let i=0; i<data?.length; i++) {
-      labels.push(data[i].keyword_name);
+  const labels: any[] = []
+  if (data?.length > 0) {
+    for (let i = 0; i < data?.length; i++) {
+      labels.push(data[i].keyword_name)
     }
   }
 
-  return labels;
+  return labels
 }
 
-const ChartDataSentiment = (data: any, type : string) => {
-  if(!data) {
-    return [];
+const ChartDataSentiment = (data: any, type: string) => {
+  if (!data) {
+    return []
   }
-  const value : any[] = []
-  if(data?.length > 0) {
-    if(type === 'negative') {
-      for(let i=0; i<data?.length; i++) {
-        value.push(data[i].negative);
+  const value: any[] = []
+  if (data?.length > 0) {
+    if (type === 'negative') {
+      for (let i = 0; i < data?.length; i++) {
+        value.push(data[i].negative)
       }
-    } else if(type==='neutral') {
-      for(let i=0; i<data?.length; i++) {
-        value.push(data[i].neutral);
+    } else if (type === 'neutral') {
+      for (let i = 0; i < data?.length; i++) {
+        value.push(data[i].neutral)
       }
     } else if (type === 'positive') {
-      for(let i=0; i<data?.length; i++) {
-        value.push(data[i].positive);
+      for (let i = 0; i < data?.length; i++) {
+        value.push(data[i].positive)
       }
     }
-
   }
 
-  return value;
+  return value
 }
 
-const SentimentScorePercentage = ({highlight, resultSentimentScorePercentage, loadingSentimentScore } : {params: any, highlight: boolean, resultSentimentScorePercentage: any, loadingSentimentScore : boolean }) => {
-  
-  const chartLabels =  Labels(resultSentimentScorePercentage);
-  const negativeData = ChartDataSentiment(resultSentimentScorePercentage, 'negative');
-  const neutralData = ChartDataSentiment(resultSentimentScorePercentage, 'neutral');
-  const positiveData = ChartDataSentiment(resultSentimentScorePercentage, 'positive');
+const SentimentScorePercentage = ({
+  highlight,
+  resultSentimentScorePercentage,
+  loadingSentimentScore
+}: {
+  params: any
+  highlight: boolean
+  resultSentimentScorePercentage: any
+  loadingSentimentScore: boolean
+}) => {
+  const chartLabels = Labels(resultSentimentScorePercentage)
+  const negativeData = ChartDataSentiment(resultSentimentScorePercentage, 'negative')
+  const neutralData = ChartDataSentiment(resultSentimentScorePercentage, 'neutral')
+  const positiveData = ChartDataSentiment(resultSentimentScorePercentage, 'positive')
 
-
-  const series =  [{
-    name: 'negative',
-    data: negativeData
-  }, {
-    name: 'Neutral',
-    data: neutralData
-  }, {
-    name: 'Positive',
-    data: positiveData
-  }]
+  const series = [
+    {
+      name: 'negative',
+      data: negativeData
+    },
+    {
+      name: 'Neutral',
+      data: neutralData
+    },
+    {
+      name: 'Positive',
+      data: positiveData
+    }
+  ]
 
   const options: ApexOptions = {
     chart: {
@@ -75,13 +85,13 @@ const SentimentScorePercentage = ({highlight, resultSentimentScorePercentage, lo
       height: 350,
       stacked: true,
       stackType: '100%',
-      toolbar: {show: false}
+      toolbar: { show: false }
     },
     dataLabels: { enabled: false },
     plotOptions: {
       bar: {
-        horizontal: true,
-      },
+        horizontal: true
+      }
     },
     stroke: {
       width: 1,
@@ -92,18 +102,18 @@ const SentimentScorePercentage = ({highlight, resultSentimentScorePercentage, lo
     },
     colors: SentimentAllColors,
     xaxis: {
-      categories: chartLabels,
+      categories: chartLabels
     },
     tooltip: {
       y: {
         formatter: function (val) {
-          return val + "%"
+          return val + '%'
         }
       }
     },
     fill: {
       opacity: 1,
-      colors: SentimentAllColors,
+      colors: SentimentAllColors
     },
     legend: {
       position: 'top',
@@ -113,19 +123,26 @@ const SentimentScorePercentage = ({highlight, resultSentimentScorePercentage, lo
   }
 
   return (
-    <Card>
-      {loadingSentimentScore && (
-            <LinearProgress
-                style={{ width: "100%" }}
-            />
-            )}
-        <CardHeader
-                title=''
-                titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <CardContent>
-            <ReactApexcharts type="bar" height={380} series={series} options={options} />
-        </CardContent>
+    <Card sx={{minHeight: 455}}>
+      {loadingSentimentScore && <LinearProgress style={{ width: '100%' }} />}
+      <CardHeader title='' titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }} />
+      <CardContent>
+        {resultSentimentScorePercentage ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            <Translations text='no data' />
+          </div>
+        ) : (
+          <ReactApexcharts type='bar' height={380} series={series} options={options} />
+        )}
+      </CardContent>
     </Card>
   )
 }

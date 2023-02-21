@@ -110,7 +110,7 @@ const EngagmentComparisonChart = ({
     tooltip: {
       y: {
         formatter: function (val) {
-          return val + ""
+          return val + ''
         }
       }
     },
@@ -134,7 +134,7 @@ const EngagmentComparisonChart = ({
       {loadingComparison && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text='Engagement Type Proportion'/>}
+          title={<Translations text='Engagement Type Proportion' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
         <StyledTooltip arrow title={title || ''}>
@@ -143,7 +143,21 @@ const EngagmentComparisonChart = ({
       </span>
 
       <CardContent>
-        <ReactApexcharts type='bar' height={420} series={series} options={options} />
+        {resultComparison ? (
+          <ReactApexcharts type='bar' height={420} series={series} options={options} />
+        ) : (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            <Translations text='no data' />
+          </div>
+        )}
       </CardContent>
     </Card>
   )

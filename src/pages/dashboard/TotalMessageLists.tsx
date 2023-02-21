@@ -1,4 +1,14 @@
-import { LinearProgress } from '@mui/material'
+import {
+  Box,
+  LinearProgress,
+  Pagination,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
+} from '@mui/material'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -6,10 +16,13 @@ import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import { GetWordClouds } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
-import { DataGrid } from '@mui/x-data-grid'
+import { useEffect, useState } from 'react'
 
 const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }) => {
-  const { loadingWordClouds, wordCloudTable } = GetWordClouds(
+  const [pageCount, setPageCount] = useState<number>(0)
+  const [page, setPage] = useState<number>(0)
+
+  const { loadingWordClouds, resultWordClouds, total } = GetWordClouds(
     params?.campaign,
     params?.platformId,
     params?.date,
@@ -18,17 +31,26 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
     params?.topKeyword,
     params?.previousDate,
     params?.previousEndDate,
-    params?.keywordIds
+    params?.keywordIds,
+    page
   )
   const reportNo = '1.2.022'
 
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-  const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'keyword', headerName: 'Keyword', flex: 1 },
-    { field: 'total', headerName: ' จํานวน Keyword ', flex: 1 },
-    { field: 'percent', headerName: ' %', flex: 1 }
-  ]
+
+  useEffect(() => {
+    if (total > 0) {
+      setPageCount(Math.ceil(total / 10))
+    }
+  }, [total])
+
+  const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value - 1)
+  }
+
+  useEffect(() => {
+    setPage(0)
+  },[params?.topKeyword])
 
   return (
     <Card sx={{ maxHeight: 450, minHeight: 450 }}>
@@ -43,8 +65,8 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
         </StyledTooltip>
       </span>
       <CardContent>
-        {/* <TableContainer sx={{ maxHeight: 300 , p: 4}}>
-          <Table size='small' stickyHeader={true}>
+        <TableContainer sx={{ maxHeight: 320, p: 2 }}>
+          <Table size='small'>
             <TableHead sx={{ backgroundColor: 'lightgrey !important' }}>
               <TableRow>
                 <TableCell variant='head'> No. </TableCell>
@@ -57,10 +79,12 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
               {(resultWordClouds?.word_clouds_table || [])?.map((keyword: any, index: any) => {
                 return (
                   <TableRow key={index}>
-                    <TableCell sx={{ backgroundColor: 'lightgrey !important' }}>
-                      <b>{index + 1}</b>
+                    <TableCell sx={{ backgroundColor: '#d3d3d338 !important' }}>
+                      <b>{(index + 1) + (page *7)}</b>
                     </TableCell>
-                    <TableCell> {keyword.keyword}</TableCell>
+                    <TableCell>
+                      <span style={{ fontWeight: 'bold' }}>{keyword.keyword}</span>
+                    </TableCell>
                     <TableCell>{keyword.total}</TableCell>
                     <TableCell>{keyword.percent} %</TableCell>
                   </TableRow>
@@ -69,7 +93,7 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
               {!resultWordClouds?.word_clouds_table || resultWordClouds?.word_clouds_table?.length == 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} sx={{ textAlign: 'center' }}>
-                    There is no data
+                    <Translations text='no data' />
                   </TableCell>
                 </TableRow>
               ) : (
@@ -77,29 +101,20 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
               )}
             </TableBody>
           </Table>
-        </TableContainer> */}
-
-        {wordCloudTable.length > 0 ? (
-          <DataGrid
-            autoHeight
-            rows={wordCloudTable}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            getRowId={row => row.id}
-          />
-        ) : (
-          <div
-            style={{
-              padding: '130px 0',
-              textAlign: 'center',
-              verticalAlign: 'middle',
-              color: '#80808059'
-            }}
-          >
-            <Translations text='no data' />
-          </div>
-        )}
+        </TableContainer>
+        <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center' }}>
+          {total > 0 && params?.topKeyword === 'all' ? (
+            <Pagination
+              count={pageCount}
+              page={page + 1}
+              onChange={handleChangePagination}
+              variant='outlined'
+              color='primary'
+            />
+          ) : (
+            ''
+          )}
+        </Box>
       </CardContent>
     </Card>
   )

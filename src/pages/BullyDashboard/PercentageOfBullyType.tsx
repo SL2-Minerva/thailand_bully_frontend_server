@@ -57,6 +57,7 @@ const PercentageOfBullyType = (props: MessageData) => {
   const [previousPeriod, setPreviousPeriod] = useState<string>('')
   const [currentTotal, setCurrentTotal] = useState<number>()
   const [previousTotal, setPreviousTotal] = useState<number>()
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -189,11 +190,14 @@ const PercentageOfBullyType = (props: MessageData) => {
         setCurrentData(currentDataset)
         if (currentMessageData?.length > 0) {
           setCurrentTotal(currentMessageData[0]?.value?.total)
+          setShowNoDataText(false)
         } else {
+          setShowNoDataText(true)
           setCurrentTotal(0)
         }
       } else {
         setCurrentData(initValue)
+        setShowNoDataText(true)
         setCurrentTotal(0)
       }
 
@@ -202,17 +206,21 @@ const PercentageOfBullyType = (props: MessageData) => {
         setPreviousData(previousDataset)
         if (previousMessageData?.length > 0) {
           setPreviousTotal(previousMessageData[0]?.value?.total)
+          setShowNoDataText(false)
         } else {
+          setShowNoDataText(true)
           setPreviousTotal(0)
         }
       } else {
         setPreviousTotal(0)
+        setShowNoDataText(true)
         setPreviousData(initValue)
       }
     } else {
       setCurrentData(initValue)
       setPreviousData(initValue)
       setCurrentTotal(0)
+      setShowNoDataText(true)
       setPreviousTotal(0)
     }
   }, [resultBullyTypePercentage, t])
@@ -238,10 +246,38 @@ const PercentageOfBullyType = (props: MessageData) => {
       <CardContent>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
-            <Doughnut data={currentData} options={options as any} height={330} />
+            {showNoDataText ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '70px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                <Translations text='no data' />
+              </div>
+            ) : (
+              <Doughnut data={currentData} options={options as any} height={330} />
+            )}
           </Grid>
           <Grid item xs={12} md={6}>
-            <Doughnut data={previousData} options={optionsPrevious as any} height={330} />
+            {showNoDataText ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '70px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                <Translations text='no data' />
+              </div>
+            ) : (
+              <Doughnut data={previousData} options={optionsPrevious as any} height={330} />
+            )}
           </Grid>
           <Grid item xs={12} md={6}>
             <p style={{ fontSize: '10px' }}> Current Period :</p>

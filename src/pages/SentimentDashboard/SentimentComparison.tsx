@@ -218,6 +218,15 @@ const SentimentComparisonTable = ({
                   </TableRow>
                 )
               })}
+              {resultSentimentComparison?.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} sx={{textAlign:'center'}}>
+                    <Translations text='no data' />
+                  </TableCell>
+                </TableRow>
+              ) : (
+                ''
+              )}
             </Table>
             <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
               {total > 0 ? (

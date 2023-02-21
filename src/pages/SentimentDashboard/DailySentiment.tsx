@@ -79,6 +79,7 @@ const DailySenitment = (props: LineProps) => {
 
   // const [ chartData, setChartData ] = useState();
   const colors = SentimentColors
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const { t } = useTranslation()
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -134,12 +135,12 @@ const DailySenitment = (props: LineProps) => {
         params.label = label[index]
       }
       const keyword_id = getKeywordId(getDatasetAtEvent(chartRef.current, event))
-      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event);
+      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event)
 
-      if(getDatasetIndex?.length > 0) {
-        const datasetIndex = getDatasetIndex[0]?.datasetIndex;
-       
-        if(datasetIndex === 0 || datasetIndex) {
+      if (getDatasetIndex?.length > 0) {
+        const datasetIndex = getDatasetIndex[0]?.datasetIndex
+
+        if (datasetIndex === 0 || datasetIndex) {
           params.Llabel = dataset[datasetIndex]?.label
         }
       }
@@ -262,17 +263,19 @@ const DailySenitment = (props: LineProps) => {
         if (labels?.length > 0) {
           const dataSets = chartDatasets(sentimentData, labels)
           setDataset(dataSets)
+          setShowNoDataText(false)
         }
       } else {
         setLabel([])
         setDataset([])
 
         data = { labels: [], datasets: [] }
+        setShowNoDataText(true)
       }
     } else {
       setLabel([])
       setDataset([])
-
+      setShowNoDataText(true)
       data = { labels: [], datasets: [] }
     }
   }, [resultFilterData, t])
@@ -295,7 +298,21 @@ const DailySenitment = (props: LineProps) => {
       </span>
 
       <CardContent>
-        <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        {showNoDataText ? (
+          <div
+            style={{
+              height: 300,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059'
+            }}
+          >
+            <Translations text='no data' />
+          </div>
+        ) : (
+          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+        )}
         {showDetail ? (
           <MessageDetail
             show={showDetail}

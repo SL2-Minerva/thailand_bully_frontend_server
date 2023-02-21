@@ -81,6 +81,7 @@ const DailyMessageGraph = (props: Props) => {
     organization_id: null
   })
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+  const [keywordId, setKeywordId] = useState<any>()
 
   const { resultDailyMessage, loadingDailyMessage } = GetDailyMessages(
     params?.campaign,
@@ -101,29 +102,17 @@ const DailyMessageGraph = (props: Props) => {
     const dailyMessageData = resultDailyMessage
 
     let keywordId: number | null = null
-    let sourceId: number | null = null
-    let campaign_id: number | null = null
-    let organization_id: number | null = null
-
     if (dailyMessageData?.length > 0) {
       for (let i = 0; i < dailyMessageData?.length; i++) {
-        if (keywordName === dailyMessageData[i].keyword_name) {
-          sourceId = dailyMessageData[i].source_id || ''
-          campaign_id = dailyMessageData[i].campaign_id || ''
-          organization_id = dailyMessageData[i].organization_id || ''
-          keywordId = dailyMessageData[i]?.keyword_id || ''
+        if (dailyMessageData[i]?.value && dailyMessageData[i]?.value?.length > 0) {
+          if (keywordName === dailyMessageData[i]?.value[0]?.keyword_name) {
+            keywordId = dailyMessageData[i].value[0]?.keyword_id
+          }
         }
       }
     }
 
-    const returnData = {
-      keywordId: keywordId,
-      sourceId: sourceId,
-      campaign_id: campaign_id,
-      organization_id: organization_id
-    }
-
-    return returnData
+    return keywordId
   }
 
   const onClick = (event: any) => {
@@ -136,9 +125,9 @@ const DailyMessageGraph = (props: Props) => {
       }
 
       const keyword_id = getKeywordId(getDatasetAtEvent(chartRef.current, event))
-
       if (keyword_id) {
         setParamsId(keyword_id)
+        setKeywordId(keyword_id)
         setShowDetail(true)
       }
     }
@@ -197,17 +186,18 @@ const DailyMessageGraph = (props: Props) => {
             ...node,
             total_at_date: oldInfo?.total_at_date || 0,
             date: oldInfo?.date || node,
-            keyword_name : oldInfo?.keyword_name || ""
+            keyword_name: oldInfo?.keyword_name || ''
           }
         } else {
-          return { ...node, total_at_date: 0, date: node, keyword_name : oldInfo?.keyword_name || "" }
+          return { ...node, total_at_date: 0, date: node, keyword_name: oldInfo?.keyword_name || '' }
         }
       })
 
       for (let j = 0; j < modifiedData?.length; j++) {
         totalAmount.push(modifiedData[j].total_at_date)
-        keywordName = modifiedData[j].keyword_name ? modifiedData[j].keyword_name : ''
       }
+
+      keywordName = data[i]?.value[0]?.keyword_name ? data[i]?.value[0]?.keyword_name : ''
 
       for (let j = 0; j < keywordColor?.length; j++) {
         if (keywordColor[j]?.keywordName === keywordName) {
@@ -243,7 +233,7 @@ const DailyMessageGraph = (props: Props) => {
   }
 
   useEffect(() => {
-    if (resultDailyMessage && resultDailyMessage?.length>0) {
+    if (resultDailyMessage && resultDailyMessage?.length > 0) {
       const labels = chartLabel(resultDailyMessage)
       setLabel(labels)
 
@@ -295,7 +285,7 @@ const DailyMessageGraph = (props: Props) => {
               color: '#80808059'
             }}
           >
-            <Translations text='no data'/>
+            <Translations text='no data' />
           </div>
         ) : (
           <Bar ref={chartRef} data={data} options={options as any} height={500} onClick={onClick} />
@@ -309,6 +299,8 @@ const DailyMessageGraph = (props: Props) => {
           paramsId={paramsId}
           setParamsId={setParamsId}
           reportNo={reportNo}
+          keywordId={keywordId}
+          setKeywordId={setKeywordId}
           title='Daily Messages: Message Transactions'
           networkTitle='Daily Messages: Social Network Analysis'
         />

@@ -209,7 +209,7 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
   const title = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Card>
+    <Card sx={{minHeight: 713}}>
       {loadingPeriodComparisonBySenitment && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader

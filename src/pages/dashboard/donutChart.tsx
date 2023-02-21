@@ -182,6 +182,9 @@ const DonutChart = (props: MessageData) => {
         setShowNoDataText(true)
         setCurrentData(initValue)
         setCurrentTotal(0)
+        if (previousMessageData) {
+          setShowNoDataText(false)
+        }
       }
 
       if (previousMessageData) {
@@ -193,6 +196,10 @@ const DonutChart = (props: MessageData) => {
         setShowNoDataText(false)
       } else {
         setShowNoDataText(true)
+
+        if (currentMessageData) {
+          setShowNoDataText(false)
+        }
         setPreviousData(initValue)
         setPreviousTotal(0)
       }

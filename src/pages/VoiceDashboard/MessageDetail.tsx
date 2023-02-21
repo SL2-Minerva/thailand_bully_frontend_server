@@ -55,10 +55,12 @@ interface DialogInfoProps {
   reportNo?: string
   title?: string
   networkTitle?: string
+  keywordId?: number
+  setKeywordId?: any
 }
 
 const MessageDetail = (props: DialogInfoProps) => {
-  const { show, setShow, current, params, paramsId, setParamsId, reportNo, title, networkTitle } = props
+  const { show, setShow, current, params, paramsId, setParamsId, reportNo, title, networkTitle, keywordId, setKeywordId } = props
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [page, setPage] = useState(0)
   const [messageId, setMessageId] = useState<number | string>()
@@ -73,7 +75,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
       end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
       period: params?.period,
-      keyword_id: paramsId?.keywordId || '',
+      keyword_id: paramsId?.keywordId || keywordId || "",
       organization_id: paramsId?.organization_id || '',
       classification_id: paramsId?.classification_id || '',
       start_date_period: params?.previousDate ? moment(params?.previousDate).format('YYYY-MM-DD') : '',
@@ -91,7 +93,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
       end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
       period: params?.period,
-      keyword_id: paramsId?.keywordId || '',
+      keyword_id: paramsId?.keywordId || keywordId || "",
       classification_id: paramsId?.classification_id || '',
       organization_id: paramsId?.organization_id || '',
       page: page,
@@ -126,6 +128,9 @@ const MessageDetail = (props: DialogInfoProps) => {
       campaign_id: null,
       organization_id: null
     })
+    if (keywordId) {
+      setKeywordId('')
+    }
   }
 
   useEffect(() => {
