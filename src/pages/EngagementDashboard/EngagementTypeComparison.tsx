@@ -45,138 +45,152 @@ const EngagementTypeComparison = ({
       <CardContent>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <TableContainer>
-              <Table size='small'>
-                <TableHead>
-                  <TableRow>
-                    <TableCell variant='head'></TableCell>
-                    <TableCell variant='head' align='center'>
-                      Total
-                    </TableCell>
-                    <TableCell variant='head' align='center'>
-                      Share
-                    </TableCell>
-                    <TableCell variant='head' align='center'>
-                      Comment
-                    </TableCell>
-                    <TableCell variant='head' align='center'>
-                      Reaction
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {(resultEngagementComparison || []).map((comparison: any, index: number) => {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell>{comparison.keyword_name}</TableCell>
-                        <TableCell align='left'>
-                          <span style={{ display: 'flex', justifyContent: 'center' }}>
-                            {comparison.total?.value == 0 ? (
-                              ''
-                            ) : (
-                              <>
-                                {comparison.total?.type === 'plus' ? (
-                                  <ChevronUp
-                                    fontSize='large'
-                                    sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
-                                  />
-                                ) : (
-                                  <ChevronDown
-                                    fontSize='large'
-                                    sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
-                                  />
-                                )}
-                              </>
-                            )}
-                            <Typography variant='h6'>
-                              {comparison.total?.value}
-                              <Typography variant='body1'>{comparison.total?.percentage} %</Typography>
-                            </Typography>
-                          </span>
-                        </TableCell>
-                        <TableCell align='left'>
-                          <span style={{ display: 'flex', justifyContent: 'center' }}>
-                            {comparison.share?.value == 0 ? (
-                              ''
-                            ) : (
-                              <>
-                                {comparison.share?.type === 'plus' ? (
-                                  <ChevronUp
-                                    fontSize='large'
-                                    sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
-                                  />
-                                ) : (
-                                  <ChevronDown
-                                    fontSize='large'
-                                    sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
-                                  />
-                                )}
-                              </>
-                            )}
-                            <Typography variant='h6'>
-                              {comparison.share?.value}
-                              <Typography variant='body1'>{comparison.share?.percentage} %</Typography>
-                            </Typography>
-                          </span>
-                        </TableCell>
-                        <TableCell align='left'>
-                          <span style={{ display: 'flex', justifyContent: 'center' }}>
-                            {comparison.comment?.value === 0 ? (
-                              ''
-                            ) : (
-                              <>
-                                {comparison.comment?.type === 'plus' ? (
-                                  <ChevronUp
-                                    fontSize='large'
-                                    sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
-                                  />
-                                ) : (
-                                  <ChevronDown
-                                    fontSize='large'
-                                    sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
-                                  />
-                                )}
-                              </>
-                            )}
+            {resultEngagementComparison?.length > 0 ? (
+              <TableContainer>
+                <Table size='small'>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell variant='head'></TableCell>
+                      <TableCell variant='head' align='center'>
+                        Total
+                      </TableCell>
+                      <TableCell variant='head' align='center'>
+                        Share
+                      </TableCell>
+                      <TableCell variant='head' align='center'>
+                        Comment
+                      </TableCell>
+                      <TableCell variant='head' align='center'>
+                        Reaction
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {(resultEngagementComparison || []).map((comparison: any, index: number) => {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell>{comparison.keyword_name}</TableCell>
+                          <TableCell align='left'>
+                            <span style={{ display: 'flex', justifyContent: 'center' }}>
+                              {comparison.total?.value == 0 ? (
+                                ''
+                              ) : (
+                                <>
+                                  {comparison.total?.type === 'plus' ? (
+                                    <ChevronUp
+                                      fontSize='large'
+                                      sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
+                                    />
+                                  ) : (
+                                    <ChevronDown
+                                      fontSize='large'
+                                      sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
+                                    />
+                                  )}
+                                </>
+                              )}
+                              <Typography variant='h6'>
+                                {comparison.total?.value}
+                                <Typography variant='body1'>{comparison.total?.percentage} %</Typography>
+                              </Typography>
+                            </span>
+                          </TableCell>
+                          <TableCell align='left'>
+                            <span style={{ display: 'flex', justifyContent: 'center' }}>
+                              {comparison.share?.value == 0 ? (
+                                ''
+                              ) : (
+                                <>
+                                  {comparison.share?.type === 'plus' ? (
+                                    <ChevronUp
+                                      fontSize='large'
+                                      sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
+                                    />
+                                  ) : (
+                                    <ChevronDown
+                                      fontSize='large'
+                                      sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
+                                    />
+                                  )}
+                                </>
+                              )}
+                              <Typography variant='h6'>
+                                {comparison.share?.value}
+                                <Typography variant='body1'>{comparison.share?.percentage} %</Typography>
+                              </Typography>
+                            </span>
+                          </TableCell>
+                          <TableCell align='left'>
+                            <span style={{ display: 'flex', justifyContent: 'center' }}>
+                              {comparison.comment?.value === 0 ? (
+                                ''
+                              ) : (
+                                <>
+                                  {comparison.comment?.type === 'plus' ? (
+                                    <ChevronUp
+                                      fontSize='large'
+                                      sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
+                                    />
+                                  ) : (
+                                    <ChevronDown
+                                      fontSize='large'
+                                      sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
+                                    />
+                                  )}
+                                </>
+                              )}
 
-                            <Typography variant='h6'>
-                              {comparison.comment?.value}
-                              <Typography variant='body1'>{comparison.comment?.percentage} %</Typography>
-                            </Typography>
-                          </span>
-                        </TableCell>
-                        <TableCell align='left'>
-                          <span style={{ display: 'flex', justifyContent: 'center' }}>
-                            {comparison.reaction?.value == 0 ? (
-                              ''
-                            ) : (
-                              <>
-                                {comparison.reaction?.type === 'plus' ? (
-                                  <ChevronUp
-                                    fontSize='large'
-                                    sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
-                                  />
-                                ) : (
-                                  <ChevronDown
-                                    fontSize='large'
-                                    sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
-                                  />
-                                )}
-                              </>
-                            )}
+                              <Typography variant='h6'>
+                                {comparison.comment?.value}
+                                <Typography variant='body1'>{comparison.comment?.percentage} %</Typography>
+                              </Typography>
+                            </span>
+                          </TableCell>
+                          <TableCell align='left'>
+                            <span style={{ display: 'flex', justifyContent: 'center' }}>
+                              {comparison.reaction?.value == 0 ? (
+                                ''
+                              ) : (
+                                <>
+                                  {comparison.reaction?.type === 'plus' ? (
+                                    <ChevronUp
+                                      fontSize='large'
+                                      sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
+                                    />
+                                  ) : (
+                                    <ChevronDown
+                                      fontSize='large'
+                                      sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
+                                    />
+                                  )}
+                                </>
+                              )}
 
-                            <Typography variant='h6'>
-                              {comparison.reaction?.value}
-                              <Typography variant='body1'>{comparison.reaction?.percentage} %</Typography>
-                            </Typography>
-                          </span>
-                        </TableCell>
-                      </TableRow>
-                    )
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                              <Typography variant='h6'>
+                                {comparison.reaction?.value}
+                                <Typography variant='body1'>{comparison.reaction?.percentage} %</Typography>
+                              </Typography>
+                            </span>
+                          </TableCell>
+                        </TableRow>
+                      )
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : (
+              <div
+                style={{
+                  height: 300,
+                  padding: '170px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                <Translations text='no data' />
+              </div>
+            )}
           </Grid>
         </Grid>
       </CardContent>

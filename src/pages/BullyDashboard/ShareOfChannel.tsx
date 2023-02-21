@@ -98,65 +98,77 @@ const ShareOfChannel = ({
       <CardContent>
         <Grid container spacing={3}>
           <Grid item xs={5}>
-            <Bar data={data} options={{ indexAxis: 'y' }} height={150} />
+            {resultShareOfChannel ? <Bar data={data} options={{ indexAxis: 'y' }} height={150} /> : ''}
           </Grid>
           <Grid item xs={7}>
-            <Table size='small'>
-              <TableHead>
-                {(resultShareofChannelPlatform || []).map((shareVoice: any, index: number) => {
-                  return (
-                    <TableRow key={index}>
-                      {index == 0 ? (
-                        <>
-                          {(shareVoice.value || []).map((value: any, key: number) => {
-                            return (
-                              <TableCell variant='head' key={key}>
-                                {value?.channel === 'facebook' ? (
-                                  <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
-                                ) : value?.channel === 'twitter' ? (
-                                  <img alt={'logo'} width={34} height={34} src={`/images/logos/twitter.png`} />
-                                ) : value?.channel === 'youtube' ? (
-                                  <img width={34} height={34} alt={'logo'} src={`/images/logos/youtube-text.png`} />
-                                ) : value?.channel === 'instagram' ? (
-                                  <img width={34} alt={'logo'} height={34} src={`/images/logos/instagram.png`} />
-                                ) : value?.channel === 'pantip' ? (
-                                  <img width={34} alt={'logo'} height={34} src={`/images/logos/pantip.png`} />
-                                ) : value?.channel === 'google' ? (
-                                  <img width={34} alt={'logo'} height={34} src={`/images/logos/google.png`} />
-                                ) 
-                                : 
-                                (
-                                  <span style={{ textTransform: 'uppercase' }}>{value?.channel}</span>
-                                )}
-                              </TableCell>
-                            )
-                          })}
-                        </>
-                      ) : (
-                        ''
-                      )}
-                    </TableRow>
-                  )
-                })}
-              </TableHead>
-              <TableBody>
-                {(resultShareofChannelPlatform || []).map((shareVoice: any, index: number) => {
-                  return (
-                    <TableRow key={index}>
-                      {(shareVoice.value || []).map((value: any, key: number) => {
-                        return (
-                          <TableCell key={key}>
-                            <span style={{ border: value?.highlight ? '1px solid red' : '', padding: '4px' }}>
-                              {value?.percentage + '%'}
-                            </span>
-                          </TableCell>
-                        )
-                      })}
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
+            {resultShareofChannelPlatform?.length > 0 ? (
+              <Table size='small'>
+                <TableHead>
+                  {(resultShareofChannelPlatform || []).map((shareVoice: any, index: number) => {
+                    return (
+                      <TableRow key={index}>
+                        {index == 0 ? (
+                          <>
+                            {(shareVoice.value || []).map((value: any, key: number) => {
+                              return (
+                                <TableCell variant='head' key={key}>
+                                  {value?.channel === 'facebook' ? (
+                                    <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
+                                  ) : value?.channel === 'twitter' ? (
+                                    <img alt={'logo'} width={34} height={34} src={`/images/logos/twitter.png`} />
+                                  ) : value?.channel === 'youtube' ? (
+                                    <img width={34} height={34} alt={'logo'} src={`/images/logos/youtube-text.png`} />
+                                  ) : value?.channel === 'instagram' ? (
+                                    <img width={34} alt={'logo'} height={34} src={`/images/logos/instagram.png`} />
+                                  ) : value?.channel === 'pantip' ? (
+                                    <img width={34} alt={'logo'} height={34} src={`/images/logos/pantip.png`} />
+                                  ) : value?.channel === 'google' ? (
+                                    <img width={34} alt={'logo'} height={34} src={`/images/logos/google.png`} />
+                                  ) : (
+                                    <span style={{ textTransform: 'uppercase' }}>{value?.channel}</span>
+                                  )}
+                                </TableCell>
+                              )
+                            })}
+                          </>
+                        ) : (
+                          ''
+                        )}
+                      </TableRow>
+                    )
+                  })}
+                </TableHead>
+                <TableBody>
+                  {(resultShareofChannelPlatform || []).map((shareVoice: any, index: number) => {
+                    return (
+                      <TableRow key={index}>
+                        {(shareVoice.value || []).map((value: any, key: number) => {
+                          return (
+                            <TableCell key={key}>
+                              <span style={{ border: value?.highlight ? '1px solid red' : '', padding: '4px' }}>
+                                {value?.percentage + '%'}
+                              </span>
+                            </TableCell>
+                          )
+                        })}
+                      </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </Table>
+            ) : (
+              <div
+                style={{
+                  height: 300,
+                  padding: '70px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                <Translations text='no data' />
+              </div>
+            )}
           </Grid>
         </Grid>
       </CardContent>

@@ -80,7 +80,7 @@ const ChannelBySentiment = ({
       </span>
       <CardContent>
         <Grid container spacing={3}>
-          {resultBy ? (
+          {!resultBy ? (
             <div
               style={{
                 height: 200,

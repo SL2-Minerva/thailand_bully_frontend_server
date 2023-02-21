@@ -18,6 +18,7 @@ import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import { GetWordCloudsPlatform } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
+import AccountList from './AccountList'
 
 const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string }) => {
   const [platformId, setPlatformId] = useState<string>('1')
@@ -44,59 +45,76 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Card sx={{ maxHeight: 500, minHeight: 500 }}>
-      {loadingWordCloudsPlatform && <LinearProgress style={{ width: '100%' }} />}
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader title={<Translations text='Word Cloud by Channel' />} titleTypographyProps={{ variant: 'h6' }} />
-        <StyledTooltip arrow title={chartTitle}>
-          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
-        </StyledTooltip>
-      </span>
-      <Grid container spacing={2}>
-        <Grid item sm={6} xs={6} ml={4}>
-          <FormControl fullWidth>
-            <InputLabel id='plan-select'>Select Platform</InputLabel>
-            <Select
-              fullWidth
-              value={platformId}
-              id='select-platform'
-              label='Select Channel'
-              labelId='platform-select'
-              onChange={e => {
-                handleSelectList(e)
-              }}
-              inputProps={{ placeholder: 'Select Channel' }}
-            >
-              {result_source_list &&
-                result_source_list.map((item: any, index: number) => {
-                  return (
-                    <MenuItem key={index} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  )
-                })}
-            </Select>
-          </FormControl>
-        </Grid>
-      </Grid>
-      <div style={{ height: 400, width: 600 }}>
-        {!resultWordCloudsPlatform?.word_clouds_platform ||
-        resultWordCloudsPlatform?.word_clouds_platform?.length == 0 ? (
-          <div
-            style={{
-              padding: '130px 0',
-              textAlign: 'center',
-              verticalAlign: 'middle',
-              color: '#80808059'
-            }}
-          >
-            <Translations text='no data' />
+    <Grid container spacing={2}>
+      <Grid xs={12} md={6}>
+        <Card sx={{ maxHeight: 500, minHeight: 500 }}>
+          {loadingWordCloudsPlatform && <LinearProgress style={{ width: '100%' }} />}
+          <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <CardHeader
+              title={<Translations text='Word Cloud by Channel' />}
+              titleTypographyProps={{ variant: 'h6' }}
+            />
+            <StyledTooltip arrow title={chartTitle}>
+              <Information style={{ marginTop: '22px', fontSize: '29px' }} />
+            </StyledTooltip>
+          </span>
+          <Grid container spacing={2}>
+            <Grid item sm={6} xs={6} ml={4}>
+              <FormControl fullWidth>
+                <InputLabel id='plan-select'>Select Platform</InputLabel>
+                <Select
+                  fullWidth
+                  value={platformId}
+                  id='select-platform'
+                  label='Select Channel'
+                  labelId='platform-select'
+                  onChange={e => {
+                    handleSelectList(e)
+                  }}
+                  inputProps={{ placeholder: 'Select Channel' }}
+                >
+                  {result_source_list &&
+                    result_source_list.map((item: any, index: number) => {
+                      return (
+                        <MenuItem key={index} value={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      )
+                    })}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <div style={{ height: 400, width: 600 }}>
+            {!resultWordCloudsPlatform?.word_clouds_platform ||
+            resultWordCloudsPlatform?.word_clouds_platform?.length == 0 ? (
+              <div
+                style={{
+                  padding: '130px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                <Translations text='no data' />
+              </div>
+            ) : (
+              <ReactWordcloud words={resultWordCloudsPlatform?.word_clouds_platform || []} />
+            )}
           </div>
-        ) : (
-          <ReactWordcloud words={resultWordCloudsPlatform?.word_clouds_platform || []} />
-        )}
-      </div>
-    </Card>
+        </Card>
+      </Grid>
+      <Grid id='chart16' item xs={12} md={6}>
+            <AccountList
+              loading={loadingWordCloudsPlatform}
+              accountList={resultWordCloudsPlatform?.wordCloudByAccount}
+              chartId='Chart 16'
+              cardHeader='Word Cloud by Account'
+              title='Word Cloud by Account: Message Transaction'
+              networkTitle='Word Cloud by Account: Social Network Analysis'
+            />
+          </Grid>
+    </Grid>
   )
 }
 

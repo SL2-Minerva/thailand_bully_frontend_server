@@ -284,7 +284,7 @@ const DailyEngagement = (props: LineProps) => {
   const title = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600, maxHeight: 600 }} square variant='outlined'>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader

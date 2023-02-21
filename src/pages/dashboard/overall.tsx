@@ -61,7 +61,6 @@ import SourceService from 'src/services/api/source/SourceApi'
 import WordCloud from './WordCloud'
 import TotalMessageLists from './TotalMessageLists'
 import WordCloudChannel from './WordCloudChannel'
-import AccountList from './AccountList'
 import WordCloudSentiment from './WordCloudSentiment'
 import { UserPermission } from 'src/services/api/users/role'
 import { API_PATH, GraphicColors } from 'src/utils/const'
@@ -819,17 +818,8 @@ const OverallDashboard = () => {
 
       {resultReportPermission?.includes('15') ? (
         <Grid container spacing={3} mt={2}>
-          <Grid id='chart15' item xs={12} md={6}>
+          <Grid id='chart15' item xs={12}>
             <WordCloudChannel params={params} chartId='Chart 15' />
-          </Grid>
-          <Grid id='chart16' item xs={12} md={6}>
-            <AccountList
-              params={params}
-              chartId='Chart 16'
-              cardHeader='Word Cloud by Account'
-              title='Word Cloud by Account: Message Transaction'
-              networkTitle='Word Cloud by Account: Social Network Analysis'
-            />
           </Grid>
         </Grid>
       ) : (
@@ -837,17 +827,8 @@ const OverallDashboard = () => {
       )}
       {resultReportPermission?.includes('18') ? (
         <Grid container spacing={3} mt={2}>
-          <Grid id='chart17' item xs={12} md={6}>
+          <Grid id='chart17' item xs={12} md={12}>
             <WordCloudSentiment params={params} chartId='Chart 18' />
-          </Grid>
-          <Grid id='chart18' item xs={12} md={6}>
-            <AccountList
-              params={params}
-              chartId='Chart 19'
-              cardHeader='Word Cloud by Sentiment Type'
-              title='Word Cloud by Sentiment Type: Message Transaction'
-              networkTitle='Word Cloud by Sentiment Type: Social Network Analysis'
-            />
           </Grid>
         </Grid>
       ) : (

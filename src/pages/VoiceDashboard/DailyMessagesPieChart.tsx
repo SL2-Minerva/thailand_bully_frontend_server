@@ -188,6 +188,9 @@ const DailyMessagePieChart = (props: Props) => {
       } else {
         setCurrentTotal(0)
         setShowNoDataText(true)
+        if(previousMessageData) {
+          setShowNoDataText(false)
+        }
       }
       if (previousMessageData?.length > 0) {
         setShowNoDataText(false)
@@ -195,6 +198,9 @@ const DailyMessagePieChart = (props: Props) => {
       } else {
         setPreviousTotal(0)
         setShowNoDataText(true)
+        if(currentMessageData) {
+          setShowNoDataText(false)
+        }
       }
     } else {
       setCurrentData(initValue)

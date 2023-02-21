@@ -5,7 +5,7 @@ import Translations from 'src/layouts/components/Translations'
 import AccountDetail from './AccountDetail'
 import { StyledTooltip } from './overall'
 
-const AccountList = ({
+const SentimentAccountList = ({
   chartId,
   cardHeader,
   title,
@@ -65,17 +65,17 @@ const AccountList = ({
                   <Typography variant='subtitle1'>{keyword.engagements} Engagements/posts</Typography>
                 </Grid>
                 <Grid item sm={2} xs={2} mt={5}>
-                  {keyword?.source_name == 'facebook' ? (
+                  {keyword?.source_name == 'Facebook' ? (
                     <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
-                  ) : keyword?.source_name == 'twitter' ? (
+                  ) : keyword?.source_name == 'Twitter' ? (
                     <img alt={'logo'} width={34} height={34} src={`/images/logos/twitter.png`} />
-                  ) : keyword?.source_name == 'youtube' ? (
+                  ) : keyword?.source_name == 'Youtube' ? (
                     <img width={34} height={34} alt={'logo'} src={`/images/logos/youtube-text.png`} />
-                  ) : keyword?.source_name == 'instagram' ? (
+                  ) : keyword?.source_name == 'Instagram' ? (
                     <img width={34} alt={'logo'} height={34} src={`/images/logos/instagram.png`} />
-                  ) : keyword?.source_name == 'pantip' ? (
+                  ) : keyword?.source_name == 'Pantip' ? (
                     <img width={34} alt={'logo'} height={34} src={`/images/logos/pantip.png`} />
-                  ) : keyword?.source_name == 'google' ? (
+                  ) : keyword?.source_name == 'Google' ? (
                     <img width={34} alt={'logo'} height={34} src={`/images/logos/google.png`} />
                   ) : (
                     <span style={{ textTransform: 'uppercase' }}>{keyword?.source_name}</span>
@@ -111,4 +111,4 @@ const AccountList = ({
   )
 }
 
-export default AccountList
+export default SentimentAccountList

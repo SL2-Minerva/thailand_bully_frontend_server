@@ -81,6 +81,7 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
 
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
+  const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const chartRef = useRef()
   const onClick = (event: any) => {
@@ -182,7 +183,15 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
 
         const dataSets = chartDatasets(dailyMessageData)
         setDataset(dataSets)
+
+        if (dailyMessageData?.value) {
+          setShowNoDataText(false)
+        } else {
+          setShowNoDataText(true)
+        }
       }
+    } else {
+      setShowNoDataText(true)
     }
   }, [resultSenitmentComparisonByChannel])
 
@@ -200,7 +209,7 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
       {loadingSenitmentComparisonByChannel && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text={getTitle(type, chartTitle)}/>}
+          title={<Translations text={getTitle(type, chartTitle)} />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
@@ -212,60 +221,80 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
       <CardContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+            {showNoDataText ? (
+              <div
+                style={{
+                  height: 300,
+                  padding: '170px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                <Translations text='no data' />
+              </div>
+            ) : (
+              <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+            )}
           </Grid>
           <Grid item xs={12}>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-                <TableHead>
-                  <TableRow>
-                    <TableCell width={30}>{resultSenitmentComparisonByChannel?.share ? 'Share' : 'Positive'}</TableCell>
-                    {(
-                      resultSenitmentComparisonByChannel?.share ||
-                      resultSenitmentComparisonByChannel?.positive ||
-                      []
-                    )?.map((share: any, index: number) => {
-                      return (
-                        <TableCell align='left' key={index}>
-                          {share}
-                        </TableCell>
-                      )
-                    })}
-                    {/* <TableCell align='left'>{resultSenitmentComparisonByChannel?.share || resultSenitmentComparisonByChannel?.positive || ""}</TableCell> */}
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>{resultSenitmentComparisonByChannel?.comment ? 'Comment' : 'Neutral'}</TableCell>
-                    {(
-                      resultSenitmentComparisonByChannel?.comment ||
-                      resultSenitmentComparisonByChannel?.neutral ||
-                      []
-                    )?.map((comment: any, index: number) => {
-                      return (
-                        <TableCell align='left' key={index}>
-                          {comment}
-                        </TableCell>
-                      )
-                    })}
-                    {/* <TableCell>{resultSenitmentComparisonByChannel?.comment || resultSenitmentComparisonByChannel?.neutral ||  ""}</TableCell> */}
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>{resultSenitmentComparisonByChannel?.comment ? 'Reaction' : 'Negative'}</TableCell>
-                    {(
-                      resultSenitmentComparisonByChannel?.reaction ||
-                      resultSenitmentComparisonByChannel?.negative ||
-                      []
-                    )?.map((reaction: any, index: number) => {
-                      return (
-                        <TableCell align='left' key={index}>
-                          {reaction}
-                        </TableCell>
-                      )
-                    })}
-                    {/* <TableCell>{resultSenitmentComparisonByChannel?.reaction || resultSenitmentComparisonByChannel?.negative ||  ""}</TableCell> */}
-                  </TableRow>
-                </TableHead>
-              </Table>
-            </TableContainer>
+            {resultSenitmentComparisonByChannel?.value ? (
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell width={30}>
+                        {resultSenitmentComparisonByChannel?.share ? 'Share' : 'Positive'}
+                      </TableCell>
+                      {(
+                        resultSenitmentComparisonByChannel?.share ||
+                        resultSenitmentComparisonByChannel?.positive ||
+                        []
+                      )?.map((share: any, index: number) => {
+                        return (
+                          <TableCell align='left' key={index}>
+                            {share}
+                          </TableCell>
+                        )
+                      })}
+                      {/* <TableCell align='left'>{resultSenitmentComparisonByChannel?.share || resultSenitmentComparisonByChannel?.positive || ""}</TableCell> */}
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>{resultSenitmentComparisonByChannel?.comment ? 'Comment' : 'Neutral'}</TableCell>
+                      {(
+                        resultSenitmentComparisonByChannel?.comment ||
+                        resultSenitmentComparisonByChannel?.neutral ||
+                        []
+                      )?.map((comment: any, index: number) => {
+                        return (
+                          <TableCell align='left' key={index}>
+                            {comment}
+                          </TableCell>
+                        )
+                      })}
+                      {/* <TableCell>{resultSenitmentComparisonByChannel?.comment || resultSenitmentComparisonByChannel?.neutral ||  ""}</TableCell> */}
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>{resultSenitmentComparisonByChannel?.comment ? 'Reaction' : 'Negative'}</TableCell>
+                      {(
+                        resultSenitmentComparisonByChannel?.reaction ||
+                        resultSenitmentComparisonByChannel?.negative ||
+                        []
+                      )?.map((reaction: any, index: number) => {
+                        return (
+                          <TableCell align='left' key={index}>
+                            {reaction}
+                          </TableCell>
+                        )
+                      })}
+                      {/* <TableCell>{resultSenitmentComparisonByChannel?.reaction || resultSenitmentComparisonByChannel?.negative ||  ""}</TableCell> */}
+                    </TableRow>
+                  </TableHead>
+                </Table>
+              </TableContainer>
+            ) : (
+              ''
+            )}
           </Grid>
         </Grid>
       </CardContent>

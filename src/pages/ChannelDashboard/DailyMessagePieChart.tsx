@@ -214,6 +214,9 @@ const DailyMessagePieChart = (props: Props) => {
       setPreviousData(initValue)
       setPreviousTotal(0)
       setShowNoDataText(true)
+      if (resultPercentageChannelCurrent) {
+        setShowNoDataText(false)
+      }
     }
   }, [resultPercentageChannelCurrent, resultPercentageChannelPrevious])
 
