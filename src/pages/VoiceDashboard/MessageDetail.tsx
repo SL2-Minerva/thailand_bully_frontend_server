@@ -144,7 +144,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       <Dialog
         fullWidth
         open={show}
-        maxWidth='lg'
+        maxWidth='xl'
         scroll='body'
         onClose={onCloseDialog}
         TransitionComponent={Transition}
@@ -164,14 +164,15 @@ const MessageDetail = (props: DialogInfoProps) => {
             <Table style={{ minWidth: '00px' }} aria-label='customized table'>
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>Message ID</StyledTableCell>
                   <StyledTableCell>Message Detail</StyledTableCell>
+                  <StyledTableCell>Message Type</StyledTableCell>
                   <StyledTableCell>Account Name</StyledTableCell>
                   <StyledTableCell>Post Date</StyledTableCell>
                   <StyledTableCell>Post Time</StyledTableCell>
                   <StyledTableCell>Day</StyledTableCell>
                   <StyledTableCell>Device</StyledTableCell>
                   <StyledTableCell>Channel</StyledTableCell>
+                  <StyledTableCell>Sentiment</StyledTableCell>
                   <StyledTableCell>Bully Level</StyledTableCell>
                   <StyledTableCell>Bully Type</StyledTableCell>
                   <StyledTableCell>Parent</StyledTableCell>
@@ -187,16 +188,17 @@ const MessageDetail = (props: DialogInfoProps) => {
                     }}
                     style={{ cursor: 'pointer' }}
                   >
-                    <StyledTableCell align='center'>{messageDetail.message_id}</StyledTableCell>
                     <StyledTableCell component='th' scope='row'>
                       {messageDetail.message_detail}
                     </StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.message_type || '-'}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.account_name}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.post_date}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.post_time}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.day}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.device}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.channel}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.device || '-'}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.channel_name || '-'}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.sentiment || '-'}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.bully_level}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.parent}</StyledTableCell>

@@ -101,7 +101,7 @@ const AccountDetail = (props: DialogInfoProps) => {
       <Dialog
         fullWidth
         open={show}
-        maxWidth='lg'
+        maxWidth='xl'
         scroll='body'
         onClose={onCloseDialog}
         TransitionComponent={Transition}
@@ -120,7 +120,6 @@ const AccountDetail = (props: DialogInfoProps) => {
             <Table aria-label='customized table'>
               <TableHead sx={{ backgroundColor: '#e8d63aa1 !important' }}>
                 <TableRow>
-                  <TableCell>Message ID</TableCell>
                   <TableCell variant='head'> Message Detail </TableCell>
                   <TableCell variant='head'> Account Name </TableCell>
                   <TableCell variant='head'> Channel/Platform </TableCell>
@@ -136,10 +135,9 @@ const AccountDetail = (props: DialogInfoProps) => {
                       setShowDialog(true), setMessageId(row.message_id)
                     }}
                   >
-                    <TableCell>{row.message_id}</TableCell>
                     <TableCell style={{ whiteSpace: 'normal', width: 300 }}>{row.message_detail}</TableCell>
                     <TableCell>{row.account_name}</TableCell>
-                    <TableCell>{row.channel}</TableCell>
+                    <TableCell>{row.channel_name || '-'}</TableCell>
                     <TableCell>{row.post_date}</TableCell>
                     <TableCell> {row.post_time}</TableCell>
                   </TableRow>

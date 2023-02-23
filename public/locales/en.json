@@ -173,5 +173,6 @@
   "Bully Type: Daily Message by Sentiment"	:	"Bully Type: Daily Message by Sentiment",
   "Bully Level: Share of Channel"	:	"Bully Level: Share of Channel",
   "Bully Type: Share of Channel"	:	"Bully Type: Share of Channel",
-  "no data": "There is no data"
+  "no data": "There is no data",
+  "frequencyPlaceHolder" : "(Example)  30  = 30 min"
 }

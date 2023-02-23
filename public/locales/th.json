@@ -173,5 +173,6 @@
   "Bully Type: Daily Message by Sentiment"	:	"จำนวนข้อความแบ่งตามความรู้สึก เปรียบเทียบประเภทความคุกคาม",
   "Bully Level: Share of Channel"	:	"ร้อยละของระดับการคุกคามในแต่ละช่องทาง",
   "Bully Type: Share of Channel"	:	"ร้อยละของประเภทการคุกคามในแต่ละช่องทาง",
-  "no data" : "ตรวจสอบแล้ว ไม่มีข้อมูล"
+  "no data" : "ตรวจสอบแล้ว ไม่มีข้อมูล",
+  "frequencyPlaceHolder" : "ตัวอย่าง 30 = 30 นาที"
 }

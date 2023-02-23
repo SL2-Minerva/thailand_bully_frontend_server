@@ -10,7 +10,7 @@ import Translations from 'src/layouts/components/Translations'
 import SentimentAccountList from './SentimentAccountList'
 
 const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string }) => {
-  const [sentiment, setSentiment] = useState('')
+  const [sentiment, setSentiment] = useState('positive')
   const { resultWordCloudsSentiment, loadingWordCloudsSentiment } = GetWordCloudsSentiment(
     params?.campaign,
     params?.platformId,

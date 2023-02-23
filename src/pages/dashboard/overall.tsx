@@ -718,7 +718,7 @@ const OverallDashboard = () => {
         {resultReportPermission?.includes('12') ? (
           <>
             <Grid id='chart12' item xs={12} md={8}>
-              <ShareOfVoice params={params} chartId='Chart 12' />
+              <ShareOfVoice params={params} chartId='Chart 12' keywordsColor={keywordGraphColors} />
             </Grid>
             <Grid item xs={12} md={4}>
               <SentimentLevelChart params={params} />

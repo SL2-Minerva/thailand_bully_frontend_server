@@ -78,7 +78,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
     10,
     reportNo,
     params?.page,
-    params?.label, 
+    params?.label,
     params?.ylabel
   )
 
@@ -102,19 +102,25 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
   }, [totalMessage])
 
   const cardTitle = title ? title : 'Daily Messages: Message Transactions'
-  const titleNetwork = networkTitle ? networkTitle : "Daily Messages: Social Network Analysis"
+  const titleNetwork = networkTitle ? networkTitle : 'Daily Messages: Social Network Analysis'
 
   return (
     <Card>
       <Dialog
         fullWidth
         open={show}
-        maxWidth='lg'
+        maxWidth='xl'
         scroll='body'
         onClose={onCloseDialog}
         TransitionComponent={Transition}
       >
-        <DialogContent sx={{ pb: 6, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
+        <DialogContent
+          sx={{
+            pb: 6,
+            pt: { xs: 8, sm: 12.5 },
+            position: 'relative'
+          }}
+        >
           <IconButton size='small' onClick={onCloseDialog} sx={{ position: 'absolute', right: '1rem', top: '1rem' }}>
             <Close />
           </IconButton>
@@ -126,17 +132,18 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
           </Box>
 
           <TableContainer component={Paper}>
-            <Table style={{ minWidth: '00px' }} aria-label='customized table'>
+            <Table aria-label='customized table'>
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>Message ID</StyledTableCell>
                   <StyledTableCell>Message Detail</StyledTableCell>
+                  <StyledTableCell>Message Type</StyledTableCell>
                   <StyledTableCell>Account Name</StyledTableCell>
                   <StyledTableCell>Post Date</StyledTableCell>
                   <StyledTableCell>Post Time</StyledTableCell>
                   <StyledTableCell>Day</StyledTableCell>
                   <StyledTableCell>Device</StyledTableCell>
                   <StyledTableCell>Channel</StyledTableCell>
+                  <StyledTableCell>Sentiment</StyledTableCell>
                   <StyledTableCell>Bully Level</StyledTableCell>
                   <StyledTableCell>Bully Type</StyledTableCell>
                   <StyledTableCell>Parent</StyledTableCell>
@@ -151,19 +158,22 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                     }}
                     style={{ cursor: 'pointer' }}
                   >
-                    <StyledTableCell align='center'>{messageDetail.message_id}</StyledTableCell>
                     <StyledTableCell component='th' scope='row'>
                       {messageDetail.message_detail}
+                    </StyledTableCell>
+                    <StyledTableCell component='th' scope='row'>
+                      {messageDetail.message_type || '-'}
                     </StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.account_name}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.post_date}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.post_time}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.day}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.device}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.channel}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.device || '-'}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.channel_name || '-'}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.sentiment || '-'}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.bully_level}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.parent}</StyledTableCell>
+                    <StyledTableCell>{messageDetail.parent}</StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>
