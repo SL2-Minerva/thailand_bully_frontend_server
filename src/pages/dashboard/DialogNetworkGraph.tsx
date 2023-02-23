@@ -72,7 +72,7 @@ const DialogNetworkGraph = (props: DialogInfoProps) => {
         <Dialog
           fullWidth
           open={showDialog}
-          maxWidth='md'
+          maxWidth='lg'
           scroll='body'
           onClose={onClose}
           TransitionComponent={Transition}

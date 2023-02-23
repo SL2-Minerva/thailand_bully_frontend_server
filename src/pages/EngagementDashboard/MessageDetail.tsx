@@ -136,7 +136,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       <Dialog
         fullWidth
         open={show}
-        maxWidth='lg'
+        maxWidth='xl'
         scroll='body'
         onClose={onCloseDialog}
         TransitionComponent={Transition}
@@ -156,8 +156,8 @@ const MessageDetail = (props: DialogInfoProps) => {
             <Table style={{ minWidth: '00px' }} aria-label='customized table'>
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>Message ID</StyledTableCell>
                   <StyledTableCell>Message Description</StyledTableCell>
+                  <StyledTableCell>Message Type</StyledTableCell>
                   <StyledTableCell>Account Name</StyledTableCell>
                   <StyledTableCell>Account Type</StyledTableCell>
                   <StyledTableCell>Post Date</StyledTableCell>
@@ -177,10 +177,10 @@ const MessageDetail = (props: DialogInfoProps) => {
                       setShowDialog(true), setMessageId(messageDetail.message_id)
                     }}
                   >
-                    <StyledTableCell align='center'>{messageDetail.message_id}</StyledTableCell>
                     <StyledTableCell component='th' scope='row'>
                       {messageDetail.message_detail}
                     </StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.message_type}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.account_name}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.bully_level}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.post_date}</StyledTableCell>

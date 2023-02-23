@@ -9,6 +9,7 @@ import { Bar } from 'react-chartjs-2'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
+import { ChannelColors } from 'src/utils/const'
 
 const ChartLabels = (data: any) => {
   if (!data) return []
@@ -55,8 +56,8 @@ const ChannelBySentiment = ({
         label: '',
         data: ChartData(resultBy),
         fill: false,
-        backgroundColor: ['rgb(54, 162, 235)'],
-        borderColor: ['rgb(54, 162, 235)'],
+        backgroundColor: ChannelColors,
+        borderColor: ChannelColors,
         borderWidth: 1
       }
     ]

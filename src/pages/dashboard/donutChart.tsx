@@ -222,7 +222,7 @@ const DonutChart = (props: MessageData) => {
       </span>
 
       <CardContent>
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             {showNoDataText ? (
               <div
@@ -237,7 +237,7 @@ const DonutChart = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={currentData} options={options as any} height={343} />
+              <Doughnut data={currentData} options={options as any} height={370} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>
@@ -254,7 +254,7 @@ const DonutChart = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={previousData} options={optionsPrevious as any} height={343} />
+              <Doughnut data={previousData} options={optionsPrevious as any} height={370} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>

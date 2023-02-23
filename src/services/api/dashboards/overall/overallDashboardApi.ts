@@ -558,10 +558,10 @@ export const GetDetailMessage = (
   if (ylabel) {
     params.ylabel = encodeURI(ylabel)
   }
-  if(wordCloud) {
+  if (wordCloud) {
     params.wordColud = wordCloud
   }
-  if(authorName) {
+  if (authorName) {
     params.author_name = authorName
   }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
@@ -588,7 +588,9 @@ export const GetNetworkGraph = (
   previousEndDate?: any,
   keywordId?: any,
   messageId?: any,
-  reportNo?: string
+  reportNo?: string,
+  fillter_keywords?: any,
+  limit?: any
 ) => {
   let params: any = {}
   params = {
@@ -602,6 +604,14 @@ export const GetNetworkGraph = (
 
   if (platformId) {
     params.source_id = platformId
+  }
+
+  if (fillter_keywords) {
+    params.fillter_keywords = fillter_keywords
+  }
+
+  if (limit) {
+    params.limit = limit
   }
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({

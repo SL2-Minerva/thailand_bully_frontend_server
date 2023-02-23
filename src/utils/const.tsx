@@ -21,6 +21,26 @@ export const GraphicColors = [
 
   ];
 
+export const ChannelColors = [
+  '#53b1d9',
+  "#4472c4",
+  "#ed7d31",
+  "#a5a5a5",
+  "#ffc000",
+  "#5b9bd5",
+  "#299b82",
+  "#1640a1c4",
+  "#d8df20",
+  "#e02916",
+  "#ffca25",
+  "#C0D3DF",
+  '#4f86b9',
+  '#70ad47',
+  '#c00000',
+ '#c46627',
+
+];
+
 export const EngagementTransChartColor = [
   '#ed7d31',
   '#ffc000',

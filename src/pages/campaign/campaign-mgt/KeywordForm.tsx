@@ -206,8 +206,8 @@ const KeywordForm = (props: any) => {
             multiline
             size='small'
             sx={{ mt: 3.5 }}
-            placeholder='Enter Label'
-            label='Label'
+            placeholder='Enter Keyword'
+            label='Keyword'
             value={keywords[indexNumber]?.name || ''}
             onChange={e => handleChangeLabel(indexNumber, e)}
           />

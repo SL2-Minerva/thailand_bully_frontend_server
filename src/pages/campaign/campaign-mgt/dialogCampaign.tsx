@@ -34,6 +34,7 @@ import KeywordForm from './KeywordForm'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { API_PATH } from 'src/utils/const'
+import { useTranslation } from 'react-i18next'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -61,6 +62,7 @@ const RepeaterWrapper = styled(CardContent)<CardContentProps>(({ theme }) => ({
 
 const DialogCampaign = (props: DialogInfoProps) => {
   const { show, setShow, action, current, keywordLimit } = props
+  const { t } = useTranslation()
 
   const [domain, setDomain] = useState<string>('')
   const [frequency, setFrequency] = useState<string>('')
@@ -325,7 +327,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
               <Grid item sm={12} xs={12}>
                 <FormControl fullWidth>
-                  <TextField fullWidth label='frequency' value={frequency} onChange={handleFrequency} placeholder='' />
+                  <TextField
+                    fullWidth
+                    label='Frequency'
+                    value={frequency}
+                    onChange={handleFrequency}
+                    placeholder={t('frequencyPlaceHolder')}
+                  />
                 </FormControl>
               </Grid>
             </Grid>

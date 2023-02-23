@@ -8,7 +8,8 @@ import {
   MenuItem,
   Box,
   LinearProgress,
-  Typography
+  Typography,
+  Button
 } from '@mui/material'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
@@ -18,7 +19,7 @@ import DatePicker from 'react-datepicker'
 import { DateType } from 'src/types/forms/reactDatepickerTypes'
 import format from 'date-fns/format'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
-import { GetNetworkGraph } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import { GetKeyWordsList, GetNetworkGraph } from 'src/services/api/dashboards/overall/overallDashboardApi'
 
 // ** Third Party Styles Imports
 // import addDays from 'date-fns/addDays'
@@ -26,10 +27,16 @@ import { CampaignList } from 'src/services/api/campaign/CampaignAPI'
 import SourceService from 'src/services/api/source/SourceApi'
 import Translations from 'src/layouts/components/Translations'
 import { useRouter } from 'next/router'
-import { calculateDate, get1stAndLastDayOfMonth, PickerProps } from '../dashboard/overall'
+import { calculateDate, get1stAndLastDayOfMonth, PickerProps, wordBreaks } from '../dashboard/overall'
 import { UserPermission } from 'src/services/api/users/role'
 import Graph from 'react-graph-vis'
 import 'react-graph-vis/node_modules/vis-network/dist/dist/vis-network.css'
+import { GraphicColors } from 'src/utils/const'
+
+export const initialGraph = {
+  nodes: [],
+  edges: []
+}
 
 const SNA = () => {
   const [date, setDate] = useState<DateType>(calculateDate(6))
@@ -38,9 +45,13 @@ const SNA = () => {
   const [previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
   const [campaign, setCampaign] = useState<string>('1')
   const [platformId, setPlatformId] = useState<string>('all')
+  const [limit, setLimit] = useState<string>('1000');
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
   const [period, setPeriod] = useState<string>('last7days')
   const [showPreviousDatepicker, setShowPreviousDatepicker] = useState<boolean>(false)
+  const [keyword, setKeyword] = useState<string>('all')
+  const [filterKeyword, setFilterKeyword] = useState<any>([])
+  const [graphData, setGraphData] = useState<any>(initialGraph);
 
   // const [selectedValue, setSelectedValue] = useState('bySentiment')
 
@@ -49,11 +60,21 @@ const SNA = () => {
   const { errorUserPermission } = UserPermission()
   const { resultCampaiganList } = CampaignList()
   const { result_source_list } = SourceService()
-  const {
-    resultNetworkGraph,
-    resultSentimentNetwork,
-    loadingNetworkGraph
-  } = GetNetworkGraph(campaign, platformId, date, endDate, period, previousDate, previousEndDate, '', '', 'sna')
+  const { resultNetworkGraph, resultSentimentNetwork, loadingNetworkGraph } = GetNetworkGraph(
+    campaign,
+    platformId,
+    date,
+    endDate,
+    period,
+    previousDate,
+    previousEndDate,
+    '',
+    '',
+    'sna',
+    keyword,
+    limit
+  )
+  const { resultKeywordList, keywordsColor } = GetKeyWordsList(campaign)
 
   const CustomInput = forwardRef((props: PickerProps, ref) => {
     const startDate = format(props.start, 'dd/MM/yyyy')
@@ -71,6 +92,8 @@ const SNA = () => {
   const handleSelectList = useCallback((e: SelectChangeEvent, type: string) => {
     if (type === 'campaign') {
       setCampaign(e.target.value)
+    } else if (type==='limit'){
+      setLimit(e.target.value)
     } else {
       setPlatformId(e.target.value)
     }
@@ -138,9 +161,22 @@ const SNA = () => {
     }
   }
 
-  const initialGraph = {
-    nodes: [],
-    edges: []
+  const checkKeywordId = (data: any, keywordId: string | number) => {
+    const index = data.indexOf(keywordId)
+    
+    if (index > -1) {
+      data.splice(index, 1)
+    } else {
+      data.push(keywordId)
+    }
+    setFilterKeyword(data)
+    if (data.length === 0) {
+      setKeyword('all')
+    } else {
+      setKeyword(data.join(','))
+    }
+
+    return data
   }
 
   // const [ graph, setGraph ] = useState(initialGraph);
@@ -174,6 +210,14 @@ const SNA = () => {
       setCampaign(resultCampaiganList[0]?.id)
     }
   }, [resultCampaiganList])
+
+  useEffect(() => {
+    if (!loadingNetworkGraph && resultSentimentNetwork) {
+      setGraphData(resultSentimentNetwork)
+    } else {
+      setGraphData(initialGraph)
+    }
+  },[loadingNetworkGraph])
 
   return (
     <Grid container spacing={2}>
@@ -276,6 +320,31 @@ const SNA = () => {
                 </FormControl>
               </Grid>
               <Grid item sm={4} xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id='plan-select'>
+                    <Translations text='Limit' />
+                  </InputLabel>
+                  <Select
+                    fullWidth
+                    value={limit}
+                    id='select-limit'
+                    label='Select Limit'
+                    labelId='limit-select'
+                    onChange={e => {
+                      handleSelectList(e, 'limit')
+                    }}
+                    inputProps={{ placeholder: 'Select Limit' }}
+                  >
+                    <MenuItem value='1000'>1000</MenuItem>
+                    <MenuItem value='2000'>2000</MenuItem>
+                    <MenuItem value='3000'>3000</MenuItem>
+                    <MenuItem value='4000'>4000</MenuItem>
+                    <MenuItem value='5000'>5000</MenuItem>
+                    <MenuItem value='6000'>6000</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item sm={4} xs={12}>
                 <Box>
                   <DatePickerWrapper>
                     <DatePicker
@@ -329,6 +398,67 @@ const SNA = () => {
           </CardContent>
         </Card>
       </Grid>
+      <Grid container spacing={2} mt={2}>
+        <Grid item xs={12} ml={2}>
+          <Card>
+            <CardHeader title='Keyword Filter'></CardHeader>
+            <CardContent>
+              <Grid container spacing={2}>
+                <Grid item xs={6} md={1}>
+                  <Button
+                    sx={{ mb: 2 }}
+                    onClick={() => {
+                      if (keyword === 'all') {
+                        setKeyword('')
+                      } else {
+                        setKeyword('all')
+                        setFilterKeyword([])
+                      }
+                    }}
+                    variant='contained'
+                    color={keyword === 'all' ? 'primary' : 'secondary'}
+                  >
+                    ALL
+                  </Button>
+                </Grid>
+
+                {resultKeywordList &&
+                  (resultKeywordList || []).map((keywords: any, index: number) => {
+                    return (
+                      <Grid item xs={6} md={1.2} key={index}>
+                        <Button
+                          sx={{
+                            mb: 2,
+                            bgcolor:
+                              filterKeyword?.indexOf(keywords?.id) > -1
+                                ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                                : keyword === 'all'
+                                ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                                : 'grey',
+                            ':hover': {
+                              bgcolor:
+                                filterKeyword?.indexOf(keywords?.id) > -1
+                                  ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                                  : keyword === 'all'
+                                  ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                                  : 'grey'
+                            }
+                          }}
+                          onClick={() => {
+                            checkKeywordId(filterKeyword, keywords?.id)
+                          }}
+                          variant='contained'
+                        >
+                          <span style={{ wordWrap: 'break-word' }}>{wordBreaks(keywords.name)}</span>
+                        </Button>
+                      </Grid>
+                    )
+                  })}
+              </Grid>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
       <Grid item xs={12}>
         <Card>
           {loadingNetworkGraph && <LinearProgress style={{ width: '100%' }} />}
@@ -339,39 +469,11 @@ const SNA = () => {
             </Typography>
           </Box>
 
-          {/* <Grid container spacing={1}>
-            <FormControl sx={{ mt: 3, ml: 5 }}>
-              <RadioGroup row aria-labelledby='demo-row-radio-buttons-group-label' name='row-radio-buttons-group'>
-                <FormControlLabel
-                  value='bySentiment'
-                  control={
-                    <Radio value='bySentiment' checked={selectedValue === 'bySentiment'} onChange={handleChange} />
-                  }
-                  label='By Sentiment'
-                />
-                <FormControlLabel
-                  value='byBullyLevel'
-                  control={
-                    <Radio value='byBullyLevel' checked={selectedValue === 'byBullyLevel'} onChange={handleChange} />
-                  }
-                  label='By Bully Level'
-                />
-                <FormControlLabel
-                  value='ByBullyType'
-                  control={
-                    <Radio value='byBullyType' checked={selectedValue === 'byBullyType'} onChange={handleChange} />
-                  }
-                  label='By Bully Type'
-                />
-              </RadioGroup>
-            </FormControl>
-          </Grid> */}
-
           <Grid container spacing={3}>
             <Grid item xs={12}>
               {resultNetworkGraph ? (
                 <>
-                  <Graph graph={resultSentimentNetwork ? resultSentimentNetwork : initialGraph} options={options} />
+                  <Graph graph={graphData} options={options} />
                 </>
               ) : (
                 <div

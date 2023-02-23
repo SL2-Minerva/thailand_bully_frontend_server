@@ -10,8 +10,17 @@ import { Bar } from 'react-chartjs-2'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import { GetShareOfVoice, GetShareOfVoiceChart } from 'src/services/api/dashboards/overall/overallDashboardApi'
-import { FacebookIcon, googleIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const'
+import {
+  FacebookIcon,
+  googleIcon,
+  GraphicColors,
+  InstagramIcon,
+  PantipIcon,
+  TwitterIcon,
+  YoutubeIcon
+} from 'src/utils/const'
 import Translations from 'src/layouts/components/Translations'
+import { useEffect, useState } from 'react'
 
 const ChartLabels = (data: any) => {
   if (!data) return []
@@ -37,7 +46,7 @@ const ChartData = (data: any) => {
   return chartDatas
 }
 
-const ShareOfVoice = ({ params, chartId }: { params: any; chartId: string }) => {
+const ShareOfVoice = ({ params, chartId, keywordsColor }: { params: any; chartId: string; keywordsColor: any }) => {
   const { resultShareOfVoice, loadingShareOfVoice } = GetShareOfVoice(
     params?.campaign,
     params?.platformId,
@@ -61,22 +70,80 @@ const ShareOfVoice = ({ params, chartId }: { params: any; chartId: string }) => 
   const reportNo = '1.1.020'
 
   const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
-
   const labels = resultShareOfVoiceChart ? ChartLabels(resultShareOfVoiceChart) : []
-  const data = {
-    labels: labels,
+
+  const [chartData, setChartData] = useState<any>({
+    labels: [],
     datasets: [
       {
         axis: 'y',
         label: 'Number of Messages',
-        data: ChartData(resultShareOfVoiceChart),
+        data: [],
         fill: false,
         backgroundColor: ['rgb(54, 162, 235)'],
         borderColor: ['rgb(54, 162, 235)'],
         borderWidth: 1
       }
     ]
-  }
+  })
+
+  // const data = {
+  //   labels: labels,
+  //   datasets: [
+  //     {
+  //       axis: 'y',
+  //       label: 'Number of Messages',
+  //       data: ChartData(resultShareOfVoiceChart),
+  //       fill: false,
+  //       backgroundColor: ['rgb(54, 162, 235)'],
+  //       borderColor: ['rgb(54, 162, 235)'],
+  //       borderWidth: 1
+  //     }
+  //   ]
+  // }
+
+  useEffect(() => {
+    if (keywordsColor?.length > 0) {
+    
+      const colors = []
+      for (let i = 0; i < keywordsColor?.length; i++) {
+        for (let j = 0; j < resultShareOfVoiceChart?.length; j++) {
+          if (keywordsColor[i]?.keywordName === resultShareOfVoiceChart[j]?.keyword_name) {
+            colors.push(keywordsColor[i]?.color)
+          }
+        }
+      }
+      setChartData({
+        labels: labels,
+        datasets: [
+          {
+            axis: 'y',
+            label: 'Number of Messages',
+            data: ChartData(resultShareOfVoiceChart),
+            fill: false,
+            backgroundColor: colors,
+            borderColor: colors,
+            borderWidth: 1
+          }
+        ]
+      })
+    } else {
+      setChartData({
+        labels: labels,
+        datasets: [
+          {
+            axis: 'y',
+            label: 'Number of Messages',
+            data: ChartData(resultShareOfVoiceChart),
+            fill: false,
+            backgroundColor: GraphicColors,
+            borderColor: GraphicColors,
+            borderWidth: 1
+          }
+        ]
+      })
+    }
+  }, [keywordsColor, resultShareOfVoiceChart])
 
   const ShareOfVoiceTable = (data: any) => {
     if (!data) return null
@@ -160,7 +227,7 @@ const ShareOfVoice = ({ params, chartId }: { params: any; chartId: string }) => 
         <Grid container spacing={3}>
           <Grid item xs={5}>
             {resultShareOfVoiceChart ? (
-              <Bar data={data} options={{ indexAxis: 'y' }} height={245} />
+              <Bar data={chartData} options={{ indexAxis: 'y' }} height={245} />
             ) : (
               <div
                 style={{
