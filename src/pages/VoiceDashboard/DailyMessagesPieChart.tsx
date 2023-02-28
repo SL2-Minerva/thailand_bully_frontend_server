@@ -1,7 +1,6 @@
 // ** MUI Imports
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { useTheme } from '@mui/material/styles'
 import { Grid, LinearProgress, Paper } from '@mui/material'
 
 // ** Third Party Imports
@@ -36,8 +35,7 @@ const DailyMessagePieChart = (props: Props) => {
     params?.previousDate,
     params?.previousEndDate
   )
-  const theme = useTheme()
-  const labelColor = theme.palette.text.primary
+
   const initValue = {
     labels: [],
     datasets: [
@@ -55,6 +53,7 @@ const DailyMessagePieChart = (props: Props) => {
   const [currentTotal, setCurrentTotal] = useState<number>()
   const [previousTotal, setPreviousTotal] = useState<number>()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+  const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
 
   const chartDataset = (data: any, type: string, keywordColor: any) => {
     if (!data) {
@@ -114,14 +113,7 @@ const DailyMessagePieChart = (props: Props) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -146,14 +138,7 @@ const DailyMessagePieChart = (props: Props) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -188,19 +173,13 @@ const DailyMessagePieChart = (props: Props) => {
       } else {
         setCurrentTotal(0)
         setShowNoDataText(true)
-        if(previousMessageData) {
-          setShowNoDataText(false)
-        }
       }
       if (previousMessageData?.length > 0) {
-        setShowNoDataText(false)
+        setShowNoDataTextPrevious(false)
         setPreviousTotal(previousMessageData[0]?.value[0]?.total)
       } else {
         setPreviousTotal(0)
-        setShowNoDataText(true)
-        if(currentMessageData) {
-          setShowNoDataText(false)
-        }
+        setShowNoDataTextPrevious(true)
       }
     } else {
       setCurrentData(initValue)
@@ -208,6 +187,7 @@ const DailyMessagePieChart = (props: Props) => {
       setPreviousTotal(0)
       setCurrentTotal(0)
       setShowNoDataText(true)
+      setShowNoDataTextPrevious(true)
     }
   }, [resultPercentageMessage, keywordsColor])
 
@@ -216,7 +196,7 @@ const DailyMessagePieChart = (props: Props) => {
   const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 708 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 400 }} square variant='outlined'>
       {loadingPercentageMessage && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -237,7 +217,7 @@ const DailyMessagePieChart = (props: Props) => {
               <div
                 style={{
                   height: 300,
-                  padding: '70px 0',
+                  padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
                   color: '#80808059'
@@ -246,15 +226,15 @@ const DailyMessagePieChart = (props: Props) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={currentData} options={currentPeriodOptions as any} height={500} />
+              <Doughnut data={currentData} options={currentPeriodOptions as any} height={275} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>
-            {showNoDataText ? (
+            {showNoDataTextPrevious ? (
               <div
                 style={{
                   height: 300,
-                  padding: '70px 0',
+                  padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
                   color: '#80808059'
@@ -263,7 +243,7 @@ const DailyMessagePieChart = (props: Props) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={previousData} options={previousPeriodOptions as any} height={500} />
+              <Doughnut data={previousData} options={previousPeriodOptions as any} height={275} />
             )}
           </Grid>
         </Grid>
