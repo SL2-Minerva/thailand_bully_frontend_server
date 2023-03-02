@@ -597,7 +597,7 @@ const OverallDashboard = () => {
               stats={resultTotalMessagePerDay?.comparison || '0'}
               type={resultTotalMessagePerDay?.type}
               color='primary'
-              trendNumber={resultTotalMessagePerDay?.percentage || '0%'}
+              trendNumber={resultTotalMessagePerDay?.percentage || '0'}
               icon={<MessageText />}
               title='Period over Period Comparison'
               chipText='Last 1 Month'

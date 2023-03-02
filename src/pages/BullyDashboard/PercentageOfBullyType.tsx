@@ -58,6 +58,7 @@ const PercentageOfBullyType = (props: MessageData) => {
   const [currentTotal, setCurrentTotal] = useState<number>()
   const [previousTotal, setPreviousTotal] = useState<number>()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+  const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -206,26 +207,21 @@ const PercentageOfBullyType = (props: MessageData) => {
         setPreviousData(previousDataset)
         if (previousMessageData?.length > 0) {
           setPreviousTotal(previousMessageData[0]?.value?.total)
-          setShowNoDataText(false)
+          setShowNoDataTextPrevious(false)
         } else {
-          setShowNoDataText(true)
+          setShowNoDataTextPrevious(true)
           setPreviousTotal(0)
-          if (currentMessageData) {
-            setShowNoDataText(false)
-          }
         }
       } else {
         setPreviousTotal(0)
-        setShowNoDataText(true)
+        setShowNoDataTextPrevious(true)
         setPreviousData(initValue)
-        if (currentMessageData) {
-          setShowNoDataText(false)
-        }
       }
     } else {
       setCurrentData(initValue)
       setPreviousData(initValue)
       setCurrentTotal(0)
+      setShowNoDataTextPrevious(true)
       setShowNoDataText(true)
       setPreviousTotal(0)
     }
@@ -269,7 +265,7 @@ const PercentageOfBullyType = (props: MessageData) => {
             )}
           </Grid>
           <Grid item xs={12} md={6}>
-            {showNoDataText ? (
+            {showNoDataTextPrevious ? (
               <div
                 style={{
                   height: 300,

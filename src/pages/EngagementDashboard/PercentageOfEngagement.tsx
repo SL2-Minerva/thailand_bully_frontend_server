@@ -1,7 +1,6 @@
 // ** MUI Imports
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { useTheme } from '@mui/material/styles'
 import { Grid, LinearProgress, Paper } from '@mui/material'
 
 // ** Third Party Imports
@@ -48,9 +47,7 @@ const PercentageOfEngangement = (props: MessageData) => {
   const [currentTotal, setCurrentTotal] = useState<number>()
   const [previousTotal, setPreviousTotal] = useState<number>()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
-
-  const theme = useTheme()
-  const labelColor = theme.palette.text.primary
+  const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
 
   const options = {
     responsive: true,
@@ -58,14 +55,7 @@ const PercentageOfEngangement = (props: MessageData) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -90,14 +80,7 @@ const PercentageOfEngangement = (props: MessageData) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+       display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -206,26 +189,23 @@ const PercentageOfEngangement = (props: MessageData) => {
 
         if (previousMessageData?.length > 0) {
           setPreviousTotal(previousMessageData[0]?.value[0]?.total)
-          setShowNoDataText(false)
+          setShowNoDataTextPrevious(false)
         } else {
           setPreviousTotal(0)
-          setShowNoDataText(true)
+          setShowNoDataTextPrevious(true)
         }
       } else {
         setPreviousData(initValue)
         setPreviousTotal(0)
-        setShowNoDataText(true)
-        if(currentMessageData) {
-          setShowNoDataText(false)
-        }
+        setShowNoDataTextPrevious(true)
       }
     } else {
       setCurrentData(initValue)
       setPreviousData(initValue)
-
       setPreviousTotal(0)
       setCurrentTotal(0)
       setShowNoDataText(true)
+      setShowNoDataTextPrevious(true)
     }
   }, [resultFilterData, keywordsColor])
 
@@ -250,7 +230,7 @@ const PercentageOfEngangement = (props: MessageData) => {
               <div
                 style={{
                   height: 300,
-                  padding: '70px 0',
+                  padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
                   color: '#80808059'
@@ -263,11 +243,11 @@ const PercentageOfEngangement = (props: MessageData) => {
             )}
           </Grid>
           <Grid item xs={12} md={6}>
-            {showNoDataText ? (
+            {showNoDataTextPrevious ? (
               <div
                 style={{
                   height: 300,
-                  padding: '70px 0',
+                  padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
                   color: '#80808059'

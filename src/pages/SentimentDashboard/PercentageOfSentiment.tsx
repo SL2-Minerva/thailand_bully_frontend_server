@@ -50,6 +50,7 @@ const PercentageOfSentiments = (props: MessageData) => {
   const [currentTotal, setCurrentTotal] = useState<number>()
   const [previousTotal, setPreviousTotal] = useState<number>()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+  const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -184,40 +185,34 @@ const PercentageOfSentiments = (props: MessageData) => {
           setCurrentTotal(0)
           setShowNoDataText(true)
         }
-      }else {
+      } else {
         setCurrentData(initValue)
         setCurrentTotal(0)
         setShowNoDataText(true)
       }
-      
-      
-      if(previousMessageData) {
+
+      if (previousMessageData) {
         const previousDataset = chartDataset(previousMessageData, 'previous')
         setPreviousData(previousDataset)
 
         if (previousMessageData?.length > 0) {
           setPreviousTotal(previousMessageData[0]?.value[0]?.total)
-          setShowNoDataText(false)
+          setShowNoDataTextPrevious(false)
         } else {
           setPreviousTotal(0)
-          setShowNoDataText(true)
-          if(currentMessageData) {
-            setShowNoDataText(false)
-          }
+          setShowNoDataTextPrevious(true)
         }
-      }else {
+      } else {
         setPreviousData(initValue)
         setPreviousTotal(0)
-        setShowNoDataText(true)
-        if(currentMessageData) {
-          setShowNoDataText(false)
-        }
+        setShowNoDataTextPrevious(true)
       }
     } else {
       setCurrentData(initValue)
       setPreviousData(initValue)
       setPreviousTotal(0)
       setCurrentTotal(0)
+      setShowNoDataTextPrevious(false)
       setShowNoDataText(true)
     }
   }, [resultFilterData, t])
@@ -243,7 +238,7 @@ const PercentageOfSentiments = (props: MessageData) => {
               <div
                 style={{
                   height: 300,
-                  padding: '70px 0',
+                  padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
                   color: '#80808059'
@@ -256,11 +251,11 @@ const PercentageOfSentiments = (props: MessageData) => {
             )}
           </Grid>
           <Grid item xs={12} md={6}>
-            {showNoDataText ? (
+            {showNoDataTextPrevious ? (
               <div
                 style={{
                   height: 300,
-                  padding: '70px 0',
+                  padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
                   color: '#80808059'

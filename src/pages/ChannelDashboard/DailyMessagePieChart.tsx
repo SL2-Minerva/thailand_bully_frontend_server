@@ -56,6 +56,7 @@ const DailyMessagePieChart = (props: Props) => {
   const [currentTotal, setCurrentTotal] = useState<number>()
   const [previousTotal, setPreviousTotal] = useState<number>()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+  const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
 
   const chartDataset = (data: any, type: string) => {
     if (!data) {
@@ -209,14 +210,11 @@ const DailyMessagePieChart = (props: Props) => {
       } else {
         setPreviousTotal(0)
       }
-      setShowNoDataText(false)
+      setShowNoDataTextPrevious(false)
     } else {
       setPreviousData(initValue)
       setPreviousTotal(0)
-      setShowNoDataText(true)
-      if (resultPercentageChannelCurrent) {
-        setShowNoDataText(false)
-      }
+      setShowNoDataTextPrevious(true)
     }
   }, [resultPercentageChannelCurrent, resultPercentageChannelPrevious])
 
@@ -255,7 +253,7 @@ const DailyMessagePieChart = (props: Props) => {
               <div
                 style={{
                   height: 300,
-                  padding: '70px 0',
+                  padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
                   color: '#80808059'
@@ -268,11 +266,11 @@ const DailyMessagePieChart = (props: Props) => {
             )}
           </Grid>
           <Grid item xs={12} md={6}>
-            {showNoDataText ? (
+            {showNoDataTextPrevious ? (
               <div
                 style={{
                   height: 300,
-                  padding: '70px 0',
+                  padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
                   color: '#80808059'

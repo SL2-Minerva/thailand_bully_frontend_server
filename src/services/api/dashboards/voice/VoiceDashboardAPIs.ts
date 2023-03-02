@@ -921,8 +921,8 @@ previousDate?: any,
   return {
     resultKeywordComparisonByBullyType: response?.data?.keywordBullyType || null,
     resultKeywordComparisonByBullyLevel: response?.data?.keywordBullyLevel || null,
-    resultKeywordComparisonBySentiment: response?.data?.keywordChannel || null,
-    resultKeywordComparisonByChannel: response?.data?.keywordSentiment || null,
+    resultKeywordComparisonBySentiment: response?.data?.keywordSentiment || null,
+    resultKeywordComparisonByChannel: response?.data?.keywordChannel || null,
     loadingKeywordComparisonByAll: loading,
     errorKeywordComparisonByAll: error
   }

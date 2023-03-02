@@ -254,7 +254,7 @@ const DailyMessageGraph = (props: Props) => {
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 706 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 504 }} square variant='outlined'>
       {loadingDailyMessage && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         {type === 'message' ? (
@@ -288,7 +288,7 @@ const DailyMessageGraph = (props: Props) => {
             <Translations text='no data' />
           </div>
         ) : (
-          <Bar ref={chartRef} data={data} options={options as any} height={500} onClick={onClick} />
+          <Bar ref={chartRef} data={data} options={options as any} height={360} onClick={onClick} />
         )}
       </CardContent>
       {showDetail ? (

@@ -29,6 +29,8 @@ import { useDropzone } from 'react-dropzone'
 import { HeadingTypography, Img } from 'src/pages/content/content-mgt/DialogContents'
 import Link from '@mui/material/Link'
 
+// import { Color, ColorPicker } from 'material-ui-color'
+
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
   ref: Ref<unknown>
@@ -51,10 +53,9 @@ interface FileProp {
 }
 
 const DialogSource = (props: DialogInfoProps) => {
-  const {  show, setShow, action, current } = props
+  const { show, setShow, action, current } = props
 
   const schema = yup.object().shape({
-
     name: yup.string().required()
   })
 
@@ -67,7 +68,9 @@ const DialogSource = (props: DialogInfoProps) => {
   }
 
   const [files, setFiles] = useState<File[]>([])
-  const [imagePath, setImagePath] = useState(''); 
+  const [imagePath, setImagePath] = useState('')
+
+  // const [selectedColor, setSelectedColor] = useState<string>('#A5C1E5')
 
   // ** Hook
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
@@ -84,6 +87,11 @@ const DialogSource = (props: DialogInfoProps) => {
     event.preventDefault()
   }
 
+  // function handleChangeColor(event: any) {
+  //   const hexColor = '#' + event.hex
+  //   setSelectedColor(hexColor)
+  // }
+
   const handleRemoveFile = (file: FileProp) => {
     const uploadedFiles = files
     const filtered = uploadedFiles.filter((i: FileProp) => i.name !== file.name)
@@ -91,10 +99,10 @@ const DialogSource = (props: DialogInfoProps) => {
   }
 
   const img = files.map((file: FileProp) => (
-    <div key={file.name} style={{ display: 'flex', justifyContent:'center' }}>
+    <div key={file.name} style={{ display: 'flex', justifyContent: 'center' }}>
       <img key={file.name} alt={file.name} style={{ width: 400, height: 300 }} src={URL.createObjectURL(file as any)} />
-      <IconButton onClick={() => handleRemoveFile(file)} size="small">
-          <Close fontSize='large'/>
+      <IconButton onClick={() => handleRemoveFile(file)} size='small'>
+        <Close fontSize='large' />
       </IconButton>
     </div>
   ))
@@ -117,58 +125,63 @@ const DialogSource = (props: DialogInfoProps) => {
     setImagePath('')
     if (action === 'edit') {
       setValue('id', current?.id)
-      setImagePath(current?.image);
+      setImagePath(current?.image)
+
+      // setSelectedColor(current?.color)
     }
   }, [current])
 
   const onSubmit = (data: FormData) => {
-    
     if (action === 'create') {
-      const formData = new FormData();
-      if(files.length>0) {
-        data.image = files[0];
-        formData.append("image", data.image);
+      const formData = new FormData()
+      if (files.length > 0) {
+        data.image = files[0]
+        formData.append('image', data.image)
       }
-      formData.append("description", data.description);
-      formData.append('name', data.name);
-      formData.append('status', data.status?.toString() === 'true' ? '1' : '0');
-      
+      formData.append('description', data.description)
+      formData.append('name', data.name)
+      formData.append('status', data.status?.toString() === 'true' ? '1' : '0')
+
+      // formData.append('color', selectedColor)
+
       axios
-      .post(authConfig.createSource, formData, {
-        headers: {
-          Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`,
-          "Content-Type": "multipart/form-data"
-        }
-      })
-      .then(() => {
-        // console.log('res', res);
-       onClose();
-      });
+        .post(authConfig.createSource, formData, {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(() => {
+          // console.log('res', res);
+          onClose()
+        })
     } else {
-      const formData = new FormData();
-      if(files.length>0) {
-        data.image = files[0];
-        formData.append("image", data.image);
+      const formData = new FormData()
+      if (files.length > 0) {
+        data.image = files[0]
+        formData.append('image', data.image)
       }
-      if(data.id) {
-        formData.append('id', data.id.toString());
+      if (data.id) {
+        formData.append('id', data.id.toString())
       }
-      formData.append("description", data.description);
-      formData.append('name', data.name);
-      formData.append('status', data.status?.toString() === 'true' ? '1' : '0');
+      formData.append('description', data.description)
+      formData.append('name', data.name)
+      formData.append('status', data.status?.toString() === 'true' ? '1' : '0')
+
+      // formData.append('color', selectedColor)
 
       axios
-      .post(authConfig.updateSource, formData, {
-        headers: {
-          Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`,
-          "Content-Type": "multipart/form-data"
-        }
-      })
-      .then(() => {
-        // console.log('res', res);
+        .post(authConfig.updateSource, formData, {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(() => {
+          // console.log('res', res);
 
-        onClose()
-      });
+          onClose()
+        })
     }
   }
 
@@ -176,6 +189,8 @@ const DialogSource = (props: DialogInfoProps) => {
     setFiles([])
     acceptedFiles.length = 0
     setShow(false)
+
+    // setSelectedColor('')
   }
 
   return (
@@ -248,58 +263,67 @@ const DialogSource = (props: DialogInfoProps) => {
               </FormControl>
             </Grid>
 
-            <Grid item sm={12} xs={12} mt={5} style={{ border: '1px solid #4c4e6430', borderRadius: '1rem', marginLeft: '1.2rem' }}>
-                <Box {...getRootProps({ className: 'dropzone' })} sx={acceptedFiles.length ? { height: 320 } : {}}>
-                    <input name='image' {...getInputProps()} />
-                    {files.length ? (
-                      img
+            <Grid
+              item
+              sm={12}
+              xs={12}
+              mt={5}
+              style={{ border: '1px solid #4c4e6430', borderRadius: '1rem', marginLeft: '1.2rem' }}
+            >
+              <Box {...getRootProps({ className: 'dropzone' })} sx={acceptedFiles.length ? { height: 320 } : {}}>
+                <input name='image' {...getInputProps()} />
+                {files.length ? (
+                  img
+                ) : (
+                  <Box sx={{ display: 'flex', flexDirection: ['column', 'column', 'row'], alignItems: 'center' }}>
+                    {imagePath ? (
+                      <Img width={200} alt='image' src={'https://cornea-analysis.com/storage/images/' + imagePath} />
                     ) : (
-                    <Box sx={{ display: 'flex', flexDirection: ['column', 'column', 'row'], alignItems: 'center' }}>
-                      {
-                        imagePath ?
-                        
-                        <Img width={200} alt="image" src={"https://cornea-analysis.com/storage/" +imagePath} />
-
-                        // <Img width={200} alt="image" src={"http://202.44.231.31/storage/" +imagePath} />
-                        
-
-                        :
-                        <Img width={200} alt='Upload img' src='/images/misc/upload.png' />
-                      }
-                      
-                      <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: ['center', 'center', 'inherit'] }}>
-                        <HeadingTypography variant='h5'>Drop image file here or click to upload.</HeadingTypography>
-                        <Typography color='textSecondary'>
-                          Drop image file here or click{' '}
-                          <Link href='/' onClick={handleLinkClick}>
-                            browse
-                          </Link>{' '}
-                          thorough your machine
-                        </Typography>
-                        <Typography color='textSecondary'>Allowed *.jpeg, *.jpg, *.png, *.gif</Typography>
-                      </Box>
-                    </Box>
-                  )}
-                </Box>
-              </Grid>
-
-            <Grid item sm={6} xs={12}>
-              <Grid item sm={6} xs={12}>
-                <FormControl>
-                  <Controller
-                    name='status'
-                    control={control}
-                    render={({ field: { value, onChange } }) => (
-                      <FormControlLabel
-                        name={'status'}
-                        control={<Switch checked={value} onChange={onChange} />}
-                        label='Status : '
-                        labelPlacement='start'
-                      />
+                      <Img width={200} alt='Upload img' src='/images/misc/upload.png' />
                     )}
-                  />
-                </FormControl>
-              </Grid>
+
+                    <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: ['center', 'center', 'inherit'] }}>
+                      <HeadingTypography variant='h5'>Drop image file here or click to upload.</HeadingTypography>
+                      <Typography color='textSecondary'>
+                        Drop image file here or click{' '}
+                        <Link href='/' onClick={handleLinkClick}>
+                          browse
+                        </Link>{' '}
+                        thorough your machine
+                      </Typography>
+                      <Typography color='textSecondary'>Allowed *.jpeg, *.jpg, *.png, *.gif</Typography>
+                    </Box>
+                  </Box>
+                )}
+              </Box>
+            </Grid>
+
+            <Grid item sm={3} xs={12}>
+              <FormControl>
+                <Controller
+                  name='status'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <FormControlLabel
+                      name={'status'}
+                      control={<Switch checked={value} onChange={onChange} />}
+                      label='Status : '
+                      labelPlacement='start'
+                    />
+                  )}
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid item sm={3} xs={12}>
+              {/* <FormControl>
+                <ColorPicker
+                  value={selectedColor}
+                  onChange={(color: Color) => {
+                    handleChangeColor(color)
+                  }}
+                />
+              </FormControl> */}
             </Grid>
           </Grid>
         </DialogContent>

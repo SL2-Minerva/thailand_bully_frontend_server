@@ -223,7 +223,7 @@ const UserList = () => {
   const [endDate, setEndDate] = useState<Date | null>(new Date())
   const [reload, setReload] = useState<boolean>(false)
   const [users, setUsers] = useState<any[]>([])
-  const current = {}
+  const [current, setCurrent] = useState<any>({})
   const [show, setShow] = useState<boolean>(false)
   const [ refreshDelete, setRefreshDelete ] = useState<boolean>(false);
 
@@ -537,7 +537,7 @@ const UserList = () => {
             />
           </Card>
         </Grid>
-        <DialogEditUserInfo show={addUserOpen} setShow={setAddUserOpen} action={'create'} current={current} />
+        <DialogEditUserInfo show={addUserOpen} setShow={setAddUserOpen} action={'create'} current={current}  setCurrent={setCurrent}/>
       </Grid>
     </>
   )

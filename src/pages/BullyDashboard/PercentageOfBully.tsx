@@ -50,6 +50,7 @@ const PercentageOfBully = (props: MessageData) => {
   const [currentTotal, setCurrentTotal] = useState<number>()
   const [previousTotal, setPreviousTotal] = useState<number>()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+  const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -189,25 +190,20 @@ const PercentageOfBully = (props: MessageData) => {
         const previousDataset = chartDataset(previousMessageData, 'previous')
         setPreviousData(previousDataset)
         if (previousMessageData?.length > 0) {
-          setShowNoDataText(false)
+          setShowNoDataTextPrevious(false)
           setPreviousTotal(previousMessageData[0]?.value?.total)
         } else {
-          setShowNoDataText(true)
+          setShowNoDataTextPrevious(true)
           setPreviousTotal(0)
-          if (currentMessageData) {
-            setShowNoDataText(false)
-          }
         }
       } else {
         setPreviousData(initValue)
-        setShowNoDataText(true)
+        setShowNoDataTextPrevious(true)
         setPreviousTotal(0)
-        if (currentMessageData) {
-          setShowNoDataText(false)
-        }
       }
     } else {
       setCurrentData(initValue)
+      setShowNoDataTextPrevious(true)
       setShowNoDataText(true)
       setPreviousData(initValue)
     }
@@ -238,7 +234,7 @@ const PercentageOfBully = (props: MessageData) => {
               <div
                 style={{
                   height: 300,
-                  padding: '70px 0',
+                  padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
                   color: '#80808059'
@@ -251,11 +247,11 @@ const PercentageOfBully = (props: MessageData) => {
             )}
           </Grid>
           <Grid item xs={12} md={6}>
-            {showNoDataText ? (
+            {showNoDataTextPrevious ? (
               <div
                 style={{
                   height: 300,
-                  padding: '70px 0',
+                  padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
                   color: '#80808059'

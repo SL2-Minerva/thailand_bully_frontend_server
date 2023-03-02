@@ -50,6 +50,7 @@ const PercentageOfEngangementType = (props: MessageData) => {
   const [currentTotal, setCurrentTotal] = useState<number>()
   const [previousTotal, setPreviousTotal] = useState<number>()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+  const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -162,7 +163,7 @@ const PercentageOfEngangementType = (props: MessageData) => {
   const title = type === 'transaction' ? 'Percentage of Engagement Trans' : 'Percentage of Engagement Type'
 
   useEffect(() => {
-    console.log("enggagementtype", resultEngagementType)
+    console.log('enggagementtype', resultEngagementType)
     if (resultEngagementType) {
       const currentMessageData = resultEngagementType?.prcentage_of_engagement_current
       const previousMessageData = resultEngagementType?.prcentage_of_engagement_previous
@@ -176,23 +177,27 @@ const PercentageOfEngangementType = (props: MessageData) => {
 
         if (currentMessageData?.length > 0) {
           setCurrentTotal(currentMessageData[0]?.total)
+          setShowNoDataText(false)
+        } else {
+          setShowNoDataText(true)
         }
 
         if (previousMessageData?.length > 0) {
           setPreviousTotal(previousMessageData[0]?.total)
+          setShowNoDataTextPrevious(false)
+        } else {
+          setShowNoDataTextPrevious(true)
         }
-
-        setShowNoDataText(false)
       } else {
         setCurrentData(initValue)
         setPreviousData(initValue)
-        setShowNoDataText(true)
       }
     } else {
       setCurrentData(initValue)
       setPreviousData(initValue)
       setCurrentTotal(0)
       setPreviousTotal(0)
+      setShowNoDataTextPrevious(true)
       setShowNoDataText(true)
     }
   }, [resultEngagementType])
@@ -218,7 +223,7 @@ const PercentageOfEngangementType = (props: MessageData) => {
               <div
                 style={{
                   height: 300,
-                  padding: '70px 0',
+                  padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
                   color: '#80808059'
@@ -231,11 +236,11 @@ const PercentageOfEngangementType = (props: MessageData) => {
             )}
           </Grid>
           <Grid item xs={12} md={6}>
-            {showNoDataText ? (
+            {showNoDataTextPrevious ? (
               <div
                 style={{
                   height: 300,
-                  padding: '70px 0',
+                  padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
                   color: '#80808059'

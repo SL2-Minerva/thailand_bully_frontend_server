@@ -2,7 +2,6 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { useTheme } from '@mui/material/styles'
 import { Grid, LinearProgress } from '@mui/material'
 
 // ** Third Party Imports
@@ -46,24 +45,28 @@ const DonutChart = (props: MessageData) => {
   const [currentTotal, setCurrentTotal] = useState<number>()
   const [previousTotal, setPreviousTotal] = useState<number>()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+  const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
 
-  const theme = useTheme()
-  const labelColor = theme.palette.text.primary
+  // const theme = useTheme()
+  // const labelColor = theme.palette.text.primary
 
   const options = {
     responsive: true,
     backgroundColor: false,
     maintainAspectRatio: false,
     plugins: {
+      // legend: {
+      //   align: 'end',
+      //   position: 'top',
+      //   labels: {
+      //     padding: 25,
+      //     boxWidth: 10,
+      //     color: labelColor,
+      //     usePointStyle: true
+      //   }
+      // },
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -87,15 +90,18 @@ const DonutChart = (props: MessageData) => {
     backgroundColor: false,
     maintainAspectRatio: false,
     plugins: {
+      // legend: {
+      //   align: 'end',
+      //   position: 'top',
+      //   labels: {
+      //     padding: 25,
+      //     boxWidth: 10,
+      //     color: labelColor,
+      //     usePointStyle: true
+      //   }
+      // },
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -193,13 +199,9 @@ const DonutChart = (props: MessageData) => {
         if (previousMessageData?.length > 0) {
           setPreviousTotal(previousMessageData[0]?.total)
         }
-        setShowNoDataText(false)
+        setShowNoDataTextPrevious(false)
       } else {
-        setShowNoDataText(true)
-
-        if (currentMessageData) {
-          setShowNoDataText(false)
-        }
+        setShowNoDataTextPrevious(true)
         setPreviousData(initValue)
         setPreviousTotal(0)
       }
@@ -228,7 +230,7 @@ const DonutChart = (props: MessageData) => {
               <div
                 style={{
                   height: 300,
-                  padding: '70px 0',
+                  padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
                   color: '#80808059'
@@ -241,11 +243,11 @@ const DonutChart = (props: MessageData) => {
             )}
           </Grid>
           <Grid item xs={12} md={6}>
-            {showNoDataText ? (
+            {showNoDataTextPrevious ? (
               <div
                 style={{
                   height: 300,
-                  padding: '70px 0',
+                  padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
                   color: '#80808059'

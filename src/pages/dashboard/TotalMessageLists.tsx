@@ -7,7 +7,8 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow
+  TableRow,
+  Typography
 } from '@mui/material'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
@@ -53,19 +54,20 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
   },[params?.topKeyword])
 
   return (
-    <Card sx={{ maxHeight: 450, minHeight: 450 }}>
+    <Card sx={{ maxHeight: 470, minHeight: 470 }}>
       {loadingWordClouds && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text='Top10 Match: Keyword vs. Message' />}
+          title={<Translations text='Top Match: Keyword vs. Message' />}
           titleTypographyProps={{ variant: 'h6' }}
         />
         <StyledTooltip arrow title={chartTitle}>
           <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
+      <Typography variant='h5' sx={{ml: 5}}> Total Messages : {total}</Typography>
       <CardContent>
-        <TableContainer sx={{ maxHeight: 320, p: 2 }}>
+        <TableContainer sx={{ maxHeight: 320, p: 2 , pt: 0 }}>
           <Table size='small'>
             <TableHead sx={{ backgroundColor: 'lightgrey !important' }}>
               <TableRow>
