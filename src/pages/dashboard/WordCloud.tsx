@@ -24,7 +24,7 @@ const WordCloud = ({ params, chartId }: { params: any; chartId: string }) => {
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Card sx={{ maxHeight: 450, minHeight: 450 }}>
+    <Card sx={{ maxHeight: 470, minHeight: 470 }}>
       {loadingWordClouds && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title='Word Clouds' titleTypographyProps={{ variant: 'h6' }} />

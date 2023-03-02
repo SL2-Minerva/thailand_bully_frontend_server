@@ -61,7 +61,7 @@ const KeyStatusReport = (props: KeyStatusProps) => {
   const chartTitle = chartId + ", Report Level 1(" + reportNo + ")";
 
   return (
-    <Card>
+    <Card sx={{minHeight: 300, maxHeight: 300}}>
       {loading && (
           <LinearProgress
             style={{ width: "100%" }}
@@ -112,12 +112,12 @@ const KeyStatusReport = (props: KeyStatusProps) => {
           
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-            <Typography variant='h5' sx={{ mb: 1 }}>
+            <Typography variant='h6' sx={{ mb: 1 }}>
                 {stats}
             </Typography>
 
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant='h5' sx={{ color: type == "plus"  ? 'success.main' : 'error.main' }}>
+                <Typography variant='h6' sx={{ color: type == "plus"  ? 'success.main' : 'error.main' }}>
                     {trendNumber+ "%"}
                 </Typography>
                 <TrendIcon fontSize='large' sx={{ color: type == "plus"  ? 'success.main' : 'error.main' }} />

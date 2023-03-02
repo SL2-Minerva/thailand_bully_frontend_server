@@ -215,7 +215,7 @@ const ShareOfVoice = ({ params, chartId, keywordsColor }: { params: any; chartId
   }
 
   return (
-    <Card sx={{ height: 450 }}>
+    <Card sx={{ minheight: 450 }}>
       {loadingShareOfVoice && loadingShareOfVoiceChart && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title={<Translations text='Share of Voice' />} titleTypographyProps={{ variant: 'h6' }} />
@@ -225,9 +225,9 @@ const ShareOfVoice = ({ params, chartId, keywordsColor }: { params: any; chartId
       </span>
       <CardContent>
         <Grid container spacing={3}>
-          <Grid item xs={5}>
+          <Grid item xs={12} md={5}>
             {resultShareOfVoiceChart ? (
-              <Bar data={chartData} options={{ indexAxis: 'y' }} height={245} />
+              <Bar data={chartData} options={{ indexAxis: 'y' , plugins: { legend: {display: false}}}} height={245} />
             ) : (
               <div
                 style={{
