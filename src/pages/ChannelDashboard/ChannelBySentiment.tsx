@@ -95,7 +95,7 @@ const ChannelBySentiment = ({
               <Translations text='no data' />
             </div>
           ) : (
-            <Bar data={data} options={{ indexAxis: 'y' }} height={140} />
+            <Bar data={data} options={{ indexAxis: 'y', plugins:{legend: {display: false}} }} height={140} />
           )}
         </Grid>
       </CardContent>

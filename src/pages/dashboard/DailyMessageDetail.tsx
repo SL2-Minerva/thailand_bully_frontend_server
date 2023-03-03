@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper'
 import Fade, { FadeProps } from '@mui/material/Fade'
 import { Box, Card, Dialog, DialogContent, IconButton, LinearProgress, Pagination, Typography } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
+import { CheckCircle, OpenInNew, AlphaXCircle } from 'mdi-material-ui'
 import { GetDetailMessage } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from './DialogNetworkGraphByFilter'
@@ -135,6 +136,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
             <Table aria-label='customized table'>
               <TableHead>
                 <TableRow>
+                  <StyledTableCell>No.</StyledTableCell>
                   <StyledTableCell>Message Detail</StyledTableCell>
                   <StyledTableCell>Message Type</StyledTableCell>
                   <StyledTableCell>Account Name</StyledTableCell>
@@ -147,6 +149,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                   <StyledTableCell>Bully Level</StyledTableCell>
                   <StyledTableCell>Bully Type</StyledTableCell>
                   <StyledTableCell>Parent</StyledTableCell>
+                  <StyledTableCell>Link</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -154,26 +157,127 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                   <StyledTableRow
                     key={index}
                     onClick={() => {
-                      setShowDialog(true), setMessageId(messageDetail.message_id)
+                      setMessageId(messageDetail.message_id)
                     }}
                     style={{ cursor: 'pointer' }}
                   >
-                    <StyledTableCell component='th' scope='row'>
+                    <StyledTableCell
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      <b>{index + 1 + page * 10}</b>
+                    </StyledTableCell>
+                    <StyledTableCell
+                      component='th'
+                      scope='row'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
                       {messageDetail.message_detail}
                     </StyledTableCell>
-                    <StyledTableCell component='th' scope='row'>
+                    <StyledTableCell
+                      component='th'
+                      scope='row'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
                       {messageDetail.message_type || '-'}
                     </StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.account_name}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.post_date}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.post_time}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.day}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.device || '-'}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.channel_name || '-'}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.sentiment || '-'}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.bully_level}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
-                    <StyledTableCell>{messageDetail.parent}</StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.account_name}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.post_date}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.post_time}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.day}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.device || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.channel || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.sentiment || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.bully_level || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.bully_type || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.parent ? (
+                        <CheckCircle style={{ color: 'green' }} />
+                      ) : (
+                        <AlphaXCircle style={{ color: 'red' }} />
+                      )}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {messageDetail.link_message ? (
+                        <a href={messageDetail.link_message} target='_blank' rel='noopener noreferrer'>
+                          <OpenInNew style={{ color: '#0047ff9e' }} />
+                        </a>
+                      ) : (
+                        ''
+                      )}
+                    </StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>

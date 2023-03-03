@@ -197,6 +197,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
                         params= {params}
                         type="type"
                         chartId="Chart 10"
+                        resultBullyTypeFilterData={quickViewData?.resultBullyTypeByDaily}
+                        loadingBullyTypeFilterData={quickViewData?.loadingBullyTypeBy}
                     />
                    
                 :chartId === 'chart11' ?

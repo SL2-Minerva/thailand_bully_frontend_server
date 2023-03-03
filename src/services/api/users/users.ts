@@ -15,14 +15,14 @@ export const userlist = (paged?: number, filter?: string) => {
 }
 
 
-const UserService = () => {
+const UserService = (userId: number) => {
   const [{ data, loading, error }, store] = CallAPI<{
     code: 0 | 1
     message: string
     data: any
   }>(
     {
-      url: `/user/update`,
+      url: `/user/update/${userId}`,
       method: 'POST'
     },
     { manual: true }
@@ -33,7 +33,9 @@ const UserService = () => {
     loading_user_create: loading,
     error_user_create: error,
     update_user: (userInput: any) => {
-      const inputData = userInput
+      const inputData = {
+        status: userInput
+      }
 
       return new Promise((resolve, reject) => {
         store({

@@ -84,7 +84,7 @@ const ChannelVsDevice = ({
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Card style={{ minHeight: 500 }}>
+    <Card style={{ minHeight: 550, maxHeight: 550 }}>
       {loadingDeviceVsChannel && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader

@@ -85,7 +85,9 @@ const BullyDashboard = () => {
     resultBullyTypeByDevice,
     resultBullyTypeBySenitment,
     resultBullyTypeByTime,
-    loadingBullyTypeBy
+    loadingBullyTypeBy,
+    resultBullyTypeByDaily,
+    resultBullyTypeByPercentage,
   } = GetDailyTypeBy(campaign, date, endDate, period, keyword, previousDate, previousEndDate)
 
   const {
@@ -124,6 +126,7 @@ const BullyDashboard = () => {
     resultBullyTypeByDevice: resultBullyTypeByDevice,
     resultBullyTypeBySenitment: resultBullyTypeBySenitment,
     resultBullyTypeByTime: resultBullyTypeByTime,
+    resultBullyTypeByDaily: resultBullyTypeByDaily,
     loadingBullyTypeBy: loadingBullyTypeBy
   }
 
@@ -412,6 +415,8 @@ const BullyDashboard = () => {
             type='type'
             chartId='Chart 9'
             highlight={highlight === 'chart9' ? true : false}
+            resultBullyTypePercentage={resultBullyTypeByPercentage}
+            loadingBullyTypePercentage={loadingBullyTypeBy}
           />
         </Grid>
       ) : (
@@ -431,6 +436,8 @@ const BullyDashboard = () => {
             type='type'
             chartId='Chart 10'
             highlight={highlight === 'chart10' ? true : false}
+            resultBullyTypeFilterData={resultBullyTypeByDaily}
+            loadingBullyTypeFilterData={loadingBullyTypeBy}
           />
         </Grid>
       ) : (

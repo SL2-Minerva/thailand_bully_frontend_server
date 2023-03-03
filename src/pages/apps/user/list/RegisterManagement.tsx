@@ -25,9 +25,11 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 
 import { ThemeColor } from 'src/@core/layouts/types'
 import CustomChip from 'src/@core/components/mui/chip'
-import UserService, {userlist} from "../../../../services/api/users/users";
+import { userlist } from '../../../../services/api/users/users'
 import { useRouter } from 'next/router'
-
+import axios from 'axios'
+import authConfig from '../../../../configs/auth'
+import { API_PATH } from 'src/utils/const'
 
 interface StatusType {
   [key: string]: ThemeColor
@@ -53,23 +55,61 @@ const RegisterManagement = () => {
     setStatus(e.target.value)
   }, [])
 
-  function handleChange(e: any, id:number) {
-    console.log(e.target.checked, id)
+  function handleChange(e: any, id: number) {
 
     if (e.target.checked) {
-      //todo update axios
-      // axios.
-      update_user({id}).then(r => console.log(r)) ;
+      const status = 1;
+
+      axios
+        .post(
+          `${API_PATH}/user/update/${id}`,
+          {status},
+          {
+            headers: {
+              Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+            }
+          }
+        )
+        .then(async response => {
+          const { data, status } = response.data
+          console.log(data, status)
+        })
+        .catch((ex: any) => {
+          console.log(ex)
+        })
+    } else  {
+      const status =  2;
+
+      axios
+        .post(
+          `${API_PATH}/user/update/${id}`,
+          {status},
+          {
+            headers: {
+              Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+            }
+          }
+        )
+        .then(async response => {
+          const { data, status } = response.data
+          console.log(data, status)
+        })
+        .catch((ex: any) => {
+          console.log(ex)
+        })
     }
+    
+    
 
   }
 
   //call service
-  const {  update_user } = UserService();
-  const {resultUserList, errorUserlist } = userlist();
+  // const { update_user } = UserService(userId)
 
-  useEffect(()=> {
-    if(errorUserlist) {
+  const { resultUserList, errorUserlist } = userlist()
+
+  useEffect(() => {
+    if (errorUserlist) {
       window.localStorage.removeItem('userData')
       localStorage.clear()
       router.push('/login')
@@ -165,38 +205,44 @@ const RegisterManagement = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {resultUserList && resultUserList.map( (row:any) => (
-                    <TableRow
-                      key={row.id}
-                      sx={{
-                        '&:last-of-type td, &:last-of-type th': {
-                          border: 0
-                        }
-                      }}
-                    >
-                      <TableCell component='th' scope='row'>
-                        {row.id}
-                      </TableCell>
-                      <TableCell align='center'>{row.name}</TableCell>
-                      <TableCell align='center'>{row.email}</TableCell>
-                      <TableCell align='center'>{row.mobile}</TableCell>
-                      <TableCell align='center'>{row.company}</TableCell>
-                      <TableCell align='center'>{row.created_at}</TableCell>
-                      <TableCell align='center'>
-                        <Switch checked={row.approved} onChange={ (e) => handleChange(e,row.id)} />
-                      </TableCell>
-                      {/*<TableCell align='center'>{row.expired_date}</TableCell>*/}
-                      <TableCell align='center'>
-                        <CustomChip
-                          skin='light'
-                          size='small'
-                          label={'pending'}
-                          color={StatusObj[row.status]}
-                          sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {resultUserList &&
+                    resultUserList.map((row: any) => (
+                      <TableRow
+                        key={row.id}
+                        sx={{
+                          '&:last-of-type td, &:last-of-type th': {
+                            border: 0
+                          }
+                        }}
+                      >
+                        <TableCell component='th' scope='row'>
+                          {row.id}
+                        </TableCell>
+                        <TableCell align='center'>{row.name}</TableCell>
+                        <TableCell align='center'>{row.email}</TableCell>
+                        <TableCell align='center'>{row.mobile}</TableCell>
+                        <TableCell align='center'>{row.company}</TableCell>
+                        <TableCell align='center'>{row.created_at}</TableCell>
+                        <TableCell align='center'>
+                          <Switch
+                            checked={row.approved}
+                            onChange={e => {
+                              handleChange(e, row.id)
+                            }}
+                          />
+                        </TableCell>
+                        {/*<TableCell align='center'>{row.expired_date}</TableCell>*/}
+                        <TableCell align='center'>
+                          <CustomChip
+                            skin='light'
+                            size='small'
+                            label={'pending'}
+                            color={StatusObj[row.status]}
+                            sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </TableContainer>

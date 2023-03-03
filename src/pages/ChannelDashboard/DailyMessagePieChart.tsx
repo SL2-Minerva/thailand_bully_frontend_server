@@ -121,7 +121,7 @@ const DailyMessagePieChart = (props: Props) => {
         paddingPercentage: 5,
         labels: [
           {
-            text: currentTotal || '',
+            text: currentTotal && currentTotal != 0 ? currentTotal : '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',
@@ -153,7 +153,7 @@ const DailyMessagePieChart = (props: Props) => {
         paddingPercentage: 5,
         labels: [
           {
-            text: previousTotal || '',
+            text: previousTotal && previousTotal !=0 ? previousTotal : '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',

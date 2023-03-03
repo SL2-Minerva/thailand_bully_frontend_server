@@ -3,7 +3,7 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { Grid, LinearProgress, TableBody, Typography } from '@mui/material'
-import { Table, TableRow, TableHead, TableCell } from '@mui/material'
+import { Table, TableRow, TableHead } from '@mui/material'
 
 // ** Third Party Imports
 import { Bar } from 'react-chartjs-2'
@@ -21,6 +21,14 @@ import {
 } from 'src/utils/const'
 import Translations from 'src/layouts/components/Translations'
 import { useEffect, useState } from 'react'
+import MuiTableCell from "@material-ui/core/TableCell";
+import { withStyles } from '@material-ui/core'
+
+const TableCell = withStyles({
+  root: {
+    borderBottom: "none"
+  }
+})(MuiTableCell);
 
 const ChartLabels = (data: any) => {
   if (!data) return []

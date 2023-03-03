@@ -74,7 +74,7 @@ const PercentageOfEngangementType = (props: MessageData) => {
         paddingPercentage: 5,
         labels: [
           {
-            text: currentTotal || '',
+            text: currentTotal && currentTotal !=0 ? currentTotal : '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',
@@ -106,7 +106,7 @@ const PercentageOfEngangementType = (props: MessageData) => {
         paddingPercentage: 5,
         labels: [
           {
-            text: previousTotal || '',
+            text: previousTotal && previousTotal !=0 ? previousTotal : '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',
@@ -176,14 +176,14 @@ const PercentageOfEngangementType = (props: MessageData) => {
         setPreviousData(previousDataset)
 
         if (currentMessageData?.length > 0) {
-          setCurrentTotal(currentMessageData[0]?.total)
+          setCurrentTotal(currentMessageData[0]?.value?.total)
           setShowNoDataText(false)
         } else {
           setShowNoDataText(true)
         }
 
         if (previousMessageData?.length > 0) {
-          setPreviousTotal(previousMessageData[0]?.total)
+          setPreviousTotal(previousMessageData[0]?.value?.total)
           setShowNoDataTextPrevious(false)
         } else {
           setShowNoDataTextPrevious(true)

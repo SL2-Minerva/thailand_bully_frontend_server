@@ -137,7 +137,7 @@ const AccountDetail = (props: DialogInfoProps) => {
                   >
                     <TableCell style={{ whiteSpace: 'normal', width: 300 }}>{row.message_detail}</TableCell>
                     <TableCell>{row.account_name}</TableCell>
-                    <TableCell>{row.channel_name || '-'}</TableCell>
+                    <TableCell>{row.channel || '-'}</TableCell>
                     <TableCell>{row.post_date}</TableCell>
                     <TableCell> {row.post_time}</TableCell>
                   </TableRow>
