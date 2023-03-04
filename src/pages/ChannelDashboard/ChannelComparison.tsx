@@ -59,19 +59,18 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
             <Grid container spacing={6}>
               <Grid item xs={12}>
                 <span style={{ display: 'flex', justifyContent: 'center' }}>
-                  <Avatar sx={{ width: 60, height: 60 }}>
-                    <img src={imgPath} width={50} height={50} alt=""/>
+                  <Avatar sx={{ width: 30, height: 30 }}>
+                    <img src={imgPath} width={30} height={30} alt=""/>
                   </Avatar>
                   <Chip
                     label={totalText}
                     sx={{
                       ml: 2,
-                      mt: '0.8rem',
                       display: 'flex',
                       justifyContent: 'center',
                       backgroundColor: color,
                       color: 'white',
-                      fontSize: '24px'
+                      fontSize: '1vw'
                     }}
                   />
                   {/* <Typography variant='h4'>
@@ -80,12 +79,12 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
                 </span>
                 <Grid mt={4}>
                   {totalValue != 0 ? (
-                    <Typography variant='h4' sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Typography variant='h6' sx={{ display: 'flex', justifyContent: 'center' }}>
                       {trend === 'plus' ? '+' : ''}
                       {totalValue}
                     </Typography>
                   ) : (
-                    <Typography variant='h4' sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Typography variant='h6' sx={{ display: 'flex', justifyContent: 'center' }}>
                       {totalValue}
                     </Typography>
                   )}
@@ -98,13 +97,13 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
                             <>
                                 <TrendIcon fontSize='large' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }} />
 
-                                <Typography variant='h4' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
+                                <Typography variant='h6' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
                                     {percentageValue}
                                 </Typography>
                             </>
 
                             :
-                            <Typography variant='h4'>
+                            <Typography variant='h6'>
                                 {0 + '%'}
                             </Typography>
 

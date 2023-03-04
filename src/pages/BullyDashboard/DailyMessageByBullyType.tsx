@@ -12,7 +12,6 @@ import { InteractionItem } from 'chart.js'
 import { BullyTypeColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { FilterBullyTypeByCampaignId } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { LinearProgress } from '@mui/material'
 import { useTranslation } from 'react-i18next'
@@ -34,6 +33,8 @@ interface LineProps {
   type: string
   chartId: string
   highlight?: boolean
+  resultBullyTypeFilterData: any
+  loadingBullyTypeFilterData: boolean
 }
 
 const chartLabel = (data: any) => {
@@ -70,7 +71,18 @@ const chartLabel = (data: any) => {
 const DailyMessgesByBullyType = (props: LineProps) => {
   // ** Props
   const { t } = useTranslation()
-  const { white, labelColor, borderColor, gridLineColor, params, type, chartId, highlight } = props
+  const {
+    white,
+    labelColor,
+    borderColor,
+    gridLineColor,
+    params,
+    type,
+    chartId,
+    highlight,
+    resultBullyTypeFilterData,
+    loadingBullyTypeFilterData
+  } = props
 
   // const [ chartData, setChartData ] = useState();
   const colors = BullyTypeColors
@@ -85,15 +97,7 @@ const DailyMessgesByBullyType = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   })
-  const { resultBullyTypeFilterData, loadingBullyTypeFilterData } = FilterBullyTypeByCampaignId(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
-  )
+  
 
   const chartRef = useRef()
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -139,12 +143,12 @@ const DailyMessgesByBullyType = (props: LineProps) => {
         params.label = label[index]
       }
       const keyword_id = getKeywordId(getDatasetAtEvent(chartRef.current, event))
-      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event);
+      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event)
 
-      if(getDatasetIndex?.length > 0) {
-        const datasetIndex = getDatasetIndex[0]?.datasetIndex;
-       
-        if(datasetIndex === 0 || datasetIndex) {
+      if (getDatasetIndex?.length > 0) {
+        const datasetIndex = getDatasetIndex[0]?.datasetIndex
+
+        if (datasetIndex === 0 || datasetIndex) {
           params.Llabel = dataset[datasetIndex]?.label
         }
       }
@@ -271,12 +275,12 @@ const DailyMessgesByBullyType = (props: LineProps) => {
         }
       } else {
         setLabel([])
-        setDataset([]) 
+        setDataset([])
         setShowNoDataText(true)
       }
     } else {
       setLabel([])
-      setDataset([])  
+      setDataset([])
       setShowNoDataText(true)
     }
   }, [resultBullyTypeFilterData, t])
@@ -307,7 +311,7 @@ const DailyMessgesByBullyType = (props: LineProps) => {
       </span>
 
       <CardContent>
-      {showNoDataText ? (
+        {showNoDataText ? (
           <div
             style={{
               height: 300,

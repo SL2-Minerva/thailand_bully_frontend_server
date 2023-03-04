@@ -82,7 +82,7 @@ const InfluencerGraph = ({
   //   params?.endDate,
   //   params?.period,
   //   params?.keywordIds
-  // )
+  // ) 
 
   const chartRef = useRef()
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -101,7 +101,7 @@ const InfluencerGraph = ({
         if (keywordName === dailyMessageData[i].keyword_name) {
           sourceId = dailyMessageData[i].source_id || ''
           campaign_id = dailyMessageData[i].campaign_id || ''
-          keywordId = dailyMessageData[i].id || ''
+          keywordId = dailyMessageData[i].keyword_id || ''
         }
       }
     }

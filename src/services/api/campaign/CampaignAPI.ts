@@ -97,7 +97,7 @@ export const CampaignSearchList = (reload?: boolean, page?: number, name?: strin
   })
   
   return {
-    resultCampaiganList: res?.data || null,
+    resultCampaiganList: res?.data?.list || null,
     total: res?.data?.total || 0,
     keyword_limit : res?.data?.keyword_limit || 3,
     loadingCampaiganList: loading,

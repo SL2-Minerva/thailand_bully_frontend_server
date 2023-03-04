@@ -14,6 +14,7 @@ import { GetMessageDetail } from 'src/services/api/dashboards/overall/overallDas
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
+import { CheckCircle, OpenInNew, AlphaXCircle } from 'mdi-material-ui'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -60,7 +61,19 @@ interface DialogInfoProps {
 }
 
 const MessageDetail = (props: DialogInfoProps) => {
-  const { show, setShow, current, params, paramsId, setParamsId, reportNo, title, networkTitle, keywordId, setKeywordId } = props
+  const {
+    show,
+    setShow,
+    current,
+    params,
+    paramsId,
+    setParamsId,
+    reportNo,
+    title,
+    networkTitle,
+    keywordId,
+    setKeywordId
+  } = props
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [page, setPage] = useState(0)
   const [messageId, setMessageId] = useState<number | string>()
@@ -75,7 +88,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
       end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
       period: params?.period,
-      keyword_id: paramsId?.keywordId || keywordId || "",
+      keyword_id: paramsId?.keywordId || keywordId || '',
       organization_id: paramsId?.organization_id || '',
       classification_id: paramsId?.classification_id || '',
       start_date_period: params?.previousDate ? moment(params?.previousDate).format('YYYY-MM-DD') : '',
@@ -93,7 +106,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
       end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
       period: params?.period,
-      keyword_id: paramsId?.keywordId || keywordId || "",
+      keyword_id: paramsId?.keywordId || keywordId || '',
       classification_id: paramsId?.classification_id || '',
       organization_id: paramsId?.organization_id || '',
       page: page,
@@ -104,8 +117,8 @@ const MessageDetail = (props: DialogInfoProps) => {
     }
   }
 
-  if(params?.Llabel) {
-    paramData.Llabel =params?.Llabel
+  if (params?.Llabel) {
+    paramData.Llabel = params?.Llabel
   }
 
   if (params.select_period) {
@@ -164,6 +177,7 @@ const MessageDetail = (props: DialogInfoProps) => {
             <Table style={{ minWidth: '00px' }} aria-label='customized table'>
               <TableHead>
                 <TableRow>
+                  <StyledTableCell>No.</StyledTableCell>
                   <StyledTableCell>Message Detail</StyledTableCell>
                   <StyledTableCell>Message Type</StyledTableCell>
                   <StyledTableCell>Account Name</StyledTableCell>
@@ -176,6 +190,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                   <StyledTableCell>Bully Level</StyledTableCell>
                   <StyledTableCell>Bully Type</StyledTableCell>
                   <StyledTableCell>Parent</StyledTableCell>
+                  <StyledTableCell>Link</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -184,24 +199,126 @@ const MessageDetail = (props: DialogInfoProps) => {
                     key={index}
                     hover={true}
                     onClick={() => {
-                      setShowDialog(true), setMessageId(messageDetail.message_id)
+                      setMessageId(messageDetail.message_id)
                     }}
                     style={{ cursor: 'pointer' }}
                   >
-                    <StyledTableCell component='th' scope='row'>
+                    <StyledTableCell
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      <b>{index + 1 + page * 10}</b>
+                    </StyledTableCell>
+                    <StyledTableCell
+                      component='th'
+                      scope='row'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
                       {messageDetail.message_detail}
                     </StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.message_type || '-'}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.account_name}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.post_date}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.post_time}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.day}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.device || '-'}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.channel_name || '-'}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.sentiment || '-'}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.bully_level}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.parent}</StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.message_type || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.account_name}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.post_date}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.post_time}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.day}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.device || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.channel_name || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.sentiment || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.bully_level}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.bully_type}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.parent ? (
+                        <CheckCircle style={{ color: 'green' }} />
+                      ) : (
+                        <AlphaXCircle style={{ color: 'red' }} />
+                      )}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {messageDetail.link_message ? (
+                        <a href={messageDetail.link_message} target='_blank' rel='noopener noreferrer'>
+                          <OpenInNew style={{ color: '#0047ff9e' }} />
+                        </a>
+                      ) : (
+                        ''
+                      )}
+                    </StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>

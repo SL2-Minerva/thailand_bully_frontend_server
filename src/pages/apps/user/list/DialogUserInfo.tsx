@@ -69,7 +69,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
   const handleSummit = () => {
     if (action === 'edit') {
       axios
-        .put(
+        .post(
           `${API_PATH}/user/update/${current?.id}`,
           { name, password,  email, company, organization_id: organization, role_id, status },
           {

@@ -189,8 +189,8 @@ export const GetDailyTypeBy = (
   })
 
   return {
-    // resultBullyTypeByDaily: res?.data?.bully_type_daily || null,
-    // resultBullyTypeByPercentage : res?.data?.bully_type_percentage || null,
+    resultBullyTypeByDaily: res?.data?.bully_type_daily || null,
+    resultBullyTypeByPercentage : res?.data?.bully_type_percentage || null,
     resultBullyTypeByDay: res?.data?.bully_type_by_day || null,
     resultBullyTypeByTime: res?.data?.bully_type_by_time || null,
     resultBullyTypeByDevice: res?.data?.bully_type_by_device || null,

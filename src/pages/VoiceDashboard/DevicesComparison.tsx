@@ -2,8 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { useTheme } from '@mui/material/styles'
-import { Grid, LinearProgress } from '@mui/material'
+import { Box, Grid, LinearProgress } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -15,6 +14,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { GraphicColors } from 'src/utils/const'
 import Translations from 'src/layouts/components/Translations'
+import { CustomeLabels } from './CustomLabel'
 
 Chart.register(DoughnutLabel)
 const DevicesComparison = ({
@@ -29,8 +29,8 @@ const DevicesComparison = ({
   resultDevicesComparison: any
   loadingDevicesComparison: boolean
 }) => {
-  const theme = useTheme()
-  const labelColor = theme.palette.text.primary
+  // const theme = useTheme()
+  // const labelColor = theme.palette.text.primary
   const initValue = {
     label: [],
     data: [],
@@ -46,20 +46,13 @@ const DevicesComparison = ({
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
         labels: [
           {
-            text: currentData?.total || 0,
+            text: currentData?.total && currentData?.total != 0 ? currentData?.total : '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',
@@ -98,20 +91,13 @@ const DevicesComparison = ({
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
         labels: [
           {
-            text: previousData?.total || 0,
+            text: previousData?.total && previousData?.total != 0 ? previousData?.total : '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',
@@ -161,7 +147,7 @@ const DevicesComparison = ({
   }, [resultDevicesComparison])
 
   return (
-    <Card style={{ minHeight: 500 }}>
+    <Card style={{ minHeight: 550, maxHeight: 550 }}>
       {loadingDevicesComparison && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -176,6 +162,17 @@ const DevicesComparison = ({
       </span>
       <CardContent>
         <Grid container spacing={3}>
+        <Grid item xs={12}>
+            <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }}  sx={{display: 'flex', justifyContent: 'center'}}>
+              <CustomeLabels
+                data={currentData}
+                labels={previousData?.label || currentData?.label}
+                color={GraphicColors}
+                itemsCountPerPage={4}
+                showValue={true}
+              />
+            </Box>
+          </Grid>
           <Grid item xs={12} md={6}>
             {showNoDataText ? (
               <div
