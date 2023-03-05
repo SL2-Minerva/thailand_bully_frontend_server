@@ -48,9 +48,10 @@ import TopSiteList from './TopSiteList'
 
 import SentimentGaugeChart from './SentimentGaugeChart'
 
+// import SentimentLevelChart from './SentimentLevelChart'
+
 import CommentSentiment from './CommentSentiment'
 import ShareOfVoice from './ShareOfVoice'
-import SentimentLevelChart from './SentimentLevelChart'
 import { CampaignList } from 'src/services/api/campaign/CampaignAPI'
 import {
   FilterByCampaignId,
@@ -717,12 +718,12 @@ const OverallDashboard = () => {
       <Grid container spacing={3} mt={2}>
         {resultReportPermission?.includes('12') ? (
           <>
-            <Grid id='chart12' item xs={12} md={8}>
+            <Grid id='chart12' item xs={12} >
               <ShareOfVoice params={params} chartId='Chart 12' keywordsColor={keywordGraphColors} />
             </Grid>
-            <Grid item xs={12} md={4}>
+            {/* <Grid item xs={12} md={4}>
               <SentimentLevelChart params={params} />
-            </Grid>
+            </Grid> */}
           </>
         ) : (
           ''

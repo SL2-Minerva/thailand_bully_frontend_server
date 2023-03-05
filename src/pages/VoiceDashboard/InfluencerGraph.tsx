@@ -90,7 +90,7 @@ const InfluencerGraph = ({
 
     const datasetIndex = dataset[0].datasetIndex
     const keywordName = data.datasets[datasetIndex].label
-    const dailyMessageData = resultNumbersOfAccounts?.value
+    const dailyMessageData = resultNumbersOfAccounts
 
     let keywordId: number | null = null
     let sourceId: number | null = null
@@ -98,7 +98,7 @@ const InfluencerGraph = ({
 
     if (dailyMessageData?.length > 0) {
       for (let i = 0; i < dailyMessageData?.length; i++) {
-        if (keywordName === dailyMessageData[i].keyword_name) {
+        if (keywordName === dailyMessageData[i].name) {
           sourceId = dailyMessageData[i].source_id || ''
           campaign_id = dailyMessageData[i].campaign_id || ''
           keywordId = dailyMessageData[i].keyword_id || ''

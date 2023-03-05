@@ -1,6 +1,6 @@
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
+// import Card from '@mui/material/Card'
+// import CardHeader from '@mui/material/CardHeader'
+// import CardContent from '@mui/material/CardContent'
 
 // ** Third Party Imports
 import { ApexOptions } from 'apexcharts'
@@ -105,6 +105,9 @@ const SentimentLevelChart = ({ params }: { params: any }) => {
     xaxis: {
       categories: chartLabels
     },
+    yaxis: {
+      show: false
+    },
     tooltip: {
       y: {
         formatter: function (val) {
@@ -117,21 +120,34 @@ const SentimentLevelChart = ({ params }: { params: any }) => {
       colors: ['#C73E1D', '#FEB95F', '#63A375']
     },
     legend: {
-      position: 'top',
-      horizontalAlign: 'left',
-      offsetX: 40
+      show: false
     }
+
+    // legend: {
+    //   position: 'top',
+    //   horizontalAlign: 'left',
+    //   offsetX: 40
+    // }
   }
 
   return (
-    <Card sx={{ height: 450 }}>
-      {loadingSentimentLevel && <LinearProgress style={{ width: '100%' }} />}
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader title='Sentiment Level' titleTypographyProps={{ variant: 'h6' }} />
-      </span>
-      <CardContent>
-        {resultSentimentLevel ? (
+   
+    // <Card sx={{ height: 400 }}>
+    
+    //   <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+    //     <CardHeader title='Sentiment' titleTypographyProps={{ variant: 'h6' }} />
+    //   </span>
+    //   <CardContent>
+        
+    //   </CardContent>
+    // </Card>
+
+    <>
+      {resultSentimentLevel ? (
+        <>
+          {loadingSentimentLevel && <LinearProgress style={{ width: '100%' }} />}
           <ReactApexcharts type='bar' series={series} options={options} />
+        </>
         ) : (
           <div
             style={{
@@ -144,8 +160,7 @@ const SentimentLevelChart = ({ params }: { params: any }) => {
             <Translations text='no data' />
           </div>
         )}
-      </CardContent>
-    </Card>
+    </>
   )
 }
 

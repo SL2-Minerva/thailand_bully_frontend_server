@@ -85,7 +85,7 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
               </FormControl>
             </Grid>
           </Grid>
-          <div style={{ height: 400, width: 600 }}>
+          <div style={{ height: 400, width: 500 }}>
             {!resultWordCloudsPlatform?.word_clouds_platform ||
             resultWordCloudsPlatform?.word_clouds_platform?.length == 0 ? (
               <div

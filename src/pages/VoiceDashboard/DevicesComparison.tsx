@@ -168,7 +168,7 @@ const DevicesComparison = ({
                 data={currentData}
                 labels={previousData?.label || currentData?.label}
                 color={GraphicColors}
-                itemsCountPerPage={4}
+                itemsCountPerPage={50}
                 showValue={true}
               />
             </Box>

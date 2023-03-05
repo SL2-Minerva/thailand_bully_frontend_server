@@ -67,7 +67,7 @@ const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string 
               </Button>
             </Grid>
           </Grid>
-          <div style={{ height: 400, width: 600 }}>
+          <div style={{ height: 400, width: 500 }}>
             {!resultWordCloudsSentiment?.word_clouds_position ||
             resultWordCloudsSentiment?.word_clouds_position?.length == 0 ? (
               <div
