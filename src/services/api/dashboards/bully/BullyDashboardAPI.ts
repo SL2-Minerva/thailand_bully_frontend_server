@@ -33,6 +33,23 @@ const getParams = (data: any) => {
   return params
 }
 
+export const GetSortBullyData = (data: any, value?: boolean) => {
+  if(value) {
+    data?.value?.sort(function(a:any, b :any){
+      if(a.bully_level < b.bully_level) { return -1; }
+      if(a.bully_level > b.bully_level) { return 1; } 
+    })
+  } else {
+    data.sort(function(a:any, b :any){
+      if(a.bully_level < b.bully_level) { return -1; }
+      if(a.bully_level > b.bully_level) { return 1; } 
+    })
+  }
+  
+  
+  return data;
+}
+
 export const GetBullyDailyBy = (
   campaignId?: string,
   start_date?: any,

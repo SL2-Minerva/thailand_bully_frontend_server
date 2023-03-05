@@ -102,7 +102,7 @@ const ShareOfChannel = ({
           </Grid>
           <Grid item xs={7}>
             {resultShareofChannelPlatform?.length > 0 ? (
-              <Table size='small'>
+              <Table size='small' sx={{overflow: 'auto'}}>
                 <TableHead>
                   {(resultShareofChannelPlatform || []).map((shareVoice: any, index: number) => {
                     return (
@@ -146,7 +146,7 @@ const ShareOfChannel = ({
                           return (
                             <TableCell key={key}>
                               <span style={{ border: value?.highlight ? '1px solid red' : '', padding: '4px' }}>
-                                {value?.percentage + '%'}
+                                {value?.percentage > 0 ? <>{value?.percentage?.toFixed(2) + '%'}</> : '0%'}
                               </span>
                             </TableCell>
                           )

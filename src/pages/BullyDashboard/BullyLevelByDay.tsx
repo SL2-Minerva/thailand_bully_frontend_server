@@ -10,6 +10,7 @@ import { LineProps } from '../VoiceDashboard/MessageByDays'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
+import { GetSortData } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
   
 const BullyLevelByDay = (props: LineProps) => {
   const {t} = useTranslation()
@@ -191,8 +192,8 @@ const BullyLevelByDay = (props: LineProps) => {
         if(dailyMessageData) {
             const labels = chartLabel(dailyMessageData);
             setLabel(labels);
-            
-            const dataSets = chartDatasets(dailyMessageData);
+            const sortData = GetSortData(dailyMessageData, true)
+            const dataSets = chartDatasets(sortData);
             setDataset(dataSets)
 
             if (!dailyMessageData?.value) {

@@ -272,13 +272,6 @@ const MessageDetail = (props: DialogInfoProps) => {
                         setShowDialog(true)
                       }}
                     >
-                      {messageDetail.parent}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      onClick={() => {
-                        setShowDialog(true)
-                      }}
-                    >
                       {messageDetail.parent ? (
                         <CheckCircle style={{ color: 'green' }} />
                       ) : (

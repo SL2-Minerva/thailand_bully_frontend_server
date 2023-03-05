@@ -2,8 +2,7 @@
 import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { useTheme } from '@mui/material/styles'
-import { Grid, LinearProgress } from '@mui/material'
+import { Box, Grid, LinearProgress } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -16,6 +15,8 @@ import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
 import { Chart } from 'chart.js'
 import * as DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne'
+import { GetSortData } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
+import CustomeLabels from '../VoiceDashboard/CustomLabel'
 
 Chart.register(DoughnutLabel)
 
@@ -52,8 +53,8 @@ const PercentageOfSentiments = (props: MessageData) => {
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
 
-  const theme = useTheme()
-  const labelColor = theme.palette.text.primary
+  // const theme = useTheme()
+  // const labelColor = theme.palette.text.primary
 
   const options = {
     responsive: true,
@@ -61,14 +62,7 @@ const PercentageOfSentiments = (props: MessageData) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display : false
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -93,14 +87,7 @@ const PercentageOfSentiments = (props: MessageData) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -169,14 +156,13 @@ const PercentageOfSentiments = (props: MessageData) => {
 
   useEffect(() => {
     if (resultFilterData) {
-      // const currentMessageData = resultFilterData?.percentage_of_sentitment_current;
-      // const previousMessageData = resultFilterData?.percentage_of_sentitment_previous;
-
       const currentMessageData = resultFilterData?.prcentage_of_messages_current
       const previousMessageData = resultFilterData?.prcentage_of_messages_previous
 
       if (currentMessageData) {
-        const currentDataset = chartDataset(currentMessageData, 'current')
+        const sortCurrentData = GetSortData(currentMessageData)
+
+        const currentDataset = chartDataset(sortCurrentData, 'current')
         setCurrentData(currentDataset)
         if (currentMessageData?.length > 0) {
           setCurrentTotal(currentMessageData[0]?.value[0]?.total)
@@ -192,7 +178,8 @@ const PercentageOfSentiments = (props: MessageData) => {
       }
 
       if (previousMessageData) {
-        const previousDataset = chartDataset(previousMessageData, 'previous')
+        const sortPreviousData = GetSortData(previousMessageData)
+        const previousDataset = chartDataset(sortPreviousData, 'previous')
         setPreviousData(previousDataset)
 
         if (previousMessageData?.length > 0) {
@@ -232,12 +219,28 @@ const PercentageOfSentiments = (props: MessageData) => {
         </StyledTooltip>
       </span>
       <CardContent>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+        <Grid container spacing={2}>
+          {!showNoDataText || !showNoDataTextPrevious ? (
+            <Grid item xs={12}>
+              <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <CustomeLabels
+                  data={currentData || previousData}
+                  labels={['Negative', 'Neutral', 'Positive']}
+                  color={SentimentColors}
+                  itemsCountPerPage={50}
+                  showValue={true}
+                />
+              </Box>
+            </Grid>
+          ) : (
+            ''
+          )}
+
+          <Grid item xs={12} md={6}  mt={-5}>
             {showNoDataText ? (
               <div
                 style={{
-                  height: 300,
+                  height: 200,
                   padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
@@ -247,14 +250,14 @@ const PercentageOfSentiments = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={currentData} options={options as any} height={330} />
+              <Doughnut data={currentData} options={options as any} height={200} />
             )}
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6}  mt={-5}>
             {showNoDataTextPrevious ? (
               <div
                 style={{
-                  height: 300,
+                  height: 200,
                   padding: '150px 0',
                   textAlign: 'center',
                   verticalAlign: 'middle',
@@ -264,14 +267,14 @@ const PercentageOfSentiments = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={previousData} options={optionsPrevious as any} height={330} />
+              <Doughnut data={previousData} options={optionsPrevious as any} height={200} />
             )}
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} mt={-5}>
             <p style={{ fontSize: '10px' }}> Current Period :</p>
             <p style={{ fontSize: '10px' }}> {currentPeriod} </p>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} mt={-5}>
             <p style={{ fontSize: '10px' }}> Previous Period : </p>
             <p style={{ fontSize: '10px' }}> {previousPeriod} </p>
           </Grid>

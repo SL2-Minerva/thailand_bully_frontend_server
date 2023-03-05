@@ -16,6 +16,7 @@ import { SentimentColors } from 'src/utils/const'
 import { LinearProgress } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
+import { GetSortData } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
 
 interface LineProps {
   white: string
@@ -257,11 +258,13 @@ const DailySenitment = (props: LineProps) => {
     if (resultFilterData) {
       const sentimentData = resultFilterData?.sentiment
       if (sentimentData) {
-        const labels = chartLabel(sentimentData)
-        setLabel(labels)
+        const sortData = GetSortData(sentimentData)
 
+        const labels = chartLabel(sortData)
+        setLabel(labels)
+        
         if (labels?.length > 0) {
-          const dataSets = chartDatasets(sentimentData, labels)
+          const dataSets = chartDatasets(sortData, labels)
           setDataset(dataSets)
           setShowNoDataText(false)
         }
