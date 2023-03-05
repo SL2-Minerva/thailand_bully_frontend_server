@@ -13,8 +13,8 @@ import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { GraphicColors } from 'src/utils/const'
-import Translations from 'src/layouts/components/Translations'
-import { CustomeLabels } from './CustomLabel'
+import Translations from 'src/layouts/components/Translations' 
+import CustomeLabels from './CustomLabel'
 
 Chart.register(DoughnutLabel)
 const PlatformsComparison = ({
