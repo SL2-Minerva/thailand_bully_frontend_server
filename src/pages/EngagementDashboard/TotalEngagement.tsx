@@ -1,4 +1,3 @@
-
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
@@ -15,223 +14,197 @@ import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { Share, StickerEmoji, Message } from 'mdi-material-ui'
 import { StyledTooltip } from '../dashboard/overall'
-import { Information } from "mdi-material-ui";
+import { Information } from 'mdi-material-ui'
 import { LinearProgress } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 
 interface InfluencerComparisonProps {
-    totalEngagement?: any,
-    highlight: boolean,
-    loading?: boolean 
-  }
+  totalEngagement?: any
+  highlight: boolean
+  loading?: boolean
+}
 
 const TotalEngagement = (props: InfluencerComparisonProps) => {
-    // ** Props
-    const { totalEngagement, highlight, loading } = props
-
+  // ** Props
+  const { totalEngagement, highlight, loading } = props
 
   return (
     <>
-        
-        <Grid container spacing={2}>
+      <Card>
+        {loading && <LinearProgress style={{ width: '100%' }} />}
+        <CardContent>
+          <Grid container spacing={2}>
             <Grid item xs={6} md={3}>
-            <Card>
-                {loading && (
-                <LinearProgress
-                    style={{ width: "100%" }}
-                />
-                )}
-                <CardContent>
-                    <span style={{ display: 'flex', justifyContent: 'left' }}>
-                        <Typography variant='h5' sx={{ color : highlight ? 'green' : '#4c4e64de' }}>
-                            <Translations text='Total Engagement'/>
-                        </Typography>
-                        <StyledTooltip arrow title="Chart 16, Report Level 2 (4.2.020)">
-                            <Information style={{margin: '2px 0px 0px 5px', fontSize: '29px', color : highlight ? 'green' : '#4c4e64de'}} />
-                        </StyledTooltip>
-                    </span>
-                    <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
-                        <Typography variant='h3' >
-                                {/* { totalEngagement?.totalEngagement?.type === 'plus' ? "+" : "-" } */}
-                                {totalEngagement?.totalEngagement?.totalValue}
-                        </Typography>
-                                
-                        <Box>
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                {
-                                    totalEngagement?.totalEngagement?.comparison == 0 ?
-                                    <Typography variant='h4' mt={2}>
-                                        {totalEngagement?.totalEngagement?.comparison}
-                                    </Typography> :
-                                    <>
-                                         <Typography variant='h4' mt={4}>
-                                            {
-                                                totalEngagement?.totalEngagement?.type === 'plus' ?
-                                                <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
-                                                :
-                                                <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
-                                            }
-                                        </Typography>
+              <span style={{ display: 'flex', justifyContent: 'left' }}>
+                <Typography
+                  sx={{ color: highlight ? 'green' : '#4c4e64de', fontSize: '1.3vw', fontWeight: 'bold', mt: 1 }}
+                >
+                  <Translations text='Total Engagement' />
+                </Typography>
+                <StyledTooltip arrow title='Chart 16, Report Level 2 (4.2.020)'>
+                  <Information
+                    style={{ margin: '2px 0px 0px 5px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }}
+                  />
+                </StyledTooltip>
+              </span>
+              <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography variant='h5' sx={{mt:1.5}}>
+                  {totalEngagement?.totalEngagement?.totalValue}
+                </Typography>
 
-                                        <Typography variant='h4' sx={{ color: totalEngagement?.totalEngagement?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                            {totalEngagement?.totalEngagement?.comparison}
-                                        </Typography>
-                                    </>
-                                }   
-                               
-                            </Box>
-                        </Box>
-                    </Grid>
-                </CardContent>
-            </Card>
+                <Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 15 }}>
+                    {totalEngagement?.totalEngagement?.comparison == 0 ? (
+
+                      <Typography variant='h6' mt={2}>
+                        {totalEngagement?.totalEngagement?.comparison}
+                      </Typography>
+                    ) : (
+                      <>
+                        <Typography variant='h6'>
+                          {totalEngagement?.totalEngagement?.type === 'plus' ? (
+                            <ChevronUp fontSize='large' sx={{ color: 'success.main' }} />
+                          ) : (
+                            <ChevronDown fontSize='large' sx={{ color: 'error.main' }} />
+                          )}
+                        </Typography>
+
+                        <Typography
+                          variant='h6'
+                          sx={{
+                            color: totalEngagement?.totalEngagement?.type === 'plus' ? 'success.main' : 'error.main'
+                          }}
+                        >
+                          {totalEngagement?.totalEngagement?.comparison}
+                        </Typography>
+                      </>
+                    )}
+                  </Box>
+                </Box>
+              </Grid>
             </Grid>
-        <Grid item xs={6} md={3}>
-            <Card>
-            {loading && (
-                <LinearProgress
-                    style={{ width: "100%" }}
-                />
-                )}
-                <CardContent>
-                <span style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Share fontSize='large'/>
-                    <Typography variant='h5' sx={{ marginLeft: '20px' }}>Share</Typography>
-                </span>
-                
-                <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
-                    <Typography variant='h3' >
-                        {totalEngagement?.share?.totalValue}
-                    </Typography>
-                            
-                    <Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            {
-                                totalEngagement?.share?.comparison == 0 ?
-                                <Typography variant='h4' mt={2}>
-                                    {totalEngagement?.share?.comparison}
-                                </Typography> :
-                                <>
-                                    <Typography variant='h4' mt={4}>
-                                        {
-                                            totalEngagement?.share?.type === 'plus' ?
-                                            <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
-                                            :
-                                            <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
-                                        }
-                                    </Typography>
+            <Grid item xs={6} md={3}>
+              <span style={{ display: 'flex'}}>
+                <Share fontSize='large' />
+                <Typography sx={{ marginLeft: '20px',fontSize: '1.5vw', fontWeight: 'bold', mt: 1  }}>
+                  Share
+                </Typography>
+              </span>
 
-                                    <Typography variant='h4' sx={{ color: totalEngagement?.share?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                        {totalEngagement?.share?.comparison}
-                                    </Typography>
-                                </>
-                            }
-                            
-                        </Box>
-                    </Box>
-                </Grid>    
-                </CardContent>
-            </Card>   
-        </Grid>
+              <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography variant='h5' sx={{mt:1.5}}>{totalEngagement?.share?.totalValue}</Typography>
 
-        <Grid item xs={6} md={3}>
-             <Card>
-             {loading && (
-                <LinearProgress
-                    style={{ width: "100%" }}
-                />
-                )}
-                <CardContent>
-                <span style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Message fontSize='large'/>
-                    <Typography variant='h5' sx={{ marginLeft: '20px' }}>Comment</Typography>
-                </span>
-                <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
-                    <Typography variant='h3' >
-                        {totalEngagement?.comment?.totalValue}
-                    </Typography>
-                            
-                    <Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            {
-                                totalEngagement?.comment?.comparison == 0 ?
-                                    <Typography variant='h4' mt={2}>
-                                        {totalEngagement?.comment?.comparison}
-                                    </Typography>
-                                    : 
-                                    <>
-                                        <Typography variant='h4' mt={4}>
-                                            {
-                                                totalEngagement?.comment?.type === 'plus' ?
-                                                <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
-                                                :
-                                                <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
-                                            }
-                                        </Typography>
+                <Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 15 }}>
+                    {totalEngagement?.share?.comparison == 0 ? (
+                      <Typography variant='h6' mt={2}>
+                        {totalEngagement?.share?.comparison}
+                      </Typography>
+                    ) : (
+                      <>
+                        <Typography variant='h6'>
+                          {totalEngagement?.share?.type === 'plus' ? (
+                            <ChevronUp fontSize='large' sx={{ color: 'success.main' }} />
+                          ) : (
+                            <ChevronDown fontSize='large' sx={{ color: 'error.main' }} />
+                          )}
+                        </Typography>
 
-                                        <Typography variant='h4' sx={{ color: totalEngagement?.comment?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                            {totalEngagement?.comment?.comparison}
-                                        </Typography>
-                                    </>
-                            }       
-                            
-                        </Box>
-                    </Box>
-                </Grid> 
-                </CardContent>
-            </Card>
-        </Grid>
+                        <Typography
+                          variant='h6'
+                          sx={{ color: totalEngagement?.share?.type === 'plus' ? 'success.main' : 'error.main' }}
+                        >
+                          {totalEngagement?.share?.comparison}
+                        </Typography>
+                      </>
+                    )}
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
 
-        <Grid item xs={6} md={3}>
-            <Card>
-            {loading && (
-                <LinearProgress
-                    style={{ width: "100%" }}
-                />
-                )}
-                <CardContent>
-                <span style={{ display: 'flex', justifyContent: 'center' }}>
-                    <StickerEmoji fontSize='large'/>
-                    <Typography variant='h5' sx={{ marginLeft: '20px' }}>Reaction</Typography>
-                </span>
-                <Grid  mt={10} sx={{ display:'flex', justifyContent: 'space-between' }}>
-                    <Typography variant='h3' >
-                        {totalEngagement?.reaction?.totalValue}
-                    </Typography>
-                            
-                    <Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            {
-                                totalEngagement?.reaction?.comparison == 0 ?
-                                <Typography variant='h4' mt={2}>
-                                    {totalEngagement?.reaction?.comparison}
-                                </Typography> :
-                                <>
-                                    <Typography variant='h4' mt={4}>
-                                        {
-                                            totalEngagement?.reaction?.type === 'plus' ?
-                                            <ChevronUp fontSize='large' sx={{ color: 'success.main'}} />
-                                            :
-                                            <ChevronDown fontSize='large' sx={{ color: 'error.main'}} />
-                                        }
-                                    </Typography>
+            <Grid item xs={6} md={3}>
+              <span style={{ display: 'flex'}}>
+                <Message fontSize='large' />
+                <Typography sx={{ marginLeft: '20px',fontSize: '1.5vw', fontWeight: 'bold', mt: 1  }}>
+                  Comment
+                </Typography>
+              </span>
+              <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography variant='h5' sx={{mt:1.5}}>{totalEngagement?.comment?.totalValue}</Typography>
 
-                                    <Typography variant='h4' sx={{ color: totalEngagement?.reaction?.type === 'plus' ? 'success.main' : 'error.main' }}>
-                                        {totalEngagement?.reaction?.comparison}
-                                    </Typography>
-                                </>
-                            }
-                        </Box>
-                    </Box>
-                </Grid> 
-                </CardContent>
-            </Card>
-        </Grid> 
+                <Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 15 }}>
+                    {totalEngagement?.comment?.comparison == 0 ? (
+                      <Typography variant='h6' mt={2}>
+                        {totalEngagement?.comment?.comparison}
+                      </Typography>
+                    ) : (
+                      <>
+                        <Typography variant='h6'>
+                          {totalEngagement?.comment?.type === 'plus' ? (
+                            <ChevronUp fontSize='large' sx={{ color: 'success.main' }} />
+                          ) : (
+                            <ChevronDown fontSize='large' sx={{ color: 'error.main' }} />
+                          )}
+                        </Typography>
 
-        </Grid>
-                
+                        <Typography
+                          variant='h6'
+                          sx={{ color: totalEngagement?.comment?.type === 'plus' ? 'success.main' : 'error.main' }}
+                        >
+                          {totalEngagement?.comment?.comparison}
+                        </Typography>
+                      </>
+                    )}
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={6} md={3}>
+              <span style={{ display: 'flex' }}>
+                <StickerEmoji fontSize='large' />
+                <Typography sx={{ marginLeft: '20px',fontSize: '1.5vw', fontWeight: 'bold', mt: 1  }}>
+                  Reaction
+                </Typography>
+              </span>
+              <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography variant='h5' sx={{mt:1.5}}>{totalEngagement?.reaction?.totalValue}</Typography>
+
+                <Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 15}}>
+                    {totalEngagement?.reaction?.comparison == 0 ? (
+                      <Typography variant='h6' mt={2}>
+                        {totalEngagement?.reaction?.comparison}
+                      </Typography>
+                    ) : (
+                      <>
+                        <Typography variant='h6' mt={4}>
+                          {totalEngagement?.reaction?.type === 'plus' ? (
+                            <ChevronUp fontSize='large' sx={{ color: 'success.main' }} />
+                          ) : (
+                            <ChevronDown fontSize='large' sx={{ color: 'error.main' }} />
+                          )}
+                        </Typography>
+
+                        <Typography
+                          variant='h6'
+                          sx={{ color: totalEngagement?.reaction?.type === 'plus' ? 'success.main' : 'error.main' }}
+                        >
+                          {totalEngagement?.reaction?.comparison}
+                        </Typography>
+                      </>
+                    )}
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
     </>
   )
 }
 
 export default TotalEngagement
-

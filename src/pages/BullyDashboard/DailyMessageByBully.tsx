@@ -16,6 +16,7 @@ import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { LinearProgress } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
+import { GetSortBullyData } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -269,7 +270,8 @@ const DailyMessgeByBully = (props: LineProps) => {
         setLabel(labels)
 
         if (labels?.length > 0) {
-          const dataSets = chartDatasets(bully_levelData, labels)
+          const sortData = GetSortBullyData(bully_levelData)
+          const dataSets = chartDatasets(sortData, labels)
           setDataset(dataSets)
           setShowNoDataText(false)
         }

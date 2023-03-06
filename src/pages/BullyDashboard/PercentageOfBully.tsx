@@ -2,8 +2,7 @@
 import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { useTheme } from '@mui/material/styles'
-import { Grid, LinearProgress } from '@mui/material'
+import { Box, Grid, LinearProgress } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -16,6 +15,8 @@ import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
 import { Chart } from 'chart.js'
 import * as DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne'
+import { GetSortBullyData } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
+import CustomeLabels from '../VoiceDashboard/CustomLabel'
 
 Chart.register(DoughnutLabel)
 interface MessageData {
@@ -52,8 +53,8 @@ const PercentageOfBully = (props: MessageData) => {
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
 
-  const theme = useTheme()
-  const labelColor = theme.palette.text.primary
+  // const theme = useTheme()
+  // const labelColor = theme.palette.text.primary
 
   const options = {
     responsive: true,
@@ -61,14 +62,7 @@ const PercentageOfBully = (props: MessageData) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -93,14 +87,7 @@ const PercentageOfBully = (props: MessageData) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -172,7 +159,8 @@ const PercentageOfBully = (props: MessageData) => {
       const previousMessageData = resultBullyLevelPercentage?.prcentage_of_messages_previous
 
       if (currentMessageData) {
-        const currentDataset = chartDataset(currentMessageData, 'current')
+        const sortCurrentData = GetSortBullyData(currentMessageData)
+        const currentDataset = chartDataset(sortCurrentData, 'current')
         setCurrentData(currentDataset)
         if (currentMessageData?.length > 0) {
           setShowNoDataText(false)
@@ -187,7 +175,8 @@ const PercentageOfBully = (props: MessageData) => {
         setCurrentTotal(0)
       }
       if (previousMessageData) {
-        const previousDataset = chartDataset(previousMessageData, 'previous')
+        const sortData = GetSortBullyData(previousMessageData)
+        const previousDataset = chartDataset(sortData, 'previous')
         setPreviousData(previousDataset)
         if (previousMessageData?.length > 0) {
           setShowNoDataTextPrevious(false)
@@ -214,7 +203,7 @@ const PercentageOfBully = (props: MessageData) => {
   const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} square variant='outlined'>
       {loadingBullyLevelPercentage && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -229,7 +218,22 @@ const PercentageOfBully = (props: MessageData) => {
       </span>
       <CardContent>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+        {!showNoDataText || !showNoDataTextPrevious ? (
+            <Grid item xs={12}>
+              <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <CustomeLabels
+                  data={currentData || previousData}
+                  labels={['Level 0', 'Level 1', 'Level 2', 'Level 3']}
+                  color={BullyLevelColors}
+                  itemsCountPerPage={50}
+                  showValue={true}
+                />
+              </Box>
+            </Grid>
+          ) : (
+            ''
+          )}
+          <Grid item xs={12} md={6}  mt={-5}>
             {showNoDataText ? (
               <div
                 style={{
@@ -243,10 +247,10 @@ const PercentageOfBully = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={currentData} options={options as any} height={330} />
+              <Doughnut data={currentData} options={options as any} height={200} />
             )}
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} mt={-5}>
             {showNoDataTextPrevious ? (
               <div
                 style={{
@@ -260,7 +264,7 @@ const PercentageOfBully = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={previousData} options={optionsPrevious as any} height={330} />
+              <Doughnut data={previousData} options={optionsPrevious as any} height={200} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>

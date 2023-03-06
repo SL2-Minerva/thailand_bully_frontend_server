@@ -256,7 +256,7 @@ const PeriodComparisonChart = (props: LineProps) => {
           <Grid item xs={12}>
             {resultSentimentComparisonByEngagement?.value ? (
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                <Table sx={{ minWidth: 500 }} aria-label='simple table'>
                   <TableHead>
                     <TableRow>
                       <TableCell width={30}>
@@ -268,12 +268,12 @@ const PeriodComparisonChart = (props: LineProps) => {
                         []
                       )?.map((share: any, index: number) => {
                         return (
-                          <TableCell align='left' key={index}>
+                          <TableCell align='center' key={index}>
                             {share}
                           </TableCell>
                         )
                       })}
-                      {/* <TableCell align='left'>{resultSentimentComparisonByEngagement?.share || resultSentimentComparisonByEngagement?.positive || ""}</TableCell> */}
+                      {/* <TableCell align='center'>{resultSentimentComparisonByEngagement?.share || resultSentimentComparisonByEngagement?.positive || ""}</TableCell> */}
                     </TableRow>
                     <TableRow>
                       <TableCell>{resultSentimentComparisonByEngagement?.comment ? 'Comment' : 'Neutral'}</TableCell>
@@ -283,12 +283,12 @@ const PeriodComparisonChart = (props: LineProps) => {
                         []
                       )?.map((comment: any, index: number) => {
                         return (
-                          <TableCell align='left' key={index}>
+                          <TableCell align='center' key={index}>
                             {comment}
                           </TableCell>
                         )
                       })}
-                      {/* <TableCell align='left'>{resultSentimentComparisonByEngagement?.comment || resultSentimentComparisonByEngagement?.neutral || ""}</TableCell> */}
+                      {/* <TableCell align='center'>{resultSentimentComparisonByEngagement?.comment || resultSentimentComparisonByEngagement?.neutral || ""}</TableCell> */}
                     </TableRow>
                     <TableRow>
                       <TableCell>{resultSentimentComparisonByEngagement?.comment ? 'Reaction' : 'Negative'}</TableCell>
@@ -298,12 +298,12 @@ const PeriodComparisonChart = (props: LineProps) => {
                         []
                       )?.map((reaction: any, index: number) => {
                         return (
-                          <TableCell align='left' key={index}>
+                          <TableCell align='center' key={index}>
                             {reaction}
                           </TableCell>
                         )
                       })}
-                      {/* <TableCell align='left'>{resultSentimentComparisonByEngagement?.reaction || resultSentimentComparisonByEngagement?.negative || ""}</TableCell> */}
+                      {/* <TableCell align='center'>{resultSentimentComparisonByEngagement?.reaction || resultSentimentComparisonByEngagement?.negative || ""}</TableCell> */}
                     </TableRow>
                   </TableHead>
                 </Table>

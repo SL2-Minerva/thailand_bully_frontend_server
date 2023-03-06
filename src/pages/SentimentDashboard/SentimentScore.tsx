@@ -9,7 +9,7 @@ import { Table, TableRow, TableHead, TableCell } from '@mui/material'
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { StyledTooltip } from '../dashboard/overall'
-import { Information } from 'mdi-material-ui'
+import { Information, ApproximatelyEqual } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
 
 const SenitmentScore = ({
@@ -29,7 +29,7 @@ const SenitmentScore = ({
   const title = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Card sx={{ minHeight: 455 }}>
+    <Card sx={{ minHeight: 470 }}>
       {loadingSentimentScore && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -48,7 +48,7 @@ const SenitmentScore = ({
               <Table size='small'>
                 <TableHead>
                   <TableRow>
-                    <TableCell variant='head'></TableCell>
+                    <TableCell variant='head' width={200}></TableCell>
                     <TableCell variant='head' align='center'>
                       Sentiment Score
                     </TableCell>
@@ -62,7 +62,7 @@ const SenitmentScore = ({
                   return (
                     <TableRow key={index}>
                       <TableCell>
-                        <Typography variant='h6'>{comparison.keyword_name}</Typography>
+                        <Typography sx={{ fontSize: '1vw', fontWeight: 'bold' }}>{comparison.keyword_name}</Typography>
                       </TableCell>
                       <TableCell align='center'>
                         <Typography
@@ -76,14 +76,25 @@ const SenitmentScore = ({
                                 : '#ea4228'
                           }}
                         >
-                          {comparison.resultSenitmentScore}
+                          {comparison.sentimentScore?.toFixed(4)}
                         </Typography>
                       </TableCell>
                       <TableCell align='left'>
-                        {comparison?.type === 'plus' ? (
-                          <ChevronUp fontSize='large' sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }} />
+                        {comparison?.hightlightColor === 'positive' ? (
+                          <ChevronUp
+                            fontSize='medium'
+                            sx={{ color: '#5be12c', marginTop: '10px', marginRight: '10px' }}
+                          />
+                        ) : comparison?.hightlightColor === 'neutral' ? (
+                          <ApproximatelyEqual
+                            fontSize='medium'
+                            sx={{ color: '#f5cd19', marginTop: '10px', marginRight: '10px' }}
+                          />
                         ) : (
-                          <ChevronDown fontSize='large' sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }} />
+                          <ChevronDown
+                            fontSize='medium'
+                            sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
+                          />
                         )}
                       </TableCell>
                       <TableCell align='center'>

@@ -2,8 +2,7 @@
 import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { useTheme } from '@mui/material/styles'
-import { Grid, LinearProgress } from '@mui/material'
+import { Box, Grid, LinearProgress } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -14,6 +13,7 @@ import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
 import { Chart } from 'chart.js'
 import * as DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne'
+import CustomeLabels from '../VoiceDashboard/CustomLabel'
 
 Chart.register(DoughnutLabel)
 
@@ -52,8 +52,8 @@ const PercentageOfEngangementType = (props: MessageData) => {
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
 
-  const theme = useTheme()
-  const labelColor = theme.palette.text.primary
+  // const theme = useTheme()
+  // const labelColor = theme.palette.text.primary
 
   const options = {
     responsive: true,
@@ -61,20 +61,13 @@ const PercentageOfEngangementType = (props: MessageData) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
         labels: [
           {
-            text: currentTotal && currentTotal !=0 ? currentTotal : '',
+            text: currentTotal && currentTotal != 0 ? currentTotal : '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',
@@ -93,20 +86,13 @@ const PercentageOfEngangementType = (props: MessageData) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
         labels: [
           {
-            text: previousTotal && previousTotal !=0 ? previousTotal : '',
+            text: previousTotal && previousTotal != 0 ? previousTotal : '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',
@@ -218,6 +204,22 @@ const PercentageOfEngangementType = (props: MessageData) => {
       </span>
       <CardContent>
         <Grid container spacing={3}>
+          {!showNoDataText || !showNoDataTextPrevious ? (
+            <Grid item xs={12}>
+              <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <CustomeLabels
+                  data={currentData || previousData}
+                  labels={['Share', 'Comment', 'Reactions']}
+                  color={keywordsColor}
+                  itemsCountPerPage={50}
+                  showValue={true}
+                />
+              </Box>
+            </Grid>
+          ) : (
+            ''
+          )}
+
           <Grid item xs={12} md={6}>
             {showNoDataText ? (
               <div
@@ -232,7 +234,9 @@ const PercentageOfEngangementType = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={currentData} options={options as any} height={343} />
+              <>
+                <Doughnut data={currentData} options={options as any} height={250} />
+              </>
             )}
           </Grid>
           <Grid item xs={12} md={6}>
@@ -249,14 +253,14 @@ const PercentageOfEngangementType = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={previousData} options={optionsPrevious as any} height={343} />
+              <Doughnut data={previousData} options={optionsPrevious as any} height={250} />
             )}
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} mt={0}>
             <p style={{ fontSize: '10px' }}> Current Period :</p>
             <p style={{ fontSize: '10px' }}> {currentPeriod} </p>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} mt={0}>
             <p style={{ fontSize: '10px' }}> Previous Period : </p>
             <p style={{ fontSize: '10px' }}> {previousPeriod} </p>
           </Grid>

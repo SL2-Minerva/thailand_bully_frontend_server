@@ -1,8 +1,7 @@
 // ** MUI Imports
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { useTheme } from '@mui/material/styles'
-import { Grid, LinearProgress, Paper } from '@mui/material'
+import { Box, Grid, LinearProgress, Paper } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -13,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
+import CustomeLabels from '../VoiceDashboard/CustomLabel'
 
 interface Props {
   params: any
@@ -36,8 +36,8 @@ const DailyMessagePieChart = (props: Props) => {
     keywordsColor
   } = props
 
-  const theme = useTheme()
-  const labelColor = theme.palette.text.primary
+  // const theme = useTheme()
+  // const labelColor = theme.palette.text.primary
   const initValue = {
     labels: [],
     datasets: [
@@ -52,6 +52,8 @@ const DailyMessagePieChart = (props: Props) => {
   const [currentData, setCurrentData] = useState<any>(initValue)
   const [currentPeriod, setCurrentPeriod] = useState<string>('')
   const [previousPeriod, setPreviousPeriod] = useState<string>('')
+  const [currentLabel, setCurrentLabel] = useState<any[]>([])
+  const [previousLabel, setPreviousLabel] = useState<any[]>([])
 
   const [currentTotal, setCurrentTotal] = useState<number>()
   const [previousTotal, setPreviousTotal] = useState<number>()
@@ -88,6 +90,7 @@ const DailyMessagePieChart = (props: Props) => {
         }
       }
     }
+
     const returnData = {
       labels: labels,
       datasets: [
@@ -108,14 +111,7 @@ const DailyMessagePieChart = (props: Props) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -140,20 +136,13 @@ const DailyMessagePieChart = (props: Props) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
         labels: [
           {
-            text: previousTotal && previousTotal !=0 ? previousTotal : '',
+            text: previousTotal && previousTotal != 0 ? previousTotal : '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',
@@ -189,6 +178,9 @@ const DailyMessagePieChart = (props: Props) => {
       const currentMessageData = resultPercentageChannelCurrent
       const currentDataset = chartDataset(currentMessageData, 'current')
       setCurrentData(currentDataset)
+      if (currentDataset?.labels?.length > 0) {
+        setCurrentLabel(currentDataset?.labels)
+      }
       if (currentMessageData?.length > 0) {
         setCurrentTotal(currentMessageData[0]?.total)
       } else {
@@ -199,11 +191,16 @@ const DailyMessagePieChart = (props: Props) => {
       setCurrentData(initValue)
       setCurrentTotal(0)
       setShowNoDataText(true)
+      setCurrentLabel([])
     }
 
     if (resultPercentageChannelPrevious) {
       const previousMessageData = resultPercentageChannelPrevious
       const previousDataset = chartDataset(previousMessageData, 'previous')
+
+      if (previousDataset?.labels?.length > 0) {
+        setPreviousLabel(previousDataset?.labels)
+      }
       setPreviousData(previousDataset)
       if (previousMessageData?.length > 0) {
         setPreviousTotal(previousMessageData[0]?.total)
@@ -215,12 +212,19 @@ const DailyMessagePieChart = (props: Props) => {
       setPreviousData(initValue)
       setPreviousTotal(0)
       setShowNoDataTextPrevious(true)
+      setPreviousLabel([])
     }
   }, [resultPercentageChannelCurrent, resultPercentageChannelPrevious])
 
   const reportNo = '3.1.001'
 
   const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
+
+  const getLabels = (current: any, previous: any) => {
+    const union = Array.from(new Set([...current, ...previous]))
+
+    return union
+  }
 
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
@@ -248,6 +252,17 @@ const DailyMessagePieChart = (props: Props) => {
 
       <CardContent>
         <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
+              <CustomeLabels
+                data={currentData || previousData}
+                labels={getLabels(currentLabel, previousLabel)}
+                color={keywordsColor}
+                itemsCountPerPage={50}
+                showValue={true}
+              />
+            </Box>
+          </Grid>
           <Grid item xs={12} md={6}>
             {showNoDataText ? (
               <div
@@ -283,7 +298,7 @@ const DailyMessagePieChart = (props: Props) => {
             )}
           </Grid>
         </Grid>
-        <Grid container spacing={3} mt={3}>
+        <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <p style={{ fontSize: '10px' }}> Current Period :</p>
             <p style={{ fontSize: '10px' }}> {currentPeriod} </p>

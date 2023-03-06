@@ -32,7 +32,7 @@ const WordCloud = ({ params, chartId }: { params: any; chartId: string }) => {
           <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
-      <div style={{ height: 400, width: 600 }}>
+      <div style={{ height: 400, width: 500 }}>
         {!resultWordClouds?.word_clouds || resultWordClouds?.word_clouds?.length == 0 ? (
           <div
             style={{

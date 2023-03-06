@@ -114,6 +114,9 @@ const SentimentLevelChart = ({
     xaxis: {
       categories: chartLabels
     },
+    yaxis : {
+      show: false
+    },
     tooltip: {
       y: {
         formatter: function (val) {

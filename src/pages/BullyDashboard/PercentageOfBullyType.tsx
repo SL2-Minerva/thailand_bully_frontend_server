@@ -2,7 +2,6 @@
 import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { useTheme } from '@mui/material/styles'
 import { Grid, LinearProgress } from '@mui/material'
 
 // ** Third Party Imports
@@ -62,8 +61,8 @@ const PercentageOfBullyType = (props: MessageData) => {
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
 
-  const theme = useTheme()
-  const labelColor = theme.palette.text.primary
+  // const theme = useTheme()
+  // const labelColor = theme.palette.text.primary
 
   const options = {
     responsive: true,
@@ -71,14 +70,7 @@ const PercentageOfBullyType = (props: MessageData) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+       display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -103,14 +95,7 @@ const PercentageOfBullyType = (props: MessageData) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        align: 'end',
-        position: 'top',
-        labels: {
-          padding: 25,
-          boxWidth: 10,
-          color: labelColor,
-          usePointStyle: true
-        }
+        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,

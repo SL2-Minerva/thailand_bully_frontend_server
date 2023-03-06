@@ -33,6 +33,23 @@ const getParams = (data: any) => {
   return params
 }
 
+export const GetSortData = (data: any, value?: boolean) => {
+  if(value) {
+    data?.value?.sort(function(a:any, b :any){
+      if(a.keyword_name < b.keyword_name) { return -1; }
+      if(a.keyword_name > b.keyword_name) { return 1; } 
+    })
+  } else {
+    data.sort(function(a:any, b :any){
+      if(a.keyword_name < b.keyword_name) { return -1; }
+      if(a.keyword_name > b.keyword_name) { return 1; } 
+    })
+  }
+  
+  
+  return data;
+}
+
 export const FilterByCampaignId = (
   campaignId?: string,
   start_date?: any,

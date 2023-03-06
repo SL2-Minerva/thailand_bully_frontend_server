@@ -2,7 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, LinearProgress, TableBody, Typography } from '@mui/material'
+import { Grid, LinearProgress, TableBody, TableCell, Typography } from '@mui/material'
 import { Table, TableRow, TableHead } from '@mui/material'
 
 // ** Third Party Imports
@@ -21,14 +21,16 @@ import {
 } from 'src/utils/const'
 import Translations from 'src/layouts/components/Translations'
 import { useEffect, useState } from 'react'
-import MuiTableCell from "@material-ui/core/TableCell";
-import { withStyles } from '@material-ui/core'
+import SentimentLevelChart from './SentimentLevelChart'
 
-const TableCell = withStyles({
-  root: {
-    borderBottom: "none"
-  }
-})(MuiTableCell);
+// import MuiTableCell from "@material-ui/core/TableCell";
+// import { withStyles } from '@material-ui/core'
+
+// const TableCell = withStyles({
+//   root: {
+//     borderBottom: "none"
+//   }
+// })(MuiTableCell);
 
 const ChartLabels = (data: any) => {
   if (!data) return []
@@ -112,7 +114,6 @@ const ShareOfVoice = ({ params, chartId, keywordsColor }: { params: any; chartId
 
   useEffect(() => {
     if (keywordsColor?.length > 0) {
-    
       const colors = []
       for (let i = 0; i < keywordsColor?.length; i++) {
         for (let j = 0; j < resultShareOfVoiceChart?.length; j++) {
@@ -233,9 +234,14 @@ const ShareOfVoice = ({ params, chartId, keywordsColor }: { params: any; chartId
       </span>
       <CardContent>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={5}>
+          <Grid item xs={12} md={4}>
+            <Typography variant='caption'> Number of Message</Typography>
             {resultShareOfVoiceChart ? (
-              <Bar data={chartData} options={{ indexAxis: 'y' , plugins: { legend: {display: false}}}} height={245} />
+              <Bar
+                data={chartData}
+                options={{ indexAxis: 'y', plugins: { legend: { display: false } } }}
+                height={245}
+              />
             ) : (
               <div
                 style={{
@@ -249,10 +255,12 @@ const ShareOfVoice = ({ params, chartId, keywordsColor }: { params: any; chartId
               </div>
             )}
           </Grid>
-          <Grid item xs={7}>
+          <Grid item xs={4}>
             <Table size='small'>
               <TableHead>
-                <TableRow>{resultShareOfVoice ? <ShareOfVoiceTableHead data={resultShareOfVoice} /> : ''}</TableRow>
+                <TableRow>
+                  {resultShareOfVoice ? <ShareOfVoiceTableHead data={resultShareOfVoice} /> : ''}
+                </TableRow>
               </TableHead>
               {(resultShareOfVoice || []).map((shareVoice: any, index: number) => {
                 return (
@@ -264,6 +272,24 @@ const ShareOfVoice = ({ params, chartId, keywordsColor }: { params: any; chartId
                 )
               })}
             </Table>
+          </Grid>
+          <Grid item xs={4} mt={-10}>
+          <Table size='small'>
+              <TableHead>
+                <TableRow>
+                    <TableCell colSpan={3} sx={{textAlign: 'center'}}>Sentiment</TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell>Negative</TableCell>
+                    <TableCell>Neutral</TableCell>
+                    <TableCell>Positive</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow></TableRow>
+              </TableBody>
+            </Table>
+            <SentimentLevelChart params={params} />
           </Grid>
         </Grid>
       </CardContent>
