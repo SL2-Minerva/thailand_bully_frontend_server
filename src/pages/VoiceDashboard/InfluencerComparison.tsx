@@ -74,10 +74,10 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
             <Grid item xs={4} p={4}>
               <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Typography sx={{ fontSize:'1.2vw', color: trend === 'plus' ? 'success.main' : 'error.main' }}>
+                  <Typography variant="body2" sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
                     {trendNumber + '%'}
                   </Typography>
-                  <TrendIcon fontSize='large' sx={{ fontSize:'1.2vw', color: trend === 'plus' ? 'success.main' : 'error.main' }} />
+                  <TrendIcon fontSize='medium' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }} />
                 </Box>
               </Box>
             </Grid>

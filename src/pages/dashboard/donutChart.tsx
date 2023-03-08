@@ -199,7 +199,7 @@ const DonutChart = (props: MessageData) => {
   }, [resultFilterData, keywordsColor])
 
   return (
-    <Card sx={{ minHeight: 550, maxHeight: 550 }}>
+    <Card sx={{ minHeight: 550 }}>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader

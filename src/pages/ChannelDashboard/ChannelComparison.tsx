@@ -70,7 +70,7 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
                       justifyContent: 'center',
                       backgroundColor: color,
                       color: 'white',
-                      fontSize: '1vw'
+                      fontSize: '12px'
                     }}
                   />
                   {/* <Typography variant='h4'>

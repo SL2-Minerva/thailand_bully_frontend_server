@@ -146,7 +146,7 @@ const PlatformsComparison = ({
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Card style={{ minHeight: 550, maxHeight: 550 }}>
+    <Card style={{ minHeight: 550 }}>
       {loadingPlatformComparison && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader

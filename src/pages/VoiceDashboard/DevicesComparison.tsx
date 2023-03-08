@@ -147,7 +147,7 @@ const DevicesComparison = ({
   }, [resultDevicesComparison])
 
   return (
-    <Card style={{ minHeight: 550, maxHeight: 550 }}>
+    <Card style={{ minHeight: 550 }}>
       {loadingDevicesComparison && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader

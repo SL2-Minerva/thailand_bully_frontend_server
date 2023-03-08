@@ -31,7 +31,7 @@ const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={6}>
-        <Card sx={{ maxHeight: 500, minHeight: 500 }}>
+        <Card sx={{ maxHeight: 500, minHeight: 500 , overflow: 'auto'}}>
           {loadingWordCloudsSentiment && <LinearProgress style={{ width: '100%' }} />}
           <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <CardHeader
