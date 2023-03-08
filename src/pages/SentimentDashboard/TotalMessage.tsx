@@ -55,7 +55,7 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
                               color: totalMessage?.totalSentiment?.type === 'plus' ? 'success.main' : 'error.main'
                             }}
                           >
-                            {totalMessage?.totalSentiment?.comparison}
+                            {totalMessage?.totalSentiment?.comparison}%
                           </Typography>
                         </>
                       ) : (
@@ -84,7 +84,7 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
                     <Box sx={{ display: 'flex', alignItems: 'center' , mr : 15}}>
                       {totalMessage?.positive?.comparison ? (
                         <>
-                          <Typography variant='h6' mt={4}>
+                          <Typography variant='h6'>
                             {totalMessage?.positive?.type === 'plus' ? (
                               <ChevronUp fontSize='large' sx={{ color: 'success.main' }} />
                             ) : (
@@ -96,7 +96,7 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
                             variant='h6'
                             sx={{ color: totalMessage?.positive?.type === 'plus' ? 'success.main' : 'error.main' }}
                           >
-                            {totalMessage?.positive?.comparison}
+                            {totalMessage?.positive?.comparison}%
                           </Typography>
                         </>
                       ) : (
@@ -138,7 +138,7 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
                             variant='h6'
                             sx={{ color: totalMessage?.neutral?.type === 'plus' ? 'success.main' : 'error.main' }}
                           >
-                            {totalMessage?.neutral?.comparison}
+                            {totalMessage?.neutral?.comparison}%
                           </Typography>
                         </>
                       ) : (
@@ -177,7 +177,7 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
                             variant='h6'
                             sx={{ color: totalMessage?.negative?.type === 'plus' ? 'success.main' : 'error.main' }}
                           >
-                            {totalMessage?.negative?.comparison}
+                            {totalMessage?.negative?.comparison}%
                           </Typography>
                         </>
                       ) : (

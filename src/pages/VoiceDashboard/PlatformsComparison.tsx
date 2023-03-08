@@ -169,7 +169,7 @@ const PlatformsComparison = ({
                 labels={previousData?.label || currentData?.label}
                 color={GraphicColors}
                 itemsCountPerPage={50}
-                showValue={true}
+                showValue={false}
               />
             </Box>
           </Grid>

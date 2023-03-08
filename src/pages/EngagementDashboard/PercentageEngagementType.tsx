@@ -63,6 +63,11 @@ const PercentageOfEngangementType = (props: MessageData) => {
       legend: {
         display: false
       },
+      tooltip: {
+        callbacks: {
+          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+        }
+      },
       doughnutlabel: {
         paddingPercentage: 5,
         labels: [
@@ -87,6 +92,11 @@ const PercentageOfEngangementType = (props: MessageData) => {
     plugins: {
       legend: {
         display: false
+      },
+      tooltip: {
+        callbacks: {
+          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+        }
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -212,7 +222,7 @@ const PercentageOfEngangementType = (props: MessageData) => {
                   labels={['Share', 'Comment', 'Reactions']}
                   color={keywordsColor}
                   itemsCountPerPage={50}
-                  showValue={true}
+                  showValue={false}
                 />
               </Box>
             </Grid>

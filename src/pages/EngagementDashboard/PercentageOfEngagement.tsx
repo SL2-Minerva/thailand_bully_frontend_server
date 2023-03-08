@@ -57,6 +57,11 @@ const PercentageOfEngangement = (props: MessageData) => {
       legend: {
         display: false
       },
+      tooltip: {
+        callbacks: {
+          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+        }
+      },
       doughnutlabel: {
         paddingPercentage: 5,
         labels: [
@@ -81,6 +86,11 @@ const PercentageOfEngangement = (props: MessageData) => {
     plugins: {
       legend: {
        display: false
+      },
+      tooltip: {
+        callbacks: {
+          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+        }
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -136,7 +146,14 @@ const PercentageOfEngangement = (props: MessageData) => {
     for (let i = 0; i < labels?.length; i++) {
       for (let j = 0; j < keywordColor?.length; j++) {
         if (keywordColor[j]?.keywordName === labels[i]) {
-          colors.push(keywordColor[j]?.color)
+          colors.push(keywordColor[j]?.color )
+          
+          // if(keywordColor[j]?.color !== '#')
+          // {
+          //   colors.push(keywordColor[j]?.color )
+          // } else {
+          //   colors.push(EngagementTransChartColor[i])
+          // }
         }
       }
     }
@@ -210,7 +227,7 @@ const PercentageOfEngangement = (props: MessageData) => {
   }, [resultFilterData, keywordsColor])
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600, maxHeight: 600 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }} square variant='outlined'>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -239,7 +256,7 @@ const PercentageOfEngangement = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={currentData} options={options as any} height={400} />
+              <Doughnut data={currentData} options={options as any} height={250} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>
@@ -256,7 +273,7 @@ const PercentageOfEngangement = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={previousData} options={optionsPrevious as any} height={400} />
+              <Doughnut data={previousData} options={optionsPrevious as any} height={250} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>

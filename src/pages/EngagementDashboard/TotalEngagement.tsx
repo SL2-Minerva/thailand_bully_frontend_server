@@ -57,7 +57,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                     {totalEngagement?.totalEngagement?.comparison == 0 ? (
 
                       <Typography variant='h6' mt={2}>
-                        {totalEngagement?.totalEngagement?.comparison}
+                        {totalEngagement?.totalEngagement?.comparison}%
                       </Typography>
                     ) : (
                       <>
@@ -75,7 +75,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                             color: totalEngagement?.totalEngagement?.type === 'plus' ? 'success.main' : 'error.main'
                           }}
                         >
-                          {totalEngagement?.totalEngagement?.comparison}
+                          {totalEngagement?.totalEngagement?.comparison}%
                         </Typography>
                       </>
                     )}
@@ -98,7 +98,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                   <Box sx={{ display: 'flex', alignItems: 'center', mr: 15 }}>
                     {totalEngagement?.share?.comparison == 0 ? (
                       <Typography variant='h6' mt={2}>
-                        {totalEngagement?.share?.comparison}
+                        {totalEngagement?.share?.comparison}%
                       </Typography>
                     ) : (
                       <>
@@ -114,7 +114,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                           variant='h6'
                           sx={{ color: totalEngagement?.share?.type === 'plus' ? 'success.main' : 'error.main' }}
                         >
-                          {totalEngagement?.share?.comparison}
+                          {totalEngagement?.share?.comparison}%
                         </Typography>
                       </>
                     )}
@@ -137,7 +137,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                   <Box sx={{ display: 'flex', alignItems: 'center', mr: 15 }}>
                     {totalEngagement?.comment?.comparison == 0 ? (
                       <Typography variant='h6' mt={2}>
-                        {totalEngagement?.comment?.comparison}
+                        {totalEngagement?.comment?.comparison}%
                       </Typography>
                     ) : (
                       <>
@@ -153,7 +153,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                           variant='h6'
                           sx={{ color: totalEngagement?.comment?.type === 'plus' ? 'success.main' : 'error.main' }}
                         >
-                          {totalEngagement?.comment?.comparison}
+                          {totalEngagement?.comment?.comparison}%
                         </Typography>
                       </>
                     )}
@@ -176,7 +176,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                   <Box sx={{ display: 'flex', alignItems: 'center', mr: 15}}>
                     {totalEngagement?.reaction?.comparison == 0 ? (
                       <Typography variant='h6' mt={2}>
-                        {totalEngagement?.reaction?.comparison}
+                        {totalEngagement?.reaction?.comparison}%
                       </Typography>
                     ) : (
                       <>
@@ -192,7 +192,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                           variant='h6'
                           sx={{ color: totalEngagement?.reaction?.type === 'plus' ? 'success.main' : 'error.main' }}
                         >
-                          {totalEngagement?.reaction?.comparison}
+                          {totalEngagement?.reaction?.comparison}%
                         </Typography>
                       </>
                     )}

@@ -64,6 +64,11 @@ const PercentageOfBully = (props: MessageData) => {
       legend: {
         display: false
       },
+      tooltip: {
+        callbacks: {
+          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+        }
+      },
       doughnutlabel: {
         paddingPercentage: 5,
         labels: [
@@ -88,6 +93,11 @@ const PercentageOfBully = (props: MessageData) => {
     plugins: {
       legend: {
         display: false
+      },
+      tooltip: {
+        callbacks: {
+          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+        }
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -226,14 +236,14 @@ const PercentageOfBully = (props: MessageData) => {
                   labels={['Level 0', 'Level 1', 'Level 2', 'Level 3']}
                   color={BullyLevelColors}
                   itemsCountPerPage={50}
-                  showValue={true}
+                  showValue={false}
                 />
               </Box>
             </Grid>
           ) : (
             ''
           )}
-          <Grid item xs={12} md={6}  mt={-5}>
+          <Grid item xs={12} md={6}>
             {showNoDataText ? (
               <div
                 style={{
@@ -250,7 +260,7 @@ const PercentageOfBully = (props: MessageData) => {
               <Doughnut data={currentData} options={options as any} height={200} />
             )}
           </Grid>
-          <Grid item xs={12} md={6} mt={-5}>
+          <Grid item xs={12} md={6}>
             {showNoDataTextPrevious ? (
               <div
                 style={{

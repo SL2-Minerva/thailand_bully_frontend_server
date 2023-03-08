@@ -254,7 +254,7 @@ const DailyMessageGraph = (props: Props) => {
   }, [resultDailyChannel])
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 561, maxHeight: 561 }} square variant='outlined'>
       {loadingDailyChannel && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         {type === 'message' ? (

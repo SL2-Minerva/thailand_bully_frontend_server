@@ -45,7 +45,12 @@ const CommentSentiment = ({ params, chartId }: { params: any; chartId: string })
           color: labelColor,
           usePointStyle: true
         }
-      }
+      },
+      tooltip: {
+        callbacks: {
+          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+        }
+      },
     }
   }
 

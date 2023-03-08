@@ -269,7 +269,7 @@ const PeriodComparisonChart = (props: LineProps) => {
                       )?.map((share: any, index: number) => {
                         return (
                           <TableCell align='center' key={index}>
-                            {share}
+                            {share}%
                           </TableCell>
                         )
                       })}
@@ -284,7 +284,7 @@ const PeriodComparisonChart = (props: LineProps) => {
                       )?.map((comment: any, index: number) => {
                         return (
                           <TableCell align='center' key={index}>
-                            {comment}
+                            {comment}%
                           </TableCell>
                         )
                       })}
@@ -299,7 +299,7 @@ const PeriodComparisonChart = (props: LineProps) => {
                       )?.map((reaction: any, index: number) => {
                         return (
                           <TableCell align='center' key={index}>
-                            {reaction}
+                            {reaction}%
                           </TableCell>
                         )
                       })}

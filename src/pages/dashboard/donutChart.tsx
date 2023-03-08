@@ -55,16 +55,11 @@ const DonutChart = (props: MessageData) => {
     backgroundColor: false,
     maintainAspectRatio: false,
     plugins: {
-      // legend: {
-      //   align: 'end',
-      //   position: 'top',
-      //   labels: {
-      //     padding: 25,
-      //     boxWidth: 10,
-      //     color: labelColor,
-      //     usePointStyle: true
-      //   }
-      // },
+      tooltip: {
+        callbacks: {
+          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+        }
+      },
       legend: {
         display: false
       },
@@ -90,18 +85,13 @@ const DonutChart = (props: MessageData) => {
     backgroundColor: false,
     maintainAspectRatio: false,
     plugins: {
-      // legend: {
-      //   align: 'end',
-      //   position: 'top',
-      //   labels: {
-      //     padding: 25,
-      //     boxWidth: 10,
-      //     color: labelColor,
-      //     usePointStyle: true
-      //   }
-      // },
       legend: {
         display: false
+      },
+      tooltip: {
+        callbacks: {
+          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+        }
       },
       doughnutlabel: {
         paddingPercentage: 5,

@@ -21,7 +21,7 @@ import EngagementRate from './EngagementRate'
 import SentimentScore from './SenitmentScore'
 import SentimentLevelChart from './SentimentLevelChart'
 import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDashboardApi'
-import { GraphicColors } from 'src/utils/const'
+import { ChannelColorCode, GraphicColors } from 'src/utils/const'
 import QuickViewModal from './QuickViewModal'
 import ChannelByDay from './ChannelBy/ChannelByDay'
 import ChannelByTime from './ChannelBy/ChannelByTime'
@@ -184,16 +184,18 @@ const ChannelDashboard = () => {
                             mb: 2,
                             bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1
-                                ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                                ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
                                 : keyword === 'all'
-                                ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                                ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
                                 : 'grey',
+
+                                // (keywordsColor && keywordsColor[index]) || GraphicColors[index]
                             ':hover': {
                               bgcolor:
                                 filterKeyword?.indexOf(keywords?.id) > -1
-                                  ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                                  ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
                                   : keyword === 'all'
-                                  ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                                  ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
                                   : 'grey'
                             }
                           }}
@@ -222,7 +224,7 @@ const ChannelDashboard = () => {
             resultPercentageChannelCurrent={resultPercentageChannelCurrent}
             resultPercentageChannelPrevious={resultPercentageChannelPrevious}
             loadingPercentageChannel={loadingDailyChannel}
-            keywordsColor={GraphicColors}
+            keywordsColor={ChannelColorCode}
           />
         </Grid>
       ) : (
