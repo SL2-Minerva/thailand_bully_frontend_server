@@ -1,7 +1,7 @@
 
 // export const API_PATH = process.env.NEXT_PUBLIC_APP_ENV === 'localhost' ? 'http://127.0.0.1:8000/api' : 'http://202.44.231.31/api';
 
-export const API_PATH = process.env.NEXT_PUBLIC_APP_ENV === 'localhost' ? 'http://127.0.0.1:8000/api' : 'https://cornea-analysis.com/api';
+export const API_PATH = process.env.NEXT_PUBLIC_APP_ENV === 'localhost' ? 'https://cornea-analysis.com/api' : 'https://cornea-analysis.com/api';
 export const GraphicColors = [
     "#4472c4",
     "#ed7d31",
@@ -37,9 +37,44 @@ export const ChannelColors = [
   '#4f86b9',
   '#70ad47',
   '#c00000',
- '#c46627',
+  '#c46627',
 
 ];
+
+export const ChannelColorCode = [
+  {
+    name : 'facebook',
+    color: '#4472c4'
+  },
+  {
+    name: 'twitter',
+    color: '#ed7d31'
+  },
+  {
+    name: 'youtube',
+    color: '#a5a5a5'
+  },
+  {
+    name: 'instagram',
+    color: '#ffc000'
+  },
+  {
+    name: 'google',
+    color: '#5b9bd5'
+  },
+  {
+    name: 'pantip',
+    color: '#5b9bd5'
+  },
+  {
+    name: 'tiktok',
+    color: '#299b82'
+  },
+  {
+    name: 'sanook',
+    color: '#1640a1c4'
+  }
+]
 
 export const EngagementTransChartColor = [
   '#ed7d31',
@@ -195,6 +230,21 @@ export const SentimentColors = [
   '#63A375'
 ]
 
+export const SentimentColorsCode = [
+  {
+    name: 'Positive',
+    color: "#C73E1D",
+  },
+  {
+    name: 'Neutral',
+    color: "#FEB95F",
+  },
+  {
+    name: 'Negative',
+    color: "#63A375",
+  },
+]
+
 export const SentimentAllColors = [
   "#C73E1D",
   '#FEB95F',
@@ -219,6 +269,33 @@ export const BullyTypeSummaryColors  = [
   "#89023E",
   "#521130",
   "#34213E",
+]
+
+export const BullyTypeColorCode = [
+  {
+    name : 'NoBully',
+    color : '#f0f0f0'
+  }, 
+  {
+    name : 'Gossip',
+    color : '#efd4dc'
+  },
+  {
+    name: 'Trolling',
+    color: '#ea628c'
+  },
+  {
+    name: 'Exclusion',
+    color: '#89033d'
+  },
+  {
+    name: 'HateSpeech',
+    color: '#521031'
+  },
+  {
+    name : 'Harassment',
+    color: '#34203e'
+  }
 ]
 
 export const BullyLevelSummaryColors  = [

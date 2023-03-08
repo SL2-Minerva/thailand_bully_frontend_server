@@ -228,7 +228,7 @@ const PercentageOfSentiments = (props: MessageData) => {
                   labels={['Negative', 'Neutral', 'Positive']}
                   color={SentimentColors}
                   itemsCountPerPage={50}
-                  showValue={true}
+                  showValue={false}
                 />
               </Box>
             </Grid>
@@ -236,7 +236,7 @@ const PercentageOfSentiments = (props: MessageData) => {
             ''
           )}
 
-          <Grid item xs={12} md={6}  mt={-5}>
+          <Grid item xs={12} md={6} >
             {showNoDataText ? (
               <div
                 style={{
@@ -253,7 +253,7 @@ const PercentageOfSentiments = (props: MessageData) => {
               <Doughnut data={currentData} options={options as any} height={200} />
             )}
           </Grid>
-          <Grid item xs={12} md={6}  mt={-5}>
+          <Grid item xs={12} md={6} >
             {showNoDataTextPrevious ? (
               <div
                 style={{
@@ -270,11 +270,11 @@ const PercentageOfSentiments = (props: MessageData) => {
               <Doughnut data={previousData} options={optionsPrevious as any} height={200} />
             )}
           </Grid>
-          <Grid item xs={12} md={6} mt={-5}>
+          <Grid item xs={12} md={6}>
             <p style={{ fontSize: '10px' }}> Current Period :</p>
             <p style={{ fontSize: '10px' }}> {currentPeriod} </p>
           </Grid>
-          <Grid item xs={12} md={6} mt={-5}>
+          <Grid item xs={12} md={6}>
             <p style={{ fontSize: '10px' }}> Previous Period : </p>
             <p style={{ fontSize: '10px' }}> {previousPeriod} </p>
           </Grid>

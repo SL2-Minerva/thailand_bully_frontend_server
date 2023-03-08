@@ -21,7 +21,7 @@ import EngagementRate from './EngagementRate'
 import SentimentScore from './SenitmentScore'
 import SentimentLevelChart from './SentimentLevelChart'
 import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDashboardApi'
-import { GraphicColors } from 'src/utils/const'
+import { ChannelColorCode, GraphicColors } from 'src/utils/const'
 import QuickViewModal from './QuickViewModal'
 import ChannelByDay from './ChannelBy/ChannelByDay'
 import ChannelByTime from './ChannelBy/ChannelByTime'
@@ -222,7 +222,7 @@ const ChannelDashboard = () => {
             resultPercentageChannelCurrent={resultPercentageChannelCurrent}
             resultPercentageChannelPrevious={resultPercentageChannelPrevious}
             loadingPercentageChannel={loadingDailyChannel}
-            keywordsColor={GraphicColors}
+            keywordsColor={ChannelColorCode}
           />
         </Grid>
       ) : (

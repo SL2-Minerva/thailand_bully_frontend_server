@@ -13,6 +13,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
 import CustomeLabels from '../VoiceDashboard/CustomLabel'
+import { ChannelColorCode, GraphicColors } from 'src/utils/const'
 
 interface Props {
   params: any
@@ -52,15 +53,16 @@ const DailyMessagePieChart = (props: Props) => {
   const [currentData, setCurrentData] = useState<any>(initValue)
   const [currentPeriod, setCurrentPeriod] = useState<string>('')
   const [previousPeriod, setPreviousPeriod] = useState<string>('')
-  const [currentLabel, setCurrentLabel] = useState<any[]>([])
-  const [previousLabel, setPreviousLabel] = useState<any[]>([])
+
+  // const [currentLabel, setCurrentLabel] = useState<any[]>([])
+  // const [previousLabel, setPreviousLabel] = useState<any[]>([])
 
   const [currentTotal, setCurrentTotal] = useState<number>()
   const [previousTotal, setPreviousTotal] = useState<number>()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
 
-  const chartDataset = (data: any, type: string) => {
+  const chartDataset = (data: any, type: string, keywordColor: any) => {
     if (!data) {
       const chartData = {
         labels: [],
@@ -77,8 +79,15 @@ const DailyMessagePieChart = (props: Props) => {
     }
     const labels: any[] = []
     const percentage: number[] = []
+    const colors = []
     for (let i = 0; i < data?.length; i++) {
       labels.push(data[i].source_name)
+
+      for (let j = 0; j < keywordColor?.length; j++) {
+        if (keywordColor[j]?.name == data[i].source_name) {
+          colors.push(keywordColor[j]?.color)
+        }
+      }
 
       const percentageValue = data[i]?.value
       for (let j = 0; j < percentageValue?.length; j++) {
@@ -96,7 +105,7 @@ const DailyMessagePieChart = (props: Props) => {
       datasets: [
         {
           data: percentage,
-          backgroundColor: keywordsColor,
+          backgroundColor: colors?.length !== 0 ? colors : GraphicColors,
           hoverOffset: 4
         }
       ]
@@ -155,32 +164,16 @@ const DailyMessagePieChart = (props: Props) => {
     }
   }
 
-  // const options = {
-  //   responsive: true,
-  //   backgroundColor: false,
-  //   maintainAspectRatio: false,
-  //   plugins: {
-  //     legend: {
-  //       align: 'end',
-  //       position: 'top',
-  //       labels: {
-  //         padding: 25,
-  //         boxWidth: 10,
-  //         color: labelColor,
-  //         usePointStyle: true
-  //       }
-  //     }
-  //   }
-  // }
-
   useEffect(() => {
     if (resultPercentageChannelCurrent) {
       const currentMessageData = resultPercentageChannelCurrent
-      const currentDataset = chartDataset(currentMessageData, 'current')
+      const currentDataset = chartDataset(currentMessageData, 'current', keywordsColor)
       setCurrentData(currentDataset)
-      if (currentDataset?.labels?.length > 0) {
-        setCurrentLabel(currentDataset?.labels)
-      }
+
+      // if (currentDataset?.labels?.length > 0) {
+      //   setCurrentLabel(currentDataset?.labels)
+      // }
+
       if (currentMessageData?.length > 0) {
         setCurrentTotal(currentMessageData[0]?.total)
       } else {
@@ -191,16 +184,17 @@ const DailyMessagePieChart = (props: Props) => {
       setCurrentData(initValue)
       setCurrentTotal(0)
       setShowNoDataText(true)
-      setCurrentLabel([])
+      
+      // setCurrentLabel([])
     }
 
     if (resultPercentageChannelPrevious) {
       const previousMessageData = resultPercentageChannelPrevious
-      const previousDataset = chartDataset(previousMessageData, 'previous')
+      const previousDataset = chartDataset(previousMessageData, 'previous', keywordsColor)
 
-      if (previousDataset?.labels?.length > 0) {
-        setPreviousLabel(previousDataset?.labels)
-      }
+      // if (previousDataset?.labels?.length > 0) {
+      //   setPreviousLabel(previousDataset?.labels)
+      // }
       setPreviousData(previousDataset)
       if (previousMessageData?.length > 0) {
         setPreviousTotal(previousMessageData[0]?.total)
@@ -212,22 +206,43 @@ const DailyMessagePieChart = (props: Props) => {
       setPreviousData(initValue)
       setPreviousTotal(0)
       setShowNoDataTextPrevious(true)
-      setPreviousLabel([])
+      
+      // setPreviousLabel([])
     }
-  }, [resultPercentageChannelCurrent, resultPercentageChannelPrevious])
+  }, [resultPercentageChannelCurrent, resultPercentageChannelPrevious, keywordsColor])
 
   const reportNo = '3.1.001'
 
   const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
 
-  const getLabels = (current: any, previous: any) => {
-    const union = Array.from(new Set([...current, ...previous]))
+  // const getLabels = (current: any, previous: any) => {
+  //   const union = Array.from(new Set([...current, ...previous]))
 
-    return union
+  //   return union
+  // }
+
+  const getLabelColor = (data: any) => {
+    const labels : any= [];
+
+    for(let i =0; i<data?.length ; i++) {
+      labels.push(data[i].name)
+    }
+
+    return labels
+  }
+
+  const getColors = (data:any) => {
+    const channelColor : any = [];
+
+    for(let i=0; i<data?.length; i++) {
+      channelColor.push(data[i]?.color);
+    }
+
+    return channelColor
   }
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550}} square variant='outlined'>
       {loadingPercentageChannel && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         {type === 'message' ? (
@@ -256,10 +271,10 @@ const DailyMessagePieChart = (props: Props) => {
             <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
               <CustomeLabels
                 data={currentData || previousData}
-                labels={getLabels(currentLabel, previousLabel)}
-                color={keywordsColor}
+                labels={getLabelColor(ChannelColorCode)}
+                color={getColors(ChannelColorCode)}
                 itemsCountPerPage={50}
-                showValue={true}
+                showValue={false}
               />
             </Box>
           </Grid>

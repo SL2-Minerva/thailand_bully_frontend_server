@@ -212,7 +212,7 @@ const PercentageOfEngangementType = (props: MessageData) => {
                   labels={['Share', 'Comment', 'Reactions']}
                   color={keywordsColor}
                   itemsCountPerPage={50}
-                  showValue={true}
+                  showValue={false}
                 />
               </Box>
             </Grid>

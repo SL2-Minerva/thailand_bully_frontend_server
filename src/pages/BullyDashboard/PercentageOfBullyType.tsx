@@ -2,19 +2,20 @@
 import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, LinearProgress } from '@mui/material'
+import { Box, Grid, LinearProgress } from '@mui/material'
 
 // ** Third Party Imports
 
 import { Doughnut } from 'react-chartjs-2'
 import { useEffect, useState } from 'react'
-import { BullyTypeColors } from 'src/utils/const'
+import { BullyTypeColorCode, BullyTypeColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
 import { Chart } from 'chart.js'
 import * as DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne'
+import CustomeLabels from '../VoiceDashboard/CustomLabel'
 
 Chart.register(DoughnutLabel)
 
@@ -131,11 +132,19 @@ const PercentageOfBullyType = (props: MessageData) => {
     }
     const labels: string[] = []
     const percentage: number[] = []
+    const colorsBullyType = []
+
     for (let i = 0; i < data?.length; i++) {
       if (data[i].bully_level) {
         labels.push(t(data[i].bully_level))
       } else if (data[i].bully_type) {
         labels.push(t(data[i].bully_type))
+      }
+
+      for (let j = 0; j < BullyTypeColorCode?.length; j++) {
+        if (BullyTypeColorCode[j]?.name == data[i].bully_level) {
+          colorsBullyType.push(BullyTypeColorCode[j]?.color)
+        }
       }
 
       // const percentageValue = data[i]?.value;
@@ -155,7 +164,7 @@ const PercentageOfBullyType = (props: MessageData) => {
       datasets: [
         {
           data: percentage,
-          backgroundColor: colors,
+          backgroundColor: colorsBullyType,
           hoverOffset: 4
         }
       ]
@@ -165,6 +174,26 @@ const PercentageOfBullyType = (props: MessageData) => {
   }
 
   const title = type === 'level' ? 'Percentage of Bully Level' : 'Percentage of Bully Type'
+
+  const getLabels = (data: any) => {
+    const labels : any= [];
+
+    for(let i =0; i<data?.length ; i++) {
+      labels.push(data[i].name)
+    }
+
+    return labels
+  }
+
+  const getColors = (data:any) => {
+    const bullyColors : any = [];
+
+    for(let i=0; i<data?.length; i++) {
+      bullyColors.push(data[i]?.color);
+    }
+
+    return bullyColors
+  }
 
   useEffect(() => {
     if (resultBullyTypePercentage) {
@@ -219,7 +248,7 @@ const PercentageOfBullyType = (props: MessageData) => {
   const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} square variant='outlined'>
       {loadingBullyTypePercentage && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -234,6 +263,17 @@ const PercentageOfBullyType = (props: MessageData) => {
       </span>
       <CardContent>
         <Grid container spacing={3}>
+        <Grid item xs={12}>
+            <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
+              <CustomeLabels
+                data={currentData || previousData}
+                labels={getLabels(BullyTypeColorCode)}
+                color={getColors(BullyTypeColorCode)}
+                itemsCountPerPage={50}
+                showValue={false}
+              />
+            </Box>
+          </Grid>
           <Grid item xs={12} md={6}>
             {showNoDataText ? (
               <div
@@ -248,7 +288,7 @@ const PercentageOfBullyType = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={currentData} options={options as any} height={330} />
+              <Doughnut data={currentData} options={options as any} height={200} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>
@@ -265,7 +305,7 @@ const PercentageOfBullyType = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={previousData} options={optionsPrevious as any} height={330} />
+              <Doughnut data={previousData} options={optionsPrevious as any} height={200} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>
