@@ -118,7 +118,7 @@ const SummaryByKeywords = ({
       field: 'percentage',
       headerName: ' %',
       flex: 1,
-      valueGetter: (params: GridValueGetterParams) => `${params.row.percentage + '%'}`
+      valueGetter: (params: GridValueGetterParams) => `${ params.row.percentage?.toFixed(4)  + '%'}`
     },
     { field: 'positive', headerName: ' Positive', flex: 1, renderCell: renderProgress },
     { field: 'neutral', headerName: ' Neutral', flex: 1, renderCell: renderProgress },

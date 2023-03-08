@@ -257,7 +257,7 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
                       )?.map((share: any, index: number) => {
                         return (
                           <TableCell align='left' key={index}>
-                            {share}
+                            {share} %
                           </TableCell>
                         )
                       })}
@@ -271,7 +271,7 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
                       )?.map((comment: any, index: number) => {
                         return (
                           <TableCell align='left' key={index}>
-                            {comment}
+                            {comment} %
                           </TableCell>
                         )
                       })}
@@ -285,7 +285,7 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
                       )?.map((reaction: any, index: number) => {
                         return (
                           <TableCell align='left' key={index}>
-                            {reaction}
+                            {reaction} %
                           </TableCell>
                         )
                       })}

@@ -57,6 +57,11 @@ const PercentageOfEngangement = (props: MessageData) => {
       legend: {
         display: false
       },
+      tooltip: {
+        callbacks: {
+          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+        }
+      },
       doughnutlabel: {
         paddingPercentage: 5,
         labels: [
@@ -81,6 +86,11 @@ const PercentageOfEngangement = (props: MessageData) => {
     plugins: {
       legend: {
        display: false
+      },
+      tooltip: {
+        callbacks: {
+          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+        }
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -136,7 +146,14 @@ const PercentageOfEngangement = (props: MessageData) => {
     for (let i = 0; i < labels?.length; i++) {
       for (let j = 0; j < keywordColor?.length; j++) {
         if (keywordColor[j]?.keywordName === labels[i]) {
-          colors.push(keywordColor[j]?.color)
+          colors.push(keywordColor[j]?.color )
+          
+          // if(keywordColor[j]?.color !== '#')
+          // {
+          //   colors.push(keywordColor[j]?.color )
+          // } else {
+          //   colors.push(EngagementTransChartColor[i])
+          // }
         }
       }
     }

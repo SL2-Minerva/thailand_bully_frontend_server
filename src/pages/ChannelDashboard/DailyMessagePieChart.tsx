@@ -122,6 +122,11 @@ const DailyMessagePieChart = (props: Props) => {
       legend: {
         display: false
       },
+      tooltip: {
+        callbacks: {
+          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+        }
+      },
       doughnutlabel: {
         paddingPercentage: 5,
         labels: [
@@ -146,6 +151,11 @@ const DailyMessagePieChart = (props: Props) => {
     plugins: {
       legend: {
         display: false
+      },
+      tooltip: {
+        callbacks: {
+          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+        }
       },
       doughnutlabel: {
         paddingPercentage: 5,

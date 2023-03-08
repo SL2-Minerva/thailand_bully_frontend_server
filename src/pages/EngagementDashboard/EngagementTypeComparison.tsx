@@ -46,7 +46,7 @@ const EngagementTypeComparison = ({
         <Grid container spacing={3}>
           <Grid item xs={12}>
             {resultEngagementComparison?.length > 0 ? (
-              <TableContainer>
+              <TableContainer style={{height: 400}}>
                 <Table size='small'>
                   <TableHead>
                     <TableRow>
@@ -78,18 +78,18 @@ const EngagementTypeComparison = ({
                                 <>
                                   {comparison.total?.type === 'plus' ? (
                                     <ChevronUp
-                                      fontSize='large'
+                                      fontSize='medium'
                                       sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
                                     />
                                   ) : (
                                     <ChevronDown
-                                      fontSize='large'
+                                      fontSize='medium'
                                       sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
                                     />
                                   )}
                                 </>
                               )}
-                              <Typography variant='h6'>
+                              <Typography sx={{fontSize: '1.3vw'}}>
                                 {comparison.total?.value}
                                 <Typography variant='body1'>{comparison.total?.percentage} %</Typography>
                               </Typography>
@@ -103,18 +103,18 @@ const EngagementTypeComparison = ({
                                 <>
                                   {comparison.share?.type === 'plus' ? (
                                     <ChevronUp
-                                      fontSize='large'
+                                      fontSize='medium'
                                       sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
                                     />
                                   ) : (
                                     <ChevronDown
-                                      fontSize='large'
+                                      fontSize='medium'
                                       sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
                                     />
                                   )}
                                 </>
                               )}
-                              <Typography variant='h6'>
+                              <Typography sx={{fontSize: '1.3vw'}}>
                                 {comparison.share?.value}
                                 <Typography variant='body1'>{comparison.share?.percentage} %</Typography>
                               </Typography>
@@ -128,19 +128,19 @@ const EngagementTypeComparison = ({
                                 <>
                                   {comparison.comment?.type === 'plus' ? (
                                     <ChevronUp
-                                      fontSize='large'
+                                      fontSize='medium'
                                       sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
                                     />
                                   ) : (
                                     <ChevronDown
-                                      fontSize='large'
+                                      fontSize='medium'
                                       sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
                                     />
                                   )}
                                 </>
                               )}
 
-                              <Typography variant='h6'>
+                              <Typography sx={{fontSize: '1.3vw'}}>
                                 {comparison.comment?.value}
                                 <Typography variant='body1'>{comparison.comment?.percentage} %</Typography>
                               </Typography>
@@ -154,19 +154,19 @@ const EngagementTypeComparison = ({
                                 <>
                                   {comparison.reaction?.type === 'plus' ? (
                                     <ChevronUp
-                                      fontSize='large'
+                                      fontSize='medium'
                                       sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
                                     />
                                   ) : (
                                     <ChevronDown
-                                      fontSize='large'
+                                      fontSize='medium'
                                       sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
                                     />
                                   )}
                                 </>
                               )}
 
-                              <Typography variant='h6'>
+                              <Typography sx={{fontSize: '1.3vw'}}>
                                 {comparison.reaction?.value}
                                 <Typography variant='body1'>{comparison.reaction?.percentage} %</Typography>
                               </Typography>

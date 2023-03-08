@@ -98,7 +98,7 @@ const SenitmentScore = ({
                         )}
                       </TableCell>
                       <TableCell align='center'>
-                        <Typography variant='body1'>{comparison?.previous_period}</Typography>
+                        <Typography variant='body1'>{comparison?.previous_period && comparison?.previous_period?.toFixed(4)}</Typography>
                       </TableCell>
                     </TableRow>
                   )

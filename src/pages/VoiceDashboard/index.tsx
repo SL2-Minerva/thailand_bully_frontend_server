@@ -175,16 +175,16 @@ const VoiceDashboard = () => {
                             mb: 2,
                             bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1
-                                ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                                ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
                                 : keyword === 'all'
-                                ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                                ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
                                 : 'grey',
                             ':hover': {
                               bgcolor:
                                 filterKeyword?.indexOf(keywords?.id) > -1
-                                  ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                                  ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
                                   : keyword === 'all'
-                                  ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
+                                  ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
                                   : 'grey'
                             }
                           }}

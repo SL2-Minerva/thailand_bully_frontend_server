@@ -115,6 +115,11 @@ const DailyMessagePieChart = (props: Props) => {
       legend: {
         display: false
       },
+      tooltip: {
+        callbacks: {
+          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+        }
+      },
       doughnutlabel: {
         paddingPercentage: 5,
         labels: [
@@ -139,6 +144,11 @@ const DailyMessagePieChart = (props: Props) => {
     plugins: {
       legend: {
         display: false
+      },
+      tooltip: {
+        callbacks: {
+          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+        }
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -226,7 +236,7 @@ const DailyMessagePieChart = (props: Props) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={currentData} options={currentPeriodOptions as any} height={275} />
+              <Doughnut data={currentData} options={currentPeriodOptions as any} height={270} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>
@@ -243,11 +253,11 @@ const DailyMessagePieChart = (props: Props) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={previousData} options={previousPeriodOptions as any} height={275} />
+              <Doughnut data={previousData} options={previousPeriodOptions as any} height={270} />
             )}
           </Grid>
         </Grid>
-        <Grid container spacing={3} mt={3}>
+        <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <p style={{ fontSize: '10px' }}> Current Period :</p>
             <p style={{ fontSize: '10px' }}> {currentPeriod} </p>

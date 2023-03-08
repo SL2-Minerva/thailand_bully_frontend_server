@@ -255,8 +255,8 @@ const ShareOfVoice = ({ params, chartId, keywordsColor }: { params: any; chartId
               </div>
             )}
           </Grid>
-          <Grid item xs={4}>
-            <Table size='small'>
+          <Grid item xs={4} sx={{maxHeight: 500, overflow: 'auto'}}>
+            <Table size='small' >
               <TableHead>
                 <TableRow>
                   {resultShareOfVoice ? <ShareOfVoiceTableHead data={resultShareOfVoice} /> : ''}

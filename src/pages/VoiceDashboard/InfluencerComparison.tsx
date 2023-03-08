@@ -63,7 +63,7 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
               </CustomAvatar>
             </Grid>
             <Grid item xs={5} p={4}>
-              <Typography variant='h4'>
+              <Typography variant='h5'>
                 {trend === 'plus' ? '+' : ''}
                 {totalValue}
               </Typography>
@@ -74,10 +74,10 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
             <Grid item xs={4} p={4}>
               <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Typography variant='h5' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
+                  <Typography sx={{ fontSize:'1.2vw', color: trend === 'plus' ? 'success.main' : 'error.main' }}>
                     {trendNumber + '%'}
                   </Typography>
-                  <TrendIcon fontSize='large' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }} />
+                  <TrendIcon fontSize='large' sx={{ fontSize:'1.2vw', color: trend === 'plus' ? 'success.main' : 'error.main' }} />
                 </Box>
               </Box>
             </Grid>
