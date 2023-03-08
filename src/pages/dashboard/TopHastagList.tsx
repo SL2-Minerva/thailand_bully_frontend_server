@@ -46,7 +46,7 @@ const TopHashtagList = ({ params, chartId }: Props) => {
           <Table stickyHeader={true} size='small'>
             <TableHead sx={{ backgroundColor: 'lightgrey !important' }}>
               <TableRow>
-                <TableCell variant='head' sx={{ backgroundColor: 'white !important' }}>
+                <TableCell  variant='head' sx={{ backgroundColor: 'white !important', width:'30%'  }}>
                   {' '}
                 </TableCell>
                 <TableCell variant='head'> No. of Messages </TableCell>
@@ -63,11 +63,11 @@ const TopHashtagList = ({ params, chartId }: Props) => {
                       //   setKeywordId(hashtag?.keyword_id)
                     }}
                   >
-                    <TableCell sx={{ backgroundColor: 'lightslategrey !important', color: 'white' }}>
+                    <TableCell  sx={{ backgroundColor: 'lightslategrey !important', color: 'white',width:'30%'  }}>
                       {hashtag?.hashtag}
                     </TableCell>
-                    <TableCell>{hashtag?.no_of_message}</TableCell>
-                    <TableCell>{hashtag?.percentage}</TableCell>
+                    <TableCell width = '30%' >{hashtag?.no_of_message}</TableCell>
+                    <TableCell width = '40%'>{hashtag?.percentage && hashtag?.percentage?.toFixed(4) }</TableCell>
                   </TableRow>
                 )
               })}

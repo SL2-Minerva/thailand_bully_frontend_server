@@ -255,7 +255,7 @@ const ShareOfVoice = ({ params, chartId, keywordsColor }: { params: any; chartId
               </div>
             )}
           </Grid>
-          <Grid item xs={4} sx={{maxHeight: 500, overflow: 'auto'}}>
+          <Grid item md={4} xs={12}sx={{maxHeight: 500, overflow: 'auto'}}>
             <Table size='small' >
               <TableHead>
                 <TableRow>
@@ -273,7 +273,7 @@ const ShareOfVoice = ({ params, chartId, keywordsColor }: { params: any; chartId
               })}
             </Table>
           </Grid>
-          <Grid item xs={4} mt={-10}>
+          <Grid item md={4} xs={12} >
           <Table size='small'>
               <TableHead>
                 <TableRow>

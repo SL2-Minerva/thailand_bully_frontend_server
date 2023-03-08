@@ -97,12 +97,12 @@ const ShareOfChannel = ({
       </span>
       <CardContent>
         <Grid container spacing={3}>
-          <Grid item xs={5}>
+          <Grid item md={5} xs={12}>
             {resultShareOfChannel ? <Bar data={data} options={{ indexAxis: 'y' }} height={150} /> : ''}
           </Grid>
-          <Grid item xs={7}>
+          <Grid item md={7} xs={12} sx={{overflow: 'auto'}}>
             {resultShareofChannelPlatform?.length > 0 ? (
-              <Table size='small' sx={{overflow: 'auto'}}>
+              <Table size='small'>
                 <TableHead>
                   {(resultShareofChannelPlatform || []).map((shareVoice: any, index: number) => {
                     return (

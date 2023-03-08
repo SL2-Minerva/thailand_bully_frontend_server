@@ -696,7 +696,7 @@ const EngagementDashboard = () => {
           {resultReportPermission?.includes('75') ? (
             <>
               <Grid container spacing={3} mt={2}>
-                <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
+                <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end', overflowX: 'auto' }}>
                   <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
                   <Button
                     variant='contained'
