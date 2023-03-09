@@ -28,7 +28,7 @@ import { role_list } from '../../../../services/api/users/role'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
-import { InputAdornment, OutlinedInput } from '@mui/material'
+import { InputAdornment } from '@mui/material'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -71,7 +71,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
       axios
         .post(
           `${API_PATH}/user/update/${current?.id}`,
-          { name, password,  email, company, organization_id: organization, role_id, status },
+          { name, password, email, company, organization_id: organization, role_id, status },
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
@@ -83,18 +83,18 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
           console.log(data, status)
 
           setShow(false)
-          setCurrent({})
-          onClose();
+          setCurrent()
+          onClose()
         })
         .catch((ex: any) => {
           console.log(ex)
-          setCurrent({})
+          setCurrent()
         })
     } else {
       axios
         .post(
           `${API_PATH}/user/create/`,
-          { name, password,  email,company, organization_id: organization, role_id, status },
+          { name, password, email, company, organization_id: organization, role_id, status },
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
@@ -104,13 +104,15 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
         .then(async response => {
           const { data, status } = response.data
           console.log(data, status)
-          setCurrent({})
-          onClose();
+
+          setCurrent()
+          onClose()
           setShow(false)
         })
         .catch((ex: any) => {
           console.log(ex)
-          setCurrent({})
+
+          setCurrent()
         })
     }
   }
@@ -127,9 +129,11 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
 
   useEffect(() => {
     if (action === 'create') {
-      onClose();
+      onClose()
     }
   }, [action])
+
+  console.log("current data", current)
 
   return (
     <Card>
@@ -140,12 +144,14 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
         scroll='body'
         onClose={() => {
           setShow(false)
-          setCurrent({})
+          onClose();
+          setCurrent()
         }}
         TransitionComponent={Transition}
         onBackdropClick={() => {
           setShow(false)
-          setCurrent({})
+          onClose()
+          setCurrent()
         }}
       >
         <DialogContent sx={{ pb: 6, px: { xs: 8, sm: 15 }, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
@@ -153,7 +159,8 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
             size='small'
             onClick={() => {
               setShow(false)
-              setCurrent({})
+              onClose();
+              setCurrent()
             }}
             sx={{ position: 'absolute', right: '1rem', top: '1rem' }}
           >
@@ -172,18 +179,21 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
                 label='Full Name'
                 onChange={e => setName(e.target.value)}
                 placeholder='johnDoe'
+                autoComplete='off'
               />
             </Grid>
             <Grid item sm={6} xs={12}>
-              <FormControl fullWidth>
-                <InputLabel>Password</InputLabel>
-                <OutlinedInput
-                  fullWidth
-                  label='Password'
-                  onChange={e => setPassword(e.target.value)}
-                  value={password}
-                  type={showPassword ? 'text' : 'password'}
-                  endAdornment={
+              <TextField
+                fullWidth
+                id='filled-password-input'
+                label='Password'
+                autoComplete='new-password'
+                variant='outlined'
+                onChange={e => setPassword(e.target.value)}
+                value={password}
+                type={showPassword ? 'text' : 'password'}
+                InputProps={{
+                  endAdornment: (
                     <InputAdornment position='end'>
                       <IconButton
                         aria-label='toggle password visibility'
@@ -194,9 +204,9 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
                         {showPassword ? <EyeOutline /> : <EyeOffOutline />}
                       </IconButton>
                     </InputAdornment>
-                  }
-                />
-              </FormControl>
+                  )
+                }}
+              />
             </Grid>
             <Grid item sm={6} xs={12}>
               <TextField
@@ -288,7 +298,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
             color='secondary'
             onClick={() => {
               setShow(false)
-              setCurrent({})
+              setCurrent()
               onClose()
             }}
           >

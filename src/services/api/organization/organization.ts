@@ -8,10 +8,10 @@ export const Organization = {
     if(page ||  page === 0  ) {
       params = {
         page: page,
-        limit : 10
+        limit : 1000000
       }
     }
-    const [{ data: res, error }, store] = CallAPI<{ data?: any }>({
+    const [{ data: res, error }] = CallAPI<{ data?: any }>({
       url: `/organization/list`,
       method: 'GET',
       params : params,

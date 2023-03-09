@@ -115,17 +115,30 @@ const renderClient = (row: UsersType) => {
   }
 }
 
-const RowOptions = ({ id, current, show, setShow,refreshDelete, setRefreshDelete }
-  : { id: any; current: any, show: boolean, setShow: any, refreshDelete:boolean, setRefreshDelete:any }) => {
+const RowOptions = ({
+  id,
+  current,
+  show,
+  setShow,
+  refreshDelete,
+  setRefreshDelete
+}: {
+  id: any
+  current: any
+  show: boolean
+  setShow: any
+  refreshDelete: boolean
+  setRefreshDelete: any
+}) => {
   // ** Hooks
 
-  const [ updateData, setUpdateData ] = useState();
+  const [updateData, setUpdateData] = useState()
 
   // ** State
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const rowOptionsOpen = Boolean(anchorEl)
-  const { resultPermission } = UserPermission();
+  const { resultPermission } = UserPermission()
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -144,8 +157,8 @@ const RowOptions = ({ id, current, show, setShow,refreshDelete, setRefreshDelete
       .then(async response => {
         const { data, status } = response.data
         console.log(data, status)
-        handleRowOptionsClose();
-        setRefreshDelete(!refreshDelete);
+        handleRowOptionsClose()
+        setRefreshDelete(!refreshDelete)
       })
       .catch((ex: any) => {
         console.log(ex)
@@ -154,55 +167,65 @@ const RowOptions = ({ id, current, show, setShow,refreshDelete, setRefreshDelete
 
   return (
     <>
-    {
-      !resultPermission?.user?.authorized_edit && !resultPermission?.user?.authorized_delete ?
+      {!resultPermission?.user?.authorized_edit && !resultPermission?.user?.authorized_delete ? (
         <></>
-      :
-      <>
-        <IconButton size='small' onClick={handleRowOptionsClick}>
-        <DotsVertical />
-        </IconButton>
-        <Menu
-          keepMounted
-          anchorEl={anchorEl}
-          open={rowOptionsOpen}
-          onClose={handleRowOptionsClose}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right'
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
-          }}
-          PaperProps={{ style: { minWidth: '8rem' } }}
-        >
-          {
-            resultPermission?.user?.authorized_edit ? 
-            <MenuItem onClick={() => {setShow(true);  setAnchorEl(null); setUpdateData(current);}}>
-              <PencilOutline fontSize='small' sx={{ mr: 2 }} />
-              Edit
-            </MenuItem>
-            :  <></>
-          }
+      ) : (
+        <>
+          <IconButton size='small' onClick={handleRowOptionsClick}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            {resultPermission?.user?.authorized_edit ? (
+              <MenuItem
+                onClick={() => {
+                  setShow(true)
+                  setAnchorEl(null)
+                  setUpdateData(current)
+                }}
+              >
+                <PencilOutline fontSize='small' sx={{ mr: 2 }} />
+                Edit
+              </MenuItem>
+            ) : (
+              <></>
+            )}
 
-          {
-            resultPermission?.user?.authorized_delete ? 
-            <MenuItem onClick={handleDelete}>
-              <DeleteOutline fontSize='small' sx={{ mr: 2 }} />
-              Delete
-            </MenuItem>
-            :<></>
-          }
-        </Menu>
-        {
-          updateData ? 
-          <DialogEditUserInfo show={show} setShow={setShow} action='edit' current={updateData} setCurrent={setUpdateData}></DialogEditUserInfo>
-          : ""
-        }
-      </>
-    }
-      
+            {resultPermission?.user?.authorized_delete ? (
+              <MenuItem onClick={handleDelete}>
+                <DeleteOutline fontSize='small' sx={{ mr: 2 }} />
+                Delete
+              </MenuItem>
+            ) : (
+              <></>
+            )}
+          </Menu>
+          {updateData ? (
+            <DialogEditUserInfo
+              show={show}
+              setShow={setShow}
+              action='edit'
+              current={updateData}
+              setCurrent={setUpdateData}
+            ></DialogEditUserInfo>
+          ) : (
+            ''
+          )}
+        </>
+      )}
     </>
   )
 }
@@ -223,12 +246,13 @@ const UserList = () => {
   const [endDate, setEndDate] = useState<Date | null>(new Date())
   const [reload, setReload] = useState<boolean>(false)
   const [users, setUsers] = useState<any[]>([])
-  const [current, setCurrent] = useState<any>({})
   const [show, setShow] = useState<boolean>(false)
-  const [ refreshDelete, setRefreshDelete ] = useState<boolean>(false);
+  const [refreshDelete, setRefreshDelete] = useState<boolean>(false)
 
-  //user permission 
-  const { resultPermission, errorUserPermission } = UserPermission();
+  const [current, setCurrent] = useState<any>()
+
+  //user permission
+  const { resultPermission, errorUserPermission } = UserPermission()
 
   // ** Hooks
   const { list } = Organization.getList(reload)
@@ -241,8 +265,8 @@ const UserList = () => {
     setUsers([])
   }, [organization, role, status, value, userName, date, endDate])
 
-  useEffect(()=> {
-    if(errorUserPermission) {
+  useEffect(() => {
+    if (errorUserPermission) {
       window.localStorage.removeItem('userData')
       localStorage.clear()
       router.push('/login')
@@ -254,15 +278,16 @@ const UserList = () => {
       .get(`${API_PATH}/user/search`, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
-        }, 
+        },
 
-        params : {
-          name : userName, 
-          status : status, 
+        params: {
+          page: 0,
+          limit: 100000,
+          name: userName,
+          status: status,
           organization_id: organization,
-          start_at : date ? moment(date).format('YYYY-MM-DD') : "",
-          end_at : endDate ?  moment(endDate).format('YYYY-MM-DD') : "",
-
+          start_at: date ? moment(date).format('YYYY-MM-DD') : '',
+          end_at: endDate ? moment(endDate).format('YYYY-MM-DD') : ''
         }
       })
       .then(async response => {
@@ -291,9 +316,9 @@ const UserList = () => {
 
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
 
-  useEffect(()=> {
-    handleList();
-  },[addUserOpen, show, refreshDelete])
+  useEffect(() => {
+    handleList()
+  }, [addUserOpen, show, refreshDelete])
 
   const columns = [
     {
@@ -303,7 +328,7 @@ const UserList = () => {
       headerName: 'ID',
       renderCell: ({ row }: CellType) => {
         const { id } = row
-  
+
         return <Box sx={{ display: 'flex', alignItems: 'center' }}>{id}</Box>
       }
     },
@@ -314,12 +339,17 @@ const UserList = () => {
       headerName: 'User',
       renderCell: ({ row }: CellType) => {
         const { name } = row
-  
+
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             {renderClient(row)}
             <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
-              <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
+              <Typography
+                noWrap
+                component='a'
+                variant='subtitle2'
+                sx={{ color: 'text.primary', textDecoration: 'none' }}
+              >
                 {name}
               </Typography>
             </Box>
@@ -379,8 +409,8 @@ const UserList = () => {
           <CustomChip
             skin='light'
             size='small'
-            label={row.status ? 'active' : 'inactive'}
-            color={userStatusObj[row.status ? 'active' : 'inactive']}
+            label={row.status == '1' ? 'active' : row.status == '2' ? 'pending': 'inactive'}
+            color={userStatusObj[row.status == '1' ? 'active' : row.status == '2' ? 'pending': 'inactive']}
             sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
           />
         )
@@ -393,20 +423,26 @@ const UserList = () => {
       field: 'actions',
       headerName: 'Actions',
       renderCell: ({ row }: CellType) => {
-
-        return <RowOptions id={row.id} current={row}
-         setShow={setShow} show={show} refreshDelete={refreshDelete} setRefreshDelete={setRefreshDelete} />
+        return (
+          <RowOptions
+            id={row.id}
+            current={row}
+            setShow={setShow}
+            show={show}
+            refreshDelete={refreshDelete}
+            setRefreshDelete={setRefreshDelete}
+          />
+        )
       }
     }
   ]
 
   const handleClear = () => {
-    setUserName('');
-    setOrganization('');
-    setDate(null);
-    setEndDate(null);
-    setStatus('');
-    
+    setUserName('')
+    setOrganization('')
+    setDate(null)
+    setEndDate(null)
+    setStatus('')
   }
 
   return (
@@ -419,7 +455,13 @@ const UserList = () => {
               <Grid container spacing={6}>
                 <Grid item sm={4} xs={12}>
                   <FormControl fullWidth>
-                    <TextField id='userName' label='User Name' value={userName} onChange={(e) => setUserName(e.target.value)}/>
+                    <TextField
+                      autoComplete='off'
+                      id='userName'
+                      label='User Name'
+                      value={userName}
+                      onChange={e => setUserName(e.target.value)}
+                    />
                   </FormControl>
                 </Grid>
                 <Grid item sm={4} xs={12}>
@@ -434,9 +476,7 @@ const UserList = () => {
                       onChange={handleOrganization}
                       inputProps={{ placeholder: 'Select Organization' }}
                     >
-                      <MenuItem value="">
-                        All
-                      </MenuItem>
+                      <MenuItem value=''>All</MenuItem>
                       {list &&
                         list.map((item: any, index: number) => {
                           return (
@@ -462,6 +502,7 @@ const UserList = () => {
                     >
                       <MenuItem value=''>All</MenuItem>
                       <MenuItem value='1'>Active</MenuItem>
+                      <MenuItem value='2'>Pending</MenuItem>
                       <MenuItem value='0'>Inactive</MenuItem>
                     </Select>
                   </FormControl>
@@ -507,7 +548,7 @@ const UserList = () => {
                     <Button
                       sx={{ mb: 2, ml: 3 }}
                       onClick={() => {
-                        handleClear();
+                        handleClear()
                       }}
                       variant='contained'
                     >
@@ -521,11 +562,11 @@ const UserList = () => {
         </Grid>
         <Grid item xs={12}>
           <Card>
-            {
-              resultPermission?.user?.authorized_create ? 
-                <TableHeader value={value} handleFilter={handleFilter} toggle={toggleAddUserDrawer} />
-                : <></>
-            }
+            {resultPermission?.user?.authorized_create ? (
+              <TableHeader value={value} handleFilter={handleFilter} toggle={toggleAddUserDrawer} />
+            ) : (
+              <></>
+            )}
             <DataGrid
               autoHeight
               rows={users}
@@ -537,7 +578,13 @@ const UserList = () => {
             />
           </Card>
         </Grid>
-        <DialogEditUserInfo show={addUserOpen} setShow={setAddUserOpen} action={'create'} current={current}  setCurrent={setCurrent}/>
+        <DialogEditUserInfo
+          show={addUserOpen}
+          setShow={setAddUserOpen}
+          action={'create'}
+          current={current}
+          setCurrent={setCurrent}
+        />
       </Grid>
     </>
   )
