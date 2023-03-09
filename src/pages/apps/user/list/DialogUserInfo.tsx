@@ -133,8 +133,6 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
     }
   }, [action])
 
-  console.log("current data", current)
-
   return (
     <Card>
       <Dialog

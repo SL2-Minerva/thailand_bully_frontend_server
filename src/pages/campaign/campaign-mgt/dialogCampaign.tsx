@@ -35,6 +35,7 @@ import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { API_PATH } from 'src/utils/const'
 import { useTranslation } from 'react-i18next'
+import { FormHelperText } from '@mui/material'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -72,6 +73,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
   const [campaignName, setCampaignName] = useState<string>('')
   const [description, setDescription] = useState<string>('')
   const [status, setStatus] = useState<boolean>(false)
+  const [checkKeyword, setCheckKeyword] = useState<boolean>(false)
 
   const [keywords, setKeywords] = useState([
     {
@@ -208,7 +210,6 @@ const DialogCampaign = (props: DialogInfoProps) => {
   useEffect(() => {
     if (action === 'edit') {
       if (current) {
-        console.log('current', current)
         setCampaignName(current.name)
         setDescription(current.description)
         setDomain(current.domain_id)
@@ -217,7 +218,6 @@ const DialogCampaign = (props: DialogInfoProps) => {
         setFrequency(current.frequency)
 
         if (current.keyword && current.keyword.length > 0) {
-          console.log('current.keyword', current.keyword)
           setKeywords(current.keyword)
         }
 
@@ -352,6 +352,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
                         keywords={keywords}
                         setKeywords={setKeywords}
                         removeKeyword={removeKeyword}
+                        checkKeyword={checkKeyword}
+                        setCheckKeyword={setCheckKeyword}
                       />
                     )
                   }}
@@ -374,6 +376,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
                   </Grid>
                 </Grid>
               </RepeaterWrapper>
+              <Grid item xs={12} mt={3}>
+                {checkKeyword && (
+                  <FormHelperText sx={{ color: 'red', textAlign: 'center', fontSize: '14px' }}>
+                    Keywords must be different value.
+                  </FormHelperText>
+                )}
+              </Grid>
             </Grid>
 
             <Grid container spacing={6} mt={1} style={{ paddingLeft: '1.5rem' }}>
@@ -440,7 +449,15 @@ const DialogCampaign = (props: DialogInfoProps) => {
           </div>
         </DialogContent>
         <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
-          <Button variant='contained' sx={{ mr: 2 }} onClick={createNewCampaign}>
+          <Button
+            variant='contained'
+            sx={{ mr: 2 }}
+            onClick={() => {
+              if (!checkKeyword) {
+                createNewCampaign()
+              }
+            }}
+          >
             Submit
           </Button>
           <Button variant='outlined' color='secondary' onClick={closeDialogBox}>

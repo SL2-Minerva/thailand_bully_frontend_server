@@ -18,7 +18,7 @@ import { Color, ColorPicker, createColor } from 'material-ui-color'
 // }
 
 const KeywordForm = (props: any) => {
-  const { indexNumber, keywords, setKeywords, removeKeyword, value } = props
+  const { indexNumber, keywords, setKeywords, removeKeyword, value, setCheckKeyword } = props
 
   const {
     keyword_and,
@@ -30,6 +30,48 @@ const KeywordForm = (props: any) => {
     delete_keyword_or,
     delete_keyword_exclude
   } = value
+
+  const CheckKeywords = (keyword: string, keywordsValue: any) => {
+    if(!keywordsValue || !keyword) return false;
+
+    if(keywordsValue?.length > 0) {
+      for(let j=0; j<keywordsValue?.length; j++) {
+        if(keyword === keywordsValue[j]?.name || keyword === keywordsValue[j]?.label) {
+          return true
+        }
+    
+        const keywordAnd = keywordsValue[j]?.keyword_and;
+        const keywordOr = keywordsValue[j]?.keyword_or;
+        const keywordExclude = keywordsValue[j]?.keyword_exclude;
+    
+        if(keywordAnd?.length > 0) {
+          for(let i =0; i< keywordAnd?.length; i++) {
+             if(keywordAnd[i] === keyword) {
+               return true
+             }
+          }
+        }
+    
+        if(keywordOr?.length > 0) {
+          for(let i =0; i< keywordOr?.length; i++) {
+             if(keywordOr[i] === keyword) {
+               return true
+             }
+          }
+        }
+    
+        if(keywordExclude?.length > 0) {
+          for(let i =0; i< keywordExclude?.length; i++) {
+             if(keywordExclude[i] === keyword) {
+               return true
+             }
+          }
+        }
+      }
+    }
+
+    return false
+  }
 
   function handleChangeLabel(i: number, event: any) {
     const values = [...keywords]
@@ -90,7 +132,6 @@ const KeywordForm = (props: any) => {
   }
 
   const addMoreKeywordColors = (i: number, colorList: any, current: any, type: any) => {
-    console.log('colorlist', colorList)
     const newKeywordColor = [...colorList, '#70d477']
 
     const values = [...keywords]
@@ -133,9 +174,15 @@ const KeywordForm = (props: any) => {
     let textKeywords
     if (list.length <= 0) {
       textKeywords = [...list, e.target.value]
+      const checkInputKeywords = CheckKeywords(e.target.value, keywords)
+      console.log("checkKeywords", checkInputKeywords);
+      setCheckKeyword(checkInputKeywords || false)
     } else {
       textKeywords = [...list]
       textKeywords[i] = e.target.value
+      const checkInputKeywords = CheckKeywords(e.target.value, keywords)
+      console.log("checkKeywords", checkInputKeywords);
+      setCheckKeyword(checkInputKeywords  || false)
     }
 
     const values = [...keywords]
