@@ -17,7 +17,6 @@ import MuiDrawer, { DrawerProps } from '@mui/material/Drawer'
 import Close from 'mdi-material-ui/Close'
 import { ArrowLeftDropCircle, ArrowRightDropCircle } from 'mdi-material-ui'
 import { Toggler, TogglerOpen } from '../VoiceDashboard/QuickView'
-import Translations from 'src/layouts/components/Translations'
   
 export const Drawer = styled(MuiDrawer)<DrawerProps>(({ theme }) => ({
     width: 400,
@@ -106,35 +105,35 @@ const QuickView = ({setHighlight, setShowQuickView} : {setHighlight?:any, setSho
               </Link>
               <Divider sx={{ m: 0 }} /> */}
                 <Box sx={{ mb: 6, mt: 6 }} onClick={() => {onClose("chart2")}}>
-                    <Typography sx={{ color : highlightText === 'chart2' ? 'green' : '#4c4e64de'  }}>Chart 2 : <Translations text='Daily Sentiment Type by Date'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart2' ? 'green' : '#4c4e64de'  }}>by Date</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 6, mt: 6 }} onClick={() => {onClose("chart3")}}>
-                    <Typography sx={{ color : highlightText === 'chart3' ? 'green' : '#4c4e64de'  }}>Chart 3 : <Translations text='Daily Sentiment Type By Day'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart3' ? 'green' : '#4c4e64de'  }}>by Day</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 6, mt: 6 }} onClick={() => {onClose("chart4")}}>
-                    <Typography sx={{ color : highlightText === 'chart4' ? 'green' : '#4c4e64de'  }}>Chart 4 : <Translations text='Daily Sentiment Type By Time'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart4' ? 'green' : '#4c4e64de'  }}>by Time</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 6, mt: 6 }} onClick={() => {onClose("chart5")}}>
-                    <Typography sx={{ color : highlightText === 'chart5' ? 'green' : '#4c4e64de'  }}>Chart 5 : <Translations text='Daily Sentiment Type By Device'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart5' ? 'green' : '#4c4e64de'  }}>by Device</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 6, mt: 6 }} onClick={() => {onClose("chart6")}}>
-                    <Typography sx={{ color : highlightText === 'chart6' ? 'green' : '#4c4e64de'  }}>Chart 6 : <Translations text='Daily Sentiment Type By Account'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart6' ? 'green' : '#4c4e64de'  }}>by Account</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 6, mt: 6 }} onClick={() => {onClose("chart7")}}>
-                    <Typography sx={{ color : highlightText === 'chart7' ? 'green' : '#4c4e64de'  }}>Chart 7 : <Translations text='Daily Sentiment Type By Channel'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart7' ? 'green' : '#4c4e64de'  }}>by Channel</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 6, mt: 6 }} onClick={() => {onClose("chart8")}}>
-                    <Typography sx={{ color : highlightText === 'chart8' ? 'green' : '#4c4e64de'  }}>Chart 8 : <Translations text='Daily Sentiment Type By Bully Level'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart8' ? 'green' : '#4c4e64de'  }}>by Bully Level</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 6, mt: 6 }} onClick={() => {onClose("chart9")}}>
-                    <Typography sx={{ color : highlightText === 'chart9' ? 'green' : '#4c4e64de'  }}>Chart 9 : <Translations text='Daily Sentiment Type By Bully Type'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart9' ? 'green' : '#4c4e64de'  }}>by Bully Type</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
 

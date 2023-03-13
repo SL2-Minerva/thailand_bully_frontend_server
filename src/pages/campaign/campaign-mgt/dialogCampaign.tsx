@@ -74,6 +74,9 @@ const DialogCampaign = (props: DialogInfoProps) => {
   const [description, setDescription] = useState<string>('')
   const [status, setStatus] = useState<boolean>(false)
   const [checkKeyword, setCheckKeyword] = useState<boolean>(false)
+  const [checkKeywordAnd, setCheckKeywordAnd] = useState<boolean>(false)
+  const [checkKeywordOr, setCheckKeywordOr] = useState<boolean>(false)
+  const [checkKeywordExclude, setCheckKeywordExclude] = useState<boolean>(false)
 
   const [keywords, setKeywords] = useState([
     {
@@ -354,6 +357,12 @@ const DialogCampaign = (props: DialogInfoProps) => {
                         removeKeyword={removeKeyword}
                         checkKeyword={checkKeyword}
                         setCheckKeyword={setCheckKeyword}
+                        checkKeywordAnd={checkKeywordAnd}
+                        setCheckKeywordAnd={setCheckKeywordAnd}
+                        checkKeywordOr={checkKeywordOr}
+                        setCheckKeywordOr={setCheckKeywordOr}
+                        checkKeywordExclude={checkKeywordExclude}
+                        setCheckKeywordExclude={setCheckKeywordExclude}
                       />
                     )
                   }}
@@ -377,7 +386,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                 </Grid>
               </RepeaterWrapper>
               <Grid item xs={12} mt={3}>
-                {checkKeyword && (
+                {(checkKeyword || checkKeywordAnd || checkKeywordOr || checkKeywordExclude) && (
                   <FormHelperText sx={{ color: 'red', textAlign: 'center', fontSize: '14px' }}>
                     Keywords must be different value.
                   </FormHelperText>
@@ -453,7 +462,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
             variant='contained'
             sx={{ mr: 2 }}
             onClick={() => {
-              if (!checkKeyword) {
+              if (!checkKeyword && !checkKeywordAnd && !checkKeywordExclude && !checkKeywordOr ) {
                 createNewCampaign()
               }
             }}

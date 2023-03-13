@@ -110,6 +110,7 @@ const Filter = (props: Props) => {
 
   const handleSelectList = useCallback((e: SelectChangeEvent) => {
     setCampaign(e.target.value)
+    localStorage.setItem('campaign', e.target.value)
   }, [])
 
   const handleOnChangeDate = (dates: any) => {
@@ -143,11 +144,19 @@ const Filter = (props: Props) => {
       const value = localStorage.getItem('dateSelect')
       periodSet(value)
     }
+
   }, [])
 
   useEffect(() => {
     if(resultCampaiganList?.length>0) {
-     setCampaign(resultCampaiganList[0]?.id)
+      if(localStorage.getItem('campaign')) {
+        const value = localStorage.getItem('campaign')
+        setCampaign(value || '') 
+      } else {
+        setCampaign(resultCampaiganList[0]?.id)
+      }
+
+     
     }
   },[resultCampaiganList])
 

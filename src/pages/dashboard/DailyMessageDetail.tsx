@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper'
 import Fade, { FadeProps } from '@mui/material/Fade'
 import { Box, Card, Dialog, DialogContent, IconButton, LinearProgress, Pagination, Typography } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
-import { CheckCircle, OpenInNew, AlphaXCircle } from 'mdi-material-ui'
+import { CheckCircle, OpenInNew } from 'mdi-material-ui'
 import { GetDetailMessage } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from './DialogNetworkGraphByFilter'
@@ -266,7 +266,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                       {messageDetail.parent ? (
                         <CheckCircle style={{ color: 'green' }} />
                       ) : (
-                        <AlphaXCircle style={{ color: 'red' }} />
+                        ''
                       )}
                     </StyledTableCell>
                     <StyledTableCell>
@@ -291,9 +291,6 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
               variant='outlined'
               color='primary'
             />
-            {/* <Button disabled={disableLoadMore} variant="contained" color="primary" onClick={(e) => {handleChangePagination(e, page)}}>
-                Load More
-              </Button> */}
           </Box>
         </DialogContent>
       </Dialog>

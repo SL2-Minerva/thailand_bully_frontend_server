@@ -17,7 +17,8 @@ import MuiDrawer, { DrawerProps } from '@mui/material/Drawer'
 import Close from 'mdi-material-ui/Close'
 import { ArrowLeftDropCircle, ArrowRightDropCircle } from 'mdi-material-ui'
 import { Toggler, TogglerOpen } from '../VoiceDashboard/QuickView'
-import Translations from 'src/layouts/components/Translations'
+
+// import Translations from 'src/layouts/components/Translations'
 
 export const Drawer = styled(MuiDrawer)<DrawerProps>(({ theme }) => ({
     width: 400,
@@ -107,36 +108,36 @@ const QuickView = ({setHighlight,setShowQuickView} : {setHighlight?:any, setShow
               <Divider sx={{ m: 0 }} /> */}
 
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart2")}}>
-                    <Typography sx={{ color : highlightText === 'chart2' ? 'green' : '#4c4e64de'  }}>Chart 2 : <Translations text='Bully Level: Daily Messages by Date'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart2' ? 'green' : '#4c4e64de'  }}>Bully Level : By Date</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
 
               
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart3")}}>
-                    <Typography sx={{ color : highlightText === 'chart3' ? 'green' : '#4c4e64de'  }}>Chart 3 : <Translations text='Bully Level: Daily Messages by Day'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart3' ? 'green' : '#4c4e64de'  }}>Bully Level : By Day</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
 
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart4")}}>
-                    <Typography sx={{ color : highlightText === 'chart4' ? 'green' : '#4c4e64de'  }}>Chart 4 : <Translations text='Bully Level: Daily Messages by Time'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart4' ? 'green' : '#4c4e64de'  }}>Bully Level : By Time</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
 
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart5")}}>
-                    <Typography sx={{ color : highlightText === 'chart5' ? 'green' : '#4c4e64de'  }}>Chart 5 : <Translations text='Bully Level: Daily Messages by Device'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart5' ? 'green' : '#4c4e64de'  }}>Bully Level : By Device</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
 
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart6")}}>
-                    <Typography sx={{ color : highlightText === 'chart6' ? 'green' : '#4c4e64de'  }}>Chart 6 : <Translations text='Bully Level: Daily Messages by Account'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart6' ? 'green' : '#4c4e64de'  }}>Bully Level : By Account</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart7")}}>
-                    <Typography sx={{ color : highlightText === 'chart7' ? 'green' : '#4c4e64de'  }}>Chart 7 : <Translations text='Bully Level: Daily Messages by Channel'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart7' ? 'green' : '#4c4e64de'  }}>Bully Level : By Channel</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart8")}}>
-                    <Typography sx={{ color : highlightText === 'chart8' ? 'green' : '#4c4e64de'  }}>Chart 8 : <Translations text='Bully Level: Daily Messages by Sentiment'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart8' ? 'green' : '#4c4e64de'  }}>Bully Level : By Sentiment</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
 
@@ -148,37 +149,37 @@ const QuickView = ({setHighlight,setShowQuickView} : {setHighlight?:any, setShow
               <Divider sx={{ m: 0 }} /> */}
 
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart10")}}>
-                    <Typography sx={{ color : highlightText === 'chart10' ? 'green' : '#4c4e64de'  }}>Chart 10 : <Translations text='Bully Type: Daily Message by Date'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart10' ? 'green' : '#4c4e64de'  }}>Bully Type : By Date</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
 
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart11")}}>
-                    <Typography sx={{ color : highlightText === 'chart11' ? 'green' : '#4c4e64de'  }}>Chart 11 : <Translations text='Bully Type: Daily Message by Day'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart11' ? 'green' : '#4c4e64de'  }}>Bully Type : By Day</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
 
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart12")}}>
-                    <Typography sx={{ color : highlightText === 'chart12' ? 'green' : '#4c4e64de'  }}>Chart 12 : <Translations text='Bully Type: Daily Message by Time'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart12' ? 'green' : '#4c4e64de'  }}>Bully Type : By  Time</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
 
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart13")}}>
-                    <Typography sx={{ color : highlightText === 'chart13' ? 'green' : '#4c4e64de'  }}>Chart 13 : <Translations text='Bully Type: Daily Message by Device'/> </Typography>
+                    <Typography sx={{ color : highlightText === 'chart13' ? 'green' : '#4c4e64de'  }}>Bully Type : By Device </Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
 
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart14")}}>
-                    <Typography sx={{ color : highlightText === 'chart14' ? 'green' : '#4c4e64de'  }}>Chart 14 : <Translations text='Bully Type: Daily Message by Account'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart14' ? 'green' : '#4c4e64de'  }}>Bully Type : By Account</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
 
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart15")}}>
-                    <Typography sx={{ color : highlightText === 'chart15' ? 'green' : '#4c4e64de'  }}>Chart 15 : <Translations text='Bully Type: Daily Message by Channel'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart15' ? 'green' : '#4c4e64de'  }}>Bully Type : By Channel</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
 
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart16")}}>
-                    <Typography sx={{ color : highlightText === 'chart16' ? 'green' : '#4c4e64de'  }}>Chart 16 : <Translations text='Bully Type: Daily Message by Sentiment'/></Typography>
+                    <Typography sx={{ color : highlightText === 'chart16' ? 'green' : '#4c4e64de'  }}>Bully Type : By Sentiment</Typography>
                 </Box>
               <Divider sx={{ m: 0 }} />
 

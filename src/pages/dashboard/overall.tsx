@@ -104,7 +104,7 @@ export const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 export const wordBreaks = (data: any) => {
   let paragraphs = data
-  for (let i = 0; i < paragraphs.length; i++) {
+  for (let i = 0; i < paragraphs?.length; i++) {
     paragraphs = paragraphs.replace(/,/g, ' ')
   }
 
@@ -198,6 +198,7 @@ const OverallDashboard = () => {
   const handleSelectList = useCallback((e: SelectChangeEvent, type: string) => {
     if (type === 'campaign') {
       setCampaign(e.target.value)
+      localStorage.setItem("campaign", e.target.value)
     } else {
       setPlatformId(e.target.value)
     }
@@ -300,7 +301,12 @@ const OverallDashboard = () => {
 
   useEffect(() => {
     if(resultCampaiganList?.length>0) {
-     setCampaign(resultCampaiganList[0]?.id)
+      if(localStorage.getItem('campaign')) {
+        const value = localStorage.getItem('campaign')
+        setCampaign(value || '') 
+      } else {
+        setCampaign(resultCampaiganList[0]?.id)
+      }
     }
   },[resultCampaiganList])
 

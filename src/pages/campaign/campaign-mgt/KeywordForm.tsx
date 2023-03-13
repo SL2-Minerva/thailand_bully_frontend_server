@@ -17,8 +17,63 @@ import { Color, ColorPicker, createColor } from 'material-ui-color'
 //   value: any
 // }
 
+export const CheckKeywords = (keyword: string, keywordsValue: any) => {
+  if (!keywordsValue || !keyword) return false
+
+  console.log('keyword', keyword, 'keywordsValue:', keywordsValue)
+  const keywordTrim = keyword?.trim()
+
+  if (keywordsValue?.length > 0) {
+    for (let j = 0; j < keywordsValue?.length; j++) {
+      if (keywordTrim === keywordsValue[j]?.name || keywordTrim === keywordsValue[j]?.label) {
+        return true
+      }
+
+      const keywordAnd = keywordsValue[j]?.keyword_and
+      const keywordOr = keywordsValue[j]?.keyword_or
+      const keywordExclude = keywordsValue[j]?.keyword_exclude
+
+      if (keywordAnd?.length > 0) {
+        for (let i = 0; i < keywordAnd?.length; i++) {
+          if (keywordAnd[i] === keywordTrim) {
+            return true
+          }
+        }
+      }
+
+      if (keywordOr?.length > 0) {
+        for (let i = 0; i < keywordOr?.length; i++) {
+          if (keywordOr[i] === keywordTrim) {
+            return true
+          }
+        }
+      }
+
+      if (keywordExclude?.length > 0) {
+        for (let i = 0; i < keywordExclude?.length; i++) {
+          if (keywordExclude[i] === keywordTrim) {
+            return true
+          }
+        }
+      }
+    }
+  }
+
+  return false
+}
+
 const KeywordForm = (props: any) => {
-  const { indexNumber, keywords, setKeywords, removeKeyword, value, setCheckKeyword } = props
+  const {
+    indexNumber,
+    keywords,
+    setKeywords,
+    removeKeyword,
+    value,
+    setCheckKeyword,
+    setCheckKeywordAnd,
+    setCheckKeywordExclude,
+    setCheckKeywordOr
+  } = props
 
   const {
     keyword_and,
@@ -31,49 +86,10 @@ const KeywordForm = (props: any) => {
     delete_keyword_exclude
   } = value
 
-  const CheckKeywords = (keyword: string, keywordsValue: any) => {
-    if(!keywordsValue || !keyword) return false;
-
-    if(keywordsValue?.length > 0) {
-      for(let j=0; j<keywordsValue?.length; j++) {
-        if(keyword === keywordsValue[j]?.name || keyword === keywordsValue[j]?.label) {
-          return true
-        }
-    
-        const keywordAnd = keywordsValue[j]?.keyword_and;
-        const keywordOr = keywordsValue[j]?.keyword_or;
-        const keywordExclude = keywordsValue[j]?.keyword_exclude;
-    
-        if(keywordAnd?.length > 0) {
-          for(let i =0; i< keywordAnd?.length; i++) {
-             if(keywordAnd[i] === keyword) {
-               return true
-             }
-          }
-        }
-    
-        if(keywordOr?.length > 0) {
-          for(let i =0; i< keywordOr?.length; i++) {
-             if(keywordOr[i] === keyword) {
-               return true
-             }
-          }
-        }
-    
-        if(keywordExclude?.length > 0) {
-          for(let i =0; i< keywordExclude?.length; i++) {
-             if(keywordExclude[i] === keyword) {
-               return true
-             }
-          }
-        }
-      }
-    }
-
-    return false
-  }
-
   function handleChangeLabel(i: number, event: any) {
+    const checkInputKeywords = CheckKeywords(event.target.value, keywords)
+    setCheckKeyword(checkInputKeywords)
+
     const values = [...keywords]
     values[i].name = event.target.value
     setKeywords(values)
@@ -81,7 +97,7 @@ const KeywordForm = (props: any) => {
 
   function handleChangeColor(event: any, i: number) {
     const values = [...keywords]
-    values[i].colors = '#' + event.hex
+    values[i].color = '#' + event.hex
     setKeywords(values)
   }
 
@@ -115,17 +131,19 @@ const KeywordForm = (props: any) => {
 
     if (type === 'keyword_or') {
       values[indexValue].keyword_or = news
-      values[indexValue].delete_keyword_or =  delete_keyword_or ? [...delete_keyword_or , removed[0]] : removed
+      values[indexValue].delete_keyword_or = delete_keyword_or ? [...delete_keyword_or, removed[0]] : removed
     }
 
     if (type === 'keyword_and') {
       values[indexValue].keyword_and = news
-      values[indexValue].delete_keyword_and =  delete_keyword_and ? [...delete_keyword_and , removed[0]] : removed
+      values[indexValue].delete_keyword_and = delete_keyword_and ? [...delete_keyword_and, removed[0]] : removed
     }
 
     if (type === 'keyword_exclude') {
       values[indexValue].keyword_exclude = news
-      values[indexValue].delete_keyword_exclude =  delete_keyword_exclude ? [...delete_keyword_exclude , removed[0]] : removed
+      values[indexValue].delete_keyword_exclude = delete_keyword_exclude
+        ? [...delete_keyword_exclude, removed[0]]
+        : removed
     }
 
     setKeywords(values)
@@ -175,14 +193,37 @@ const KeywordForm = (props: any) => {
     if (list.length <= 0) {
       textKeywords = [...list, e.target.value]
       const checkInputKeywords = CheckKeywords(e.target.value, keywords)
-      console.log("checkKeywords", checkInputKeywords);
-      setCheckKeyword(checkInputKeywords || false)
+
+      // setCheckKeyword(checkInputKeywords)
+
+      if (type === 'keyword_or') {
+        setCheckKeywordOr(checkInputKeywords)
+      }
+
+      if (type === 'keyword_and') {
+        setCheckKeywordAnd(checkInputKeywords)
+      }
+
+      if (type === 'keyword_exclude') {
+        setCheckKeywordExclude(checkInputKeywords)
+      }
     } else {
       textKeywords = [...list]
       textKeywords[i] = e.target.value
       const checkInputKeywords = CheckKeywords(e.target.value, keywords)
-      console.log("checkKeywords", checkInputKeywords);
-      setCheckKeyword(checkInputKeywords  || false)
+
+      // setCheckKeyword(checkInputKeywords)
+      if (type === 'keyword_or') {
+        setCheckKeywordOr(checkInputKeywords)
+      }
+
+      if (type === 'keyword_and') {
+        setCheckKeywordAnd(checkInputKeywords)
+      }
+
+      if (type === 'keyword_exclude') {
+        setCheckKeywordExclude(checkInputKeywords)
+      }
     }
 
     const values = [...keywords]
@@ -208,12 +249,11 @@ const KeywordForm = (props: any) => {
     if (colorList.length <= 0) {
       keywordsColor = [...colorList, hashColor]
     } else {
-      
       if (type === 'keyword_or') {
         keywordsColor = [...colorList]
         keywordsColor[i] = hashColor
       }
-  
+
       if (type === 'keyword_and') {
         keywordsColor = [...colorList]
         keywordsColor = [hashColor]
@@ -264,7 +304,7 @@ const KeywordForm = (props: any) => {
           {keyword_and.length > 0 && !keyword_and[0] && !keyword_or[0] && !keyword_exclude[0] ? (
             <ColorPicker
               hideTextfield={true}
-              value={keywords[indexNumber]?.colors ? keywords[indexNumber]?.colors : createColor('#fff')}
+              value={keywords[indexNumber]?.color && keywords[indexNumber]?.color != '#' ? keywords[indexNumber]?.color : createColor('#fff')}
               onChange={(color: Color) => {
                 handleChangeColor(color, indexNumber)
               }}
@@ -440,14 +480,20 @@ const InputKeyword = (props: any) => {
   const [keywordColors, setKeywordColors] = useState(createColor('#70D477'))
   useEffect(() => {
     setText(textValue)
-    if(index === 0 && colorList) {
+    if (index === 0 && colorList) {
       console.log(colorList[0])
-      setKeywordColors(colorList[0]|| createColor('#70D477'))
-    } else if ( index && colorList) {
-      setKeywordColors((colorList && colorList[index])|| createColor('#70D477'))
+      setKeywordColors(colorList[0] || createColor('#70D477'))
+    } else if (index && colorList) {
+      setKeywordColors((colorList && colorList[index]) || createColor('#70D477'))
+    }
+
+    if(typeof(colorList) == 'string') {
+      console.log("and color", colorList  );
+      setKeywordColor(colorList)
     }
   }, [textValue])
 
+  
 
   function handleChangeText(e: any, index: any, indexValue: any) {
     setText(e.target.value)

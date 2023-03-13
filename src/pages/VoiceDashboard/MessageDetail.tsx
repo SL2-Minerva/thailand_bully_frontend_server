@@ -14,7 +14,7 @@ import { GetMessageDetail } from 'src/services/api/dashboards/overall/overallDas
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
-import { CheckCircle, OpenInNew, AlphaXCircle } from 'mdi-material-ui'
+import { CheckCircle, OpenInNew } from 'mdi-material-ui'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -307,7 +307,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                       {messageDetail.parent ? (
                         <CheckCircle style={{ color: 'green' }} />
                       ) : (
-                        <AlphaXCircle style={{ color: 'red' }} />
+                        ''
                       )}
                     </StyledTableCell>
                     <StyledTableCell>

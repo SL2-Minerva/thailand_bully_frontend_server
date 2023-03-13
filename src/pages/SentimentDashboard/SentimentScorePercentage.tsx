@@ -18,10 +18,10 @@ const Labels = (data: any) => {
   const labels: any[] = []
   if (data?.length > 0) {
     for (let i = 0; i < data?.length; i++) {
-      labels.push(data[i].keyword_name)
+      labels.push(data[i].keyword_name || '')
     }
   }
-
+  
   return labels
 }
 
@@ -46,6 +46,8 @@ const ChartDataSentiment = (data: any, type: string) => {
     }
   }
 
+  console.log("sentiment value", value)
+
   return value
 }
 
@@ -66,18 +68,18 @@ const SentimentScorePercentage = ({
 
   const series = [
     {
-      name: 'negative',
-      data: negativeData
+      name: 'Negative',
+      data: negativeData || []
     },
     {
       name: 'Neutral',
-      data: neutralData
+      data: neutralData || []
     },
     {
       name: 'Positive',
-      data: positiveData
+      data: positiveData || []
     }
-  ]
+  ];
 
   const options: ApexOptions = {
     chart: {
@@ -140,7 +142,14 @@ const SentimentScorePercentage = ({
             <Translations text='no data' />
           </div>
         ) : (
-          <ReactApexcharts type='bar' height={380} series={series} options={options} />
+          <>
+            {
+              negativeData?.length > 0 || positiveData?.length> 0 || neutralData?.length> 0 ? 
+              <ReactApexcharts type='bar' height={380} series={series} options={options} />
+              :
+              ""
+            }
+          </>
         )}
       </CardContent>
     </Card>
