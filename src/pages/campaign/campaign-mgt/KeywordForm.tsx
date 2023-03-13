@@ -97,6 +97,7 @@ const KeywordForm = (props: any) => {
 
   function handleChangeColor(event: any, i: number) {
     const values = [...keywords]
+    values[i].colors = '#' + event.hex
     values[i].color = '#' + event.hex
     setKeywords(values)
   }
@@ -481,14 +482,12 @@ const InputKeyword = (props: any) => {
   useEffect(() => {
     setText(textValue)
     if (index === 0 && colorList) {
-      console.log(colorList[0])
       setKeywordColors(colorList[0] || createColor('#70D477'))
     } else if (index && colorList) {
       setKeywordColors((colorList && colorList[index]) || createColor('#70D477'))
     }
 
     if(typeof(colorList) == 'string') {
-      console.log("and color", colorList  );
       setKeywordColor(colorList)
     }
   }, [textValue])

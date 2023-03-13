@@ -85,12 +85,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
       keyword_or: [''],
       keyword_and: [''],
       keyword_exclude: [''],
-      colors: [''],
+      colors: '',
       keyword_or_color: [''],
       keyword_and_color: [''],
       delete_keyword_or: [''],
       delete_keyword_and: [''],
-      delete_keyword_exclude: ['']
+      delete_keyword_exclude: [''],
+      color: ''
     }
   ])
 
@@ -103,12 +104,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
         keyword_or: [''],
         keyword_and: [''],
         keyword_exclude: [''],
-        colors: ['#fff'],
+        colors: '#fff',
         keyword_or_color: ['#70d477'],
         keyword_and_color: ['#ed5d5e'],
         delete_keyword_or: [''],
         delete_keyword_and: [''],
-        delete_keyword_exclude: ['']
+        delete_keyword_exclude: [''],
+        color: ''
       }
     ]
     setKeywords(news)
@@ -145,12 +147,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
         keyword_or: [''],
         keyword_and: [''],
         keyword_exclude: [''],
-        colors: [''],
+        colors: '',
         keyword_or_color: [''],
         keyword_and_color: [''],
         delete_keyword_or: [''],
         delete_keyword_and: [''],
-        delete_keyword_exclude: ['']
+        delete_keyword_exclude: [''],
+        color: ''
       }
     ])
   }
@@ -159,6 +162,18 @@ const DialogCampaign = (props: DialogInfoProps) => {
     // const startdate = new Date(date);
 
     // var formattedDate =
+    const values = [...keywords]
+
+    if(action == 'edit' && values?.length > 0) {
+      for(let i=0; i<keywords?.length; i++) {
+        let changeDataType : any;
+        if(typeof(values[i]?.keyword_and_color) == 'string') {
+          changeDataType = [values[i]?.keyword_and_color];
+          values[i].keyword_and_color = changeDataType
+        }
+        values[i].colors = values[i]?.color
+      }
+    }
 
     const input_data = {
       name: campaignName,
@@ -239,12 +254,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
           keyword_or: [''],
           keyword_and: [''],
           keyword_exclude: [''],
-          colors: [''],
+          colors: '',
           keyword_or_color: [''],
           keyword_and_color: [''],
           delete_keyword_or: [''],
           delete_keyword_and: [''],
-          delete_keyword_exclude: ['']
+          delete_keyword_exclude: [''],
+          color: ''
         }
       ])
       setDate(null)
