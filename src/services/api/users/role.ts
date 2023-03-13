@@ -6,7 +6,7 @@ export const role_list = (reload?: boolean, page?: number, paged?: boolean, filt
     method: 'GET',
     params : {
       page : page,
-      limit: 10
+      limit: 100000000
     },
     data: { paged, filter, org_id, reload }
   })

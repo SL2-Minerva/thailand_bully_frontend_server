@@ -486,7 +486,14 @@ const InputKeyword = (props: any) => {
     } else if (index && colorList) {
       setKeywordColors((colorList && colorList[index]) || createColor('#70D477'))
     }
+
+    if(typeof(colorList) == 'string') {
+      console.log("and color", colorList  );
+      setKeywordColor(colorList)
+    }
   }, [textValue])
+
+  
 
   function handleChangeText(e: any, index: any, indexValue: any) {
     setText(e.target.value)

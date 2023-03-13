@@ -1,5 +1,5 @@
 // ** React Imports
-import { ReactNode, SyntheticEvent } from 'react'
+import { ReactNode, SyntheticEvent, useState } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -76,12 +76,18 @@ const ForgotPassword = () => {
   const theme = useTheme()
   const { settings } = useSettings()
 
+  const [email, setEmail] = useState<string>('')
+
   // ** Vars
   const { skin } = settings
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
+  }
+
+  const handleChangeEmail = (e: any) => {
+    setEmail(e.target.value)
   }
 
   const imageSource =
@@ -203,7 +209,14 @@ const ForgotPassword = () => {
               </Typography>
             </Box>
             <form noValidate autoComplete='off' onSubmit={handleSubmit}>
-              <TextField autoFocus type='email' label='Email' sx={{ display: 'flex', mb: 4 }} />
+              <TextField
+                autoFocus
+                type='email'
+                label='Email'
+                value={email}
+                onChange={handleChangeEmail}
+                sx={{ display: 'flex', mb: 4 }}
+              />
               <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 5.25 }}>
                 Send reset link
               </Button>

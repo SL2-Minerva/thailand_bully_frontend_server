@@ -291,9 +291,6 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
               variant='outlined'
               color='primary'
             />
-            {/* <Button disabled={disableLoadMore} variant="contained" color="primary" onClick={(e) => {handleChangePagination(e, page)}}>
-                Load More
-              </Button> */}
           </Box>
         </DialogContent>
       </Dialog>
