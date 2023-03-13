@@ -14,6 +14,7 @@ import { GetMessageDetail } from 'src/services/api/dashboards/overall/overallDas
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
+import { CheckCircle, OpenInNew } from 'mdi-material-ui'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -166,6 +167,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                   <StyledTableCell>Comments</StyledTableCell>
                   <StyledTableCell>Reaction</StyledTableCell>
                   <StyledTableCell>Parent</StyledTableCell>
+                  <StyledTableCell>Link</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -188,7 +190,26 @@ const MessageDetail = (props: DialogInfoProps) => {
                     <StyledTableCell align='center'>{messageDetail.day}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.device}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.channel}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.parent}</StyledTableCell>
+                    <StyledTableCell
+                      onClick={() => {
+                        setShowDialog(true)
+                      }}
+                    >
+                      {messageDetail.parent ? (
+                        <CheckCircle style={{ color: 'green' }} />
+                      ) : (
+                        ''
+                      )}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {messageDetail.link_message ? (
+                        <a href={messageDetail.link_message} target='_blank' rel='noopener noreferrer'>
+                          <OpenInNew style={{ color: '#0047ff9e' }} />
+                        </a>
+                      ) : (
+                        ''
+                      )}
+                    </StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>
