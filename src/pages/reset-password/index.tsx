@@ -16,6 +16,8 @@ import Typography, { TypographyProps } from '@mui/material/Typography'
 // ** Icons Imports
 import ChevronLeft from 'mdi-material-ui/ChevronLeft'
 
+// ** Configs
+
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 
@@ -24,7 +26,8 @@ import { useSettings } from 'src/@core/hooks/useSettings'
 
 // ** Demo Imports
 import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
-import { ForgetPassword } from 'src/services/api/users/users'
+
+// import { ForgetPassword } from 'src/services/api/users/users'
 
 // Styled Components
 const ForgotPasswordIllustrationWrapper = styled(Box)<BoxProps>(({ theme }) => ({
@@ -69,16 +72,16 @@ const TypographyStyled = styled(Typography)<TypographyProps>(({ theme }) => ({
   [theme.breakpoints.down('md')]: { marginTop: theme.spacing(8) }
 }))
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
   // ** Hooks
   const theme = useTheme()
   const { settings } = useSettings()
 
   const [email, setEmail] = useState<string>('')
-  const [showText, setShowText] = useState<boolean>(false)
-  const [showErrorText, setShowErrorText] = useState<boolean>(false)
+  const [password, setPassword] = useState<string>('')
 
-  const { call_forgotPassword } = ForgetPassword()
+  //   const [showText, setShowText] = useState<boolean>(false)
+  //   const { call_forgotPassword } = ForgetPassword()
 
   // ** Vars
   const { skin } = settings
@@ -92,23 +95,23 @@ const ForgotPassword = () => {
     setEmail(e.target.value)
   }
 
-  const submitData = () => {
-    setShowText(false)
-    setShowErrorText(false)
-
-    if (email) {
-      call_forgotPassword(email)
-        .then(() => {
-          setShowText(true)
-          setShowErrorText(false)
-        })
-        .catch(ex => {
-          setShowText(false)
-          setShowErrorText(true)
-          console.log('error sending email', ex)
-        })
-    }
+  const handleChangePassword = (e: any) => {
+    setPassword(e.target.value)
   }
+
+  //   const submitData = () => {
+  //     setShowText(false)
+  //     if (email) {
+  //       call_forgotPassword(email)
+  //         .then(() => {
+  //           setShowText(true)
+  //         })
+  //         .catch(ex => {
+  //           setShowText(false)
+  //           console.log('error sending email', ex)
+  //         })
+  //     }
+  //   }
 
   const imageSource =
     skin === 'bordered' ? 'auth-v2-forgot-password-illustration-bordered' : 'auth-v2-forgot-password-illustration'
@@ -151,10 +154,7 @@ const ForgotPassword = () => {
               <img src='/images/Logo_Horizontal2.png' alt='logo' height='40' />
             </Box>
             <Box sx={{ mb: 6 }}>
-              <TypographyStyled variant='h5'>Forgot Password? 🔒</TypographyStyled>
-              <Typography variant='body2'>
-                Enter your email and we&prime;ll send you instructions to reset your password
-              </Typography>
+              <TypographyStyled variant='h5'>Reset Password</TypographyStyled>
             </Box>
             <form noValidate autoComplete='off' onSubmit={handleSubmit}>
               <TextField
@@ -165,40 +165,19 @@ const ForgotPassword = () => {
                 onChange={handleChangeEmail}
                 sx={{ display: 'flex', mb: 4 }}
               />
-              <Button onClick={submitData} fullWidth size='large' type='submit' variant='contained' sx={{ mb: 5.25 }}>
-                Send reset link
+              
+              <TextField
+                type='password'
+                label='New Password'
+                value={password}
+                onChange={handleChangePassword}
+                sx={{ display: 'flex', mb: 4 }}
+              />
+
+              <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 5.25 }}>
+                Reset Password
               </Button>
-              {showText ? (
-                <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Link passHref href='/login'>
-                    <Typography
-                      component={MuiLink}
-                      sx={{ display: 'flex', alignItems: 'center', color: 'primary.main', justifyContent: 'center' }}
-                    >
-                      <span>We've already set reset link to your email.</span> <br />
-                    </Typography>
-                  </Link>
-                </Typography>
-              ) : (
-                ''
-              )}
-              {showErrorText ? (
-                <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Link passHref href='/login'>
-                    <Typography
-                      component={MuiLink}
-                      sx={{ display: 'flex', alignItems: 'center', color: 'red', justifyContent: 'center' }}
-                    >
-                      <span>
-                        Sorry! We can't find your email in our system. <br />
-                        Please kindly check your email again that is corret or not.{' '}
-                      </span>
-                    </Typography>
-                  </Link>
-                </Typography>
-              ) : (
-                ''
-              )}
+
               <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Link passHref href='/login'>
                   <Typography
@@ -218,7 +197,7 @@ const ForgotPassword = () => {
   )
 }
 
-ForgotPassword.guestGuard = true
-ForgotPassword.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+ResetPassword.guestGuard = true
+ResetPassword.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 
-export default ForgotPassword
+export default ResetPassword

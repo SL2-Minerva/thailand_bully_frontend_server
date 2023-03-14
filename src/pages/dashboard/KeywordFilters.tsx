@@ -32,7 +32,7 @@ const KeywordFilters = (data: Props) => {
           <CardHeader title='Filter'></CardHeader>
           <CardContent>
             <Grid container spacing={1}>
-              <Grid item xs={6} md={1}>
+              <Grid item xs={6} md={2}>
                 <Button
                   sx={{ mb: 2 }}
                   onClick={() => {
@@ -53,7 +53,7 @@ const KeywordFilters = (data: Props) => {
               {resultKeywordList &&
                 (resultKeywordList || [])?.map((keywords: any, index: number) => {
                   return (
-                    <Grid item xs={6} md={1} key={index}>
+                    <Grid item xs={6} md={2} key={index}>
                       <Button
                         sx={{
                           mb: 2,
