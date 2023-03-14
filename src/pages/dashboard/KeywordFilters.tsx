@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, CardHeader, Grid } from '@mui/material'
+import { Button, Card, CardContent, CardHeader, Grid, LinearProgress } from '@mui/material'
 import { useEffect } from 'react'
 import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { wordBreaks } from './overall'
@@ -29,11 +29,13 @@ const KeywordFilters = (data: Props) => {
     <Grid container spacing={2} mt={2}>
       <Grid item xs={12}>
         <Card>
+        {loadingKeywordList && <LinearProgress style={{ width: '100%' }} />}
           <CardHeader title='Filter'></CardHeader>
           <CardContent>
             <Grid container spacing={1}>
-              <Grid item xs={6} md={2}>
+              <Grid item xs={6} md={1}>
                 <Button
+                fullWidth
                   sx={{ mb: 2 }}
                   onClick={() => {
                     if (keyword === 'all') {
@@ -53,8 +55,9 @@ const KeywordFilters = (data: Props) => {
               {resultKeywordList &&
                 (resultKeywordList || [])?.map((keywords: any, index: number) => {
                   return (
-                    <Grid item xs={6} md={2} key={index}>
+                    <Grid item xs={6} md={1.4} key={index}>
                       <Button
+                        fullWidth
                         sx={{
                           mb: 2,
                           bgcolor:
