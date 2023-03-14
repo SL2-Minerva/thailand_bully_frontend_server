@@ -40,7 +40,7 @@ export const GetSortBullyData = (data: any, value?: boolean) => {
       if(a.bully_level > b.bully_level) { return 1; } 
     })
   } else {
-    data.sort(function(a:any, b :any){
+    data?.sort(function(a:any, b :any){
       if(a.bully_level < b.bully_level) { return -1; }
       if(a.bully_level > b.bully_level) { return 1; } 
     })

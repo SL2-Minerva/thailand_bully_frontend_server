@@ -6,7 +6,6 @@ import {
   CardContent,
   InputLabel,
   MenuItem,
-  Button,
   Box,
   Tooltip,
   tooltipClasses,
@@ -15,17 +14,6 @@ import {
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
 import TextField from '@mui/material/TextField'
-
-// import DatePicker from '@mui/lab/DatePicker'
-// import LocalizationProvider from '@mui/lab/LocalizationProvider'
-// import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import StackedChart from './stackedChart'
-import DonutChart from './donutChart'
-import { useTheme } from '@mui/material/styles'
-import MessageText from 'mdi-material-ui/MessageText'
-import ThumbUp from 'mdi-material-ui/ThumbUp'
-import Person from 'mdi-material-ui/Account'
-import KeyStatusReport from './keyStatusReport'
 
 import DatePicker from 'react-datepicker'
 import { DateType } from 'src/types/forms/reactDatepickerTypes'
@@ -38,37 +26,19 @@ import { styled } from '@mui/material/styles'
 
 import 'chart.js/auto'
 import 'react-datepicker/dist/react-datepicker.css'
-import KeywordTable from './keywordTable'
-import MainKeyWordTable from './MainKeywordTable'
 
-// import SubKeywordList from "./SubKeyWordList"
-
-import TopHashtagList from './TopHastagList'
-import TopSiteList from './TopSiteList'
-
-import SentimentGaugeChart from './SentimentGaugeChart'
-
-// import SentimentLevelChart from './SentimentLevelChart'
-
-import CommentSentiment from './CommentSentiment'
-import ShareOfVoice from './ShareOfVoice'
 import { CampaignList } from 'src/services/api/campaign/CampaignAPI'
-import {
-  FilterByCampaignId,
-  GetKeyWordsList,
-  TotalKeyStats
-} from 'src/services/api/dashboards/overall/overallDashboardApi'
+
 import SourceService from 'src/services/api/source/SourceApi'
-import WordCloud from './WordCloud'
-import TotalMessageLists from './TotalMessageLists'
-import WordCloudChannel from './WordCloudChannel'
-import WordCloudSentiment from './WordCloudSentiment'
+
 import { UserPermission } from 'src/services/api/users/role'
 import { API_PATH, GraphicColors } from 'src/utils/const'
 import Translations from 'src/layouts/components/Translations'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import authConfig from 'src/configs/auth'
+import KeywordFilters from './KeywordFilters'
+import OverallGraphs from './OverallGraphs'
 
 // import QuickView from "./QuickView"
 
@@ -119,53 +89,30 @@ const OverallDashboard = () => {
   const [campaign, setCampaign] = useState<string>('')
   const [platformId, setPlatformId] = useState<string>('all')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
-  const [reload] = useState<boolean>(false)
-  const [period, setPeriod] = useState<string>('last7days')
+
+  // const [reload] = useState<boolean>(false)
   const [topKeyword, setTopKeyword] = useState<string>('all')
+
+  const [period, setPeriod] = useState<string>('last7days')
+
   const [showPreviousDatepicker, setShowPreviousDatepicker] = useState<boolean>(false)
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
-  const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
 
-  const theme = useTheme()
+  const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
+  const [loadingKeyword, setLoadingKeyword] = useState<boolean>(true);
+  
   const router = useRouter()
 
-  const whiteColor = '#fff'
-  const lineChartYellow = '#d4e157'
-  const lineChartPrimary = '#787EFF'
-  const lineChartWarning = '#ff9800'
-  const labelColor = theme.palette.text.primary
-  const borderColor = theme.palette.action.focus
-  const gridLineColor = theme.palette.action.focus
-  
-  const { resultReportPermission, errorUserPermission } = UserPermission()
   const { resultCampaiganList } = CampaignList()
+
+  const { resultReportPermission, errorUserPermission } = UserPermission()
+
   const { result_source_list } = SourceService()
-  const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount, loadingTotalKeystats } = TotalKeyStats(
-    campaign,
-    reload,
-    platformId,
-    date,
-    endDate,
-    period,
-    previousDate,
-    previousEndDate,
-    keyword
-  )
-  const { resultKeywordList, keywordsColor } = GetKeyWordsList(campaign)
-  const { resultFilterData, loadingFilterData } = FilterByCampaignId(
-    campaign,
-    platformId,
-    date,
-    endDate,
-    period,
-    previousDate,
-    previousEndDate,
-    keyword
-  )
+
   const checkKeywordId = (data: any, keywordId: string | number) => {
     const index = data.indexOf(keywordId)
-    
+
     if (index > -1) {
       data.splice(index, 1)
     } else {
@@ -198,15 +145,11 @@ const OverallDashboard = () => {
   const handleSelectList = useCallback((e: SelectChangeEvent, type: string) => {
     if (type === 'campaign') {
       setCampaign(e.target.value)
-      localStorage.setItem("campaign", e.target.value)
+      localStorage.setItem('campaign', e.target.value)
     } else {
       setPlatformId(e.target.value)
     }
   }, [])
-
-  const handleTopKeywords = (data: string) => {
-    setTopKeyword(data)
-  }
 
   const handleDateSelect = useCallback((e: any) => {
     const value = e.target?.value ? e.target?.value : e
@@ -299,20 +242,11 @@ const OverallDashboard = () => {
     }
   }, [])
 
-  useEffect(() => {
-    if(resultCampaiganList?.length>0) {
-      if(localStorage.getItem('campaign')) {
-        const value = localStorage.getItem('campaign')
-        setCampaign(value || '') 
-      } else {
-        setCampaign(resultCampaiganList[0]?.id)
-      }
-    }
-  },[resultCampaiganList])
+  const getKeywords = (campaignId: string) => {
+    setLoadingKeyword(true);
 
-  useEffect(() => {
     axios
-      .get(`${API_PATH}/keywords?campaing_id=${campaign}`, {
+      .get(`${API_PATH}/keywords?campaing_id=${campaignId}`, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
         }
@@ -324,21 +258,42 @@ const OverallDashboard = () => {
           for (let i = 0; i < resultData?.length; i++) {
             if (resultData[i]?.color) {
               keywordsColor.push({
-                keywordName : resultData[i]?.name,
+                keywordName: resultData[i]?.name,
                 color: resultData[i]?.color
               })
             }
           }
         }
         setKeywordGraphColor(keywordsColor)
+        setLoadingKeyword(false);
 
-        if(keywordsColor.length == 0) {
+        if (keywordsColor.length == 0) {
           setKeywordGraphColor(GraphicColors)
         }
       })
       .catch((ex: any) => {
+        setLoadingKeyword(true);
         console.log(ex)
       })
+  }
+
+  useEffect(() => {
+    if (resultCampaiganList?.length > 0) {
+      const value = localStorage.getItem('campaign')
+      if (value) {
+        setCampaign(value)
+        getKeywords(value)
+      } else {
+        setCampaign(resultCampaiganList[0]?.id)
+        getKeywords(resultCampaiganList[0]?.id)
+      }
+    }
+  }, [resultCampaiganList])
+
+  useEffect(() => {
+    if (campaign) {
+      getKeywords(campaign)
+    }
   }, [campaign])
 
   return (
@@ -404,7 +359,7 @@ const OverallDashboard = () => {
                       inputProps={{ placeholder: 'Select Campaign' }}
                     >
                       {resultCampaiganList &&
-                        resultCampaiganList.map((item: any, index: number) => {
+                        (resultCampaiganList || [])?.map((item: any, index: number) => {
                           return (
                             <MenuItem key={index} value={item.id}>
                               {item.name}
@@ -432,7 +387,7 @@ const OverallDashboard = () => {
                     >
                       <MenuItem value='all'>ALL</MenuItem>
                       {result_source_list &&
-                        result_source_list.map((item: any, index: number) => {
+                        result_source_list?.map((item: any, index: number) => {
                           return (
                             <MenuItem key={index} value={item.id}>
                               {item.name}
@@ -498,351 +453,30 @@ const OverallDashboard = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} mt={2}>
-        <Grid item xs={12}>
-          <Card>
-            <CardHeader title='Filter'></CardHeader>
-            <CardContent>
-              <Grid container spacing={2}>
-                <Grid item xs={6} md={1}>
-                  <Button
-                    sx={{ mb: 2 }}
-                    onClick={() => {
-                      if (keyword === 'all') {
-                        setKeyword('')
-                      } else {
-                        setKeyword('all')
-                        setFilterKeyword([])
-                      }
-                    }}
-                    variant='contained'
-                    color={keyword === 'all' ? 'primary' : 'secondary'}
-                  >
-                    ALL
-                  </Button>
-                </Grid>
-
-                {resultKeywordList &&
-                  (resultKeywordList || []).map((keywords: any, index: number) => {
-                    return (
-                      <Grid item xs={6} md={1.2} key={index}>
-                        <Button
-                          sx={{
-                            mb: 2,
-                            bgcolor:
-                              filterKeyword?.indexOf(keywords?.id) > -1
-                                ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
-                                : keyword === 'all'
-                                ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
-                                : 'grey',
-                            ':hover': {
-                              bgcolor:
-                                filterKeyword?.indexOf(keywords?.id) > -1
-                                  ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
-                                  : keyword === 'all'
-                                  ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
-                                  : 'grey'
-                            }
-                          }}
-                          onClick={() => {
-                            checkKeywordId(
-                              filterKeyword,
-                              keywords?.id
-                            )
-                          }}
-                          variant='contained'
-                        >
-                          <span style={{ wordWrap: 'break-word' }}>{wordBreaks(keywords.name)}</span>
-                        </Button>
-                      </Grid>
-                    )
-                  })}
-              </Grid>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={3} mt={2}>
-        {resultReportPermission?.includes('1') ? (
-          <Grid id='chart1' item xs={12} md={4}>
-            <DonutChart
-              keywordsColor={keywordGraphColors}
-              params={params}
-              resultFilterData={resultFilterData}
-              loadingFilterData={loadingFilterData}
-            />
-          </Grid>
-        ) : (
-          ''
-        )}
-        {resultReportPermission?.includes('2') ? (
-          <Grid id='chart2' item xs={12} md={8}>
-            <StackedChart
-              white={whiteColor}
-              labelColor={labelColor}
-              success={lineChartYellow}
-              borderColor={borderColor}
-              primary={lineChartPrimary}
-              warning={lineChartWarning}
-              gridLineColor={gridLineColor}
-              params={params}
-              loadingFilterData={loadingFilterData}
-              resultFilterData={resultFilterData}
-              keywordsColor={keywordGraphColors}
-            />
-          </Grid>
-        ) : (
-          ''
-        )}
-      </Grid>
-
-      <Grid container spacing={3} mt={2}>
-        {resultReportPermission?.includes('3') ? (
-          <Grid id='chart3' item xs={12} md={4}>
-            <KeyStatusReport
-              stats={resultTotalMessagePerDay?.comparison || '0'}
-              type={resultTotalMessagePerDay?.type}
-              color='primary'
-              trendNumber={resultTotalMessagePerDay?.percentage || '0'}
-              icon={<MessageText />}
-              title='Period over Period Comparison'
-              chipText='Last 1 Month'
-              totalText='Total Messages'
-              totalValue={resultTotalMessagePerDay?.total_message?.toString() || '0'}
-              averageText='Average Message per Day'
-              averageValue={resultTotalMessagePerDay?.average_message?.toString() || '0'}
-              chartId='Chart 3'
-              reportNo='1.1.005'
-              loading={loadingTotalKeystats}
-            />
-          </Grid>
-        ) : (
-          ''
-        )}
-
-        {resultReportPermission?.includes('4') ? (
-          <Grid id='chart4' item xs={12} md={4}>
-            <KeyStatusReport
-              stats={resultTotalEngagement?.comparison || '0'}
-              type={resultTotalEngagement?.type}
-              color='primary'
-              trendNumber={resultTotalEngagement?.percentage || '0'}
-              icon={<ThumbUp />}
-              title='Period over Period Comparison'
-              chipText='Last 1 Month'
-              totalText='Total Engagements'
-              totalValue={resultTotalEngagement?.total_engagement?.toString() || '0'}
-              averageText='Avg. Engagement per Day'
-              averageValue={resultTotalEngagement?.average_engagement?.toString() || '0'}
-              chartId='Chart 4'
-              reportNo='1.1.006'
-              loading={loadingTotalKeystats}
-            />
-          </Grid>
-        ) : (
-          ''
-        )}
-
-        {resultReportPermission?.includes('5') ? (
-          <Grid id='chart5' item xs={12} md={4}>
-            <KeyStatusReport
-              stats={resultTotalAccount?.comparison || '0'}
-              type={resultTotalAccount?.type}
-              color='primary'
-              trendNumber={resultTotalAccount?.percentage || '0'}
-              icon={<Person />}
-              title='Period over Period Comparison'
-              chipText='Last 1 Month'
-              totalText='Total Accounts'
-              totalValue={resultTotalAccount?.total_account?.toString() || '0'}
-              averageText='Average Account per Day'
-              averageValue={resultTotalAccount?.average_account?.toString() || '0'}
-              chartId='Chart 5'
-              reportNo='1.1.007'
-              loading={loadingTotalKeystats}
-            />
-          </Grid>
-        ) : (
-          ''
-        )}
-      </Grid>
-
-      <Grid container spacing={3} mt={2}>
-        {resultReportPermission?.includes('6') ? (
-          <Grid id='chart6' item xs={12}>
-            <KeywordTable params={params} chartId='Chart 6' />
-          </Grid>
-        ) : (
-          ''
-        )}
-      </Grid>
-
-      <Grid container spacing={3} mt={2}>
-        {resultReportPermission?.includes('7') ? (
-          <Grid id='chart7' item xs={12} md={4}>
-            <MainKeyWordTable params={params} chartId='Chart 7' />
-          </Grid>
-        ) : (
-          ''
-        )}
-
-        {resultReportPermission?.includes('8') ? (
-          <Grid id='chart8' item xs={12} md={4}>
-            <TopSiteList params={params} chartId='Chart 8' />
-          </Grid>
-        ) : (
-          ''
-        )}
-
-        {resultReportPermission?.includes('9') ? (
-          <Grid id='chart9' item xs={12} md={4}>
-            <TopHashtagList params={params} chartId='Chart 9' />
-          </Grid>
-        ) : (
-          ''
-        )}
-      </Grid>
-
-      <Grid container spacing={3} mt={2}>
-        {resultReportPermission?.includes('10') ? (
-          <Grid id='chart10' item xs={12} md={6}>
-            <SentimentGaugeChart params={params} chartId='Chart 10' />
-          </Grid>
-        ) : (
-          ''
-        )}
-        {resultReportPermission?.includes('11') ? (
-          <Grid id='chart11' item xs={12} md={6}>
-            <CommentSentiment params={params} chartId='Chart 11' />
-          </Grid>
-        ) : (
-          ''
-        )}
-      </Grid>
-
-      <Grid container spacing={3} mt={2}>
-        {resultReportPermission?.includes('12') ? (
-          <>
-            <Grid id='chart12' item xs={12} >
-              <ShareOfVoice params={params} chartId='Chart 12' keywordsColor={keywordGraphColors} />
-            </Grid>
-            {/* <Grid item xs={12} md={4}>
-              <SentimentLevelChart params={params} />
-            </Grid> */}
-          </>
-        ) : (
-          ''
-        )}
-      </Grid>
-
-      {resultReportPermission?.includes('13') ||
-      resultReportPermission?.includes('15') ||
-      resultReportPermission?.includes('18') ? (
-        <Grid container spacing={3} mt={2}>
-          <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
-            <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
-            <Button
-              variant='contained'
-              color={topKeyword === 'top10' ? 'warning' : 'inherit'}
-              size='medium'
-              sx={{ marginRight: '20px' }}
-              onClick={() => {
-                handleTopKeywords('top10')
-              }}
-            >
-              {' '}
-              Top 10
-            </Button>
-            <Button
-              variant='contained'
-              color={topKeyword === 'top20' ? 'warning' : 'inherit'}
-              size='medium'
-              sx={{ marginRight: '20px' }}
-              onClick={() => {
-                handleTopKeywords('top20')
-              }}
-            >
-              {' '}
-              Top 20
-            </Button>
-            <Button
-              variant='contained'
-              color={topKeyword === 'top50' ? 'warning' : 'inherit'}
-              size='medium'
-              sx={{ marginRight: '20px' }}
-              onClick={() => {
-                handleTopKeywords('top50')
-              }}
-            >
-              {' '}
-              Top 50
-            </Button>
-            <Button
-              variant='contained'
-              color={topKeyword === 'top100' ? 'warning' : 'inherit'}
-              size='medium'
-              sx={{ marginRight: '20px' }}
-              onClick={() => {
-                handleTopKeywords('top100')
-              }}
-            >
-              {' '}
-              Top 100
-            </Button>
-            <Button
-              variant='contained'
-              color={topKeyword === 'all' ? 'warning' : 'inherit'}
-              size='medium'
-              sx={{ marginRight: '20px' }}
-              onClick={() => {
-                handleTopKeywords('all')
-              }}
-            >
-              {' '}
-              ALL{' '}
-            </Button>
-          </Grid>
-        </Grid>
+      {campaign ? (
+        <KeywordFilters
+          campaign={campaign}
+          keyword={keyword}
+          setKeyword={setKeyword}
+          filterKeyword={filterKeyword}
+          setFilterKeyword={setFilterKeyword}
+          checkKeywordId={checkKeywordId}
+        />
       ) : (
         ''
       )}
 
-      {resultReportPermission?.includes('13') ? (
-        <>
-          <Grid container spacing={3} mt={2}>
-            <Grid id='chart13' item xs={12} md={6}>
-              <WordCloud params={params} chartId='Chart 13' />
-            </Grid>
-            <Grid id='chart14' item xs={12} md={6}>
-              <TotalMessageLists params={params} chartId='Chart 14' />
-            </Grid>
-          </Grid>
-        </>
+      {!loadingKeyword && keywordGraphColors ? (
+        <OverallGraphs
+          params={params}
+          setTopKeyword={setTopKeyword}
+          resultReportPermission={resultReportPermission}
+          keywordGraphColors={keywordGraphColors}
+          topKeyword={topKeyword}
+        />
       ) : (
         ''
       )}
-
-      {resultReportPermission?.includes('15') ? (
-        <Grid container spacing={3} mt={2}>
-          <Grid id='chart15' item xs={12}>
-            <WordCloudChannel params={params} chartId='Chart 15' />
-          </Grid>
-        </Grid>
-      ) : (
-        ''
-      )}
-      {resultReportPermission?.includes('18') ? (
-        <Grid container spacing={3} mt={2}>
-          <Grid id='chart17' item xs={12} md={12}>
-            <WordCloudSentiment params={params} chartId='Chart 18' />
-          </Grid>
-        </Grid>
-      ) : (
-        ''
-      )}
-
-      {/* <QuickView /> */}
     </>
   )
 }

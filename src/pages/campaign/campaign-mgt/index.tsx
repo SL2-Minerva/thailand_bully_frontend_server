@@ -32,8 +32,6 @@ import { UserPermission } from 'src/services/api/users/role'
 import { useRouter } from 'next/router'
 
 const CampaignManagement = () => {
-  
-  
   // const [campaignName, setCampaignName] = useState<string>('')
   const router = useRouter()
   const [campaignName, setCampaignName] = useState<string>('')
@@ -47,8 +45,8 @@ const CampaignManagement = () => {
   const [reload, setReload] = useState<boolean>(false)
   const [current, setCurrent] = useState<any>({})
   const [action, setAction] = useState<string>('create')
-  const [page, setPage] = useState(0);
-  const [pageCount, setPageCount] = useState<number>(0);
+  const [page, setPage] = useState(0)
+  const [pageCount, setPageCount] = useState<number>(0)
 
   const toggleCreate = () => {
     setAction('create')
@@ -56,13 +54,21 @@ const CampaignManagement = () => {
     setCurrent({})
   }
 
-  const { resultCampaiganList, total, keyword_limit } = CampaignSearchList(reload, page, campaignName, status, organization, date, endDate)
+  const { resultCampaiganList, total, keyword_limit } = CampaignSearchList(
+    reload,
+    page,
+    campaignName,
+    status,
+    organization,
+    date,
+    endDate
+  )
 
-  const { result_domain_list } = DomainList();
+  const { result_domain_list } = DomainList()
 
   const { list } = Organization.getList(reload)
 
-  const { resultPermission, errorUserPermission } = UserPermission();
+  const { resultPermission, errorUserPermission } = UserPermission()
 
   const handleOrganization = useCallback((e: SelectChangeEvent) => {
     setOrganization(e.target.value)
@@ -73,21 +79,22 @@ const CampaignManagement = () => {
   }, [])
 
   function handleChange(index: number, i: number, event: any) {
-    axios.put(
-      authConfig.updateCampaign,
-      { id: i, status: event.target.checked },
-      {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+    axios
+      .put(
+        authConfig.updateCampaign,
+        { id: i, status: event.target.checked },
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+          }
         }
-      }
-    ).then(() => {
-      const values = [...resultCampaiganList]
-      values[index].status = event.target.checked
-      setTableData(values)
-      setReload(!reload)
-    })
-
+      )
+      .then(() => {
+        const values = [...resultCampaiganList]
+        values[index].status = event.target.checked
+        setTableData(values)
+        setReload(!reload)
+      })
   }
 
   function handleEdit(i: number) {
@@ -97,52 +104,52 @@ const CampaignManagement = () => {
   }
   const [tableData, setTableData] = useState(resultCampaiganList)
 
-  function handleSubmitSearch ()  {
-    setReload(!reload);
-    setPage(0);
+  function handleSubmitSearch() {
+    setReload(!reload)
+    setPage(0)
   }
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value-1);
-  };
-
-  const handleClear = () => {
-    setCampaignName('');
-    setOrganization('');
-    setDate(null);
-    setEndDate(null);
-    setStatus('');
-    setPage(0);
+    setPage(value - 1)
   }
 
-  useEffect(()=> {
-      if (total > 0) {
-      setPageCount(Math.ceil(total / 10));
-      }
-  }, [total]);
+  const handleClear = () => {
+    setCampaignName('')
+    setOrganization('')
+    setDate(null)
+    setEndDate(null)
+    setStatus('')
+    setPage(0)
+  }
 
   useEffect(() => {
-    if(!showCreate) {
+    if (total > 0) {
+      setPageCount(Math.ceil(total / 10))
+    }
+  }, [total])
+
+  useEffect(() => {
+    if (!showCreate) {
       setReload(!reload)
-    } 
+    }
   }, [showCreate])
 
   useEffect(() => {
-    if(!showEdit) {
+    if (!showEdit) {
       setReload(!reload)
     }
   }, [showEdit])
 
-  useEffect(()=> {
-    if(errorUserPermission) {
+  useEffect(() => {
+    if (errorUserPermission) {
       window.localStorage.removeItem('userData')
       localStorage.clear()
       router.push('/login')
     }
   }, [errorUserPermission])
 
-  useEffect(()=> {
+  useEffect(() => {
     setTableData(resultCampaiganList)
-  },[resultCampaiganList])
+  }, [resultCampaiganList])
 
   return (
     <Grid container spacing={6}>
@@ -153,7 +160,12 @@ const CampaignManagement = () => {
             <Grid container spacing={6}>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <TextField id='campaign' onChange={(e) => setCampaignName(e.target.value )} label='Campaign Name' value={campaignName} />
+                  <TextField
+                    id='campaign'
+                    onChange={e => setCampaignName(e.target.value)}
+                    label='Campaign Name'
+                    value={campaignName}
+                  />
                 </FormControl>
               </Grid>
               <Grid item sm={4} xs={12}>
@@ -168,18 +180,15 @@ const CampaignManagement = () => {
                     onChange={handleOrganization}
                     inputProps={{ placeholder: 'Select Organization' }}
                   >
-                    <MenuItem value="">
-                       All
-                    </MenuItem>
-                     {
-                      list && list.map((item: any, index: number) => {
+                    <MenuItem value=''>All</MenuItem>
+                    {list &&
+                      list.map((item: any, index: number) => {
                         return (
                           <MenuItem key={index} value={item.id}>
                             {item.name}
                           </MenuItem>
                         )
-                      })
-                    }
+                      })}
                   </Select>
                 </FormControl>
               </Grid>
@@ -195,9 +204,7 @@ const CampaignManagement = () => {
                     onChange={handleStatusChange}
                     inputProps={{ placeholder: 'Select Status' }}
                   >
-                    <MenuItem value="">
-                       All
-                    </MenuItem>
+                    <MenuItem value=''>All</MenuItem>
                     <MenuItem value='1'>Active</MenuItem>
                     <MenuItem value='0'>Inactive</MenuItem>
                   </Select>
@@ -244,7 +251,7 @@ const CampaignManagement = () => {
                   <Button
                     sx={{ mb: 2, ml: 3 }}
                     onClick={() => {
-                      handleClear();
+                      handleClear()
                     }}
                     variant='contained'
                   >
@@ -260,8 +267,7 @@ const CampaignManagement = () => {
         <Card>
           <CardContent>
             <TableContainer component={Paper}>
-              {
-                resultPermission?.campaign?.authorized_create ?
+              {resultPermission?.campaign?.authorized_create ? (
                 <Box
                   sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
                 >
@@ -271,10 +277,10 @@ const CampaignManagement = () => {
                     </Button>
                   </Box>
                 </Box>
-                :
+              ) : (
                 <></>
-              }
-              
+              )}
+
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
@@ -283,85 +289,96 @@ const CampaignManagement = () => {
                     <TableCell align='center'>Domain</TableCell>
                     <TableCell align='center'>Organization</TableCell>
                     <TableCell align='center'>Status</TableCell>
-                    {
-                      resultPermission?.campaign?.authorized_edit ?
-                      <TableCell align='center'>Action</TableCell>
-                      : <></>
-                    }
+                    {resultPermission?.campaign?.authorized_edit ? <TableCell align='center'>Action</TableCell> : <></>}
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {resultCampaiganList && resultCampaiganList.map((campaignList: any, index: number) => (
-                    <TableRow
-                      key={index}
-                      sx={{
-                        '&:last-of-type td, &:last-of-type th': {
-                          border: 0
-                        }
-                      }}
-                    >
-                      <TableCell component='th' scope='row'>
-                        {campaignList.name}
-                      </TableCell>
-                      <TableCell align='center'>
-                        {(campaignList.keyword || []).map((keyword: any, i: number) => (
-                          <div key={i}>
-                            <span>
-                              <b>{keyword.name} :</b>
-                              {' ' + keyword.keyword_or + ', ' + keyword.keyword_and + ', ' + keyword.keyword_exclude}
-                            </span>
-                          </div>
-                        ))}
-                      </TableCell>
-                      <TableCell align='center'>
-                        {(result_domain_list || []).map((domain: any, domainIndex: number) => (
-                          <span key={domainIndex}>{domain.id === campaignList.domain_id && <span>{domain.name}</span>}</span>
-                        ))}
-                      </TableCell>
-                      <TableCell align='center'>{campaignList.organization}</TableCell>
-                      {
-                        resultPermission?.campaign?.authorized_edit ?
-                        <>
-                            <TableCell align='center'>
-                              <Switch key={index} checked={campaignList.status === 1 ? true : campaignList.status ? true : false} 
-                                onChange={e => handleChange(index, campaignList.id, e)} />
-                            </TableCell>
-                            <TableCell align='center'>
-                            <PencilOutline
-                                      onClick={() => {
-                                        handleEdit(index)
-                                      }}
-                                    />
-                            </TableCell>
-                        </>
-                        : 
-                        <TableCell align='center'>
-                            <Switch key={index} checked={campaignList.status === 1 ? true : campaignList.status ? true : false} />
+                  {resultCampaiganList &&
+                    resultCampaiganList.map((campaignList: any, index: number) => (
+                      <TableRow
+                        key={index}
+                        sx={{
+                          '&:last-of-type td, &:last-of-type th': {
+                            border: 0
+                          }
+                        }}
+                      >
+                        <TableCell component='th' scope='row'>
+                          {campaignList.name}
                         </TableCell>
-                      }
-                    </TableRow>
-                      
-                  ))}
+                        <TableCell align='center'>
+                          {(campaignList.keyword || []).map((keyword: any, i: number) => (
+                            <div key={i}>
+                              <span>
+                                <b>{keyword.name} :</b>
+                                {' ' + keyword.keyword_or + ', ' + keyword.keyword_and + ', ' + keyword.keyword_exclude}
+                              </span>
+                            </div>
+                          ))}
+                        </TableCell>
+                        <TableCell align='center'>
+                          {(result_domain_list || []).map((domain: any, domainIndex: number) => (
+                            <span key={domainIndex}>
+                              {domain.id === campaignList.domain_id && <span>{domain.name}</span>}
+                            </span>
+                          ))}
+                        </TableCell>
+                        <TableCell align='center'>{campaignList.organization}</TableCell>
+                        {resultPermission?.campaign?.authorized_edit ? (
+                          <>
+                            <TableCell align='center'>
+                              <Switch
+                                key={index}
+                                checked={campaignList.status === 1 ? true : campaignList.status ? true : false}
+                                onChange={e => handleChange(index, campaignList.id, e)}
+                              />
+                            </TableCell>
+                            <TableCell align='center'>
+                              <a href='#' style={{ color: 'grey' }}>
+                                <PencilOutline
+                                  onClick={() => {
+                                    handleEdit(index)
+                                  }}
+                                />
+                              </a>
+                            </TableCell>
+                          </>
+                        ) : (
+                          <TableCell align='center'>
+                            <Switch
+                              key={index}
+                              checked={campaignList.status === 1 ? true : campaignList.status ? true : false}
+                            />
+                          </TableCell>
+                        )}
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </TableContainer>
-            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
-              {
-                  total > 0 ? 
-                  <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
-                  : ""
-              }
+            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+              {total > 0 ? (
+                <Pagination
+                  count={pageCount}
+                  page={page + 1}
+                  onChange={handleChangePagination}
+                  variant='outlined'
+                  color='primary'
+                />
+              ) : (
+                ''
+              )}
             </Box>
           </CardContent>
         </Card>
-        <DialogCampaign table={tableData}
-                show={action === 'create' ? showCreate : showEdit}
-                setShow={action === 'create' ? setShowCreate : setShowEdit}
-                action={action}
-                current={current} 
-                keywordLimit = {keyword_limit}
-                />
-        
+        <DialogCampaign
+          table={tableData}
+          show={action === 'create' ? showCreate : showEdit}
+          setShow={action === 'create' ? setShowCreate : setShowEdit}
+          action={action}
+          current={current}
+          keywordLimit={keyword_limit}
+        />
       </Grid>
     </Grid>
   )

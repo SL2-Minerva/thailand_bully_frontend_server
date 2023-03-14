@@ -10,7 +10,7 @@ import MuiLink from '@mui/material/Link'
 import Button from '@mui/material/Button'
 
 // import Divider from '@mui/material/Divider'
-import Checkbox from '@mui/material/Checkbox'
+// import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
 import InputLabel from '@mui/material/InputLabel'
 import IconButton from '@mui/material/IconButton'
@@ -22,7 +22,8 @@ import { styled, useTheme } from '@mui/material/styles'
 import FormHelperText from '@mui/material/FormHelperText'
 import InputAdornment from '@mui/material/InputAdornment'
 import Typography from '@mui/material/Typography'
-import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
+
+// import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
 
 // ** Icons Imports
 // import Google from 'mdi-material-ui/Google'
@@ -95,12 +96,12 @@ const BoxWrapper = styled(Box)<BoxProps>(({ theme }) => ({
 //   [theme.breakpoints.down('md')]: { marginTop: theme.spacing(8) }
 // }))
 
-const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ theme }) => ({
-  '& .MuiFormControlLabel-label': {
-    fontSize: '0.875rem',
-    color: theme.palette.text.secondary
-  }
-}))
+// const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ theme }) => ({
+//   '& .MuiFormControlLabel-label': {
+//     fontSize: '0.875rem',
+//     color: theme.palette.text.secondary
+//   }
+// }))
 
 const schema = yup.object().shape({
   username: yup.string().email().required(),
@@ -267,13 +268,14 @@ const LoginPage = () => {
                 )}
               </FormControl>
               <Box
-                sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
+                sx={{ mb: 4,mt: 2, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
               >
-                <FormControlLabel
+                {/* <FormControlLabel
                   label='Remember Me'
                   control={<Checkbox />}
                   sx={{ '& .MuiFormControlLabel-label': { color: 'text.primary' } }}
-                />
+                /> */}
+                <span></span>
                 <Link passHref href='/forgot-password'>
                   <Typography component={MuiLink} variant='body2' sx={{ color: 'primary.main' }}>
                     Forgot Password?
@@ -283,7 +285,7 @@ const LoginPage = () => {
               <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
                 Login
               </Button>
-              <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+              {/* <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography sx={{ mr: 2, color: 'text.secondary' }}>New on our platform?</Typography>
                 <Typography>
                   <Link passHref href='/register'>
@@ -292,7 +294,7 @@ const LoginPage = () => {
                     </Typography>
                   </Link>
                 </Typography>
-              </Box>
+              </Box> */}
               {/* <Divider sx={{ mt: 5, mb: 7.5, '& .MuiDivider-wrapper': { px: 4 } }}>or</Divider>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Link href='/' passHref>

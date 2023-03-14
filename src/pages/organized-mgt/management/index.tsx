@@ -21,7 +21,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 
 import DialogOrganization from './dialogOrganization'
-import {OrganzationGroupServiceList}  from 'src/services/api/organization/OrganizationApi';
+import { OrganzationGroupServiceList } from 'src/services/api/organization/OrganizationApi'
 import OrganizationTypeService from 'src/services/api/organization/OrganizationApi'
 import { OrganizationSearchList } from 'src/services/api/organization/organization'
 import axios from 'axios'
@@ -31,21 +31,28 @@ import { useRouter } from 'next/router'
 const OrganizedManagement = () => {
   const [showEdit, setShowEdit] = useState<boolean>(false)
   const [showCreate, setShowCreate] = useState<boolean>(false)
-  const [name, setName] = useState<string>("");
+  const [name, setName] = useState<string>('')
   const [organization, setOrganization] = useState<string>('')
   const [organizationType, setOrganizationType] = useState<string>('')
   const [status, setStatus] = useState<string>('')
   const [reload, setReload] = useState<boolean>(false)
   const [current, setCurrent] = useState<any>({})
   const [action, setAction] = useState<string>('create')
-  const [page, setPage] = useState(0);
-  const [pageCount, setPageCount] = useState<number>(0);
+  const [page, setPage] = useState(0)
+  const [pageCount, setPageCount] = useState<number>(0)
   const router = useRouter()
 
   // const { list, total } = Organization.getList(reload, page)
-  const { result_organization_group_list } = OrganzationGroupServiceList(reload);
+  const { result_organization_group_list } = OrganzationGroupServiceList(reload)
   const { result_organization_type_list } = OrganizationTypeService(reload)
-  const { resultOrganizationSearch, total, errorOrganizationSearch } = OrganizationSearchList(reload, page, name, organization, organizationType,status )
+  const { resultOrganizationSearch, total, errorOrganizationSearch } = OrganizationSearchList(
+    reload,
+    page,
+    name,
+    organization,
+    organizationType,
+    status
+  )
 
   const [tableData, setTableData] = useState(resultOrganizationSearch)
 
@@ -68,17 +75,17 @@ const OrganizedManagement = () => {
   }
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value-1);
-  };
+    setPage(value - 1)
+  }
 
-  useEffect(()=> {
-      if (total > 0) {
-      setPageCount(Math.ceil(total / 10));
-      }
-  }, [total]);
+  useEffect(() => {
+    if (total > 0) {
+      setPageCount(Math.ceil(total / 10))
+    }
+  }, [total])
 
-  useEffect(()=> {
-    if(errorOrganizationSearch) {
+  useEffect(() => {
+    if (errorOrganizationSearch) {
       window.localStorage.removeItem('userData')
       localStorage.clear()
       router.push('/login')
@@ -116,11 +123,11 @@ const OrganizedManagement = () => {
   }
 
   const handleClear = () => {
-    setName('');
-    setOrganization('');
-    setOrganizationType('');
-    setStatus('');
-    setPage(0);
+    setName('')
+    setOrganization('')
+    setOrganizationType('')
+    setStatus('')
+    setPage(0)
   }
 
   return (
@@ -135,7 +142,14 @@ const OrganizedManagement = () => {
             <Grid container spacing={6}>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <TextField id='name' value={name} onChange={(e)=> {setName(e.target.value)}} label='Organization Name' />
+                  <TextField
+                    id='name'
+                    value={name}
+                    onChange={e => {
+                      setName(e.target.value)
+                    }}
+                    label='Organization Name'
+                  />
                 </FormControl>
               </Grid>
               <Grid item sm={4} xs={12}>
@@ -150,19 +164,15 @@ const OrganizedManagement = () => {
                     onChange={handleOrganization}
                     inputProps={{ placeholder: 'Select Organization' }}
                   >
-                    <MenuItem value="">
-                       All
-                    </MenuItem>
-                    {
-                      result_organization_group_list && result_organization_group_list.map((item: any, index: number) => {
+                    <MenuItem value=''>All</MenuItem>
+                    {result_organization_group_list &&
+                      result_organization_group_list.map((item: any, index: number) => {
                         return (
                           <MenuItem key={index} value={item.id}>
                             {item.organization_group_name}
                           </MenuItem>
                         )
-                      })
-                    }
-
+                      })}
                   </Select>
                 </FormControl>
               </Grid>
@@ -178,18 +188,15 @@ const OrganizedManagement = () => {
                     onChange={handleOrganizationType}
                     inputProps={{ placeholder: 'Select Organization' }}
                   >
-                    <MenuItem value="">
-                       All
-                    </MenuItem>
-                   {
-                      result_organization_type_list && result_organization_type_list.map((item: any, index: number) => {
+                    <MenuItem value=''>All</MenuItem>
+                    {result_organization_type_list &&
+                      result_organization_type_list.map((item: any, index: number) => {
                         return (
                           <MenuItem key={index} value={item.id}>
                             {item.organization_type_name}
                           </MenuItem>
                         )
-                      })
-                    }
+                      })}
                   </Select>
                 </FormControl>
               </Grid>
@@ -227,7 +234,7 @@ const OrganizedManagement = () => {
                   <Button
                     sx={{ mb: 2, ml: 3 }}
                     onClick={() => {
-                      handleClear();
+                      handleClear()
                     }}
                     variant='contained'
                   >
@@ -245,9 +252,9 @@ const OrganizedManagement = () => {
           <CardContent>
             <Box sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-              <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                    Add
-                  </Button>
+                <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
+                  Add
+                </Button>
               </Box>
             </Box>
             <TableContainer component={Paper}>
@@ -280,26 +287,38 @@ const OrganizedManagement = () => {
                         <TableCell align='center'>{row.group}</TableCell>
                         <TableCell align='center'>{row.type}</TableCell>
                         <TableCell align='center'>
-                          <Switch key={index} checked={row.status === 1 ? true : row.status ? true : false} onChange={e => handleChange(index, row.id, e)} />
+                          <Switch
+                            key={index}
+                            checked={row.status === 1 ? true : row.status ? true : false}
+                            onChange={e => handleChange(index, row.id, e)}
+                          />
                         </TableCell>
                         <TableCell align='center'>
-                          <PencilOutline
-                            onClick={() => {
-                              handleEdit(index)
-                            }}
-                          />
+                          <a href='#' style={{ color: 'grey' }}>
+                            <PencilOutline
+                              onClick={() => {
+                                handleEdit(index)
+                              }}
+                            />
+                          </a>
                         </TableCell>
                       </TableRow>
                     ))}
                 </TableBody>
               </Table>
             </TableContainer>
-            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
-              {
-                  total > 0 ? 
-                  <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
-                  : ""
-              }
+            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+              {total > 0 ? (
+                <Pagination
+                  count={pageCount}
+                  page={page + 1}
+                  onChange={handleChangePagination}
+                  variant='outlined'
+                  color='primary'
+                />
+              ) : (
+                ''
+              )}
             </Box>
             <DialogOrganization
               table={tableData}

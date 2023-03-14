@@ -28,8 +28,8 @@ const DomainManagement = () => {
   const [reload, setReload] = useState<boolean>(false)
   const [current, setCurrent] = useState<any>({})
   const [action, setAction] = useState<string>('create')
-  const [page, setPage] = useState(0);
-  const [pageCount, setPageCount] = useState<number>(0);
+  const [page, setPage] = useState(0)
+  const [pageCount, setPageCount] = useState<number>(0)
 
   const toggleCreate = () => {
     setAction('create')
@@ -38,15 +38,15 @@ const DomainManagement = () => {
   }
 
   const { result_domain_list, total } = DomainList(reload, page)
-  const { resultPermission, errorUserPermission } = UserPermission();
+  const { resultPermission, errorUserPermission } = UserPermission()
 
   useEffect(() => {
     setReload(!reload)
     setTableData(result_domain_list)
   }, [showCreate, showEdit])
 
-  useEffect(()=> {
-    if(errorUserPermission) {
+  useEffect(() => {
+    if (errorUserPermission) {
       window.localStorage.removeItem('userData')
       localStorage.clear()
       router.push('/login')
@@ -79,15 +79,14 @@ const DomainManagement = () => {
   const [tableData, setTableData] = useState(result_domain_list)
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value-1);
-  };
+    setPage(value - 1)
+  }
 
-  useEffect(()=> {
-      if (total > 0) {
-      setPageCount(Math.ceil(total / 10));
-      }
-  }, [total]);
-
+  useEffect(() => {
+    if (total > 0) {
+      setPageCount(Math.ceil(total / 10))
+    }
+  }, [total])
 
   return (
     <Grid container spacing={6}>
@@ -96,8 +95,7 @@ const DomainManagement = () => {
           <CardHeader title='Domain Management' />
           <CardContent>
             <TableContainer component={Paper}>
-              {
-                resultPermission?.campaign?.authorized_create ? 
+              {resultPermission?.campaign?.authorized_create ? (
                 <Box
                   sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
                 >
@@ -107,20 +105,17 @@ const DomainManagement = () => {
                     </Button>
                   </Box>
                 </Box>
-                : <></>
-              }
-              
+              ) : (
+                <></>
+              )}
+
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Domain Name</TableCell>
                     <TableCell align='center'>Description</TableCell>
                     <TableCell align='center'>Status</TableCell>
-                    {
-                      resultPermission?.campaign?.authorized_edit ? 
-                      <TableCell align='center'>Action</TableCell>
-                      : ""
-                    }
+                    {resultPermission?.campaign?.authorized_edit ? <TableCell align='center'>Action</TableCell> : ''}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -145,33 +140,30 @@ const DomainManagement = () => {
                                 {row.name}
                               </TableCell>
                               <TableCell align='center'>{row.description ?? '-'}</TableCell>
-                              {
-                                resultPermission?.campaign?.authorized_edit ? 
-                                  <>
-                                    <TableCell align='center'>
-                                      <Switch
-                                        key={index}
-                                        checked={row.status === 1 ? true : row.status ? true : false}
-                                        onChange={e => handleChange(index, row.id, e)}
-                                      />
-                                    </TableCell>
-                                    <TableCell align='center'>
+                              {resultPermission?.campaign?.authorized_edit ? (
+                                <>
+                                  <TableCell align='center'>
+                                    <Switch
+                                      key={index}
+                                      checked={row.status === 1 ? true : row.status ? true : false}
+                                      onChange={e => handleChange(index, row.id, e)}
+                                    />
+                                  </TableCell>
+                                  <TableCell align='center'>
+                                    <a href='#' style={{ color: 'grey' }}>
                                       <PencilOutline
                                         onClick={() => {
                                           handleEdit(index)
                                         }}
                                       />
-                                    </TableCell>
-                                  </>
-                                : 
+                                    </a>
+                                  </TableCell>
+                                </>
+                              ) : (
                                 <TableCell align='center'>
-                                  <Switch
-                                    key={index}
-                                    checked={row.status === 1 ? true : row.status ? true : false}
-                                  />
+                                  <Switch key={index} checked={row.status === 1 ? true : row.status ? true : false} />
                                 </TableCell>
-                              }
-                              
+                              )}
                             </TableRow>
                           ))}
                       </>
@@ -180,12 +172,18 @@ const DomainManagement = () => {
                 </TableBody>
               </Table>
             </TableContainer>
-            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
-              {
-                  total > 0 ? 
-                  <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
-                  : ""
-              }
+            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+              {total > 0 ? (
+                <Pagination
+                  count={pageCount}
+                  page={page + 1}
+                  onChange={handleChangePagination}
+                  variant='outlined'
+                  color='primary'
+                />
+              ) : (
+                ''
+              )}
             </Box>
             <DialogDomain
               table={tableData}

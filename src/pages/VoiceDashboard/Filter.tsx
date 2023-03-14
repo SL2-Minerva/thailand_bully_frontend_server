@@ -149,14 +149,12 @@ const Filter = (props: Props) => {
 
   useEffect(() => {
     if(resultCampaiganList?.length>0) {
-      if(localStorage.getItem('campaign')) {
-        const value = localStorage.getItem('campaign')
-        setCampaign(value || '') 
+      const value = localStorage.getItem('campaign')
+      if(value) {
+        setCampaign(value) 
       } else {
         setCampaign(resultCampaiganList[0]?.id)
       }
-
-     
     }
   },[resultCampaiganList])
 
