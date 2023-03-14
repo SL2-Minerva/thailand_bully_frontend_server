@@ -15,6 +15,7 @@ import Typography, { TypographyProps } from '@mui/material/Typography'
 
 // ** Icons Imports
 import ChevronLeft from 'mdi-material-ui/ChevronLeft'
+import { EyeOutline, EyeOffOutline } from 'mdi-material-ui'
 
 // ** Configs
 
@@ -26,6 +27,9 @@ import { useSettings } from 'src/@core/hooks/useSettings'
 
 // ** Demo Imports
 import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
+import { useRouter } from 'next/router'
+import { IconButton, InputAdornment } from '@mui/material'
+import { ResetPasswordRequest } from 'src/services/api/users/users'
 
 // import { ForgetPassword } from 'src/services/api/users/users'
 
@@ -73,15 +77,28 @@ const TypographyStyled = styled(Typography)<TypographyProps>(({ theme }) => ({
 }))
 
 const ResetPassword = () => {
+  const { query } = useRouter()
+
+  const token = query.token as string
+  const email = query.email as string
+
+  console.log('token', token, 'email', decodeURI(email))
+
   // ** Hooks
   const theme = useTheme()
   const { settings } = useSettings()
+  const [showText, setShowText] = useState<boolean>(false)
+  const [showErrorResponseText, setShowErrorResponseText] = useState<boolean>(false)
 
-  const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [showPassword, setShowPassword] = useState(false)
 
-  //   const [showText, setShowText] = useState<boolean>(false)
-  //   const { call_forgotPassword } = ForgetPassword()
+  const [confirmPassword, setConfirmPassword] = useState<string>('')
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
+  const [showErrorText, setShowErrorText] = useState<boolean>(false)
+
+  const { callResetPassword } = ResetPasswordRequest()
 
   // ** Vars
   const { skin } = settings
@@ -91,27 +108,60 @@ const ResetPassword = () => {
     e.preventDefault()
   }
 
-  const handleChangeEmail = (e: any) => {
-    setEmail(e.target.value)
+  const handleClickShowPassword = () => setShowPassword(show => !show)
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
   }
 
   const handleChangePassword = (e: any) => {
-    setPassword(e.target.value)
+    if (e.target.name === 'confirmPassword') {
+      setConfirmPassword(e.target.value)
+      if (password && password !== e.target.value) {
+        setShowErrorText(true)
+      } else {
+        setShowErrorText(false)
+      }
+    }
+
+    if (e.target.name === 'password') {
+      setPassword(e.target.value)
+      if (confirmPassword && confirmPassword !== e.target.value) {
+        setShowErrorText(true)
+      } else {
+        setShowErrorText(false)
+      }
+    }
   }
 
-  //   const submitData = () => {
-  //     setShowText(false)
-  //     if (email) {
-  //       call_forgotPassword(email)
-  //         .then(() => {
-  //           setShowText(true)
-  //         })
-  //         .catch(ex => {
-  //           setShowText(false)
-  //           console.log('error sending email', ex)
-  //         })
-  //     }
-  //   }
+  const handleClickShowConfrimPassword = () => setShowConfirmPassword(show => !show)
+
+  const handleMouseDownConfrimPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+  }
+
+  const submitData = () => {
+    setShowText(false)
+    setShowErrorResponseText(false)
+
+    if (password && confirmPassword && !showErrorText) {
+      const data = {
+        email: email || '',
+        token: token || '',
+        password: password
+      }
+      callResetPassword(data)
+        .then(() => {
+          setShowText(true)
+          setShowErrorResponseText(false)
+        })
+        .catch(ex => {
+          setShowText(false)
+          setShowErrorResponseText(true)
+          console.log('error sending email', ex)
+        })
+    }
+  }
 
   const imageSource =
     skin === 'bordered' ? 'auth-v2-forgot-password-illustration-bordered' : 'auth-v2-forgot-password-illustration'
@@ -158,37 +208,128 @@ const ResetPassword = () => {
             </Box>
             <form noValidate autoComplete='off' onSubmit={handleSubmit}>
               <TextField
-                autoFocus
-                type='email'
-                label='Email'
-                value={email}
-                onChange={handleChangeEmail}
                 sx={{ display: 'flex', mb: 4 }}
-              />
-              
-              <TextField
-                type='password'
-                label='New Password'
-                value={password}
+                id='password'
+                name='password'
+                label='Password'
+                variant='outlined'
                 onChange={handleChangePassword}
-                sx={{ display: 'flex', mb: 4 }}
+                value={password}
+                type={showPassword ? 'text' : 'password'}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <IconButton
+                        aria-label='toggle password visibility'
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge='end'
+                      >
+                        {showPassword ? <EyeOutline /> : <EyeOffOutline />}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
               />
 
-              <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 5.25 }}>
-                Reset Password
-              </Button>
+              <TextField
+                sx={{ display: 'flex', mb: 4 }}
+                id='confirm-password'
+                name='confirmPassword'
+                label='Confirm Password'
+                variant='outlined'
+                onChange={handleChangePassword}
+                value={confirmPassword}
+                type={showConfirmPassword ? 'text' : 'password'}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <IconButton
+                        aria-label='toggle password visibility'
+                        onClick={handleClickShowConfrimPassword}
+                        onMouseDown={handleMouseDownConfrimPassword}
+                        edge='end'
+                      >
+                        {showConfirmPassword ? <EyeOutline /> : <EyeOffOutline />}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
+              />
 
-              <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Link passHref href='/login'>
+              {password && confirmPassword && !showErrorText ? (
+                <Button onClick={submitData} fullWidth size='large' type='submit' variant='contained' sx={{ mb: 5.25 }}>
+                  Reset Password
+                </Button>
+              ) : (
+                <Button fullWidth size='large' variant='contained' color='secondary' sx={{ mb: 5.25 }}>
+                  Reset Password
+                </Button>
+              )}
+
+              {showErrorText ? (
+                <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Typography
                     component={MuiLink}
-                    sx={{ display: 'flex', alignItems: 'center', color: 'primary.main', justifyContent: 'center' }}
+                    sx={{ display: 'flex', alignItems: 'center', color: 'red', justifyContent: 'center' }}
                   >
-                    <ChevronLeft sx={{ mr: 1.5, fontSize: '2rem' }} />
-                    <span>Back to login</span>
+                    <span>Password and Confirm Password must be same! </span>
                   </Typography>
-                </Link>
-              </Typography>
+                </Typography>
+              ) : (
+                ''
+              )}
+
+              {showText ? (
+                <>
+                  <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Typography
+                      component={MuiLink}
+                      sx={{ display: 'flex', alignItems: 'center', color: 'primary.main', justifyContent: 'center' }}
+                    >
+                      <span>Your password is updated successfully</span>
+                    </Typography>
+                  </Typography>
+                  <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Link passHref href='/login'>
+                      <Typography
+                        component={MuiLink}
+                        sx={{ display: 'flex', alignItems: 'center', color: 'primary.main', justifyContent: 'center' }}
+                      >
+                        <ChevronLeft sx={{ mr: 1.5, fontSize: '2rem' }} />
+                        <span>Back to login</span>
+                      </Typography>
+                    </Link>
+                  </Typography>
+                </>
+              ) : (
+                ''
+              )}
+              {showErrorResponseText ? (
+                <>
+                  <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Typography
+                      component={MuiLink}
+                      sx={{ display: 'flex', alignItems: 'center', color: 'red', justifyContent: 'center' }}
+                    >
+                      <span>Sorry! Something went wrong while processing</span>
+                    </Typography>
+                  </Typography>
+                  <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Link passHref href='/login'>
+                      <Typography
+                        component={MuiLink}
+                        sx={{ display: 'flex', alignItems: 'center', color: 'primary.main', justifyContent: 'center' }}
+                      >
+                        <ChevronLeft sx={{ mr: 1.5, fontSize: '2rem' }} />
+                        <span>Back to login</span>
+                      </Typography>
+                    </Link>
+                  </Typography>
+                </>
+              ) : (
+                ''
+              )}
             </form>
           </BoxWrapper>
         </Box>
