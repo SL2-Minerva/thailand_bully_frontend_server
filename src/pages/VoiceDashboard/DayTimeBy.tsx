@@ -28,7 +28,7 @@ const DayTimeBy = ({
     params?.date,
     params?.endDate,
     params?.period,
-    params?.keyword,
+    params?.keywordIds,
     params?.previousDate,
     params?.previousEndDate
   )

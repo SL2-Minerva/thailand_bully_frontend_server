@@ -26,8 +26,8 @@ const OrganizationType = () => {
   const [reload, setReload] = useState<boolean>(false)
   const [current, setCurrent] = useState<any>({})
   const [action, setAction] = useState<string>('create')
-  const [page, setPage] = useState(0);
-  const [pageCount, setPageCount] = useState<number>(0);
+  const [page, setPage] = useState(0)
+  const [pageCount, setPageCount] = useState<number>(0)
 
   const toggleCreate = () => {
     setAction('create')
@@ -38,17 +38,17 @@ const OrganizationType = () => {
   const { result_organization_type_list, total, error_domain_list } = OrganizationTypeService(reload, page)
   const router = useRouter()
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value-1);
-  };
+    setPage(value - 1)
+  }
 
-  useEffect(()=> {
-      if (total > 0) {
-      setPageCount(Math.ceil(total / 10));
-      }
-  }, [total]);
+  useEffect(() => {
+    if (total > 0) {
+      setPageCount(Math.ceil(total / 10))
+    }
+  }, [total])
 
-  useEffect(()=> {
-    if(error_domain_list) {
+  useEffect(() => {
+    if (error_domain_list) {
       window.localStorage.removeItem('userData')
       localStorage.clear()
       router.push('/login')
@@ -61,23 +61,23 @@ const OrganizationType = () => {
   }, [showCreate, showEdit])
 
   function handleChange(index: number, i: number, event: any) {
-    axios.put(
-      authConfig.updateOrgType,
-      { id: i, status: event.target.checked },
-      {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+    axios
+      .put(
+        authConfig.updateOrgType,
+        { id: i, status: event.target.checked },
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+          }
         }
-      }
-    ).then(() => {
-      const values = [...result_organization_type_list]
-      values[index].status = event.target.checked
-      setTableData(values)
-  
-      setReload(!reload)
-    })
+      )
+      .then(() => {
+        const values = [...result_organization_type_list]
+        values[index].status = event.target.checked
+        setTableData(values)
 
-    
+        setReload(!reload)
+      })
   }
 
   function handleEdit(i: number) {
@@ -131,14 +131,20 @@ const OrganizationType = () => {
                             </TableCell>
                             <TableCell align='center'>{row.organization_type_description}</TableCell>
                             <TableCell align='center'>
-                              <Switch key={index} checked={row.status === 1 ? true : row.status ? true : false} onChange={e => handleChange(index, row.id, e)} />
+                              <Switch
+                                key={index}
+                                checked={row.status === 1 ? true : row.status ? true : false}
+                                onChange={e => handleChange(index, row.id, e)}
+                              />
                             </TableCell>
                             <TableCell align='center'>
-                              <PencilOutline
-                                onClick={() => {
-                                  handleEdit(index)
-                                }}
-                              />
+                              <a href='#' style={{ color: 'grey' }}>
+                                <PencilOutline
+                                  onClick={() => {
+                                    handleEdit(index)
+                                  }}
+                                />
+                              </a>
                             </TableCell>
                           </TableRow>
                         )
@@ -146,22 +152,28 @@ const OrganizationType = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
-                {
-                    total > 0 ? 
-                    <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
-                    : ""
-                }
+              <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+                {total > 0 ? (
+                  <Pagination
+                    count={pageCount}
+                    page={page + 1}
+                    onChange={handleChangePagination}
+                    variant='outlined'
+                    color='primary'
+                  />
+                ) : (
+                  ''
+                )}
               </Box>
-              {
-                action === 'create' ? 
+              {action === 'create' ? (
                 <DialogOrganizationType
                   table={tableData}
                   show={showCreate}
                   setShow={setShowCreate}
                   action={action}
                   current={current}
-                /> :
+                />
+              ) : (
                 <DialogOrganizationType
                   table={tableData}
                   show={showEdit}
@@ -169,8 +181,7 @@ const OrganizationType = () => {
                   action={action}
                   current={current}
                 />
-              }
-              
+              )}
             </CardContent>
           </CardContent>
         </Card>

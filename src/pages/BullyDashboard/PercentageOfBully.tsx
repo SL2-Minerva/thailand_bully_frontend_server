@@ -197,7 +197,7 @@ const PercentageOfBully = (props: MessageData) => {
           setShowNoDataTextPrevious(false)
           setPreviousTotal(previousMessageData[0]?.value?.total)
           if(!previousMessageData[0]?.bully_level) {
-            setShowNoDataText(true)
+            setShowNoDataTextPrevious(true)
           }
         } else {
           setShowNoDataTextPrevious(true)

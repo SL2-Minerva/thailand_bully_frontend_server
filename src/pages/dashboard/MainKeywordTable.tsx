@@ -85,7 +85,7 @@ const MainKeyWordTable = ({ params, chartId }: Props) => {
             </TableBody>
           </Table>
         </TableContainer>
-        {params?.campaign ? (
+        {params?.campaign && showDetail ? (
           <DailyMessageDetail
             show={showDetail}
             setShow={setShowDetail}
