@@ -394,7 +394,7 @@ const SNAByBullyType = () => {
               <Grid container spacing={2}>
                 <Grid item xs={6} md={1}>
                   <Button
-                    sx={{ mb: 2 }}
+                    fullWidth
                     onClick={() => {
                       if (keyword === 'all') {
                         setKeyword('')
@@ -413,10 +413,10 @@ const SNAByBullyType = () => {
                 {resultKeywordList &&
                   (resultKeywordList || []).map((keywords: any, index: number) => {
                     return (
-                      <Grid item xs={6} md={1.2} key={index}>
+                      <Grid item xs={6} md={1.4} key={index}>
                         <Button
+                          fullWidth
                           sx={{
-                            mb: 2,
                             bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1
                                 ? (keywordsColor && keywordsColor[index]) || GraphicColors[index]
