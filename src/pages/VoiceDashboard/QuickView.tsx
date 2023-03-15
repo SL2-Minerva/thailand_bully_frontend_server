@@ -32,7 +32,7 @@ export const Toggler = styled(Box)<BoxProps>(({ theme }) => ({
   }))
 
 export const TogglerOpen = styled(Box)<BoxProps>(({ theme }) => ({
-    right: '390px',
+    right: '200px',
     top: '50%',
     display: 'block',
     cursor: 'pointer',
@@ -46,14 +46,14 @@ export const TogglerOpen = styled(Box)<BoxProps>(({ theme }) => ({
   }))
   
 export const Drawer = styled(MuiDrawer)<DrawerProps>(({ theme }) => ({
-    width: 400,
+    width: 200,
     zIndex: theme.zIndex.modal,
     '& .MuiFormControlLabel-root': {
       marginRight: '0.6875rem'
     },
     '& .MuiDrawer-paper': {
       border: 0,
-      width: 400,
+      width: 200,
       zIndex: theme.zIndex.modal,
       boxShadow: theme.shadows[9]
     }

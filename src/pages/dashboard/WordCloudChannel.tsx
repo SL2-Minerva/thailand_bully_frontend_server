@@ -18,6 +18,8 @@ import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import { GetWordCloudsPlatform } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
+import "d3-transition";
+import { select } from "d3-selection";
 import AccountList from './AccountList'
 
 const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string }) => {
@@ -44,9 +46,40 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
 
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
+  function getCallback(callback : any) {
+    return function (word : any, event:any) {
+      const isActive = callback !== "onWordMouseOut";
+      const element = event.target;
+      const text = select(element);
+      text
+        .on("click", () => {
+          if (isActive && word) {
+            // window.open(`https://www.google.com/`, "_blank");
+
+            const selectedWord = word?.text;
+
+            console.log("selected word :",selectedWord)
+          }
+        })
+        .transition()
+        .attr("background", "white")
+        .attr("font-size", isActive ? "300%" : "100%")
+        .attr("text-decoration", isActive ? "underline" : "none");
+    };
+  }
+  
+  const callbacks = {
+    // getWordColor: (word:any) => (word.value > 50 ? "orange" : "purple"),
+    getWordTooltip: (word:any) =>
+      `The word "${word.text}" appears ${word.value} times.`,
+    onWordClick: getCallback("onWordClick"),
+    onWordMouseOut: getCallback("onWordMouseOut"),
+    onWordMouseOver: getCallback("onWordMouseOver")
+  };
+
   return (
     <Grid container spacing={2}>
-      <Grid xs={12} md={6}>
+      <Grid item xs={12} md={6}>
         <Card sx={{ maxHeight: 500, minHeight: 500, overflow: 'auto' }}>
           {loadingWordCloudsPlatform && <LinearProgress style={{ width: '100%' }} />}
           <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -99,7 +132,7 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
                 <Translations text='no data' />
               </div>
             ) : (
-              <ReactWordcloud words={resultWordCloudsPlatform?.word_clouds_platform || []} />
+              <ReactWordcloud words={resultWordCloudsPlatform?.word_clouds_platform || []} callbacks={callbacks} />
             )}
           </div>
         </Card>

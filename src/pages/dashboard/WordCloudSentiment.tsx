@@ -8,6 +8,8 @@ import { Information } from 'mdi-material-ui'
 import { GetWordCloudsSentiment } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
 import SentimentAccountList from './SentimentAccountList'
+import "d3-transition";
+import { select } from "d3-selection";
 
 const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string }) => {
   const [sentiment, setSentiment] = useState('positive')
@@ -27,6 +29,35 @@ const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string 
   const chooseSentiment = (value: string) => {
     setSentiment(value)
   }
+
+  function getCallback(callback : any) {
+    return function (word : any, event:any) {
+      const isActive = callback !== "onWordMouseOut";
+      const element = event.target;
+      const text = select(element);
+      text
+        .on("click", () => {
+          if (isActive && word) {
+            const selectedWord = word?.text;
+
+            console.log("selected word :",selectedWord)
+          }
+        })
+        .transition()
+        .attr("background", "white")
+        .attr("font-size", isActive ? "300%" : "100%")
+        .attr("text-decoration", isActive ? "underline" : "none");
+    };
+  }
+  
+  const callbacks = {
+    // getWordColor: (word:any) => (word.value > 50 ? "orange" : "purple"),
+    getWordTooltip: (word:any) =>
+      `The word "${word.text}" appears ${word.value} times.`,
+    onWordClick: getCallback("onWordClick"),
+    onWordMouseOut: getCallback("onWordMouseOut"),
+    onWordMouseOver: getCallback("onWordMouseOver")
+  };
 
   return (
     <Grid container spacing={2}>
@@ -81,7 +112,7 @@ const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string 
                 <Translations text='no data' />
               </div>
             ) : (
-              <ReactWordcloud words={resultWordCloudsSentiment?.word_clouds_position || []} />
+              <ReactWordcloud callbacks={callbacks} words={resultWordCloudsSentiment?.word_clouds_position || []} />
             )}
           </div>
         </Card>

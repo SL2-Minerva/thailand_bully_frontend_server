@@ -17,10 +17,18 @@ import { Color, ColorPicker, createColor } from 'material-ui-color'
 //   value: any
 // }
 
+export const GenerateRandomColor = () => {
+  const randomColor = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+
+  return randomColor as string
+}
+
+const randomHexColor = GenerateRandomColor()
+const randomColorKeyword = GenerateRandomColor()
+
 export const CheckKeywords = (keyword: string, keywordsValue: any) => {
   if (!keywordsValue || !keyword) return false
 
-  console.log('keyword', keyword, 'keywordsValue:', keywordsValue)
   const keywordTrim = keyword?.trim()
 
   if (keywordsValue?.length > 0) {
@@ -151,17 +159,18 @@ const KeywordForm = (props: any) => {
   }
 
   const addMoreKeywordColors = (i: number, colorList: any, current: any, type: any) => {
-    const newKeywordColor = [...colorList, '#70d477']
-
     const values = [...keywords]
 
     if (type === 'keyword_or') {
       // console.log(values, i, values[i])
+      const randomColor = GenerateRandomColor()
+      const newKeywordColor = [...colorList, randomColor]
       values[i].keyword_or_color = newKeywordColor
     }
 
     if (type === 'keyword_and') {
-      values[i].keyword_and_color = [...colorList, '#ed5d5e']
+      const randomColor = GenerateRandomColor()
+      values[i].keyword_and_color = [...colorList, randomColor]
     }
 
     if (type === 'keyword_exclude') {
@@ -305,7 +314,11 @@ const KeywordForm = (props: any) => {
           {keyword_and.length > 0 && !keyword_and[0] && !keyword_or[0] && !keyword_exclude[0] ? (
             <ColorPicker
               hideTextfield={true}
-              value={keywords[indexNumber]?.color && keywords[indexNumber]?.color != '#' ? keywords[indexNumber]?.color : createColor('#fff')}
+              value={
+                keywords[indexNumber]?.color && keywords[indexNumber]?.color != '#'
+                  ? keywords[indexNumber]?.color
+                  : createColor(randomColorKeyword)
+              }
               onChange={(color: Color) => {
                 handleChangeColor(color, indexNumber)
               }}
@@ -332,7 +345,7 @@ const KeywordForm = (props: any) => {
                   index={index}
                   indexValue={indexNumber}
                   label={'คำที่ต้องมี (AND)'}
-                  colorList={keyword_and_color || []}
+                  colorList={keyword_and_color || ''}
                   handlChangeKeywordColors={handlChangeKeywordColors}
                   addMoreKeywordColors={addMoreKeywordColors}
                   removeKeywordColors={removeKeywordColors}
@@ -353,7 +366,7 @@ const KeywordForm = (props: any) => {
                 index={0}
                 indexValue={indexNumber}
                 label={'คำที่ต้องมี (AND)'}
-                colorList={keyword_and_color || []}
+                colorList={keyword_and_color || ''}
                 handlChangeKeywordColors={handlChangeKeywordColors}
                 addMoreKeywordColors={addMoreKeywordColors}
                 removeKeywordColors={removeKeywordColors}
@@ -476,23 +489,22 @@ const InputKeyword = (props: any) => {
     removeKeywordColors,
     colorList
   } = props
+  
   const [text, setText] = useState(textValue)
-  const [keywordColor, setKeywordColor] = useState(colorList || createColor('#ED5D5D'))
-  const [keywordColors, setKeywordColors] = useState(createColor('#70D477'))
+  const [keywordColor, setKeywordColor] = useState<any>(createColor(GenerateRandomColor()))
+  const [keywordColors, setKeywordColors] = useState(createColor(GenerateRandomColor()))
   useEffect(() => {
     setText(textValue)
     if (index === 0 && colorList) {
-      setKeywordColors(colorList[0] || createColor('#70D477'))
+      setKeywordColors(colorList[0] || createColor(randomHexColor))
     } else if (index && colorList) {
-      setKeywordColors((colorList && colorList[index]) || createColor('#70D477'))
+      setKeywordColors((colorList && colorList[index]) || createColor(GenerateRandomColor()))
     }
 
-    if(typeof(colorList) == 'string') {
+    if (typeof colorList === 'string') {
       setKeywordColor(colorList)
     }
   }, [textValue])
-
-  
 
   function handleChangeText(e: any, index: any, indexValue: any) {
     setText(e.target.value)

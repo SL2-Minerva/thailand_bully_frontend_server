@@ -7,6 +7,15 @@ import { Information } from 'mdi-material-ui'
 import { GetKeyWords } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
 
+const cellStyle = {
+  width: 250,
+  maxWidth: 250,
+  whiteSpace: 'normal',
+  wordWrap: 'break-word',
+  borderStyle: "border-box",
+  backgroundColor: 'lightgrey !important'
+};
+
 const KeywordTable = ({ params, chartId }: { params: any; chartId: string }) => {
   const { resultKeywords, loadingFilterData } = GetKeyWords(
     params?.campaign,
@@ -51,7 +60,7 @@ const KeywordTable = ({ params, chartId }: { params: any; chartId: string }) => 
               {(resultKeywords || [])?.map((keyword: any, index: any) => {
                 return (
                   <TableRow key={index}>
-                    <TableCell sx={{ backgroundColor: 'lightgrey !important' }}>
+                    <TableCell sx={cellStyle}>
                       <b>{keyword.keyword}</b>
                     </TableCell>
                     <TableCell>{keyword.message}</TableCell>

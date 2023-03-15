@@ -218,6 +218,9 @@ const PercentageOfBullyType = (props: MessageData) => {
         if (currentMessageData?.length > 0) {
           setCurrentTotal(currentMessageData[0]?.value?.total)
           setShowNoDataText(false)
+          if(!currentMessageData[0]?.bully_level) {
+            setShowNoDataText(true)
+          }
         } else {
           setShowNoDataText(true)
           setCurrentTotal(0)
@@ -234,6 +237,9 @@ const PercentageOfBullyType = (props: MessageData) => {
         if (previousMessageData?.length > 0) {
           setPreviousTotal(previousMessageData[0]?.value?.total)
           setShowNoDataTextPrevious(false)
+          if(!previousMessageData[0]?.bully_level) {
+            setShowNoDataTextPrevious(true)
+          }
         } else {
           setShowNoDataTextPrevious(true)
           setPreviousTotal(0)

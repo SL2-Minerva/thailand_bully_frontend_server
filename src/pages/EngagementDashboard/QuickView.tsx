@@ -10,24 +10,37 @@ import Divider from '@mui/material/Divider'
 import { styled } from '@mui/material/styles'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
+import Box, { BoxProps } from '@mui/material/Box'
 import MuiDrawer, { DrawerProps } from '@mui/material/Drawer'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
 import { ArrowLeftDropCircle, ArrowRightDropCircle } from 'mdi-material-ui'
-import { Toggler, TogglerOpen } from '../VoiceDashboard/QuickView'
+import { Toggler } from '../VoiceDashboard/QuickView'
 
-  
+export const TogglerOpen = styled(Box)<BoxProps>(({ theme }) => ({
+  right: '250px',
+  top: '50%',
+  display: 'block',
+  cursor: 'pointer',
+  position: 'fixed',
+  zIndex: theme.zIndex.modal,
+  padding: '10px 0px 30px 0px',
+  transform: 'translateY(-50%)',
+  backgroundColor: theme.palette.primary.main,
+  borderTopLeftRadius: theme.shape.borderRadius,
+  borderBottomLeftRadius: theme.shape.borderRadius
+}))
+
 export const Drawer = styled(MuiDrawer)<DrawerProps>(({ theme }) => ({
-    width: 400,
+    width: 250,
     zIndex: theme.zIndex.modal,
     '& .MuiFormControlLabel-root': {
       marginRight: '0.6875rem'
     },
     '& .MuiDrawer-paper': {
       border: 0,
-      width: 400,
+      width: 250,
       zIndex: theme.zIndex.modal,
       boxShadow: theme.shadows[9]
     }
