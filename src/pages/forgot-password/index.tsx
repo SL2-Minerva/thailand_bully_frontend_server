@@ -184,7 +184,6 @@ const ForgotPassword = () => {
               )}
               {showErrorText ? (
                 <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Link passHref href='/login'>
                     <Typography
                       component={MuiLink}
                       sx={{ display: 'flex', alignItems: 'center', color: 'red', justifyContent: 'center' }}
@@ -194,7 +193,6 @@ const ForgotPassword = () => {
                         Please kindly check your email again that is corret or not.{' '}
                       </span>
                     </Typography>
-                  </Link>
                 </Typography>
               ) : (
                 ''

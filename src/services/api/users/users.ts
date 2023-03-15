@@ -97,4 +97,47 @@ export const ForgetPassword = () => {
   }
 }
 
+export const ResetPasswordRequest = () => {
+  const [{ data, loading, error }, store] = CallAPI<{
+    code: 0 | 1
+    message: string
+    data: any
+  }>(
+    {
+      url: `/user/reset_password`,
+      method: 'POST'
+    },
+    { manual: true }
+  )
+
+  return {
+    resultResetPassword: data?.data,
+    loadingResetPassword: loading,
+    errorResetPassword: error,
+    callResetPassword: (data: any) => {
+      const formData = new FormData()
+      
+      formData.append('email', data?.email)
+      formData.append('token', data?.token)
+      formData.append('password', data?.password)
+
+      return new Promise((resolve, reject) => {
+        store({
+          data: formData
+        })
+          .then(({ data: { data, code, message } }) => {
+            if (code === 0) {
+              reject(message)
+            } else {
+              resolve(data)
+            }
+          })
+          .catch(ex => {
+            reject(ex.toString())
+          })
+      })
+    }
+  }
+}
+
 export default UserService
