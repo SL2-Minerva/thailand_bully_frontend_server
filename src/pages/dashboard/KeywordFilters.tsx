@@ -32,11 +32,10 @@ const KeywordFilters = (data: Props) => {
         {loadingKeywordList && <LinearProgress style={{ width: '100%' }} />}
           <CardHeader title='Filter'></CardHeader>
           <CardContent>
-            <Grid container spacing={1}>
+            <Grid container spacing={4}>
               <Grid item xs={6} md={1}>
                 <Button
                 fullWidth
-                  sx={{ mb: 2 }}
                   onClick={() => {
                     if (keyword === 'all') {
                       setKeyword('')
@@ -59,7 +58,6 @@ const KeywordFilters = (data: Props) => {
                       <Button
                         fullWidth
                         sx={{
-                          mb: 2,
                           bgcolor:
                             filterKeyword?.indexOf(keywords?.id) > -1
                               ? keywordsColor && keywordsColor[index] !== '#'

@@ -65,25 +65,28 @@ const SentimentDashboard = () => {
 
   return (
     <Grid container spacing={2}>
-      <Filter
-        tilte='Sentiment Dashboard'
-        date={date}
-        setDate={setDate}
-        endDate={endDate}
-        setEndDate={setEndDate}
-        previousDate={previousDate}
-        setPreviousDate={setPreviousDate}
-        previousEndDate={previousEndDate}
-        setPreviousEndDate={setPreviousEndDate}
-        period={period}
-        setPeriod={setPeriod}
-        dateSelect={dateSelect}
-        setDateSelect={setDateSelect}
-        campaign={campaign}
-        setCampaign={setCampaign}
-      />
+      <Grid item xs={12}>
+        <Filter
+          tilte='Sentiment Dashboard'
+          date={date}
+          setDate={setDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
+          previousDate={previousDate}
+          setPreviousDate={setPreviousDate}
+          previousEndDate={previousEndDate}
+          setPreviousEndDate={setPreviousEndDate}
+          period={period}
+          setPeriod={setPeriod}
+          dateSelect={dateSelect}
+          setDateSelect={setDateSelect}
+          campaign={campaign}
+          setCampaign={setCampaign}
+        />
+      </Grid>
+
       {campaign ? (
-        <Grid container ml={5}>
+        <Grid container ml={2}>
           <KeywordFilters
             campaign={campaign}
             keyword={keyword}
@@ -98,7 +101,9 @@ const SentimentDashboard = () => {
         ''
       )}
 
-      {!loadingKeyword ? <SentimentGraph params={params} resultReportPermission={resultReportPermission} /> : ''}
+      <Grid container ml={2}>
+        {!loadingKeyword ? <SentimentGraph params={params} resultReportPermission={resultReportPermission} /> : ''}
+      </Grid>
     </Grid>
   )
 }

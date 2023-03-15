@@ -85,7 +85,7 @@ const BullyDashboard = () => {
         />
       </Grid>
       {campaign ? (
-        <Grid container ml={5}>
+        <Grid container ml={2}>
           <KeywordFilters
             campaign={campaign}
             keyword={keyword}
