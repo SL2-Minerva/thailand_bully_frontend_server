@@ -19,14 +19,14 @@ import { ArrowLeftDropCircle, ArrowRightDropCircle } from 'mdi-material-ui'
 import { Toggler, TogglerOpen } from '../VoiceDashboard/QuickView'
 
 export const Drawer = styled(MuiDrawer)<DrawerProps>(({ theme }) => ({
-    width: 400,
+    width: 200,
     zIndex: theme.zIndex.modal,
     '& .MuiFormControlLabel-root': {
       marginRight: '0.6875rem'
     },
     '& .MuiDrawer-paper': {
       border: 0,
-      width: 400,
+      width: 200,
       zIndex: theme.zIndex.modal,
       boxShadow: theme.shadows[9]
     }

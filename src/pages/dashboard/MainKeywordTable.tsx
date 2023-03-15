@@ -6,34 +6,27 @@ import { useState } from 'react'
 import DailyMessageDetail from './DailyMessageDetail'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
-import { GetTopKeywords } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
+import { tableCellStyle } from './TopSiteList'
 
 interface Props {
   params: any
   chartId: string
+  resultTopKeywords: any
+  loadingTopKeywords: boolean
 }
 
-const MainKeyWordTable = ({ params, chartId }: Props) => {
+const MainKeyWordTable = ({ params, resultTopKeywords, loadingTopKeywords, chartId }: Props) => {
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [keywordId, setKeywordId] = useState<number>()
-  const { resultTopKeywords, loadingFilterData } = GetTopKeywords(
-    params?.campaign,
-    params?.platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.previousDate,
-    params?.previousEndDate,
-    params?.keywordIds
-  )
+  
   const reportNo = '1.2.009'
 
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
     <Card sx={{ maxHeight: 360, minHeight: 360 }}>
-      {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
+      {loadingTopKeywords && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title={<Translations text='Main Keyword' />} titleTypographyProps={{ variant: 'h6' }} />
         <StyledTooltip arrow title={chartTitle || ''}>
@@ -64,7 +57,7 @@ const MainKeyWordTable = ({ params, chartId }: Props) => {
                       setKeywordId(keyword?.keyword_id)
                     }}
                   >
-                    <TableCell sx={{ backgroundColor: 'lightslategrey !important', color: 'white' }}>
+                    <TableCell sx={tableCellStyle}>
                       {keyword?.keyword}
                     </TableCell>
                     <TableCell>{keyword?.no_of_message}</TableCell>

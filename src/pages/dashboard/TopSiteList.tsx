@@ -4,7 +4,6 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
-import { GetTopKeywords } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
 
 // import { useState } from 'react'
@@ -13,21 +12,24 @@ import Translations from 'src/layouts/components/Translations'
 interface Props {
   params: any
   chartId: string
+  resultTopKeywords: any
+  loadingTopKeywords: boolean
 }
 
-const TopSiteList = ({ params, chartId }: Props) => {
-  // const [showDetail, setShowDetail] = useState<boolean>(false)
-  // const [keywordId, setKeywordId] = useState<number>()
-  const { resultTopKeywords, loadingFilterData } = GetTopKeywords(
-    params?.campaign,
-    params?.platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.previousDate,
-    params?.previousEndDate,
-    params?.keywordIds
-  )
+export const tableCellStyle = {
+  width: 200,
+  maxWidth: 200,
+  whiteSpace: 'normal',
+  wordWrap: 'break-word',
+  borderStyle: "border-box",
+  backgroundColor: 'lightslategrey !important', 
+  color: 'white'
+
+  // overflow: "hidden",
+  // textOverflow: "ellipsis",
+};
+
+const TopSiteList = ({ chartId, resultTopKeywords, loadingTopKeywords }: Props) => {
 
   const reportNo = '1.2.012'
 
@@ -35,7 +37,7 @@ const TopSiteList = ({ params, chartId }: Props) => {
 
   return (
     <Card sx={{ maxHeight: 360, minHeight: 360 }}>
-      {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
+      {loadingTopKeywords && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title='Top Sites' titleTypographyProps={{ variant: 'h6' }} />
         <StyledTooltip arrow title={chartTitle || ''}>
@@ -66,7 +68,7 @@ const TopSiteList = ({ params, chartId }: Props) => {
 
                     // style={{ cursor: 'pointer' }}
                   >
-                    <TableCell sx={{ backgroundColor: 'lightslategrey !important', color: 'white' }}>
+                    <TableCell sx={tableCellStyle}>
                       {topsite?.site_domain}
                     </TableCell>
                     <TableCell>{topsite?.no_of_message}</TableCell>

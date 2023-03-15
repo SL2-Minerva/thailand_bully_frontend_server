@@ -30,7 +30,7 @@ import { format } from 'date-fns'
 import Plus from 'mdi-material-ui/Plus'
 import Close from 'mdi-material-ui/Close'
 import DomainList from 'src/services/api/domains/DomainAPI'
-import KeywordForm from './KeywordForm'
+import KeywordForm, { GenerateRandomColor } from './KeywordForm'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { API_PATH } from 'src/utils/const'
@@ -85,13 +85,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
       keyword_or: [''],
       keyword_and: [''],
       keyword_exclude: [''],
-      colors: '',
+      colors: GenerateRandomColor(),
       keyword_or_color: [''],
       keyword_and_color: [''],
       delete_keyword_or: [''],
       delete_keyword_and: [''],
       delete_keyword_exclude: [''],
-      color: ''
+      color: GenerateRandomColor()
     }
   ])
 
@@ -104,13 +104,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
         keyword_or: [''],
         keyword_and: [''],
         keyword_exclude: [''],
-        colors: '#fff',
+        colors: GenerateRandomColor(),
         keyword_or_color: ['#70d477'],
         keyword_and_color: ['#ed5d5e'],
         delete_keyword_or: [''],
         delete_keyword_and: [''],
         delete_keyword_exclude: [''],
-        color: ''
+        color: GenerateRandomColor()
       }
     ]
     setKeywords(news)
@@ -147,13 +147,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
         keyword_or: [''],
         keyword_and: [''],
         keyword_exclude: [''],
-        colors: '',
+        colors: GenerateRandomColor(),
         keyword_or_color: [''],
         keyword_and_color: [''],
         delete_keyword_or: [''],
         delete_keyword_and: [''],
         delete_keyword_exclude: [''],
-        color: ''
+        color: GenerateRandomColor()
       }
     ])
   }
@@ -254,13 +254,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
           keyword_or: [''],
           keyword_and: [''],
           keyword_exclude: [''],
-          colors: '',
+          colors: GenerateRandomColor(),
           keyword_or_color: [''],
           keyword_and_color: [''],
           delete_keyword_or: [''],
           delete_keyword_and: [''],
           delete_keyword_exclude: [''],
-          color: ''
+          color: GenerateRandomColor()
         }
       ])
       setDate(null)

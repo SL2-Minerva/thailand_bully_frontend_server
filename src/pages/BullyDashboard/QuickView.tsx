@@ -16,19 +16,20 @@ import MuiDrawer, { DrawerProps } from '@mui/material/Drawer'
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
 import { ArrowLeftDropCircle, ArrowRightDropCircle } from 'mdi-material-ui'
-import { Toggler, TogglerOpen } from '../VoiceDashboard/QuickView'
+import { Toggler } from '../VoiceDashboard/QuickView'
+import { TogglerOpen } from '../EngagementDashboard/QuickView'
 
 // import Translations from 'src/layouts/components/Translations'
 
 export const Drawer = styled(MuiDrawer)<DrawerProps>(({ theme }) => ({
-    width: 400,
+    width: 250,
     zIndex: theme.zIndex.modal,
     '& .MuiFormControlLabel-root': {
       marginRight: '0.6875rem'
     },
     '& .MuiDrawer-paper': {
       border: 0,
-      width: 400,
+      width: 250,
       zIndex: theme.zIndex.modal,
       boxShadow: theme.shadows[9]
     }

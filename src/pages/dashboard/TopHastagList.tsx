@@ -4,8 +4,8 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
-import { GetTopKeywords } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
+import { tableCellStyle } from './TopSiteList'
 
 // import { useState } from "react";
 // import DailyMessageDetail from "./DailyMessageDetail";
@@ -13,28 +13,19 @@ import Translations from 'src/layouts/components/Translations'
 interface Props {
   params: any
   chartId: string
+  resultTopKeywords: any
+  loadingTopKeywords: boolean
 }
 
-const TopHashtagList = ({ params, chartId }: Props) => {
-  // const [showDetail, setShowDetail] = useState<boolean>(false);
-  // const [keywordId, setKeywordId] = useState<number>();
-  const { resultTopKeywords, loadingFilterData } = GetTopKeywords(
-    params?.campaign,
-    params?.platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.previousDate,
-    params?.previousEndDate,
-    params?.keywordIds
-  )
+const TopHashtagList = ({ resultTopKeywords, loadingTopKeywords, chartId }: Props) => {
+  
   const reportNo = '1.2.015'
 
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
     <Card sx={{ maxHeight: 360, minHeight: 360 }}>
-      {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
+      {loadingTopKeywords && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title='Top Hashtag' titleTypographyProps={{ variant: 'h6' }} />
         <StyledTooltip arrow title={chartTitle || ''}>
@@ -46,7 +37,7 @@ const TopHashtagList = ({ params, chartId }: Props) => {
           <Table stickyHeader={true} size='small'>
             <TableHead sx={{ backgroundColor: 'lightgrey !important' }}>
               <TableRow>
-                <TableCell  variant='head' sx={{ backgroundColor: 'white !important', width:'30%'  }}>
+                <TableCell  variant='head' sx={{ backgroundColor: 'white !important'}}>
                   {' '}
                 </TableCell>
                 <TableCell variant='head'> No. of Messages </TableCell>
@@ -63,7 +54,7 @@ const TopHashtagList = ({ params, chartId }: Props) => {
                       //   setKeywordId(hashtag?.keyword_id)
                     }}
                   >
-                    <TableCell  sx={{ backgroundColor: 'lightslategrey !important', color: 'white',width:'30%'  }}>
+                    <TableCell  sx={tableCellStyle}>
                       {hashtag?.hashtag}
                     </TableCell>
                     <TableCell width = '30%' >{hashtag?.no_of_message}</TableCell>

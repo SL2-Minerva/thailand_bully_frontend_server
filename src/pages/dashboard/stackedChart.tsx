@@ -249,7 +249,7 @@ const StackedChart = (props: LineProps) => {
   const chartTitle = 'Chart 2, Report Level 2(' + reportNo + ')'
 
   return (
-    <Card sx={{ minHeight: 550, maxHeight: 550 }}>
+    <Card sx={{ minHeight: 574, maxHeight: 580 }}>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>

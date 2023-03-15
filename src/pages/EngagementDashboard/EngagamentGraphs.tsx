@@ -57,7 +57,7 @@ const EngagementGraphs = (data: Props) => {
   const [topKeyword, setTopKeyword] = useState<string>('all')
 
   const { resultFilterData, loadingFilterData } = FilterByCampaignId(
-    params?.campaignType,
+    params?.campaign,
     params?.date,
     params?.endDate,
     params?.period,
@@ -74,7 +74,7 @@ const EngagementGraphs = (data: Props) => {
     resultKeywordByEngagementType,
     loadingEngagementBy
   } = GetEngagementBy(
-    params?.campaignType,
+    params?.campaign,
     params?.date,
     params?.endDate,
     params?.period,
@@ -92,7 +92,7 @@ const EngagementGraphs = (data: Props) => {
     resultEngagementTypeByTime,
     loadingEngagementType
   } = EngagementTypeBy(
-    params?.campaignType,
+    params?.campaign,
     params?.date,
     params?.endDate,
     params?.period,
@@ -110,7 +110,7 @@ const EngagementGraphs = (data: Props) => {
     loadingPeriodComparisonBySenitment,
     resultPeriodComparisonByChannel
   } = GetEngagementComparisonBy(
-    params?.campaignType,
+    params?.campaign,
     params?.date,
     params?.endDate,
     params?.period,

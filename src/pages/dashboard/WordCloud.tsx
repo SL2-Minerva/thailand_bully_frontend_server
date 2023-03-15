@@ -6,6 +6,8 @@ import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import { GetWordClouds } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
+import "d3-transition";
+import { select } from "d3-selection";
 
 const WordCloud = ({ params, chartId }: { params: any; chartId: string }) => {
   const { resultWordClouds, loadingWordClouds } = GetWordClouds(
@@ -22,6 +24,35 @@ const WordCloud = ({ params, chartId }: { params: any; chartId: string }) => {
   const reportNo = '1.2.021'
 
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
+
+  function getCallback(callback : any) {
+    return function (word : any, event:any) {
+      const isActive = callback !== "onWordMouseOut";
+      const element = event.target;
+      const text = select(element);
+      text
+        .on("click", () => {
+          if (isActive && word) {
+            const selectedWord = word?.text;
+
+            console.log("selected word :",selectedWord)
+          }
+        })
+        .transition()
+        .attr("background", "white")
+        .attr("font-size", isActive ? "300%" : "100%")
+        .attr("text-decoration", isActive ? "underline" : "none");
+    };
+  }
+  
+  const callbacks = {
+    // getWordColor: (word:any) => (word.value > 50 ? "orange" : "purple"),
+    getWordTooltip: (word:any) =>
+      `The word "${word.text}" appears ${word.value} times.`,
+    onWordClick: getCallback("onWordClick"),
+    onWordMouseOut: getCallback("onWordMouseOut"),
+    onWordMouseOver: getCallback("onWordMouseOver")
+  };
 
   return (
     <Card sx={{ maxHeight: 470, minHeight: 470, overflow: 'auto' }}>
@@ -45,7 +76,7 @@ const WordCloud = ({ params, chartId }: { params: any; chartId: string }) => {
             <Translations text='no data' />
           </div>
         ) : (
-          <ReactWordcloud words={resultWordClouds?.word_clouds || []} />
+          <ReactWordcloud words={resultWordClouds?.word_clouds || []} callbacks={callbacks} />
         )}
       </div>
     </Card>

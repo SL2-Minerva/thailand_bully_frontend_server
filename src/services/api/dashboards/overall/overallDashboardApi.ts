@@ -1,6 +1,8 @@
 import moment from 'moment'
 import { CallAPI } from 'src/services/CallAPI'
 
+// import Words from 'src/types/dashboard/words'
+
 export const GetParams = (data: any) => {
   if (!data) return null
   let params = {}
@@ -168,7 +170,7 @@ export const GetTopKeywords = (
 
   return {
     resultTopKeywords: response?.data || null,
-    loadingFilterData: loading,
+    loadingTopKeywords: loading,
     errorFilterData: error
   }
 }
@@ -442,6 +444,12 @@ export const GetWordCloudsPlatform = (
     method: 'GET',
     params: params
   })
+
+  // const response = {
+  //   data: {
+  //     word_clouds_platform : Words
+  //   }
+  // }
 
   return {
     resultWordCloudsPlatform: response?.data || null,

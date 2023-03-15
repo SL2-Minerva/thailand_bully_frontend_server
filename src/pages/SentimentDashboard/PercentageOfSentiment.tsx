@@ -177,6 +177,9 @@ const PercentageOfSentiments = (props: MessageData) => {
         if (currentMessageData?.length > 0) {
           setCurrentTotal(currentMessageData[0]?.value[0]?.total)
           setShowNoDataText(false)
+          if(!currentMessageData[0]?.keyword_name) {
+            setShowNoDataText(true)
+          }
         } else {
           setCurrentTotal(0)
           setShowNoDataText(true)
@@ -195,6 +198,9 @@ const PercentageOfSentiments = (props: MessageData) => {
         if (previousMessageData?.length > 0) {
           setPreviousTotal(previousMessageData[0]?.value[0]?.total)
           setShowNoDataTextPrevious(false)
+          if(!previousMessageData[0]?.keyword_name) {
+            setShowNoDataTextPrevious(true)
+          }
         } else {
           setPreviousTotal(0)
           setShowNoDataTextPrevious(true)
@@ -209,7 +215,7 @@ const PercentageOfSentiments = (props: MessageData) => {
       setPreviousData(initValue)
       setPreviousTotal(0)
       setCurrentTotal(0)
-      setShowNoDataTextPrevious(false)
+      setShowNoDataTextPrevious(true)
       setShowNoDataText(true)
     }
   }, [resultFilterData, t])

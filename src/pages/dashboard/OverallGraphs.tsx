@@ -14,9 +14,10 @@ import TopSiteList from './TopSiteList'
 
 import SentimentGaugeChart from './SentimentGaugeChart'
 import {
-    FilterByCampaignId,
-    TotalKeyStats
-  } from 'src/services/api/dashboards/overall/overallDashboardApi'
+  FilterByCampaignId,
+  GetTopKeywords,
+  TotalKeyStats
+} from 'src/services/api/dashboards/overall/overallDashboardApi'
 
 // import SentimentLevelChart from './SentimentLevelChart'
 import WordCloud from './WordCloud'
@@ -28,15 +29,15 @@ import CommentSentiment from './CommentSentiment'
 import ShareOfVoice from './ShareOfVoice'
 
 interface Props {
-    params : any
-    setTopKeyword: any
-    resultReportPermission: any
-    keywordGraphColors: any
-    topKeyword: any
+  params: any
+  setTopKeyword: any
+  resultReportPermission: any
+  keywordGraphColors: any
+  topKeyword: any
 }
 
 const OverallGraphs = (data: Props) => {
-    const {params, setTopKeyword, resultReportPermission, keywordGraphColors, topKeyword } = data
+  const { params, setTopKeyword, resultReportPermission, keywordGraphColors, topKeyword } = data
   const theme = useTheme()
 
   const whiteColor = '#fff'
@@ -60,6 +61,17 @@ const OverallGraphs = (data: Props) => {
   )
 
   const { resultFilterData, loadingFilterData } = FilterByCampaignId(
+    params?.campaign,
+    params?.platformId,
+    params?.date,
+    params?.endDate,
+    params?.period,
+    params?.previousDate,
+    params?.previousEndDate,
+    params?.keywordIds
+  )
+
+  const { resultTopKeywords, loadingTopKeywords } = GetTopKeywords(
     params?.campaign,
     params?.platformId,
     params?.date,
@@ -194,7 +206,12 @@ const OverallGraphs = (data: Props) => {
       <Grid container spacing={3} mt={2}>
         {resultReportPermission?.includes('7') ? (
           <Grid id='chart7' item xs={12} md={4}>
-            <MainKeyWordTable params={params} chartId='Chart 7' />
+            <MainKeyWordTable
+              params={params}
+              loadingTopKeywords={loadingTopKeywords}
+              resultTopKeywords={resultTopKeywords}
+              chartId='Chart 7'
+            />
           </Grid>
         ) : (
           ''
@@ -202,7 +219,12 @@ const OverallGraphs = (data: Props) => {
 
         {resultReportPermission?.includes('8') ? (
           <Grid id='chart8' item xs={12} md={4}>
-            <TopSiteList params={params} chartId='Chart 8' />
+            <TopSiteList
+              params={params}
+              loadingTopKeywords={loadingTopKeywords}
+              resultTopKeywords={resultTopKeywords}
+              chartId='Chart 8'
+            />
           </Grid>
         ) : (
           ''
@@ -210,7 +232,12 @@ const OverallGraphs = (data: Props) => {
 
         {resultReportPermission?.includes('9') ? (
           <Grid id='chart9' item xs={12} md={4}>
-            <TopHashtagList params={params} chartId='Chart 9' />
+            <TopHashtagList
+              params={params}
+              loadingTopKeywords={loadingTopKeywords}
+              resultTopKeywords={resultTopKeywords}
+              chartId='Chart 9'
+            />
           </Grid>
         ) : (
           ''
