@@ -163,7 +163,7 @@ const Filter = (props: Props) => {
       <Card>
         <CardHeader title={tilte} />
         <CardContent>
-          <Grid container spacing={2} mt={2}>
+          <Grid container spacing={2}>
             <Grid item sm={4} xs={12} mb={3}>
               <FormControl fullWidth>
                 <InputLabel id='plan-select'>

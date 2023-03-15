@@ -303,7 +303,7 @@ const OverallDashboard = () => {
           <Card>
             <CardHeader title='Overall Dashboard' />
             <CardContent>
-              <Grid container spacing={6} mt={2}>
+              <Grid container spacing={6}>
                 <Grid item sm={4} xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='plan-select'>

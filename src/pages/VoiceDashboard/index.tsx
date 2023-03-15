@@ -107,7 +107,7 @@ const VoiceDashboard = () => {
   }, [campaign])
 
   return (
-    <Grid container spacing={6}>
+    <Grid container spacing={4}>
       <Filter
         tilte='Voice Dashboard'
         date={date}
@@ -196,7 +196,7 @@ const VoiceDashboard = () => {
       </Grid> */}
 
       {campaign ? (
-        <Grid container ml={5}>
+        <Grid container ml={4}>
           <KeywordFilters
             campaign={campaign}
             keyword={keyword}

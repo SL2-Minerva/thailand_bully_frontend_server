@@ -66,7 +66,7 @@ const ChannelDashboard = () => {
   }, [errorUserPermission])
 
   return (
-    <Grid container spacing={6}>
+    <Grid container spacing={4}>
       <Filter
         tilte='Channel Dashboard'
         date={date}
@@ -86,7 +86,7 @@ const ChannelDashboard = () => {
       />
 
       {campaign ? (
-        <Grid container ml={5}>
+        <Grid container ml={4}>
           <KeywordFilters
             campaign={campaign}
             keyword={keyword}
