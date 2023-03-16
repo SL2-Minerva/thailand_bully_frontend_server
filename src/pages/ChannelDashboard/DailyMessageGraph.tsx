@@ -49,7 +49,12 @@ export const chartLabel = (data: any) => {
   const labelValue: string[] = []
 
   for (let i = 0; i < data?.length; i++) {
-    const label = data[i]?.value
+    const dataValue = data[i]?.value
+    const label: any[] = []
+
+    for (let j = 0; j < dataValue?.length; j++) {
+      label.push(dataValue[j]?.date_m)
+    }
 
     if (labels && label) {
       labels = [...labels, ...label]
@@ -59,7 +64,7 @@ export const chartLabel = (data: any) => {
   if (labels && labels?.length > 0) {
     const filterArray = [...new Set(labels)]
     for (let i = 0; i < filterArray?.length; i++) {
-      labelValue.push(moment(filterArray[i]?.date_m).format('DD/MM/YYYY'))
+      labelValue.push(moment(filterArray[i]).format('DD/MM/YYYY'))
     }
     labelValue.sort()
   }
