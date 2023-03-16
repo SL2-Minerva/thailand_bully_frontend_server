@@ -8,28 +8,23 @@ import MessagesByDays from './MessagesBy/MessageByDays'
 import MessagesByTime from './MessagesBy/MessageByTime'
 import MessagesByDevices from './MessagesBy/MessageByDevice'
 import { useTheme } from '@mui/material/styles'
-import { GetMessagesByAll } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
 const MessageByAll = ({
   params,
   highlight,
   resultReportPermission,
-  keywordsColor
+  keywordsColor, 
+  resultMessagesByAll, 
+  loadingMessagesByAll
 }: {
   params: any
   highlight: string
   resultReportPermission: any
-  keywordsColor: any
+  keywordsColor: any,
+  resultMessagesByAll : any,
+  loadingMessagesByAll : boolean
 }) => {
-  const { resultMessagesByAll, loadingMessagesByAll } = GetMessagesByAll(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
-  )
+  
 
   const theme = useTheme()
 
