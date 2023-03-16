@@ -259,6 +259,7 @@ const ChannelByBullyLevel = (props: LineProps) => {
             paramsId={paramsId}
             setParamsId={setParamsId}
             reportNo={reportNo}
+            type="channel"
           />
         ) : (
           ''

@@ -111,6 +111,7 @@ const RegisterManagement = () => {
   useEffect(() => {
     if (errorUserlist) {
       window.localStorage.removeItem('userData')
+      window.localStorage.removeItem(authConfig.storageTokenKeyName)
       localStorage.clear()
       router.push('/login')
     }

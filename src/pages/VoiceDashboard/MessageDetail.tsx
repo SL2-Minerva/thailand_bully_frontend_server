@@ -58,6 +58,7 @@ interface DialogInfoProps {
   networkTitle?: string
   keywordId?: number
   setKeywordId?: any
+  type?: string
 }
 
 const MessageDetail = (props: DialogInfoProps) => {
@@ -72,7 +73,8 @@ const MessageDetail = (props: DialogInfoProps) => {
     title,
     networkTitle,
     keywordId,
-    setKeywordId
+    setKeywordId,
+    type
   } = props
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [page, setPage] = useState(0)
@@ -93,7 +95,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       classification_id: paramsId?.classification_id || '',
       start_date_period: params?.previousDate ? moment(params?.previousDate).format('YYYY-MM-DD') : '',
       end_date_period: params?.previousEndDate ? moment(params?.previousEndDate).format('YYYY-MM-DD') : '',
-      page: page,
+      page: page ? (page + 1) : 1,
       limit: 10,
       report_number: reportNo,
       page_name: params?.page,
@@ -109,7 +111,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       keyword_id: paramsId?.keywordId || keywordId || '',
       classification_id: paramsId?.classification_id || '',
       organization_id: paramsId?.organization_id || '',
-      page: page,
+      page: page ? (page + 1) : 1,
       limit: 10,
       report_number: reportNo,
       page_name: params?.page,
@@ -148,7 +150,8 @@ const MessageDetail = (props: DialogInfoProps) => {
 
   useEffect(() => {
     if (totalMessage > 0) {
-      setPageCount(Math.ceil(totalMessage / 10))
+      const count = Math.ceil(totalMessage / 10) - 1
+      setPageCount(count)
     }
   }, [totalMessage])
 
@@ -180,7 +183,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                   <StyledTableCell>No.</StyledTableCell>
                   <StyledTableCell>Message Detail</StyledTableCell>
                   <StyledTableCell>Message Type</StyledTableCell>
-                  <StyledTableCell>Account Name</StyledTableCell>
+                  <StyledTableCell>{type && type === 'channel' ? 'Source Name' : 'Account Name'}</StyledTableCell>
                   <StyledTableCell>Post Date</StyledTableCell>
                   <StyledTableCell>Post Time</StyledTableCell>
                   <StyledTableCell>Day</StyledTableCell>
@@ -273,7 +276,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                         setShowDialog(true)
                       }}
                     >
-                      {messageDetail.channel_name || '-'}
+                      {messageDetail.channel || '-'}
                     </StyledTableCell>
                     <StyledTableCell
                       align='center'
@@ -304,11 +307,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                         setShowDialog(true)
                       }}
                     >
-                      {messageDetail.parent ? (
-                        <CheckCircle style={{ color: 'green' }} />
-                      ) : (
-                        ''
-                      )}
+                      {messageDetail.parent ? <CheckCircle style={{ color: 'green' }} /> : ''}
                     </StyledTableCell>
                     <StyledTableCell>
                       {messageDetail.link_message ? (
