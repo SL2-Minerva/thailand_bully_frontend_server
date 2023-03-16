@@ -87,6 +87,7 @@ const OrganizedManagement = () => {
   useEffect(() => {
     if (errorOrganizationSearch) {
       window.localStorage.removeItem('userData')
+      window.localStorage.clear()
       localStorage.clear()
       router.push('/login')
     }

@@ -115,6 +115,19 @@ const ChannelDashboardGraphs = (data: Props) => {
     params?.previousEndDate
   )
 
+  const quickViewData = {
+    resultDailyChannel: resultDailyChannel,
+    resultChannelByDay: resultChannelByDay,
+    resultChannelByTime: resultChannelByTime,
+    resultChannelByDevice: resultChannelByDevice,
+    resultChannelByAccount: resultChannelByAccount,
+    resultChannelBySentiment: resultChannelBySentiment,
+    resultChannelByBullyLevel: resultChannelByBullyLevel,
+    resultChannelByBullyType: resultChannelByBullyType,
+    loadingChannelBy: loadingChannelBy,
+    loadingDailyChannel: loadingDailyChannel
+  }
+
   return (
     <>
       {resultReportPermission?.includes('44') ? (
@@ -464,8 +477,7 @@ const ChannelDashboardGraphs = (data: Props) => {
         setShow={setShowQuickView}
         params={params}
         chartId={highlight}
-        resultDailyChannel={resultDailyChannel}
-        loadingDailyChannel={loadingDailyChannel}
+        quickViewData= {quickViewData}
         keywordsColor={GraphicColors}
       />
     </>

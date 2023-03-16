@@ -304,6 +304,7 @@ const DailyMessageGraph = (props: Props) => {
           paramsId={paramsId}
           setParamsId={setParamsId}
           reportNo={reportNo}
+          type="channel"
         />
       ) : (
         ''

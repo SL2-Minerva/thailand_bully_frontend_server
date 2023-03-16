@@ -84,6 +84,7 @@ const OrganizationGroup = () => {
   useEffect(() => {
     if (error_organization_group_list) {
       window.localStorage.removeItem('userData')
+      window.localStorage.clear()
       localStorage.clear()
       router.push('/login')
     }

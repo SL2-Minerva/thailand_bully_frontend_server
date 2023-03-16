@@ -4,13 +4,13 @@ import { Box, Card, Dialog, DialogContent, IconButton, Typography } from '@mui/m
 import Close from 'mdi-material-ui/Close'
 import { useTheme } from '@mui/material/styles'
 import DailyMessageGraph from './DailyMessageGraph'
-import ChannelByDay from './ChannelByDay'
-import ChannelByBullyType from './ChannelByBullyType'
-import ChannelByBullyLevel from './ChannelByBullyLevel'
-import ChannelByDevice from './ChannelByDevice'
-import ChannelByAccount from './ChannelByAccount'
-import ChannelBySentimentComparison from './ChannelBySentimentComparison'
-import ChannelByTime from './ChannelByTime'
+import ChannelByDay from './ChannelBy/ChannelByDay'
+import ChannelByTime from './ChannelBy/ChannelByTime'
+import ChannelByDevice from './ChannelBy/ChannelByDevice'
+import ChannelByAccount from './ChannelBy/ChannelByAccount'
+import ChannelBySentimentComparison from './ChannelBy/ChannelBySentimentComparison'
+import ChannelByBullyLevel from './ChannelBy/ChannelByBullyLevel'
+import ChannelByBullyType from './ChannelBy/ChannelByBullyType'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -24,13 +24,12 @@ interface DialogInfoProps {
   setShow: any
   params?: any
   chartId?: string
-  resultDailyChannel: any
-  loadingDailyChannel: boolean
+  quickViewData: any
   keywordsColor: any
 }
 
 const QuickViewModal = (props: DialogInfoProps) => {
-  const { show, setShow, params, chartId, resultDailyChannel, loadingDailyChannel, keywordsColor } = props
+  const { show, setShow, params, chartId, quickViewData, keywordsColor } = props
 
   const theme = useTheme()
 
@@ -70,9 +69,9 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               type='channel'
               chartId='Chart 2'
-              resultDailyChannel={resultDailyChannel}
-              loadingDailyChannel={loadingDailyChannel}
-              keywordsColor ={keywordsColor}
+              resultDailyChannel={quickViewData?.resultDailyChannel}
+              loadingDailyChannel={quickViewData?.oadingDailyChannel}
+              keywordsColor={keywordsColor}
             />
           ) : chartId === 'chart3' ? (
             <ChannelByDay
@@ -86,6 +85,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               chartId='Chart 3'
               keywordsColor={keywordsColor}
+              resultBy={quickViewData?.resultChannelByDay}
+              loading={quickViewData?.loadingChannelBy}
             />
           ) : chartId === 'chart4' ? (
             <ChannelByTime
@@ -99,6 +100,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               chartId='Chart 4'
               keywordsColor={keywordsColor}
+              resultBy={quickViewData?.resultChannelByTime}
+              loading={quickViewData?.loadingChannelBy}
             />
           ) : chartId === 'chart5' ? (
             <ChannelByDevice
@@ -112,6 +115,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               chartId='Chart 5'
               keywordsColor={keywordsColor}
+              resultBy={quickViewData?.resultChannelByDevice}
+              loading={quickViewData?.loadingChannelBy}
             />
           ) : chartId === 'chart6' ? (
             <ChannelByAccount
@@ -125,6 +130,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               chartId='Chart 6'
               keywordsColor={keywordsColor}
+              resultBy={quickViewData?.resultChannelByAccount}
+              loading={quickViewData?.loadingChannelBy}
             />
           ) : chartId === 'chart7' ? (
             <ChannelBySentimentComparison
@@ -138,6 +145,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               chartId='Chart 7'
               keywordsColor={keywordsColor}
+              resultBy={quickViewData?.resultChannelBySentiment}
+              loading={quickViewData?.loadingChannelBy}
             />
           ) : chartId === 'chart8' ? (
             <ChannelByBullyLevel
@@ -151,6 +160,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               chartId='Chart 8'
               keywordsColor={keywordsColor}
+              resultBy={quickViewData?.resultChannelByBullyLevel}
+              loading={quickViewData?.loadingChannelBy}
             />
           ) : chartId === 'chart9' ? (
             <ChannelByBullyType
@@ -164,6 +175,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               chartId='Chart 9'
               keywordsColor={keywordsColor}
+              resultBy={quickViewData?.resultChannelByBullyType}
+              loading={quickViewData?.loadingChannelBy}
             />
           ) : (
             ''

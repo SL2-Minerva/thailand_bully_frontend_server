@@ -251,6 +251,7 @@ const ChannelByDevice = (props: LineProps) => {
             paramsId={paramsId}
             setParamsId={setParamsId}
             reportNo={reportNo}
+            type="channel"
           />
         ) : (
           ''

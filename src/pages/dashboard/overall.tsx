@@ -100,8 +100,8 @@ const OverallDashboard = () => {
   const [filterKeyword, setFilterKeyword] = useState<any>([])
 
   const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
-  const [loadingKeyword, setLoadingKeyword] = useState<boolean>(true);
-  
+  const [loadingKeyword, setLoadingKeyword] = useState<boolean>(true)
+
   const router = useRouter()
 
   const { resultCampaiganList } = CampaignList()
@@ -230,6 +230,7 @@ const OverallDashboard = () => {
   useEffect(() => {
     if (errorUserPermission) {
       window.localStorage.removeItem('userData')
+      window.localStorage.clear()
       localStorage.clear()
       router.push('/login')
     }
@@ -243,7 +244,7 @@ const OverallDashboard = () => {
   }, [])
 
   const getKeywords = (campaignId: string) => {
-    setLoadingKeyword(true);
+    setLoadingKeyword(true)
 
     axios
       .get(`${API_PATH}/keywords?campaing_id=${campaignId}`, {
@@ -265,14 +266,14 @@ const OverallDashboard = () => {
           }
         }
         setKeywordGraphColor(keywordsColor)
-        setLoadingKeyword(false);
+        setLoadingKeyword(false)
 
         if (keywordsColor.length == 0) {
           setKeywordGraphColor(GraphicColors)
         }
       })
       .catch((ex: any) => {
-        setLoadingKeyword(true);
+        setLoadingKeyword(true)
         console.log(ex)
       })
   }
