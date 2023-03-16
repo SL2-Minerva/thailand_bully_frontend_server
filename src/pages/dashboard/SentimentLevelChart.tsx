@@ -83,7 +83,6 @@ const SentimentLevelChart = ({ params }: { params: any }) => {
   const options: ApexOptions = {
     chart: {
       type: 'bar',
-      height: 350,
       stacked: true,
       stackType: '100%',
       toolbar: { show: false }
@@ -146,7 +145,7 @@ const SentimentLevelChart = ({ params }: { params: any }) => {
       {resultSentimentLevel ? (
         <>
           {loadingSentimentLevel && <LinearProgress style={{ width: '100%' }} />}
-          <ReactApexcharts type='bar' series={series} options={options} />
+          <ReactApexcharts type='bar' series={series} options={options} height={470} />
         </>
         ) : (
           <div

@@ -1,0 +1,136 @@
+import { Button, Grid } from '@mui/material'
+import TotalMessageLists from '../dashboard/TotalMessageLists'
+import WordCloud from '../dashboard/WordCloud'
+import WordCloudChannel from '../dashboard/WordCloudChannel'
+import WordCloudSentiment from '../dashboard/WordCloudSentiment'
+
+// import SentimentLevelChart from './SentimentLevelChart'
+
+interface Props {
+  params: any
+  setTopKeyword: any
+  resultReportPermission: any
+  keywordGraphColors: any
+  topKeyword: any
+}
+
+const WordCloudGraphs = (data: Props) => {
+  const { params, setTopKeyword, resultReportPermission, topKeyword } = data
+
+  const handleTopKeywords = (data: string) => {
+    setTopKeyword(data)
+  }
+
+  return (
+    <>
+
+      {resultReportPermission?.includes('13') ||
+      resultReportPermission?.includes('15') ||
+      resultReportPermission?.includes('18') ? (
+        <Grid container spacing={3} mt={2}>
+          <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
+            <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
+            <Button
+              variant='contained'
+              color={topKeyword === 'top10' ? 'warning' : 'inherit'}
+              size='medium'
+              sx={{ marginRight: '20px' }}
+              onClick={() => {
+                handleTopKeywords('top10')
+              }}
+            >
+              {' '}
+              Top 10
+            </Button>
+            <Button
+              variant='contained'
+              color={topKeyword === 'top20' ? 'warning' : 'inherit'}
+              size='medium'
+              sx={{ marginRight: '20px' }}
+              onClick={() => {
+                handleTopKeywords('top20')
+              }}
+            >
+              {' '}
+              Top 20
+            </Button>
+            <Button
+              variant='contained'
+              color={topKeyword === 'top50' ? 'warning' : 'inherit'}
+              size='medium'
+              sx={{ marginRight: '20px' }}
+              onClick={() => {
+                handleTopKeywords('top50')
+              }}
+            >
+              {' '}
+              Top 50
+            </Button>
+            <Button
+              variant='contained'
+              color={topKeyword === 'top100' ? 'warning' : 'inherit'}
+              size='medium'
+              sx={{ marginRight: '20px' }}
+              onClick={() => {
+                handleTopKeywords('top100')
+              }}
+            >
+              {' '}
+              Top 100
+            </Button>
+            <Button
+              variant='contained'
+              color={topKeyword === 'all' ? 'warning' : 'inherit'}
+              size='medium'
+              sx={{ marginRight: '20px' }}
+              onClick={() => {
+                handleTopKeywords('all')
+              }}
+            >
+              {' '}
+              ALL{' '}
+            </Button>
+          </Grid>
+        </Grid>
+      ) : (
+        ''
+      )}
+
+      {resultReportPermission?.includes('13') ? (
+        <>
+          <Grid container spacing={3} mt={2}>
+            <Grid id='chart13' item xs={12} md={6}>
+              <WordCloud params={params} chartId='Chart 13' />
+            </Grid>
+            <Grid id='chart14' item xs={12} md={6}>
+              <TotalMessageLists params={params} chartId='Chart 14' />
+            </Grid>
+          </Grid>
+        </>
+      ) : (
+        ''
+      )}
+
+      {resultReportPermission?.includes('15') ? (
+        <Grid container spacing={3} mt={2}>
+          <Grid id='chart15' item xs={12}>
+            <WordCloudChannel params={params} chartId='Chart 15' />
+          </Grid>
+        </Grid>
+      ) : (
+        ''
+      )}
+      {resultReportPermission?.includes('18') ? (
+        <Grid container spacing={3} mt={2}>
+          <Grid id='chart17' item xs={12} md={12}>
+            <WordCloudSentiment params={params} chartId='Chart 18' />
+          </Grid>
+        </Grid>
+      ) : (
+        ''
+      )}
+    </>
+  )
+}
+
+export default WordCloudGraphs

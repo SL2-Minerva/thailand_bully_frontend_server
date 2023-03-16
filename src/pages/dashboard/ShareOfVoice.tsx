@@ -235,12 +235,25 @@ const ShareOfVoice = ({ params, chartId, keywordsColor }: { params: any; chartId
       <CardContent>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
-            <Typography variant='caption'> Number of Message</Typography>
+            <Table size='small'>
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ textAlign: 'center', color: 'white' }}>Share of Voice</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell sx={{ textAlign: 'center' }}>Number of Messages</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow></TableRow>
+              </TableBody>
+            </Table>
+
             {resultShareOfVoiceChart ? (
               <Bar
                 data={chartData}
                 options={{ indexAxis: 'y', plugins: { legend: { display: false } } }}
-                height={245}
+                height={250}
               />
             ) : (
               <div
@@ -255,12 +268,11 @@ const ShareOfVoice = ({ params, chartId, keywordsColor }: { params: any; chartId
               </div>
             )}
           </Grid>
-          <Grid item md={4} xs={12}sx={{maxHeight: 500, overflow: 'auto'}}>
-            <Table size='small' >
+
+          <Grid item md={4} xs={12} sx={{ maxHeight: 550, overflow: 'auto', mt: 7.6 }}>
+            <Table size='small'>
               <TableHead>
-                <TableRow>
-                  {resultShareOfVoice ? <ShareOfVoiceTableHead data={resultShareOfVoice} /> : ''}
-                </TableRow>
+                <TableRow>{resultShareOfVoice ? <ShareOfVoiceTableHead data={resultShareOfVoice} /> : ''}</TableRow>
               </TableHead>
               {(resultShareOfVoice || []).map((shareVoice: any, index: number) => {
                 return (
@@ -273,24 +285,33 @@ const ShareOfVoice = ({ params, chartId, keywordsColor }: { params: any; chartId
               })}
             </Table>
           </Grid>
-          <Grid item md={4} xs={12} >
-          <Table size='small'>
+
+          <Grid item md={4} xs={12}>
+            <Table size='small'>
               <TableHead>
                 <TableRow>
-                    <TableCell colSpan={3} sx={{textAlign: 'center'}}>Sentiment</TableCell>
+                  <TableCell colSpan={3} sx={{ textAlign: 'center' }}>
+                    Sentiment
+                  </TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell>Negative</TableCell>
-                    <TableCell>Neutral</TableCell>
-                    <TableCell>Positive</TableCell>
+                  <TableCell>Negative</TableCell>
+                  <TableCell>Neutral</TableCell>
+                  <TableCell>Positive</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow></TableRow>
               </TableBody>
             </Table>
-            <SentimentLevelChart params={params} />
+            <Grid container mt={-6.3}>
+              <Grid item xs={12}>
+                <SentimentLevelChart params={params} />
+              </Grid>
+            </Grid>
           </Grid>
+
+          
         </Grid>
       </CardContent>
     </Card>
