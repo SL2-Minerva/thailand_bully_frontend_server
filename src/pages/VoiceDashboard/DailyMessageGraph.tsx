@@ -11,7 +11,6 @@ import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { InteractionItem } from 'chart.js'
 import moment from 'moment'
-import { GetDailyMessages } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 import { LinearProgress, Paper } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import MessageDetail from './MessageDetail'
@@ -22,6 +21,8 @@ interface Props {
   params: any
   keywordsColor: any
   highlight?: boolean
+  resultDailyMessage: any
+  loadingDailyMessage : boolean
 }
 export const getSeries = (seriesData: any) => {
   if (!seriesData) return []
@@ -70,7 +71,7 @@ export const chartLabel = (data: any) => {
 }
 
 const DailyMessageGraph = (props: Props) => {
-  const { type, chartId, params, highlight, keywordsColor } = props
+  const { type, chartId, params, highlight, keywordsColor,resultDailyMessage, loadingDailyMessage } = props
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
@@ -82,16 +83,6 @@ const DailyMessageGraph = (props: Props) => {
   })
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [keywordId, setKeywordId] = useState<any>()
-
-  const { resultDailyMessage, loadingDailyMessage } = GetDailyMessages(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
-  )
 
   const chartRef = useRef()
   const getKeywordId = (dataset: InteractionItem[]) => {

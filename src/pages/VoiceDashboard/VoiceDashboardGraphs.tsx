@@ -7,7 +7,7 @@ import MessageText from 'mdi-material-ui/MessageText'
 import { AccountGroup } from 'mdi-material-ui'
 import DailyMessagePieChart from './DailyMessagesPieChart'
 
-import { GetNumbersOfAccountComparison } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
+import { GetDailyMessages, GetMessagesByAll, GetNumbersOfAccountComparison } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
 import QuickViewModal from './QuickViewModal'
 import KeywordBy from './KeywordBy'
@@ -38,6 +38,33 @@ const VoiceDashboardGraphs = (data: Props) => {
       params?.previousDate,
       params?.previousEndDate
     )
+    
+    const { resultMessagesByAll, loadingMessagesByAll } = GetMessagesByAll(
+      params?.campaign,
+      params?.date,
+      params?.endDate,
+      params?.period,
+      params?.keywordIds,
+      params?.previousDate,
+      params?.previousEndDate
+    )
+
+    const { resultDailyMessage, loadingDailyMessage } = GetDailyMessages(
+      params?.campaign,
+      params?.date,
+      params?.endDate,
+      params?.period,
+      params?.keywordIds,
+      params?.previousDate,
+      params?.previousEndDate
+    )
+
+    const quickViewData = {
+      resultDailyMessage: resultDailyMessage,
+      resultMessagesByAll: resultMessagesByAll,
+      loadingMessagesByAll: loadingMessagesByAll,
+      loadingDailyMessage: loadingDailyMessage
+    }
 
   return (
     <>
@@ -63,6 +90,8 @@ const VoiceDashboardGraphs = (data: Props) => {
             params={params}
             chartId='Chart 2'
             highlight={highlight === 'chart2' ? true : false}
+            resultDailyMessage = {resultDailyMessage}
+            loadingDailyMessage ={loadingDailyMessage}
           />
         </Grid>
       ) : (
@@ -74,6 +103,8 @@ const VoiceDashboardGraphs = (data: Props) => {
         resultReportPermission={resultReportPermission}
         highlight={highlight}
         params={params}
+        resultMessagesByAll ={resultMessagesByAll}
+        loadingMessagesByAll={loadingMessagesByAll}
       />
 
       {resultReportPermission?.includes('30') ? (
@@ -148,6 +179,7 @@ const VoiceDashboardGraphs = (data: Props) => {
         params={params}
         chartId={highlight}
         keywordsColor={keywordGraphColors}
+        quickViewData ={quickViewData}
       />
     </>
   )
