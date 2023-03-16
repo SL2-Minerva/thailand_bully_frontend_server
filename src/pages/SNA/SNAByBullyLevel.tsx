@@ -86,6 +86,8 @@ const SNAByBullyLevel = () => {
   const handleSelectList = useCallback((e: SelectChangeEvent, type: string) => {
     if (type === 'campaign') {
       setCampaign(e.target.value)
+      localStorage.setItem('campaign', e.target.value)
+
     } else if (type==='limit'){
       setLimit(e.target.value)
     } else {
@@ -194,10 +196,16 @@ const SNAByBullyLevel = () => {
   }, [errorUserPermission])
 
   useEffect(() => {
-    if (resultCampaiganList?.length > 0) {
-      setCampaign(resultCampaiganList[0]?.id)
+    if(resultCampaiganList?.length>0) {
+      const value = localStorage.getItem('campaign')
+      if(value) {
+        setCampaign(value) 
+      } else {
+        setCampaign(resultCampaiganList[0]?.id)
+      }
     }
-  }, [resultCampaiganList])
+  },[resultCampaiganList])
+
 
   useEffect(() => {
     if (!loadingNetworkGraph && resultBullyLevelNetwork) {
