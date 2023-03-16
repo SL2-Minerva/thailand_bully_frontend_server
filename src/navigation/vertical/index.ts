@@ -43,6 +43,11 @@ const navigation = (): VerticalNavItemsType => {
     "path": "/BullyDashboard"
   };
 
+  const wordCloudDashboard = {
+    'title' : 'Word Clouds',
+    'path' : '/WordCloud'
+  }
+
   const sna = {
     "title" : "SNA",
     children: [
@@ -83,6 +88,7 @@ const navigation = (): VerticalNavItemsType => {
   }
 
   reportDashboardList.push(sna);
+  reportDashboardList.push(wordCloudDashboard);
 
   const UserPermissionData = resultPermission?.user?.authorized_view ? {
     title: 'User Permission',

@@ -38,9 +38,10 @@ export const getChartData = (data: any, keywordColor: any) => {
       seriesData.push({
         label: data[i].keyword_name || '',
         data: data[i].data || [],
-        backgroundColor: 'rgba(0,0,0,0.01)',
+        backgroundColor: color || GraphicColors[i],
         borderColor: color || GraphicColors[i],
-        borderWidth: 1
+        borderWidth: 1,
+        fill: false
       })
     }
   }
