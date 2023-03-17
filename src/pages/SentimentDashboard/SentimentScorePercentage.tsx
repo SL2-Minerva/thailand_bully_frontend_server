@@ -125,7 +125,7 @@ const SentimentScorePercentage = ({
   }
 
   return (
-    <Card sx={{minHeight: 470}}>
+    <Card sx={{minHeight: 520}}>
       {loadingSentimentScore && <LinearProgress style={{ width: '100%' }} />}
       <CardHeader title='' titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }} />
       <CardContent>
@@ -145,7 +145,7 @@ const SentimentScorePercentage = ({
           <>
             {
               negativeData?.length > 0 || positiveData?.length> 0 || neutralData?.length> 0 ? 
-              <ReactApexcharts type='bar' height={380} series={series} options={options} />
+              <ReactApexcharts type='bar' height={430} series={series} options={options} />
               :
               ""
             }
