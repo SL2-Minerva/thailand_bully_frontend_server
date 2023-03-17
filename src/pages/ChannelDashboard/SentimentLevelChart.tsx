@@ -12,19 +12,35 @@ import { LinearProgress } from '@mui/material'
 import { useEffect, useState } from 'react'
 import Translations from 'src/layouts/components/Translations'
 
-const Labels = (data: any) => {
+// const Labels = (data: any) => {
+//   if (!data) {
+//     return []
+//   }
+//   const labels: any[] = []
+//   if (data?.length > 0) {
+//     for (let i = 0; i < data?.length; i++) {
+//       labels.push(data[i].keyword_name || "")
+//     }
+//   }
+
+//   return labels
+// }
+
+const YLabels = (data: any) => {
   if (!data) {
     return []
   }
   const labels: any[] = []
   if (data?.length > 0) {
     for (let i = 0; i < data?.length; i++) {
-      labels.push(data[i].keyword_name || "")
+      labels.push(data[i].source_name || "")
     }
   }
 
   return labels
 }
+
+
 
 const ChartDataPositive = (data: any, type: string) => {
   if (!data) {
@@ -61,7 +77,9 @@ const SentimentLevelChart = ({
   resultSentimentLevel: any
   loading: boolean
 }) => {
-  const chartLabels = Labels(resultSentimentLevel)
+  // const chartLabels = Labels(resultSentimentLevel)
+
+  const sourceNames = YLabels(resultSentimentLevel);
   const positiveData = ChartDataPositive(resultSentimentLevel, 'positive')
   const neutralData = ChartDataPositive(resultSentimentLevel, 'neutral')
   const negativeData = ChartDataPositive(resultSentimentLevel, 'negative')
@@ -112,11 +130,12 @@ const SentimentLevelChart = ({
     },
     colors: SentimentAllColors,
     xaxis: {
-      categories: chartLabels
+      categories: sourceNames
     },
-    yaxis : {
-      show: false
-    },
+
+    // yaxis : {
+    //   show: false
+    // },
     tooltip: {
       y: {
         formatter: function (val) {
@@ -129,9 +148,11 @@ const SentimentLevelChart = ({
       colors: SentimentAllColors
     },
     legend: {
-      position: 'top',
-      horizontalAlign: 'left',
-      offsetX: 40
+      show: false
+
+      // position: 'top',
+      // horizontalAlign: 'left',
+      // offsetX: 40
     }
   }
 
@@ -161,7 +182,7 @@ const SentimentLevelChart = ({
             <Translations text='no data' />
           </div>
         ) : (
-          <ReactApexcharts type='bar' height={276} series={series} options={options} />
+          <ReactApexcharts type='bar' height={300} series={series} options={options} />
         )}
         
       </CardContent>
