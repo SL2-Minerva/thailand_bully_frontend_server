@@ -14,6 +14,7 @@ import moment from 'moment'
 import MessageDetail from '../VoiceDashboard/MessageDetail'
 import { LinearProgress, Paper } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
+import { ChannelColorCode } from 'src/utils/const'
 
 interface Props {
   type: string
@@ -73,7 +74,7 @@ export const chartLabel = (data: any) => {
 }
 
 const DailyMessageGraph = (props: Props) => {
-  const { type, chartId, params, highlight, resultDailyChannel, loadingDailyChannel, keywordsColor } = props
+  const { type, chartId, params, highlight, resultDailyChannel, loadingDailyChannel } = props
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
@@ -186,7 +187,7 @@ const DailyMessageGraph = (props: Props) => {
     let totalAmount: number[] = []
     let keywordName = ''
     const returnData: StackChartDataset[] = []
-    const color = keywordsColor
+    const color = []
     for (let i = 0; i < data?.length; i++) {
       totalAmount = []
       const total = data[i]?.value
@@ -209,6 +210,11 @@ const DailyMessageGraph = (props: Props) => {
       }
 
       keywordName = data[i].keyword_name ? data[i].keyword_name : data[i].source_name ? data[i].source_name : ''
+      for (let j = 0; j < ChannelColorCode?.length; j++) {
+        if (ChannelColorCode[j]?.name === keywordName) {
+          color.push(ChannelColorCode[j]?.color)
+        }
+      }
 
       const chartDataset: StackChartDataset = {
         fill: false,

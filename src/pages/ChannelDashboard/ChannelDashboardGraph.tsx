@@ -340,7 +340,7 @@ const ChannelDashboardGraphs = (data: Props) => {
           <Grid container spacing={4} ml={3} mt={2}>
             <Grid item xs={6} md={2}>
               <ChannelComparison
-                color='#44546a'
+                color='#3b5998'
                 trendNumber={resultFacebookComparison?.percentage}
                 trend={resultFacebookComparison?.type}
                 totalText='Facebook'
@@ -350,7 +350,7 @@ const ChannelDashboardGraphs = (data: Props) => {
             </Grid>
             <Grid item xs={6} md={2}>
               <ChannelComparison
-                color='#4472c4'
+                color='#00aced'
                 trendNumber={resultTwitterComparison?.percentage}
                 trend={resultTwitterComparison?.type}
                 totalText='Twitter'
@@ -360,7 +360,7 @@ const ChannelDashboardGraphs = (data: Props) => {
             </Grid>
             <Grid item xs={6} md={2}>
               <ChannelComparison
-                color='#c92d27'
+                color='#e31010'
                 trendNumber={resultYoutubeComparison?.percentage}
                 trend={resultYoutubeComparison?.type}
                 totalText='Youtube'
@@ -370,7 +370,7 @@ const ChannelDashboardGraphs = (data: Props) => {
             </Grid>
             <Grid item xs={6} md={2}>
               <ChannelComparison
-                color='#a5a5a5'
+                color='#d62976'
                 trendNumber={resultInstagramComparison?.percentage}
                 trend={resultInstagramComparison?.type}
                 totalText='Instagram'
@@ -380,7 +380,7 @@ const ChannelDashboardGraphs = (data: Props) => {
             </Grid>
             <Grid item xs={6} md={2}>
               <ChannelComparison
-                color='#36a853'
+                color='#F4B400'
                 trendNumber={resultGoogleComparison?.percentage}
                 trend={resultGoogleComparison?.type}
                 totalText='Google'
@@ -390,7 +390,7 @@ const ChannelDashboardGraphs = (data: Props) => {
             </Grid>
             <Grid item xs={6} md={2}>
               <ChannelComparison
-                color='#ffc000'
+                color='#642c8c'
                 trendNumber={resultPantipComparison?.percentage}
                 trend={resultPantipComparison?.type}
                 totalText='Pantip'

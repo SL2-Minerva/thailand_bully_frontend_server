@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment'
 import { InteractionItem } from 'chart.js'
-import { BullyTypeColors } from 'src/utils/const'
+import { BullyTypeColorCode } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
@@ -85,7 +85,7 @@ const DailyMessgesByBullyType = (props: LineProps) => {
   } = props
 
   // const [ chartData, setChartData ] = useState();
-  const colors = BullyTypeColors
+  // const colors = BullyTypeColors
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const [label, setLabel] = useState<string[]>([])
@@ -209,7 +209,7 @@ const DailyMessgesByBullyType = (props: LineProps) => {
     let totalAmount: number[] = []
     let keywordName = ''
     const returnData: StackChartDataset[] = []
-    const color = colors
+    const color = []
     for (let i = 0; i < data?.length; i++) {
       totalAmount = []
       const total = data[i]?.value
@@ -237,6 +237,13 @@ const DailyMessgesByBullyType = (props: LineProps) => {
 
       if (data[i].bully_type) {
         keywordName = t(data[i].bully_type)
+      }
+
+      // keywordName = data[i].bully_level
+      for (let j = 0; j < BullyTypeColorCode?.length; j++) {
+        if (BullyTypeColorCode[j]?.name === data[i].bully_level) {
+          color.push(BullyTypeColorCode[j]?.color)
+        }
       }
 
       const chartDataset: StackChartDataset = {

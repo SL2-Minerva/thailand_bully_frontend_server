@@ -86,7 +86,7 @@ const KeywordFilters = (data: Props) => {
                         }}
                         variant='contained'
                       >
-                        <span style={{ wordWrap: 'break-word', color:'#eae4e4' }}>{wordBreaks(keywords.name)}</span>
+                        <span style={{ wordWrap: 'break-word' }}>{wordBreaks(keywords.name)}</span>
                       </Button>
                     </Grid>
                   )

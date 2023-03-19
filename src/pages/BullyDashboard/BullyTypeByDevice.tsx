@@ -2,7 +2,7 @@ import { Paper, CardContent, CardHeader, LinearProgress } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent} from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
-import { BullyTypeColors } from 'src/utils/const'
+import { BullyTypeColorCode } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
@@ -134,7 +134,7 @@ const BullyTypeByDevice = (props: LineProps) => {
     let totalAmount : number[] = [];
     let keywordName = "";
     const returnData : StackChartDataset[] = [];
-    const color = BullyTypeColors
+    const color = []
     const total = data?.value || data?.data || [];
 
     for(let i = 0 ; i<total?.length; i++) {
@@ -144,7 +144,12 @@ const BullyTypeByDevice = (props: LineProps) => {
         totalAmount.push(total[i]?.data[j]);
       } 
       
-      keywordName = t(total[i]?.keyword_name);
+      for (let j = 0; j < BullyTypeColorCode?.length; j++) {
+        if (BullyTypeColorCode[j]?.name === total[i]?.keyword_name) {
+          color.push(BullyTypeColorCode[j]?.color)
+          keywordName = t(total[i]?.keyword_name);
+        }
+      }
       const chartDataset : StackChartDataset  = {
         fill: false,
         tension: 0.5,

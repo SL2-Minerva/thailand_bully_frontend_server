@@ -51,7 +51,9 @@ const NumberOfMessage = ({ params, keywordsColor }: { params: any; keywordsColor
     params?.previousEndDate,
     params?.keywordIds
   )
-  const chartLabels = Labels(resultShareOfVoiceChart)
+  
+  // const chartLabels = Labels(resultShareOfVoiceChart)
+
   const chartSeriesData = ChartData(resultShareOfVoiceChart)
 
   const [chartOptions, setChartOptions] = useState<ApexOptions>()
@@ -62,8 +64,6 @@ const NumberOfMessage = ({ params, keywordsColor }: { params: any; keywordsColor
       data: chartSeriesData
     }
   ]
-
-  console.log('labeles', chartLabels, 'keyword color', keywordsColor)
 
   useEffect(() => {
     if (keywordsColor?.length > 0) {
