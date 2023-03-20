@@ -20,7 +20,9 @@ import {
 } from 'src/services/api/dashboards/overall/overallDashboardApi'
 
 import CommentSentiment from './CommentSentiment'
-import ShareOfVoice from './ShareOfVoice'
+import ShareOfVoices from './ShareofVoices'
+
+// import ShareOfVoice from './ShareOfVoice'
 
 interface Props {
   params: any
@@ -251,11 +253,23 @@ const OverallGraphs = (data: Props) => {
         )}
       </Grid>
 
-      <Grid container spacing={3} mt={2}>
+      {/* <Grid container spacing={3} mt={2}>
         {resultReportPermission?.includes('12') ? (
           <>
             <Grid id='chart12' item xs={12}>
               <ShareOfVoice params={params} chartId='Chart 12' keywordsColor={keywordGraphColors} />
+            </Grid>
+          </>
+        ) : (
+          ''
+        )}
+      </Grid> */}
+
+      <Grid container spacing={3} mt={2}>
+        {resultReportPermission?.includes('12') ? (
+          <>
+            <Grid id='chart12' item xs={12}>
+              <ShareOfVoices params={params} chartId='Chart 12' keywordsColor={keywordGraphColors} />
             </Grid>
           </>
         ) : (

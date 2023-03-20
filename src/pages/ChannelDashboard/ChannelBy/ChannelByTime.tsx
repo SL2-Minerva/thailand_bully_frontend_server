@@ -9,6 +9,7 @@ import MessageDetail from 'src/pages/VoiceDashboard/MessageDetail'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
+import { ChannelColorCode } from 'src/utils/const'
 
 const ChannelByTime = (props: LineProps) => {
   const { t } = useTranslation()
@@ -21,8 +22,7 @@ const ChannelByTime = (props: LineProps) => {
     params,
     highlight,
     resultBy,
-    loading,
-    keywordsColor
+    loading
   } = props
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
@@ -145,7 +145,7 @@ const ChannelByTime = (props: LineProps) => {
     let totalAmount: number[] = []
     let keywordName = ''
     const returnData: StackChartDataset[] = []
-    const color = keywordsColor
+    const color = []
     const total = data?.value || data?.data || []
 
     for (let i = 0; i < total?.length; i++) {
@@ -156,6 +156,11 @@ const ChannelByTime = (props: LineProps) => {
       }
 
       keywordName = total[i]?.source_name
+      for (let j = 0; j < ChannelColorCode?.length; j++) {
+        if (ChannelColorCode[j]?.name === keywordName) {
+          color.push(ChannelColorCode[j]?.color)
+        }
+      }
       const chartDataset: StackChartDataset = {
         fill: false,
         tension: 0.5,
