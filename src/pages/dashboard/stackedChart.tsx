@@ -16,6 +16,9 @@ import { StyledTooltip } from './overall'
 import { LinearProgress } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 
+// import * as htmlToImage from 'html-to-image';
+// import { saveAs } from 'file-saver';
+
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
 // import { Bar, getDatasetAtEvent,  } from 'react-chartjs-2'
@@ -63,6 +66,17 @@ const chartLabel = (data: any) => {
 
   return labelValue
 }
+
+// const onCapture = () =>{
+//   const pictureId = document.getElementById("savePNG")
+//   if(pictureId){
+//     htmlToImage.toPng(pictureId)
+//       .then(function (dataUrl) {
+//       saveAs(dataUrl,  'Daily Message (overall).png');
+//       });
+//   }
+  
+// }
 
 const StackedChart = (props: LineProps) => {
   // ** Props
@@ -263,9 +277,10 @@ const StackedChart = (props: LineProps) => {
             <Information fontSize='large' style={{ marginTop: '23px' }} />
           </StyledTooltip>
         </span>
+        {/* <Button onClick={onCapture}>PNG</Button> */}
       </div>
 
-      <CardContent>
+      <CardContent id="savePNG">
         {showNoDataText ? (
           <div
             style={{
