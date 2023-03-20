@@ -13,17 +13,7 @@ import { ChannelColorCode } from 'src/utils/const'
 
 const ChannelBySentimentComparison = (props: LineProps) => {
   const { t } = useTranslation()
-  const {
-    white,
-    labelColor,
-    borderColor,
-    gridLineColor,
-    chartId,
-    params,
-    highlight,
-    resultBy,
-    loading
-  } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const [label, setLabel] = useState<string[]>([])
@@ -213,6 +203,19 @@ const ChannelBySentimentComparison = (props: LineProps) => {
         setLabel(labels)
 
         const dataSets = chartDatasets(dailyMessageData)
+        dataSets?.sort((a, b) => {
+          const fa = a.label?.toLowerCase(),
+            fb = b.label?.toLowerCase()
+
+          if (fa < fb) {
+            return -1
+          }
+          if (fa > fb) {
+            return 1
+          }
+
+          return 0
+        })
         setDataset(dataSets)
       }
       if (!dailyMessageData?.value) {

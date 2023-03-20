@@ -48,32 +48,32 @@ export const ChannelColorCode = [
     color: '#3b5998'
   },
   {
-    name: 'twitter',
-    color: '#00aced'
-  },
-  {
-    name: 'youtube',
-    color: '#e31010'
+    name: 'google',
+    color: '#F4B400'
   },
   {
     name: 'instagram',
     color: '#d62976'
   },
   {
-    name: 'google',
-    color: '#F4B400'
-  },
-  {
     name: 'pantip',
     color: '#642c8c'
+  },
+  {
+    name: 'sanook',
+    color: '#c46627'
   },
   {
     name: 'tiktok',
     color: '#010101'
   },
   {
-    name: 'sanook',
-    color: '#c46627'
+    name: 'twitter',
+    color: '#00aced'
+  },
+  {
+    name: 'youtube',
+    color: '#e31010'
   }
 ]
 
@@ -258,7 +258,36 @@ export const SentimentAllColors = [
   '#7A0010'
 ]
 
-export const BullyTypeSummaryColors = ['#FEB95F', '#F0F0F0', '#EFD4DC', '#EA638C', '#89023E', '#521130', '#34213E']
+export const BullyTypeSummaryColors = [
+  {
+    name: 'all',
+    color: '#FEB95F'
+  },
+  {
+    name: 'NoBully',
+    color: '#f0f0f0'
+  },
+  {
+    name: 'Gossip',
+    color: '#efd4dc'
+  },
+  {
+    name: 'Trolling',
+    color: '#ea628c'
+  },
+  {
+    name: 'Exclusion',
+    color: '#89033d'
+  },
+  {
+    name: 'HateSpeech',
+    color: '#521031'
+  },
+  {
+    name: 'Harassment',
+    color: '#34203e'
+  }
+]
 
 export const BullyTypeColorCode = [
   {
@@ -287,7 +316,28 @@ export const BullyTypeColorCode = [
   }
 ]
 
-export const BullyLevelSummaryColors = ['#FEB95F', '#EDF2F4', '#8D99AE', '#4C4B63', '#7A0010']
+export const BullyLevelSummaryColors = [
+  {
+    name: 'all',
+    color: '#FEB95F'
+  },
+  {
+    name: 'Level 0',
+    color: '#EDF2F4'
+  },
+  {
+    name: 'Level 1',
+    color: '#8D99AE'
+  },
+  {
+    name: 'Level 2',
+    color: '#4C4B63'
+  },
+  {
+    name: 'Level 3',
+    color: '#7A0010'
+  },
+]
 
 export const FacebookIcon = '/images/logos/facebook-round.png'
 export const TwitterIcon = '/images/logos/twitter.png'

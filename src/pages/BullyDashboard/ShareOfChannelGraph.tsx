@@ -25,12 +25,14 @@ export const ChartData = (data: any) => {
   return value
 }
 
-const NumberOfEachMessage = ({
+const ShareOfChannelGraph = ({
   keywordsColor,
-  resultShareOfVoiceChart
+  resultShareOfVoiceChart,
+  max
 }: {
   keywordsColor: any
   resultShareOfVoiceChart: any
+  max: number
 }) => {
   //   const chartLabels = Labels(resultShareOfVoiceChart)
 
@@ -58,7 +60,7 @@ const NumberOfEachMessage = ({
     colors: keywordsColor,
     xaxis: {
       categories: Labels(resultShareOfVoiceChart),
-      max: 20000,
+      max: max,
       labels: {
         show: false
       },
@@ -81,7 +83,7 @@ const NumberOfEachMessage = ({
     <>
       {resultShareOfVoiceChart ? (
         <>
-          <ReactApexcharts type='bar' series={series} options={options} height={70} />
+          <ReactApexcharts type='bar' series={series} options={options} height={70}/>
         </>
       ) : (
         <div
@@ -99,4 +101,4 @@ const NumberOfEachMessage = ({
   )
 }
 
-export default NumberOfEachMessage
+export default ShareOfChannelGraph
