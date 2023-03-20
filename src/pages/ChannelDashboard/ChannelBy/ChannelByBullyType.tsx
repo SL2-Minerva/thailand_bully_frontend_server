@@ -6,10 +6,10 @@ import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { chartDatasets } from './ChannelByBullyLevel'
 import { LineProps } from 'src/pages/VoiceDashboard/MessageByDays'
-import MessageDetail from 'src/pages/VoiceDashboard/MessageDetail'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
+import MessageDetailChannel from '../MessageDetailChannel'
 
 const ChannelByBullyType = (props: LineProps) => {
   const { t } = useTranslation()
@@ -217,7 +217,7 @@ const ChannelByBullyType = (props: LineProps) => {
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
         )}
         {showDetail ? (
-          <MessageDetail
+          <MessageDetailChannel
             show={showDetail}
             setShow={setShowDetail}
             params={params}

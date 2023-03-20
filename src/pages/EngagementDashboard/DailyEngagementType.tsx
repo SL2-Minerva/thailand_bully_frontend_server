@@ -4,15 +4,20 @@ import CardContent from '@mui/material/CardContent'
 
 // ** Third Party Imports
 import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, MouseEvent } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment'
 import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import MessageDetail from './MessageDetail'
-import { LinearProgress, Paper } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
+import DotsVertical from 'mdi-material-ui/DotsVertical'
+import { Download } from 'mdi-material-ui'
+
+import * as htmlToImage from 'html-to-image'
+import { saveAs } from 'file-saver'
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -66,6 +71,15 @@ const chartLabel = (data: any) => {
   return labelValue
 }
 
+const onCapture = () => {
+  const pictureId = document.getElementById('savePNGEngagementType')
+  if (pictureId) {
+    htmlToImage.toPng(pictureId).then(function (dataUrl) {
+      saveAs(dataUrl, 'Daily Engagement Type By Date.png')
+    })
+  }
+}
+
 const DailyEngagementType = (props: LineProps) => {
   // ** Props
   const {
@@ -87,6 +101,15 @@ const DailyEngagementType = (props: LineProps) => {
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const rowOptionsOpen = Boolean(anchorEl)
+
+  const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleRowOptionsClose = () => {
+    setAnchorEl(null)
+  }
 
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [paramsId, setParamsId] = useState<any>({
@@ -291,19 +314,51 @@ const DailyEngagementType = (props: LineProps) => {
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
       {loading && <LinearProgress style={{ width: '100%' }} />}
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text='Daily Engagement Type By Date' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          subheader='KeyWords'
-          subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip arrow title={title || ''}>
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
 
-      <CardContent>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text='Daily Engagement Type By Date' />}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            subheader='KeyWords'
+            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+          />
+          <StyledTooltip arrow title={title || ''}>
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
+        <>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCapture()
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              PNG
+            </MenuItem>
+          </Menu>
+        </>
+      </div>
+
+      <CardContent id='savePNGEngagementType'>
         {showNoDataText ? (
           <div
             style={{

@@ -5,10 +5,10 @@ import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps } from 'src/pages/VoiceDashboard/MessageByDays'
-import MessageDetail from 'src/pages/VoiceDashboard/MessageDetail'
 import { StyledTooltip } from 'src/pages/dashboard/overall'
 import Translations from 'src/layouts/components/Translations'
 import { ChannelColorCode } from 'src/utils/const'
+import MessageDetailChannel from '../MessageDetailChannel'
 
 const ChannelByDevice = (props: LineProps) => {
   const {
@@ -262,7 +262,7 @@ const ChannelByDevice = (props: LineProps) => {
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
         )}
         {showDetail ? (
-          <MessageDetail
+          <MessageDetailChannel
             show={showDetail}
             setShow={setShowDetail}
             params={params}

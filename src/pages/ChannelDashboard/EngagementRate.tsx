@@ -7,8 +7,8 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps } from '../VoiceDashboard/MessageByDays'
-import MessageDetail from '../VoiceDashboard/MessageDetail'
 import Translations from 'src/layouts/components/Translations'
+import MessageDetailChannel from './MessageDetailChannel'
 
 export const chartLabel = (currentData: any, previousData: any) => {
   if (!currentData && !previousData) return []
@@ -258,7 +258,7 @@ const EngagementRate = (props: LineProps) => {
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
         )}
         {showDetail ? (
-          <MessageDetail
+          <MessageDetailChannel
             show={showDetail}
             setShow={setShowDetail}
             params={params}

@@ -11,7 +11,7 @@ import Fade, { FadeProps } from '@mui/material/Fade'
 import { Box, Card, Dialog, DialogContent, IconButton, LinearProgress, Pagination, Typography } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
 import DialogNetworkGraph from '../dashboard/DialogNetworkGraph'
-import { GetMessageDetail } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import { GetMessageDetailBullyDashboard } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
 import { CheckCircle, OpenInNew } from 'mdi-material-ui'
@@ -106,7 +106,7 @@ const MessageDetail = (props: DialogInfoProps) => {
   if (params?.Llabel) {
     paramData.Llabel = params?.Llabel
   }
-  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetail(paramData)
+  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetailBullyDashboard(paramData)
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value - 1)
