@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper'
 import Fade, { FadeProps } from '@mui/material/Fade'
 import { Box, Card, Dialog, DialogContent, IconButton, LinearProgress, Pagination, Typography } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
-import { GetMessageDetail } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import { GetMessageDetailEngagementDashboard } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
@@ -108,7 +108,7 @@ const MessageDetail = (props: DialogInfoProps) => {
     paramData.Llabel = params.Llabel
   }
 
-  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetail(paramData)
+  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetailEngagementDashboard(paramData)
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value - 1)

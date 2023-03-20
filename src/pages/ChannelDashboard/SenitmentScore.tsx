@@ -7,8 +7,8 @@ import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps } from '../VoiceDashboard/MessageByDays'
 import { chartDatasets, chartLabel } from './EngagementRate'
-import MessageDetail from '../VoiceDashboard/MessageDetail'
 import Translations from 'src/layouts/components/Translations'
+import MessageDetailChannel from './MessageDetailChannel'
 
 const SentimentScore = (props: LineProps) => {
   const { labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, resultByPrevious, loading } =
@@ -190,7 +190,7 @@ const SentimentScore = (props: LineProps) => {
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
         )}
         {showDetail ? (
-          <MessageDetail
+          <MessageDetailChannel
             show={showDetail}
             setShow={setShowDetail}
             params={params}

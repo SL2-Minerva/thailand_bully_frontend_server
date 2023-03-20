@@ -10,10 +10,10 @@ import Paper from '@mui/material/Paper'
 import Fade, { FadeProps } from '@mui/material/Fade'
 import { Box, Card, Dialog, DialogContent, IconButton, LinearProgress, Pagination, Typography } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
-import { GetMessageDetailVoiceDashboard } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import DialogNetworkGraph from '../dashboard/DialogNetworkGraph'
+import { GetMessageDetailSentimentDashboard } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
-import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
 import { CheckCircle, OpenInNew } from 'mdi-material-ui'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -56,26 +56,10 @@ interface DialogInfoProps {
   reportNo?: string
   title?: string
   networkTitle?: string
-  keywordId?: number
-  setKeywordId?: any
-  type?: string
 }
 
 const MessageDetail = (props: DialogInfoProps) => {
-  const {
-    show,
-    setShow,
-    current,
-    params,
-    paramsId,
-    setParamsId,
-    reportNo,
-    title,
-    networkTitle,
-    keywordId,
-    setKeywordId,
-    type
-  } = props
+  const { show, setShow, current, params, paramsId, setParamsId, reportNo, title, networkTitle } = props
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [page, setPage] = useState(0)
   const [messageId, setMessageId] = useState<number | string>()
@@ -83,6 +67,7 @@ const MessageDetail = (props: DialogInfoProps) => {
 
   let paramData: any = {}
   const todayDate = new Date()
+  paramData.Llabel = ''
   if (params?.period === 'customrange' && params?.previousDate !== todayDate && params?.previousEndDate !== todayDate) {
     paramData = {
       campaign_id: params?.campaign || '',
@@ -90,12 +75,12 @@ const MessageDetail = (props: DialogInfoProps) => {
       start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
       end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
       period: params?.period,
-      keyword_id: paramsId?.keywordId || keywordId || '',
+      keyword_id: paramsId?.keywordId || '',
       organization_id: paramsId?.organization_id || '',
       classification_id: paramsId?.classification_id || '',
       start_date_period: params?.previousDate ? moment(params?.previousDate).format('YYYY-MM-DD') : '',
       end_date_period: params?.previousEndDate ? moment(params?.previousEndDate).format('YYYY-MM-DD') : '',
-      page: page ? (page + 1) : 1,
+      page: page ? (page + 1 ): 1,
       limit: 10,
       report_number: reportNo,
       page_name: params?.page,
@@ -108,26 +93,20 @@ const MessageDetail = (props: DialogInfoProps) => {
       start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
       end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
       period: params?.period,
-      keyword_id: paramsId?.keywordId || keywordId || '',
+      keyword_id: paramsId?.keywordId || '',
       classification_id: paramsId?.classification_id || '',
       organization_id: paramsId?.organization_id || '',
-      page: page ? (page + 1) : 1,
+      page: page ? (page + 1 ): 1,
       limit: 10,
       report_number: reportNo,
       page_name: params?.page,
       label: params?.label
     }
   }
-
   if (params?.Llabel) {
     paramData.Llabel = params?.Llabel
   }
-
-  if (params.select_period) {
-    paramData.select_period = params?.select_period
-  }
-
-  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetailVoiceDashboard(paramData)
+  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetailSentimentDashboard(paramData)
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value - 1)
@@ -143,9 +122,6 @@ const MessageDetail = (props: DialogInfoProps) => {
       campaign_id: null,
       organization_id: null
     })
-    if (keywordId) {
-      setKeywordId('')
-    }
   }
 
   useEffect(() => {
@@ -183,7 +159,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                   <StyledTableCell>No.</StyledTableCell>
                   <StyledTableCell>Message Detail</StyledTableCell>
                   <StyledTableCell>Message Type</StyledTableCell>
-                  <StyledTableCell>{type && type === 'channel' ? 'Source Name' : 'Account Name'}</StyledTableCell>
+                  <StyledTableCell>Account Name</StyledTableCell>
                   <StyledTableCell>Post Date</StyledTableCell>
                   <StyledTableCell>Post Time</StyledTableCell>
                   <StyledTableCell>Day</StyledTableCell>
@@ -214,16 +190,15 @@ const MessageDetail = (props: DialogInfoProps) => {
                       <b>{index + 1 + page * 10}</b>
                     </StyledTableCell>
                     <StyledTableCell
-                      component='th'
-                      scope='row'
                       onClick={() => {
                         setShowDialog(true)
                       }}
+                      component='th'
+                      scope='row'
                     >
                       {messageDetail.message_detail}
                     </StyledTableCell>
                     <StyledTableCell
-                      align='center'
                       onClick={() => {
                         setShowDialog(true)
                       }}
@@ -231,7 +206,6 @@ const MessageDetail = (props: DialogInfoProps) => {
                       {messageDetail.message_type || '-'}
                     </StyledTableCell>
                     <StyledTableCell
-                      align='center'
                       onClick={() => {
                         setShowDialog(true)
                       }}
@@ -239,7 +213,6 @@ const MessageDetail = (props: DialogInfoProps) => {
                       {messageDetail.account_name}
                     </StyledTableCell>
                     <StyledTableCell
-                      align='center'
                       onClick={() => {
                         setShowDialog(true)
                       }}
@@ -247,7 +220,6 @@ const MessageDetail = (props: DialogInfoProps) => {
                       {messageDetail.post_date}
                     </StyledTableCell>
                     <StyledTableCell
-                      align='center'
                       onClick={() => {
                         setShowDialog(true)
                       }}
@@ -255,7 +227,6 @@ const MessageDetail = (props: DialogInfoProps) => {
                       {messageDetail.post_time}
                     </StyledTableCell>
                     <StyledTableCell
-                      align='center'
                       onClick={() => {
                         setShowDialog(true)
                       }}
@@ -263,15 +234,13 @@ const MessageDetail = (props: DialogInfoProps) => {
                       {messageDetail.day}
                     </StyledTableCell>
                     <StyledTableCell
-                      align='center'
                       onClick={() => {
                         setShowDialog(true)
                       }}
                     >
-                      {messageDetail.device || '-'}
+                      {messageDetail.device}
                     </StyledTableCell>
                     <StyledTableCell
-                      align='center'
                       onClick={() => {
                         setShowDialog(true)
                       }}
@@ -279,7 +248,6 @@ const MessageDetail = (props: DialogInfoProps) => {
                       {messageDetail.channel || '-'}
                     </StyledTableCell>
                     <StyledTableCell
-                      align='center'
                       onClick={() => {
                         setShowDialog(true)
                       }}
@@ -287,7 +255,6 @@ const MessageDetail = (props: DialogInfoProps) => {
                       {messageDetail.sentiment || '-'}
                     </StyledTableCell>
                     <StyledTableCell
-                      align='center'
                       onClick={() => {
                         setShowDialog(true)
                       }}
@@ -295,7 +262,6 @@ const MessageDetail = (props: DialogInfoProps) => {
                       {messageDetail.bully_level}
                     </StyledTableCell>
                     <StyledTableCell
-                      align='center'
                       onClick={() => {
                         setShowDialog(true)
                       }}
@@ -307,7 +273,11 @@ const MessageDetail = (props: DialogInfoProps) => {
                         setShowDialog(true)
                       }}
                     >
-                      {messageDetail.parent ? <CheckCircle style={{ color: 'green' }} /> : ''}
+                      {messageDetail.parent ? (
+                        <CheckCircle style={{ color: 'green' }} />
+                      ) : (
+                        ''
+                      )}
                     </StyledTableCell>
                     <StyledTableCell>
                       {messageDetail.link_message ? (
@@ -339,7 +309,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       </Dialog>
 
       {messageId && params?.campaign ? (
-        <DialogNetworkGraphByFitler
+        <DialogNetworkGraph
           showDialog={showDialog}
           setShowDialog={setShowDialog}
           currentData={current}

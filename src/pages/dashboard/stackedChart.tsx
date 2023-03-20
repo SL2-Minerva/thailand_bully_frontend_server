@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent'
 
 // ** Third Party Imports
 import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, MouseEvent } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment'
 import DailyMessageDetail from './DailyMessageDetail'
@@ -13,11 +13,13 @@ import { InteractionItem } from 'chart.js'
 
 import { Information } from 'mdi-material-ui'
 import { StyledTooltip } from './overall'
-import { LinearProgress } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
+import DotsVertical from 'mdi-material-ui/DotsVertical'
+import { Download } from 'mdi-material-ui'
 
-// import * as htmlToImage from 'html-to-image';
-// import { saveAs } from 'file-saver';
+import * as htmlToImage from 'html-to-image';
+import { saveAs } from 'file-saver';
 
 // import { Button } from '@mui/material'
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
@@ -67,16 +69,14 @@ const chartLabel = (data: any) => {
   return labelValue
 }
 
-// const onCapture = () =>{
-//   const pictureId = document.getElementById("savePNG")
-//   if(pictureId){
-//     htmlToImage.toPng(pictureId)
-//       .then(function (dataUrl) {
-//       saveAs(dataUrl,  'Daily Message (overall).png');
-//       });
-//   }
-  
-// }
+const onCapture = () => {
+  const pictureId = document.getElementById('savePNG')
+  if (pictureId) {
+    htmlToImage.toPng(pictureId).then(function (dataUrl) {
+      saveAs(dataUrl, 'Daily Message (overall).png')
+    })
+  }
+}
 
 const StackedChart = (props: LineProps) => {
   // ** Props
@@ -90,6 +90,8 @@ const StackedChart = (props: LineProps) => {
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [keywordId, setKeywordId] = useState<any>()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const rowOptionsOpen = Boolean(anchorEl)
 
   const chartRef = useRef()
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -177,6 +179,51 @@ const StackedChart = (props: LineProps) => {
     }
   }
 
+  // const lineOptions = {
+  //   responsive: true,
+  //   backgroundColor: false,
+  //   maintainAspectRatio: false,
+  //   scales: {
+  //     x: {
+  //       ticks: { color: labelColor },
+  //       grid: {
+  //         borderColor,
+  //         color: gridLineColor
+  //       },
+  //       stacked: true
+  //     },
+  //     y: {
+  //       min: 0,
+
+  //       // max: 5000,
+
+  //       scaleLabel: { display: true },
+  //       ticks: {
+  //         stepSize: 100,
+  //         color: labelColor
+  //       },
+  //       grid: {
+  //         borderColor,
+  //         color: gridLineColor
+  //       },
+
+  //       stacked: true
+  //     }
+  //   },
+  //   plugins: {
+  //     legend: {
+  //       align: 'end',
+  //       position: 'top',
+  //       labels: {
+  //         padding: 25,
+  //         boxWidth: 10,
+  //         color: labelColor,
+  //         usePointStyle: true
+  //       }
+  //     }
+  //   },
+  // }
+
   const chartDatasets = (data: any, labels: any, keywordColor: any) => {
     if (!data) return []
     let totalAmount: number[] = []
@@ -262,6 +309,13 @@ const StackedChart = (props: LineProps) => {
 
   const chartTitle = 'Chart 2, Report Level 2(' + reportNo + ')'
 
+  const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleRowOptionsClose = () => {
+    setAnchorEl(null)
+  }
+
   return (
     <Card sx={{ minHeight: 574, maxHeight: 580 }}>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
@@ -277,10 +331,38 @@ const StackedChart = (props: LineProps) => {
             <Information fontSize='large' style={{ marginTop: '23px' }} />
           </StyledTooltip>
         </span>
-        {/* <Button onClick={onCapture}>PNG</Button> */}
+        <>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{m:2}}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCapture()
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              PNG
+            </MenuItem>
+          </Menu>
+        </>
       </div>
 
-      <CardContent id="savePNG">
+      <CardContent id='savePNG'>
         {showNoDataText ? (
           <div
             style={{

@@ -84,7 +84,7 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
       <>
         {(percentageData || []).map((percentage: any, index: number) => {
           return (
-            <TableCell key={index}>
+            <TableCell key={index} sx={{textAlign:'center'}}>
               <span style={{ border: percentage?.highlight ? '1px solid red' : '', padding: '4px' }}>
                 {percentage?.percentage + '%'}
               </span>
@@ -129,7 +129,7 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
               : ''
 
           return (
-            <TableCell key={i}>
+            <TableCell key={i} sx={{textAlign:'center'}}>
               {imgPath ? (
                 <img alt='logo' width={34} height={34} src={imgPath} />
               ) : (
@@ -185,15 +185,15 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
                   {(tableData || []).map((shareVoice: any, index: number) => {
                     return (
                       <TableRow key={index}>
-                        <TableCell sx={{ textAlign: 'right', minWidth:120, paddingRight:'0px' }}>{shareVoice?.keyword_name}</TableCell>
-                        <TableCell sx={{minWidth: 150, paddingLeft:'0px' }}>
+                        <TableCell sx={{ textAlign: 'right', maxWidth:120, paddingRight:'0px' }}>{shareVoice?.keyword_name}</TableCell>
+                        <TableCell sx={{minWidth: 100, maxWidth: 300, paddingLeft:'0px' }}>
                           <NumberOfEachMessage
                             keywordsColor={getKeywordColor(shareVoice)}
                             resultShareOfVoiceChart={shareVoice}
                           />
                         </TableCell>
                         <ShareOfVoiceTable data={shareVoice} />
-                        <TableCell colSpan={3}>
+                        <TableCell colSpan={3} sx={{maxWidth: 300}}>
                           <SentimentEachGraph resultSentimentLevel={shareVoice}/>
                         </TableCell>
                       </TableRow>

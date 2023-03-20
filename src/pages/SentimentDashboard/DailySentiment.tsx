@@ -5,18 +5,23 @@ import CardContent from '@mui/material/CardContent'
 
 // ** Third Party Imports
 import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, MouseEvent } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment'
 import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { SentimentColors } from 'src/utils/const'
-import { LinearProgress } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
 import { GetSortData } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
+import DotsVertical from 'mdi-material-ui/DotsVertical'
+import { Download } from 'mdi-material-ui'
+
+import * as htmlToImage from 'html-to-image'
+import { saveAs } from 'file-saver'
+import MessageDetail from './MessageDetail'
 
 interface LineProps {
   white: string
@@ -64,6 +69,15 @@ export const chartLabel = (data: any) => {
   return labelValue
 }
 
+const onCapture = () => {
+  const pictureId = document.getElementById('savePNG')
+  if (pictureId) {
+    htmlToImage.toPng(pictureId).then(function (dataUrl) {
+      saveAs(dataUrl, 'Daily Sentiment Type By Date.png')
+    })
+  }
+}
+
 const DailySenitment = (props: LineProps) => {
   // ** Props
   const {
@@ -91,6 +105,15 @@ const DailySenitment = (props: LineProps) => {
     campaign_id: null,
     organization_id: null
   })
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const rowOptionsOpen = Boolean(anchorEl)
+
+  const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleRowOptionsClose = () => {
+    setAnchorEl(null)
+  }
 
   const chartRef = useRef()
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -290,6 +313,7 @@ const DailySenitment = (props: LineProps) => {
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} square variant='outlined'>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Daily Sentiment Type by Date' />}
@@ -299,8 +323,38 @@ const DailySenitment = (props: LineProps) => {
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>
+        <>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{m:2}}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCapture()
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              PNG
+            </MenuItem>
+          </Menu>
+        </>
+      </div>
 
-      <CardContent>
+      <CardContent id="savePNG">
         {showNoDataText ? (
           <div
             style={{

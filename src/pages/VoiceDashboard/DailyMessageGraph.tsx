@@ -7,13 +7,18 @@ import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
 // ** Custom Components Imports
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, MouseEvent } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { InteractionItem } from 'chart.js'
 import moment from 'moment'
-import { LinearProgress, Paper } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import MessageDetail from './MessageDetail'
+import DotsVertical from 'mdi-material-ui/DotsVertical'
+import { Download } from 'mdi-material-ui'
+
+import * as htmlToImage from 'html-to-image'
+import { saveAs } from 'file-saver'
 
 interface Props {
   type: string
@@ -22,7 +27,7 @@ interface Props {
   keywordsColor: any
   highlight?: boolean
   resultDailyMessage: any
-  loadingDailyMessage : boolean
+  loadingDailyMessage: boolean
 }
 export const getSeries = (seriesData: any) => {
   if (!seriesData) return []
@@ -69,9 +74,17 @@ export const chartLabel = (data: any) => {
 
   return labelValue
 }
+const onCapture = () => {
+  const pictureId = document.getElementById('savePNG')
+  if (pictureId) {
+    htmlToImage.toPng(pictureId).then(function (dataUrl) {
+      saveAs(dataUrl, 'Daily Messages By Date (Voice).png')
+    })
+  }
+}
 
 const DailyMessageGraph = (props: Props) => {
-  const { type, chartId, params, highlight, keywordsColor,resultDailyMessage, loadingDailyMessage } = props
+  const { type, chartId, params, highlight, keywordsColor, resultDailyMessage, loadingDailyMessage } = props
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
@@ -83,6 +96,15 @@ const DailyMessageGraph = (props: Props) => {
   })
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [keywordId, setKeywordId] = useState<any>()
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const rowOptionsOpen = Boolean(anchorEl)
+
+  const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleRowOptionsClose = () => {
+    setAnchorEl(null)
+  }
 
   const chartRef = useRef()
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -247,25 +269,57 @@ const DailyMessageGraph = (props: Props) => {
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 400 }} square variant='outlined'>
       {loadingDailyMessage && <LinearProgress style={{ width: '100%' }} />}
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        {type === 'message' ? (
-          <CardHeader
-            title={<Translations text='Daily Messages by Date' />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          />
-        ) : type === 'channel' ? (
-          <CardHeader
-            title='Daily Channel By Date'
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          />
-        ) : (
-          ''
-        )}
-        <StyledTooltip arrow title={chartTitle || ''}>
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
-      <CardContent>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          {type === 'message' ? (
+            <CardHeader
+              title={<Translations text='Daily Messages by Date' />}
+              titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            />
+          ) : type === 'channel' ? (
+            <CardHeader
+              title='Daily Channel By Date'
+              titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            />
+          ) : (
+            ''
+          )}
+          <StyledTooltip arrow title={chartTitle || ''}>
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
+        <>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{m:2}}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCapture()
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              PNG
+            </MenuItem>
+          </Menu>
+        </>
+      </div>
+
+      <CardContent id='savePNG'>
         {showNoDataText ? (
           <div
             style={{
