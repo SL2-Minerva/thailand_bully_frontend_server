@@ -6,23 +6,38 @@ import { Grid, LinearProgress, TableBody } from '@mui/material'
 import { Table, TableRow, TableHead, TableCell } from '@mui/material'
 
 // ** Third Party Imports
-import { Bar } from 'react-chartjs-2'
+// import { Bar } from 'react-chartjs-2'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { BullyLevelSummaryColors, BullyTypeSummaryColors } from 'src/utils/const'
 import { useTranslation } from 'react-i18next'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Translations from 'src/layouts/components/Translations'
+import ShareOfChannelGraph from './ShareOfChannelGraph'
 
-const ChartData = (data: any) => {
-  if (!data) return []
+const getMaxValue = (data: any) => {
+  if (!data) return 1000
 
-  const chartDatas: any[] = []
-  for (let i = 0; i < data?.length; i++) {
-    chartDatas.push(data[i]?.data || data[i]?.value)
+  const total = data?.map((object: any) => {
+    return object.total
+  })
+
+  const max = Math.max(...total) + 3000
+
+  return max
+}
+
+const getKeywordColor = (shareofVoiceData: any, color: any) => {
+  if (!shareofVoiceData) return ['#fff']
+
+  const colors = []
+  for (let i = 0; i < color?.length; i++) {
+    if (color[i].name === shareofVoiceData?.keyword_name) {
+      colors.push(color[i].color)
+    }
   }
 
-  return chartDatas
+  return colors
 }
 
 const ShareOfChannel = ({
@@ -44,44 +59,25 @@ const ShareOfChannel = ({
   loadingChannel: boolean
   title?: string
 }) => {
-  const [label, setLabel] = useState<any>([])
   const { t } = useTranslation()
 
-  const ChartLabels = (data: any) => {
-    if (!data) return []
-    const keywordData = data
-
-    const labels: any[] = []
-
-    for (let i = 0; i < keywordData?.length; i++) {
-      labels.push(t(keywordData[i].keyword_name))
-    }
-
-    return labels
-  }
-
   useEffect(() => {
-    if (resultShareOfChannel) {
-      const labels = ChartLabels(resultShareOfChannel)
-      setLabel(labels)
+    if (resultShareofChannelPlatform) {
+      resultShareofChannelPlatform?.sort((a: any, b: any) => {
+        const fa = a?.keyword_name?.toLowerCase(),
+          fb = b?.keyword_name?.toLowerCase()
+
+        if (fa < fb) {
+          return -1
+        }
+        if (fa > fb) {
+          return 1
+        }
+
+        return 0
+      })
     }
   }, [t, resultShareOfChannel])
-
-  // const labels = resultShareOfChannel ? ChartLabels(resultShareOfChannel) : [];
-  const data = {
-    labels: label,
-    datasets: [
-      {
-        axis: 'y',
-        label: '',
-        data: ChartData(resultShareOfChannel),
-        fill: false,
-        backgroundColor: type === 'level' ? BullyLevelSummaryColors : BullyTypeSummaryColors,
-        borderColor: type === 'level' ? BullyLevelSummaryColors : BullyTypeSummaryColors,
-        borderWidth: 1
-      }
-    ]
-  }
 
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
@@ -97,10 +93,14 @@ const ShareOfChannel = ({
       </span>
       <CardContent>
         <Grid container spacing={3}>
-          <Grid item md={5} xs={12}>
-            {resultShareOfChannel ? <Bar data={data} options={{ indexAxis: 'y' }} height={150} /> : ''}
-          </Grid>
-          <Grid item md={7} xs={12} sx={{overflow: 'auto'}}>
+          {/* <Grid item md={5} xs={12}>
+            {resultShareOfChannel ? (
+              <Bar data={data} options={{ indexAxis: 'y', plugins: { legend: { display: false } } }} height={150} />
+            ) : (
+              ''
+            )}
+          </Grid> */}
+          <Grid item xs={12}>
             {resultShareofChannelPlatform?.length > 0 ? (
               <Table size='small'>
                 <TableHead>
@@ -109,6 +109,8 @@ const ShareOfChannel = ({
                       <TableRow key={index}>
                         {index == 0 ? (
                           <>
+                            <TableCell sx={{ maxWidth: 100 }}></TableCell>
+                            <TableCell sx={{ maxWidth: 200 }}></TableCell>
                             {(shareVoice.value || []).map((value: any, key: number) => {
                               return (
                                 <TableCell variant='head' key={key}>
@@ -142,6 +144,20 @@ const ShareOfChannel = ({
                   {(resultShareofChannelPlatform || []).map((shareVoice: any, index: number) => {
                     return (
                       <TableRow key={index}>
+                        <TableCell sx={{ textAlign: 'right', maxWidth: 80, paddingRight: '0px' }}>
+                          {shareVoice?.keyword_name}
+                        </TableCell>
+                        <TableCell sx={{ maxWidth: 150, paddingLeft: '0px'}}>
+                          <ShareOfChannelGraph
+                            max={getMaxValue(resultShareofChannelPlatform)}
+                            keywordsColor={
+                              type === 'level'
+                                ? getKeywordColor(shareVoice, BullyLevelSummaryColors)
+                                : getKeywordColor(shareVoice, BullyTypeSummaryColors)
+                            }
+                            resultShareOfVoiceChart={shareVoice}
+                          />
+                        </TableCell>
                         {(shareVoice.value || []).map((value: any, key: number) => {
                           return (
                             <TableCell key={key}>

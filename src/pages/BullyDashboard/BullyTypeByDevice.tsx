@@ -194,6 +194,19 @@ const BullyTypeByDevice = (props: LineProps) => {
             setLabel(labels);
             
             const dataSets = chartDatasets(dailyMessageData);
+            dataSets?.sort((a, b) => {
+              const fa = a.label?.toLowerCase(),
+                fb = b.label?.toLowerCase()
+    
+              if (fa < fb) {
+                return -1
+              }
+              if (fa > fb) {
+                return 1
+              }
+    
+              return 0
+            })
             setDataset(dataSets)
 
             if (!dailyMessageData?.value) {
