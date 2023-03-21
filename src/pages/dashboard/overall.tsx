@@ -62,12 +62,12 @@ export interface PickerProps {
 
 export const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
+))(() => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: '#9e9e9e',
     color: 'white',
     maxWidth: 220,
-    fontSize: theme.typography.pxToRem(20),
+    fontSize: '15px',
     border: '1px solid #9e9e9e'
   }
 }))

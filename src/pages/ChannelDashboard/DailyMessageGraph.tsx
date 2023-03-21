@@ -2,7 +2,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
 // ** Third Party Imports
-import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
+import { Bar, Line, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
 
 // ** Custom Components Imports
 import { StyledTooltip } from '../dashboard/overall'
@@ -15,7 +15,7 @@ import { IconButton, LinearProgress, Menu, MenuItem, Paper } from '@mui/material
 import Translations from 'src/layouts/components/Translations'
 import { ChannelColorCode } from 'src/utils/const'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
-import { Download } from 'mdi-material-ui'
+import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
@@ -101,6 +101,8 @@ const DailyMessageGraph = (props: Props) => {
   })
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [chooseChart, setChooseChart] = useState<string>('bar')
+
   const rowOptionsOpen = Boolean(anchorEl)
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
@@ -181,15 +183,43 @@ const DailyMessageGraph = (props: Props) => {
       },
       y: {
         min: 0,
-
-        // max: 5000,
-
         scaleLabel: { display: true },
         ticks: {
           stepSize: 100,
           color: 'grey'
         },
         stacked: true
+      }
+    },
+    plugins: {
+      legend: {
+        align: 'end',
+        position: 'top',
+        labels: {
+          padding: 25,
+          boxWidth: 10,
+          color: 'grey',
+          usePointStyle: true
+        }
+      }
+    }
+  }
+
+  const lineOptions = {
+    responsive: true,
+    backgroundColor: false,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        ticks: { color: 'grey' }
+      },
+      y: {
+        min: 0,
+        scaleLabel: { display: true },
+        ticks: {
+          stepSize: 100,
+          color: 'grey'
+        }
       }
     },
     plugins: {
@@ -242,8 +272,8 @@ const DailyMessageGraph = (props: Props) => {
 
       const chartDataset: StackChartDataset = {
         fill: false,
-        tension: 0.5,
-        pointRadius: 1,
+        tension: 0.2,
+        pointRadius: 4,
         label: keywordName,
         pointHoverRadius: 5,
         pointStyle: 'circle',
@@ -260,6 +290,10 @@ const DailyMessageGraph = (props: Props) => {
     }
 
     return returnData
+  }
+
+  const handleChooseChart = (data: string) => {
+    setChooseChart(data)
   }
 
   const data = {
@@ -323,7 +357,25 @@ const DailyMessageGraph = (props: Props) => {
             <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
           </StyledTooltip>
         </span>
-        <>
+        <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton
+            size='large'
+            onClick={() => {
+              handleChooseChart('bar')
+            }}
+            sx={{ m: 1 }}
+          >
+            <ChartBarStacked />
+          </IconButton>
+          <IconButton
+            size='large'
+            onClick={() => {
+              handleChooseChart('line')
+            }}
+            sx={{ m: 1 }}
+          >
+            <ChartLine />
+          </IconButton>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
           </IconButton>
@@ -351,7 +403,7 @@ const DailyMessageGraph = (props: Props) => {
               PNG
             </MenuItem>
           </Menu>
-        </>
+        </span>
       </div>
 
       <CardContent id="savePNG">
@@ -368,7 +420,15 @@ const DailyMessageGraph = (props: Props) => {
             <Translations text='no data' />
           </div>
         ) : (
-          <Bar ref={chartRef} data={data} options={options as any} height={366} onClick={onClick} />
+          <>
+            {chooseChart === 'point' ? (
+              <></>
+            ) : chooseChart === 'line' ? (
+              <Line ref={chartRef} data={data} options={lineOptions as any} height={366} onClick={onClick} />
+            ) : (
+              <Bar ref={chartRef} data={data} options={options as any} height={366} onClick={onClick} />
+            )}
+          </>
         )}
       </CardContent>
       {showDetail ? (

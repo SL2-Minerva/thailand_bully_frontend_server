@@ -81,15 +81,15 @@ const QuickView = ({setHighlight, setShowQuickView} : {setHighlight?:any, setSho
 
     return (
       <div className='customizer'>
-        <Toggler className='customizer-toggler' onClick={() => setOpen(true)}>
-          <ArrowLeftDropCircle fontSize='large' sx={{ color: 'common.white', mb : 3 , ml: 6}}/>
-            <p style={{  transform: 'rotate(90deg)',color : 'white'  }}>QuickView</p>
+        <Toggler className='customizer-toggler' sx={{ width: '40px'}} onClick={() => setOpen(true)}>
+          <ArrowLeftDropCircle fontSize='small' sx={{ color: 'common.white',  ml: 3}}/>
+            <p style={{  transform: 'rotate(90deg)',color : 'white', fontSize: '13px' }}>QuickView</p>
         </Toggler>
         <Drawer open={open} hideBackdrop anchor='right' variant='persistent'>
-        <TogglerOpen className='customizer-toggler' onClick={() => setOpen(false)}>
-          <ArrowRightDropCircle fontSize='large' sx={{ color: 'common.white', mb : 3 , ml: 6}}/>
+        <TogglerOpen className='customizer-toggler' sx={{ width: '40px'}} onClick={() => setOpen(false)}>
+          <ArrowRightDropCircle fontSize='small' sx={{ color: 'common.white', ml: 3}}/>
             
-            <p style={{  transform: 'rotate(90deg)',color : 'white'  }}>QuickView</p>
+          <p style={{  transform: 'rotate(90deg)',color : 'white', fontSize: '13px' }}>QuickView</p>
         </TogglerOpen>
           <Box
             className='customizer-header'
