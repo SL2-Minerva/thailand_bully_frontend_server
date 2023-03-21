@@ -22,172 +22,266 @@ import { TogglerOpen } from '../EngagementDashboard/QuickView'
 // import Translations from 'src/layouts/components/Translations'
 
 export const Drawer = styled(MuiDrawer)<DrawerProps>(({ theme }) => ({
+  width: 250,
+  zIndex: theme.zIndex.modal,
+  '& .MuiFormControlLabel-root': {
+    marginRight: '0.6875rem'
+  },
+  '& .MuiDrawer-paper': {
+    border: 0,
     width: 250,
     zIndex: theme.zIndex.modal,
-    '& .MuiFormControlLabel-root': {
-      marginRight: '0.6875rem'
-    },
-    '& .MuiDrawer-paper': {
-      border: 0,
-      width: 250,
-      zIndex: theme.zIndex.modal,
-      boxShadow: theme.shadows[9]
-    }
-  }))
-  
+    boxShadow: theme.shadows[9]
+  }
+}))
+
 export const CustomizerSpacing = styled('div')(({ theme }) => ({
-    padding: theme.spacing(5, 6)
-  }))
-  
- 
-  
-const QuickView = ({setHighlight,setShowQuickView} : {setHighlight?:any, setShowQuickView?:any}) => {
+  padding: theme.spacing(5, 6)
+}))
+
+const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; setShowQuickView?: any }) => {
   // ** State
   const [open, setOpen] = useState<boolean>(false)
-  const [ highlightText, setHightlightText ] = useState<string>('');
+  const [highlightText, setHightlightText] = useState<string>('')
 
   const onClose = (chartId?: string) => {
-    if(chartId) {
-      setHighlight(chartId);
-      setHightlightText(chartId);
+    if (chartId) {
+      setHighlight(chartId)
+      setHightlightText(chartId)
       setShowQuickView(true)
     }
-    setOpen(false);
+    setOpen(false)
   }
-  
-    return (
-      <div className='customizer'>
-        <Toggler className='customizer-toggler' onClick={() => setOpen(true)}>
-          <ArrowLeftDropCircle fontSize='large' sx={{ color: 'common.white', mb : 3 , ml: 6}}/>
-            <p style={{  transform: 'rotate(90deg)',color : 'white'  }}>QuickView</p>
-        </Toggler>
-        <Drawer open={open} hideBackdrop anchor='right' variant='persistent'>
-        <TogglerOpen className='customizer-toggler' onClick={() => setOpen(false)}>
-          <ArrowRightDropCircle fontSize='large' sx={{ color: 'common.white', mb : 3 , ml: 6}}/>
-            
-            <p style={{  transform: 'rotate(90deg)',color : 'white'  }}>QuickView</p>
+
+  return (
+    <div className='customizer'>
+      <Toggler className='customizer-toggler' sx={{ width: '40px' }} onClick={() => setOpen(true)}>
+        <ArrowLeftDropCircle fontSize='small' sx={{ color: 'common.white', ml: 3 }} />
+        <p style={{ transform: 'rotate(90deg)', color: 'white', fontSize: '13px' }}>QuickView</p>
+      </Toggler>
+      <Drawer open={open} hideBackdrop anchor='right' variant='persistent'>
+        <TogglerOpen className='customizer-toggler' sx={{ width: '40px' }} onClick={() => setOpen(false)}>
+          <ArrowRightDropCircle fontSize='small' sx={{ color: 'common.white', ml: 3 }} />
+
+          <p style={{ transform: 'rotate(90deg)', color: 'white', fontSize: '13px' }}>QuickView</p>
         </TogglerOpen>
-          <Box
-            className='customizer-header'
+        <Box
+          className='customizer-header'
+          sx={{
+            position: 'relative',
+            p: theme => theme.spacing(3.5, 5),
+            borderBottom: theme => `1px solid ${theme.palette.divider}`
+          }}
+        >
+          <Typography variant='h6' sx={{ fontWeight: 600, textTransform: 'uppercase' }}>
+            Quick View
+          </Typography>
+          <IconButton
+            onClick={() => onClose()}
             sx={{
-              position: 'relative',
-              p: theme => theme.spacing(3.5, 5),
-              borderBottom: theme => `1px solid ${theme.palette.divider}`
+              right: 20,
+              top: '50%',
+              position: 'absolute',
+              color: 'text.secondary',
+              transform: 'translateY(-50%)'
             }}
           >
-            <Typography variant='h6' sx={{ fontWeight: 600, textTransform: 'uppercase' }}>
-              Quick View
-            </Typography>
-            <IconButton
-              onClick={() => onClose()}
-              sx={{
-                right: 20,
-                top: '50%',
-                position: 'absolute',
-                color: 'text.secondary',
-                transform: 'translateY(-50%)'
-              }}
-            >
-              <Close fontSize='small' />
-            </IconButton>
-          </Box>
-          {/* <PerfectScrollbar options={{ wheelPropagation: false }}> */}
-            <CustomizerSpacing className='customizer-body'>
-              <Typography
-                component='p'
-                variant='caption'
-                sx={{ mb: 4, mt: 4, color: 'text.disabled', textTransform: 'uppercase' }}
-              >
-                Charts
-              </Typography>
-  
-              {/* <Link to="chart1" spy={true} smooth={true}>
+            <Close fontSize='small' />
+          </IconButton>
+        </Box>
+        {/* <PerfectScrollbar options={{ wheelPropagation: false }}> */}
+        <CustomizerSpacing className='customizer-body'>
+          <Typography
+            component='p'
+            variant='caption'
+            sx={{ mb: 4, mt: 4, color: 'text.disabled', textTransform: 'uppercase' }}
+          >
+            Charts
+          </Typography>
+
+          {/* <Link to="chart1" spy={true} smooth={true}>
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart1")}}>
                     <Typography sx={{ color : highlightText === 'chart1' ? 'green' : '#4c4e64de'  }}>Chart 1 : Percentage of Bully Level</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} /> */}
 
-                <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart2")}}>
-                    <Typography sx={{ color : highlightText === 'chart2' ? 'green' : '#4c4e64de'  }}>Bully Level : By Date</Typography>
-                </Box>
-              <Divider sx={{ m: 0 }} />
+          <Box
+            sx={{ mb: 4, mt: 4 }}
+            onClick={() => {
+              onClose('chart2')
+            }}
+          >
+            <Typography sx={{ color: highlightText === 'chart2' ? 'green' : '#4c4e64de' }}>
+              Bully Level : By Date
+            </Typography>
+          </Box>
+          <Divider sx={{ m: 0 }} />
 
-              
-                <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart3")}}>
-                    <Typography sx={{ color : highlightText === 'chart3' ? 'green' : '#4c4e64de'  }}>Bully Level : By Day</Typography>
-                </Box>
-              <Divider sx={{ m: 0 }} />
+          <Box
+            sx={{ mb: 4, mt: 4 }}
+            onClick={() => {
+              onClose('chart3')
+            }}
+          >
+            <Typography sx={{ color: highlightText === 'chart3' ? 'green' : '#4c4e64de' }}>
+              Bully Level : By Day
+            </Typography>
+          </Box>
+          <Divider sx={{ m: 0 }} />
 
-                <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart4")}}>
-                    <Typography sx={{ color : highlightText === 'chart4' ? 'green' : '#4c4e64de'  }}>Bully Level : By Time</Typography>
-                </Box>
-              <Divider sx={{ m: 0 }} />
+          <Box
+            sx={{ mb: 4, mt: 4 }}
+            onClick={() => {
+              onClose('chart4')
+            }}
+          >
+            <Typography sx={{ color: highlightText === 'chart4' ? 'green' : '#4c4e64de' }}>
+              Bully Level : By Time
+            </Typography>
+          </Box>
+          <Divider sx={{ m: 0 }} />
 
-                <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart5")}}>
-                    <Typography sx={{ color : highlightText === 'chart5' ? 'green' : '#4c4e64de'  }}>Bully Level : By Device</Typography>
-                </Box>
-              <Divider sx={{ m: 0 }} />
+          <Box
+            sx={{ mb: 4, mt: 4 }}
+            onClick={() => {
+              onClose('chart5')
+            }}
+          >
+            <Typography sx={{ color: highlightText === 'chart5' ? 'green' : '#4c4e64de' }}>
+              Bully Level : By Device
+            </Typography>
+          </Box>
+          <Divider sx={{ m: 0 }} />
 
-                <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart6")}}>
-                    <Typography sx={{ color : highlightText === 'chart6' ? 'green' : '#4c4e64de'  }}>Bully Level : By Account</Typography>
-                </Box>
-              <Divider sx={{ m: 0 }} />
-                <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart7")}}>
-                    <Typography sx={{ color : highlightText === 'chart7' ? 'green' : '#4c4e64de'  }}>Bully Level : By Channel</Typography>
-                </Box>
-              <Divider sx={{ m: 0 }} />
-                <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart8")}}>
-                    <Typography sx={{ color : highlightText === 'chart8' ? 'green' : '#4c4e64de'  }}>Bully Level : By Sentiment</Typography>
-                </Box>
-              <Divider sx={{ m: 0 }} />
+          <Box
+            sx={{ mb: 4, mt: 4 }}
+            onClick={() => {
+              onClose('chart6')
+            }}
+          >
+            <Typography sx={{ color: highlightText === 'chart6' ? 'green' : '#4c4e64de' }}>
+              Bully Level : By Account
+            </Typography>
+          </Box>
+          <Divider sx={{ m: 0 }} />
+          <Box
+            sx={{ mb: 4, mt: 4 }}
+            onClick={() => {
+              onClose('chart7')
+            }}
+          >
+            <Typography sx={{ color: highlightText === 'chart7' ? 'green' : '#4c4e64de' }}>
+              Bully Level : By Channel
+            </Typography>
+          </Box>
+          <Divider sx={{ m: 0 }} />
+          <Box
+            sx={{ mb: 4, mt: 4 }}
+            onClick={() => {
+              onClose('chart8')
+            }}
+          >
+            <Typography sx={{ color: highlightText === 'chart8' ? 'green' : '#4c4e64de' }}>
+              Bully Level : By Sentiment
+            </Typography>
+          </Box>
+          <Divider sx={{ m: 0 }} />
 
-              {/* <Link to="chart9" spy={true} smooth={true}>
+          {/* <Link to="chart9" spy={true} smooth={true}>
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart9")}}>
                     <Typography sx={{ color : highlightText === 'chart9' ? 'green' : '#4c4e64de'  }}>Chart 9 : Percentage of Bully Type</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} /> */}
 
-                <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart10")}}>
-                    <Typography sx={{ color : highlightText === 'chart10' ? 'green' : '#4c4e64de'  }}>Bully Type : By Date</Typography>
-                </Box>
-              <Divider sx={{ m: 0 }} />
+          <Box
+            sx={{ mb: 4, mt: 4 }}
+            onClick={() => {
+              onClose('chart10')
+            }}
+          >
+            <Typography sx={{ color: highlightText === 'chart10' ? 'green' : '#4c4e64de' }}>
+              Bully Type : By Date
+            </Typography>
+          </Box>
+          <Divider sx={{ m: 0 }} />
 
-                <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart11")}}>
-                    <Typography sx={{ color : highlightText === 'chart11' ? 'green' : '#4c4e64de'  }}>Bully Type : By Day</Typography>
-                </Box>
-              <Divider sx={{ m: 0 }} />
+          <Box
+            sx={{ mb: 4, mt: 4 }}
+            onClick={() => {
+              onClose('chart11')
+            }}
+          >
+            <Typography sx={{ color: highlightText === 'chart11' ? 'green' : '#4c4e64de' }}>
+              Bully Type : By Day
+            </Typography>
+          </Box>
+          <Divider sx={{ m: 0 }} />
 
-                <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart12")}}>
-                    <Typography sx={{ color : highlightText === 'chart12' ? 'green' : '#4c4e64de'  }}>Bully Type : By  Time</Typography>
-                </Box>
-              <Divider sx={{ m: 0 }} />
+          <Box
+            sx={{ mb: 4, mt: 4 }}
+            onClick={() => {
+              onClose('chart12')
+            }}
+          >
+            <Typography sx={{ color: highlightText === 'chart12' ? 'green' : '#4c4e64de' }}>
+              Bully Type : By Time
+            </Typography>
+          </Box>
+          <Divider sx={{ m: 0 }} />
 
-                <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart13")}}>
-                    <Typography sx={{ color : highlightText === 'chart13' ? 'green' : '#4c4e64de'  }}>Bully Type : By Device </Typography>
-                </Box>
-              <Divider sx={{ m: 0 }} />
+          <Box
+            sx={{ mb: 4, mt: 4 }}
+            onClick={() => {
+              onClose('chart13')
+            }}
+          >
+            <Typography sx={{ color: highlightText === 'chart13' ? 'green' : '#4c4e64de' }}>
+              Bully Type : By Device{' '}
+            </Typography>
+          </Box>
+          <Divider sx={{ m: 0 }} />
 
-                <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart14")}}>
-                    <Typography sx={{ color : highlightText === 'chart14' ? 'green' : '#4c4e64de'  }}>Bully Type : By Account</Typography>
-                </Box>
-              <Divider sx={{ m: 0 }} />
+          <Box
+            sx={{ mb: 4, mt: 4 }}
+            onClick={() => {
+              onClose('chart14')
+            }}
+          >
+            <Typography sx={{ color: highlightText === 'chart14' ? 'green' : '#4c4e64de' }}>
+              Bully Type : By Account
+            </Typography>
+          </Box>
+          <Divider sx={{ m: 0 }} />
 
-                <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart15")}}>
-                    <Typography sx={{ color : highlightText === 'chart15' ? 'green' : '#4c4e64de'  }}>Bully Type : By Channel</Typography>
-                </Box>
-              <Divider sx={{ m: 0 }} />
+          <Box
+            sx={{ mb: 4, mt: 4 }}
+            onClick={() => {
+              onClose('chart15')
+            }}
+          >
+            <Typography sx={{ color: highlightText === 'chart15' ? 'green' : '#4c4e64de' }}>
+              Bully Type : By Channel
+            </Typography>
+          </Box>
+          <Divider sx={{ m: 0 }} />
 
-                <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart16")}}>
-                    <Typography sx={{ color : highlightText === 'chart16' ? 'green' : '#4c4e64de'  }}>Bully Type : By Sentiment</Typography>
-                </Box>
-              <Divider sx={{ m: 0 }} />
+          <Box
+            sx={{ mb: 4, mt: 4 }}
+            onClick={() => {
+              onClose('chart16')
+            }}
+          >
+            <Typography sx={{ color: highlightText === 'chart16' ? 'green' : '#4c4e64de' }}>
+              Bully Type : By Sentiment
+            </Typography>
+          </Box>
+          <Divider sx={{ m: 0 }} />
+        </CustomizerSpacing>
+      </Drawer>
+    </div>
+  )
+}
 
-            </CustomizerSpacing>
-        </Drawer>
-      </div>
-    )
-  }
-  
-  export default QuickView
+export default QuickView

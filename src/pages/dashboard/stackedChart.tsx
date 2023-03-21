@@ -4,7 +4,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
 // ** Third Party Imports
-import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
+import { Bar, Line, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
 import { useEffect, useRef, useState, MouseEvent } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment'
@@ -16,12 +16,13 @@ import { StyledTooltip } from './overall'
 import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
-import { Download } from 'mdi-material-ui'
+import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 
-import * as htmlToImage from 'html-to-image';
-import { saveAs } from 'file-saver';
+// import { Download, ChartBarStacked, ChartLine, ChartScatterPlot } from 'mdi-material-ui'
 
-// import { Button } from '@mui/material'
+import * as htmlToImage from 'html-to-image'
+import { saveAs } from 'file-saver'
+
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
 // import { Bar, getDatasetAtEvent,  } from 'react-chartjs-2'
 
@@ -91,6 +92,8 @@ const StackedChart = (props: LineProps) => {
   const [keywordId, setKeywordId] = useState<any>()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [chooseChart, setChooseChart] = useState<string>('bar')
+
   const rowOptionsOpen = Boolean(anchorEl)
 
   const chartRef = useRef()
@@ -179,50 +182,46 @@ const StackedChart = (props: LineProps) => {
     }
   }
 
-  // const lineOptions = {
-  //   responsive: true,
-  //   backgroundColor: false,
-  //   maintainAspectRatio: false,
-  //   scales: {
-  //     x: {
-  //       ticks: { color: labelColor },
-  //       grid: {
-  //         borderColor,
-  //         color: gridLineColor
-  //       },
-  //       stacked: true
-  //     },
-  //     y: {
-  //       min: 0,
+  const lineOptions = {
+    responsive: true,
+    backgroundColor: false,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        ticks: { color: labelColor },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        }
+      },
+      y: {
+        min: 0,
+        scaleLabel: { display: true },
+        ticks: {
+          stepSize: 100,
+          color: labelColor
+        },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        }
 
-  //       // max: 5000,
-
-  //       scaleLabel: { display: true },
-  //       ticks: {
-  //         stepSize: 100,
-  //         color: labelColor
-  //       },
-  //       grid: {
-  //         borderColor,
-  //         color: gridLineColor
-  //       },
-
-  //       stacked: true
-  //     }
-  //   },
-  //   plugins: {
-  //     legend: {
-  //       align: 'end',
-  //       position: 'top',
-  //       labels: {
-  //         padding: 25,
-  //         boxWidth: 10,
-  //         color: labelColor,
-  //         usePointStyle: true
-  //       }
-  //     }
-  //   },
-  // }
+        // stacked: true
+      }
+    },
+    plugins: {
+      legend: {
+        align: 'end',
+        position: 'top',
+        labels: {
+          padding: 25,
+          boxWidth: 10,
+          color: labelColor,
+          usePointStyle: true
+        }
+      }
+    }
+  }
 
   const chartDatasets = (data: any, labels: any, keywordColor: any) => {
     if (!data) return []
@@ -260,8 +259,8 @@ const StackedChart = (props: LineProps) => {
 
       const chartDataset: StackChartDataset = {
         fill: false,
-        tension: 0.5,
-        pointRadius: 1,
+        tension: 0.2,
+        pointRadius: 4,
         label: keywordName,
         pointHoverRadius: 5,
         pointStyle: 'circle',
@@ -316,6 +315,10 @@ const StackedChart = (props: LineProps) => {
     setAnchorEl(null)
   }
 
+  const handleChooseChart = (data: string) => {
+    setChooseChart(data)
+  }
+
   return (
     <Card sx={{ minHeight: 574, maxHeight: 580 }}>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
@@ -331,8 +334,26 @@ const StackedChart = (props: LineProps) => {
             <Information fontSize='large' style={{ marginTop: '23px' }} />
           </StyledTooltip>
         </span>
-        <>
-          <IconButton size='large' onClick={handleRowOptionsClick} sx={{m:2}}>
+        <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton
+            size='large'
+            onClick={() => {
+              handleChooseChart('bar')
+            }}
+            sx={{ m: 1 }}
+          >
+            <ChartBarStacked />
+          </IconButton>
+          <IconButton
+            size='large'
+            onClick={() => {
+              handleChooseChart('line')
+            }}
+            sx={{ m: 1 }}
+          >
+            <ChartLine />
+          </IconButton>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
           </IconButton>
           <Menu
@@ -359,7 +380,7 @@ const StackedChart = (props: LineProps) => {
               PNG
             </MenuItem>
           </Menu>
-        </>
+        </span>
       </div>
 
       <CardContent id='savePNG'>
@@ -376,7 +397,13 @@ const StackedChart = (props: LineProps) => {
             <Translations text='no data' />
           </div>
         ) : (
-          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+          <>
+            {chooseChart === 'line' ? (
+              <Line ref={chartRef} data={data} options={lineOptions as any} height={400} onClick={onClick} />
+            ) : (
+              <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+            )}
+          </>
         )}
         {keywordId && params?.campaign ? (
           <DailyMessageDetail
