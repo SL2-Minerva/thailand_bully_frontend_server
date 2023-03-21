@@ -74,7 +74,7 @@ const chartLabel = (data: any) => {
 const onCapture = () => {
   const pictureId = document.getElementById('savePNGEngagementType')
   if (pictureId) {
-    htmlToImage.toPng(pictureId).then(function (dataUrl) {
+    htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
       saveAs(dataUrl, 'Daily Engagement Type By Date.png')
     })
   }
@@ -401,6 +401,7 @@ const DailyEngagementType = (props: LineProps) => {
             <MenuItem
               onClick={() => {
                 onCapture()
+                setAnchorEl(null)
               }}
             >
               <Download fontSize='medium' sx={{ mr: 2 }} />

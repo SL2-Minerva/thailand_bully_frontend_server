@@ -77,7 +77,7 @@ const chartLabel = (data: any) => {
 const onCapture = () => {
   const pictureId = document.getElementById('savePNG')
   if (pictureId) {
-    htmlToImage.toPng(pictureId).then(function (dataUrl) {
+    htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
       saveAs(dataUrl, 'Bully Level: Daily Messages By Date.png')
     })
   }
@@ -413,7 +413,8 @@ const DailyMessgeByBully = (props: LineProps) => {
           >
             <MenuItem
               onClick={() => {
-                onCapture()
+                onCapture();
+                setAnchorEl(null)
               }}
             >
               <Download fontSize='medium' sx={{ mr: 2 }} />
