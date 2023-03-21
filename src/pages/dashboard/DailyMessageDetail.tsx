@@ -98,7 +98,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
 
   useEffect(() => {
     if (totalMessage > 0) {
-      const count = Math.ceil(totalMessage / 10) -1 
+      const count = Math.ceil(totalMessage / 10)
       setPageCount(count)
     }
   }, [totalMessage])
