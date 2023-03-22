@@ -18,8 +18,8 @@ import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import { GetWordCloudsPlatform } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
-import "d3-transition";
-import { select } from "d3-selection";
+import 'd3-transition'
+import { select } from 'd3-selection'
 import AccountList from './AccountList'
 
 const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string }) => {
@@ -44,38 +44,35 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
 
   const reportNo = '1.2.023'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
-  function getCallback(callback : any) {
-    return function (word : any, event:any) {
-      const isActive = callback !== "onWordMouseOut";
-      const element = event.target;
-      const text = select(element);
+  function getCallback(callback: any) {
+    return function (word: any, event: any) {
+      const isActive = callback !== 'onWordMouseOut'
+      const element = event.target
+      const text = select(element)
       text
-        .on("click", () => {
+        .on('click', () => {
           if (isActive && word) {
             // window.open(`https://www.google.com/`, "_blank");
 
-            const selectedWord = word?.text;
+            const selectedWord = word?.text
 
-            console.log("selected word :",selectedWord)
+            console.log('selected word :', selectedWord)
           }
         })
         .transition()
-        .attr("background", "white")
-        .attr("font-size", isActive ? "300%" : "100%")
-        .attr("text-decoration", isActive ? "underline" : "none");
-    };
+        .attr('background', 'white')
+        .attr('font-size', isActive ? '300%' : '100%')
+        .attr('text-decoration', isActive ? 'underline' : 'none')
+    }
   }
-  
+
   const callbacks = {
     // getWordColor: (word:any) => (word.value > 50 ? "orange" : "purple"),
-    getWordTooltip: (word:any) =>
-      `The word "${word.text}" appears ${word.value} times.`,
-    onWordClick: getCallback("onWordClick"),
-    onWordMouseOut: getCallback("onWordMouseOut"),
-    onWordMouseOver: getCallback("onWordMouseOver")
-  };
+    getWordTooltip: (word: any) => `The word "${word.text}" appears ${word.value} times.`,
+    onWordClick: getCallback('onWordClick'),
+    onWordMouseOut: getCallback('onWordMouseOut'),
+    onWordMouseOver: getCallback('onWordMouseOver')
+  }
 
   return (
     <Grid container spacing={2}>
@@ -87,7 +84,14 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
               title={<Translations text='Word Cloud by Channel' />}
               titleTypographyProps={{ variant: 'h6' }}
             />
-            <StyledTooltip arrow title={chartTitle}>
+            <StyledTooltip
+              arrow
+              title={
+                <span>
+                  {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                </span>
+              }
+            >
               <Information style={{ marginTop: '22px', fontSize: '29px' }} />
             </StyledTooltip>
           </span>
@@ -138,16 +142,16 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
         </Card>
       </Grid>
       <Grid id='chart16' item xs={12} md={6}>
-            <AccountList
-              loading={loadingWordCloudsPlatform}
-              accountList={resultWordCloudsPlatform?.wordCloudByAccount}
-              chartId='Chart 16'
-              cardHeader='Word Cloud by Account'
-              title='Word Cloud by Account: Message Transaction'
-              networkTitle='Word Cloud by Account: Social Network Analysis'
-              params={params}
-            />
-          </Grid>
+        <AccountList
+          loading={loadingWordCloudsPlatform}
+          accountList={resultWordCloudsPlatform?.wordCloudByAccount}
+          chartId='Chart 16'
+          cardHeader='Word Cloud by Account'
+          title='Word Cloud by Account: Message Transaction'
+          networkTitle='Word Cloud by Account: Social Network Analysis'
+          params={params}
+        />
+      </Grid>
     </Grid>
   )
 }

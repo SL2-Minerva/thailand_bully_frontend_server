@@ -302,7 +302,7 @@ const WordCloudDashboard = () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Card>
-            <CardHeader title='Overall Dashboard' />
+            <CardHeader title='Word Clouds' />
             <CardContent>
               <Grid container spacing={6}>
                 <Grid item sm={4} xs={12}>

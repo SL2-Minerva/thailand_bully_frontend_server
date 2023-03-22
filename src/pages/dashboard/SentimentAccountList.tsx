@@ -19,13 +19,13 @@ const SentimentAccountList = ({
   title: string
   networkTitle: string
   accountList: any
-  loading: boolean,
+  loading: boolean
   params: any
 }) => {
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [current, setCurrent] = useState<any>({})
   const [keywordId, setKeywordId] = useState<any>()
-  const [authorName, setAuthorName] = useState<string>('');
+  const [authorName, setAuthorName] = useState<string>('')
 
   // const { resultKeywords, loadingFilterData } = GetKeyWords(
   //   params?.campaign,
@@ -38,14 +38,20 @@ const SentimentAccountList = ({
   //   params?.keywordIds
   // )
   const reportNo = '1.2.02'
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
     <Card sx={{ maxHeight: 493, minHeight: 493, overflow: 'auto' }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title={<Translations text={cardHeader} />} titleTypographyProps={{ variant: 'h6' }} />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>

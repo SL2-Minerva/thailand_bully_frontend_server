@@ -45,9 +45,7 @@ const ChartDataSentiment = (data: any, type: string) => {
       }
     }
   }
-
-  console.log("sentiment value", value)
-
+  
   return value
 }
 

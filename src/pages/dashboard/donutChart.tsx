@@ -2,18 +2,21 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, LinearProgress } from '@mui/material'
+import { Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
 
 // ** Third Party Imports
 
 import { Doughnut } from 'react-chartjs-2'
-import { useEffect, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import { Information } from 'mdi-material-ui'
 import { StyledTooltip } from './overall'
 import Translations from 'src/layouts/components/Translations'
 import { Chart } from 'chart.js'
 import * as DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne'
 import { GraphicColors } from 'src/utils/const'
+import * as htmlToImage from 'html-to-image'
+import { saveAs } from 'file-saver'
+import { DotsVertical, Download } from 'mdi-material-ui'
 
 Chart.register(DoughnutLabel)
 
@@ -22,6 +25,15 @@ interface MessageData {
   resultFilterData: any
   loadingFilterData: boolean
   keywordsColor: any
+}
+
+const onCapture = () => {
+  const pictureId = document.getElementById('percentagePies')
+  if (pictureId) {
+    htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
+      saveAs(dataUrl, 'Percentage of Messages (overall).png')
+    })
+  }
 }
 
 const DonutChart = (props: MessageData) => {
@@ -46,9 +58,19 @@ const DonutChart = (props: MessageData) => {
   const [previousTotal, setPreviousTotal] = useState<number>()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  const rowOptionsOpen = Boolean(anchorEl)
 
   // const theme = useTheme()
   // const labelColor = theme.palette.text.primary
+
+  const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleRowOptionsClose = () => {
+    setAnchorEl(null)
+  }
 
   const options = {
     responsive: true,
@@ -57,7 +79,7 @@ const DonutChart = (props: MessageData) => {
     plugins: {
       tooltip: {
         callbacks: {
-          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+          label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
       },
       legend: {
@@ -90,7 +112,7 @@ const DonutChart = (props: MessageData) => {
       },
       tooltip: {
         callbacks: {
-          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+          label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
       },
       doughnutlabel: {
@@ -201,19 +223,58 @@ const DonutChart = (props: MessageData) => {
   return (
     <Card sx={{ minHeight: 570 }}>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text='Percentage of Messages' />}
-          titleTypographyProps={{ variant: 'h6' }}
-          subheader='Period over Period Comparison'
-          subheaderTypographyProps={{ variant: 'caption' }}
-        />
-        <StyledTooltip arrow title={<span>Chart 1 <br/> Report Level 1(1.1.001)</span>}>
-          <Information fontSize='large' style={{ marginTop: '23px' }} />
-        </StyledTooltip>
-      </span>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text='Percentage of Messages' />}
+            titleTypographyProps={{ variant: 'h6' }}
+            subheader='Period over Period Comparison'
+            subheaderTypographyProps={{ variant: 'caption' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                Chart 1 <br /> Report Level 1(1.1.001)
+              </span>
+            }
+          >
+            <Information fontSize='large' style={{ marginTop: '23px' }} />
+          </StyledTooltip>
+        </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCapture()
+                setAnchorEl(null)
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              PNG
+            </MenuItem>
+          </Menu>
+        </span>
+      </div>
 
-      <CardContent>
+      <CardContent id='percentagePies'>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             {showNoDataText ? (
