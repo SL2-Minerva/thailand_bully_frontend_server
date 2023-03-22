@@ -2,7 +2,14 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, LinearProgress, TableBody, TableCell, TableContainer, Typography } from '@mui/material'
+import {
+  Grid,
+  LinearProgress,
+  TableBody,
+  TableCell,
+  TableContainer,
+  Typography
+} from '@mui/material'
 import { Table, TableRow, TableHead } from '@mui/material'
 
 // ** Third Party Imports
@@ -14,6 +21,19 @@ import Translations from 'src/layouts/components/Translations'
 import { useEffect, useState } from 'react'
 import NumberOfEachMessage from './NumberOfEachMessage'
 import SentimentEachGraph from './SentimentEachGraph'
+
+// import * as htmlToImage from 'html-to-image'
+// import { saveAs } from 'file-saver'
+// import { DotsVertical, Download } from 'mdi-material-ui'
+
+// const onCapture = () => {
+//   const pictureId = document.getElementById('shareOfVoices')
+//   if (pictureId) {
+//     htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
+//       saveAs(dataUrl, 'Share of Voices(overall).png')
+//     })
+//   }
+// }
 
 // import MuiTableCell from "@material-ui/core/TableCell";
 // import { withStyles } from '@material-ui/core'
@@ -49,6 +69,17 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
   )
 
   const [tableData, setTableData] = useState<any[]>([])
+
+  // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  // const rowOptionsOpen = Boolean(anchorEl)
+
+  // const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+  //   setAnchorEl(event.currentTarget)
+  // }
+  // const handleRowOptionsClose = () => {
+  //   setAnchorEl(null)
+  // }
 
   useEffect(() => {
     if (resultShareOfVoice && resultSentimentLevel) {
@@ -159,20 +190,53 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
   return (
     <Card sx={{ minheight: 450 }}>
       {loadingShareOfVoice && <LinearProgress style={{ width: '100%' }} />}
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader title={<Translations text='Share of Voice' />} titleTypographyProps={{ variant: 'h6' }} />
-        <StyledTooltip
-          arrow
-          title={
-            <span>
-              {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
-            </span>
-          }
-        >
-          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
-        </StyledTooltip>
-      </span>
-      <CardContent>
+
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader title={<Translations text='Share of Voice' />} titleTypographyProps={{ variant: 'h6' }} />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
+          </StyledTooltip>
+        </span>
+        {/* <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCapture()
+                setAnchorEl(null)
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              PNG
+            </MenuItem>
+          </Menu>
+        </span> */}
+      </div>
+      <CardContent id="shareOfVoices">
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <TableContainer>

@@ -37,8 +37,6 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
   )
   const reportNo = '1.2.022'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   useEffect(() => {
     if (total > 0) {
       setPageCount(Math.ceil(total / 10))
@@ -61,7 +59,14 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
           title={<Translations text='Top 10 Match: Popular Words' />}
           titleTypographyProps={{ variant: 'h6' }}
         />
-        <StyledTooltip arrow title={chartTitle}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>

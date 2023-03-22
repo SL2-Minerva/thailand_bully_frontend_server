@@ -8,8 +8,8 @@ import { Information } from 'mdi-material-ui'
 import { GetWordCloudsSentiment } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
 import SentimentAccountList from './SentimentAccountList'
-import "d3-transition";
-import { select } from "d3-selection";
+import 'd3-transition'
+import { select } from 'd3-selection'
 
 const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string }) => {
   const [sentiment, setSentiment] = useState('positive')
@@ -30,46 +30,52 @@ const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string 
     setSentiment(value)
   }
 
-  function getCallback(callback : any) {
-    return function (word : any, event:any) {
-      const isActive = callback !== "onWordMouseOut";
-      const element = event.target;
-      const text = select(element);
+  function getCallback(callback: any) {
+    return function (word: any, event: any) {
+      const isActive = callback !== 'onWordMouseOut'
+      const element = event.target
+      const text = select(element)
       text
-        .on("click", () => {
+        .on('click', () => {
           if (isActive && word) {
-            const selectedWord = word?.text;
+            const selectedWord = word?.text
 
-            console.log("selected word :",selectedWord)
+            console.log('selected word :', selectedWord)
           }
         })
         .transition()
-        .attr("background", "white")
-        .attr("font-size", isActive ? "300%" : "100%")
-        .attr("text-decoration", isActive ? "underline" : "none");
-    };
+        .attr('background', 'white')
+        .attr('font-size', isActive ? '300%' : '100%')
+        .attr('text-decoration', isActive ? 'underline' : 'none')
+    }
   }
-  
+
   const callbacks = {
     // getWordColor: (word:any) => (word.value > 50 ? "orange" : "purple"),
-    getWordTooltip: (word:any) =>
-      `The word "${word.text}" appears ${word.value} times.`,
-    onWordClick: getCallback("onWordClick"),
-    onWordMouseOut: getCallback("onWordMouseOut"),
-    onWordMouseOver: getCallback("onWordMouseOver")
-  };
+    getWordTooltip: (word: any) => `The word "${word.text}" appears ${word.value} times.`,
+    onWordClick: getCallback('onWordClick'),
+    onWordMouseOut: getCallback('onWordMouseOut'),
+    onWordMouseOver: getCallback('onWordMouseOver')
+  }
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={6}>
-        <Card sx={{ maxHeight: 500, minHeight: 500 , overflow: 'auto'}}>
+        <Card sx={{ maxHeight: 500, minHeight: 500, overflow: 'auto' }}>
           {loadingWordCloudsSentiment && <LinearProgress style={{ width: '100%' }} />}
           <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <CardHeader
               title={<Translations text='Word Cloud by Sentiment Type' />}
               titleTypographyProps={{ variant: 'h6' }}
             />
-            <StyledTooltip arrow title={chartId}>
+            <StyledTooltip
+              arrow
+              title={
+                <span>
+                  {chartId} <br /> Report Level 2(1.2.025)
+                </span>
+              }
+            >
               <Information style={{ marginTop: '22px', fontSize: '29px' }} />
             </StyledTooltip>
           </span>

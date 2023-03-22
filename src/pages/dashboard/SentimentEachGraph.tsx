@@ -42,7 +42,6 @@ const SentimentEachGraph = ({ resultSentimentLevel }: { resultSentimentLevel: an
   const neutralData = ChartDataPositive(resultSentimentLevel, 'neutral')
   const negativeData = ChartDataPositive(resultSentimentLevel, 'negative')
 
-  console.log("chartLabels", resultSentimentLevel, chartLabels, "positive data", positiveData, 'negative', negativeData)
   const series = [
     {
       name: 'Negative',

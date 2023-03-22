@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { useEffect } from 'react'
-import { renderProgress } from './SummaryByKeywords'
+import { changeToFixedValue, renderProgress } from './SummaryByKeywords'
 import { DataGrid } from '@mui/x-data-grid'
 import Translations from 'src/layouts/components/Translations'
 
@@ -48,7 +48,7 @@ const SummaryByAccount = ({
 
   const columns = [
     { field: 'infulencer', headerName: 'Influencer', flex: 1, sortable: false },
-    { field: 'sentiment_score', headerName: 'Sentiment Score ', flex: 1 },
+    { field: 'sentiment_score', headerName: 'Sentiment Score ', flex: 1, renderCell: changeToFixedValue },
     { field: 'positive', headerName: ' Positive', flex: 1, renderCell: renderProgress },
     { field: 'neutral', headerName: ' Neutral', flex: 1, renderCell: renderProgress },
     { field: 'negative', headerName: ' Negative', flex: 1, renderCell: renderProgress }

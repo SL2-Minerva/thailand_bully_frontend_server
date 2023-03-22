@@ -84,7 +84,7 @@ const SenitmentScore = ({
                                   : '#ea4228'
                             }}
                           >
-                            {comparison.sentimentScore?.toFixed(4)}
+                            {comparison.sentimentScore?.toFixed(2)}
                           </Typography>
                         </TableCell>
                         <TableCell align='left'>
@@ -107,7 +107,7 @@ const SenitmentScore = ({
                         </TableCell>
                         <TableCell align='center'>
                           <Typography variant='body1'>
-                            {comparison?.previous_period && comparison?.previous_period?.toFixed(4)}
+                            {comparison?.previous_period && comparison?.previous_period?.toFixed(2)}
                           </Typography>
                         </TableCell>
                       </TableRow>

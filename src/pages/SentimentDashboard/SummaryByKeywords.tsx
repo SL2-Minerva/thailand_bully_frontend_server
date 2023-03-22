@@ -72,6 +72,12 @@ export function renderProgress(params: any) {
   return <ProgressBar value={Number(params.value)!} />
 }
 
+export const changeToFixedValue = (params: any) => {
+  if(!params) return ''
+  
+  return params?.value?.toFixed(2)
+}
+
 const SummaryByKeywords = ({
   resultSummaryByKeywords,
   total,
