@@ -297,8 +297,6 @@ const DailyMessageGraph = (props: Props) => {
 
   const reportNo = '2.2.002'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   const handleChooseChart = (data: string) => {
     setChooseChart(data)
   }
@@ -321,7 +319,7 @@ const DailyMessageGraph = (props: Props) => {
           ) : (
             ''
           )}
-          <StyledTooltip arrow title={chartTitle || ''}>
+          <StyledTooltip arrow title={<span>{chartId} <br/>{' Report Level 2(' + reportNo + ')'}</span>}>
             <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
           </StyledTooltip>
         </span>

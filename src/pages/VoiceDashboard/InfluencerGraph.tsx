@@ -82,7 +82,7 @@ const InfluencerGraph = ({
   //   params?.endDate,
   //   params?.period,
   //   params?.keywordIds
-  // ) 
+  // )
 
   const chartRef = useRef()
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -192,7 +192,7 @@ const InfluencerGraph = ({
           date: moment(total[j]).format('DD/MM/YYYY')
         })
       }
-      
+
       const modifiedData = labels.map((node: any) => {
         const oldInfo = dataArray.find((item: any) => item?.date === node)
         if (oldInfo) {
@@ -312,8 +312,6 @@ const InfluencerGraph = ({
 
   const reportNo = '2.2.013'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Card style={{ height: 520 }}>
       {loadingNumbersOfAccounts && <LinearProgress style={{ width: '100%' }} />}
@@ -322,7 +320,14 @@ const InfluencerGraph = ({
           title={<Translations text='Number of Accounts' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

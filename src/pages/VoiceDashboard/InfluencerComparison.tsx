@@ -44,8 +44,6 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
 
   const TrendIcon = trend === 'plus' ? ChevronUp : ChevronDown
 
-  const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
-
   const title =
     totalText === 'Messages'
       ? 'Number of Messages: Period over Period Comparison'
@@ -74,7 +72,7 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
             <Grid item xs={4} p={4}>
               <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Typography variant="body2" sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
+                  <Typography variant='body2' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
                     {trendNumber + '%'}
                   </Typography>
                   <TrendIcon fontSize='medium' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }} />
@@ -88,7 +86,14 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
 
         <span style={{ display: 'flex', justifyContent: 'flex-start', color: highlight ? 'green' : '#4c4e64de' }}>
           <Translations text={title} />
-          <StyledTooltip arrow title={chartTitle || ''}>
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+              </span>
+            }
+          >
             <Information style={{ marginLeft: '10px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>

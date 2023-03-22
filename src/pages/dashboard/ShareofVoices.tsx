@@ -48,7 +48,6 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
     params?.keywordIds
   )
 
-  const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
   const [tableData, setTableData] = useState<any[]>([])
 
   useEffect(() => {
@@ -84,7 +83,7 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
       <>
         {(percentageData || []).map((percentage: any, index: number) => {
           return (
-            <TableCell key={index} sx={{textAlign:'center'}}>
+            <TableCell key={index} sx={{ textAlign: 'center' }}>
               <span style={{ border: percentage?.highlight ? '1px solid red' : '', padding: '4px' }}>
                 {percentage?.percentage + '%'}
               </span>
@@ -129,7 +128,7 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
               : ''
 
           return (
-            <TableCell key={i} sx={{textAlign:'center'}}>
+            <TableCell key={i} sx={{ textAlign: 'center' }}>
               {imgPath ? (
                 <img alt='logo' width={34} height={34} src={imgPath} />
               ) : (
@@ -162,7 +161,14 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
       {loadingShareOfVoice && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title={<Translations text='Share of Voice' />} titleTypographyProps={{ variant: 'h6' }} />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
@@ -170,7 +176,7 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <TableContainer>
-              <Table size='small' sx={{overflow: 'auto'}}>
+              <Table size='small' sx={{ overflow: 'auto' }}>
                 <TableHead>
                   <TableRow>
                     <TableCell></TableCell>
@@ -185,16 +191,18 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
                   {(tableData || []).map((shareVoice: any, index: number) => {
                     return (
                       <TableRow key={index}>
-                        <TableCell sx={{ textAlign: 'right', maxWidth:120, paddingRight:'0px' }}>{shareVoice?.keyword_name}</TableCell>
-                        <TableCell sx={{minWidth: 100, maxWidth: 300, paddingLeft:'0px' }}>
+                        <TableCell sx={{ textAlign: 'right', maxWidth: 120, paddingRight: '0px' }}>
+                          {shareVoice?.keyword_name}
+                        </TableCell>
+                        <TableCell sx={{ minWidth: 100, maxWidth: 300, paddingLeft: '0px' }}>
                           <NumberOfEachMessage
                             keywordsColor={getKeywordColor(shareVoice)}
                             resultShareOfVoiceChart={shareVoice}
                           />
                         </TableCell>
                         <ShareOfVoiceTable data={shareVoice} />
-                        <TableCell colSpan={3} sx={{maxWidth: 300}}>
-                          <SentimentEachGraph resultSentimentLevel={shareVoice}/>
+                        <TableCell colSpan={3} sx={{ maxWidth: 300 }}>
+                          <SentimentEachGraph resultSentimentLevel={shareVoice} />
                         </TableCell>
                       </TableRow>
                     )

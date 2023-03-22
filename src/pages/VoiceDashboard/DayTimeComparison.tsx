@@ -93,8 +93,6 @@ const DayTimeComparison = ({
 
   const reportNo = '2.2.016'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Card>
       {loadingDayTimeComparison && <LinearProgress style={{ width: '100%' }} />}
@@ -103,7 +101,14 @@ const DayTimeComparison = ({
           title={<Translations text='Day & Time' />}
           titleTypographyProps={{ variant: 'h4', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

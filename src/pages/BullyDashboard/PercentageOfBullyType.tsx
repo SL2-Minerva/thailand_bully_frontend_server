@@ -71,11 +71,11 @@ const PercentageOfBullyType = (props: MessageData) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-       display: false
+        display: false
       },
       tooltip: {
         callbacks: {
-          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+          label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
       },
       doughnutlabel: {
@@ -105,7 +105,7 @@ const PercentageOfBullyType = (props: MessageData) => {
       },
       tooltip: {
         callbacks: {
-          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+          label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
       },
       doughnutlabel: {
@@ -186,20 +186,20 @@ const PercentageOfBullyType = (props: MessageData) => {
   const title = type === 'level' ? 'Percentage of Bully Level' : 'Percentage of Bully Type'
 
   const getLabels = (data: any) => {
-    const labels : any= [];
+    const labels: any = []
 
-    for(let i =0; i<data?.length ; i++) {
+    for (let i = 0; i < data?.length; i++) {
       labels.push(data[i].name)
     }
 
     return labels
   }
 
-  const getColors = (data:any) => {
-    const bullyColors : any = [];
+  const getColors = (data: any) => {
+    const bullyColors: any = []
 
-    for(let i=0; i<data?.length; i++) {
-      bullyColors.push(data[i]?.color);
+    for (let i = 0; i < data?.length; i++) {
+      bullyColors.push(data[i]?.color)
     }
 
     return bullyColors
@@ -218,7 +218,7 @@ const PercentageOfBullyType = (props: MessageData) => {
         if (currentMessageData?.length > 0) {
           setCurrentTotal(currentMessageData[0]?.value?.total)
           setShowNoDataText(false)
-          if(!currentMessageData[0]?.bully_level) {
+          if (!currentMessageData[0]?.bully_level) {
             setShowNoDataText(true)
           }
         } else {
@@ -237,7 +237,7 @@ const PercentageOfBullyType = (props: MessageData) => {
         if (previousMessageData?.length > 0) {
           setPreviousTotal(previousMessageData[0]?.value?.total)
           setShowNoDataTextPrevious(false)
-          if(!previousMessageData[0]?.bully_level) {
+          if (!previousMessageData[0]?.bully_level) {
             setShowNoDataTextPrevious(true)
           }
         } else {
@@ -261,8 +261,6 @@ const PercentageOfBullyType = (props: MessageData) => {
 
   const reportNo = '6.1.011'
 
-  const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
-
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} square variant='outlined'>
       {loadingBullyTypePercentage && <LinearProgress style={{ width: '100%' }} />}
@@ -273,13 +271,20 @@ const PercentageOfBullyType = (props: MessageData) => {
           subheader='Period over Period Comparison'
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>
       <CardContent>
         <Grid container spacing={3}>
-        <Grid item xs={12}>
+          <Grid item xs={12}>
             <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
               <CustomeLabels
                 data={currentData || previousData}

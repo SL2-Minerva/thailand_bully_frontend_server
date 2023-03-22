@@ -37,8 +37,6 @@ const EngagementByAccounts = (props: LineProps) => {
   const reportNo = '4.2.006'
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
-  const title = chartId + ', Report Level 2(' + reportNo + ')'
-
   const chartRef = useRef()
   const getKeywordId = (dataset: InteractionItem[]) => {
     if (!dataset.length) return
@@ -234,7 +232,14 @@ const EngagementByAccounts = (props: LineProps) => {
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={title || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

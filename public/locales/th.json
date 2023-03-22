@@ -174,5 +174,8 @@
   "Bully Level: Share of Channel"	:	"ร้อยละของระดับการคุกคามในแต่ละช่องทาง",
   "Bully Type: Share of Channel"	:	"ร้อยละของประเภทการคุกคามในแต่ละช่องทาง",
   "no data" : "ตรวจสอบแล้ว ไม่มีข้อมูล",
-  "frequencyPlaceHolder" : "ตัวอย่าง 30 = 30 นาที"
+  "frequencyPlaceHolder" : "ตัวอย่าง 30 = 30 นาที",
+  "Popular Word Total" : "จำนวนคำที่พูดถึงท้ังหมด",
+  "Popular Word" : "คำที่พูดถึง",
+  "Amount" : "จำนวน"
 }

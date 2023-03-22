@@ -26,8 +26,6 @@ const EngagementTypeComparison = ({
 }) => {
   const reportNo = '4.2.023'
 
-  const title = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Card sx={{ minHeight: 560 }}>
       {loadingEngagementComparison && <LinearProgress style={{ width: '100%' }} />}
@@ -37,7 +35,14 @@ const EngagementTypeComparison = ({
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheader='Period over Period'
         />
-        <StyledTooltip arrow title={title || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>
@@ -46,7 +51,7 @@ const EngagementTypeComparison = ({
         <Grid container spacing={3}>
           <Grid item xs={12}>
             {resultEngagementComparison?.length > 0 ? (
-              <TableContainer style={{height: 400}}>
+              <TableContainer style={{ height: 400 }}>
                 <Table size='small'>
                   <TableHead>
                     <TableRow>
@@ -89,7 +94,7 @@ const EngagementTypeComparison = ({
                                   )}
                                 </>
                               )}
-                              <Typography sx={{fontSize: '1.3vw'}}>
+                              <Typography sx={{ fontSize: '1.3vw' }}>
                                 {comparison.total?.value}
                                 <Typography variant='body1'>{comparison.total?.percentage} %</Typography>
                               </Typography>
@@ -114,7 +119,7 @@ const EngagementTypeComparison = ({
                                   )}
                                 </>
                               )}
-                              <Typography sx={{fontSize: '1.3vw'}}>
+                              <Typography sx={{ fontSize: '1.3vw' }}>
                                 {comparison.share?.value}
                                 <Typography variant='body1'>{comparison.share?.percentage} %</Typography>
                               </Typography>
@@ -140,7 +145,7 @@ const EngagementTypeComparison = ({
                                 </>
                               )}
 
-                              <Typography sx={{fontSize: '1.3vw'}}>
+                              <Typography sx={{ fontSize: '1.3vw' }}>
                                 {comparison.comment?.value}
                                 <Typography variant='body1'>{comparison.comment?.percentage} %</Typography>
                               </Typography>
@@ -166,7 +171,7 @@ const EngagementTypeComparison = ({
                                 </>
                               )}
 
-                              <Typography sx={{fontSize: '1.3vw'}}>
+                              <Typography sx={{ fontSize: '1.3vw' }}>
                                 {comparison.reaction?.value}
                                 <Typography variant='body1'>{comparison.reaction?.percentage} %</Typography>
                               </Typography>

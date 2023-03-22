@@ -26,8 +26,6 @@ const SenitmentScore = ({
 }) => {
   const reportNo = '5.2.015'
 
-  const title = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Card sx={{ minHeight: 520 }}>
       {loadingSentimentScore && <LinearProgress style={{ width: '100%' }} />}
@@ -36,7 +34,14 @@ const SenitmentScore = ({
           title={<Translations text='Sentiment Score' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={title || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

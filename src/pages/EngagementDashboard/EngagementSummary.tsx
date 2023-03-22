@@ -35,8 +35,6 @@ const EngagementSummary = ({
 
   const reportNo = '4.2.025'
 
-  const title = chartId + ', Report Level 2(' + reportNo + ')'
-
   const columns = [
     { field: 'infulencer', headerName: 'Influencer', flex: 1, sortable: false },
     { field: 'total', headerName: 'Total', flex: 1 },
@@ -67,7 +65,14 @@ const EngagementSummary = ({
           title={<Translations text='Summary Engagement By Account' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={title || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

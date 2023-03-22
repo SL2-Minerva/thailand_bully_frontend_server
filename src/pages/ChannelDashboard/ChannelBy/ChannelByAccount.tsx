@@ -13,17 +13,7 @@ import MessageDetailChannel from '../MessageDetailChannel'
 
 const ChannelByAccount = (props: LineProps) => {
   const { t } = useTranslation()
-  const {
-    white,
-    labelColor,
-    borderColor,
-    gridLineColor,
-    chartId,
-    params,
-    highlight,
-    resultBy,
-    loading
-  } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const [label, setLabel] = useState<string[]>([])
@@ -239,8 +229,6 @@ const ChannelByAccount = (props: LineProps) => {
 
   const reportNo = '3.2.006'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loading && <LinearProgress style={{ width: '100%' }} />}
@@ -250,7 +238,14 @@ const ChannelByAccount = (props: LineProps) => {
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

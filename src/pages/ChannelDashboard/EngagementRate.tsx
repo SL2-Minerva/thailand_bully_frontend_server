@@ -10,7 +10,7 @@ import { LineProps } from '../VoiceDashboard/MessageByDays'
 import Translations from 'src/layouts/components/Translations'
 import MessageDetailChannel from './MessageDetailChannel'
 
-export const chartLabel = (currentData: any, previousData: any) => {
+export const chartLabels = (currentData: any, previousData: any) => {
   if (!currentData && !previousData) return []
 
   let labels: string[] = []
@@ -201,7 +201,7 @@ const EngagementRate = (props: LineProps) => {
       const previousEngagementData = resultByPrevious
 
       if (currentEngagementData) {
-        const labels = chartLabel(currentEngagementData, previousEngagementData)
+        const labels = chartLabels(currentEngagementData, previousEngagementData)
         setLabel(labels)
 
         const dataSets = chartDatasets(currentEngagementData, previousEngagementData)
@@ -225,10 +225,8 @@ const EngagementRate = (props: LineProps) => {
 
   const reportNo = '3.2.013'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
-    <Card sx={{ minHeight: 518}}>
+    <Card sx={{ minHeight: 518 }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -236,7 +234,14 @@ const EngagementRate = (props: LineProps) => {
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

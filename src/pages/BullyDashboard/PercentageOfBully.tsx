@@ -218,8 +218,6 @@ const PercentageOfBully = (props: MessageData) => {
 
   const reportNo = '6.1.001'
 
-  const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
-
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} square variant='outlined'>
       {loadingBullyLevelPercentage && <LinearProgress style={{ width: '100%' }} />}
@@ -230,7 +228,11 @@ const PercentageOfBully = (props: MessageData) => {
           subheader='Period over Period Comparison'
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip arrow title={
+            <span>
+              {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+            </span>
+          }>
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { GraphicColors } from 'src/utils/const'
-import Translations from 'src/layouts/components/Translations' 
+import Translations from 'src/layouts/components/Translations'
 import CustomeLabels from './CustomLabel'
 
 Chart.register(DoughnutLabel)
@@ -50,7 +50,7 @@ const PlatformsComparison = ({
         paddingPercentage: 5,
         labels: [
           {
-            text: currentData?.total && currentData?.total !=0 ? currentData?.total : '',
+            text: currentData?.total && currentData?.total != 0 ? currentData?.total : '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',
@@ -95,7 +95,7 @@ const PlatformsComparison = ({
         paddingPercentage: 5,
         labels: [
           {
-            text: previousData?.total && previousData?.total !=0 ? previousData?.total : '',
+            text: previousData?.total && previousData?.total != 0 ? previousData?.total : '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',
@@ -143,8 +143,6 @@ const PlatformsComparison = ({
 
   const reportNo = '2.2.022'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Card style={{ minHeight: 550 }}>
       {loadingPlatformComparison && <LinearProgress style={{ width: '100%' }} />}
@@ -155,15 +153,22 @@ const PlatformsComparison = ({
           subheader='Period over Period Comparison'
           subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>
 
       <CardContent>
         <Grid container spacing={3}>
-        <Grid item xs={12}>
-            <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }}  sx={{display: 'flex', justifyContent: 'center'}}>
+          <Grid item xs={12}>
+            <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
               <CustomeLabels
                 data={currentData}
                 labels={previousData?.label || currentData?.label}

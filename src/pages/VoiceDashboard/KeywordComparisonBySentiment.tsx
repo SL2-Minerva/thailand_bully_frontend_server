@@ -41,13 +41,13 @@ const KeywordComparisonBySentiment = ({
 
       if (resultKeywordComparisonBySentiment?.value) {
         setShowNoDataText(false)
-      } else {setShowNoDataText(true)}
+      } else {
+        setShowNoDataText(true)
+      }
     }
   }, [resultKeywordComparisonBySentiment, keywordsColor])
 
   const reportNo = '2.2.026'
-
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
     <Card>
@@ -57,7 +57,14 @@ const KeywordComparisonBySentiment = ({
           title={<Translations text='Percentage of Keyword Comparison by Sentiment' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

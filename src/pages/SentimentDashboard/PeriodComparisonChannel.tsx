@@ -202,8 +202,6 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
 
   const reportNo = '5.2.013'
 
-  const title = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Card>
       {loadingSenitmentComparisonByChannel && <LinearProgress style={{ width: '100%' }} />}
@@ -213,7 +211,14 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={title || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

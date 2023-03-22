@@ -141,8 +141,6 @@ const DayTimeBullyType = (props: Props) => {
 
   const reportNo = '2.2.019'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Card>
       {loadingDayByBullyType && <LinearProgress style={{ width: '100%' }} />}
@@ -151,7 +149,14 @@ const DayTimeBullyType = (props: Props) => {
           title={<Translations text='Day & Time by Bully Type' />}
           titleTypographyProps={{ variant: 'h4', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

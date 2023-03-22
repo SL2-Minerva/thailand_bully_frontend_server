@@ -81,8 +81,6 @@ const ChannelVsDevice = ({
 
   const reportNo = '2.2.024'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Card style={{ minHeight: 550, maxHeight: 550 }}>
       {loadingDeviceVsChannel && <LinearProgress style={{ width: '100%' }} />}
@@ -93,7 +91,14 @@ const ChannelVsDevice = ({
           subheader='Period over Period Comparison'
           subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

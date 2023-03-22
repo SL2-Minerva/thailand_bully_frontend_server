@@ -12,9 +12,9 @@ const cellStyle = {
   maxWidth: 250,
   whiteSpace: 'normal',
   wordWrap: 'break-word',
-  borderStyle: "border-box",
+  borderStyle: 'border-box',
   backgroundColor: 'lightgrey !important'
-};
+}
 
 const KeywordTable = ({ params, chartId }: { params: any; chartId: string }) => {
   const { resultKeywords, loadingFilterData } = GetKeyWords(
@@ -30,14 +30,19 @@ const KeywordTable = ({ params, chartId }: { params: any; chartId: string }) => 
 
   const reportNo = '1.1.008'
 
-  const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
-
   return (
     <Card>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title={<Translations text='Keyword Summary' />} titleTypographyProps={{ variant: 'h6' }} />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {'Report Level 1(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>

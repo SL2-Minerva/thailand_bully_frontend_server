@@ -303,8 +303,6 @@ const DailyMessageGraph = (props: Props) => {
 
   const reportNo = '3.2.002'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   useEffect(() => {
     if (resultDailyChannel) {
       const labels = chartLabel(resultDailyChannel)
@@ -353,7 +351,14 @@ const DailyMessageGraph = (props: Props) => {
           ) : (
             ''
           )}
-          <StyledTooltip arrow title={chartTitle || ''}>
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              </span>
+            }
+          >
             <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
           </StyledTooltip>
         </span>
@@ -407,7 +412,7 @@ const DailyMessageGraph = (props: Props) => {
         </span>
       </div>
 
-      <CardContent id="savePNG">
+      <CardContent id='savePNG'>
         {showNoDataText ? (
           <div
             style={{

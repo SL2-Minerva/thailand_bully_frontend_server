@@ -124,7 +124,7 @@ const DailyMessagePieChart = (props: Props) => {
       },
       tooltip: {
         callbacks: {
-          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+          label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
       },
       doughnutlabel: {
@@ -154,7 +154,7 @@ const DailyMessagePieChart = (props: Props) => {
       },
       tooltip: {
         callbacks: {
-          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+          label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
       },
       doughnutlabel: {
@@ -194,7 +194,7 @@ const DailyMessagePieChart = (props: Props) => {
       setCurrentData(initValue)
       setCurrentTotal(0)
       setShowNoDataText(true)
-      
+
       // setCurrentLabel([])
     }
 
@@ -216,14 +216,12 @@ const DailyMessagePieChart = (props: Props) => {
       setPreviousData(initValue)
       setPreviousTotal(0)
       setShowNoDataTextPrevious(true)
-      
+
       // setPreviousLabel([])
     }
   }, [resultPercentageChannelCurrent, resultPercentageChannelPrevious, keywordsColor])
 
   const reportNo = '3.1.001'
-
-  const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
 
   // const getLabels = (current: any, previous: any) => {
   //   const union = Array.from(new Set([...current, ...previous]))
@@ -232,27 +230,27 @@ const DailyMessagePieChart = (props: Props) => {
   // }
 
   const getLabelColor = (data: any) => {
-    const labels : any= [];
+    const labels: any = []
 
-    for(let i =0; i<data?.length ; i++) {
+    for (let i = 0; i < data?.length; i++) {
       labels.push(data[i].name)
     }
 
     return labels
   }
 
-  const getColors = (data:any) => {
-    const channelColor : any = [];
+  const getColors = (data: any) => {
+    const channelColor: any = []
 
-    for(let i=0; i<data?.length; i++) {
-      channelColor.push(data[i]?.color);
+    for (let i = 0; i < data?.length; i++) {
+      channelColor.push(data[i]?.color)
     }
 
     return channelColor
   }
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550}} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} square variant='outlined'>
       {loadingPercentageChannel && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         {type === 'message' ? (
@@ -270,7 +268,14 @@ const DailyMessagePieChart = (props: Props) => {
             subheaderTypographyProps={{ varient: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           />
         )}
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

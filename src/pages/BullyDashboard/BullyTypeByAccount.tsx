@@ -13,7 +13,7 @@ import Translations from 'src/layouts/components/Translations'
 
 const BullyTypeByAccount = (props: LineProps) => {
   const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -60,19 +60,19 @@ const BullyTypeByAccount = (props: LineProps) => {
 
   const onClick = (event: any) => {
     if (chartRef.current) {
-      const getIndex = getElementAtEvent(chartRef.current, event);
+      const getIndex = getElementAtEvent(chartRef.current, event)
 
-      if(getIndex?.length > 0 ) {
-        const index =  getIndex[0].index;
-        params.label = label[index];
+      if (getIndex?.length > 0) {
+        const index = getIndex[0].index
+        params.label = label[index]
       }
       const keyword_id = getKeywordId(getDatasetAtEvent(chartRef.current, event))
-      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event);
+      const getDatasetIndex = getDatasetAtEvent(chartRef.current, event)
 
-      if(getDatasetIndex?.length > 0) {
-        const datasetIndex = getDatasetIndex[0]?.datasetIndex;
-       
-        if(datasetIndex === 0 || datasetIndex) {
+      if (getDatasetIndex?.length > 0) {
+        const datasetIndex = getDatasetIndex[0]?.datasetIndex
+
+        if (datasetIndex === 0 || datasetIndex) {
           params.Llabel = dataset[datasetIndex]?.label
         }
       }
@@ -146,7 +146,7 @@ const BullyTypeByAccount = (props: LineProps) => {
       for (let j = 0; j < BullyTypeColorCode?.length; j++) {
         if (BullyTypeColorCode[j]?.name === total[i]?.keyword_name) {
           color.push(BullyTypeColorCode[j]?.color)
-          keywordName = t(total[i]?.keyword_name);
+          keywordName = t(total[i]?.keyword_name)
         }
       }
       const chartDataset: StackChartDataset = {
@@ -171,18 +171,17 @@ const BullyTypeByAccount = (props: LineProps) => {
     return returnData
   }
 
-  const chartLabel = (data:any) => {
-    if(!data) return [];
-    const labels : any[] = [];
-    
-    if(data) {
-      for(let i =0 ; i<data.labels?.length ; i++) {
+  const chartLabel = (data: any) => {
+    if (!data) return []
+    const labels: any[] = []
+
+    if (data) {
+      for (let i = 0; i < data.labels?.length; i++) {
         labels.push(t(data.labels[i]))
       }
-      
     }
-  
-    return labels;
+
+    return labels
   }
 
   useEffect(() => {
@@ -215,7 +214,7 @@ const BullyTypeByAccount = (props: LineProps) => {
         }
       }
     }
-  }, [resultBy,t])
+  }, [resultBy, t])
 
   const data = {
     labels: label || [],
@@ -223,18 +222,23 @@ const BullyTypeByAccount = (props: LineProps) => {
   }
   const reportNo = '6.2.016'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text="Bully Type: Daily Message by Account"/>}
+          title={<Translations text='Bully Type: Daily Message by Account' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

@@ -25,14 +25,14 @@ const KeywordComparisonByBullyLevel = ({
   highlight: boolean
   resultKeywordComparisonByBullyLevel: any
   loadingKeywordComparisonByBullyLevel: boolean
-  keywordsColor:any
+  keywordsColor: any
 }) => {
   const [charData, setChartData] = useState(initValue)
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   useEffect(() => {
     if (resultKeywordComparisonByBullyLevel) {
-      const seriesData = getChartData(resultKeywordComparisonByBullyLevel?.value,keywordsColor)
+      const seriesData = getChartData(resultKeywordComparisonByBullyLevel?.value, keywordsColor)
       setChartData({
         labels: resultKeywordComparisonByBullyLevel?.labels ? resultKeywordComparisonByBullyLevel?.labels : [],
         datasets: seriesData
@@ -40,27 +40,34 @@ const KeywordComparisonByBullyLevel = ({
     }
     if (resultKeywordComparisonByBullyLevel?.value) {
       setShowNoDataText(false)
-    } else {setShowNoDataText(true)}
-  }, [resultKeywordComparisonByBullyLevel,keywordsColor])
+    } else {
+      setShowNoDataText(true)
+    }
+  }, [resultKeywordComparisonByBullyLevel, keywordsColor])
 
   const reportNo = '2.2.027'
-
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
     <Card>
       {loadingKeywordComparisonByBullyLevel && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text="Percentage of Keyword Comparison by Bully Level"/>}
+          title={<Translations text='Percentage of Keyword Comparison by Bully Level' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>
       <CardContent>
-      {showNoDataText ? (
+        {showNoDataText ? (
           <div
             style={{
               height: 300,

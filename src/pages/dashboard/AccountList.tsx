@@ -55,7 +55,7 @@ const AccountList = ({
                 </Grid>
                 <Grid item sm={7} xs={7}>
                   <Typography variant='h6'>{keyword.author}</Typography>
-                  <Typography variant='subtitle1'>{keyword.total_message} messages</Typography>
+                  <Typography variant='subtitle1'>{keyword.total_message} <Translations text='Popular Word' /></Typography>
                   <Typography variant='subtitle1'>{keyword.engagements} Engagements/posts</Typography>
                 </Grid>
                 <Grid item sm={2} xs={2} mt={5}>

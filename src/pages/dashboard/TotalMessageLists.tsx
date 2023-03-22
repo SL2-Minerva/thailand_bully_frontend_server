@@ -51,29 +51,38 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
 
   useEffect(() => {
     setPage(0)
-  },[params?.topKeyword])
+  }, [params?.topKeyword])
 
   return (
     <Card sx={{ maxHeight: 470, minHeight: 470 }}>
       {loadingWordClouds && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text='Top Match: Keyword vs. Message' />}
+          title={<Translations text='Top 10 Match: Popular Words' />}
           titleTypographyProps={{ variant: 'h6' }}
         />
         <StyledTooltip arrow title={chartTitle}>
           <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
-      <Typography variant='h5' sx={{ml: 5}}> Total Messages : {total}</Typography>
+      <Typography variant='h5' sx={{ ml: 5 }}>
+        {' '}
+        <Translations text='Popular Word Total' /> : {total}
+      </Typography>
       <CardContent>
-        <TableContainer sx={{ maxHeight: 320, p: 2 , pt: 0 }}>
+        <TableContainer sx={{ maxHeight: 320, p: 2, pt: 0 }}>
           <Table size='small'>
             <TableHead sx={{ backgroundColor: 'lightgrey !important' }}>
               <TableRow>
                 <TableCell variant='head'> No. </TableCell>
-                <TableCell variant='head'> Keyword </TableCell>
-                <TableCell variant='head'> จํานวน Keyword </TableCell>
+                <TableCell variant='head'>
+                  {' '}
+                  <Translations text='Popular Word' />{' '}
+                </TableCell>
+                <TableCell variant='head'>
+                  {' '}
+                  <Translations text='Amount' />{' '}
+                </TableCell>
                 <TableCell variant='head'> % </TableCell>
               </TableRow>
             </TableHead>
@@ -82,7 +91,7 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
                 return (
                   <TableRow key={index}>
                     <TableCell sx={{ backgroundColor: '#d3d3d338 !important' }}>
-                      <b>{(index + 1) + (page *7)}</b>
+                      <b>{index + 1 + page * 7}</b>
                     </TableCell>
                     <TableCell>
                       <span style={{ fontWeight: 'bold' }}>{keyword.keyword}</span>
