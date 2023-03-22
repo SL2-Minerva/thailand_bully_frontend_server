@@ -52,7 +52,7 @@ const ShareOfChannel = ({
 }: {
   resultShareOfChannel: any
   resultShareofChannelPlatform: any
-  chartId: string
+  chartId: any
   highlight: boolean
   type: string
   loading: boolean

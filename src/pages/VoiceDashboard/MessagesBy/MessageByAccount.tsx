@@ -209,8 +209,6 @@ const MessagesByAccount = (props: LineProps) => {
 
   const reportNo = '2.2.006'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loading && <LinearProgress style={{ width: '100%' }} />}
@@ -220,7 +218,7 @@ const MessagesByAccount = (props: LineProps) => {
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip arrow title={<span>{chartId} <br/> {' Report Level 2(' + reportNo + ')'}</span>}>
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

@@ -19,17 +19,23 @@ interface Props {
 const MainKeyWordTable = ({ params, resultTopKeywords, loadingTopKeywords, chartId }: Props) => {
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [keywordId, setKeywordId] = useState<number>()
-  
-  const reportNo = '1.2.009'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
+  const reportNo = '1.2.009'
 
   return (
     <Card sx={{ maxHeight: 360, minHeight: 360 }}>
       {loadingTopKeywords && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title={<Translations text='Main Keyword' />} titleTypographyProps={{ variant: 'h6' }} />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br />
+              {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
@@ -57,9 +63,7 @@ const MainKeyWordTable = ({ params, resultTopKeywords, loadingTopKeywords, chart
                       setKeywordId(keyword?.keyword_id)
                     }}
                   >
-                    <TableCell sx={tableCellStyle}>
-                      {keyword?.keyword}
-                    </TableCell>
+                    <TableCell sx={tableCellStyle}>{keyword?.keyword}</TableCell>
                     <TableCell>{keyword?.no_of_message}</TableCell>
                     <TableCell>{keyword?.percentage}</TableCell>
                   </TableRow>

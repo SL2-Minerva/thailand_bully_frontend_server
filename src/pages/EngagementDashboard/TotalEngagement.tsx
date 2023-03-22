@@ -41,7 +41,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                 >
                   <Translations text='Total Engagement' />
                 </Typography>
-                <StyledTooltip arrow title='Chart 16, Report Level 2 (4.2.020)'>
+                <StyledTooltip arrow title={<span>Chart 16<br/> Report Level 2 (4.2.020)</span>}>
                   <Information
                     style={{ margin: '2px 0px 0px 5px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }}
                   />

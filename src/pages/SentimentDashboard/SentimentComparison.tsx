@@ -47,7 +47,6 @@ const SentimentComparisonTable = ({
     }
   }, [total])
   const reportNo = '5.2.016'
-  const title = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
     <Card>
@@ -58,14 +57,21 @@ const SentimentComparisonTable = ({
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheader='Period over Period'
         />
-        <StyledTooltip arrow title={title || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>
 
       <CardContent>
         <Grid container spacing={3}>
-          <Grid item xs={12} sx={{overflow: 'auto'}}>
+          <Grid item xs={12} sx={{ overflow: 'auto' }}>
             <Table size='small'>
               <TableHead>
                 <TableRow>
@@ -219,7 +225,7 @@ const SentimentComparisonTable = ({
               })}
               {resultSentimentComparison?.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} sx={{textAlign:'center'}}>
+                  <TableCell colSpan={6} sx={{ textAlign: 'center' }}>
                     <Translations text='no data' />
                   </TableCell>
                 </TableRow>

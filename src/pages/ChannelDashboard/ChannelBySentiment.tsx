@@ -69,11 +69,11 @@ const ChannelBySentiment = ({
   const series = [
     {
       name: 'Total ',
-      data:  ChartData(resultBy)
+      data: ChartData(resultBy)
     }
   ]
 
-  const data : ApexOptions = {
+  const data: ApexOptions = {
     chart: {
       type: 'bar',
       stacked: true,
@@ -97,8 +97,6 @@ const ChannelBySentiment = ({
 
   const reportNo = '3.2.015'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Card sx={{ minHeight: 460 }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
@@ -107,30 +105,37 @@ const ChannelBySentiment = ({
           title={<Translations text='Channel by Sentiement' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>
       <CardContent>
-          {!resultBy ? (
-            <div
-              style={{
-                height: 200,
-                padding: '170px 0',
-                textAlign: 'center',
-                verticalAlign: 'middle',
-                color: '#80808059',
-                alignItems: 'center'
-              }}
-            >
-              <Translations text='no data' />
-            </div>
-          ) : (
+        {!resultBy ? (
+          <div
+            style={{
+              height: 200,
+              padding: '170px 0',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              color: '#80808059',
+              alignItems: 'center'
+            }}
+          >
+            <Translations text='no data' />
+          </div>
+        ) : (
 
-            // <Bar data={data} options={{ indexAxis: 'y', plugins:{legend: {display: false}} }} height={140} />
+          // <Bar data={data} options={{ indexAxis: 'y', plugins:{legend: {display: false}} }} height={140} />
 
-            <ReactApexcharts type='bar' series={series} options={data} height={300} />
-          )}
+          <ReactApexcharts type='bar' series={series} options={data} height={300} />
+        )}
       </CardContent>
     </Card>
   )

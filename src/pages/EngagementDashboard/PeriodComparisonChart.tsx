@@ -216,12 +216,11 @@ const PeriodComparisonChart = (props: LineProps) => {
     labels: label || [],
     datasets: dataset
   }
-
-  const title = chartId + ', Report Level 2(' + reportNo + ')'
+  
   const cardTitle = getTitle(type, chartTitle)
 
   return (
-    <Card sx={{minHeight: 713}}>
+    <Card sx={{ minHeight: 713 }}>
       {loadingSenitmentComparisonByEngagement && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -229,7 +228,14 @@ const PeriodComparisonChart = (props: LineProps) => {
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={title || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

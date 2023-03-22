@@ -86,9 +86,9 @@ const navigation = (): VerticalNavItemsType => {
   if(showBullyDashboard) {
     reportDashboardList.push(bullyDashboard);
   }
-
-  reportDashboardList.push(sna);
   reportDashboardList.push(wordCloudDashboard);
+  reportDashboardList.push(sna);
+  
 
   const UserPermissionData = resultPermission?.user?.authorized_view ? {
     title: 'User Permission',

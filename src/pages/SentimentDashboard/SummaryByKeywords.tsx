@@ -109,7 +109,6 @@ const SummaryByKeywords = ({
 
   const reportNo = '5.2.019'
 
-  const title = chartId + ', Report Level 2(' + reportNo + ')'
 
   const columns = [
     { field: 'keyword_name', headerName: 'Keywords', flex: 1, sortable: false },
@@ -118,7 +117,7 @@ const SummaryByKeywords = ({
       field: 'percentage',
       headerName: ' %',
       flex: 1,
-      valueGetter: (params: GridValueGetterParams) => `${ params.row.percentage?.toFixed(4)  + '%'}`
+      valueGetter: (params: GridValueGetterParams) => `${params.row.percentage?.toFixed(4) + '%'}`
     },
     { field: 'positive', headerName: ' Positive', flex: 1, renderCell: renderProgress },
     { field: 'neutral', headerName: ' Neutral', flex: 1, renderCell: renderProgress },
@@ -133,7 +132,14 @@ const SummaryByKeywords = ({
           title={<Translations text='Sentiment Type by Keyword' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={title || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

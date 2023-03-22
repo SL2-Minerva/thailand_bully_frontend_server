@@ -37,8 +37,6 @@ const EngagementByDevice = (props: LineProps) => {
   const chartRef = useRef()
   const reportNo = '4.2.005'
 
-  const title = chartId + ', Report Level 2(' + reportNo + ')'
-
   const getKeywordId = (dataset: InteractionItem[]) => {
     if (!dataset.length) return
 
@@ -228,7 +226,11 @@ const EngagementByDevice = (props: LineProps) => {
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={title || ''}>
+        <StyledTooltip arrow title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }>
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

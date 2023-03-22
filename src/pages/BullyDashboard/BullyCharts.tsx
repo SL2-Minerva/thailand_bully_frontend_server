@@ -503,7 +503,7 @@ const BullyCharts = (data: Props) => {
                 loading={loadingShareOfChannelChart}
                 loadingChannel={loadingShareOfChannelChart}
                 type={bullyType}
-                chartId={'Chart 17, Report Level 2(6.2.021)'}
+                chartId={<span>Chart 17 <br/> Report Level 2(6.2.021)</span>}
                 highlight={highlight === 'chart17' ? true : false}
                 title='Bully Level: Share of Channel'
               />
@@ -514,7 +514,7 @@ const BullyCharts = (data: Props) => {
                 loading={loadingShareOfChannelChart}
                 loadingChannel={loadingShareOfChannelChart}
                 type={bullyType}
-                chartId={'Chart 18, Report Level 2(6.2.022)'}
+                chartId={<span>Chart 18<br/> Report Level 2(6.2.022)</span>}
                 highlight={highlight === 'chart17' ? true : false}
                 title='Bully Type: Share of Channel'
               />

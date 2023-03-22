@@ -356,8 +356,6 @@ const DailyMessgeByBully = (props: LineProps) => {
 
   const reportNo = '6.2.002'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
@@ -370,7 +368,14 @@ const DailyMessgeByBully = (props: LineProps) => {
             subheader='Period over Period Comparison'
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />
-          <StyledTooltip arrow title={chartTitle || ''}>
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              </span>
+            }
+          >
             <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
           </StyledTooltip>
         </span>
@@ -413,7 +418,7 @@ const DailyMessgeByBully = (props: LineProps) => {
           >
             <MenuItem
               onClick={() => {
-                onCapture();
+                onCapture()
                 setAnchorEl(null)
               }}
             >

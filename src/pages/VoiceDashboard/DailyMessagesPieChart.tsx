@@ -203,8 +203,6 @@ const DailyMessagePieChart = (props: Props) => {
 
   const reportNo = '2.1.001'
 
-  const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
-
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 400 }} square variant='outlined'>
       {loadingPercentageMessage && <LinearProgress style={{ width: '100%' }} />}
@@ -215,7 +213,9 @@ const DailyMessagePieChart = (props: Props) => {
           subheader='Period over Period Comparison'
           subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip arrow title={<span>
+          {chartId} <br/> {'Report Level 1(' + reportNo + ')'}
+        </span>}>
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

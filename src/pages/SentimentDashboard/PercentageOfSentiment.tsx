@@ -62,11 +62,11 @@ const PercentageOfSentiments = (props: MessageData) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        display : false
+        display: false
       },
       tooltip: {
         callbacks: {
-          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+          label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
       },
       doughnutlabel: {
@@ -96,7 +96,7 @@ const PercentageOfSentiments = (props: MessageData) => {
       },
       tooltip: {
         callbacks: {
-          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+          label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
       },
       doughnutlabel: {
@@ -162,8 +162,6 @@ const PercentageOfSentiments = (props: MessageData) => {
 
   const reportNo = '5.1.001'
 
-  const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
-
   useEffect(() => {
     if (resultFilterData) {
       const currentMessageData = resultFilterData?.prcentage_of_messages_current
@@ -177,7 +175,7 @@ const PercentageOfSentiments = (props: MessageData) => {
         if (currentMessageData?.length > 0) {
           setCurrentTotal(currentMessageData[0]?.value[0]?.total)
           setShowNoDataText(false)
-          if(!currentMessageData[0]?.keyword_name) {
+          if (!currentMessageData[0]?.keyword_name) {
             setShowNoDataText(true)
           }
         } else {
@@ -198,7 +196,7 @@ const PercentageOfSentiments = (props: MessageData) => {
         if (previousMessageData?.length > 0) {
           setPreviousTotal(previousMessageData[0]?.value[0]?.total)
           setShowNoDataTextPrevious(false)
-          if(!previousMessageData[0]?.keyword_name) {
+          if (!previousMessageData[0]?.keyword_name) {
             setShowNoDataTextPrevious(true)
           }
         } else {
@@ -230,7 +228,14 @@ const PercentageOfSentiments = (props: MessageData) => {
           subheader='Period over Period Comparison'
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>
@@ -252,7 +257,7 @@ const PercentageOfSentiments = (props: MessageData) => {
             ''
           )}
 
-          <Grid item xs={12} md={6} >
+          <Grid item xs={12} md={6}>
             {showNoDataText ? (
               <div
                 style={{
@@ -269,7 +274,7 @@ const PercentageOfSentiments = (props: MessageData) => {
               <Doughnut data={currentData} options={options as any} height={200} />
             )}
           </Grid>
-          <Grid item xs={12} md={6} >
+          <Grid item xs={12} md={6}>
             {showNoDataTextPrevious ? (
               <div
                 style={{

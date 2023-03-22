@@ -343,8 +343,6 @@ const DailyEngagementType = (props: LineProps) => {
 
   const reportNo = '4.2.012'
 
-  const title = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
       {loading && <LinearProgress style={{ width: '100%' }} />}
@@ -357,7 +355,14 @@ const DailyEngagementType = (props: LineProps) => {
             subheader='KeyWords'
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />
-          <StyledTooltip arrow title={title || ''}>
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              </span>
+            }
+          >
             <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
           </StyledTooltip>
         </span>

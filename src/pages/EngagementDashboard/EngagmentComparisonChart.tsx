@@ -19,7 +19,7 @@ const Labels = (data: any) => {
   const labels: any[] = []
   if (data?.length > 0) {
     for (let i = 0; i < data?.length; i++) {
-      labels.push(data[i].keyword_name || "")
+      labels.push(data[i].keyword_name || '')
     }
   }
 
@@ -127,8 +127,6 @@ const EngagmentComparisonChart = ({
 
   const reportNo = '4.2.024'
 
-  const title = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Card sx={{ minHeight: 560 }}>
       {loadingComparison && <LinearProgress style={{ width: '100%' }} />}
@@ -137,7 +135,14 @@ const EngagmentComparisonChart = ({
           title={<Translations text='Engagement Type Proportion' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={title || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

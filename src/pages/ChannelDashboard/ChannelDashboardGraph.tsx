@@ -324,7 +324,7 @@ const ChannelDashboardGraphs = (data: Props) => {
                   title={<Translations text='Channel Comparison: Period over Period' />}
                   titleTypographyProps={{ variant: 'h6', color: highlight === 'chart10' ? 'green' : '#4c4e64de' }}
                 />
-                <StyledTooltip arrow title='Chart 10, Report Level 2(3.3.012)'>
+                <StyledTooltip arrow title={<span>Chart 10<br/> Report Level 2(3.3.012)</span>}>
                   <Information
                     style={{
                       marginTop: '22px',

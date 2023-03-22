@@ -6,7 +6,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
 import { LineProps } from '../VoiceDashboard/MessageByDays'
-import { chartDatasets, chartLabel } from './EngagementRate'
+import { chartDatasets, chartLabels } from './EngagementRate'
 import Translations from 'src/layouts/components/Translations'
 import MessageDetailChannel from './MessageDetailChannel'
 
@@ -134,7 +134,7 @@ const SentimentScore = (props: LineProps) => {
       const currentSentimentScore = resultBy
       const previousSentimentScore = resultByPrevious
       if (currentSentimentScore) {
-        const labels = chartLabel(currentSentimentScore, previousSentimentScore)
+        const labels = chartLabels(currentSentimentScore, previousSentimentScore)
         setLabel(labels)
 
         const dataSets = chartDatasets(currentSentimentScore, previousSentimentScore)
@@ -157,8 +157,6 @@ const SentimentScore = (props: LineProps) => {
 
   const reportNo = '3.2.014'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Card>
       {loading && <LinearProgress style={{ width: '100%' }} />}
@@ -168,13 +166,20 @@ const SentimentScore = (props: LineProps) => {
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>
 
       <CardContent>
-      {showNoDataText ? (
+        {showNoDataText ? (
           <div
             style={{
               height: 400,

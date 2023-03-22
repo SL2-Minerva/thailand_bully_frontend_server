@@ -21,26 +21,31 @@ export const tableCellStyle = {
   maxWidth: 200,
   whiteSpace: 'normal',
   wordWrap: 'break-word',
-  borderStyle: "border-box",
-  backgroundColor: 'lightslategrey !important', 
+  borderStyle: 'border-box',
+  backgroundColor: 'lightslategrey !important',
   color: 'white'
 
   // overflow: "hidden",
   // textOverflow: "ellipsis",
-};
+}
 
 const TopSiteList = ({ chartId, resultTopKeywords, loadingTopKeywords }: Props) => {
-
   const reportNo = '1.2.012'
-
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
     <Card sx={{ maxHeight: 360, minHeight: 360 }}>
       {loadingTopKeywords && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title='Top Sites' titleTypographyProps={{ variant: 'h6' }} />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br />
+              {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '21px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
@@ -68,9 +73,7 @@ const TopSiteList = ({ chartId, resultTopKeywords, loadingTopKeywords }: Props) 
 
                     // style={{ cursor: 'pointer' }}
                   >
-                    <TableCell sx={tableCellStyle}>
-                      {topsite?.site_domain}
-                    </TableCell>
+                    <TableCell sx={tableCellStyle}>{topsite?.site_domain}</TableCell>
                     <TableCell>{topsite?.no_of_message}</TableCell>
                     <TableCell>{topsite?.percentage}</TableCell>
                   </TableRow>

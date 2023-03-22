@@ -18,17 +18,22 @@ interface Props {
 }
 
 const TopHashtagList = ({ resultTopKeywords, loadingTopKeywords, chartId }: Props) => {
-  
   const reportNo = '1.2.015'
-
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
     <Card sx={{ maxHeight: 360, minHeight: 360 }}>
       {loadingTopKeywords && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title='Top Hashtag' titleTypographyProps={{ variant: 'h6' }} />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br />
+              {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '21px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
@@ -37,7 +42,7 @@ const TopHashtagList = ({ resultTopKeywords, loadingTopKeywords, chartId }: Prop
           <Table stickyHeader={true} size='small'>
             <TableHead sx={{ backgroundColor: 'lightgrey !important' }}>
               <TableRow>
-                <TableCell  variant='head' sx={{ backgroundColor: 'white !important'}}>
+                <TableCell variant='head' sx={{ backgroundColor: 'white !important' }}>
                   {' '}
                 </TableCell>
                 <TableCell variant='head'> No. of Messages </TableCell>
@@ -54,11 +59,9 @@ const TopHashtagList = ({ resultTopKeywords, loadingTopKeywords, chartId }: Prop
                       //   setKeywordId(hashtag?.keyword_id)
                     }}
                   >
-                    <TableCell  sx={tableCellStyle}>
-                      {hashtag?.hashtag}
-                    </TableCell>
-                    <TableCell width = '30%' >{hashtag?.no_of_message}</TableCell>
-                    <TableCell width = '40%'>{hashtag?.percentage && hashtag?.percentage?.toFixed(4) }</TableCell>
+                    <TableCell sx={tableCellStyle}>{hashtag?.hashtag}</TableCell>
+                    <TableCell width='30%'>{hashtag?.no_of_message}</TableCell>
+                    <TableCell width='40%'>{hashtag?.percentage && hashtag?.percentage?.toFixed(4)}</TableCell>
                   </TableRow>
                 )
               })}

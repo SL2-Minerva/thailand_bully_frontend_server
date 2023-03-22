@@ -306,8 +306,6 @@ const StackedChart = (props: LineProps) => {
 
   const reportNo = '1.2.002'
 
-  const chartTitle = 'Chart 2, Report Level 2(' + reportNo + ')'
-
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
@@ -330,7 +328,7 @@ const StackedChart = (props: LineProps) => {
             subheader='KeyWords'
             subheaderTypographyProps={{ variant: 'caption' }}
           />
-          <StyledTooltip arrow title={chartTitle || ''}>
+          <StyledTooltip arrow title={<span>Chart 2 <br/>{'Report Level 2(' + reportNo + ')'}</span>}>
             <Information fontSize='large' style={{ marginTop: '23px' }} />
           </StyledTooltip>
         </span>

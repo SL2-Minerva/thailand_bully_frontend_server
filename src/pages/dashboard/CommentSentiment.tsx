@@ -26,8 +26,6 @@ const CommentSentiment = ({ params, chartId }: { params: any; chartId: string })
   )
   const reportNo = '1.1.019'
 
-  const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
-
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
 
@@ -48,9 +46,9 @@ const CommentSentiment = ({ params, chartId }: { params: any; chartId: string })
       },
       tooltip: {
         callbacks: {
-          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+          label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
-      },
+      }
     }
   }
 
@@ -74,7 +72,14 @@ const CommentSentiment = ({ params, chartId }: { params: any; chartId: string })
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title='Comment Sentiment' titleTypographyProps={{ variant: 'h6' }} />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>

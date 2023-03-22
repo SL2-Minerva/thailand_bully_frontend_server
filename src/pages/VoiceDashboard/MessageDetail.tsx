@@ -95,7 +95,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       classification_id: paramsId?.classification_id || '',
       start_date_period: params?.previousDate ? moment(params?.previousDate).format('YYYY-MM-DD') : '',
       end_date_period: params?.previousEndDate ? moment(params?.previousEndDate).format('YYYY-MM-DD') : '',
-      page: page ? (page + 1) : 1,
+      page: page,
       limit: 10,
       report_number: reportNo,
       page_name: params?.page,
@@ -111,7 +111,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       keyword_id: paramsId?.keywordId || keywordId || '',
       classification_id: paramsId?.classification_id || '',
       organization_id: paramsId?.organization_id || '',
-      page: page ? (page + 1) : 1,
+      page: page,
       limit: 10,
       report_number: reportNo,
       page_name: params?.page,
@@ -150,7 +150,7 @@ const MessageDetail = (props: DialogInfoProps) => {
 
   useEffect(() => {
     if (totalMessage > 0) {
-      const count = Math.ceil(totalMessage / 10) - 1
+      const count = Math.ceil(totalMessage / 10)
       setPageCount(count)
     }
   }, [totalMessage])

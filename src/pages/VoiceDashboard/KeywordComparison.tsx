@@ -41,12 +41,12 @@ const KeywordComparisonByChannel = ({
     }
     if (resultKeywordComparisonByChannel?.value) {
       setShowNoDataText(false)
-    } else {setShowNoDataText(true)}
+    } else {
+      setShowNoDataText(true)
+    }
   }, [resultKeywordComparisonByChannel, keywordColors])
 
   const reportNo = '2.2.025'
-
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
     <Card>
@@ -56,7 +56,14 @@ const KeywordComparisonByChannel = ({
           title={<Translations text='Percentage of Keyword Comparison by Channel' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

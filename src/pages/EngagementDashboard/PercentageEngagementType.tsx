@@ -31,7 +31,6 @@ const PercentageOfEngangementType = (props: MessageData) => {
   const { type, chartId, highlight, resultEngagementType, loadingEngagementType, keywordsColor } = props
   const colors = keywordsColor
   const reportNo = '4.1.011'
-  const chartTitle = chartId + ', Report Level 1(' + reportNo + ')'
   const initValue = {
     labels: [],
     datasets: [
@@ -208,7 +207,11 @@ const PercentageOfEngangementType = (props: MessageData) => {
           subheader='Period over Period Comparison'
           subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip arrow title={
+            <span>
+              {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+            </span>
+          }>
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

@@ -45,8 +45,6 @@ const SummaryByChannel = ({
 
   const reportNo = '5.2.018'
 
-  const title = chartId + ', Report Level 2(' + reportNo + ')'
-
   const columns = [
     { field: 'channel', headerName: 'Channel', flex: 1, sortable: false },
     { field: 'sentiment_score', headerName: 'Sentiment Score ', flex: 1 },
@@ -63,7 +61,14 @@ const SummaryByChannel = ({
           title={<Translations text='Summary Sentiment Score by Channel' />}
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
         />
-        <StyledTooltip arrow title={title || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>

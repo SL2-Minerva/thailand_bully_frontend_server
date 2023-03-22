@@ -120,9 +120,6 @@ const MessagesByDays = (props: LineProps) => {
       },
       y: {
         min: 0,
-
-        // max: 5000,
-
         scaleLabel: { display: true },
         ticks: {
           stepSize: 100,
@@ -132,8 +129,6 @@ const MessagesByDays = (props: LineProps) => {
           borderColor,
           color: gridLineColor
         }
-
-        // stacked: true
       }
     },
     plugins: {
@@ -240,8 +235,6 @@ const MessagesByDays = (props: LineProps) => {
 
   const reportNo = '2.2.003'
 
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
-
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loading && <LinearProgress style={{ width: '100%' }} />}
@@ -251,7 +244,14 @@ const MessagesByDays = (props: LineProps) => {
           titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           subheaderTypographyProps={{ variant: 'caption' }}
         />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>
@@ -267,7 +267,7 @@ const MessagesByDays = (props: LineProps) => {
               color: '#80808059'
             }}
           >
-            <Translations text='no data'/>
+            <Translations text='no data' />
           </div>
         ) : (
           <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
