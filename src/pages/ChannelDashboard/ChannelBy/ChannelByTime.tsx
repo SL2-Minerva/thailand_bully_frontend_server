@@ -1,5 +1,5 @@
-import { Paper, CardContent, CardHeader, LinearProgress } from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
+import { Paper, CardContent, CardHeader, LinearProgress, IconButton, Menu, MenuItem } from '@mui/material'
+import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { Information } from 'mdi-material-ui'
@@ -10,6 +10,18 @@ import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
 import { ChannelColorCode } from 'src/utils/const'
 import MessageDetailChannel from '../MessageDetailChannel'
+import * as htmlToImage from 'html-to-image'
+import { saveAs } from 'file-saver'
+import { DotsVertical, Download } from 'mdi-material-ui'
+
+const onCapture = () => {
+  const pictureId = document.getElementById('channelByTime')
+  if (pictureId) {
+    htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
+      saveAs(dataUrl, 'Daily Messages By Time.png')
+    })
+  }
+}
 
 const ChannelByTime = (props: LineProps) => {
   const { t } = useTranslation()
@@ -27,6 +39,16 @@ const ChannelByTime = (props: LineProps) => {
   })
 
   const chartRef = useRef()
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  const rowOptionsOpen = Boolean(anchorEl)
+
+  const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleRowOptionsClose = () => {
+    setAnchorEl(null)
+  }
 
   const getKeywordId = (dataset: InteractionItem[]) => {
     if (!dataset.length) return
@@ -233,6 +255,7 @@ const ChannelByTime = (props: LineProps) => {
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loading && <LinearProgress style={{ width: '100%' }} />}
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Daily Messages By Time' />}
@@ -250,8 +273,39 @@ const ChannelByTime = (props: LineProps) => {
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCapture()
+                setAnchorEl(null)
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              PNG
+            </MenuItem>
+          </Menu>
+        </span>
+      </div>
 
-      <CardContent>
+      <CardContent id="channelByTime">
         {showNoDataText ? (
           <div
             style={{

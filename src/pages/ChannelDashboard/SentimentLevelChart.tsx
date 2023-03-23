@@ -8,9 +8,21 @@ import { ApexOptions } from 'apexcharts'
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { SentimentAllColors } from 'src/utils/const'
-import { LinearProgress } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { MouseEvent, useEffect, useState } from 'react'
 import Translations from 'src/layouts/components/Translations'
+import * as htmlToImage from 'html-to-image'
+import { saveAs } from 'file-saver'
+import { DotsVertical, Download } from 'mdi-material-ui'
+
+const onCapture = () => {
+  const pictureId = document.getElementById('sentimentLevel')
+  if (pictureId) {
+    htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
+      saveAs(dataUrl, 'Sentiment Level.png')
+    })
+  }
+}
 
 // const Labels = (data: any) => {
 //   if (!data) {
@@ -84,6 +96,16 @@ const SentimentLevelChart = ({
   const neutralData = ChartDataPositive(resultSentimentLevel, 'neutral')
   const negativeData = ChartDataPositive(resultSentimentLevel, 'negative')
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  const rowOptionsOpen = Boolean(anchorEl)
+
+  const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleRowOptionsClose = () => {
+    setAnchorEl(null)
+  }
 
   useEffect(() => {
     if(resultSentimentLevel) {
@@ -159,6 +181,8 @@ const SentimentLevelChart = ({
   return (
     <Card sx={{ minHeight: 460 }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
+      
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title='Sentiment Level'
@@ -168,7 +192,38 @@ const SentimentLevelChart = ({
               <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />
           </StyledTooltip> */}
       </span>
-      <CardContent>
+        <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCapture()
+                setAnchorEl(null)
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              PNG
+            </MenuItem>
+          </Menu>
+        </span>
+      </div>
+      <CardContent id="sentimentLevel">
         {showNoDataText ? (
           <div
             style={{

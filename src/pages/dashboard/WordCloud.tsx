@@ -20,7 +20,6 @@ const WordCloud = ({
   loadingWordClouds: boolean
   setWord: any
 }) => {
-  
   const reportNo = '1.2.021'
 
   function getCallback(callback: any) {
@@ -67,19 +66,25 @@ const WordCloud = ({
         </StyledTooltip>
       </span>
       <div style={{ height: 400, width: 500 }}>
-        {!resultWordClouds?.word_clouds || resultWordClouds?.word_clouds?.length == 0 ? (
-          <div
-            style={{
-              padding: '130px 0',
-              textAlign: 'center',
-              verticalAlign: 'middle',
-              color: '#80808059'
-            }}
-          >
-            <Translations text='no data' />
-          </div>
+        {!loadingWordClouds ? (
+          <>
+            {!resultWordClouds?.word_clouds || resultWordClouds?.word_clouds?.length == 0 ? (
+              <div
+                style={{
+                  padding: '130px 0',
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  color: '#80808059'
+                }}
+              >
+                <Translations text='no data' />
+              </div>
+            ) : (
+              <ReactWordcloud words={resultWordClouds?.word_clouds || []} callbacks={callbacks} />
+            )}
+          </>
         ) : (
-          <ReactWordcloud words={resultWordClouds?.word_clouds || []} callbacks={callbacks} />
+          ''
         )}
       </div>
     </Card>
