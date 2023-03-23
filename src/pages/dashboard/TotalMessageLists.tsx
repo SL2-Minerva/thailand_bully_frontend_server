@@ -1,7 +1,5 @@
 import {
-  Box,
   LinearProgress,
-  Pagination,
   Table,
   TableBody,
   TableCell,
@@ -15,41 +13,38 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
-import { GetWordClouds } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
-import { useEffect, useState } from 'react'
 
-const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }) => {
-  const [pageCount, setPageCount] = useState<number>(0)
-  const [page, setPage] = useState<number>(0)
+const TotalMessageLists = ({
+  chartId,
+  resultWordClouds,
+  loadingWordClouds,
+  total
+}: {
+  params: any
+  chartId: string
+  resultWordClouds: any
+  loadingWordClouds: boolean
+  total: number
+}) => {
+  // const [pageCount, setPageCount] = useState<number>(0)
+  // const [page, setPage] = useState<number>(0)
 
-  const { loadingWordClouds, resultWordClouds, total } = GetWordClouds(
-    params?.campaign,
-    params?.platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.topKeyword,
-    params?.previousDate,
-    params?.previousEndDate,
-    params?.keywordIds,
-    page
-  )
   const reportNo = '1.2.022'
 
-  useEffect(() => {
-    if (total > 0) {
-      setPageCount(Math.ceil(total / 10))
-    }
-  }, [total])
+  // useEffect(() => {
+  //   if (total > 0) {
+  //     setPageCount(Math.ceil(total / 10))
+  //   }
+  // }, [total])
 
-  const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value - 1)
-  }
+  // const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+  //   setPage(value - 1)
+  // }
 
-  useEffect(() => {
-    setPage(0)
-  }, [params?.topKeyword])
+  // useEffect(() => {
+  //   setPage(0)
+  // }, [params?.topKeyword])
 
   return (
     <Card sx={{ maxHeight: 470, minHeight: 470 }}>
@@ -96,7 +91,9 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
                 return (
                   <TableRow key={index}>
                     <TableCell sx={{ backgroundColor: '#d3d3d338 !important' }}>
-                      <b>{index + 1 + page * 7}</b>
+                      {/* <b>{index + 1 + page * 7}</b> */}
+                      <b>{index + 1 }</b>
+
                     </TableCell>
                     <TableCell>
                       <span style={{ fontWeight: 'bold' }}>{keyword.keyword}</span>
@@ -118,7 +115,7 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
             </TableBody>
           </Table>
         </TableContainer>
-        <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center' }}>
+        {/* <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center' }}>
           {total > 0 && params?.topKeyword === 'all' ? (
             <Pagination
               count={pageCount}
@@ -130,7 +127,7 @@ const TotalMessageLists = ({ params, chartId }: { params: any; chartId: string }
           ) : (
             ''
           )}
-        </Box>
+        </Box> */}
       </CardContent>
     </Card>
   )

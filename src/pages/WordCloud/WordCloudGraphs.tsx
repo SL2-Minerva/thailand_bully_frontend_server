@@ -1,4 +1,6 @@
 import { Button, Grid } from '@mui/material'
+import { useState } from 'react'
+import { GetWordClouds } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import TotalMessageLists from '../dashboard/TotalMessageLists'
 import WordCloud from '../dashboard/WordCloud'
 import WordCloudChannel from '../dashboard/WordCloudChannel'
@@ -17,13 +19,27 @@ interface Props {
 const WordCloudGraphs = (data: Props) => {
   const { params, setTopKeyword, resultReportPermission, topKeyword } = data
 
+  const [word, setWord] = useState<string>('')
+
+  const { loadingWordClouds, resultWordClouds, total } = GetWordClouds(
+    params?.campaign,
+    params?.platformId,
+    params?.date,
+    params?.endDate,
+    params?.period,
+    params?.topKeyword,
+    params?.previousDate,
+    params?.previousEndDate,
+    params?.keywordIds,
+    word
+  )
+
   const handleTopKeywords = (data: string) => {
     setTopKeyword(data)
   }
 
   return (
     <>
-
       {resultReportPermission?.includes('13') ||
       resultReportPermission?.includes('15') ||
       resultReportPermission?.includes('18') ? (
@@ -100,10 +116,22 @@ const WordCloudGraphs = (data: Props) => {
         <>
           <Grid container spacing={3} mt={2}>
             <Grid id='chart13' item xs={12} md={6}>
-              <WordCloud params={params} chartId='Chart 13' />
+              <WordCloud
+                params={params}
+                chartId='Chart 13'
+                resultWordClouds={resultWordClouds}
+                loadingWordClouds={loadingWordClouds}
+                setWord={setWord}
+              />
             </Grid>
             <Grid id='chart14' item xs={12} md={6}>
-              <TotalMessageLists params={params} chartId='Chart 14' />
+              <TotalMessageLists
+                params={params}
+                chartId='Chart 14'
+                resultWordClouds={resultWordClouds}
+                loadingWordClouds={loadingWordClouds}
+                total={total}
+              />
             </Grid>
           </Grid>
         </>
@@ -114,7 +142,7 @@ const WordCloudGraphs = (data: Props) => {
       {resultReportPermission?.includes('15') ? (
         <Grid container spacing={3} mt={2}>
           <Grid id='chart15' item xs={12}>
-            <WordCloudChannel params={params} chartId='Chart 15' />
+            <WordCloudChannel params={params} chartId='Chart 15' word={word} setWord={setWord} />
           </Grid>
         </Grid>
       ) : (
@@ -123,7 +151,7 @@ const WordCloudGraphs = (data: Props) => {
       {resultReportPermission?.includes('18') ? (
         <Grid container spacing={3} mt={2}>
           <Grid id='chart17' item xs={12} md={12}>
-            <WordCloudSentiment params={params} chartId='Chart 18' />
+            <WordCloudSentiment params={params} chartId='Chart 18' word={word} setWord={setWord} />
           </Grid>
         </Grid>
       ) : (

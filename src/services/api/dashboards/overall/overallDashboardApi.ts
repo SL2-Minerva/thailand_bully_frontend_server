@@ -355,7 +355,7 @@ export const GetWordClouds = (
   previousDate?: any,
   previousEndDate?: any,
   fillter_keywords?: string,
-  page?: number
+  word?: string
 ) => {
   let params = {}
   const todayDate = new Date()
@@ -370,8 +370,7 @@ export const GetWordClouds = (
       start_date_period: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
       end_date_period: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
       fillter_keywords: fillter_keywords,
-      page: page,
-      limit: 7
+      word: word
     }
   } else {
     params = {
@@ -382,8 +381,7 @@ export const GetWordClouds = (
       period: period,
       select: select || 'top10',
       fillter_keywords: fillter_keywords,
-      page: page,
-      limit: 7
+      word: word
     }
   }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
@@ -394,7 +392,7 @@ export const GetWordClouds = (
 
   return {
     resultWordClouds: response?.data || null,
-    total: response?.data?.total || 0,
+    total: response?.data?.word_total || 0,
     loadingWordClouds: loading,
     errorWordClouds: error
   }
@@ -410,7 +408,8 @@ export const GetWordCloudsPlatform = (
   previousDate?: any,
   previousEndDate?: any,
   fillter_keywords?: string,
-  wordCloudPlatform?: string
+  wordCloudPlatform?: string,
+  word?:string
 ) => {
   let params = {}
   const todayDate = new Date()
@@ -425,7 +424,8 @@ export const GetWordCloudsPlatform = (
       start_date_period: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
       end_date_period: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
       fillter_keywords: fillter_keywords,
-      platform_id: wordCloudPlatform
+      platform_id: wordCloudPlatform,
+      word: word
     }
   } else {
     params = {
@@ -436,7 +436,8 @@ export const GetWordCloudsPlatform = (
       period: period,
       select: select || 'top10',
       fillter_keywords: fillter_keywords,
-      platform_id: wordCloudPlatform
+      platform_id: wordCloudPlatform,
+      word: word
     }
   }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
@@ -468,7 +469,8 @@ export const GetWordCloudsSentiment = (
   previousDate?: any,
   previousEndDate?: any,
   fillter_keywords?: string,
-  sentiment_select?: string
+  sentiment_select?: string,
+  word?:string
 ) => {
   let params = {}
   const todayDate = new Date()
@@ -483,7 +485,8 @@ export const GetWordCloudsSentiment = (
       start_date_period: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
       end_date_period: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
       fillter_keywords: fillter_keywords,
-      sentiment_type: sentiment_select
+      sentiment_type: sentiment_select,
+      word: word
     }
   } else {
     params = {
@@ -494,7 +497,8 @@ export const GetWordCloudsSentiment = (
       period: period,
       select: select || 'top10',
       fillter_keywords: fillter_keywords,
-      sentiment_type: sentiment_select
+      sentiment_type: sentiment_select,
+      word
     }
   }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
@@ -526,7 +530,8 @@ export const GetDetailMessage = (
   label?: string,
   ylabel?: string,
   wordCloud?: string,
-  authorName?: string
+  authorName?: string,
+  message_id? :string
 ) => {
   let params: any = {}
   const todayDate = new Date()
@@ -545,7 +550,8 @@ export const GetDetailMessage = (
       limit: limit,
       report_number: reportNo,
       page_name: pageName?.toString(),
-      label: label?.toString()
+      label: label?.toString(),
+      message_id: message_id
     }
   } else {
     params = {
@@ -559,7 +565,8 @@ export const GetDetailMessage = (
       limit: limit,
       report_number: reportNo,
       page_name: pageName?.toString(),
-      label: label?.toString()
+      label: label?.toString(),
+      message_id: message_id
     }
   }
 

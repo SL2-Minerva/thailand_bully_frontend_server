@@ -7,14 +7,25 @@ import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
-import { useEffect, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
-import { LinearProgress } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
 import { TimeAxis } from 'src/utils/const'
 import Translations from 'src/layouts/components/Translations'
+import * as htmlToImage from 'html-to-image'
+import { saveAs } from 'file-saver'
+import { DotsVertical, Download } from 'mdi-material-ui'
 
+const onCapture = () => {
+  const pictureId = document.getElementById('dayTimeComparison')
+  if (pictureId) {
+    htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
+      saveAs(dataUrl, 'Day & Time(voice dashboard).png')
+    })
+  }
+}
 const DayTimeComparison = ({
   params,
   chartId,
@@ -33,6 +44,16 @@ const DayTimeComparison = ({
   const [yIndex, setYIndex] = useState()
   const [xIndex, setXIndex] = useState()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  const rowOptionsOpen = Boolean(anchorEl)
+
+  const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleRowOptionsClose = () => {
+    setAnchorEl(null)
+  }
 
   const options: ApexOptions = {
     chart: {
@@ -40,15 +61,6 @@ const DayTimeComparison = ({
       type: 'heatmap',
       toolbar: { show: false },
       events: {
-        // dataPointSelection: (event, chartContext, config) => {
-        //   console.log(config.w.config.labels, 'context', chartContext);
-        //   console.log(event);
-        //   console.log("xaxis", config.w.config.xaxis.categories[config.dataPointIndex]); //value
-        //   console.log("yaxis", config.w.config.series[0].data[config.dataPointIndex]); //
-
-        //   setShowDetail(true)
-        // },
-
         click(event, chartContext, config) {
           setYIndex(config.seriesIndex)
           setXIndex(config.dataPointIndex)
@@ -96,6 +108,8 @@ const DayTimeComparison = ({
   return (
     <Card>
       {loadingDayTimeComparison && <LinearProgress style={{ width: '100%' }} />}
+     
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Day & Time' />}
@@ -112,7 +126,38 @@ const DayTimeComparison = ({
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>
-      <CardContent>
+        <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCapture()
+                setAnchorEl(null)
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              PNG
+            </MenuItem>
+          </Menu>
+        </span>
+      </div>
+      <CardContent id="dayTimeComparison">
         {showNoDataText ? (
           <div
             style={{
