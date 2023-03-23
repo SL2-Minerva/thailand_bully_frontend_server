@@ -26,6 +26,8 @@ const AccountList = ({
   const [current, setCurrent] = useState<any>({})
   const [keywordId, setKeywordId] = useState<any>()
   const [authorName, setAuthorName] = useState<string>('');
+  const [messageId, setMessageId] = useState<string>('');
+
   const reportNo = '1.2.02'
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
@@ -47,6 +49,7 @@ const AccountList = ({
                 setShowDetail(true)
                 setCurrent({})
                 setAuthorName(keyword.author)
+                setMessageId(keyword.message_id)
               }}
             >
               <Grid container spacing={2}>
@@ -107,6 +110,8 @@ const AccountList = ({
           reportNo={reportNo}
           authorName={authorName}
           setAuthorName={setAuthorName}
+          message_id = {messageId}
+          setMessage_id = {setMessageId}
         />
       ) : (
         ''

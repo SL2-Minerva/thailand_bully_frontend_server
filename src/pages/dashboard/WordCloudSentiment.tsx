@@ -11,7 +11,17 @@ import SentimentAccountList from './SentimentAccountList'
 import 'd3-transition'
 import { select } from 'd3-selection'
 
-const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string }) => {
+const WordCloudSentiment = ({
+  params,
+  chartId,
+  word,
+  setWord
+}: {
+  params: any
+  chartId: string
+  word: string
+  setWord: any
+}) => {
   const [sentiment, setSentiment] = useState('positive')
   const { resultWordCloudsSentiment, loadingWordCloudsSentiment } = GetWordCloudsSentiment(
     params?.campaign,
@@ -23,7 +33,8 @@ const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string 
     params?.previousDate,
     params?.previousEndDate,
     params?.keywordIds,
-    sentiment
+    sentiment,
+    word
   )
 
   const chooseSentiment = (value: string) => {
@@ -39,8 +50,7 @@ const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string 
         .on('click', () => {
           if (isActive && word) {
             const selectedWord = word?.text
-
-            console.log('selected word :', selectedWord)
+            setWord(selectedWord)
           }
         })
         .transition()

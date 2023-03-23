@@ -2,20 +2,31 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, LinearProgress } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
 
 // ** Third Party Imports
 
 import { Doughnut } from 'react-chartjs-2'
 import { Chart } from 'chart.js'
 import * as DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne'
-import { useEffect, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { GraphicColors } from 'src/utils/const'
 import Translations from 'src/layouts/components/Translations'
 import CustomeLabels from './CustomLabel'
+import * as htmlToImage from 'html-to-image'
+import { saveAs } from 'file-saver'
+import { DotsVertical, Download } from 'mdi-material-ui'
 
+const onCapture = () => {
+  const pictureId = document.getElementById('deviceComparison')
+  if (pictureId) {
+    htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
+      saveAs(dataUrl, 'Device: Period over Period Comparison(voice dashboard).png')
+    })
+  }
+}
 Chart.register(DoughnutLabel)
 const DevicesComparison = ({
   chartId,
@@ -39,6 +50,16 @@ const DevicesComparison = ({
   const [previousData, setPreviousData] = useState(initValue)
   const [currentData, setCurrentData] = useState(initValue)
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  const rowOptionsOpen = Boolean(anchorEl)
+
+  const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleRowOptionsClose = () => {
+    setAnchorEl(null)
+  }
 
   const currentPeriodOptions = {
     responsive: true,
@@ -116,15 +137,6 @@ const DevicesComparison = ({
       {
         data: previousData?.data || [],
         backgroundColor: GraphicColors,
-
-        // backgroundColor: [
-        //   "#299b82",
-        //   "#1640a1c4",
-        //   "#d8df20",
-        //   "#e02916",
-        //   "#ffca25",
-        //   "#C0D3DF",
-        // ],
         hoverOffset: 3
       }
     ]
@@ -147,6 +159,8 @@ const DevicesComparison = ({
   return (
     <Card style={{ minHeight: 550 }}>
       {loadingDevicesComparison && <LinearProgress style={{ width: '100%' }} />}
+      
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Device: Period over Period Comparison' />}
@@ -165,7 +179,38 @@ const DevicesComparison = ({
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>
-      <CardContent>
+        <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCapture()
+                setAnchorEl(null)
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              PNG
+            </MenuItem>
+          </Menu>
+        </span>
+      </div>
+      <CardContent id="deviceComparison">
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>

@@ -26,17 +26,8 @@ const SentimentAccountList = ({
   const [current, setCurrent] = useState<any>({})
   const [keywordId, setKeywordId] = useState<any>()
   const [authorName, setAuthorName] = useState<string>('')
+  const [messageId, setMessageId] = useState<string>('');
 
-  // const { resultKeywords, loadingFilterData } = GetKeyWords(
-  //   params?.campaign,
-  //   params?.platformId,
-  //   params?.date,
-  //   params?.endDate,
-  //   params?.period,
-  //   params?.previousDate,
-  //   params?.previousEndDate,
-  //   params?.keywordIds
-  // )
   const reportNo = '1.2.02'
 
   return (
@@ -64,6 +55,7 @@ const SentimentAccountList = ({
                 setShowDetail(true)
                 setCurrent({})
                 setAuthorName(keyword.author)
+                setMessageId(keyword.message_id)
               }}
             >
               <Grid container spacing={2}>
@@ -124,6 +116,8 @@ const SentimentAccountList = ({
           reportNo={reportNo}
           authorName={authorName}
           setAuthorName={setAuthorName}
+          message_id = {messageId}
+          setMessage_id = {setMessageId}
         />
       ) : (
         ''

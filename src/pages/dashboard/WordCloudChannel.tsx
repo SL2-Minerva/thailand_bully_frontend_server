@@ -22,7 +22,17 @@ import 'd3-transition'
 import { select } from 'd3-selection'
 import AccountList from './AccountList'
 
-const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string }) => {
+const WordCloudChannel = ({
+  params,
+  chartId,
+  word,
+  setWord
+}: {
+  params: any
+  chartId: string
+  word: string
+  setWord: any
+}) => {
   const [platformId, setPlatformId] = useState<string>('1')
   const { result_source_list } = SourceService()
   const { resultWordCloudsPlatform, loadingWordCloudsPlatform } = GetWordCloudsPlatform(
@@ -35,7 +45,8 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
     params?.previousDate,
     params?.previousEndDate,
     params?.keywordIds,
-    platformId
+    platformId,
+    word
   )
 
   const handleSelectList = useCallback((e: SelectChangeEvent) => {
@@ -55,8 +66,7 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
             // window.open(`https://www.google.com/`, "_blank");
 
             const selectedWord = word?.text
-
-            console.log('selected word :', selectedWord)
+            setWord(selectedWord)
           }
         })
         .transition()

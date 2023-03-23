@@ -1,19 +1,30 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, LinearProgress } from '@mui/material'
+import { Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
 
 // ** Third Party Imports
 import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
-import { useEffect, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { GraphicColors } from 'src/utils/const'
 import Translations from 'src/layouts/components/Translations'
+import * as htmlToImage from 'html-to-image'
+import { saveAs } from 'file-saver'
+import { DotsVertical, Download } from 'mdi-material-ui'
 
+const onCapture = () => {
+  const pictureId = document.getElementById('channelVsDevice')
+  if (pictureId) {
+    htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
+      saveAs(dataUrl, 'Channel vs. Device: Period over Period Comparison(voice dashboard).png')
+    })
+  }
+}
 const ChannelVsDevice = ({
   chartId,
   highlight,
@@ -28,6 +39,16 @@ const ChannelVsDevice = ({
 }) => {
   const [seriesData, setSeriesData] = useState([])
   const [labels, setLabels] = useState([])
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  const rowOptionsOpen = Boolean(anchorEl)
+
+  const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleRowOptionsClose = () => {
+    setAnchorEl(null)
+  }
 
   const series = [
     {
@@ -84,6 +105,8 @@ const ChannelVsDevice = ({
   return (
     <Card style={{ minHeight: 550, maxHeight: 550 }}>
       {loadingDeviceVsChannel && <LinearProgress style={{ width: '100%' }} />}
+      
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Channel vs. Device: Period over Period Comparison' />}
@@ -102,7 +125,38 @@ const ChannelVsDevice = ({
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
         </StyledTooltip>
       </span>
-      <CardContent>
+        <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCapture()
+                setAnchorEl(null)
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              PNG
+            </MenuItem>
+          </Menu>
+        </span>
+      </div>
+      <CardContent id="channelVsDevice">
         <Grid container spacing={1}>
           <Grid item xs={12} height={315}>
             {!resultDeviceVsChannel ? (

@@ -34,6 +34,8 @@ interface DialogInfoProps {
   networkTitle?: any
   authorName: string
   setAuthorName: any
+  message_id: string, 
+  setMessage_id: any
 }
 
 const AccountDetail = (props: DialogInfoProps) => {
@@ -48,7 +50,9 @@ const AccountDetail = (props: DialogInfoProps) => {
     keywordId,
     setKeywordId,
     authorName,
-    setAuthorName
+    setAuthorName,
+    message_id,
+    setMessage_id
   } = props
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [pageCount, setPageCount] = useState<number>(0)
@@ -72,7 +76,8 @@ const AccountDetail = (props: DialogInfoProps) => {
     params?.label,
     params?.ylabel,
     'level3', 
-    authorName
+    authorName,
+    message_id
   )
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -88,6 +93,7 @@ const AccountDetail = (props: DialogInfoProps) => {
       setKeywordId('')
     }
     setAuthorName('')
+    setMessage_id('')
   }
 
   useEffect(() => {

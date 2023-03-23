@@ -4,23 +4,23 @@ import 'tippy.js/animations/scale.css'
 import { Card, CardHeader, LinearProgress } from '@mui/material'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
-import { GetWordClouds } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
 import 'd3-transition'
 import { select } from 'd3-selection'
 
-const WordCloud = ({ params, chartId }: { params: any; chartId: string }) => {
-  const { resultWordClouds, loadingWordClouds } = GetWordClouds(
-    params?.campaign,
-    params?.platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.topKeyword,
-    params?.previousDate,
-    params?.previousEndDate,
-    params?.keywordIds
-  )
+const WordCloud = ({
+  chartId,
+  resultWordClouds,
+  loadingWordClouds,
+  setWord
+}: {
+  params: any
+  chartId: string
+  resultWordClouds: any
+  loadingWordClouds: boolean
+  setWord: any
+}) => {
+  
   const reportNo = '1.2.021'
 
   function getCallback(callback: any) {
@@ -32,8 +32,7 @@ const WordCloud = ({ params, chartId }: { params: any; chartId: string }) => {
         .on('click', () => {
           if (isActive && word) {
             const selectedWord = word?.text
-
-            console.log('selected word :', selectedWord)
+            setWord(selectedWord)
           }
         })
         .transition()
