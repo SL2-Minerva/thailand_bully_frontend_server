@@ -2,7 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { LinearProgress } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
 
 // ** Third Party Imports
 // import { Bar } from 'react-chartjs-2'
@@ -12,6 +12,19 @@ import Translations from 'src/layouts/components/Translations'
 import { ChannelColors } from 'src/utils/const'
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { ApexOptions } from 'apexcharts'
+import * as htmlToImage from 'html-to-image'
+import { saveAs } from 'file-saver'
+import { DotsVertical, Download } from 'mdi-material-ui'
+import { MouseEvent, useState } from 'react'
+
+const onCapture = () => {
+  const pictureId = document.getElementById('channelBySentiment')
+  if (pictureId) {
+    htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
+      saveAs(dataUrl, 'Channel by Sentiement.png')
+    })
+  }
+}
 
 const ChartLabels = (data: any) => {
   if (!data) return []
@@ -65,6 +78,16 @@ const ChannelBySentiment = ({
   //     }
   //   ]
   // }
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  const rowOptionsOpen = Boolean(anchorEl)
+
+  const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleRowOptionsClose = () => {
+    setAnchorEl(null)
+  }
 
   const series = [
     {
@@ -100,23 +123,56 @@ const ChannelBySentiment = ({
   return (
     <Card sx={{ minHeight: 460 }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text='Channel by Sentiement' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip
-          arrow
-          title={
-            <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
-            </span>
-          }
-        >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
-      <CardContent>
+
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text='Channel by Sentiement' />}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCapture()
+                setAnchorEl(null)
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              PNG
+            </MenuItem>
+          </Menu>
+        </span>
+      </div>
+      <CardContent id="channelBySentiment">
         {!resultBy ? (
           <div
             style={{
@@ -131,9 +187,6 @@ const ChannelBySentiment = ({
             <Translations text='no data' />
           </div>
         ) : (
-
-          // <Bar data={data} options={{ indexAxis: 'y', plugins:{legend: {display: false}} }} height={140} />
-
           <ReactApexcharts type='bar' series={series} options={data} height={300} />
         )}
       </CardContent>

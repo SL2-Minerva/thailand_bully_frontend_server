@@ -22,19 +22,10 @@ import 'd3-transition'
 import { select } from 'd3-selection'
 import AccountList from './AccountList'
 
-const WordCloudChannel = ({
-  params,
-  chartId,
-  word,
-  setWord
-}: {
-  params: any
-  chartId: string
-  word: string
-  setWord: any
-}) => {
+const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string }) => {
   const [platformId, setPlatformId] = useState<string>('1')
   const { result_source_list } = SourceService()
+  const [word, setWord] = useState<string>('')
   const { resultWordCloudsPlatform, loadingWordCloudsPlatform } = GetWordCloudsPlatform(
     params?.campaign,
     params?.platformId,
@@ -133,20 +124,26 @@ const WordCloudChannel = ({
             </Grid>
           </Grid>
           <div style={{ height: 400, width: 500 }}>
-            {!resultWordCloudsPlatform?.word_clouds_platform ||
-            resultWordCloudsPlatform?.word_clouds_platform?.length == 0 ? (
-              <div
-                style={{
-                  padding: '130px 0',
-                  textAlign: 'center',
-                  verticalAlign: 'middle',
-                  color: '#80808059'
-                }}
-              >
-                <Translations text='no data' />
-              </div>
+            {loadingWordCloudsPlatform ? (
+              ''
             ) : (
-              <ReactWordcloud words={resultWordCloudsPlatform?.word_clouds_platform || []} callbacks={callbacks} />
+              <>
+                {!resultWordCloudsPlatform?.word_clouds_platform ||
+                resultWordCloudsPlatform?.word_clouds_platform?.length == 0 ? (
+                  <div
+                    style={{
+                      padding: '130px 0',
+                      textAlign: 'center',
+                      verticalAlign: 'middle',
+                      color: '#80808059'
+                    }}
+                  >
+                    <Translations text='no data' />
+                  </div>
+                ) : (
+                  <ReactWordcloud words={resultWordCloudsPlatform?.word_clouds_platform || []} callbacks={callbacks} />
+                )}
+              </>
             )}
           </div>
         </Card>

@@ -3,7 +3,10 @@ import {
   CardContent,
   CardHeader,
   Grid,
+  IconButton,
   LinearProgress,
+  Menu,
+  MenuItem,
   Paper,
   Table,
   TableCell,
@@ -12,12 +15,15 @@ import {
   TableRow
 } from '@mui/material'
 import { Information } from 'mdi-material-ui'
-import { useEffect, useRef, useState } from 'react'
+import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2'
 import Translations from 'src/layouts/components/Translations'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { PeriodComparisonChannel, sentimentComparison, SentimentComparisonEngagment } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
+import * as htmlToImage from 'html-to-image'
+import { saveAs } from 'file-saver'
+import { DotsVertical, Download } from 'mdi-material-ui'
 
 interface LineProps {
   white: string
@@ -84,6 +90,27 @@ const PeriodComparisonChart = (props: LineProps) => {
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  const rowOptionsOpen = Boolean(anchorEl)
+
+  const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleRowOptionsClose = () => {
+    setAnchorEl(null)
+  }
+
+  const onCapture = () => {
+    const pictureId = document.getElementById('comparisonByCharts')
+    if (pictureId) {
+      const title = getTitle(type, chartTitle)
+
+      htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
+        saveAs(dataUrl, title + '.png')
+      })
+    }
+  }
 
   //   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
   //     setPage(value-1);
@@ -216,31 +243,63 @@ const PeriodComparisonChart = (props: LineProps) => {
     labels: label || [],
     datasets: dataset
   }
-  
+
   const cardTitle = getTitle(type, chartTitle)
 
   return (
     <Card sx={{ minHeight: 713 }}>
       {loadingSenitmentComparisonByEngagement && <LinearProgress style={{ width: '100%' }} />}
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text={cardTitle} />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip
-          arrow
-          title={
-            <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
-            </span>
-          }
-        >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text={cardTitle} />}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCapture()
+                setAnchorEl(null)
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              PNG
+            </MenuItem>
+          </Menu>
+        </span>
+      </div>
 
-      <CardContent>
+      <CardContent id='comparisonByCharts'>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             {showNoDataText ? (

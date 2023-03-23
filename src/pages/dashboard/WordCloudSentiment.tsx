@@ -11,18 +11,10 @@ import SentimentAccountList from './SentimentAccountList'
 import 'd3-transition'
 import { select } from 'd3-selection'
 
-const WordCloudSentiment = ({
-  params,
-  chartId,
-  word,
-  setWord
-}: {
-  params: any
-  chartId: string
-  word: string
-  setWord: any
-}) => {
+const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string }) => {
   const [sentiment, setSentiment] = useState('positive')
+  const [word, setWord] = useState<string>('')
+
   const { resultWordCloudsSentiment, loadingWordCloudsSentiment } = GetWordCloudsSentiment(
     params?.campaign,
     params?.platformId,
@@ -115,20 +107,26 @@ const WordCloudSentiment = ({
             </Grid>
           </Grid>
           <div style={{ height: 400, width: 500 }}>
-            {!resultWordCloudsSentiment?.word_clouds_position ||
-            resultWordCloudsSentiment?.word_clouds_position?.length == 0 ? (
-              <div
-                style={{
-                  padding: '130px 0',
-                  textAlign: 'center',
-                  verticalAlign: 'middle',
-                  color: '#80808059'
-                }}
-              >
-                <Translations text='no data' />
-              </div>
+            {!loadingWordCloudsSentiment ? (
+              <>
+                {!resultWordCloudsSentiment?.word_clouds_position ||
+                resultWordCloudsSentiment?.word_clouds_position?.length == 0 ? (
+                  <div
+                    style={{
+                      padding: '130px 0',
+                      textAlign: 'center',
+                      verticalAlign: 'middle',
+                      color: '#80808059'
+                    }}
+                  >
+                    <Translations text='no data' />
+                  </div>
+                ) : (
+                  <ReactWordcloud callbacks={callbacks} words={resultWordCloudsSentiment?.word_clouds_position || []} />
+                )}
+              </>
             ) : (
-              <ReactWordcloud callbacks={callbacks} words={resultWordCloudsSentiment?.word_clouds_position || []} />
+              ''
             )}
           </div>
         </Card>
