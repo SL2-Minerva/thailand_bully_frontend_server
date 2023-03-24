@@ -68,7 +68,7 @@ const CampaignManagement = () => {
 
   const { list } = Organization.getList(reload)
 
-  const { resultPermission, errorUserPermission } = UserPermission()
+  const { resultPermission,resultIsAdmin, errorUserPermission } = UserPermission()
 
   const handleOrganization = useCallback((e: SelectChangeEvent) => {
     setOrganization(e.target.value)
@@ -379,6 +379,7 @@ const CampaignManagement = () => {
           action={action}
           current={current}
           keywordLimit={keyword_limit}
+          resultIsAdmin={resultIsAdmin}
         />
       </Grid>
     </Grid>

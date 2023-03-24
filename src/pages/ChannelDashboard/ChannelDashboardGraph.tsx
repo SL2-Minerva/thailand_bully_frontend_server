@@ -30,10 +30,10 @@ import { useTheme } from '@mui/material/styles'
 import { useState } from 'react'
 
 interface Props {
-    params: any
-    resultReportPermission: any
-  }
-  
+  params: any
+  resultReportPermission: any
+}
+
 const ChannelDashboardGraphs = (data: Props) => {
   const { params, resultReportPermission } = data
 
@@ -324,7 +324,15 @@ const ChannelDashboardGraphs = (data: Props) => {
                   title={<Translations text='Channel Comparison: Period over Period' />}
                   titleTypographyProps={{ variant: 'h6', color: highlight === 'chart10' ? 'green' : '#4c4e64de' }}
                 />
-                <StyledTooltip arrow title={<span>Chart 10<br/> Report Level 2(3.3.012)</span>}>
+                <StyledTooltip
+                  arrow
+                  title={
+                    <span>
+                      Chart 10
+                      <br /> Report Level 2(3.3.012)
+                    </span>
+                  }
+                >
                   <Information
                     style={{
                       marginTop: '22px',
@@ -339,64 +347,88 @@ const ChannelDashboardGraphs = (data: Props) => {
 
           <Grid container spacing={4} ml={3} mt={2}>
             <Grid item xs={6} md={2}>
-              <ChannelComparison
-                color='#3b5998'
-                trendNumber={resultFacebookComparison?.percentage}
-                trend={resultFacebookComparison?.type}
-                totalText='Facebook'
-                totalValue={resultFacebookComparison?.comparison_value}
-                loading={loadingEngagementBy}
-              />
+              {resultFacebookComparison ? (
+                <ChannelComparison
+                  color='#3b5998'
+                  trendNumber={resultFacebookComparison?.percentage}
+                  trend={resultFacebookComparison?.type}
+                  totalText='Facebook'
+                  totalValue={resultFacebookComparison?.comparison_value}
+                  loading={loadingEngagementBy}
+                />
+              ) : (
+                ''
+              )}
             </Grid>
             <Grid item xs={6} md={2}>
-              <ChannelComparison
-                color='#00aced'
-                trendNumber={resultTwitterComparison?.percentage}
-                trend={resultTwitterComparison?.type}
-                totalText='Twitter'
-                totalValue={resultTwitterComparison?.comparison_value}
-                loading={loadingEngagementBy}
-              />
+              {resultTwitterComparison ? (
+                <ChannelComparison
+                  color='#00aced'
+                  trendNumber={resultTwitterComparison?.percentage}
+                  trend={resultTwitterComparison?.type}
+                  totalText='Twitter'
+                  totalValue={resultTwitterComparison?.comparison_value}
+                  loading={loadingEngagementBy}
+                />
+              ) : (
+                ''
+              )}
             </Grid>
             <Grid item xs={6} md={2}>
-              <ChannelComparison
-                color='#e31010'
-                trendNumber={resultYoutubeComparison?.percentage}
-                trend={resultYoutubeComparison?.type}
-                totalText='Youtube'
-                totalValue={resultYoutubeComparison?.comparison_value}
-                loading={loadingEngagementBy}
-              />
+              {resultYoutubeComparison ? (
+                <ChannelComparison
+                  color='#e31010'
+                  trendNumber={resultYoutubeComparison?.percentage}
+                  trend={resultYoutubeComparison?.type}
+                  totalText='Youtube'
+                  totalValue={resultYoutubeComparison?.comparison_value}
+                  loading={loadingEngagementBy}
+                />
+              ) : (
+                ''
+              )}
             </Grid>
             <Grid item xs={6} md={2}>
-              <ChannelComparison
-                color='#d62976'
-                trendNumber={resultInstagramComparison?.percentage}
-                trend={resultInstagramComparison?.type}
-                totalText='Instagram'
-                totalValue={resultInstagramComparison?.comparison_value}
-                loading={loadingEngagementBy}
-              />
+              {resultInstagramComparison ? (
+                <ChannelComparison
+                  color='#d62976'
+                  trendNumber={resultInstagramComparison?.percentage}
+                  trend={resultInstagramComparison?.type}
+                  totalText='Instagram'
+                  totalValue={resultInstagramComparison?.comparison_value}
+                  loading={loadingEngagementBy}
+                />
+              ) : (
+                ''
+              )}
             </Grid>
             <Grid item xs={6} md={2}>
-              <ChannelComparison
-                color='#F4B400'
-                trendNumber={resultGoogleComparison?.percentage}
-                trend={resultGoogleComparison?.type}
-                totalText='Google'
-                totalValue={resultGoogleComparison?.comparison_value}
-                loading={loadingEngagementBy}
-              />
+              {resultGoogleComparison ? (
+                <ChannelComparison
+                  color='#F4B400'
+                  trendNumber={resultGoogleComparison?.percentage}
+                  trend={resultGoogleComparison?.type}
+                  totalText='Google'
+                  totalValue={resultGoogleComparison?.comparison_value}
+                  loading={loadingEngagementBy}
+                />
+              ) : (
+                ''
+              )}
             </Grid>
             <Grid item xs={6} md={2}>
-              <ChannelComparison
-                color='#642c8c'
-                trendNumber={resultPantipComparison?.percentage}
-                trend={resultPantipComparison?.type}
-                totalText='Pantip'
-                totalValue={resultPantipComparison?.comparison_value}
-                loading={loadingEngagementBy}
-              />
+              {resultPantipComparison ? (
+                <ChannelComparison
+                  color='#642c8c'
+                  trendNumber={resultPantipComparison?.percentage}
+                  trend={resultPantipComparison?.type}
+                  totalText='Pantip'
+                  totalValue={resultPantipComparison?.comparison_value}
+                  loading={loadingEngagementBy}
+                />
+              ) : (
+                ''
+              )}
             </Grid>
           </Grid>
         </>
@@ -477,7 +509,7 @@ const ChannelDashboardGraphs = (data: Props) => {
         setShow={setShowQuickView}
         params={params}
         chartId={highlight}
-        quickViewData= {quickViewData}
+        quickViewData={quickViewData}
         keywordsColor={GraphicColors}
       />
     </>

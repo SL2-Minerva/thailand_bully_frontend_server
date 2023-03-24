@@ -18,7 +18,7 @@ import Fade, { FadeProps } from '@mui/material/Fade'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Select  from '@mui/material/Select'
+import Select from '@mui/material/Select'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import SourceList from 'src/services/api/source/SourceApi'
@@ -46,18 +46,15 @@ interface DialogInfoProps {
   setShow: any
   action: string
   current?: any
+  setCurrent?: any
 }
 
-
-
 const DialogOrganizationInfo = (props: DialogInfoProps) => {
-  const { show, setShow, action, current } = props;
+  const { show, setShow, action, current, setCurrent } = props
 
   const { result_domain_list } = DomainList()
 
   const { result_source_list } = SourceList()
-
-
 
   useEffect(() => {
     setValue('organization_group_description', current?.organization_group_description || '')
@@ -68,11 +65,12 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
     setValue('platform', current?.platform || '')
     setValue('total_user', current?.total_user || 0)
     setValue('msg_transaction', current?.msg_transaction || 0)
+    setValue('frequency', current?.frequency || '')
 
     setValue('domains', current?.domains || [])
     setValue('platform', current?.platform || [])
     setValue('customer_service', current?.customer_service ? true : false)
-    setValue('status', current?.status ? true : false )
+    setValue('status', current?.status ? true : false)
     if (action === 'edit') {
       setValue('id', current?.id)
     }
@@ -94,39 +92,44 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
   })
 
   const onSubmit = (data: any) => {
-
     if (action === 'create') {
       axios
-      .post(authConfig.createOrgGroup, data, {
-        headers: {
-          Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
-        }
-      })
-      .then(() => {
-        // console.log('res', res);
-        setShow(false);
-      });
+        .post(authConfig.createOrgGroup, data, {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+          }
+        })
+        .then(() => {
+          // console.log('res', res);
+          onClose()
+        })
     } else {
       axios
-      .put(authConfig.updateOrgGroup, data, {
-        headers: {
-          Authorization:`Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
-        }
-      })
-      .then(() => {
-        // console.log('res', res);
-        setShow(false);
-      });
+        .put(authConfig.updateOrgGroup, data, {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+          }
+        })
+        .then(() => {
+          // console.log('res', res);
+          onClose()
+        })
     }
   }
 
-  useEffect(() =>{
-    errors.organization_group_name = false;
-    errors.organization_group_description = false;
-    errors.total_keyword = false;
-    errors.msg_transaction = false;
-    errors.total_user = false;
+  useEffect(() => {
+    errors.organization_group_name = false
+    errors.organization_group_description = false
+    errors.total_keyword = false
+    errors.frequency = false
+    errors.msg_transaction = false
+    errors.total_user = false
   })
+
+  const onClose = () => {
+    setCurrent({})
+    setShow(false)
+  }
 
   return (
     <Card>
@@ -135,15 +138,15 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
         open={show}
         maxWidth='md'
         scroll='body'
-        onClose={() => setShow(false)}
+        onClose={() => onClose()}
         TransitionComponent={Transition}
-        onBackdropClick={() => setShow(false)}
+        onBackdropClick={() => onClose()}
       >
         <form autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
           <DialogContent sx={{ pb: 6, px: { xs: 8, sm: 15 }, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
             <IconButton
               size='small'
-              onClick={() => setShow(false)}
+              onClick={() => onClose}
               sx={{ position: 'absolute', right: '1rem', top: '1rem' }}
             >
               <Close />
@@ -206,6 +209,27 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
               <Grid item sm={12} xs={12}>
                 <FormControl fullWidth sx={{ mb: 4 }}>
                   <Controller
+                    name='frequency'
+                    control={control}
+                    render={({ field: { value, onChange } }) => (
+                      <TextField
+                        value={value}
+                        label='Frequency'
+                        type='number'
+                        onChange={onChange}
+                        placeholder='Frequency'
+                        error={errors?.frequency ? true : false}
+                      />
+                    )}
+                  />
+                  {errors.frequency && (
+                    <FormHelperText sx={{ color: 'error.main' }}>{errors.frequency.message}</FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+              <Grid item sm={12} xs={12}>
+                <FormControl fullWidth sx={{ mb: 4 }}>
+                  <Controller
                     name='total_keyword'
                     control={control}
                     render={({ field: { value, onChange } }) => (
@@ -220,9 +244,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                     )}
                   />
                   {errors.total_keyword && (
-                    <FormHelperText sx={{ color: 'error.main' }}>
-                      {errors.total_keyword.message}
-                    </FormHelperText>
+                    <FormHelperText sx={{ color: 'error.main' }}>{errors.total_keyword.message}</FormHelperText>
                   )}
                 </FormControl>
               </Grid>
@@ -342,10 +364,9 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                     name='customer_service'
                     control={control}
                     render={({ field: { value, onChange } }) => {
-
-                      return(
+                      return (
                         <RadioGroup row aria-label='controlled' name='controlled' value={value} onChange={onChange}>
-                          <FormControlLabel value={true}control={<Radio />} label='Customer Service' />
+                          <FormControlLabel value={true} control={<Radio />} label='Customer Service' />
                           <FormControlLabel value={false} control={<Radio />} label='None' />
                         </RadioGroup>
                       )
@@ -376,7 +397,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
             <Button variant='contained' sx={{ mr: 2 }} onClick={handleSubmit(onSubmit)}>
               Submit
             </Button>
-            <Button variant='outlined' color='secondary' onClick={() => setShow(false)}>
+            <Button variant='outlined' color='secondary' onClick={() => onClose()}>
               Discard
             </Button>
           </DialogActions>
