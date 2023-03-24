@@ -13,10 +13,11 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
 import CustomeLabels from '../VoiceDashboard/CustomLabel'
-import { ChannelColorCode, GraphicColors } from 'src/utils/const'
+import { GraphicColors } from 'src/utils/const'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import SourceService from 'src/services/api/source/SourceApi'
 
 const onCapture = () => {
   const pictureId = document.getElementById('percentageGraph')
@@ -60,6 +61,7 @@ const DailyMessagePieChart = (props: Props) => {
       }
     ]
   }
+  const { result_source_list } = SourceService()
   const [previousData, setPreviousData] = useState<any>(initValue)
   const [currentData, setCurrentData] = useState<any>(initValue)
   const [currentPeriod, setCurrentPeriod] = useState<string>('')
@@ -340,8 +342,8 @@ const DailyMessagePieChart = (props: Props) => {
             <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
               <CustomeLabels
                 data={currentData || previousData}
-                labels={getLabelColor(ChannelColorCode)}
-                color={getColors(ChannelColorCode)}
+                labels={getLabelColor(result_source_list)}
+                color={getColors(result_source_list)}
                 itemsCountPerPage={50}
                 showValue={false}
               />

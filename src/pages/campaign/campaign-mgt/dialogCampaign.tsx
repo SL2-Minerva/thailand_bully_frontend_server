@@ -51,6 +51,7 @@ interface DialogInfoProps {
   current?: any
   table: any
   keywordLimit: number
+  resultIsAdmin: any
 }
 
 const RepeaterWrapper = styled(CardContent)<CardContentProps>(({ theme }) => ({
@@ -62,11 +63,13 @@ const RepeaterWrapper = styled(CardContent)<CardContentProps>(({ theme }) => ({
 }))
 
 const DialogCampaign = (props: DialogInfoProps) => {
-  const { show, setShow, action, current, keywordLimit } = props
+  const { show, setShow, action, current, keywordLimit, resultIsAdmin } = props
   const { t } = useTranslation()
 
   const [domain, setDomain] = useState<string>('')
-  const [frequency, setFrequency] = useState<string>('')
+  const [originalFrequency, setOriginalFrequency] = useState<number>(0)
+  const [frequency, setFrequency] = useState<number>(0)
+  const [showErrorFrequency, setShowErrorFrequency] = useState<string>('')
   const [date, setDate] = useState<Date | null>(new Date())
   const [endDate, setEndDate] = useState<Date | null>(new Date())
 
@@ -135,7 +138,19 @@ const DialogCampaign = (props: DialogInfoProps) => {
   }
 
   function handleFrequency(event: any) {
-    setFrequency(event.target.value)
+    const frequencyValue = event.target.value
+    if(resultIsAdmin) {
+      setFrequency(frequencyValue)
+    } else {
+      if (frequencyValue < originalFrequency) {
+        setShowErrorFrequency('Frequncy value must be greater than ' + originalFrequency)
+      } else {
+        setShowErrorFrequency('')
+      }
+  
+      setFrequency(frequencyValue)
+    }
+    
   }
 
   function closeDialogBox() {
@@ -164,11 +179,11 @@ const DialogCampaign = (props: DialogInfoProps) => {
     // var formattedDate =
     const values = [...keywords]
 
-    if(action == 'edit' && values?.length > 0) {
-      for(let i=0; i<keywords?.length; i++) {
-        let changeDataType : any;
-        if(typeof(values[i]?.keyword_and_color) == 'string') {
-          changeDataType = [values[i]?.keyword_and_color];
+    if (action == 'edit' && values?.length > 0) {
+      for (let i = 0; i < keywords?.length; i++) {
+        let changeDataType: any
+        if (typeof values[i]?.keyword_and_color == 'string') {
+          changeDataType = [values[i]?.keyword_and_color]
           values[i].keyword_and_color = changeDataType
         }
         values[i].colors = values[i]?.color
@@ -234,6 +249,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
         setDate(new Date(current.start_at))
         setEndDate(new Date(current.end_at))
         setFrequency(current.frequency)
+        setOriginalFrequency(current.frequency)
 
         if (current.keyword && current.keyword.length > 0) {
           setKeywords(current.keyword)
@@ -246,7 +262,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
       setCampaignName('')
       setDescription('')
       setDomain('')
-      setFrequency('')
+      setFrequency(0)
+      setOriginalFrequency(0)
       setKeywords([
         {
           id: 1,
@@ -348,11 +365,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
                 <FormControl fullWidth>
                   <TextField
                     fullWidth
+                    type='number'
                     label='Frequency'
                     value={frequency}
                     onChange={handleFrequency}
                     placeholder={t('frequencyPlaceHolder')}
                   />
+                  {showErrorFrequency ? <p style={{ color: 'red', fontSize: '14px' }}>{showErrorFrequency}</p> : ''}
                 </FormControl>
               </Grid>
             </Grid>
@@ -478,7 +497,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
             variant='contained'
             sx={{ mr: 2 }}
             onClick={() => {
-              if (!checkKeyword && !checkKeywordAnd && !checkKeywordExclude && !checkKeywordOr ) {
+              if (!checkKeyword && !checkKeywordAnd && !checkKeywordExclude && !checkKeywordOr && !showErrorFrequency) {
                 createNewCampaign()
               }
             }}

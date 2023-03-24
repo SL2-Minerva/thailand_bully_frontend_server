@@ -23,7 +23,7 @@ const SourceService = (reload?: boolean, page?: number) => {
     if(page ||  page === 0  ) {
       params = {
         page: page,
-        limit : 10
+        limit : 100
       }
     }
 

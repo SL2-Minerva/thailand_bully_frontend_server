@@ -171,6 +171,7 @@ const OrganizationGroup = () => {
               setShow={action === 'create' ? setShowCreate : setShowEdit}
               action={action}
               current={current}
+              setCurrent={setCurrent}
             />
           </CardContent>
         </Card>
