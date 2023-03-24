@@ -101,6 +101,7 @@ export const UserPermission = () => {
   return {
     resultPermission: res?.data?.permission ||  null,
     resultReportPermission : res?.data?.authorized_report || [],
+    resultIsAdmin: res?.data?.is_admin || false,
     showOverallDashboard : showOverallDashboard,
     showVoiceDashboard: showVoiceDashboard, 
     showChannelDashboard: showChannelDashboard,
