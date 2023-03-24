@@ -33,11 +33,11 @@ const chartLabel = (data: any) => {
   const labelValue: string[] = []
 
   for (let i = 0; i < data?.length; i++) {
-    const dataValue = data[i]?.date
+    const dataValue = data[i]?.value
     const label: any[] = []
 
     for (let j = 0; j < dataValue?.length; j++) {
-      label.push(dataValue[j])
+      label.push(dataValue[j]?.date)
     }
 
     labels = [...labels, ...label]
@@ -76,6 +76,7 @@ const InfluencerGraph = ({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const rowOptionsOpen = Boolean(anchorEl)
   const [chooseChart, setChooseChart] = useState<string>('bar')
+  const [keywordId, setKeywordId] = useState<any>()
 
   const [paramsId, setParamsId] = useState<any>({
     keywordId: null,
@@ -93,27 +94,17 @@ const InfluencerGraph = ({
     const dailyMessageData = resultNumbersOfAccounts
 
     let keywordId: number | null = null
-    let sourceId: number | null = null
-    let campaign_id: number | null = null
-
     if (dailyMessageData?.length > 0) {
       for (let i = 0; i < dailyMessageData?.length; i++) {
-        if (keywordName === dailyMessageData[i].name) {
-          sourceId = dailyMessageData[i].source_id || ''
-          campaign_id = dailyMessageData[i].campaign_id || ''
-          keywordId = dailyMessageData[i].keyword_id || ''
+        if (dailyMessageData[i]?.value && dailyMessageData[i]?.value?.length > 0) {
+          if (keywordName === dailyMessageData[i]?.value[0]?.keyword_name) {
+            keywordId = dailyMessageData[i].value[0]?.keyword_id
+          }
         }
       }
     }
 
-    const returnData = {
-      keywordId: keywordId,
-      sourceId: sourceId,
-      campaign_id: campaign_id,
-      organization_id: ''
-    }
-
-    return returnData
+    return keywordId
   }
 
   const onClick = (event: any) => {
@@ -127,6 +118,7 @@ const InfluencerGraph = ({
       const keyword_id = getKeywordId(getDatasetAtEvent(chartRef.current, event))
 
       if (keyword_id) {
+        setKeywordId(keyword_id)
         setParamsId(keyword_id)
         setShowDetail(true)
       }
@@ -198,6 +190,69 @@ const InfluencerGraph = ({
     }
   }
 
+  // const chartDatasets = (data: any, labels: any, keywordColor: any) => {
+  //   if (!data) return []
+  //   let totalAmount: number[] = []
+  //   let keywordName = ''
+  //   const returnData: StackChartDataset[] = []
+  //   const color = []
+  //   for (let i = 0; i < data?.length; i++) {
+  //     // totalAmount = data[i].data
+  //     keywordName = data[i].name
+  //     for (let j = 0; j < keywordColor?.length; j++) {
+  //       if (keywordColor[j]?.keywordName === keywordName) {
+  //         color.push(keywordColor[j]?.color)
+  //       }
+  //     }
+  //     totalAmount = []
+  //     const total = data[i]?.date
+  //     const dataArray: any[] = []
+  //     for (let j = 0; j < total?.length; j++) {
+  //       dataArray.push({
+  //         total_at_date: data[i]?.data[j],
+  //         date: moment(total[j]).format('DD/MM/YYYY')
+  //       })
+  //     }
+
+  //     const modifiedData = labels.map((node: any) => {
+  //       const oldInfo = dataArray.find((item: any) => item?.date === node)
+  //       if (oldInfo) {
+  //         return {
+  //           ...node,
+  //           total_at_date: oldInfo?.total_at_date || 0,
+  //           date: oldInfo?.date || node
+  //         }
+  //       } else {
+  //         return { ...node, total_at_date: 0, date: node }
+  //       }
+  //     })
+
+  //     for (let j = 0; j < modifiedData?.length; j++) {
+  //       totalAmount.push(modifiedData[j].total_at_date)
+  //     }
+
+  //     const chartDataset: StackChartDataset = {
+  //       fill: false,
+  //       tension: 0.2,
+  //       pointRadius: 4,
+  //       label: keywordName,
+  //       pointHoverRadius: 5,
+  //       pointStyle: 'circle',
+  //       borderColor: color[i],
+  //       backgroundColor: color[i],
+  //       pointHoverBorderWidth: 5,
+  //       pointHoverBorderColor: '#fff',
+  //       pointBorderColor: 'transparent',
+  //       pointHoverBackgroundColor: color[i],
+  //       data: totalAmount
+  //     }
+
+  //     returnData.push(chartDataset)
+  //   }
+
+  //   return returnData
+  // }
+
   const chartDatasets = (data: any, labels: any, keywordColor: any) => {
     if (!data) return []
     let totalAmount: number[] = []
@@ -205,38 +260,33 @@ const InfluencerGraph = ({
     const returnData: StackChartDataset[] = []
     const color = []
     for (let i = 0; i < data?.length; i++) {
-      // totalAmount = data[i].data
-      keywordName = data[i].name
-      for (let j = 0; j < keywordColor?.length; j++) {
-        if (keywordColor[j]?.keywordName === keywordName) {
-          color.push(keywordColor[j]?.color)
-        }
-      }
       totalAmount = []
-      const total = data[i]?.date
-      const dataArray: any[] = []
-      for (let j = 0; j < total?.length; j++) {
-        dataArray.push({
-          total_at_date: data[i]?.data[j],
-          date: moment(total[j]).format('DD/MM/YYYY')
-        })
-      }
+      const total = data[i]?.value
 
       const modifiedData = labels.map((node: any) => {
-        const oldInfo = dataArray.find((item: any) => item?.date === node)
+        const oldInfo = total.find((item: any) => moment(item?.date).format('DD/MM/YYYY') === node)
         if (oldInfo) {
           return {
             ...node,
             total_at_date: oldInfo?.total_at_date || 0,
-            date: oldInfo?.date || node
+            date: oldInfo?.date || node,
+            keyword_name: oldInfo?.keyword_name || ''
           }
         } else {
-          return { ...node, total_at_date: 0, date: node }
+          return { ...node, total_at_date: 0, date: node, keyword_name: oldInfo?.keyword_name || '' }
         }
       })
 
       for (let j = 0; j < modifiedData?.length; j++) {
         totalAmount.push(modifiedData[j].total_at_date)
+      }
+
+      keywordName = data[i]?.value[0]?.keyword_name ? data[i]?.value[0]?.keyword_name : ''
+
+      for (let j = 0; j < keywordColor?.length; j++) {
+        if (keywordColor[j]?.keywordName === keywordName) {
+          color.push(keywordColor[j]?.color)
+        }
       }
 
       const chartDataset: StackChartDataset = {
@@ -404,6 +454,8 @@ const InfluencerGraph = ({
           paramsId={paramsId}
           setParamsId={setParamsId}
           reportNo={reportNo}
+          keywordId={keywordId}
+          setKeywordId={setKeywordId}
         />
       ) : (
         ''
