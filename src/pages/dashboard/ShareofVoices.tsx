@@ -4,7 +4,10 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import {
   Grid,
+  IconButton,
   LinearProgress,
+  Menu,
+  MenuItem,
   TableBody,
   TableCell,
   TableContainer,
@@ -18,22 +21,22 @@ import { Information } from 'mdi-material-ui'
 import { GetShareOfVoice, GetSentimentLevel } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { FacebookIcon, googleIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const'
 import Translations from 'src/layouts/components/Translations'
-import { useEffect, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import NumberOfEachMessage from './NumberOfEachMessage'
 import SentimentEachGraph from './SentimentEachGraph'
 
-// import * as htmlToImage from 'html-to-image'
-// import { saveAs } from 'file-saver'
-// import { DotsVertical, Download } from 'mdi-material-ui'
+import * as htmlToImage from 'html-to-image'
+import { saveAs } from 'file-saver'
+import { DotsVertical, Download } from 'mdi-material-ui'
 
-// const onCapture = () => {
-//   const pictureId = document.getElementById('shareOfVoices')
-//   if (pictureId) {
-//     htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
-//       saveAs(dataUrl, 'Share of Voices(overall).png')
-//     })
-//   }
-// }
+const onCapture = () => {
+  const pictureId = document.getElementById('shareOfVoices')
+  if (pictureId) {
+    htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
+      saveAs(dataUrl, 'Share of Voices(overall).png')
+    })
+  }
+}
 
 // import MuiTableCell from "@material-ui/core/TableCell";
 // import { withStyles } from '@material-ui/core'
@@ -70,16 +73,16 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
 
   const [tableData, setTableData] = useState<any[]>([])
 
-  // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
-  // const rowOptionsOpen = Boolean(anchorEl)
+  const rowOptionsOpen = Boolean(anchorEl)
 
-  // const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
-  //   setAnchorEl(event.currentTarget)
-  // }
-  // const handleRowOptionsClose = () => {
-  //   setAnchorEl(null)
-  // }
+  const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleRowOptionsClose = () => {
+    setAnchorEl(null)
+  }
 
   useEffect(() => {
     if (resultShareOfVoice && resultSentimentLevel) {
@@ -205,7 +208,7 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
             <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
-        {/* <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
           </IconButton>
@@ -234,7 +237,7 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
               PNG
             </MenuItem>
           </Menu>
-        </span> */}
+        </span>
       </div>
       <CardContent id="shareOfVoices">
         <Grid container spacing={3}>

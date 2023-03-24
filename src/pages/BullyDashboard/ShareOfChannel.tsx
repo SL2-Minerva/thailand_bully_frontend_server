@@ -2,7 +2,7 @@
 import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, LinearProgress, TableBody } from '@mui/material'
+import { Grid, IconButton, LinearProgress, Menu, MenuItem, TableBody } from '@mui/material'
 import { Table, TableRow, TableHead, TableCell } from '@mui/material'
 
 // ** Third Party Imports
@@ -11,9 +11,13 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { BullyLevelSummaryColors, BullyTypeSummaryColors } from 'src/utils/const'
 import { useTranslation } from 'react-i18next'
-import { useEffect } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import Translations from 'src/layouts/components/Translations'
 import ShareOfChannelGraph from './ShareOfChannelGraph'
+import * as htmlToImage from 'html-to-image'
+import { saveAs } from 'file-saver'
+import { DotsVertical, Download } from 'mdi-material-ui'
+
 
 const getMaxValue = (data: any) => {
   if (!data) return 1000
@@ -60,6 +64,16 @@ const ShareOfChannel = ({
   title?: string
 }) => {
   const { t } = useTranslation()
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  const rowOptionsOpen = Boolean(anchorEl)
+
+  const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleRowOptionsClose = () => {
+    setAnchorEl(null)
+  }
 
   useEffect(() => {
     if (resultShareofChannelPlatform) {
@@ -79,19 +93,60 @@ const ShareOfChannel = ({
     }
   }, [t, resultShareOfChannel])
 
+  const onCapture = () => {
+    const pictureId = document.getElementById('shareOfChannel')
+    if (pictureId) {
+      htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
+        saveAs(dataUrl, title + '.png')
+      })
+    }
+  }
+
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loading && loadingChannel && <LinearProgress style={{ width: '100%' }} />}
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text={title || ''} />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip arrow title={chartId}>
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
-      <CardContent>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text={title || ''} />}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          />
+          <StyledTooltip arrow title={chartId}>
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCapture()
+                setAnchorEl(null)
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              PNG
+            </MenuItem>
+          </Menu>
+        </span>
+      </div>
+      <CardContent id="shareOfChannel">
         <Grid container spacing={3}>
           {/* <Grid item md={5} xs={12}>
             {resultShareOfChannel ? (
@@ -147,7 +202,7 @@ const ShareOfChannel = ({
                         <TableCell sx={{ textAlign: 'right', maxWidth: 80, paddingRight: '0px' }}>
                           {shareVoice?.keyword_name}
                         </TableCell>
-                        <TableCell sx={{ maxWidth: 150, paddingLeft: '0px'}}>
+                        <TableCell sx={{ maxWidth: 150, paddingLeft: '0px' }}>
                           <ShareOfChannelGraph
                             max={getMaxValue(resultShareofChannelPlatform)}
                             keywordsColor={
