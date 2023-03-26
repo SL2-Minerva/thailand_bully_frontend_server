@@ -80,6 +80,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
   const [checkKeywordAnd, setCheckKeywordAnd] = useState<boolean>(false)
   const [checkKeywordOr, setCheckKeywordOr] = useState<boolean>(false)
   const [checkKeywordExclude, setCheckKeywordExclude] = useState<boolean>(false)
+  const [keywordCount, setKeywordCount ] = useState<number>(3);
 
   const [keywords, setKeywords] = useState([
     {
@@ -116,11 +117,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
         color: GenerateRandomColor()
       }
     ]
+    setKeywordCount(keywordCount + 3)
     setKeywords(news)
   }
 
   function removeKeyword(current: any) {
     const results = keywords.filter(keyword => keyword.id !== current.id)
+    setKeywordCount(keywordCount - 3)
     setKeywords(results)
   }
 
@@ -398,6 +401,9 @@ const DialogCampaign = (props: DialogInfoProps) => {
                         setCheckKeywordOr={setCheckKeywordOr}
                         checkKeywordExclude={checkKeywordExclude}
                         setCheckKeywordExclude={setCheckKeywordExclude}
+                        keywordCount = {keywordCount}
+                        setKeywordCount = {setKeywordCount}
+                        keywordLimit = {keywordLimit}
                       />
                     )
                   }}
@@ -405,7 +411,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
                 <Grid container sx={{ mt: 4.75 }}>
                   <Grid item xs={12} sx={{ px: 0 }}>
-                    {keywords?.length === keywordLimit ? (
+                    {keywordCount >= keywordLimit ? (
                       ''
                     ) : (
                       <Button

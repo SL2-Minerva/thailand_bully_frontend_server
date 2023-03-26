@@ -18,7 +18,7 @@ import { Color, ColorPicker, createColor } from 'material-ui-color'
 // }
 
 export const GenerateRandomColor = () => {
-  const randomColor = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+  const randomColor = '#' + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0')
 
   return randomColor as string
 }
@@ -80,7 +80,10 @@ const KeywordForm = (props: any) => {
     setCheckKeyword,
     setCheckKeywordAnd,
     setCheckKeywordExclude,
-    setCheckKeywordOr
+    setCheckKeywordOr,
+    keywordCount,
+    setKeywordCount,
+    keywordLimit
   } = props
 
   const {
@@ -120,10 +123,12 @@ const KeywordForm = (props: any) => {
     if (type === 'keyword_or') {
       // console.log(values, i, values[i])
       values[i].keyword_or = newTextKeyword
+      setKeywordCount(keywordCount + 1)
     }
 
     if (type === 'keyword_and') {
       values[i].keyword_and = [...list, '']
+      setKeywordCount(keywordCount + 1)
     }
 
     if (type === 'keyword_exclude') {
@@ -141,11 +146,13 @@ const KeywordForm = (props: any) => {
     if (type === 'keyword_or') {
       values[indexValue].keyword_or = news
       values[indexValue].delete_keyword_or = delete_keyword_or ? [...delete_keyword_or, removed[0]] : removed
+      setKeywordCount(keywordCount - 1)
     }
 
     if (type === 'keyword_and') {
       values[indexValue].keyword_and = news
       values[indexValue].delete_keyword_and = delete_keyword_and ? [...delete_keyword_and, removed[0]] : removed
+      setKeywordCount(keywordCount - 1)
     }
 
     if (type === 'keyword_exclude') {
@@ -349,6 +356,8 @@ const KeywordForm = (props: any) => {
                   handlChangeKeywordColors={handlChangeKeywordColors}
                   addMoreKeywordColors={addMoreKeywordColors}
                   removeKeywordColors={removeKeywordColors}
+                  keywordCount={keywordCount}
+                  keywordLimit={keywordLimit}
                 />
               )
             })}
@@ -370,6 +379,8 @@ const KeywordForm = (props: any) => {
                 handlChangeKeywordColors={handlChangeKeywordColors}
                 addMoreKeywordColors={addMoreKeywordColors}
                 removeKeywordColors={removeKeywordColors}
+                keywordCount={keywordCount}
+                keywordLimit={keywordLimit}
               />
             ))}
         </Grid>
@@ -401,6 +412,8 @@ const KeywordForm = (props: any) => {
                   handlChangeKeywordColors={handlChangeKeywordColors}
                   addMoreKeywordColors={addMoreKeywordColors}
                   removeKeywordColors={removeKeywordColors}
+                  keywordCount={keywordCount}
+                  keywordLimit={keywordLimit}
                 />
               )
             })}
@@ -421,6 +434,8 @@ const KeywordForm = (props: any) => {
               handlChangeKeywordColors={handlChangeKeywordColors}
               addMoreKeywordColors={addMoreKeywordColors}
               removeKeywordColors={removeKeywordColors}
+              keywordCount={keywordCount}
+              keywordLimit={keywordLimit}
             />
           )}
         </Grid>
@@ -444,6 +459,8 @@ const KeywordForm = (props: any) => {
                   handlChangeKeywordColors={handlChangeKeywordColors}
                   addMoreKeywordColors={addMoreKeywordColors}
                   removeKeywordColors={removeKeywordColors}
+                  keywordCount={keywordCount}
+                  keywordLimit={keywordLimit}
                 />
               )
             })}
@@ -464,6 +481,8 @@ const KeywordForm = (props: any) => {
                 handlChangeKeywordColors={handlChangeKeywordColors}
                 addMoreKeywordColors={addMoreKeywordColors}
                 removeKeywordColors={removeKeywordColors}
+                keywordCount={keywordCount}
+                keywordLimit={keywordLimit}
               />
             ))}
         </Grid>
@@ -487,9 +506,11 @@ const InputKeyword = (props: any) => {
     handlChangeKeywordColors,
     addMoreKeywordColors,
     removeKeywordColors,
-    colorList
+    colorList,
+    keywordCount,
+    keywordLimit
   } = props
-  
+
   const [text, setText] = useState(textValue)
   const [keywordColor, setKeywordColor] = useState<any>(createColor(GenerateRandomColor()))
   const [keywordColors, setKeywordColors] = useState(createColor(GenerateRandomColor()))
@@ -574,42 +595,52 @@ const InputKeyword = (props: any) => {
         <>
           {label === 'คำที่สนใจ (OR)' ? (
             <Grid sx={{ display: 'flex', mt: 3 }}>
-              <Button
-                sx={{ mt: '3%', p: '0px' }}
-                size='small'
-                variant='contained'
-                startIcon={<Plus fontSize='small' />}
-                onClick={() => {
-                  addMoreKeyword(indexValue, list, value, type)
-                  addMoreKeywordColors(indexValue, colorList, value, type)
-                }}
-              ></Button>
+              {keywordCount >= keywordLimit ? (
+                ''
+              ) : (
+                <Button
+                  sx={{ mt: '3%', p: '0px' }}
+                  size='small'
+                  variant='contained'
+                  startIcon={<Plus fontSize='small' />}
+                  onClick={() => {
+                    addMoreKeyword(indexValue, list, value, type)
+                    addMoreKeywordColors(indexValue, colorList, value, type)
+                  }}
+                ></Button>
+              )}
             </Grid>
           ) : label === 'คำที่ต้องมี (AND)' ? (
             <Grid sx={{ display: 'flex', mt: 3 }}>
-              <Button
-                sx={{ mt: '3%', p: '0px', mr: 4 }}
-                size='small'
-                variant='contained'
-                startIcon={<Plus fontSize='small' />}
-                onClick={() => {
-                  addMoreKeyword(indexValue, list, value, type)
-                }}
-              ></Button>
-              <span style={{ marginTop: 5 }}>
-                {(text && index == 0) || index > 0 ? (
-                  <ColorPicker
-                    hideTextfield={true}
-                    value={keywordColor}
-                    onChange={(color: Color) => {
-                      setKeywordColor(color)
-                      handlChangeKeywordColors(index, color, colorList, value, type, indexValue)
+              {keywordCount >= keywordLimit ? (
+                ''
+              ) : (
+                <>
+                  <Button
+                    sx={{ mt: '3%', p: '0px', mr: 4 }}
+                    size='small'
+                    variant='contained'
+                    startIcon={<Plus fontSize='small' />}
+                    onClick={() => {
+                      addMoreKeyword(indexValue, list, value, type)
                     }}
-                  />
-                ) : (
-                  ''
-                )}
-              </span>
+                  ></Button>
+                  <span style={{ marginTop: 5 }}>
+                    {(text && index == 0) || index > 0 ? (
+                      <ColorPicker
+                        hideTextfield={true}
+                        value={keywordColor}
+                        onChange={(color: Color) => {
+                          setKeywordColor(color)
+                          handlChangeKeywordColors(index, color, colorList, value, type, indexValue)
+                        }}
+                      />
+                    ) : (
+                      ''
+                    )}
+                  </span>
+                </>
+              )}
             </Grid>
           ) : (
             <Grid sx={{ display: 'flex', mt: 3 }}>

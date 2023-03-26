@@ -26,6 +26,7 @@ const ContentPage = () => {
       window.localStorage.clear()
       localStorage.clear()
       router.push('/login')
+      window.location.reload()
     }
   }, [errorCampaiganList])
 

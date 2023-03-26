@@ -87,6 +87,7 @@ const OrganizationGroup = () => {
       window.localStorage.clear()
       localStorage.clear()
       router.push('/login')
+      window.location.reload()
     }
   }, [error_organization_group_list])
 
