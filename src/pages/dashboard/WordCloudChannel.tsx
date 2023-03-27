@@ -12,7 +12,7 @@ import {
   Select,
   SelectChangeEvent
 } from '@mui/material'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import SourceService from 'src/services/api/source/SourceApi'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
@@ -26,19 +26,9 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
   const [platformId, setPlatformId] = useState<string>('1')
   const { result_source_list } = SourceService()
   const [word, setWord] = useState<string>('')
-  const { resultWordCloudsPlatform, loadingWordCloudsPlatform } = GetWordCloudsPlatform(
-    params?.campaign,
-    params?.platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.topKeyword,
-    params?.previousDate,
-    params?.previousEndDate,
-    params?.keywordIds,
-    platformId,
-    word
-  )
+  const [apiParams, setApiParams] = useState<any>()
+
+  const { resultWordCloudsPlatform, loadingWordCloudsPlatform } = GetWordCloudsPlatform(apiParams)
 
   const handleSelectList = useCallback((e: SelectChangeEvent) => {
     setPlatformId(e.target.value)
@@ -74,6 +64,43 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
     onWordMouseOut: getCallback('onWordMouseOut'),
     onWordMouseOver: getCallback('onWordMouseOver')
   }
+
+  useEffect(() => {
+    if (params?.period !== 'customrange') {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        fillter_keywords: params?.keywordIds,
+        word: word,
+        select: params?.topKeyword || 'top10',
+        platform_id: platformId
+      })
+    }
+    if (
+      params?.period === 'customrange' &&
+      params?.endDate &&
+      params?.previousEndDate &&
+      params?.date !== params?.endDate &&
+      params?.previousDate !== params?.previousEndDate
+    ) {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        start_date_period: params?.previousDate,
+        end_date_period: params?.previousEndDate,
+        fillter_keywords: params?.keywordIds,
+        word: word,
+        select: params?.topKeyword || 'top10',
+        platform_id: platformId
+      })
+    }
+  }, [params])
 
   return (
     <Grid container spacing={2}>

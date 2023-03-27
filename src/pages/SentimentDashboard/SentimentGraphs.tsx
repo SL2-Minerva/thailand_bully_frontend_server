@@ -30,7 +30,7 @@ import SentimentComparisonTable from './SentimentComparison'
 import QuickViewModal from './QuickViewModal'
 import PercentageOfSentiments from './PercentageOfSentiment'
 import Translations from 'src/layouts/components/Translations'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Props {
   params: any
@@ -54,16 +54,9 @@ const SentimentGraph = (data: Props) => {
   const [topKeyword, setTopKeyword] = useState<string>('all')
 
   const [highlight, setHighlight] = useState<string>('')
+  const [apiParams, setApiParams] = useState<any>()
 
-  const { resultFilterData, loadingFilterData } = FilterByCampaignId(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
-  )
+  const { resultFilterData, loadingFilterData } = FilterByCampaignId(apiParams)
 
   const {
     resultSenitmentScore,
@@ -76,44 +69,17 @@ const SentimentGraph = (data: Props) => {
     resultSentimentByTime,
     resultSentimentComparison,
     loadingSentimentByDay
-  } = GetSenitmemntBy(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
-  )
+  } = GetSenitmemntBy(apiParams)
 
   const {
     resultSenitmentComparisonByChannel,
     resultSentimentComparisonByEngagement,
     resultTotalSentiment,
     loadingSentimentComparison
-  } = GetPeriodComparison(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
-  )
+  } = GetPeriodComparison(apiParams)
 
   const { resultSummaryByAccount, resultSummaryByChannel, resultSummaryByKeywords, total, loadingSummaryByAccount } =
-    GetSummaryBy(
-      params?.campaign,
-      params?.date,
-      params?.endDate,
-      params?.period,
-      params?.keywordIds,
-      topAccount,
-      topChannel,
-      topKeyword,
-      params?.previousDate,
-      params?.previousEndDate
-    )
+    GetSummaryBy(apiParams, topAccount, topChannel, topKeyword)
 
   const quickViewData = {
     resultSenitmentScore: resultSenitmentScore,
@@ -129,6 +95,37 @@ const SentimentGraph = (data: Props) => {
     resultFilterData: resultFilterData,
     loadingFilterData: loadingFilterData
   }
+
+  useEffect(() => {
+    if (params?.period !== 'customrange') {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        fillter_keywords: params?.keywordIds
+      })
+    }
+    if (
+      params?.period === 'customrange' &&
+      params?.endDate &&
+      params?.previousEndDate &&
+      params?.date !== params?.endDate &&
+      params?.previousDate !== params?.previousEndDate
+    ) {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        start_date_period: params?.previousDate,
+        end_date_period: params?.previousEndDate,
+        fillter_keywords: params?.keywordIds
+      })
+    }
+  }, [params])
 
   return (
     <>
@@ -318,7 +315,15 @@ const SentimentGraph = (data: Props) => {
                     title={<Translations text='Total Messages by Engagement Type' />}
                     titleTypographyProps={{ variant: 'h6', color: highlight === 'chart10' ? 'green' : '#4c4e64de' }}
                   />
-                  <StyledTooltip arrow title={<span>Chart 10<br/> Report Level 2(5.2.012)</span>}>
+                  <StyledTooltip
+                    arrow
+                    title={
+                      <span>
+                        Chart 10
+                        <br /> Report Level 2(5.2.012)
+                      </span>
+                    }
+                  >
                     <Information
                       style={{
                         marginTop: '22px',

@@ -48,27 +48,16 @@ const onCapture = () => {
 // })(MuiTableCell);
 
 const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartId: string; keywordsColor: any }) => {
+
+  const [apiParams, setApiParams] = useState<any>()
+
   const { resultShareOfVoice, loadingShareOfVoice } = GetShareOfVoice(
-    params?.campaign,
-    params?.platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.previousDate,
-    params?.previousEndDate,
-    params?.keywordIds
+   apiParams
   )
   const reportNo = '1.1.020'
 
   const { resultSentimentLevel } = GetSentimentLevel(
-    params?.campaign,
-    params?.platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.previousDate,
-    params?.previousEndDate,
-    params?.keywordIds
+   apiParams
   )
 
   const [tableData, setTableData] = useState<any[]>([])
@@ -189,6 +178,37 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
 
     return colors
   }
+
+  useEffect(() => {
+    if (params?.period !== 'customrange') {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        fillter_keywords: params?.keywordIds
+      })
+    } 
+    if (
+      params?.period === 'customrange' &&
+      params?.endDate &&
+      params?.previousEndDate &&
+      params?.date !== params?.endDate
+      && params?.previousDate !== params?.previousEndDate
+    ) {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        start_date_period: params?.previousDate,
+        end_date_period: params?.previousEndDate,
+        fillter_keywords: params?.keywordIds
+      })
+    }
+  }, [params])
 
   return (
     <Card sx={{ minheight: 450 }}>

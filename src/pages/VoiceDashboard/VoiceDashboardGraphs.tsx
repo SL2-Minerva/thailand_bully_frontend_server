@@ -16,7 +16,7 @@ import MessageByAll from './MessageByAll'
 import Comparison from './Comparision'
 
 import QuickView from './QuickView'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Props {
   params: any
@@ -28,35 +28,19 @@ const VoiceDashboardGraphs = (data: Props) => {
   const { params, resultReportPermission, keywordGraphColors } = data
   const [highlight, setHighlight] = useState<string>('')
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
+  const [apiParams, setApiParams] = useState<any>()
+
   const { resultNumbersOfAccounts, resultTotalAccounts, resultTotalMessages, loadingNumbersOfAccountsComparison } =
     GetNumbersOfAccountComparison(
-      params?.campaign,
-      params?.date,
-      params?.endDate,
-      params?.period,
-      params?.keywordIds,
-      params?.previousDate,
-      params?.previousEndDate
+      apiParams
     )
     
     const { resultMessagesByAll, loadingMessagesByAll } = GetMessagesByAll(
-      params?.campaign,
-      params?.date,
-      params?.endDate,
-      params?.period,
-      params?.keywordIds,
-      params?.previousDate,
-      params?.previousEndDate
+      apiParams
     )
 
     const { resultDailyMessage, loadingDailyMessage } = GetDailyMessages(
-      params?.campaign,
-      params?.date,
-      params?.endDate,
-      params?.period,
-      params?.keywordIds,
-      params?.previousDate,
-      params?.previousEndDate
+      apiParams
     )
 
     const quickViewData = {
@@ -65,6 +49,37 @@ const VoiceDashboardGraphs = (data: Props) => {
       loadingMessagesByAll: loadingMessagesByAll,
       loadingDailyMessage: loadingDailyMessage
     }
+
+    useEffect(() => {
+      if (params?.period !== 'customrange') {
+        setApiParams({
+          campaign_id: params?.campaign,
+          source: params?.platformId,
+          start_date: params?.date,
+          end_date: params?.endDate,
+          period: params?.period,
+          fillter_keywords: params?.keywordIds
+        })
+      } 
+      if (
+        params?.period === 'customrange' &&
+        params?.endDate &&
+        params?.previousEndDate &&
+        params?.date !== params?.endDate
+        && params?.previousDate !== params?.previousEndDate
+      ) {
+        setApiParams({
+          campaign_id: params?.campaign,
+          source: params?.platformId,
+          start_date: params?.date,
+          end_date: params?.endDate,
+          period: params?.period,
+          start_date_period: params?.previousDate,
+          end_date_period: params?.previousEndDate,
+          fillter_keywords: params?.keywordIds
+        })
+      }
+    }, [params])
 
   return (
     <>

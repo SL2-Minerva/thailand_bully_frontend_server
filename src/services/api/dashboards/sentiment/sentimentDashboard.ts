@@ -34,44 +34,34 @@ const getParams = (data: any) => {
 }
 
 export const GetSortData = (data: any, value?: boolean) => {
-  if(value) {
-    data?.value?.sort(function(a:any, b :any){
-      if(a.keyword_name < b.keyword_name) { return -1; }
-      if(a.keyword_name > b.keyword_name) { return 1; } 
+  if (value) {
+    data?.value?.sort(function (a: any, b: any) {
+      if (a.keyword_name < b.keyword_name) {
+        return -1
+      }
+      if (a.keyword_name > b.keyword_name) {
+        return 1
+      }
     })
   } else {
-    data.sort(function(a:any, b :any){
-      if(a.keyword_name < b.keyword_name) { return -1; }
-      if(a.keyword_name > b.keyword_name) { return 1; } 
+    data.sort(function (a: any, b: any) {
+      if (a.keyword_name < b.keyword_name) {
+        return -1
+      }
+      if (a.keyword_name > b.keyword_name) {
+        return 1
+      }
     })
   }
-  
-  
-  return data;
+
+  return data
 }
 
-export const FilterByCampaignId = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
-) => {
-  const params = {
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  }
+export const FilterByCampaignId = (params: any) => {
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-sentiment/sentiment-daily`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
@@ -81,28 +71,11 @@ export const FilterByCampaignId = (
   }
 }
 
-export const GetSenitmemntBy = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
-) => {
-  const params = {
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  }
+export const GetSenitmemntBy = (params: any) => {
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-sentiment/sentiment-by`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
@@ -126,8 +99,8 @@ export const GetSenitmemntByDay = (
   end_date?: any,
   period?: any,
   fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  previousDate?: any,
+  previousEndDate?: any
 ) => {
   const params = {
     campaign_id: campaignId || '',
@@ -135,8 +108,8 @@ export const GetSenitmemntByDay = (
     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
     period: period,
     fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
+    previousDate: previousDate,
+    previousEndDate: previousEndDate
   }
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-sentiment/sentiment-day`,
@@ -157,8 +130,8 @@ export const GetSentimentByTime = (
   end_date?: any,
   period?: any,
   fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  previousDate?: any,
+  previousEndDate?: any
 ) => {
   const params = {
     campaign_id: campaignId || '',
@@ -166,8 +139,8 @@ export const GetSentimentByTime = (
     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
     period: period,
     fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
+    previousDate: previousDate,
+    previousEndDate: previousEndDate
   }
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-sentiment/sentiment-time`,
@@ -188,8 +161,8 @@ export const GetSentimentByDevice = (
   end_date?: any,
   period?: any,
   fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  previousDate?: any,
+  previousEndDate?: any
 ) => {
   const params = {
     campaign_id: campaignId || '',
@@ -197,8 +170,8 @@ export const GetSentimentByDevice = (
     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
     period: period,
     fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
+    previousDate: previousDate,
+    previousEndDate: previousEndDate
   }
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-sentiment/sentiment-device`,
@@ -219,8 +192,8 @@ export const GetSentimentByAccount = (
   end_date?: any,
   period?: any,
   fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  previousDate?: any,
+  previousEndDate?: any
 ) => {
   const params = {
     campaign_id: campaignId || '',
@@ -228,8 +201,8 @@ export const GetSentimentByAccount = (
     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
     period: period,
     fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
+    previousDate: previousDate,
+    previousEndDate: previousEndDate
   }
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-sentiment/sentiment-account`,
@@ -250,8 +223,8 @@ export const GetSentimentByChannel = (
   end_date?: any,
   period?: any,
   fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  previousDate?: any,
+  previousEndDate?: any
 ) => {
   const params = {
     campaign_id: campaignId || '',
@@ -259,8 +232,8 @@ export const GetSentimentByChannel = (
     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
     period: period,
     fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
+    previousDate: previousDate,
+    previousEndDate: previousEndDate
   }
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-sentiment/sentiment-channel`,
@@ -281,8 +254,8 @@ export const GetSentimentByBullyLevel = (
   end_date?: any,
   period?: any,
   fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  previousDate?: any,
+  previousEndDate?: any
 ) => {
   const params = {
     campaign_id: campaignId || '',
@@ -290,8 +263,8 @@ export const GetSentimentByBullyLevel = (
     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
     period: period,
     fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
+    previousDate: previousDate,
+    previousEndDate: previousEndDate
   }
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-sentiment/sentiment-bully-level`,
@@ -312,8 +285,8 @@ export const GetSentimentByBullyType = (
   end_date?: any,
   period?: any,
   fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  previousDate?: any,
+  previousEndDate?: any
 ) => {
   const params = {
     campaign_id: campaignId || '',
@@ -321,8 +294,8 @@ export const GetSentimentByBullyType = (
     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
     period: period,
     fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
+    previousDate: previousDate,
+    previousEndDate: previousEndDate
   }
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-sentiment/sentiment-bully-type`,
@@ -343,8 +316,8 @@ export const GetTotalSentiment = (
   end_date?: any,
   period?: any,
   fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  previousDate?: any,
+  previousEndDate?: any
 ) => {
   const params = {
     campaign_id: campaignId || '',
@@ -352,8 +325,8 @@ export const GetTotalSentiment = (
     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
     period: period,
     fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
+    previousDate: previousDate,
+    previousEndDate: previousEndDate
   }
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-sentiment/period-over-period`,
@@ -374,8 +347,8 @@ export const GetSenitmentComparisonByChannel = (
   end_date?: any,
   period?: any,
   fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  previousDate?: any,
+  previousEndDate?: any
 ) => {
   const params = {
     campaign_id: campaignId || '',
@@ -383,8 +356,8 @@ export const GetSenitmentComparisonByChannel = (
     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
     period: period,
     fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
+    previousDate: previousDate,
+    previousEndDate: previousEndDate
   }
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
@@ -407,10 +380,10 @@ export const GetSenitmentComparisonByEngagement = (
   period?: any,
   page?: number,
   keywordIds?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  previousDate?: any,
+  previousEndDate?: any
 ) => {
-  const params : any = {
+  const params: any = {
     campaign_id: campaignId || '',
     start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
@@ -419,11 +392,11 @@ export const GetSenitmentComparisonByEngagement = (
     limit: 10,
     fillter_keywords: keywordIds
   }
-  if(previousDate) {
+  if (previousDate) {
     params.start_date_period = moment(previousDate).format('YYYY-MM-DD')
   }
 
-  if(previousEndDate) {
+  if (previousEndDate) {
     params.end_date_period = moment(previousEndDate).format('YYYY-MM-DD')
   }
 
@@ -448,10 +421,10 @@ export const GetSentimentScore = (
   period?: any,
   page?: number,
   fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  previousDate?: any,
+  previousEndDate?: any
 ) => {
-  const params : any = {
+  const params: any = {
     campaign_id: campaignId || '',
     start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
     end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
@@ -460,11 +433,11 @@ export const GetSentimentScore = (
     page: page,
     limit: 10
   }
-  if(previousDate) {
+  if (previousDate) {
     params.start_date_period = moment(previousDate).format('YYYY-MM-DD')
   }
 
-  if(previousEndDate) {
+  if (previousEndDate) {
     params.end_date_period = moment(previousEndDate).format('YYYY-MM-DD')
   }
 
@@ -483,32 +456,11 @@ export const GetSentimentScore = (
   }
 }
 
-export const GetPeriodComparison = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any,
-  page?: number
-) => {
-  const params : any = {
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords,
-    page: page,
-    limit: 10
-  }
-  if(previousDate) {
-    params.start_date_period = moment(previousDate).format('YYYY-MM-DD')
-  }
-
-  if(previousEndDate) {
-    params.end_date_period = moment(previousEndDate).format('YYYY-MM-DD')
-  }
+export const GetPeriodComparison = (params: any) => {
+  // if (page) {
+  //   params.page = page
+  //   params.limit = 10
+  // }
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-sentiment/period-and-comparison`,
@@ -526,33 +478,7 @@ export const GetPeriodComparison = (
   }
 }
 
-export const GetSentimentComparison = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  page?: number,
-  fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
-) => {
-  const params : any = {
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords,
-    page: page,
-    limit: 10
-  }
-  if(previousDate) {
-    params.start_date_period = moment(previousDate).format('YYYY-MM-DD')
-  }
-
-  if(previousEndDate) {
-    params.end_date_period = moment(previousEndDate).format('YYYY-MM-DD')
-  }
-
+export const GetSentimentComparison = (params: any) => {
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-sentiment/sentiment-comparison`,
     method: 'GET',
@@ -572,42 +498,47 @@ export const GetSentimentComparison = (
 //           "SummaryKeyword" => $this->SummaryKeyword($request, true),
 
 export const GetSummaryBy = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
+  params: any,
   selectAccount?: string,
   selectChannel?: string,
   selectKeyword?: string,
-  previousDate?: any, 
-  previousEndDate? : any,
-  page?: number,
+  page?: number
 ) => {
-  const params : any = {
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords,
-    page: page,
-    limit: 10,
-    select_account: selectAccount,
-    select_channel: selectChannel,
-    select_keyword: selectKeyword  
-  }
-  if(previousDate) {
-    params.start_date_period = moment(previousDate).format('YYYY-MM-DD')
+  const apiParams: any = {
+    campaign_id: params?.campaign_id,
+    source: params?.source,
+    start_date: params?.start_date,
+    end_date: params?.end_date,
+    period: params?.period,
+    fillter_keywords: params?.fillter_keywords
   }
 
-  if(previousEndDate) {
-    params.end_date_period = moment(previousEndDate).format('YYYY-MM-DD')
+  if (params?.start_date_period) {
+    apiParams.start_date_period = params.start_date_period
   }
-  
+  if (params?.end_date_period) {
+    apiParams.end_date_period = params?.end_date_period
+  }
+  if (page) {
+    apiParams.page = page
+    apiParams.limit = 10
+  }
+
+  if (selectAccount) {
+    apiParams.select_account = selectAccount
+  }
+
+  if (selectChannel) {
+    apiParams.select_channel = selectChannel
+  }
+  if (selectKeyword) {
+    apiParams.select_keyword = selectKeyword
+  }
+
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-sentiment/summary-by`,
     method: 'GET',
-    params: params
+    params: apiParams
   })
 
   const returnDataSummaryScoreAccount: any = []

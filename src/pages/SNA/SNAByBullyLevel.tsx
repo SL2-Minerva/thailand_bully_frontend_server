@@ -33,12 +33,17 @@ import Graph from 'react-graph-vis'
 import 'react-graph-vis/node_modules/vis-network/dist/dist/vis-network.css'
 import { initialGraph } from '.'
 import { GraphicColors } from 'src/utils/const'
+import moment from 'moment'
 
 const SNAByBullyLevel = () => {
-  const [date, setDate] = useState<DateType>(calculateDate(6))
-  const [endDate, setEndDate] = useState<DateType>(new Date())
-  const [previousDate, setPreviousDate] = useState<DateType>(new Date())
-  const [previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
+  const [date, setDate] = useState<DateType>(new Date(localStorage.getItem('startDate') || calculateDate(6)))
+  const [endDate, setEndDate] = useState<DateType>(new Date(localStorage.getItem('endDate') || new Date()))
+  const [previousDate, setPreviousDate] = useState<DateType>(
+    new Date(localStorage.getItem('previousStartDate') || new Date())
+  )
+  const [previousEndDate, setPreviousEndDate] = useState<DateType>(
+    new Date(localStorage.getItem('previousEndDate') || new Date())
+  )
   const [campaign, setCampaign] = useState<string>('1')
   const [platformId, setPlatformId] = useState<string>('all')
   const [limit, setLimit] = useState<string>('1000');
@@ -107,12 +112,16 @@ const SNAByBullyLevel = () => {
     const [start, end] = dates
     setDate(start)
     setEndDate(end)
+    localStorage.setItem('startDate', moment(start)?.format('YYYY-MM-DD'));
+    localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'));
   }
 
   const handleOnChangePreviousDate = (dates: any) => {
     const [start, end] = dates
     setPreviousDate(start)
     setPreviousEndDate(end)
+    localStorage.setItem('previousStartDate', moment(start)?.format('YYYY-MM-DD'));
+    localStorage.setItem('previousEndDate', moment(end)?.format('YYYY-MM-DD'));
   }
 
   const checkKeywordId = (data: any, keywordId: string | number) => {
@@ -171,6 +180,11 @@ const SNAByBullyLevel = () => {
       setEndDate(lastDayofMonth)
     } else {
       setPeriod('customrange')
+      const startDate = new Date(localStorage.getItem('previousStartDate') || date || new Date())
+      const end_Date = new Date(localStorage.getItem('previousEndDate') || endDate || new Date())
+
+      setPreviousDate(startDate)
+      setPreviousEndDate(end_Date)
       setShowPreviousDatepicker(true)
     }
   }
@@ -216,6 +230,13 @@ const SNAByBullyLevel = () => {
       setGraphData(initialGraph)
     }
   },[loadingNetworkGraph])
+
+  useEffect(() => {
+    if (localStorage.getItem('dateSelect')) {
+      const value = localStorage.getItem('dateSelect')
+      periodSet(value)
+    }
+  }, [])
 
   return (
     <Grid container spacing={2}>

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Grid } from '@mui/material'
 
 import Filter from './Filter'
-import { DateType } from 'src/types/forms/reactDatepickerTypes'
 import { UserPermission } from 'src/services/api/users/role'
 import { API_PATH, GraphicColors } from 'src/utils/const'
 import { useRouter } from 'next/router'
@@ -11,16 +10,23 @@ import axios from 'axios'
 import authConfig from 'src/configs/auth'
 import KeywordFilters from '../dashboard/KeywordFilters'
 import VoiceDashboardGraphs from './VoiceDashboardGraphs'
+import moment from 'moment'
+
+// import { DateType } from 'src/types/forms/reactDatepickerTypes'
 
 const VoiceDashboard = () => {
   const router = useRouter()
-  const [date, setDate] = useState<DateType>(calculateDate(6))
-  const [endDate, setEndDate] = useState<DateType>(new Date())
+  const [date, setDate] = useState<any>(new Date(localStorage.getItem('startDate') || calculateDate(6)))
+  const [endDate, setEndDate] = useState<any>(new Date(localStorage.getItem('endDate') || new Date()))
   const [period, setPeriod] = useState<string>('last7days')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
   const [campaign, setCampaign] = useState<string>('')
-  const [previousDate, setPreviousDate] = useState<DateType>(new Date())
-  const [previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
+  const [previousDate, setPreviousDate] = useState<any>(
+    new Date(localStorage.getItem('previousStartDate') || new Date())
+  )
+  const [previousEndDate, setPreviousEndDate] = useState<any>(
+    new Date(localStorage.getItem('previousEndDate') || new Date())
+  )
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
 
@@ -29,11 +35,11 @@ const VoiceDashboard = () => {
 
   const params = {
     campaign: campaign,
-    date: date,
-    endDate: endDate,
+    date: date ? moment(date).format('YYYY-MM-DD') : '',
+    endDate: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
     period: period,
-    previousDate: previousDate,
-    previousEndDate: previousEndDate,
+    previousDate: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
+    previousEndDate: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
     keywordIds: keyword,
     page: 'voiceDashboard',
     label: '',

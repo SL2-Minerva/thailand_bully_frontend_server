@@ -15,7 +15,7 @@ import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
-import { MouseEvent, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 
 const onCapture = () => {
   const pictureId = document.getElementById('commentSentiment')
@@ -27,15 +27,10 @@ const onCapture = () => {
 }
 
 const CommentSentiment = ({ params, chartId }: { params: any; chartId: string }) => {
+  const [apiParams, setApiParams] = useState<any>()
+
   const { resultSentimentType, loadingFilterData } = GetSentimentType(
-    params?.campaign,
-    params?.platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.previousDate,
-    params?.previousEndDate,
-    params?.keywordIds
+    apiParams
   )
   const reportNo = '1.1.019'
 
@@ -90,6 +85,37 @@ const CommentSentiment = ({ params, chartId }: { params: any; chartId: string })
       }
     ]
   }
+
+  useEffect(() => {
+    if (params?.period !== 'customrange') {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        fillter_keywords: params?.keywordIds
+      })
+    } 
+    if (
+      params?.period === 'customrange' &&
+      params?.endDate &&
+      params?.previousEndDate &&
+      params?.date !== params?.endDate
+      && params?.previousDate !== params?.previousEndDate
+    ) {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        start_date_period: params?.previousDate,
+        end_date_period: params?.previousEndDate,
+        fillter_keywords: params?.keywordIds
+      })
+    }
+  }, [params])
 
   return (
     <Card style={{ minHeight: 410, maxHeight: 500 }}>

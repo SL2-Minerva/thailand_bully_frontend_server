@@ -27,7 +27,7 @@ import ChannelByBullyLevel from './ChannelBy/ChannelByBullyLevel'
 import ChannelByBullyType from './ChannelBy/ChannelByBullyType'
 import Translations from 'src/layouts/components/Translations'
 import { useTheme } from '@mui/material/styles'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Props {
   params: any
@@ -49,16 +49,11 @@ const ChannelDashboardGraphs = (data: Props) => {
 
   const [highlight, setHighlight] = useState<string>('')
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
+  const [apiParams, setApiParams] = useState<any>()
 
   const { resultDailyChannel, resultPercentageChannelCurrent, resultPercentageChannelPrevious, loadingDailyChannel } =
     GetDailyBy(
-      params?.campaign,
-      params?.date,
-      params?.endDate,
-      params?.period,
-      params?.keywordIds,
-      params?.previousDate,
-      params?.previousEndDate
+      apiParams
     )
   const {
     resultChannelByDay,
@@ -70,13 +65,7 @@ const ChannelDashboardGraphs = (data: Props) => {
     resultChannelByTime,
     loadingChannelBy
   } = GetChannelBy(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
+    apiParams
   )
 
   const {
@@ -90,13 +79,7 @@ const ChannelDashboardGraphs = (data: Props) => {
     resultGoogleComparison,
     loadingEngagementBy
   } = GetEngagementBy(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
+    apiParams
   )
 
   const {
@@ -106,13 +89,7 @@ const ChannelDashboardGraphs = (data: Props) => {
     resultSentimentScorePrevious,
     loadingSentimentBy
   } = GetSentimentBy(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
+   apiParams
   )
 
   const quickViewData = {
@@ -127,6 +104,37 @@ const ChannelDashboardGraphs = (data: Props) => {
     loadingChannelBy: loadingChannelBy,
     loadingDailyChannel: loadingDailyChannel
   }
+
+  useEffect(() => {
+    if (params?.period !== 'customrange') {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        fillter_keywords: params?.keywordIds
+      })
+    } 
+    if (
+      params?.period === 'customrange' &&
+      params?.endDate &&
+      params?.previousEndDate &&
+      params?.date !== params?.endDate
+      && params?.previousDate !== params?.previousEndDate
+    ) {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        start_date_period: params?.previousDate,
+        end_date_period: params?.previousEndDate,
+        fillter_keywords: params?.keywordIds
+      })
+    }
+  }, [params])
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { Button, Grid } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GetWordClouds } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import TotalMessageLists from '../dashboard/TotalMessageLists'
 import WordCloud from '../dashboard/WordCloud'
@@ -20,23 +20,50 @@ const WordCloudGraphs = (data: Props) => {
   const { params, setTopKeyword, resultReportPermission, topKeyword } = data
 
   const [word, setWord] = useState<string>('')
+  const [apiParams, setApiParams] = useState<any>()
 
   const { loadingWordClouds, resultWordClouds, total } = GetWordClouds(
-    params?.campaign,
-    params?.platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.topKeyword,
-    params?.previousDate,
-    params?.previousEndDate,
-    params?.keywordIds,
-    word
+    apiParams
   )
 
   const handleTopKeywords = (data: string) => {
     setTopKeyword(data)
   }
+
+  useEffect(() => {
+    if (params?.period !== 'customrange') {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        fillter_keywords: params?.keywordIds,
+        word: word,
+        select: params?.topKeyword || 'top10'
+      })
+    }
+    if (
+      params?.period === 'customrange' &&
+      params?.endDate &&
+      params?.previousEndDate &&
+      params?.date !== params?.endDate &&
+      params?.previousDate !== params?.previousEndDate
+    ) {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        start_date_period: params?.previousDate,
+        end_date_period: params?.previousEndDate,
+        fillter_keywords: params?.keywordIds,
+        word: word,
+        select: params?.topKeyword || 'top10'
+      })
+    }
+  }, [params])
 
   return (
     <>
@@ -142,7 +169,7 @@ const WordCloudGraphs = (data: Props) => {
       {resultReportPermission?.includes('15') ? (
         <Grid container spacing={3} mt={2}>
           <Grid id='chart15' item xs={12}>
-            <WordCloudChannel params={params} chartId='Chart 15'/>
+            <WordCloudChannel params={params} chartId='Chart 15' />
           </Grid>
         </Grid>
       ) : (
@@ -151,7 +178,7 @@ const WordCloudGraphs = (data: Props) => {
       {resultReportPermission?.includes('18') ? (
         <Grid container spacing={3} mt={2}>
           <Grid id='chart17' item xs={12} md={12}>
-            <WordCloudSentiment params={params} chartId='Chart 18'/>
+            <WordCloudSentiment params={params} chartId='Chart 18' />
           </Grid>
         </Grid>
       ) : (

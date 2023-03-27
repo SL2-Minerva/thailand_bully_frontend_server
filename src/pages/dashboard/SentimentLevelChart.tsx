@@ -10,6 +10,7 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { GetSentimentLevel } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { LinearProgress } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
+import { useEffect, useState } from 'react'
 
 const Labels = (data: any) => {
   if (!data) {
@@ -50,15 +51,10 @@ const ChartDataPositive = (data: any, type: string) => {
 }
 
 const SentimentLevelChart = ({ params }: { params: any }) => {
+  const [apiParams, setApiParams] = useState<any>()
+
   const { resultSentimentLevel, loadingSentimentLevel } = GetSentimentLevel(
-    params?.campaign,
-    params?.platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.previousDate,
-    params?.previousEndDate,
-    params?.keywordIds
+    apiParams
   )
   const chartLabels = Labels(resultSentimentLevel)
   const positiveData = ChartDataPositive(resultSentimentLevel, 'positive')
@@ -128,6 +124,37 @@ const SentimentLevelChart = ({ params }: { params: any }) => {
     //   offsetX: 40
     // }
   }
+
+  useEffect(() => {
+    if (params?.period !== 'customrange') {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        fillter_keywords: params?.keywordIds
+      })
+    } 
+    if (
+      params?.period === 'customrange' &&
+      params?.endDate &&
+      params?.previousEndDate &&
+      params?.date !== params?.endDate
+      && params?.previousDate !== params?.previousEndDate
+    ) {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        start_date_period: params?.previousDate,
+        end_date_period: params?.previousEndDate,
+        fillter_keywords: params?.keywordIds
+      })
+    }
+  }, [params])
 
   return (
    

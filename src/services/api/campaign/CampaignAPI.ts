@@ -100,6 +100,7 @@ export const CampaignSearchList = (reload?: boolean, page?: number, name?: strin
     resultCampaiganList: res?.data?.list || null,
     total: res?.data?.total || 0,
     keyword_limit : res?.data?.keyword_limit || 3,
+    frequencyDefault: res?.data?.frequency_default || 0,
     loadingCampaiganList: loading,
     errorCampaiganList: error
   }

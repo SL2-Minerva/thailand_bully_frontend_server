@@ -34,28 +34,12 @@ const getParams = (data: any) => {
 }
 
 export const GetPercentageMessage = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  keywordIds?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  params: any
 ) => {
-  const params = {
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: keywordIds,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  };
-
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-voice/percentage-of-message`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
@@ -66,28 +50,13 @@ export const GetPercentageMessage = (
 }
 
 export const GetDailyMessages = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  keywordIds?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  params : any
 ) => {
-  const params ={
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: keywordIds,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  };
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-voice/daily-message`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
@@ -349,28 +318,12 @@ previousDate?: any,
 }
 
 export const GetMessagesByAll = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  params : any
 ) => {
-  const params = {
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords, 
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  }
-
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-voice/message-by`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
@@ -381,28 +334,12 @@ export const GetMessagesByAll = (
 }
 
 export const GetNumbersOfAccountComparison = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  params : any
 ) => {
-  const params = {
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords, 
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  };
-
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-voice/number-of-account-period-over-period`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
@@ -603,23 +540,8 @@ previousDate?: any,
 }
 
 export const GetDayTimeByAll = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-previousDate?: any, 
-  previousEndDate? : any
+  params : any
 ) => {
-  const params = {
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords, 
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  };
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-voice/daytime-by`,
     method: 'GET',
@@ -738,27 +660,12 @@ previousDate?: any,
 // }
 
 export const GetChannelDeviceAll = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-previousDate?: any, 
-  previousEndDate? : any
+  params : any
 ) => {
-  const params = {
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords, 
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-voice/channel-platform-channel-device`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
@@ -895,27 +802,13 @@ previousDate?: any,
 }
 
 export const GetKeywordComparisonByAll = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-previousDate?: any, 
-  previousEndDate? : any
+  params : any
 ) => {
-  const params = {
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords, 
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  }
+ 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-voice/keyword-by`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {

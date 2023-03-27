@@ -1,5 +1,5 @@
 import { Button, Grid } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const'
 
 import {
@@ -55,15 +55,10 @@ const EngagementGraphs = (data: Props) => {
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
   const [highlight, setHighlight] = useState<string>('')
   const [topKeyword, setTopKeyword] = useState<string>('all')
+  const [apiParams, setApiParams] = useState<any>()
 
   const { resultFilterData, loadingFilterData } = FilterByCampaignId(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
+    apiParams
   )
   const {
     resultEngagementByTime,
@@ -74,13 +69,7 @@ const EngagementGraphs = (data: Props) => {
     resultKeywordByEngagementType,
     loadingEngagementBy
   } = GetEngagementBy(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
+    apiParams
   )
 
   const {
@@ -92,13 +81,7 @@ const EngagementGraphs = (data: Props) => {
     resultEngagementTypeByTime,
     loadingEngagementType
   } = EngagementTypeBy(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
+    apiParams
   )
 
   const {
@@ -110,14 +93,8 @@ const EngagementGraphs = (data: Props) => {
     loadingPeriodComparisonBySenitment,
     resultPeriodComparisonByChannel
   } = GetEngagementComparisonBy(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.topKeyword,
-    params?.previousDate,
-    params?.previousEndDate
+    apiParams, 
+    params?.topKeyword
   )
 
   const quickViewData = {
@@ -142,6 +119,35 @@ const EngagementGraphs = (data: Props) => {
   const handleTopKeywords = (data: string) => {
     setTopKeyword(data)
   }
+
+  useEffect(() => {
+    if (params?.period !== 'customrange') {
+      setApiParams({
+        campaign_id: params?.campaign,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        fillter_keywords: params?.keywordIds
+      })
+    } 
+    if (
+      params?.period === 'customrange' &&
+      params?.endDate &&
+      params?.previousEndDate &&
+      params?.date !== params?.endDate
+      && params?.previousDate !== params?.previousEndDate
+    ) {
+      setApiParams({
+        campaign_id: params?.campaign,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        start_date_period: params?.previousDate,
+        end_date_period: params?.previousEndDate,
+        fillter_keywords: params?.keywordIds
+      })
+    }
+  }, [params])
 
   return (
     <>

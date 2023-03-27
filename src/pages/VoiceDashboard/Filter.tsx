@@ -20,6 +20,7 @@ import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 import { forwardRef, useCallback, useEffect, useState } from 'react'
 import { DateType } from 'src/types/forms/reactDatepickerTypes'
 import Translations from 'src/layouts/components/Translations'
+import moment from 'moment'
 
 interface Props {
   date: DateType
@@ -104,6 +105,11 @@ const Filter = (props: Props) => {
       setEndDate(lastDayofMonth)
     } else {
       setPeriod('customrange')
+      const startDate = new Date(localStorage.getItem('previousStartDate') || date || new Date())
+      const end_Date = new Date(localStorage.getItem('previousEndDate') || endDate || new Date())
+
+      setPreviousDate(startDate)
+      setPreviousEndDate(end_Date)
       setShowPreviousDatepicker(true)
     }
   }
@@ -118,12 +124,16 @@ const Filter = (props: Props) => {
     const [start, end] = dates
     setDate(start)
     setEndDate(end)
+    localStorage.setItem('startDate', moment(start)?.format('YYYY-MM-DD'));
+    localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'));
   }
 
   const handleOnChangePreviousDate = (dates: any) => {
     const [start, end] = dates
     setPreviousDate(start)
     setPreviousEndDate(end)
+    localStorage.setItem('previousStartDate', moment(start)?.format('YYYY-MM-DD'));
+    localStorage.setItem('previousEndDate', moment(end)?.format('YYYY-MM-DD'));
   }
 
   const CustomInput = forwardRef((props: PickerProps, ref) => {
