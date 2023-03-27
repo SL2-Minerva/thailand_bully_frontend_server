@@ -8,6 +8,7 @@ import { UserPermission } from 'src/services/api/users/role'
 import { useRouter } from 'next/router'
 import KeywordFilters from '../dashboard/KeywordFilters'
 import SentimentGraph from './SentimentGraphs'
+import moment from 'moment'
 
 const SentimentDashboard = () => {
   const router = useRouter()
@@ -31,9 +32,11 @@ const SentimentDashboard = () => {
 
   const params = {
     campaign: campaign,
-    date: date,
-    endDate: endDate,
+    date: date ? moment(date).format('YYYY-MM-DD') : '',
+    endDate: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
     period: period,
+    previousDate: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
+    previousEndDate: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
     keywordIds: keyword,
     page: 'sentimentDashboard',
     label: '',
