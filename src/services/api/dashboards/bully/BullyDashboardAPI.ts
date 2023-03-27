@@ -51,28 +51,12 @@ export const GetSortBullyData = (data: any, value?: boolean) => {
 }
 
 export const GetBullyDailyBy = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  params : any
 ) => {
-  const params = {
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  }
-
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-bully/daily-by`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
@@ -146,27 +130,12 @@ export const BullyLevelPercentage = (
 }
 
 export const GetBullyBy = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  params : any
 ) => {
-  const params = {
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  }
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-bully/bully-by`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
@@ -182,27 +151,13 @@ export const GetBullyBy = (
 }
 
 export const GetDailyTypeBy = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  params : any
 ) => {
-  const params = {
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  }
+  
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-bully/daily-type-by`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
@@ -660,27 +615,12 @@ export const GetBullyTypeBySentiment = (
 //       $data['bully_table_type'] = $this->BullyTableTypeGroup();
 
 export const GetBullyTypeBy = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  params : any
 ) => {
-  const params = {
-    campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  }
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-bully/bully-type-by`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {

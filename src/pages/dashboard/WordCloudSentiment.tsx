@@ -2,7 +2,7 @@ import ReactWordcloud from 'react-wordcloud'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/scale.css'
 import { Button, Card, CardHeader, Grid, LinearProgress } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import { GetWordCloudsSentiment } from 'src/services/api/dashboards/overall/overallDashboardApi'
@@ -14,20 +14,9 @@ import { select } from 'd3-selection'
 const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string }) => {
   const [sentiment, setSentiment] = useState('positive')
   const [word, setWord] = useState<string>('')
+  const [apiParams, setApiParams] = useState<any>()
 
-  const { resultWordCloudsSentiment, loadingWordCloudsSentiment } = GetWordCloudsSentiment(
-    params?.campaign,
-    params?.platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.topKeyword,
-    params?.previousDate,
-    params?.previousEndDate,
-    params?.keywordIds,
-    sentiment,
-    word
-  )
+  const { resultWordCloudsSentiment, loadingWordCloudsSentiment } = GetWordCloudsSentiment(apiParams)
 
   const chooseSentiment = (value: string) => {
     setSentiment(value)
@@ -59,6 +48,43 @@ const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string 
     onWordMouseOut: getCallback('onWordMouseOut'),
     onWordMouseOver: getCallback('onWordMouseOver')
   }
+
+  useEffect(() => {
+    if (params?.period !== 'customrange') {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        fillter_keywords: params?.keywordIds,
+        word: word,
+        select: params?.topKeyword || 'top10',
+        sentiment_type: sentiment
+      })
+    }
+    if (
+      params?.period === 'customrange' &&
+      params?.endDate &&
+      params?.previousEndDate &&
+      params?.date !== params?.endDate &&
+      params?.previousDate !== params?.previousEndDate
+    ) {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        start_date_period: params?.previousDate,
+        end_date_period: params?.previousEndDate,
+        fillter_keywords: params?.keywordIds,
+        word: word,
+        select: params?.topKeyword || 'top10',
+        sentiment_type: sentiment
+      })
+    }
+  }, [params])
 
   return (
     <Grid container spacing={2}>

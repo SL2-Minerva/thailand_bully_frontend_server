@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material'
+import moment from 'moment'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { UserPermission } from 'src/services/api/users/role'
@@ -30,14 +31,14 @@ const BullyDashboard = () => {
 
   const params = {
     campaign: campaign,
-    date: date,
-    endDate: endDate,
+    date: date ? moment(date).format('YYYY-MM-DD') : '',
+    endDate: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
     period: period,
+    previousDate: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
+    previousEndDate: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
     keywordIds: keyword,
     page: 'bullyDasboard',
-    label: '',
-    previousDate: previousDate,
-    previousEndDate: previousEndDate
+    label: ''
   }
 
   const checkKeywordId = (data: any, keywordId: string | number) => {

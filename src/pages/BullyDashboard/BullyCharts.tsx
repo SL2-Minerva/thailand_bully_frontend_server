@@ -36,6 +36,7 @@ interface Props {
 const BullyCharts = (data: Props) => {
   const { params, resultReportPermission } = data
   const theme = useTheme()
+  const [apiParams, setApiParams] = useState<any>()
 
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
 
@@ -51,13 +52,7 @@ const BullyCharts = (data: Props) => {
   const gridLineColor = theme.palette.action.focus
 
   const { resultBullyLevelPercentage, resultFilterData, loadingFilterData } = GetBullyDailyBy(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
+   apiParams
   )
   const {
     resultBullyByAccount,
@@ -68,13 +63,7 @@ const BullyCharts = (data: Props) => {
     resultBullyByTime,
     loadingBullyBy
   } = GetBullyBy(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
+    apiParams
   )
 
   const {
@@ -88,13 +77,7 @@ const BullyCharts = (data: Props) => {
     resultBullyTypeByDaily,
     resultBullyTypeByPercentage
   } = GetDailyTypeBy(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
+    apiParams
   )
 
   const {
@@ -104,13 +87,7 @@ const BullyCharts = (data: Props) => {
     resultShareOfChannelPlatform,
     loadingShareOfChannelChart
   } = GetBullyTypeBy(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
+    apiParams
   )
 
   const quickViewData = {
@@ -140,6 +117,37 @@ const BullyCharts = (data: Props) => {
   useEffect(() => {
     setBullyType('level')
   }, [resultShareOfChannelChart, resultShareOfChannelPlatform])
+
+  useEffect(() => {
+    if (params?.period !== 'customrange') {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        fillter_keywords: params?.keywordIds
+      })
+    } 
+    if (
+      params?.period === 'customrange' &&
+      params?.endDate &&
+      params?.previousEndDate &&
+      params?.date !== params?.endDate
+      && params?.previousDate !== params?.previousEndDate
+    ) {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        start_date_period: params?.previousDate,
+        end_date_period: params?.previousEndDate,
+        fillter_keywords: params?.keywordIds
+      })
+    }
+  }, [params])
 
   return (
     <>

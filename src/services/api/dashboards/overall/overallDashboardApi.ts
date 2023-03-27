@@ -209,44 +209,8 @@ export const GetSentimentLevel = (
 }
 
 export const GetWordClouds = (
-  campaignId?: string,
-  platformId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  select?: string,
-  previousDate?: any,
-  previousEndDate?: any,
-  fillter_keywords?: string,
-  word?: string
+  params : any
 ) => {
-  let params = {}
-  const todayDate = new Date()
-  if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
-    params = {
-      campaign_id: campaignId || '',
-      source: platformId || '',
-      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-      period: period,
-      select: select || 'top10',
-      start_date_period: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
-      end_date_period: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
-      fillter_keywords: fillter_keywords,
-      word: word
-    }
-  } else {
-    params = {
-      campaign_id: campaignId || '',
-      source: platformId || '',
-      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-      period: period,
-      select: select || 'top10',
-      fillter_keywords: fillter_keywords,
-      word: word
-    }
-  }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/word-clouds`,
     method: 'GET',
@@ -262,47 +226,8 @@ export const GetWordClouds = (
 }
 
 export const GetWordCloudsPlatform = (
-  campaignId?: string,
-  platformId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  select?: string,
-  previousDate?: any,
-  previousEndDate?: any,
-  fillter_keywords?: string,
-  wordCloudPlatform?: string,
-  word?: string
+  params: any
 ) => {
-  let params = {}
-  const todayDate = new Date()
-  if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
-    params = {
-      campaign_id: campaignId || '',
-      source: platformId || '',
-      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-      period: period,
-      select: select || 'top10',
-      start_date_period: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
-      end_date_period: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
-      fillter_keywords: fillter_keywords,
-      platform_id: wordCloudPlatform,
-      word: word
-    }
-  } else {
-    params = {
-      campaign_id: campaignId || '',
-      source: platformId || '',
-      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-      period: period,
-      select: select || 'top10',
-      fillter_keywords: fillter_keywords,
-      platform_id: wordCloudPlatform,
-      word: word
-    }
-  }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/word-clouds-platform`,
     method: 'GET',
@@ -323,47 +248,8 @@ export const GetWordCloudsPlatform = (
 }
 
 export const GetWordCloudsSentiment = (
-  campaignId?: string,
-  platformId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  select?: string,
-  previousDate?: any,
-  previousEndDate?: any,
-  fillter_keywords?: string,
-  sentiment_select?: string,
-  word?: string
+  params : any
 ) => {
-  let params = {}
-  const todayDate = new Date()
-  if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
-    params = {
-      campaign_id: campaignId || '',
-      source: platformId || '',
-      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-      period: period,
-      select: select || 'top10',
-      start_date_period: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
-      end_date_period: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
-      fillter_keywords: fillter_keywords,
-      sentiment_type: sentiment_select,
-      word: word
-    }
-  } else {
-    params = {
-      campaign_id: campaignId || '',
-      source: platformId || '',
-      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-      period: period,
-      select: select || 'top10',
-      fillter_keywords: fillter_keywords,
-      sentiment_type: sentiment_select,
-      word
-    }
-  }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/word-clouds-position`,
     method: 'GET',
@@ -473,11 +359,27 @@ export const GetNetworkGraph = (
   let params: any = {}
   params = {
     campaign_id: campaignId || '',
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
     message_id: messageId || '',
     keyword_id: keywordId || '',
     report_number: reportNo || ''
+  }
+
+  if (period === 'customrange' &&
+  end_date &&
+  previousEndDate &&
+  start_date !== end_date
+  && previousDate !== previousEndDate) {
+    params.start_date = start_date ? moment(start_date).format('YYYY-MM-DD') : ''
+    params.end_date =  end_date ? moment(end_date).format('YYYY-MM-DD') : ''
+    params.period = period
+    params.start_date_period =  previousDate ? moment(previousDate).format('YYYY-MM-DD') : ''
+    params.end_date_period = previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : ''
+    params.fillter_keywords = fillter_keywords
+  } else {
+    params.start_date = start_date ? moment(start_date).format('YYYY-MM-DD') : ''
+    params.end_date =  end_date ? moment(end_date).format('YYYY-MM-DD') : ''
+    params.period = period
+    params.fillter_keywords = fillter_keywords
   }
 
   if (platformId) {
