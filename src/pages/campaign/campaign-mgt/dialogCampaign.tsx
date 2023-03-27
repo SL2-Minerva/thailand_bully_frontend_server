@@ -52,6 +52,7 @@ interface DialogInfoProps {
   table: any
   keywordLimit: number
   resultIsAdmin: any
+  frequencyDefault: number
 }
 
 const RepeaterWrapper = styled(CardContent)<CardContentProps>(({ theme }) => ({
@@ -63,7 +64,7 @@ const RepeaterWrapper = styled(CardContent)<CardContentProps>(({ theme }) => ({
 }))
 
 const DialogCampaign = (props: DialogInfoProps) => {
-  const { show, setShow, action, current, keywordLimit, resultIsAdmin } = props
+  const { show, setShow, action, current, keywordLimit, resultIsAdmin, frequencyDefault } = props
   const { t } = useTranslation()
 
   const [domain, setDomain] = useState<string>('')
@@ -252,7 +253,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
         setDate(new Date(current.start_at))
         setEndDate(new Date(current.end_at))
         setFrequency(current.frequency)
-        setOriginalFrequency(current.frequency)
+        setOriginalFrequency(frequencyDefault)
 
         if (current.keyword && current.keyword.length > 0) {
           setKeywords(current.keyword)
@@ -265,8 +266,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
       setCampaignName('')
       setDescription('')
       setDomain('')
-      setFrequency(0)
-      setOriginalFrequency(0)
+      setFrequency(frequencyDefault)
+      setOriginalFrequency(frequencyDefault)
       setKeywords([
         {
           id: 1,

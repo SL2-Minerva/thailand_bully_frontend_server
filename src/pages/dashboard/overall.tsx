@@ -16,7 +16,6 @@ import FormControl from '@mui/material/FormControl'
 import TextField from '@mui/material/TextField'
 
 import DatePicker from 'react-datepicker'
-import { DateType } from 'src/types/forms/reactDatepickerTypes'
 import format from 'date-fns/format'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 import { styled } from '@mui/material/styles'
@@ -39,6 +38,7 @@ import axios from 'axios'
 import authConfig from 'src/configs/auth'
 import KeywordFilters from './KeywordFilters'
 import OverallGraphs from './OverallGraphs'
+import moment from 'moment'
 
 // import QuickView from "./QuickView"
 
@@ -82,10 +82,10 @@ export const wordBreaks = (data: any) => {
 }
 
 const OverallDashboard = () => {
-  const [date, setDate] = useState<DateType>(calculateDate(6))
-  const [endDate, setEndDate] = useState<DateType>(new Date())
-  const [previousDate, setPreviousDate] = useState<DateType>(new Date())
-  const [previousEndDate, setPreviousEndDate] = useState<DateType>(new Date())
+  const [date, setDate] = useState<any>(new Date(localStorage.getItem('startDate') || calculateDate(6)))
+  const [endDate, setEndDate] = useState<any>(new Date(localStorage.getItem('endDate') || new Date()))
+  const [previousDate, setPreviousDate] = useState<any>(new Date(localStorage.getItem('previousStartDate') || new Date()))
+  const [previousEndDate, setPreviousEndDate] = useState<any>(new Date(localStorage.getItem('previousEndDate') || new Date()))
   const [campaign, setCampaign] = useState<string>('')
   const [platformId, setPlatformId] = useState<string>('all')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
@@ -131,11 +131,11 @@ const OverallDashboard = () => {
   const params = {
     campaign: campaign,
     platformId: platformId,
-    date: date,
-    endDate: endDate,
+    date: date ? moment(date).format('YYYY-MM-DD') : '',
+    endDate: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
     period: period,
-    previousDate: previousDate,
-    previousEndDate: previousEndDate,
+    previousDate: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
+    previousEndDate: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
     topKeyword: topKeyword,
     keywordIds: keyword,
     label: '',
@@ -197,6 +197,11 @@ const OverallDashboard = () => {
       setEndDate(lastDayofMonth)
     } else {
       setPeriod('customrange')
+      const startDate = new Date(localStorage.getItem('previousStartDate') || date)
+      const end_Date = new Date(localStorage.getItem('previousEndDate') || endDate)
+
+      setPreviousDate(startDate)
+      setPreviousEndDate(end_Date)
       setShowPreviousDatepicker(true)
     }
   }
@@ -206,12 +211,16 @@ const OverallDashboard = () => {
     const [start, end] = dates
     setDate(start)
     setEndDate(end)
+    localStorage.setItem('startDate', moment(start)?.format('YYYY-MM-DD'));
+    localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'));
   }
 
   const handleOnChangePreviousDates = (dates: any) => {
     const [start, end] = dates
     setPreviousDate(start)
     setPreviousEndDate(end)
+    localStorage.setItem('previousStartDate', moment(start)?.format('YYYY-MM-DD'));
+    localStorage.setItem('previousEndDate', moment(end)?.format('YYYY-MM-DD'));
   }
 
   const CustomInput = forwardRef((props: PickerProps, ref) => {
@@ -233,7 +242,7 @@ const OverallDashboard = () => {
       window.localStorage.clear()
       localStorage.clear()
       router.push('/login')
-      window.location.reload();
+      window.location.reload()
     }
   }, [errorUserPermission])
 

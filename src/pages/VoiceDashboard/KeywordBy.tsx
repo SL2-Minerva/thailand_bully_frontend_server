@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material'
+import { useEffect, useState } from 'react'
 import { GetKeywordComparisonByAll } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 import KeywordComparisonByChannel from './KeywordComparison'
 import KeywordComparisonByBullyLevel from './KeywordComparisonByBullyLevel'
@@ -16,6 +17,8 @@ const KeywordBy = ({
   resultReportPermission: any
   keywordsColor : any
 }) => {
+  const [apiParams, setApiParams] = useState<any>()
+
   const {
     resultKeywordComparisonByBullyLevel,
     resultKeywordComparisonByBullyType,
@@ -23,14 +26,39 @@ const KeywordBy = ({
     resultKeywordComparisonByChannel,
     loadingKeywordComparisonByAll
   } = GetKeywordComparisonByAll(
-    params?.campaign,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.keywordIds,
-    params?.previousDate,
-    params?.previousEndDate
+    apiParams
   )
+
+  useEffect(() => {
+    if (params?.period !== 'customrange') {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        fillter_keywords: params?.keywordIds
+      })
+    } 
+    if (
+      params?.period === 'customrange' &&
+      params?.endDate &&
+      params?.previousEndDate &&
+      params?.date !== params?.endDate
+      && params?.previousDate !== params?.previousEndDate
+    ) {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        start_date_period: params?.previousDate,
+        end_date_period: params?.previousEndDate,
+        fillter_keywords: params?.keywordIds
+      })
+    }
+  }, [params])
 
   return (
     <>

@@ -11,6 +11,7 @@ import axios from 'axios'
 import authConfig from 'src/configs/auth'
 import KeywordFilters from '../dashboard/KeywordFilters'
 import EngagementGraphs from './EngagamentGraphs'
+import moment from 'moment'
 
 const EngagementDashboard = () => {
   const router = useRouter()
@@ -32,9 +33,11 @@ const EngagementDashboard = () => {
 
   const params = {
     campaign: campaignType,
-    date: date,
-    endDate: endDate,
+    date: date ? moment(date).format('YYYY-MM-DD') : '',
+    endDate: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
     period: period,
+    previousDate: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
+    previousEndDate: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
     keywordIds: keyword,
     page: 'engagementDashboard',
     label: ''

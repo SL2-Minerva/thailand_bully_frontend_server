@@ -33,6 +33,7 @@ import authConfig from '../../../configs/auth'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
+import { useTranslation } from 'react-i18next'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -55,6 +56,8 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
   const { result_domain_list } = DomainList()
 
   const { result_source_list } = SourceList()
+
+  const { t } = useTranslation()
 
   useEffect(() => {
     setValue('organization_group_description', current?.organization_group_description || '')
@@ -217,7 +220,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                         label='Frequency'
                         type='number'
                         onChange={onChange}
-                        placeholder='Frequency'
+                        placeholder={t('frequencyPlaceHolder')}
                         error={errors?.frequency ? true : false}
                       />
                     )}

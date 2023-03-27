@@ -21,6 +21,7 @@ import {
 
 import CommentSentiment from './CommentSentiment'
 import ShareOfVoices from './ShareofVoices'
+import { useEffect, useState } from 'react'
 
 // import ShareOfVoice from './ShareOfVoice'
 
@@ -44,39 +45,48 @@ const OverallGraphs = (data: Props) => {
   const borderColor = theme.palette.action.focus
   const gridLineColor = theme.palette.action.focus
 
+  const [apiParams, setApiParams] = useState<any>()
+
   const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount, loadingTotalKeystats } = TotalKeyStats(
-    params?.campaign,
-    params?.reload,
-    params?.platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.previousDate,
-    params?.previousEndDate,
-    params?.keywordIds
+    apiParams
   )
 
-  const { resultFilterData, loadingFilterData } = FilterByCampaignId(
-    params?.campaign,
-    params?.platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.previousDate,
-    params?.previousEndDate,
-    params?.keywordIds
-  )
+  const { resultFilterData, loadingFilterData } = FilterByCampaignId(apiParams)
 
   const { resultTopKeywords, loadingTopKeywords } = GetTopKeywords(
-    params?.campaign,
-    params?.platformId,
-    params?.date,
-    params?.endDate,
-    params?.period,
-    params?.previousDate,
-    params?.previousEndDate,
-    params?.keywordIds
+    apiParams
   )
+
+  useEffect(() => {
+    if (params?.period !== 'customrange') {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        fillter_keywords: params?.keywordIds
+      })
+    } 
+    if (
+      params?.period === 'customrange' &&
+      params?.endDate &&
+      params?.previousEndDate &&
+      params?.date !== params?.endDate
+      && params?.previousDate !== params?.previousEndDate
+    ) {
+      setApiParams({
+        campaign_id: params?.campaign,
+        source: params?.platformId,
+        start_date: params?.date,
+        end_date: params?.endDate,
+        period: params?.period,
+        start_date_period: params?.previousDate,
+        end_date_period: params?.previousEndDate,
+        fillter_keywords: params?.keywordIds
+      })
+    }
+  }, [params])
 
   return (
     <>
@@ -276,7 +286,6 @@ const OverallGraphs = (data: Props) => {
           ''
         )}
       </Grid>
-
     </>
   )
 }

@@ -54,7 +54,7 @@ const CampaignManagement = () => {
     setCurrent({})
   }
 
-  const { resultCampaiganList, total, keyword_limit } = CampaignSearchList(
+  const { resultCampaiganList, total, keyword_limit, frequencyDefault } = CampaignSearchList(
     reload,
     page,
     campaignName,
@@ -381,6 +381,7 @@ const CampaignManagement = () => {
           current={current}
           keywordLimit={keyword_limit}
           resultIsAdmin={resultIsAdmin}
+          frequencyDefault={frequencyDefault}
         />
       </Grid>
     </Grid>

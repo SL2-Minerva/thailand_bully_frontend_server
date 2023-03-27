@@ -38,28 +38,13 @@ const getParams = (data: any) => {
 }
 
 export const FilterByCampaignId = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  params: any
 ) => {
-  const params = {
-    campaign_id: campaignId,
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  }
 
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-engagement/engagement-trnsaction`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
@@ -70,27 +55,13 @@ export const FilterByCampaignId = (
 }
 
 export const GetEngagementBy = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  params: any
 ) => {
-  const params = {
-    campaign_id: campaignId,
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  }
+  
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-engagement/engagement-by`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
@@ -293,28 +264,12 @@ export const GetMessagesByChannel = (
 }
 
 export const EngagementTypeBy = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  params : any
 ) => {
-  const params = {
-    campaign_id: campaignId,
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate
-  }
-
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-engagement/engagement-type-by`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
@@ -583,29 +538,17 @@ export const GetPeriodComparisonByChannel = (
 }
 
 export const GetEngagementComparisonBy = (
-  campaignId?: string,
-  start_date?: any,
-  end_date?: any,
-  period?: any,
-  fillter_keywords?: string,
-  topKeyword?: string,
-  previousDate?: any, 
-  previousEndDate? : any
+  params : any, 
+  select ?: any
 ) => {
-  const params = {
-    campaign_id: campaignId,
-    start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
-    end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
-    period: period,
-    fillter_keywords: fillter_keywords,
-    previousDate : previousDate,
-    previousEndDate : previousEndDate,
-    select: topKeyword
+  if(select) {
+    params.select = select
   }
+
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-engagement/engagement-comparison-by`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
