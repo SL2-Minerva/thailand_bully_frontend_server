@@ -53,6 +53,7 @@ const OrganizationType = () => {
       window.localStorage.clear()
       localStorage.clear()
       router.push('/login')
+      window.location.reload()
     }
   }, [error_domain_list])
 

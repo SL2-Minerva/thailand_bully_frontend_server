@@ -61,6 +61,7 @@ const BullyDashboard = () => {
       window.localStorage.clear()
       localStorage.clear()
       router.push('/login')
+      window.location.reload()
     }
   }, [errorUserPermission])
 

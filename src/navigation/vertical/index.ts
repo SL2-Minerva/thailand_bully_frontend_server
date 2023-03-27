@@ -199,7 +199,9 @@ const navigation = (): VerticalNavItemsType => {
     icon: VectorArrangeBelow,
     openInNewTab: true,
     externalLink: true,
-    path: 'http://onlinecorpus.net'
+    path : 'http://202.44.231.31:8080'
+    
+    // path: 'http://onlinecorpus.net'
   }
 
   const sideMenuBar: any[] = []

@@ -65,6 +65,7 @@ const EngagementDashboard = () => {
 
       localStorage.clear()
       router.push('/login')
+      window.location.reload()
     }
   }, [errorUserPermission])
 

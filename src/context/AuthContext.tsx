@@ -66,8 +66,8 @@ const AuthProvider = ({ children }: Props) => {
             localStorage.removeItem('accessToken')
             setUser(null)
             setLoading(false)
-            handleLogout();
-            
+            handleLogout()
+
             // initAuth()
           })
       } else {
@@ -113,6 +113,7 @@ const AuthProvider = ({ children }: Props) => {
     window.localStorage.removeItem(authConfig.storageTokenKeyName)
     localStorage.clear()
     router.push('/login')
+    window.location.reload()
   }
 
   const handleRegister = (params: RegisterParams, errorCallback?: ErrCallbackType) => {
@@ -123,7 +124,7 @@ const AuthProvider = ({ children }: Props) => {
           if (errorCallback) errorCallback(res.data.error)
         } else {
           router.replace('/register/wait-approval')
-          
+
           // handleLogin({ username: params.email, password: params.password })
         }
       })

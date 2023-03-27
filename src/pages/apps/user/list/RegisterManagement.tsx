@@ -114,6 +114,7 @@ const RegisterManagement = () => {
       window.localStorage.removeItem(authConfig.storageTokenKeyName)
       localStorage.clear()
       router.push('/login')
+      window.location.reload()
     }
   }, [errorUserlist])
 
