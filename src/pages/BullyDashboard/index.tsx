@@ -26,11 +26,13 @@ const BullyDashboard = () => {
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [loadingKeyword, setLoadingKeyword] = useState<boolean>(true)
+  const [platformId, setPlatformId] = useState<string>('all') 
 
   const { resultReportPermission, errorUserPermission } = UserPermission()
 
   const params = {
     campaign: campaign,
+    platformId: platformId,
     date: date ? moment(date).format('YYYY-MM-DD') : '',
     endDate: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
     period: period,
@@ -89,6 +91,8 @@ const BullyDashboard = () => {
           setDateSelect={setDateSelect}
           campaign={campaign}
           setCampaign={setCampaign}
+          setPlatformId = {setPlatformId}
+          platformId = {platformId}
         />
       </Grid>
       {campaign ? (

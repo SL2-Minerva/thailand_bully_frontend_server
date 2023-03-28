@@ -101,7 +101,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
 
           {/* <Link to="chart1" spy={true} smooth={true}>
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart1")}}>
-                    <Typography sx={{ color : highlightText === 'chart1' ? 'green' : '#4c4e64de'  }}>Chart 1 : Percentage of Bully Level</Typography>
+                    <Typography sx={{ color : highlightText === 'chart1' ? 'green' : '#4c4e64de'  }}>Chart 1 : Percentage of  Level</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} /> */}
@@ -113,7 +113,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart2' ? 'green' : '#4c4e64de' }}>
-              Bully Level : By Date
+               Level : By Date
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -125,7 +125,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart3' ? 'green' : '#4c4e64de' }}>
-              Bully Level : By Day
+               Level : By Day
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -137,7 +137,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart4' ? 'green' : '#4c4e64de' }}>
-              Bully Level : By Time
+               Level : By Time
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -149,7 +149,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart5' ? 'green' : '#4c4e64de' }}>
-              Bully Level : By Device
+               Level : By Device
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -161,7 +161,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart6' ? 'green' : '#4c4e64de' }}>
-              Bully Level : By Account
+               Level : By Account
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -172,7 +172,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart7' ? 'green' : '#4c4e64de' }}>
-              Bully Level : By Channel
+               Level : By Channel
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -183,14 +183,14 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart8' ? 'green' : '#4c4e64de' }}>
-              Bully Level : By Sentiment
+               Level : By Sentiment
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
 
           {/* <Link to="chart9" spy={true} smooth={true}>
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart9")}}>
-                    <Typography sx={{ color : highlightText === 'chart9' ? 'green' : '#4c4e64de'  }}>Chart 9 : Percentage of Bully Type</Typography>
+                    <Typography sx={{ color : highlightText === 'chart9' ? 'green' : '#4c4e64de'  }}>Chart 9 : Percentage of  Type</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} /> */}
@@ -202,7 +202,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart10' ? 'green' : '#4c4e64de' }}>
-              Bully Type : By Date
+               Type : By Date
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -214,7 +214,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart11' ? 'green' : '#4c4e64de' }}>
-              Bully Type : By Day
+               Type : By Day
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -226,7 +226,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart12' ? 'green' : '#4c4e64de' }}>
-              Bully Type : By Time
+               Type : By Time
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -238,7 +238,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart13' ? 'green' : '#4c4e64de' }}>
-              Bully Type : By Device{' '}
+               Type : By Device{' '}
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -250,7 +250,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart14' ? 'green' : '#4c4e64de' }}>
-              Bully Type : By Account
+               Type : By Account
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -262,7 +262,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart15' ? 'green' : '#4c4e64de' }}>
-              Bully Type : By Channel
+               Type : By Channel
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -274,7 +274,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart16' ? 'green' : '#4c4e64de' }}>
-              Bully Type : By Sentiment
+               Type : By Sentiment
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />

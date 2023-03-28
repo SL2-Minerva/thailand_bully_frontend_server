@@ -179,20 +179,20 @@ const navigation = (): VerticalNavItemsType => {
       }
     : null
 
-  const ContentPermission = {
-    title: 'Content',
-    icon: NewspaperVariantMultiple,
-    children: [
-      {
-        title: 'Contents',
-        path: '/content/homepage'
-      },
-      {
-        title: 'Content MGT',
-        path: '/content/content-mgt'
-      }
-    ]
-  }
+  // const ContentPermission = {
+  //   title: 'Content',
+  //   icon: NewspaperVariantMultiple,
+  //   children: [
+  //     {
+  //       title: 'Contents',
+  //       path: '/content/homepage'
+  //     },
+  //     {
+  //       title: 'Content MGT',
+  //       path: '/content/content-mgt'
+  //     }
+  //   ]
+  // }
 
   const LinkOut = {
     title: 'Corpus',
@@ -222,9 +222,9 @@ const navigation = (): VerticalNavItemsType => {
     sideMenuBar.push(ReportPermission)
   }
 
-  if (ContentPermission) {
-    sideMenuBar.push(ContentPermission)
-  }
+  // if (ContentPermission) {
+  //   sideMenuBar.push(ContentPermission)
+  // }
 
   if (LinkOut) {
     sideMenuBar.push(LinkOut)

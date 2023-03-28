@@ -26,6 +26,7 @@ const EngagementDashboard = () => {
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [loadingKeyword, setLoadingKeyword] = useState<boolean>(true)
+  const [platformId, setPlatformId] = useState<string>('all') 
 
   const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
 
@@ -33,6 +34,7 @@ const EngagementDashboard = () => {
 
   const params = {
     campaign: campaignType,
+    platformId: platformId,
     date: date ? moment(date).format('YYYY-MM-DD') : '',
     endDate: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
     period: period,
@@ -128,6 +130,8 @@ const EngagementDashboard = () => {
           setDateSelect={setDateSelect}
           campaign={campaignType}
           setCampaign={setCampaignType}
+          setPlatformId = {setPlatformId}
+          platformId = {platformId}
         />
       </Grid>
 
