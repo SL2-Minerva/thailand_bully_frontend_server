@@ -23,10 +23,10 @@ import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 
-//export excel lib
-// import axios, { AxiosRequestConfig } from 'axios'
-// import authConfig from 'src/configs/auth'
-// import { API_PATH } from 'src/utils/const'
+// export excel lib
+import axios, { AxiosRequestConfig } from 'axios'
+import authConfig from 'src/configs/auth'
+import { API_PATH } from 'src/utils/const'
 
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
 // import { Bar, getDatasetAtEvent,  } from 'react-chartjs-2'
@@ -43,7 +43,9 @@ interface LineProps {
   resultFilterData: any
   loadingFilterData: boolean
   keywordsColor: any
-  apiParams : any
+  apiParams: any
+  isLoading: boolean
+  setIsLoading: any
 }
 
 const chartLabel = (data: any) => {
@@ -96,8 +98,8 @@ const StackedChart = (props: LineProps) => {
     resultFilterData,
     loadingFilterData,
     keywordsColor,
-
-    // apiParams
+    apiParams,
+    setIsLoading
   } = props
 
   // const [ chartData, setChartData ] = useState();
@@ -333,27 +335,31 @@ const StackedChart = (props: LineProps) => {
     setChooseChart(data)
   }
 
-  // const excelExport = () => {
-  //   const instance = axios.create({ baseURL: API_PATH })
-  //   const method = 'GET'
-  //   const url = `/export/export-overall`
-  //   const headers = {
-  //     Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
-  //   }
-  //   const params = apiParams
-  //   const options: AxiosRequestConfig = {
-  //     url,
-  //     method,
-  //     responseType: 'blob',
-  //     headers,
-  //     params: params
-  //   }
+  const excelExport = () => {
+    setIsLoading(true);
+    const instance = axios.create({ baseURL: API_PATH })
+    const method = 'GET'
+    const url = `/export/export-overall`
+    const headers = {
+      Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+    }
+    const params = apiParams
+    const options: AxiosRequestConfig = {
+      url,
+      method,
+      responseType: 'blob',
+      headers,
+      params: params
+    }
 
-  //   return instance.request<any>(options).then(response => {
-  //     const url = window.URL.createObjectURL(new Blob([response.data]))
-  //     saveAs(url, 'Overall Daily Messages.xlsx')
-  //   })
-  // }
+    return instance.request<any>(options).then(response => {
+      const url = window.URL.createObjectURL(new Blob([response.data]))
+      setIsLoading(false);
+      saveAs(url, 'Overall Daily Messages.xlsx')
+    }).catch(()=> {
+      setIsLoading(false);
+    })
+  }
 
   return (
     <Card sx={{ minHeight: 574, maxHeight: 580 }}>
@@ -424,7 +430,7 @@ const StackedChart = (props: LineProps) => {
               <Download fontSize='medium' sx={{ mr: 2 }} />
               PNG
             </MenuItem>
-            {/* <MenuItem
+            <MenuItem
               onClick={() => {
                 excelExport()
                 setAnchorEl(null)
@@ -432,7 +438,7 @@ const StackedChart = (props: LineProps) => {
             >
               <Download fontSize='medium' sx={{ mr: 2 }} />
               Excel
-            </MenuItem> */}
+            </MenuItem>
           </Menu>
         </span>
       </div>

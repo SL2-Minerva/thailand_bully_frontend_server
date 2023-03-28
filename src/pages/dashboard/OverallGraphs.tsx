@@ -46,16 +46,14 @@ const OverallGraphs = (data: Props) => {
   const gridLineColor = theme.palette.action.focus
 
   const [apiParams, setApiParams] = useState<any>()
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount, loadingTotalKeystats } = TotalKeyStats(
-    apiParams
-  )
+  const { resultTotalMessagePerDay, resultTotalEngagement, resultTotalAccount, loadingTotalKeystats } =
+    TotalKeyStats(apiParams)
 
   const { resultFilterData, loadingFilterData } = FilterByCampaignId(apiParams)
 
-  const { resultTopKeywords, loadingTopKeywords } = GetTopKeywords(
-    apiParams
-  )
+  const { resultTopKeywords, loadingTopKeywords } = GetTopKeywords(apiParams)
 
   useEffect(() => {
     if (params?.period !== 'customrange') {
@@ -67,13 +65,13 @@ const OverallGraphs = (data: Props) => {
         period: params?.period,
         fillter_keywords: params?.keywordIds
       })
-    } 
+    }
     if (
       params?.period === 'customrange' &&
       params?.endDate &&
       params?.previousEndDate &&
-      params?.date !== params?.endDate
-      && params?.previousDate !== params?.previousEndDate
+      params?.date !== params?.endDate &&
+      params?.previousDate !== params?.previousEndDate
     ) {
       setApiParams({
         campaign_id: params?.campaign,
@@ -118,6 +116,8 @@ const OverallGraphs = (data: Props) => {
               resultFilterData={resultFilterData}
               keywordsColor={keywordGraphColors}
               apiParams={apiParams}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (
