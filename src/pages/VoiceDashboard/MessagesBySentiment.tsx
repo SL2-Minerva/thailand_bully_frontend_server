@@ -153,8 +153,8 @@ const MessagesBySentiment = (props: LineProps) => {
 
       const chartDataset: StackChartDataset = {
         fill: false,
-        tension: 0.5,
-        pointRadius: 1,
+        tension: 0.2,
+        pointRadius: 4,
         label: keywordName,
         pointHoverRadius: 5,
         pointStyle: 'circle',

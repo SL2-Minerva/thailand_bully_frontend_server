@@ -65,8 +65,8 @@ const ChartjsLineChart = (props: LineProps) => {
     datasets: [
       {
         fill: false,
-        tension: 0.5,
-        pointRadius: 1,
+        tension: 0.2,
+        pointRadius: 4,
         label: 'Europe',
         pointHoverRadius: 5,
         pointStyle: 'circle',
@@ -95,8 +95,8 @@ const ChartjsLineChart = (props: LineProps) => {
       },
       {
         fill: false,
-        tension: 0.5,
-        pointRadius: 1,
+        tension: 0.2,
+        pointRadius: 4,
         label: 'Africa',
         pointHoverRadius: 5,
         pointStyle: 'circle',

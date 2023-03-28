@@ -1,6 +1,6 @@
 import { Paper, CardContent, CardHeader, LinearProgress, IconButton, Menu, MenuItem } from '@mui/material'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
-import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
+import { Bar, getDatasetAtEvent, getElementAtEvent, Line } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { SentimentColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
@@ -13,7 +13,8 @@ import Translations from 'src/layouts/components/Translations'
 import { GetSortData } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
-import { DotsVertical, Download } from 'mdi-material-ui'
+import { DotsVertical, Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
+import { lineOptions } from 'src/utils/const'
 
 const onCapture = () => {
   const pictureId = document.getElementById('byAccount')
@@ -38,7 +39,7 @@ const SentimentByAccount = (props: LineProps) => {
     organization_id: null
   })
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-
+  const [chooseChart, setChooseChart] = useState<string>('bar')
   const rowOptionsOpen = Boolean(anchorEl)
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
@@ -46,6 +47,10 @@ const SentimentByAccount = (props: LineProps) => {
   }
   const handleRowOptionsClose = () => {
     setAnchorEl(null)
+  }
+
+  const handleChooseChart = (data: string) => {
+    setChooseChart(data)
   }
 
   const chartRef = useRef()
@@ -169,8 +174,8 @@ const SentimentByAccount = (props: LineProps) => {
       keywordName = t(total[i]?.keyword_name)
       const chartDataset: StackChartDataset = {
         fill: false,
-        tension: 0.5,
-        pointRadius: 1,
+        tension: 0.2,
+        pointRadius: 4,
         label: keywordName,
         pointHoverRadius: 5,
         pointStyle: 'circle',
@@ -250,6 +255,24 @@ const SentimentByAccount = (props: LineProps) => {
         </StyledTooltip>
       </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <IconButton
+            size='large'
+            onClick={() => {
+              handleChooseChart('bar')
+            }}
+            sx={{ m: 1 }}
+          >
+            <ChartBarStacked />
+          </IconButton>
+          <IconButton
+            size='large'
+            onClick={() => {
+              handleChooseChart('line')
+            }}
+            sx={{ m: 1 }}
+          >
+            <ChartLine />
+          </IconButton>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
           </IconButton>
@@ -295,7 +318,13 @@ const SentimentByAccount = (props: LineProps) => {
             <Translations text='no data' />
           </div>
         ) : (
-          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+          <>
+            {chooseChart === 'line' ? (
+              <Line ref={chartRef} data={data} options={lineOptions as any} height={400} onClick={onClick} />
+            ) : (
+              <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+            )}
+          </>
         )}
         {showDetail ? (
           <MessageDetail

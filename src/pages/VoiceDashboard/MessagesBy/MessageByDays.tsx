@@ -1,6 +1,6 @@
 import { Paper, CardContent, CardHeader, LinearProgress, IconButton, Menu, MenuItem } from '@mui/material'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
-import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
+import { Bar, Line, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { Information } from 'mdi-material-ui'
 import { InteractionItem } from 'chart.js'
@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
-import { DotsVertical, Download } from 'mdi-material-ui'
+import { DotsVertical, Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 
 const onCapture = () => {
   const pictureId = document.getElementById('messagesBydays')
@@ -61,6 +61,7 @@ const MessagesByDays = (props: LineProps) => {
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
+  const [chooseChart, setChooseChart] = useState<string>('bar')
 
   const [paramsId, setParamsId] = useState<any>({
     keywordId: null,
@@ -167,6 +168,38 @@ const MessagesByDays = (props: LineProps) => {
     }
   }
 
+  const lineOptions = {
+    responsive: true,
+    backgroundColor: false,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        ticks: { color: '#4c4e64de' },
+        stacked: true
+      },
+      y: {
+        min: 0,
+        scaleLabel: { display: true },
+        ticks: {
+          stepSize: 100,
+          color: '#4c4e64de'
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        align: 'end',
+        position: 'top',
+        labels: {
+          padding: 25,
+          boxWidth: 10,
+          color: '#4c4e64de',
+          usePointStyle: true
+        }
+      }
+    }
+  }
+
   const chartDatasets = (data: any, keywordColor: any) => {
     if (!data) return []
     let totalAmount: number[] = []
@@ -191,8 +224,8 @@ const MessagesByDays = (props: LineProps) => {
 
       const chartDataset: StackChartDataset = {
         fill: false,
-        tension: 0.5,
-        pointRadius: 1,
+        tension: 0.2,
+        pointRadius: 4,
         label: keywordName,
         pointHoverRadius: 5,
         pointStyle: 'circle',
@@ -243,6 +276,10 @@ const MessagesByDays = (props: LineProps) => {
     }
   }, [result, keywordsColor])
 
+  const handleChooseChart = (data: string) => {
+    setChooseChart(data)
+  }
+
   useEffect(() => {
     if (result) {
       const labels = chartLabel(result)
@@ -280,6 +317,24 @@ const MessagesByDays = (props: LineProps) => {
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton
+            size='large'
+            onClick={() => {
+              handleChooseChart('bar')
+            }}
+            sx={{ m: 1 }}
+          >
+            <ChartBarStacked />
+          </IconButton>
+          <IconButton
+            size='large'
+            onClick={() => {
+              handleChooseChart('line')
+            }}
+            sx={{ m: 1 }}
+          >
+            <ChartLine />
+          </IconButton>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
           </IconButton>
@@ -311,7 +366,7 @@ const MessagesByDays = (props: LineProps) => {
         </span>
       </div>
 
-      <CardContent id="messagesBydays">
+      <CardContent id='messagesBydays'>
         {showNoDataText ? (
           <div
             style={{
@@ -325,7 +380,13 @@ const MessagesByDays = (props: LineProps) => {
             <Translations text='no data' />
           </div>
         ) : (
-          <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+          <>
+            {chooseChart === 'line' ? (
+              <Line ref={chartRef} data={data} options={lineOptions as any} height={400} onClick={onClick} />
+            ) : (
+              <Bar ref={chartRef} data={data} options={options as any} height={400} onClick={onClick} />
+            )}
+          </>
         )}
         {showDetail ? (
           <MessageDetail
