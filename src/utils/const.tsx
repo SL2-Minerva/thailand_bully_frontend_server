@@ -2,6 +2,39 @@
 
 export const API_PATH =
   process.env.NEXT_PUBLIC_APP_ENV === 'localhost' ? 'https://cornea-analysis.com/api' : 'https://cornea-analysis.com/api'
+
+export const lineOptions = {
+  responsive: true,
+  backgroundColor: false,
+  maintainAspectRatio: false,
+  scales: {
+    x: {
+      ticks: { color: '#4c4e64de' },
+      stacked: true
+    },
+    y: {
+      min: 0,
+      scaleLabel: { display: true },
+      ticks: {
+        stepSize: 100,
+        color: '#4c4e64de'
+      }
+    }
+  },
+  plugins: {
+    legend: {
+      align: 'end',
+      position: 'top',
+      labels: {
+        padding: 25,
+        boxWidth: 10,
+        color: '#4c4e64de',
+        usePointStyle: true
+      }
+    }
+  }
+}
+
 export const GraphicColors = [
   '#4472c4',
   '#ed7d31',

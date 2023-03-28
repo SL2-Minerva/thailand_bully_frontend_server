@@ -3,7 +3,8 @@ import CogOutline from 'mdi-material-ui/CogOutline'
 import HomeAnalytics from 'mdi-material-ui/HomeAnalytics'
 import Pin from 'mdi-material-ui/Pin'
 import Finance from 'mdi-material-ui/Finance'
-import { NewspaperVariantMultiple } from 'mdi-material-ui'
+
+// import { NewspaperVariantMultiple } from 'mdi-material-ui'
 import VectorArrangeBelow from 'mdi-material-ui/VectorArrangeBelow'
 
 // ** Type import

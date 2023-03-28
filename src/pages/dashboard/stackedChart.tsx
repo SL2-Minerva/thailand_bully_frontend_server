@@ -11,12 +11,13 @@ import moment from 'moment'
 import DailyMessageDetail from './DailyMessageDetail'
 import { InteractionItem } from 'chart.js'
 
-import { Information } from 'mdi-material-ui'
+// import { Download, Information } from 'mdi-material-ui'
+// import DotsVertical from 'mdi-material-ui/DotsVertical'
+
 import { StyledTooltip } from './overall'
 import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
-import DotsVertical from 'mdi-material-ui/DotsVertical'
-import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
+import { FilePngBox, ChartBarStacked, ChartLine, MicrosoftExcel, Download, Information } from 'mdi-material-ui'
 
 // import { Download, ChartBarStacked, ChartLine, ChartScatterPlot } from 'mdi-material-ui'
 
@@ -76,15 +77,6 @@ const chartLabel = (data: any) => {
   }
 
   return labelValue
-}
-
-const onCapture = () => {
-  const pictureId = document.getElementById('savePNG')
-  if (pictureId) {
-    htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
-      saveAs(dataUrl, 'Daily Message (overall).png')
-    })
-  }
 }
 
 const StackedChart = (props: LineProps) => {
@@ -335,6 +327,17 @@ const StackedChart = (props: LineProps) => {
     setChooseChart(data)
   }
 
+  const onCapture = () => {
+    setIsLoading(true);
+    const pictureId = document.getElementById('savePNG')
+    if (pictureId) {
+      htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
+        setIsLoading(false);
+        saveAs(dataUrl, 'Daily Message (overall).png')
+      })
+    }
+  }
+
   const excelExport = () => {
     setIsLoading(true);
     const instance = axios.create({ baseURL: API_PATH })
@@ -404,7 +407,7 @@ const StackedChart = (props: LineProps) => {
             <ChartLine />
           </IconButton>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
-            <DotsVertical />
+            <Download />
           </IconButton>
           <Menu
             keepMounted
@@ -427,7 +430,7 @@ const StackedChart = (props: LineProps) => {
                 setAnchorEl(null)
               }}
             >
-              <Download fontSize='medium' sx={{ mr: 2 }} />
+              <FilePngBox fontSize='medium' sx={{ mr: 2 }} />
               PNG
             </MenuItem>
             <MenuItem
@@ -436,7 +439,7 @@ const StackedChart = (props: LineProps) => {
                 setAnchorEl(null)
               }}
             >
-              <Download fontSize='medium' sx={{ mr: 2 }} />
+              <MicrosoftExcel fontSize='medium' sx={{ mr: 2 }} />
               Excel
             </MenuItem>
           </Menu>
