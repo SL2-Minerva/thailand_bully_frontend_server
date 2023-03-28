@@ -124,6 +124,7 @@ const EngagementGraphs = (data: Props) => {
     if (params?.period !== 'customrange') {
       setApiParams({
         campaign_id: params?.campaign,
+        source: params?.platformId,
         start_date: params?.date,
         end_date: params?.endDate,
         period: params?.period,
@@ -139,6 +140,7 @@ const EngagementGraphs = (data: Props) => {
     ) {
       setApiParams({
         campaign_id: params?.campaign,
+        source: params?.platformId,
         start_date: params?.date,
         end_date: params?.endDate,
         period: params?.period,

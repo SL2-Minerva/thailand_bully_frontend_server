@@ -111,7 +111,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
 
           {/* <Link to="chart1" spy={true} smooth={true}>
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart1")}}>
-                    <Typography sx={{ color : highlightText === 'chart1' ? 'green' : '#4c4e64de'  }}>Chart 1 : Percentage of Engagement Trans</Typography>
+                    <Typography sx={{ color : highlightText === 'chart1' ? 'green' : '#4c4e64de'  }}>Chart 1 : Percentage of  Trans</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} /> */}
@@ -122,7 +122,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart2' ? 'green' : '#4c4e64de' }}>
-              Engagement Trans By Date
+              Trans By Date
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -133,7 +133,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart3' ? 'green' : '#4c4e64de' }}>
-              Engagement Trans By Day
+               Trans By Day
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -144,7 +144,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart4' ? 'green' : '#4c4e64de' }}>
-              Engagement Trans By Time
+               Trans By Time
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -155,7 +155,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart5' ? 'green' : '#4c4e64de' }}>
-              Engagement Trans By Devices
+               Trans By Devices
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -166,7 +166,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart6' ? 'green' : '#4c4e64de' }}>
-              Engagement Trans By Accounts
+               Trans By Accounts
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -178,7 +178,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart7' ? 'green' : '#4c4e64de' }}>
-              Engagement Trans By Channel
+               Trans By Channel
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -189,14 +189,14 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart8' ? 'green' : '#4c4e64de' }}>
-              Engagement Trans By Engagement Type
+               Trans By  Type
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
 
           {/* <Link to="chart9" spy={true} smooth={true}>
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart9")}}>
-                    <Typography sx={{ color : highlightText === 'chart9' ? 'green' : '#4c4e64de'  }}>Chart 9 : Percentage of Engagement Type </Typography>
+                    <Typography sx={{ color : highlightText === 'chart9' ? 'green' : '#4c4e64de'  }}>Chart 9 : Percentage of  Type </Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} /> */}
@@ -208,7 +208,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart10' ? 'green' : '#4c4e64de' }}>
-              Engagement Type By Date{' '}
+               Type By Date{' '}
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -220,7 +220,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart11' ? 'green' : '#4c4e64de' }}>
-              Engagement Type By Day{' '}
+               Type By Day{' '}
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -232,7 +232,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart12' ? 'green' : '#4c4e64de' }}>
-              Engagement Type By Time
+               Type By Time
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -243,7 +243,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart13' ? 'green' : '#4c4e64de' }}>
-              Engagement Type By Device{' '}
+               Type By Device{' '}
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -254,7 +254,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart14' ? 'green' : '#4c4e64de' }}>
-              Engagement Type By Account{' '}
+               Type By Account{' '}
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
@@ -265,55 +265,55 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
             }}
           >
             <Typography sx={{ color: highlightText === 'chart15' ? 'green' : '#4c4e64de' }}>
-              Engagement Type By Channel
+               Type By Channel
             </Typography>
           </Box>
           <Divider sx={{ m: 0 }} />
 
           {/* <Link to="chart16" spy={true} smooth={true}>
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart16")}}>
-                    <Typography sx={{ color : highlightText === 'chart16' ? 'green' : '#4c4e64de'  }}>Chart 16 : Total Engagement </Typography>
+                    <Typography sx={{ color : highlightText === 'chart16' ? 'green' : '#4c4e64de'  }}>Chart 16 : Total  </Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart17" spy={true} smooth={true}>
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart17")}}>
-                    <Typography sx={{ color : highlightText === 'chart17' ? 'green' : '#4c4e64de'  }}>Chart 17 : Engagement by Channel</Typography>
+                    <Typography sx={{ color : highlightText === 'chart17' ? 'green' : '#4c4e64de'  }}>Chart 17 :  by Channel</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart18" spy={true} smooth={true}>
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart18")}}>
-                    <Typography sx={{ color : highlightText === 'chart18' ? 'green' : '#4c4e64de'  }}>Chart 18 : Engagement by Sentiment</Typography>
+                    <Typography sx={{ color : highlightText === 'chart18' ? 'green' : '#4c4e64de'  }}>Chart 18 :  by Sentiment</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart19" spy={true} smooth={true}>
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart19")}}>
-                    <Typography sx={{ color : highlightText === 'chart19' ? 'green' : '#4c4e64de'  }}>Chart 19 : Engagement Type Comparison</Typography>
+                    <Typography sx={{ color : highlightText === 'chart19' ? 'green' : '#4c4e64de'  }}>Chart 19 :  Type Comparison</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} />
 
               <Link to="chart20" spy={true} smooth={true}>
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart20")}}>
-                    <Typography sx={{ color : highlightText === 'chart20' ? 'green' : '#4c4e64de'  }}>Chart 20 : Engagement Type Proportion</Typography>
+                    <Typography sx={{ color : highlightText === 'chart20' ? 'green' : '#4c4e64de'  }}>Chart 20 :  Type Proportion</Typography>
                 </Box>
               </Link>
 
               <Link to="chart21" spy={true} smooth={true}>
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart21")}}>
-                    <Typography sx={{ color : highlightText === 'chart21' ? 'green' : '#4c4e64de'  }}>Chart 21 : Summary Engagement by Account</Typography>
+                    <Typography sx={{ color : highlightText === 'chart21' ? 'green' : '#4c4e64de'  }}>Chart 21 : Summary  by Account</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} /> */}
 
           {/* <Link to="chart21" spy={true} smooth={true}>
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart21")}}>
-                    <Typography sx={{ color : highlightText === 'chart21' ? 'green' : '#4c4e64de'  }}>Chart 21 : Summary Engagement by Account</Typography>
+                    <Typography sx={{ color : highlightText === 'chart21' ? 'green' : '#4c4e64de'  }}>Chart 21 : Summary  by Account</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} /> */}

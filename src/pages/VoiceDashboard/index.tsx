@@ -21,6 +21,7 @@ const VoiceDashboard = () => {
   const [period, setPeriod] = useState<string>('last7days')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
   const [campaign, setCampaign] = useState<string>('')
+  const [platformId, setPlatformId] = useState<string>('all') 
   const [previousDate, setPreviousDate] = useState<any>(
     new Date(localStorage.getItem('previousStartDate') || new Date())
   )
@@ -35,6 +36,7 @@ const VoiceDashboard = () => {
 
   const params = {
     campaign: campaign,
+    platformId: platformId,
     date: date ? moment(date).format('YYYY-MM-DD') : '',
     endDate: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
     period: period,
@@ -132,6 +134,8 @@ const VoiceDashboard = () => {
         setDateSelect={setDateSelect}
         campaign={campaign}
         setCampaign={setCampaign}
+        setPlatformId = {setPlatformId}
+        platformId = {platformId}
       />
       {/* <Grid container spacing={2} mt={2} ml={3}>
         <Grid item xs={12}>

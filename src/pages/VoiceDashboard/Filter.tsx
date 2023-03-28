@@ -21,6 +21,7 @@ import { forwardRef, useCallback, useEffect, useState } from 'react'
 import { DateType } from 'src/types/forms/reactDatepickerTypes'
 import Translations from 'src/layouts/components/Translations'
 import moment from 'moment'
+import SourceService from 'src/services/api/source/SourceApi'
 
 interface Props {
   date: DateType
@@ -38,6 +39,8 @@ interface Props {
   campaign: string
   setCampaign: any
   tilte: string
+  platformId: string
+  setPlatformId: any
 }
 
 const Filter = (props: Props) => {
@@ -55,9 +58,13 @@ const Filter = (props: Props) => {
     setDateSelect,
     campaign,
     setCampaign,
-    tilte
+    tilte,
+    setPlatformId,
+    platformId
   } = props
   const { resultCampaiganList } = CampaignList()
+  const { result_source_list } = SourceService()
+
   const [showPreviousDatepicker, setShowPreviousDatepicker] = useState<boolean>(false)
 
   const handleDateSelect = (e: any) => {
@@ -114,9 +121,18 @@ const Filter = (props: Props) => {
     }
   }
 
-  const handleSelectList = useCallback((e: SelectChangeEvent) => {
-    setCampaign(e.target.value)
-    localStorage.setItem('campaign', e.target.value)
+  // const handleSelectList = useCallback((e: SelectChangeEvent) => {
+  //   setCampaign(e.target.value)
+  //   localStorage.setItem('campaign', e.target.value)
+  // }, [])
+
+  const handleSelectList = useCallback((e: SelectChangeEvent, type: string) => {
+    if (type === 'campaign') {
+      setCampaign(e.target.value)
+      localStorage.setItem('campaign', e.target.value)
+    } else {
+      setPlatformId(e.target.value)
+    }
   }, [])
 
   const handleOnChangeDate = (dates: any) => {
@@ -212,6 +228,63 @@ const Filter = (props: Props) => {
             </Grid>
 
             <Grid item sm={4} xs={12}>
+              <FormControl fullWidth>
+                <InputLabel id='plan-select'>
+                  <Translations text='Campaign Name' />
+                </InputLabel>
+                <Select
+                  fullWidth
+                  value={campaign}
+                  id='select-campaign'
+                  label='Select campaign'
+                  labelId='campaign-select'
+                  onChange={e => {
+                    handleSelectList(e, 'campaign')
+                  }}
+                  inputProps={{ placeholder: 'Select Campaign' }}
+                >
+                  {resultCampaiganList &&
+                    resultCampaiganList.map((item: any, index: number) => {
+                      return (
+                        <MenuItem key={index} value={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      )
+                    })}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item sm={4} xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel id='plan-select'>
+                      <Translations text='Channel' />
+                    </InputLabel>
+                    <Select
+                      fullWidth
+                      value={platformId}
+                      id='select-platform'
+                      label='Select Paltform'
+                      labelId='platform-select'
+                      onChange={e => {
+                        handleSelectList(e, 'platform')
+                      }}
+                      inputProps={{ placeholder: 'Select Platform' }}
+                    >
+                      <MenuItem value='all'>ALL</MenuItem>
+                      {result_source_list &&
+                        result_source_list?.map((item: any, index: number) => {
+                          return (
+                            <MenuItem key={index} value={item.id}>
+                              {item.name}
+                            </MenuItem>
+                          )
+                        })}
+                    </Select>
+                  </FormControl>
+                </Grid>
+
+            <Grid item sm={4} xs={12}>
               <Box>
                 <DatePickerWrapper>
                   <DatePicker
@@ -257,33 +330,7 @@ const Filter = (props: Props) => {
             ) : (
               ''
             )}
-            <Grid item sm={4} xs={12}>
-              <FormControl fullWidth>
-                <InputLabel id='plan-select'>
-                  <Translations text='Campaign Name' />
-                </InputLabel>
-                <Select
-                  fullWidth
-                  value={campaign}
-                  id='select-campaign'
-                  label='Select campaign'
-                  labelId='campaign-select'
-                  onChange={e => {
-                    handleSelectList(e)
-                  }}
-                  inputProps={{ placeholder: 'Select Campaign' }}
-                >
-                  {resultCampaiganList &&
-                    resultCampaiganList.map((item: any, index: number) => {
-                      return (
-                        <MenuItem key={index} value={item.id}>
-                          {item.name}
-                        </MenuItem>
-                      )
-                    })}
-                </Select>
-              </FormControl>
-            </Grid>
+            
           </Grid>
         </CardContent>
       </Card>

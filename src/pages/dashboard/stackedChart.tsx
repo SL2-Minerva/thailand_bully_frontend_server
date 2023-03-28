@@ -22,6 +22,9 @@ import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
+import axios, { AxiosRequestConfig } from 'axios'
+import authConfig from 'src/configs/auth'
+import { API_PATH } from 'src/utils/const'
 
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
 // import { Bar, getDatasetAtEvent,  } from 'react-chartjs-2'
@@ -38,6 +41,7 @@ interface LineProps {
   resultFilterData: any
   loadingFilterData: boolean
   keywordsColor: any
+  apiParams : any
 }
 
 const chartLabel = (data: any) => {
@@ -81,8 +85,17 @@ const onCapture = () => {
 
 const StackedChart = (props: LineProps) => {
   // ** Props
-  const { white, labelColor, borderColor, gridLineColor, params, resultFilterData, loadingFilterData, keywordsColor } =
-    props
+  const {
+    white,
+    labelColor,
+    borderColor,
+    gridLineColor,
+    params,
+    resultFilterData,
+    loadingFilterData,
+    keywordsColor,
+    apiParams
+  } = props
 
   // const [ chartData, setChartData ] = useState();
 
@@ -317,6 +330,28 @@ const StackedChart = (props: LineProps) => {
     setChooseChart(data)
   }
 
+  const excelExport = () => {
+    const instance = axios.create({ baseURL: API_PATH })
+    const method = 'GET'
+    const url = `/export/export-overall`
+    const headers = {
+      Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+    }
+    const params = apiParams
+    const options: AxiosRequestConfig = {
+      url,
+      method,
+      responseType: 'blob',
+      headers,
+      params: params
+    }
+
+    return instance.request<any>(options).then(response => {
+      const url = window.URL.createObjectURL(new Blob([response.data]))
+      saveAs(url, 'Overall Daily Messages.xlsx')
+    })
+  }
+
   return (
     <Card sx={{ minHeight: 574, maxHeight: 580 }}>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
@@ -328,7 +363,15 @@ const StackedChart = (props: LineProps) => {
             subheader='KeyWords'
             subheaderTypographyProps={{ variant: 'caption' }}
           />
-          <StyledTooltip arrow title={<span>Chart 2 <br/>{'Report Level 2(' + reportNo + ')'}</span>}>
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                Chart 2 <br />
+                {'Report Level 2(' + reportNo + ')'}
+              </span>
+            }
+          >
             <Information fontSize='large' style={{ marginTop: '23px' }} />
           </StyledTooltip>
         </span>
@@ -377,6 +420,15 @@ const StackedChart = (props: LineProps) => {
             >
               <Download fontSize='medium' sx={{ mr: 2 }} />
               PNG
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                excelExport()
+                setAnchorEl(null)
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              Excel
             </MenuItem>
           </Menu>
         </span>

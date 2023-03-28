@@ -117,6 +117,7 @@ const OverallGraphs = (data: Props) => {
               loadingFilterData={loadingFilterData}
               resultFilterData={resultFilterData}
               keywordsColor={keywordGraphColors}
+              apiParams={apiParams}
             />
           </Grid>
         ) : (

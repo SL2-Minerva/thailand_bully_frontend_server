@@ -545,7 +545,7 @@ export const GetDayTimeByAll = (
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-voice/daytime-by`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
   let day_value : any = null;
   let time_value : any = null;
