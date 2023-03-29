@@ -127,7 +127,7 @@ const SentimentComparisonTable = ({
                   <TableRow key={index}>
                     <TableCell>{comparison.keyword_name}</TableCell>
                     <TableCell align='center'>
-                      <Typography variant='h5'>{comparison.total}</Typography>
+                      <Typography variant='h5'>{comparison.total?.toLocaleString('en-US')}</Typography>
                     </TableCell>
                     <TableCell align='left'>
                       <span style={{ display: 'flex', justifyContent: 'center' }}>
@@ -145,7 +145,7 @@ const SentimentComparisonTable = ({
                               />
                             )}
                             <Typography variant='h5'>
-                              {comparison.comparison?.value}
+                              {comparison.comparison?.value?.toLocaleString('en-US')}
                               <Typography variant='h6'>{comparison.comparison?.percentage} %</Typography>
                             </Typography>
                           </>
@@ -175,7 +175,7 @@ const SentimentComparisonTable = ({
                               />
                             )}
                             <Typography variant='h5'>
-                              {comparison.positive?.value}
+                              {comparison.positive?.value?.toLocaleString('en-US')}
                               <Typography variant='h6'>{comparison.positive?.percentage} %</Typography>
                             </Typography>
                           </>
@@ -205,7 +205,7 @@ const SentimentComparisonTable = ({
                               />
                             )}
                             <Typography variant='h5'>
-                              {comparison.neutral?.value}
+                              {comparison.neutral?.value?.toLocaleString('en-US')}
                               <Typography variant='h6'>{comparison.neutral?.percentage} %</Typography>
                             </Typography>
                           </>
@@ -235,7 +235,7 @@ const SentimentComparisonTable = ({
                               />
                             )}
                             <Typography variant='h5'>
-                              {comparison.negative?.value}
+                              {comparison.negative?.value?.toLocaleString('en-US')}
                               <Typography variant='h6'>{comparison.negative?.percentage} %</Typography>
                             </Typography>
                           </>

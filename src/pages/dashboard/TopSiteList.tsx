@@ -74,7 +74,7 @@ const TopSiteList = ({ chartId, resultTopKeywords, loadingTopKeywords }: Props) 
                     // style={{ cursor: 'pointer' }}
                   >
                     <TableCell sx={tableCellStyle}>{topsite?.site_domain}</TableCell>
-                    <TableCell>{topsite?.no_of_message}</TableCell>
+                    <TableCell>{topsite?.no_of_message?.toLocaleString('en-US')}</TableCell>
                     <TableCell>{topsite?.percentage}</TableCell>
                   </TableRow>
                 )
