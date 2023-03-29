@@ -84,7 +84,7 @@ const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string 
         sentiment_type: sentiment
       })
     }
-  }, [params])
+  }, [params, sentiment])
 
   return (
     <Grid container spacing={2}>
