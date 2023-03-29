@@ -73,7 +73,7 @@ const DevicesComparison = ({
         paddingPercentage: 5,
         labels: [
           {
-            text: currentData?.total && currentData?.total != 0 ? currentData?.total : '',
+            text: currentData?.total && currentData?.total != 0 ? currentData?.total?.toLocaleString('en-US') : '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',
@@ -118,7 +118,7 @@ const DevicesComparison = ({
         paddingPercentage: 5,
         labels: [
           {
-            text: previousData?.total && previousData?.total != 0 ? previousData?.total : '',
+            text: previousData?.total && previousData?.total != 0 ? previousData?.total?.toLocaleString('en-US') : '',
             font: {
               size: '50',
               family: 'Arial, Helvetica, sans-serif',

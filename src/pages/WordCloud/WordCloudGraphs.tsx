@@ -63,7 +63,7 @@ const WordCloudGraphs = (data: Props) => {
         select: params?.topKeyword || 'top10'
       })
     }
-  }, [params])
+  }, [params, word])
 
   return (
     <>

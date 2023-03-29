@@ -11,10 +11,10 @@ import TextField from '@mui/material/TextField'
 import Box, { BoxProps } from '@mui/material/Box'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
-import Typography, { TypographyProps } from '@mui/material/Typography'
+import Typography from '@mui/material/Typography'
 
 // ** Icons Imports
-import ChevronLeft from 'mdi-material-ui/ChevronLeft'
+// import ChevronLeft from 'mdi-material-ui/ChevronLeft'
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
@@ -23,27 +23,10 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 import { useSettings } from 'src/@core/hooks/useSettings'
 
 // ** Demo Imports
-import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
+// import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
 import { ForgetPassword } from 'src/services/api/users/users'
 
 // Styled Components
-const ForgotPasswordIllustrationWrapper = styled(Box)<BoxProps>(({ theme }) => ({
-  padding: theme.spacing(20),
-  paddingRight: '0 !important',
-  [theme.breakpoints.down('lg')]: {
-    padding: theme.spacing(10)
-  }
-}))
-
-const ForgotPasswordIllustration = styled('img')(({ theme }) => ({
-  maxWidth: '48rem',
-  [theme.breakpoints.down('xl')]: {
-    maxWidth: '38rem'
-  },
-  [theme.breakpoints.down('lg')]: {
-    maxWidth: '30rem'
-  }
-}))
 
 const RightWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',
@@ -60,13 +43,6 @@ const BoxWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     maxWidth: 400
   }
-}))
-
-const TypographyStyled = styled(Typography)<TypographyProps>(({ theme }) => ({
-  fontWeight: 600,
-  letterSpacing: '0.18px',
-  marginBottom: theme.spacing(1.5),
-  [theme.breakpoints.down('md')]: { marginTop: theme.spacing(8) }
 }))
 
 const ForgotPassword = () => {
@@ -110,22 +86,16 @@ const ForgotPassword = () => {
     }
   }
 
-  const imageSource =
-    skin === 'bordered' ? 'auth-v2-forgot-password-illustration-bordered' : 'auth-v2-forgot-password-illustration'
-
   return (
-    <Box className='content-right'>
-      {!hidden ? (
-        <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
-          <ForgotPasswordIllustrationWrapper>
-            <ForgotPasswordIllustration
-              alt='forgot-password-illustration'
-              src={`/images/pages/${imageSource}-${theme.palette.mode}.png`}
-            />
-          </ForgotPasswordIllustrationWrapper>
-          <FooterIllustrationsV2 image={`/images/pages/auth-v2-forgot-password-mask-${theme.palette.mode}.png`} />
-        </Box>
-      ) : null}
+    <Box
+      className='content-center'
+      sx={{
+        background:
+          ' rgba(55,26,168,1) linear-gradient(to bottom, rgba(102,74,207,1) 0%, rgba(55,26,168,1) 39%,rgba(2,0,36,1) 100%)',
+        backgroundImage:
+          'linear-gradient(to bottom, rgba(245, 246, 252, 0.24), rgba(2,0,36,1)), url(/images/cornea.png)'
+      }}
+    >
       <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
         <Box
           sx={{
@@ -138,22 +108,14 @@ const ForgotPassword = () => {
           }}
         >
           <BoxWrapper>
-            <Box
-              sx={{
-                top: 30,
-                left: 40,
-                display: 'flex',
-                position: 'absolute',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <img src='/images/Logo_Horizontal2.png' alt='logo' height='40' />
+            <Box sx={{ mb: 18 }}>
+              <div className={'logo-login'}>
+                <img src='/images/Logo_notext.png' alt='logo' />
+              </div>
             </Box>
-            <Box sx={{ mb: 6 }}>
-              <TypographyStyled variant='h5'>Forgot Password? 🔒</TypographyStyled>
-              <Typography variant='body2'>
-                Enter your email and we&prime;ll send you instructions to reset your password
+            <Box sx={{ mb: 7 }}>
+              <Typography variant='h5' sx={{ color: '#0a0e3a', textAlign: 'center' }}>
+                Recover Password
               </Typography>
             </Box>
             <form noValidate autoComplete='off' onSubmit={handleSubmit}>
@@ -165,15 +127,22 @@ const ForgotPassword = () => {
                 onChange={handleChangeEmail}
                 sx={{ display: 'flex', mb: 4 }}
               />
-              <Button onClick={submitData} fullWidth size='large' type='submit' variant='contained' sx={{ mb: 5.25 }}>
+              <Button
+                onClick={submitData}
+                fullWidth
+                size='large'
+                type='submit'
+                variant='contained'
+                sx={{ mb: 5.25, backgroundColor: '#311699', ':hover': { backgroundColor: '#311699' } }}
+              >
                 Send reset link
               </Button>
               {showText ? (
-                <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                   <Link passHref href='/login'>
                     <Typography
                       component={MuiLink}
-                      sx={{ display: 'flex', alignItems: 'center', color: 'primary.main', justifyContent: 'center' }}
+                      sx={{ display: 'flex', alignItems: 'center', color: '#311699', justifyContent: 'center' }}
                     >
                       <span>We've already set reset link to your email.</span> <br />
                     </Typography>
@@ -184,15 +153,15 @@ const ForgotPassword = () => {
               )}
               {showErrorText ? (
                 <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Typography
-                      component={MuiLink}
-                      sx={{ display: 'flex', alignItems: 'center', color: 'red', justifyContent: 'center' }}
-                    >
-                      <span>
-                        Sorry! We can't find your email in our system. <br />
-                        Please kindly check your email again that is corret or not.{' '}
-                      </span>
-                    </Typography>
+                  <Typography
+                    component={MuiLink}
+                    sx={{ display: 'flex', alignItems: 'center', color: 'red', justifyContent: 'center' }}
+                  >
+                    <span>
+                      Sorry! We can't find your email in our system. <br />
+                      Please kindly check your email again that is corret or not.{' '}
+                    </span>
+                  </Typography>
                 </Typography>
               ) : (
                 ''
@@ -201,10 +170,10 @@ const ForgotPassword = () => {
                 <Link passHref href='/login'>
                   <Typography
                     component={MuiLink}
-                    sx={{ display: 'flex', alignItems: 'center', color: 'primary.main', justifyContent: 'center' }}
+                    sx={{ display: 'flex', alignItems: 'center', color: '#311699', justifyContent: 'center' }}
                   >
-                    <ChevronLeft sx={{ mr: 1.5, fontSize: '2rem' }} />
-                    <span>Back to login</span>
+                    {/* <ChevronLeft sx={{ mr: 1.5, fontSize: '2rem' }} /> */}
+                   <span> Back to <b><u>Sign In</u></b></span>
                   </Typography>
                 </Link>
               </Typography>

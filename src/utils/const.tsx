@@ -303,20 +303,20 @@ export const BullyTypeSummaryColors = [
     color: '#efd4dc'
   },
   {
-    name: 'Trolling',
-    color: '#ea628c'
+    name: 'Exclusion',
+    color: '#ea638c'
   },
   {
-    name: 'Exclusion',
+    name: 'Harassment',
     color: '#89033d'
   },
   {
     name: 'HateSpeech',
-    color: '#521031'
+    color: '#521130'
   },
   {
-    name: 'Harassment',
-    color: '#34203e'
+    name: 'Violence',
+    color: '#34213e'
   }
 ]
 
@@ -330,20 +330,20 @@ export const BullyTypeColorCode = [
     color: '#efd4dc'
   },
   {
-    name: 'Trolling',
-    color: '#ea628c'
+    name: 'Exclusion',
+    color: '#ea638c'
   },
   {
-    name: 'Exclusion',
+    name: 'Harassment',
     color: '#89033d'
   },
   {
     name: 'HateSpeech',
-    color: '#521031'
+    color: '#521130'
   },
   {
-    name: 'Harassment',
-    color: '#34203e'
+    name: 'Violence',
+    color: '#34213e'
   }
 ]
 

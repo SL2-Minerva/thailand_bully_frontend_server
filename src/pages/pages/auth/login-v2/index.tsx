@@ -124,6 +124,8 @@ const LoginV2 = () => {
   const imageSource = skin === 'bordered' ? 'auth-v2-login-illustration-bordered' : 'auth-v2-login-illustration'
 
   return (
+    
+    <>
     <Box className='content-right'>
       {!hidden ? (
         <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
@@ -317,6 +319,133 @@ const LoginV2 = () => {
         </Box>
       </RightWrapper>
     </Box>
+       {/* <Box className='content-right'>
+        {!hidden ? (
+          <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
+            <LoginIllustrationWrapper>
+              <LoginIllustration
+                alt='login-illustration'
+                src={`/images/pages/${imageSource}-${theme.palette.mode}.png`}
+              />
+            </LoginIllustrationWrapper>
+            <FooterIllustrationsV2 />
+          </Box>
+        ) : null}
+        <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
+          <Box
+            sx={{
+              p: 7,
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'background.paper'
+            }}
+          >
+            <BoxWrapper>
+              <Box
+                sx={{
+                  top: 30,
+                  left: 40,
+                  display: 'flex',
+                  position: 'absolute',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <img src='/images/Logo_Horizontal2.png' alt='logo' height='40' />
+                
+              </Box>
+              <Box sx={{ mb: 6 }}>
+                
+                <Typography variant='h5'>Please sign-in to your account </Typography>
+              </Box>
+
+              <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
+                <FormControl fullWidth sx={{ mb: 4 }}>
+                  <Controller
+                    name='username'
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field: { value, onChange, onBlur } }) => (
+                      <TextField
+                        autoFocus
+                        label='Email'
+                        value={value}
+                        onBlur={onBlur}
+                        onChange={onChange}
+                        error={Boolean(errors.username)}
+                        placeholder='admin@materialize.com'
+                      />
+                    )}
+                  />
+                  {errors.username && (
+                    <FormHelperText sx={{ color: 'error.main' }}>{errors.username.message}</FormHelperText>
+                  )}
+                </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.password)}>
+                    Password
+                  </InputLabel>
+                  <Controller
+                    name='password'
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field: { value, onChange, onBlur } }) => (
+                      <OutlinedInput
+                        value={value}
+                        onBlur={onBlur}
+                        label='Password'
+                        onChange={onChange}
+                        id='auth-login-v2-password'
+                        error={Boolean(errors.password)}
+                        type={showPassword ? 'text' : 'password'}
+                        endAdornment={
+                          <InputAdornment position='end'>
+                            <IconButton
+                              edge='end'
+                              onMouseDown={e => e.preventDefault()}
+                              onClick={() => setShowPassword(!showPassword)}
+                            >
+                              {showPassword ? <EyeOutline /> : <EyeOffOutline />}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                      />
+                    )}
+                  />
+                  {errors.password && (
+                    <FormHelperText sx={{ color: 'error.main' }} id=''>
+                      {errors.password.message}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+                <Box
+                  sx={{
+                    mb: 4,
+                    mt: 2,
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <span></span>
+                  <Link passHref href='/forgot-password'>
+                    <Typography component={MuiLink} variant='body2' sx={{ color: 'primary.main' }}>
+                      Forgot Password?
+                    </Typography>
+                  </Link>
+                </Box>
+                <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
+                  Login
+                </Button>
+              </form>
+            </BoxWrapper>
+          </Box>
+        </RightWrapper>
+      </Box> */}
+    </>
   )
 }
 
