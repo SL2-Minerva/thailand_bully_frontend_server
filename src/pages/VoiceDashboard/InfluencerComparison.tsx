@@ -63,7 +63,7 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
             <Grid item xs={5} p={4}>
               <Typography variant='h5'>
                 {trend === 'plus' ? '+' : ''}
-                {totalValue}
+                {totalValue?.toLocaleString('en-US')}
               </Typography>
               <Typography variant='h6' sx={{ m: 3 }}>
                 <b>{totalText}</b>

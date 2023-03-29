@@ -95,7 +95,7 @@ const EngagementTypeComparison = ({
                                 </>
                               )}
                               <Typography sx={{ fontSize: '1.3vw' }}>
-                                {comparison.total?.value}
+                                {comparison.total?.value?.toLocaleString('en-US')}
                                 <Typography variant='body1'>{comparison.total?.percentage} %</Typography>
                               </Typography>
                             </span>
@@ -120,7 +120,7 @@ const EngagementTypeComparison = ({
                                 </>
                               )}
                               <Typography sx={{ fontSize: '1.3vw' }}>
-                                {comparison.share?.value}
+                                {comparison.share?.value?.toLocaleString('en-US')}
                                 <Typography variant='body1'>{comparison.share?.percentage} %</Typography>
                               </Typography>
                             </span>
@@ -146,7 +146,7 @@ const EngagementTypeComparison = ({
                               )}
 
                               <Typography sx={{ fontSize: '1.3vw' }}>
-                                {comparison.comment?.value}
+                                {comparison.comment?.value?.toLocaleString('en-US')}
                                 <Typography variant='body1'>{comparison.comment?.percentage} %</Typography>
                               </Typography>
                             </span>
@@ -172,7 +172,7 @@ const EngagementTypeComparison = ({
                               )}
 
                               <Typography sx={{ fontSize: '1.3vw' }}>
-                                {comparison.reaction?.value}
+                                {comparison.reaction?.value?.toLocaleString('en-US')}
                                 <Typography variant='body1'>{comparison.reaction?.percentage} %</Typography>
                               </Typography>
                             </span>
