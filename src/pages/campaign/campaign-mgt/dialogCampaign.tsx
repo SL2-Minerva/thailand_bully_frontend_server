@@ -91,8 +91,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
       keyword_and: [''],
       keyword_exclude: [''],
       colors: GenerateRandomColor(),
-      keyword_or_color: [''],
-      keyword_and_color: [''],
+      keyword_or_color: [GenerateRandomColor()],
+      keyword_and_color: [GenerateRandomColor()],
       delete_keyword_or: [''],
       delete_keyword_and: [''],
       delete_keyword_exclude: [''],
@@ -110,8 +110,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
         keyword_and: [''],
         keyword_exclude: [''],
         colors: GenerateRandomColor(),
-        keyword_or_color: ['#70d477'],
-        keyword_and_color: ['#ed5d5e'],
+        keyword_or_color: [GenerateRandomColor()],
+        keyword_and_color: [GenerateRandomColor()],
         delete_keyword_or: [''],
         delete_keyword_and: [''],
         delete_keyword_exclude: [''],
@@ -167,8 +167,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
         keyword_and: [''],
         keyword_exclude: [''],
         colors: GenerateRandomColor(),
-        keyword_or_color: [''],
-        keyword_and_color: [''],
+        keyword_or_color: [GenerateRandomColor()],
+        keyword_and_color: [GenerateRandomColor()],
         delete_keyword_or: [''],
         delete_keyword_and: [''],
         delete_keyword_exclude: [''],
@@ -226,23 +226,21 @@ const DialogCampaign = (props: DialogInfoProps) => {
           console.log(ex)
         })
     } else {
-        console.log("input Data", input_data)
+      axios
+        .post(`${API_PATH}/campaign/create`, input_data, {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+          }
+        })
+        .then(async response => {
+          const { data, status } = response.data
+          console.log(data, status)
 
-      // axios
-      //   .post(`${API_PATH}/campaign/create`, input_data, {
-      //     headers: {
-      //       Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
-      //     }
-      //   })
-      //   .then(async response => {
-      //     const { data, status } = response.data
-      //     console.log(data, status)
-
-      //     closeDialogBox()
-      //   })
-      //   .catch((ex: any) => {
-      //     console.log(ex)
-      //   })
+          closeDialogBox()
+        })
+        .catch((ex: any) => {
+          console.log(ex)
+        })
     }
   }
 
@@ -259,12 +257,24 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
         if (current.keyword && current.keyword.length > 0) {
           setKeywords(current.keyword)
+          const keywords = current.keyword
+          let keywordCounts = keywords.length;
+
+          for(let i=0; i<keywords.length; i++) {
+            const keywordAndCount = keywords[i]?.keyword_and?.length;
+            const keywordOrCount = keywords[i]?.keyword_and?.length;
+            keywordCounts = keywordCounts + keywordAndCount + keywordOrCount;
+            setKeywordCount(keywordCounts)
+            
+            // console.log("keyword Count", keywordCounts);
+          } 
         }
 
         const campaignStatus = current.status === 1 ? true : false
         setStatus(campaignStatus)
       }
     } else {
+      setKeywordCount(3)
       setCampaignName('')
       setDescription('')
       setDomain('')
@@ -278,8 +288,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
           keyword_and: [''],
           keyword_exclude: [''],
           colors: GenerateRandomColor(),
-          keyword_or_color: [''],
-          keyword_and_color: [''],
+          keyword_or_color: [GenerateRandomColor()],
+          keyword_and_color: [GenerateRandomColor()],
           delete_keyword_or: [''],
           delete_keyword_and: [''],
           delete_keyword_exclude: [''],

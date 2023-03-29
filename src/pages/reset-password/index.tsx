@@ -11,7 +11,7 @@ import TextField from '@mui/material/TextField'
 import Box, { BoxProps } from '@mui/material/Box'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
-import Typography, { TypographyProps } from '@mui/material/Typography'
+import Typography from '@mui/material/Typography'
 
 // ** Icons Imports
 import ChevronLeft from 'mdi-material-ui/ChevronLeft'
@@ -69,12 +69,12 @@ const BoxWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   }
 }))
 
-const TypographyStyled = styled(Typography)<TypographyProps>(({ theme }) => ({
-  fontWeight: 600,
-  letterSpacing: '0.18px',
-  marginBottom: theme.spacing(1.5),
-  [theme.breakpoints.down('md')]: { marginTop: theme.spacing(8) }
-}))
+// const TypographyStyled = styled(Typography)<TypographyProps>(({ theme }) => ({
+//   fontWeight: 600,
+//   letterSpacing: '0.18px',
+//   marginBottom: theme.spacing(1.5),
+//   [theme.breakpoints.down('md')]: { marginTop: theme.spacing(8) }
+// }))
 
 const ResetPassword = () => {
   const { query } = useRouter()
@@ -162,7 +162,15 @@ const ResetPassword = () => {
   }
 
   return (
-    <Box className='content-center'>
+    <Box
+      className='content-center'
+      sx={{
+        background:
+          ' rgba(55,26,168,1) linear-gradient(to bottom, rgba(102,74,207,1) 0%, rgba(55,26,168,1) 39%,rgba(2,0,36,1) 100%)',
+        backgroundImage:
+          'linear-gradient(to bottom, rgba(245, 246, 252, 0.24), rgba(2,0,36,1)), url(/images/cornea.png)'
+      }}
+    >
       <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
         <Box
           sx={{
@@ -175,8 +183,15 @@ const ResetPassword = () => {
           }}
         >
           <BoxWrapper>
-            <Box sx={{ mb: 6 }}>
-              <TypographyStyled variant='h5'>Reset Password</TypographyStyled>
+            <Box sx={{ mb: 18 }}>
+              <div className={'logo-login'}>
+                <img src='/images/Logo_notext.png' alt='logo' />
+              </div>
+            </Box>
+            <Box sx={{ mb: 7 }}>
+              <Typography variant='h5' sx={{ color: '#0a0e3a', textAlign: 'center' }}>
+                Reset Password
+              </Typography>
             </Box>
             <form noValidate autoComplete='off' onSubmit={handleSubmit}>
               <TextField
@@ -230,11 +245,11 @@ const ResetPassword = () => {
               />
 
               {password && confirmPassword && !showErrorText ? (
-                <Button onClick={submitData} fullWidth size='large' type='submit' variant='contained' sx={{ mb: 5.25 }}>
+                <Button onClick={submitData} fullWidth size='large' type='submit' variant='contained' sx={{ mb: 5.25, backgroundColor: '#311699', ':hover': { backgroundColor: '#311699' } }}>
                   Reset Password
                 </Button>
               ) : (
-                <Button fullWidth size='large' variant='contained' color='secondary' sx={{ mb: 5.25 }}>
+                <Button fullWidth size='large' variant='contained' color='secondary' sx={{ mb: 5.25, backgroundColor: '#311699', ':hover': { backgroundColor: '#311699' } }}>
                   Reset Password
                 </Button>
               )}
@@ -257,7 +272,7 @@ const ResetPassword = () => {
                   <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Typography
                       component={MuiLink}
-                      sx={{ display: 'flex', alignItems: 'center', color: 'primary.main', justifyContent: 'center' }}
+                      sx={{ display: 'flex', alignItems: 'center', color: '#311699', justifyContent: 'center' }}
                     >
                       <span>Your password is updated successfully</span>
                     </Typography>
@@ -266,10 +281,9 @@ const ResetPassword = () => {
                     <Link passHref href='/login'>
                       <Typography
                         component={MuiLink}
-                        sx={{ display: 'flex', alignItems: 'center', color: 'primary.main', justifyContent: 'center' }}
+                        sx={{ display: 'flex', alignItems: 'center', color: '#311699', justifyContent: 'center' }}
                       >
-                        <ChevronLeft sx={{ mr: 1.5, fontSize: '2rem' }} />
-                        <span>Back to login</span>
+                        <span> Back to <b><u>Sign In</u></b></span>
                       </Typography>
                     </Link>
                   </Typography>

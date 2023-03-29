@@ -627,7 +627,9 @@ const InputKeyword = (props: any) => {
                       addMoreKeyword(indexValue, list, value, type)
                     }}
                   ></Button>
-                  <span style={{ marginTop: 5 }}>
+                </>
+              )}
+              <span style={{ marginTop: 5 }}>
                     {(text && index == 0) || index > 0 ? (
                       <ColorPicker
                         hideTextfield={true}
@@ -641,8 +643,6 @@ const InputKeyword = (props: any) => {
                       ''
                     )}
                   </span>
-                </>
-              )}
             </Grid>
           ) : (
             <Grid sx={{ display: 'flex', mt: 3 }}>
