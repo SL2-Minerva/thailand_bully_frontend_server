@@ -26,7 +26,7 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 import { useSettings } from 'src/@core/hooks/useSettings'
 
 // ** Demo Imports
-import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
+// import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
 import { useRouter } from 'next/router'
 import { IconButton, InputAdornment } from '@mui/material'
 import { ResetPasswordRequest } from 'src/services/api/users/users'
@@ -34,23 +34,23 @@ import { ResetPasswordRequest } from 'src/services/api/users/users'
 // import { ForgetPassword } from 'src/services/api/users/users'
 
 // Styled Components
-const ForgotPasswordIllustrationWrapper = styled(Box)<BoxProps>(({ theme }) => ({
-  padding: theme.spacing(20),
-  paddingRight: '0 !important',
-  [theme.breakpoints.down('lg')]: {
-    padding: theme.spacing(10)
-  }
-}))
+// const ForgotPasswordIllustrationWrapper = styled(Box)<BoxProps>(({ theme }) => ({
+//   padding: theme.spacing(20),
+//   paddingRight: '0 !important',
+//   [theme.breakpoints.down('lg')]: {
+//     padding: theme.spacing(10)
+//   }
+// }))
 
-const ForgotPasswordIllustration = styled('img')(({ theme }) => ({
-  maxWidth: '48rem',
-  [theme.breakpoints.down('xl')]: {
-    maxWidth: '38rem'
-  },
-  [theme.breakpoints.down('lg')]: {
-    maxWidth: '30rem'
-  }
-}))
+// const ForgotPasswordIllustration = styled('img')(({ theme }) => ({
+//   maxWidth: '48rem',
+//   [theme.breakpoints.down('xl')]: {
+//     maxWidth: '38rem'
+//   },
+//   [theme.breakpoints.down('lg')]: {
+//     maxWidth: '30rem'
+//   }
+// }))
 
 const RightWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',
@@ -81,8 +81,6 @@ const ResetPassword = () => {
 
   const token = query.token as string
   const email = query.email as string
-
-  console.log('token', token, 'email', decodeURI(email))
 
   // ** Hooks
   const theme = useTheme()
@@ -163,22 +161,8 @@ const ResetPassword = () => {
     }
   }
 
-  const imageSource =
-    skin === 'bordered' ? 'auth-v2-forgot-password-illustration-bordered' : 'auth-v2-forgot-password-illustration'
-
   return (
-    <Box className='content-right'>
-      {!hidden ? (
-        <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
-          <ForgotPasswordIllustrationWrapper>
-            <ForgotPasswordIllustration
-              alt='forgot-password-illustration'
-              src={`/images/pages/${imageSource}-${theme.palette.mode}.png`}
-            />
-          </ForgotPasswordIllustrationWrapper>
-          <FooterIllustrationsV2 image={`/images/pages/auth-v2-forgot-password-mask-${theme.palette.mode}.png`} />
-        </Box>
-      ) : null}
+    <Box className='content-center'>
       <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
         <Box
           sx={{
@@ -191,18 +175,6 @@ const ResetPassword = () => {
           }}
         >
           <BoxWrapper>
-            <Box
-              sx={{
-                top: 30,
-                left: 40,
-                display: 'flex',
-                position: 'absolute',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <img src='/images/Logo_Horizontal2.png' alt='logo' height='40' />
-            </Box>
             <Box sx={{ mb: 6 }}>
               <TypographyStyled variant='h5'>Reset Password</TypographyStyled>
             </Box>
