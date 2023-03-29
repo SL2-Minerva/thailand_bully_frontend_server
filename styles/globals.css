@@ -38,8 +38,11 @@ code[class*='language-'] {
 }
 
 .logo-login img{
-  width: 60%;
+  width: 60px;
   height: auto;
+  position: absolute;
+  left: 50%;
+  margin-left: -30px
 }
 
 .logo-sidebar-noText {
@@ -79,6 +82,11 @@ code[class*='language-'] {
   border-top: 10px solid #383636; /* Black */
   border-radius: 50%;
   animation: spinner 1.5s linear infinite;
+}
+
+.login-background {
+  background: rgb(2,0,36);
+  background: linear-gradient( rgba(2,0,36,1) 0%, rgba(55,26,168,1) 37%, rgba(102,74,207,1) 100%);
 }
 
   

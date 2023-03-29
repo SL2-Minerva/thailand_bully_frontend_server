@@ -303,7 +303,7 @@ export const BullyTypeSummaryColors = [
     color: '#efd4dc'
   },
   {
-    name: 'Trolling',
+    name: 'Violence',
     color: '#ea628c'
   },
   {
@@ -330,7 +330,7 @@ export const BullyTypeColorCode = [
     color: '#efd4dc'
   },
   {
-    name: 'Trolling',
+    name: 'Violence',
     color: '#ea628c'
   },
   {

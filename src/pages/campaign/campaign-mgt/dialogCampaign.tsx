@@ -183,7 +183,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
     // var formattedDate =
     const values = [...keywords]
 
-    if (action == 'edit' && values?.length > 0) {
+    if (values?.length > 0) {
       for (let i = 0; i < keywords?.length; i++) {
         let changeDataType: any
         if (typeof values[i]?.keyword_and_color == 'string') {
@@ -226,21 +226,23 @@ const DialogCampaign = (props: DialogInfoProps) => {
           console.log(ex)
         })
     } else {
-      axios
-        .post(`${API_PATH}/campaign/create`, input_data, {
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
-          }
-        })
-        .then(async response => {
-          const { data, status } = response.data
-          console.log(data, status)
+        console.log("input Data", input_data)
 
-          closeDialogBox()
-        })
-        .catch((ex: any) => {
-          console.log(ex)
-        })
+      // axios
+      //   .post(`${API_PATH}/campaign/create`, input_data, {
+      //     headers: {
+      //       Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+      //     }
+      //   })
+      //   .then(async response => {
+      //     const { data, status } = response.data
+      //     console.log(data, status)
+
+      //     closeDialogBox()
+      //   })
+      //   .catch((ex: any) => {
+      //     console.log(ex)
+      //   })
     }
   }
 

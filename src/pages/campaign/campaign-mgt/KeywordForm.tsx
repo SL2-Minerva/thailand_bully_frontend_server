@@ -318,21 +318,23 @@ const KeywordForm = (props: any) => {
         </Grid>
 
         <Grid item xs={1} sx={{ mt: 12 }}>
-          {keyword_and.length > 0 && !keyword_and[0] && !keyword_or[0] && !keyword_exclude[0] ? (
-            <ColorPicker
-              hideTextfield={true}
-              value={
-                keywords[indexNumber]?.color && keywords[indexNumber]?.color != '#'
-                  ? keywords[indexNumber]?.color
-                  : createColor(randomColorKeyword)
-              }
-              onChange={(color: Color) => {
-                handleChangeColor(color, indexNumber)
-              }}
-            />
+          <ColorPicker
+            hideTextfield={true}
+            value={
+              keywords[indexNumber]?.color && keywords[indexNumber]?.color != '#'
+                ? keywords[indexNumber]?.color
+                : createColor(randomColorKeyword)
+            }
+            onChange={(color: Color) => {
+              handleChangeColor(color, indexNumber)
+            }}
+          />
+
+          {/* {keyword_and.length > 0 && !keyword_and[0] && !keyword_or[0] && !keyword_exclude[0] ? (
+            
           ) : (
             ''
-          )}
+          )} */}
         </Grid>
 
         <Grid item sm={4} xs={12} sx={{ px: 4 }}>
@@ -519,7 +521,7 @@ const InputKeyword = (props: any) => {
     if (index === 0 && colorList) {
       setKeywordColors(colorList[0] || createColor(randomHexColor))
     } else if (index && colorList) {
-      setKeywordColors((colorList && colorList[index]) || createColor(GenerateRandomColor()))
+      setKeywordColors(colorList && colorList[index] ? colorList[index]: createColor(GenerateRandomColor()))
     }
 
     if (typeof colorList === 'string') {
@@ -541,7 +543,7 @@ const InputKeyword = (props: any) => {
               {text ? (
                 <ColorPicker
                   hideTextfield={true}
-                  value={keywordColors}
+                  value={keywordColors || createColor(randomColorKeyword)}
                   onChange={(color: Color) => {
                     setKeywordColors(color)
                     handlChangeKeywordColors(index, color, colorList, value, type, indexValue)
@@ -629,7 +631,7 @@ const InputKeyword = (props: any) => {
                     {(text && index == 0) || index > 0 ? (
                       <ColorPicker
                         hideTextfield={true}
-                        value={keywordColor}
+                        value={keywordColor || createColor(randomColorKeyword)}
                         onChange={(color: Color) => {
                           setKeywordColor(color)
                           handlChangeKeywordColors(index, color, colorList, value, type, indexValue)

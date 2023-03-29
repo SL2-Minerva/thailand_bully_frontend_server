@@ -28,6 +28,7 @@ import { saveAs } from 'file-saver'
 import axios, { AxiosRequestConfig } from 'axios'
 import authConfig from 'src/configs/auth'
 import { API_PATH } from 'src/utils/const'
+import toast from 'react-hot-toast'
 
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
 // import { Bar, getDatasetAtEvent,  } from 'react-chartjs-2'
@@ -103,7 +104,6 @@ const StackedChart = (props: LineProps) => {
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [chooseChart, setChooseChart] = useState<string>('bar')
-
   const rowOptionsOpen = Boolean(anchorEl)
 
   const chartRef = useRef()
@@ -328,18 +328,18 @@ const StackedChart = (props: LineProps) => {
   }
 
   const onCapture = () => {
-    setIsLoading(true);
+    setIsLoading(true)
     const pictureId = document.getElementById('savePNG')
     if (pictureId) {
       htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
-        setIsLoading(false);
+        setIsLoading(false)
         saveAs(dataUrl, 'Daily Message (overall).png')
       })
     }
   }
 
   const excelExport = () => {
-    setIsLoading(true);
+    setIsLoading(true)
     const instance = axios.create({ baseURL: API_PATH })
     const method = 'GET'
     const url = `/export/export-excel-overall`
@@ -355,13 +355,18 @@ const StackedChart = (props: LineProps) => {
       params: params
     }
 
-    return instance.request<any>(options).then(response => {
-      const url = window.URL.createObjectURL(new Blob([response.data]))
-      setIsLoading(false);
-      saveAs(url, 'Overall Daily Messages.xlsx')
-    }).catch(()=> {
-      setIsLoading(false);
-    })
+    return instance
+      .request<any>(options)
+      .then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        setIsLoading(false)
+        saveAs(url, 'Overall Daily Messages.xlsx')
+        toast.success('Successfully Downloaded!')
+      })
+      .catch(() => {
+        setIsLoading(false)
+        toast.error("Somenthing went wrong")
+      })
   }
 
   return (
