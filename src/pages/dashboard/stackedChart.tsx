@@ -342,7 +342,7 @@ const StackedChart = (props: LineProps) => {
     setIsLoading(true);
     const instance = axios.create({ baseURL: API_PATH })
     const method = 'GET'
-    const url = `/export/export-overall`
+    const url = `/export/export-excel-overall`
     const headers = {
       Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
     }

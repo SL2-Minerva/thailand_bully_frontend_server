@@ -100,7 +100,7 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
         platform_id: platformId
       })
     }
-  }, [params])
+  }, [params, platformId])
 
   return (
     <Grid container spacing={2}>
