@@ -41,6 +41,9 @@ interface LineProps {
   highlight?: boolean
   resultFilterData: any
   loadingFilterData: boolean
+  apiParams: any
+  isLoading: boolean
+  setIsLoading: any
 }
 
 const chartLabel = (data: any) => {

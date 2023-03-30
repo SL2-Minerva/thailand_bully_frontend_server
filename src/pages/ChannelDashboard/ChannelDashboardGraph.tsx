@@ -50,6 +50,7 @@ const ChannelDashboardGraphs = (data: Props) => {
   const [highlight, setHighlight] = useState<string>('')
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
   const [apiParams, setApiParams] = useState<any>()
+  const [isLoading, setIsLoading] = useState(false)
 
   const { resultDailyChannel, resultPercentageChannelCurrent, resultPercentageChannelPrevious, loadingDailyChannel } =
     GetDailyBy(
@@ -165,6 +166,9 @@ const ChannelDashboardGraphs = (data: Props) => {
             resultDailyChannel={resultDailyChannel}
             loadingDailyChannel={loadingDailyChannel}
             keywordsColor={GraphicColors}
+            apiParams={apiParams}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (

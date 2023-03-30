@@ -37,6 +37,7 @@ const BullyCharts = (data: Props) => {
   const { params, resultReportPermission } = data
   const theme = useTheme()
   const [apiParams, setApiParams] = useState<any>()
+  const [isLoading, setIsLoading] = useState(false)
 
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
 
@@ -181,6 +182,9 @@ const BullyCharts = (data: Props) => {
             highlight={highlight === 'chart2' ? true : false}
             resultFilterData={resultFilterData}
             loadingFilterData={loadingFilterData}
+            apiParams={apiParams}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (

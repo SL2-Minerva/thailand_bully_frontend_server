@@ -94,7 +94,8 @@ const KeywordForm = (props: any) => {
     keyword_and_color,
     delete_keyword_and,
     delete_keyword_or,
-    delete_keyword_exclude
+    delete_keyword_exclude,
+    color_and
   } = value
 
   function handleChangeLabel(i: number, event: any) {
@@ -178,6 +179,7 @@ const KeywordForm = (props: any) => {
     if (type === 'keyword_and') {
       const randomColor = GenerateRandomColor()
       values[i].keyword_and_color = [...colorList, randomColor]
+      values[i].color_and = randomColor
     }
 
     if (type === 'keyword_exclude') {
@@ -287,6 +289,8 @@ const KeywordForm = (props: any) => {
 
     if (type === 'keyword_and') {
       values[indexValue].keyword_and_color = keywordsColor
+      values[indexValue].color_and = hashColor
+      console.log("color", values, values[indexValue].color_and)
     }
     setKeywords(values)
   }
@@ -354,7 +358,7 @@ const KeywordForm = (props: any) => {
                   index={index}
                   indexValue={indexNumber}
                   label={'คำที่ต้องมี (AND)'}
-                  colorList={keyword_and_color || ''}
+                  colorList={color_and || keyword_and_color || ''}
                   handlChangeKeywordColors={handlChangeKeywordColors}
                   addMoreKeywordColors={addMoreKeywordColors}
                   removeKeywordColors={removeKeywordColors}
@@ -377,7 +381,7 @@ const KeywordForm = (props: any) => {
                 index={0}
                 indexValue={indexNumber}
                 label={'คำที่ต้องมี (AND)'}
-                colorList={keyword_and_color || ''}
+                colorList={color_and || keyword_and_color || ''}
                 handlChangeKeywordColors={handlChangeKeywordColors}
                 addMoreKeywordColors={addMoreKeywordColors}
                 removeKeywordColors={removeKeywordColors}

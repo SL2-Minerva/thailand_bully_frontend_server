@@ -37,6 +37,9 @@ interface LineProps {
   highlight?: boolean
   resultFilterData: any
   loadingFilterData: boolean
+  apiParams: any
+  isLoading: boolean
+  setIsLoading: any
 }
 
 export const chartLabel = (data: any) => {
@@ -90,6 +93,9 @@ const DailySenitment = (props: LineProps) => {
     highlight,
     resultFilterData,
     loadingFilterData
+    
+    // apiParams,
+    // setIsLoading
   } = props
 
   // const [ chartData, setChartData ] = useState();

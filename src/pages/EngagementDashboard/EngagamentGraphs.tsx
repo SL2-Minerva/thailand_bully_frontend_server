@@ -35,13 +35,13 @@ import EngagementByType from './EngagementByType'
 import QuickViewModal from './QuickViewModal'
 
 interface Props {
-    params: any
-    resultReportPermission: any
-    keywordGraphColors: any
-  }
+  params: any
+  resultReportPermission: any
+  keywordGraphColors: any
+}
 
 const EngagementGraphs = (data: Props) => {
-    const {params,resultReportPermission, keywordGraphColors } = data
+  const { params, resultReportPermission, keywordGraphColors } = data
 
   const theme = useTheme()
   const whiteColor = '#fff'
@@ -56,10 +56,9 @@ const EngagementGraphs = (data: Props) => {
   const [highlight, setHighlight] = useState<string>('')
   const [topKeyword, setTopKeyword] = useState<string>('all')
   const [apiParams, setApiParams] = useState<any>()
+  const [isLoading, setIsLoading] = useState(false)
 
-  const { resultFilterData, loadingFilterData } = FilterByCampaignId(
-    apiParams
-  )
+  const { resultFilterData, loadingFilterData } = FilterByCampaignId(apiParams)
   const {
     resultEngagementByTime,
     resultEngagementByAccount,
@@ -68,9 +67,7 @@ const EngagementGraphs = (data: Props) => {
     resultEngagementChannel,
     resultKeywordByEngagementType,
     loadingEngagementBy
-  } = GetEngagementBy(
-    apiParams
-  )
+  } = GetEngagementBy(apiParams)
 
   const {
     resultEngagementPercentage,
@@ -80,9 +77,7 @@ const EngagementGraphs = (data: Props) => {
     resultEngagementTypeByDevice,
     resultEngagementTypeByTime,
     loadingEngagementType
-  } = EngagementTypeBy(
-    apiParams
-  )
+  } = EngagementTypeBy(apiParams)
 
   const {
     resultTotalEngagement,
@@ -92,10 +87,7 @@ const EngagementGraphs = (data: Props) => {
     resultSummary,
     loadingPeriodComparisonBySenitment,
     resultPeriodComparisonByChannel
-  } = GetEngagementComparisonBy(
-    apiParams, 
-    params?.topKeyword
-  )
+  } = GetEngagementComparisonBy(apiParams, params?.topKeyword)
 
   const quickViewData = {
     resultFilterData: resultFilterData,
@@ -130,13 +122,13 @@ const EngagementGraphs = (data: Props) => {
         period: params?.period,
         fillter_keywords: params?.keywordIds
       })
-    } 
+    }
     if (
       params?.period === 'customrange' &&
       params?.endDate &&
       params?.previousEndDate &&
-      params?.date !== params?.endDate
-      && params?.previousDate !== params?.previousEndDate
+      params?.date !== params?.endDate &&
+      params?.previousDate !== params?.previousEndDate
     ) {
       setApiParams({
         campaign_id: params?.campaign,
@@ -186,6 +178,9 @@ const EngagementGraphs = (data: Props) => {
               resultFilterData={resultFilterData}
               loadingFilterData={loadingFilterData}
               keywordsColor={keywordGraphColors}
+              apiParams={apiParams}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (
