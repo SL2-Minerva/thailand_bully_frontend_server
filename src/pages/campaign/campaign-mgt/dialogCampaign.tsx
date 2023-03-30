@@ -82,6 +82,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
   const [checkKeywordOr, setCheckKeywordOr] = useState<boolean>(false)
   const [checkKeywordExclude, setCheckKeywordExclude] = useState<boolean>(false)
   const [keywordCount, setKeywordCount ] = useState<number>(3);
+  const initailAndColor = GenerateRandomColor()
 
   const [keywords, setKeywords] = useState([
     {
@@ -92,15 +93,17 @@ const DialogCampaign = (props: DialogInfoProps) => {
       keyword_exclude: [''],
       colors: GenerateRandomColor(),
       keyword_or_color: [GenerateRandomColor()],
-      keyword_and_color: [GenerateRandomColor()],
+      keyword_and_color: [initailAndColor],
       delete_keyword_or: [''],
       delete_keyword_and: [''],
       delete_keyword_exclude: [''],
-      color: GenerateRandomColor()
+      color: GenerateRandomColor(),
+      color_and:initailAndColor
     }
   ])
 
   function addKeyword() {
+    const andColor = GenerateRandomColor()
     const news = [
       ...keywords,
       {
@@ -111,11 +114,12 @@ const DialogCampaign = (props: DialogInfoProps) => {
         keyword_exclude: [''],
         colors: GenerateRandomColor(),
         keyword_or_color: [GenerateRandomColor()],
-        keyword_and_color: [GenerateRandomColor()],
+        keyword_and_color: [andColor],
         delete_keyword_or: [''],
         delete_keyword_and: [''],
         delete_keyword_exclude: [''],
-        color: GenerateRandomColor()
+        color: GenerateRandomColor(),
+        color_and: andColor
       }
     ]
     setKeywordCount(keywordCount + 3)
@@ -158,6 +162,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
   }
 
   function closeDialogBox() {
+    const andColor = GenerateRandomColor()
     setShow(false)
     setKeywords([
       {
@@ -168,11 +173,12 @@ const DialogCampaign = (props: DialogInfoProps) => {
         keyword_exclude: [''],
         colors: GenerateRandomColor(),
         keyword_or_color: [GenerateRandomColor()],
-        keyword_and_color: [GenerateRandomColor()],
+        keyword_and_color: [andColor],
         delete_keyword_or: [''],
         delete_keyword_and: [''],
         delete_keyword_exclude: [''],
-        color: GenerateRandomColor()
+        color: GenerateRandomColor(),
+        color_and: andColor,
       }
     ])
   }
@@ -274,6 +280,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
         setStatus(campaignStatus)
       }
     } else {
+      const andColor = GenerateRandomColor()
       setKeywordCount(3)
       setCampaignName('')
       setDescription('')
@@ -289,11 +296,12 @@ const DialogCampaign = (props: DialogInfoProps) => {
           keyword_exclude: [''],
           colors: GenerateRandomColor(),
           keyword_or_color: [GenerateRandomColor()],
-          keyword_and_color: [GenerateRandomColor()],
+          keyword_and_color: [andColor],
           delete_keyword_or: [''],
           delete_keyword_and: [''],
           delete_keyword_exclude: [''],
-          color: GenerateRandomColor()
+          color: GenerateRandomColor(),
+          color_and: andColor
         }
       ])
       setDate(null)

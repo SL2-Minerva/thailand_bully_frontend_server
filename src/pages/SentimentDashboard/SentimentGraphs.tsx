@@ -55,6 +55,7 @@ const SentimentGraph = (data: Props) => {
 
   const [highlight, setHighlight] = useState<string>('')
   const [apiParams, setApiParams] = useState<any>()
+  const [isLoading, setIsLoading] = useState(false)
 
   const { resultFilterData, loadingFilterData } = FilterByCampaignId(apiParams)
 
@@ -160,6 +161,9 @@ const SentimentGraph = (data: Props) => {
               highlight={highlight === 'chart2' ? true : false}
               resultFilterData={resultFilterData}
               loadingFilterData={loadingFilterData}
+              apiParams={apiParams}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (
@@ -479,6 +483,9 @@ const SentimentGraph = (data: Props) => {
         params={params}
         chartId={highlight}
         quickViewData={quickViewData}
+        apiParams={apiParams}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
     </>
   )

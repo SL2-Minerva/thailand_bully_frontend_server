@@ -21,6 +21,12 @@ import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import MessageDetailChannel from './MessageDetailChannel'
 
+// excel export
+// import axios, { AxiosRequestConfig } from 'axios'
+// import { API_PATH } from 'src/utils/const'
+// import authConfig from 'src/configs/auth'
+// import toast from 'react-hot-toast'
+
 interface Props {
   type: string
   chartId: string
@@ -29,6 +35,9 @@ interface Props {
   resultDailyChannel: any
   loadingDailyChannel: boolean
   keywordsColor: any
+  apiParams: any
+  isLoading: boolean
+  setIsLoading: any
 }
 
 const onCapture = () => {
@@ -89,7 +98,17 @@ export const chartLabel = (data: any) => {
 }
 
 const DailyMessageGraph = (props: Props) => {
-  const { type, chartId, params, highlight, resultDailyChannel, loadingDailyChannel } = props
+  const {
+    type,
+    chartId,
+    params,
+    highlight,
+    resultDailyChannel,
+    loadingDailyChannel
+
+    // apiParams,
+    // setIsLoading
+  } = props
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
@@ -333,6 +352,37 @@ const DailyMessageGraph = (props: Props) => {
     }
   }, [resultDailyChannel])
 
+  // const excelExport = () => {
+  //   setIsLoading(true)
+  //   const instance = axios.create({ baseURL: API_PATH })
+  //   const method = 'GET'
+  //   const url = `/export/export-overall`
+  //   const headers = {
+  //     Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+  //   }
+  //   const params = apiParams
+  //   const options: AxiosRequestConfig = {
+  //     url,
+  //     method,
+  //     responseType: 'blob',
+  //     headers,
+  //     params: params
+  //   }
+
+  //   return instance
+  //     .request<any>(options)
+  //     .then(response => {
+  //       const url = window.URL.createObjectURL(new Blob([response.data]))
+  //       setIsLoading(false)
+  //       saveAs(url, 'Overall Daily Messages.xlsx')
+  //       toast.success('Successfully Downloaded!')
+  //     })
+  //     .catch(() => {
+  //       setIsLoading(false)
+  //       toast.error('Somenthing went wrong')
+  //     })
+  // }
+
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 561, maxHeight: 561 }} square variant='outlined'>
       {loadingDailyChannel && <LinearProgress style={{ width: '100%' }} />}
@@ -408,6 +458,15 @@ const DailyMessageGraph = (props: Props) => {
               <Download fontSize='medium' sx={{ mr: 2 }} />
               PNG
             </MenuItem>
+            {/* <MenuItem
+              onClick={() => {
+                excelExport()
+                setAnchorEl(null)
+              }}
+            >
+              <MicrosoftExcel fontSize='medium' sx={{ mr: 2 }} />
+              Excel
+            </MenuItem> */}
           </Menu>
         </span>
       </div>

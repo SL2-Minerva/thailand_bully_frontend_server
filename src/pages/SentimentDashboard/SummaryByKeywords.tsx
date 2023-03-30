@@ -73,8 +73,8 @@ export function renderProgress(params: any) {
 }
 
 export const changeToFixedValue = (params: any) => {
-  if(!params) return ''
-  
+  if (!params) return ''
+
   return params?.value?.toFixed(2)
 }
 
@@ -115,10 +115,14 @@ const SummaryByKeywords = ({
 
   const reportNo = '5.2.019'
 
-
   const columns = [
     { field: 'keyword_name', headerName: 'Keywords', flex: 1, sortable: false },
-    { field: 'total_messages', headerName: 'Total Message', flex: 1 },
+    {
+      field: 'total_messages',
+      headerName: 'Total Message',
+      flex: 1,
+      valueGetter: (params: GridValueGetterParams) => `${params.row.total_messages?.toLocaleString('en-US')}`
+    },
     {
       field: 'percentage',
       headerName: ' %',

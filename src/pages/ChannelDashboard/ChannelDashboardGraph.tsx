@@ -50,11 +50,10 @@ const ChannelDashboardGraphs = (data: Props) => {
   const [highlight, setHighlight] = useState<string>('')
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
   const [apiParams, setApiParams] = useState<any>()
+  const [isLoading, setIsLoading] = useState(false)
 
   const { resultDailyChannel, resultPercentageChannelCurrent, resultPercentageChannelPrevious, loadingDailyChannel } =
-    GetDailyBy(
-      apiParams
-    )
+    GetDailyBy(apiParams)
   const {
     resultChannelByDay,
     resultChannelByAccount,
@@ -64,9 +63,7 @@ const ChannelDashboardGraphs = (data: Props) => {
     resultChannelBySentiment,
     resultChannelByTime,
     loadingChannelBy
-  } = GetChannelBy(
-    apiParams
-  )
+  } = GetChannelBy(apiParams)
 
   const {
     resultEngagementRate,
@@ -78,9 +75,7 @@ const ChannelDashboardGraphs = (data: Props) => {
     resultYoutubeComparison,
     resultGoogleComparison,
     loadingEngagementBy
-  } = GetEngagementBy(
-    apiParams
-  )
+  } = GetEngagementBy(apiParams)
 
   const {
     resultChannelSentimentLevel,
@@ -88,9 +83,7 @@ const ChannelDashboardGraphs = (data: Props) => {
     resultSentimentScore,
     resultSentimentScorePrevious,
     loadingSentimentBy
-  } = GetSentimentBy(
-   apiParams
-  )
+  } = GetSentimentBy(apiParams)
 
   const quickViewData = {
     resultDailyChannel: resultDailyChannel,
@@ -115,13 +108,13 @@ const ChannelDashboardGraphs = (data: Props) => {
         period: params?.period,
         fillter_keywords: params?.keywordIds
       })
-    } 
+    }
     if (
       params?.period === 'customrange' &&
       params?.endDate &&
       params?.previousEndDate &&
-      params?.date !== params?.endDate
-      && params?.previousDate !== params?.previousEndDate
+      params?.date !== params?.endDate &&
+      params?.previousDate !== params?.previousEndDate
     ) {
       setApiParams({
         campaign_id: params?.campaign,
@@ -165,6 +158,9 @@ const ChannelDashboardGraphs = (data: Props) => {
             resultDailyChannel={resultDailyChannel}
             loadingDailyChannel={loadingDailyChannel}
             keywordsColor={GraphicColors}
+            apiParams={apiParams}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -519,6 +515,9 @@ const ChannelDashboardGraphs = (data: Props) => {
         chartId={highlight}
         quickViewData={quickViewData}
         keywordsColor={GraphicColors}
+        apiParams={apiParams}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
     </>
   )

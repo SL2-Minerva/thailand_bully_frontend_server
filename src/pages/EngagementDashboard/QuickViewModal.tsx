@@ -32,10 +32,13 @@ interface DialogInfoProps {
   chartId?: string
   quickViewData: any
   keywordsColor?: any
+  apiParams: any
+  isLoading: boolean
+  setIsLoading: any
 }
 
 const QuickViewModal = (props: DialogInfoProps) => {
-  const { show, setShow, params, chartId, quickViewData, keywordsColor } = props
+  const { show, setShow, params, chartId, quickViewData, keywordsColor, apiParams, isLoading, setIsLoading } = props
 
   const theme = useTheme()
 
@@ -84,9 +87,10 @@ const QuickViewModal = (props: DialogInfoProps) => {
               chartId='Chart 2'
               resultFilterData={quickViewData?.resultFilterData}
               loadingFilterData={quickViewData?.loadingFilterData}
-              keywordsColor={
-                keywordsColor
-              }
+              keywordsColor={keywordsColor}
+              apiParams={apiParams}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart3' ? (
             <EngagementByDay
@@ -101,9 +105,7 @@ const QuickViewModal = (props: DialogInfoProps) => {
               chartId='Chart 3'
               resultBy={quickViewData?.resultEngagementByDay}
               loading={quickViewData?.loadingEngagementBy}
-              keywordsColor={
-                keywordsColor
-              }
+              keywordsColor={keywordsColor}
             />
           ) : chartId === 'chart4' ? (
             <EngagementByTime
@@ -118,9 +120,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               chartId='Chart 4'
               resultBy={quickViewData?.resultEngagementByTime}
               loading={quickViewData?.loadingEngagementBy}
-              keywordsColor={
-                keywordsColor
-              }/>
+              keywordsColor={keywordsColor}
+            />
           ) : chartId === 'chart5' ? (
             <EngagementByDevice
               white={whiteColor}
@@ -134,9 +135,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               chartId='Chart 5'
               resultBy={quickViewData?.resultEngagementByDevice}
               loading={quickViewData?.loadingEngagementBy}
-              keywordsColor={
-                keywordsColor
-              }/>
+              keywordsColor={keywordsColor}
+            />
           ) : chartId === 'chart6' ? (
             <EngagementByAccounts
               white={whiteColor}
@@ -150,9 +150,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               loading={quickViewData?.loadingEngagementBy}
               resultBy={quickViewData?.resultEngagementByAccount}
-              keywordsColor={
-                keywordsColor
-              }/>
+              keywordsColor={keywordsColor}
+            />
           ) : chartId === 'chart7' ? (
             <EngagementByChannel
               white={whiteColor}
@@ -166,9 +165,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               loading={quickViewData?.loadingEngagementBy}
               resultBy={quickViewData?.resultEngagementChannel}
-              keywordsColor={
-                keywordsColor
-              }/>
+              keywordsColor={keywordsColor}
+            />
           ) : chartId === 'chart8' ? (
             <EngagementByType
               white={whiteColor}
@@ -182,9 +180,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               chartId='Chart 8'
               loading={quickViewData?.loadingEngagementBy}
               resultBy={quickViewData?.resultKeywordByEngagementType}
-              keywordsColor={
-                keywordsColor
-              }/>
+              keywordsColor={keywordsColor}
+            />
           ) : chartId === 'chart10' ? (
             <DailyEngagementType
               white={whiteColor}
@@ -201,7 +198,11 @@ const QuickViewModal = (props: DialogInfoProps) => {
               loading={quickViewData?.loadingEngagementType}
               keywordsColor={
                 quickViewData?.loadingEngagementType && keywordsColor ? keywordsColor : EngagementTypeColors
-              }/>
+              }
+              apiParams={apiParams}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
           ) : chartId === 'chart11' ? (
             <EngagementTypeByDay
               white={whiteColor}
@@ -218,7 +219,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               resultBy={quickViewData?.resultEngagementTypeByDay}
               keywordsColor={
                 quickViewData?.loadingEngagementType && keywordsColor ? keywordsColor : EngagementTypeColors
-              }/>
+              }
+            />
           ) : chartId === 'chart12' ? (
             <EngagementTypeByTime
               white={whiteColor}
@@ -235,7 +237,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               resultBy={quickViewData?.resultEngagementTypeByTime}
               keywordsColor={
                 quickViewData?.loadingEngagementType && keywordsColor ? keywordsColor : EngagementTypeColors
-              }/>
+              }
+            />
           ) : chartId === 'chart13' ? (
             <EngagementTypeByDevice
               white={whiteColor}
@@ -252,7 +255,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               resultBy={quickViewData?.resultEngagementTypeByDevice}
               keywordsColor={
                 quickViewData?.loadingEngagementType && keywordsColor ? keywordsColor : EngagementTypeColors
-              }/>
+              }
+            />
           ) : chartId === 'chart14' ? (
             <EngagementTypeByAccount
               white={whiteColor}
@@ -268,7 +272,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               resultBy={quickViewData?.resultEngagementTypeByAccount}
               keywordsColor={
                 quickViewData?.loadingEngagementType && keywordsColor ? keywordsColor : EngagementTypeColors
-              }/>
+              }
+            />
           ) : chartId === 'chart15' ? (
             <EngagementTypeByChannel
               white={whiteColor}
@@ -284,7 +289,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               resultBy={quickViewData?.resultEngagementTypeByChannel}
               keywordsColor={
                 quickViewData?.loadingEngagementType && keywordsColor ? keywordsColor : EngagementTypeColors
-              }/>
+              }
+            />
           ) : (
             ''
           )}
