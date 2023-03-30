@@ -637,6 +637,9 @@ const EngagementGraphs = (data: Props) => {
           chartId={highlight}
           quickViewData={quickViewData}
           keywordsColor={keywordGraphColors}
+          apiParams={apiParams}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
         />
       </Grid>
     </>

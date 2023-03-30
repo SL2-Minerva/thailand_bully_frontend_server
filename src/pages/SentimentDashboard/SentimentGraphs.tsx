@@ -483,6 +483,9 @@ const SentimentGraph = (data: Props) => {
         params={params}
         chartId={highlight}
         quickViewData={quickViewData}
+        apiParams={apiParams}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
     </>
   )

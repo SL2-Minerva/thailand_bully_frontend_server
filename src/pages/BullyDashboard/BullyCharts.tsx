@@ -52,9 +52,7 @@ const BullyCharts = (data: Props) => {
   const borderColor = theme.palette.action.focus
   const gridLineColor = theme.palette.action.focus
 
-  const { resultBullyLevelPercentage, resultFilterData, loadingFilterData } = GetBullyDailyBy(
-   apiParams
-  )
+  const { resultBullyLevelPercentage, resultFilterData, loadingFilterData } = GetBullyDailyBy(apiParams)
   const {
     resultBullyByAccount,
     resultBullyByChannel,
@@ -63,9 +61,7 @@ const BullyCharts = (data: Props) => {
     resultBullyBySentiment,
     resultBullyByTime,
     loadingBullyBy
-  } = GetBullyBy(
-    apiParams
-  )
+  } = GetBullyBy(apiParams)
 
   const {
     resultBullyTypeByAccount,
@@ -77,9 +73,7 @@ const BullyCharts = (data: Props) => {
     loadingBullyTypeBy,
     resultBullyTypeByDaily,
     resultBullyTypeByPercentage
-  } = GetDailyTypeBy(
-    apiParams
-  )
+  } = GetDailyTypeBy(apiParams)
 
   const {
     resultShareOfChannelBullyLevels,
@@ -87,9 +81,7 @@ const BullyCharts = (data: Props) => {
     resultShareOfChannelChartBullyLevel,
     resultShareOfChannelPlatform,
     loadingShareOfChannelChart
-  } = GetBullyTypeBy(
-    apiParams
-  )
+  } = GetBullyTypeBy(apiParams)
 
   const quickViewData = {
     resultFilterData: resultFilterData,
@@ -129,13 +121,13 @@ const BullyCharts = (data: Props) => {
         period: params?.period,
         fillter_keywords: params?.keywordIds
       })
-    } 
+    }
     if (
       params?.period === 'customrange' &&
       params?.endDate &&
       params?.previousEndDate &&
-      params?.date !== params?.endDate
-      && params?.previousDate !== params?.previousEndDate
+      params?.date !== params?.endDate &&
+      params?.previousDate !== params?.previousEndDate
     ) {
       setApiParams({
         campaign_id: params?.campaign,
@@ -515,7 +507,11 @@ const BullyCharts = (data: Props) => {
                 loading={loadingShareOfChannelChart}
                 loadingChannel={loadingShareOfChannelChart}
                 type={bullyType}
-                chartId={<span>Chart 17 <br/> Report Level 2(6.2.021)</span>}
+                chartId={
+                  <span>
+                    Chart 17 <br /> Report Level 2(6.2.021)
+                  </span>
+                }
                 highlight={highlight === 'chart17' ? true : false}
                 title='Bully Level: Share of Channel'
               />
@@ -526,7 +522,12 @@ const BullyCharts = (data: Props) => {
                 loading={loadingShareOfChannelChart}
                 loadingChannel={loadingShareOfChannelChart}
                 type={bullyType}
-                chartId={<span>Chart 18<br/> Report Level 2(6.2.022)</span>}
+                chartId={
+                  <span>
+                    Chart 18
+                    <br /> Report Level 2(6.2.022)
+                  </span>
+                }
                 highlight={highlight === 'chart17' ? true : false}
                 title='Bully Type: Share of Channel'
               />
@@ -543,6 +544,9 @@ const BullyCharts = (data: Props) => {
         params={params}
         chartId={highlight}
         quickViewData={quickViewData}
+        apiParams={apiParams}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
     </>
   )

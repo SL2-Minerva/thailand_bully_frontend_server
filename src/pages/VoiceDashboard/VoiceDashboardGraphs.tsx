@@ -200,6 +200,9 @@ const VoiceDashboardGraphs = (data: Props) => {
         chartId={highlight}
         keywordsColor={keywordGraphColors}
         quickViewData={quickViewData}
+        apiParams={apiParams}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
     </>
   )

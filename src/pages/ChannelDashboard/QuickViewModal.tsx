@@ -26,10 +26,13 @@ interface DialogInfoProps {
   chartId?: string
   quickViewData: any
   keywordsColor: any
+  apiParams: any
+  isLoading: boolean
+  setIsLoading: any
 }
 
 const QuickViewModal = (props: DialogInfoProps) => {
-  const { show, setShow, params, chartId, quickViewData, keywordsColor } = props
+  const { show, setShow, params, chartId, quickViewData, keywordsColor, apiParams, isLoading, setIsLoading } = props
 
   const theme = useTheme()
 
@@ -72,6 +75,9 @@ const QuickViewModal = (props: DialogInfoProps) => {
               resultDailyChannel={quickViewData?.resultDailyChannel}
               loadingDailyChannel={quickViewData?.oadingDailyChannel}
               keywordsColor={keywordsColor}
+              apiParams={apiParams}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart3' ? (
             <ChannelByDay
