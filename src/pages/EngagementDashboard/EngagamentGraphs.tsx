@@ -348,6 +348,9 @@ const EngagementGraphs = (data: Props) => {
                 resultBy={resultEngagementPercentage}
                 loading={loadingEngagementType}
                 keywordsColor={EngagementTypeColors}
+                apiParams={apiParams}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
               />
             </Grid>
           ) : (

@@ -38,7 +38,7 @@ interface DialogInfoProps {
 }
 
 const QuickViewModal = (props: DialogInfoProps) => {
-  const { show, setShow, params, chartId, quickViewData, keywordsColor, apiParams, isLoading, setIsLoading  } = props
+  const { show, setShow, params, chartId, quickViewData, keywordsColor, apiParams, isLoading, setIsLoading } = props
 
   const theme = useTheme()
 
@@ -199,6 +199,9 @@ const QuickViewModal = (props: DialogInfoProps) => {
               keywordsColor={
                 quickViewData?.loadingEngagementType && keywordsColor ? keywordsColor : EngagementTypeColors
               }
+              apiParams={apiParams}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart11' ? (
             <EngagementTypeByDay

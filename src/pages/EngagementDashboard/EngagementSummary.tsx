@@ -37,7 +37,12 @@ const EngagementSummary = ({
 
   const columns = [
     { field: 'infulencer', headerName: 'Influencer', flex: 1, sortable: false },
-    { field: 'total', headerName: 'Total', flex: 1 },
+    {
+      field: 'total',
+      headerName: 'Total',
+      flex: 1,
+      valueGetter: (params: GridValueGetterParams) => `${params.row.total?.toLocaleString('en-US')}`
+    },
     { field: 'share', headerName: 'Share', flex: 1 },
     { field: 'comment', headerName: 'Comment', flex: 1 },
     { field: 'reaction', headerName: 'Reaction', flex: 1 },

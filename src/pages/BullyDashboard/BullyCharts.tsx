@@ -338,6 +338,9 @@ const BullyCharts = (data: Props) => {
             highlight={highlight === 'chart10' ? true : false}
             resultBullyTypeFilterData={resultBullyTypeByDaily}
             loadingBullyTypeFilterData={loadingBullyTypeBy}
+            apiParams={apiParams}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
