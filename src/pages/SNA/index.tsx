@@ -50,13 +50,13 @@ const SNA = () => {
   )
   const [campaign, setCampaign] = useState<string>('1')
   const [platformId, setPlatformId] = useState<string>('all')
-  const [limit, setLimit] = useState<string>('1000');
+  const [limit, setLimit] = useState<string>('1000')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
   const [period, setPeriod] = useState<string>('last7days')
   const [showPreviousDatepicker, setShowPreviousDatepicker] = useState<boolean>(false)
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
-  const [graphData, setGraphData] = useState<any>(initialGraph);
+  const [graphData, setGraphData] = useState<any>(initialGraph)
 
   // const [selectedValue, setSelectedValue] = useState('bySentiment')
 
@@ -98,7 +98,7 @@ const SNA = () => {
     if (type === 'campaign') {
       setCampaign(e.target.value)
       localStorage.setItem('campaign', e.target.value)
-    } else if (type==='limit'){
+    } else if (type === 'limit') {
       setLimit(e.target.value)
     } else {
       setPlatformId(e.target.value)
@@ -117,16 +117,16 @@ const SNA = () => {
     const [start, end] = dates
     setDate(start)
     setEndDate(end)
-    localStorage.setItem('startDate', moment(start)?.format('YYYY-MM-DD'));
-    localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'));
+    localStorage.setItem('startDate', moment(start)?.format('YYYY-MM-DD'))
+    localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'))
   }
 
   const handleOnChangePreviousDate = (dates: any) => {
     const [start, end] = dates
     setPreviousDate(start)
     setPreviousEndDate(end)
-    localStorage.setItem('previousStartDate', moment(start)?.format('YYYY-MM-DD'));
-    localStorage.setItem('previousEndDate', moment(end)?.format('YYYY-MM-DD'));
+    localStorage.setItem('previousStartDate', moment(start)?.format('YYYY-MM-DD'))
+    localStorage.setItem('previousEndDate', moment(end)?.format('YYYY-MM-DD'))
   }
 
   const periodSet = (value: any) => {
@@ -178,7 +178,7 @@ const SNA = () => {
 
   const checkKeywordId = (data: any, keywordId: string | number) => {
     const index = data.indexOf(keywordId)
-    
+
     if (index > -1) {
       data.splice(index, 1)
     } else {
@@ -197,6 +197,12 @@ const SNA = () => {
   // const [ graph, setGraph ] = useState(initialGraph);
 
   const options = {
+    interaction: {
+      dragNodes: true,
+      dragView: true,
+      zoomSpeed: 3,
+    },
+    manipulation: false,
     layout: {
       hierarchical: false
     },
@@ -223,15 +229,15 @@ const SNA = () => {
   }, [errorUserPermission])
 
   useEffect(() => {
-    if(resultCampaiganList?.length>0) {
+    if (resultCampaiganList?.length > 0) {
       const value = localStorage.getItem('campaign')
-      if(value) {
-        setCampaign(value) 
+      if (value) {
+        setCampaign(value)
       } else {
         setCampaign(resultCampaiganList[0]?.id)
       }
     }
-  },[resultCampaiganList])
+  }, [resultCampaiganList])
 
   useEffect(() => {
     if (localStorage.getItem('dateSelect')) {
@@ -240,14 +246,13 @@ const SNA = () => {
     }
   }, [])
 
-
   useEffect(() => {
     if (!loadingNetworkGraph && resultSentimentNetwork) {
       setGraphData(resultSentimentNetwork)
     } else {
       setGraphData(initialGraph)
     }
-  },[loadingNetworkGraph])
+  }, [loadingNetworkGraph])
 
   return (
     <Grid container spacing={2}>
@@ -457,7 +462,7 @@ const SNA = () => {
                     return (
                       <Grid item xs={6} md={1.2} key={index}>
                         <Button
-                         fullWidth
+                          fullWidth
                           sx={{
                             bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1

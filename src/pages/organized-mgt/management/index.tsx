@@ -27,6 +27,7 @@ import { OrganizationSearchList } from 'src/services/api/organization/organizati
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { useRouter } from 'next/router'
+import { UserPermission } from 'src/services/api/users/role'
 
 const OrganizedManagement = () => {
   const [showEdit, setShowEdit] = useState<boolean>(false)
@@ -43,9 +44,11 @@ const OrganizedManagement = () => {
   const router = useRouter()
 
   // const { list, total } = Organization.getList(reload, page)
+  const { resultPermission, errorUserPermission } = UserPermission()
+
   const { result_organization_group_list } = OrganzationGroupServiceList(reload)
   const { result_organization_type_list } = OrganizationTypeService(reload)
-  const { resultOrganizationSearch, total, errorOrganizationSearch } = OrganizationSearchList(
+  const { resultOrganizationSearch, total } = OrganizationSearchList(
     reload,
     page,
     name,
@@ -84,15 +87,25 @@ const OrganizedManagement = () => {
     }
   }, [total])
 
+  // useEffect(() => {
+  //   if (errorOrganizationSearch || errorUserPermission) {
+  //     window.localStorage.removeItem('userData')
+  //     window.localStorage.clear()
+  //     localStorage.clear()
+  //     router.push('/login')
+  //     window.location.reload()
+  //   }
+  // }, [errorOrganizationSearch, errorUserPermission])
+
   useEffect(() => {
-    if (errorOrganizationSearch) {
+    if (errorUserPermission) {
       window.localStorage.removeItem('userData')
       window.localStorage.clear()
       localStorage.clear()
       router.push('/login')
       window.location.reload()
     }
-  }, [errorOrganizationSearch])
+  }, [ errorUserPermission])
 
   useEffect(() => {
     setReload(!reload)
@@ -252,13 +265,20 @@ const OrganizedManagement = () => {
       <Grid item md={12} xs={12}>
         <Card>
           <CardContent>
-            <Box sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}>
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-                <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                  Add
-                </Button>
+            {resultPermission?.user?.authorized_create ? (
+              <Box
+                sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
+              >
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                  <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
+                    Add
+                  </Button>
+                </Box>
               </Box>
-            </Box>
+            ) : (
+              ''
+            )}
+
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
@@ -268,7 +288,7 @@ const OrganizedManagement = () => {
                     <TableCell align='center'>Organization Group</TableCell>
                     <TableCell align='center'>Organziation Type</TableCell>
                     <TableCell align='center'>Status</TableCell>
-                    <TableCell align='center'>Action</TableCell>
+                    {resultPermission?.user?.authorized_edit ? <TableCell align='center'>Action</TableCell> : ''}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -288,22 +308,30 @@ const OrganizedManagement = () => {
                         <TableCell align='center'>{row.name}</TableCell>
                         <TableCell align='center'>{row.group}</TableCell>
                         <TableCell align='center'>{row.type}</TableCell>
-                        <TableCell align='center'>
-                          <Switch
-                            key={index}
-                            checked={row.status === 1 ? true : row.status ? true : false}
-                            onChange={e => handleChange(index, row.id, e)}
-                          />
-                        </TableCell>
-                        <TableCell align='center'>
-                          <a href='#' style={{ color: 'grey' }}>
-                            <PencilOutline
-                              onClick={() => {
-                                handleEdit(index)
-                              }}
-                            />
-                          </a>
-                        </TableCell>
+                        {resultPermission?.user?.authorized_edit ? (
+                          <>
+                            <TableCell align='center'>
+                              <Switch
+                                key={index}
+                                checked={row.status === 1 ? true : row.status ? true : false}
+                                onChange={e => handleChange(index, row.id, e)}
+                              />
+                            </TableCell>
+                            <TableCell align='center'>
+                              <a href='#' style={{ color: 'grey' }}>
+                                <PencilOutline
+                                  onClick={() => {
+                                    handleEdit(index)
+                                  }}
+                                />
+                              </a>
+                            </TableCell>
+                          </>
+                        ) : (
+                          <TableCell align='center'>
+                            <Switch key={index} checked={row.status === 1 ? true : row.status ? true : false} />
+                          </TableCell>
+                        )}
                       </TableRow>
                     ))}
                 </TableBody>

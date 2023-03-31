@@ -19,6 +19,7 @@ import OrganizationTypeService from 'src/services/api/organization/OrganizationA
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { useRouter } from 'next/router'
+import { UserPermission } from 'src/services/api/users/role'
 
 const OrganizationType = () => {
   const [showEdit, setShowEdit] = useState<boolean>(false)
@@ -28,6 +29,7 @@ const OrganizationType = () => {
   const [action, setAction] = useState<string>('create')
   const [page, setPage] = useState(0)
   const [pageCount, setPageCount] = useState<number>(0)
+  const { resultPermission, errorUserPermission } = UserPermission()
 
   const toggleCreate = () => {
     setAction('create')
@@ -48,14 +50,14 @@ const OrganizationType = () => {
   }, [total])
 
   useEffect(() => {
-    if (error_domain_list) {
+    if (error_domain_list || errorUserPermission) {
       window.localStorage.removeItem('userData')
       window.localStorage.clear()
       localStorage.clear()
       router.push('/login')
       window.location.reload()
     }
-  }, [error_domain_list])
+  }, [error_domain_list, errorUserPermission])
 
   useEffect(() => {
     setReload(!reload)
@@ -98,22 +100,34 @@ const OrganizationType = () => {
           <CardContent>
             <CardContent>
               <TableContainer component={Paper}>
-                <Box
-                  sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
-                >
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-                    <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                      Add
-                    </Button>
+                {resultPermission?.user?.authorized_create ? (
+                  <Box
+                    sx={{
+                      p: 5,
+                      pb: 3,
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      alignItems: 'center',
+                      justifyContent: 'right'
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                      <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
+                        Add
+                      </Button>
+                    </Box>
                   </Box>
-                </Box>
+                ) : (
+                  ''
+                )}
+
                 <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                   <TableHead>
                     <TableRow>
                       <TableCell>Organizaton Type</TableCell>
                       <TableCell align='center'>Description</TableCell>
                       <TableCell align='center'>Status</TableCell>
-                      <TableCell align='center'>Action</TableCell>
+                      {resultPermission?.user?.authorized_edit ? <TableCell align='center'>Action</TableCell> : ''}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -132,22 +146,30 @@ const OrganizationType = () => {
                               {row.organization_type_name}
                             </TableCell>
                             <TableCell align='center'>{row.organization_type_description}</TableCell>
-                            <TableCell align='center'>
-                              <Switch
-                                key={index}
-                                checked={row.status === 1 ? true : row.status ? true : false}
-                                onChange={e => handleChange(index, row.id, e)}
-                              />
-                            </TableCell>
-                            <TableCell align='center'>
-                              <a href='#' style={{ color: 'grey' }}>
-                                <PencilOutline
-                                  onClick={() => {
-                                    handleEdit(index)
-                                  }}
-                                />
-                              </a>
-                            </TableCell>
+                            {resultPermission?.user?.authorized_edit ? (
+                              <>
+                                <TableCell align='center'>
+                                  <Switch
+                                    key={index}
+                                    checked={row.status === 1 ? true : row.status ? true : false}
+                                    onChange={e => handleChange(index, row.id, e)}
+                                  />
+                                </TableCell>
+                                <TableCell align='center'>
+                                  <a href='#' style={{ color: 'grey' }}>
+                                    <PencilOutline
+                                      onClick={() => {
+                                        handleEdit(index)
+                                      }}
+                                    />
+                                  </a>
+                                </TableCell>
+                              </>
+                            ) : (
+                              <TableCell align='center'>
+                                <Switch key={index} checked={row.status === 1 ? true : row.status ? true : false} />
+                              </TableCell>
+                            )}
                           </TableRow>
                         )
                       })}

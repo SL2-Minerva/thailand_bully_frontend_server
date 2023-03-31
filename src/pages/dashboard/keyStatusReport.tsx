@@ -90,7 +90,7 @@ const KeyStatusReport = (props: KeyStatusProps) => {
               </Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography variant='h5' sx={{ mt: 5, fontWeight: 'bold' }}>
+              <Typography variant='h6' sx={{ mt: 5, fontWeight: 'bold' }}>
                 <b>{totalValue}</b>
               </Typography>
             </Grid>
@@ -102,7 +102,7 @@ const KeyStatusReport = (props: KeyStatusProps) => {
               </Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography variant='h5' sx={{ mt: 5, fontWeight: 'bold' }}>
+              <Typography variant='h6' sx={{ mt: 5, fontWeight: 'bold' }}>
                 {averageValue}
               </Typography>
             </Grid>
