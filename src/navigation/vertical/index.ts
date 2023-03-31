@@ -116,7 +116,7 @@ const navigation = (): VerticalNavItemsType => {
       }
     : null
 
-  const OrganizationPermission = {
+  const OrganizationPermission = resultPermission?.user?.authorized_view ? {
     title: 'Organized MGT',
     icon: HomeAnalytics,
     children: [
@@ -133,7 +133,7 @@ const navigation = (): VerticalNavItemsType => {
         path: '/organized-mgt/management'
       }
     ]
-  }
+  } : null;
 
   const sourceMgt = resultIsAdmin
     ? {
