@@ -1,5 +1,5 @@
 import { StyledTooltip } from '../dashboard/overall'
-import { Card, CardHeader, Grid } from '@mui/material'
+import { Backdrop, Card, CardHeader, CircularProgress, Grid } from '@mui/material'
 import {
   FilterByCampaignId,
   GetPeriodComparison,
@@ -130,6 +130,9 @@ const SentimentGraph = (data: Props) => {
 
   return (
     <>
+      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
+        <CircularProgress color='inherit' />
+      </Backdrop>
       <Grid container spacing={3} mt={2}>
         {resultReportPermission?.includes('77') ? (
           <Grid id='chart1' item xs={12} md={4}>
@@ -184,6 +187,8 @@ const SentimentGraph = (data: Props) => {
               highlight={highlight === 'chart3' ? true : false}
               resultBy={resultSentimentByDay}
               loading={loadingSentimentByDay}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (
@@ -204,6 +209,8 @@ const SentimentGraph = (data: Props) => {
               highlight={highlight === 'chart4' ? true : false}
               loading={loadingSentimentByDay}
               resultBy={resultSentimentByTime}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (
@@ -224,6 +231,8 @@ const SentimentGraph = (data: Props) => {
               highlight={highlight === 'chart5' ? true : false}
               loading={loadingSentimentByDay}
               resultBy={resultSentimentByDevice}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (
@@ -244,6 +253,8 @@ const SentimentGraph = (data: Props) => {
               highlight={highlight === 'chart6' ? true : false}
               loading={loadingSentimentByDay}
               resultBy={resultSentimentByAccount}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (
@@ -265,6 +276,8 @@ const SentimentGraph = (data: Props) => {
               highlight={highlight === 'chart7' ? true : false}
               loading={loadingSentimentByDay}
               resultBy={resultSentimentByChannel}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (
@@ -285,6 +298,8 @@ const SentimentGraph = (data: Props) => {
               highlight={highlight === 'chart8' ? true : false}
               loading={loadingSentimentByDay}
               resultBy={resultSentimentByBullyLevel}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (
@@ -305,6 +320,8 @@ const SentimentGraph = (data: Props) => {
               highlight={highlight === 'chart9' ? true : false}
               loading={loadingSentimentByDay}
               resultBy={resultSentimentByBullyType}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (

@@ -22,6 +22,7 @@ import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import MessageDetail from './MessageDetail'
+import ExportExcel from '../VoiceDashboard/ExportExcel'
 
 // excel export
 // import axios, { AxiosRequestConfig } from 'axios'
@@ -98,10 +99,9 @@ const DailySenitment = (props: LineProps) => {
     chartId,
     highlight,
     resultFilterData,
-    loadingFilterData
-
-    // apiParams,
-    // setIsLoading
+    loadingFilterData,
+    apiParams,
+    setIsLoading
   } = props
 
   // const [ chartData, setChartData ] = useState();
@@ -455,15 +455,15 @@ const DailySenitment = (props: LineProps) => {
               PNG
             </MenuItem>
 
-            {/* <MenuItem
-              onClick={() => {
-                excelExport()
-                setAnchorEl(null)
-              }}
-            >
-              <MicrosoftExcel fontSize='medium' sx={{ mr: 2 }} />
-              Excel
-            </MenuItem> */}
+            <ExportExcel
+              setIsLoading={setIsLoading}
+              params={params}
+              apiParams={apiParams}
+              reportNo={reportNo}
+              setAnchorEl={setAnchorEl}
+              fileName='Daily Sentiment Type by Date(Sentiment).xlsx'
+              apiPath='/export/export-sentiment'
+            />
           </Menu>
         </span>
       </div>
