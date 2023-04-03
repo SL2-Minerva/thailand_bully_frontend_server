@@ -21,6 +21,7 @@ import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
+import ExportExcel from '../VoiceDashboard/ExportExcel'
 
 // excel export
 // import axios, { AxiosRequestConfig } from 'axios'
@@ -100,10 +101,9 @@ const DailyMessgesByBullyType = (props: LineProps) => {
     chartId,
     highlight,
     resultBullyTypeFilterData,
-    loadingBullyTypeFilterData
-
-    // apiParams,
-    // setIsLoading
+    loadingBullyTypeFilterData,
+    apiParams,
+    setIsLoading
   } = props
 
   // const [ chartData, setChartData ] = useState();
@@ -480,15 +480,15 @@ const DailyMessgesByBullyType = (props: LineProps) => {
               <Download fontSize='medium' sx={{ mr: 2 }} />
               PNG
             </MenuItem>
-            {/* <MenuItem
-              onClick={() => {
-                excelExport()
-                setAnchorEl(null)
-              }}
-            >
-              <MicrosoftExcel fontSize='medium' sx={{ mr: 2 }} />
-              Excel
-            </MenuItem> */}
+            <ExportExcel
+              setIsLoading={setIsLoading}
+              params={params}
+              apiParams={apiParams}
+              reportNo={reportNo}
+              setAnchorEl={setAnchorEl}
+              fileName='Bully Type: Daily Messages by Date.xlsx'
+              apiPath='/export/export-bully'
+            />
           </Menu>
         </span>
       </div>

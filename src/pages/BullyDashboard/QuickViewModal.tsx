@@ -104,6 +104,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               colorType='bullyDashboard'
               resultBy={quickViewData?.resultBullyByDay}
               loading={quickViewData?.loadingBullyBy}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart4' ? (
             <BullyLevelByTime
@@ -119,6 +121,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               colorType='bullyDashboard'
               resultBy={quickViewData?.resultBullyByTime}
               loading={quickViewData?.loadingBullyBy}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart5' ? (
             <BullyLevelByDevice
@@ -134,6 +138,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               loading={quickViewData?.loadingBullyBy}
               resultBy={quickViewData?.resultBullyByDevice}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart6' ? (
             <BullyLevelByAccount
@@ -149,6 +155,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               loading={quickViewData?.loadingBullyBy}
               resultBy={quickViewData?.resultBullyByAccount}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart7' ? (
             <BullyLevelByChannel
@@ -164,6 +172,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               loading={quickViewData?.loadingBullyBy}
               resultBy={quickViewData?.resultBullyByChannel}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart8' ? (
             <BullyLevelBySentiment
@@ -179,6 +189,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               loading={quickViewData?.loadingBullyBy}
               resultBy={quickViewData?.resultBullyBySentiment}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart10' ? (
             <DailyMessgesByBullyType
@@ -212,6 +224,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               loading={quickViewData?.loadingBullyTypeBy}
               resultBy={quickViewData?.resultBullyTypeByDay}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart12' ? (
             <BullyTypeByTime
@@ -227,6 +241,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               loading={quickViewData?.loadingBullyTypeBy}
               resultBy={quickViewData?.resultBullyTypeByTime}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart13' ? (
             <BullyTypeByDevice
@@ -242,6 +258,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               loading={quickViewData?.loadingBullyTypeBy}
               resultBy={quickViewData?.resultBullyTypeByDevice}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart14' ? (
             <BullyTypeByAccount
@@ -257,6 +275,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               loading={quickViewData?.loadingBullyTypeBy}
               resultBy={quickViewData?.resultBullyTypeByAccount}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart15' ? (
             <BullyTypeByChannel
@@ -272,6 +292,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               loading={quickViewData?.loadingBullyTypeBy}
               resultBy={quickViewData?.resultBullyTypeByChannel}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart16' ? (
             <BullyTypeBySentiment
@@ -287,6 +309,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               colorType='bullyDashboard'
               loading={quickViewData?.loadingBullyTypeBy}
               resultBy={quickViewData?.resultBullyTypeBySenitment}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : (
             ''

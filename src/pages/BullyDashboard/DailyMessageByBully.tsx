@@ -22,6 +22,7 @@ import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
+import ExportExcel from '../VoiceDashboard/ExportExcel'
 
 // excel export
 // import axios, { AxiosRequestConfig } from 'axios'
@@ -100,10 +101,9 @@ const DailyMessgeByBully = (props: LineProps) => {
     chartId,
     highlight,
     resultFilterData,
-    loadingFilterData
-
-    // apiParams,
-    // setIsLoading
+    loadingFilterData,
+    apiParams,
+    setIsLoading
   } = props
   const { t } = useTranslation()
 
@@ -364,37 +364,6 @@ const DailyMessgeByBully = (props: LineProps) => {
 
   const reportNo = '6.2.002'
 
-  // const excelExport = () => {
-  //   setIsLoading(true)
-  //   const instance = axios.create({ baseURL: API_PATH })
-  //   const method = 'GET'
-  //   const url = `/export/export-overall`
-  //   const headers = {
-  //     Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
-  //   }
-  //   const params = apiParams
-  //   const options: AxiosRequestConfig = {
-  //     url,
-  //     method,
-  //     responseType: 'blob',
-  //     headers,
-  //     params: params
-  //   }
-
-  //   return instance
-  //     .request<any>(options)
-  //     .then(response => {
-  //       const url = window.URL.createObjectURL(new Blob([response.data]))
-  //       setIsLoading(false)
-  //       saveAs(url, 'Overall Daily Messages.xlsx')
-  //       toast.success('Successfully Downloaded!')
-  //     })
-  //     .catch(() => {
-  //       setIsLoading(false)
-  //       toast.error('Somenthing went wrong')
-  //     })
-  // }
-
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} square variant='outlined'>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
@@ -464,15 +433,15 @@ const DailyMessgeByBully = (props: LineProps) => {
               <Download fontSize='medium' sx={{ mr: 2 }} />
               PNG
             </MenuItem>
-            {/* <MenuItem
-              onClick={() => {
-                excelExport()
-                setAnchorEl(null)
-              }}
-            >
-              <MicrosoftExcel fontSize='medium' sx={{ mr: 2 }} />
-              Excel
-            </MenuItem> */}
+            <ExportExcel
+              setIsLoading={setIsLoading}
+              params={params}
+              apiParams={apiParams}
+              reportNo={reportNo}
+              setAnchorEl={setAnchorEl}
+              fileName='Bully Level: Daily Messages by Date.xlsx'
+              apiPath='/export/export-bully'
+            />
           </Menu>
         </span>
       </div>
