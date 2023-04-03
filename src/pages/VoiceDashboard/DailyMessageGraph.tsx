@@ -6,7 +6,7 @@ import { Bar, Line, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2
 
 // ** Custom Components Imports
 import { StyledTooltip } from '../dashboard/overall'
-import { Information } from 'mdi-material-ui'
+import { Information, MicrosoftExcel } from 'mdi-material-ui'
 import { useEffect, useRef, useState, MouseEvent } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { InteractionItem } from 'chart.js'
@@ -21,10 +21,10 @@ import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 
 // excel export
-// import axios, { AxiosRequestConfig } from 'axios'
-// import { API_PATH } from 'src/utils/const'
-// import authConfig from 'src/configs/auth'
-// import toast from 'react-hot-toast'
+import axios, { AxiosRequestConfig } from 'axios'
+import { API_PATH } from 'src/utils/const'
+import authConfig from 'src/configs/auth'
+import toast from 'react-hot-toast'
 
 interface Props {
   type: string
@@ -101,9 +101,8 @@ const DailyMessageGraph = (props: Props) => {
     keywordsColor,
     resultDailyMessage,
     loadingDailyMessage,
-
-    // apiParams,
-    // setIsLoading
+    setIsLoading,
+    apiParams
   } = props
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -119,6 +118,7 @@ const DailyMessageGraph = (props: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const rowOptionsOpen = Boolean(anchorEl)
   const [chooseChart, setChooseChart] = useState<string>('bar')
+  const [paramsData, setParamsData] = useState<any>()
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -321,36 +321,77 @@ const DailyMessageGraph = (props: Props) => {
     setChooseChart(data)
   }
 
-  // const excelExport = () => {
-  //   setIsLoading(true)
-  //   const instance = axios.create({ baseURL: API_PATH })
-  //   const method = 'GET'
-  //   const url = `/export/export-overall`
-  //   const headers = {
-  //     Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
-  //   }
-  //   const params = apiParams
-  //   const options: AxiosRequestConfig = {
-  //     url,
-  //     method,
-  //     responseType: 'blob',
-  //     headers,
-  //     params: params
-  //   }
+  const excelExport = () => {
+    setIsLoading(true)
+    const instance = axios.create({ baseURL: API_PATH })
+    const method = 'GET'
+    const url = `/export/export-voice`
+    const headers = {
+      Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+    }
 
-  //   return instance
-  //     .request<any>(options)
-  //     .then(response => {
-  //       const url = window.URL.createObjectURL(new Blob([response.data]))
-  //       setIsLoading(false)
-  //       saveAs(url, 'Overall Daily Messages.xlsx')
-  //       toast.success('Successfully Downloaded!')
-  //     })
-  //     .catch(() => {
-  //       setIsLoading(false)
-  //       toast.error('Somenthing went wrong')
-  //     })
-  // }
+    // const params = apiParams
+    const options: AxiosRequestConfig = {
+      url,
+      method,
+      responseType: 'blob',
+      headers,
+      params: paramsData
+    }
+
+    return instance
+      .request<any>(options)
+      .then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        setIsLoading(false)
+        saveAs(url, 'Daily Messages(Voice).xlsx')
+        toast.success('Successfully Downloaded!')
+      })
+      .catch(() => {
+        setIsLoading(false)
+        toast.error('Somenthing went wrong')
+      })
+  }
+
+  useEffect(() => {
+    if (params) {
+      let paramData: any = {}
+      const todayDate = new Date()
+
+      if (
+        params?.period === 'customrange' &&
+        params?.previousDate !== todayDate &&
+        params?.previousEndDate !== todayDate
+      ) {
+        paramData = {
+          campaign_id: params?.campaign || '',
+          source: apiParams?.source || '',
+          start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
+          end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
+          period: params?.period,
+          start_date_period: params?.previousDate ? moment(params?.previousDate).format('YYYY-MM-DD') : '',
+          end_date_period: params?.previousEndDate ? moment(params?.previousEndDate).format('YYYY-MM-DD') : '',
+          report_number: reportNo,
+          page_name: params?.page
+        }
+      } else {
+        paramData = {
+          campaign_id: params?.campaign || '',
+          source: apiParams?.source || '',
+          start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
+          end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
+          period: params?.period,
+          report_number: reportNo,
+          page_name: params?.page,
+
+          // keyword_id: paramsId?.keywordId || keywordId || '',
+          // classification_id: paramsId?.classification_id || '',
+          // organization_id: paramsId?.organization_id || ''
+        }
+      }
+      setParamsData(paramData)
+    }
+  }, [params, apiParams])
 
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 400 }} square variant='outlined'>
@@ -429,7 +470,7 @@ const DailyMessageGraph = (props: Props) => {
               PNG
             </MenuItem>
 
-            {/* <MenuItem
+            <MenuItem
               onClick={() => {
                 excelExport()
                 setAnchorEl(null)
@@ -437,7 +478,7 @@ const DailyMessageGraph = (props: Props) => {
             >
               <MicrosoftExcel fontSize='medium' sx={{ mr: 2 }} />
               Excel
-            </MenuItem> */}
+            </MenuItem>
           </Menu>
         </span>
       </div>

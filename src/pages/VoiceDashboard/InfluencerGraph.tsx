@@ -23,6 +23,7 @@ import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
+import ExportExcel from './ExportExcel'
 
 const chartLabel = (data: any) => {
   if (!data) return []
@@ -60,7 +61,9 @@ const InfluencerGraph = ({
   highlight,
   resultNumbersOfAccounts,
   loadingNumbersOfAccounts,
-  keywordsColor
+  keywordsColor,
+  apiParams,
+  setIsLoading
 }: {
   chartId: string
   params: any
@@ -68,6 +71,8 @@ const InfluencerGraph = ({
   resultNumbersOfAccounts: any
   loadingNumbersOfAccounts: boolean
   keywordsColor: any
+  apiParams: any 
+  setIsLoading: any
 }) => {
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -420,10 +425,19 @@ const InfluencerGraph = ({
               <Download fontSize='medium' sx={{ mr: 2 }} />
               PNG
             </MenuItem>
+            <ExportExcel
+              setIsLoading={setIsLoading}
+              params={params}
+              apiParams={apiParams}
+              reportNo={reportNo}
+              setAnchorEl={setAnchorEl}
+              fileName = 'Number of Accounts(Voice).xlsx'
+              apiPath = '/export/export-voice'
+            />
           </Menu>
         </span>
       </div>
-      <CardContent id="numberOfAccounts">
+      <CardContent id='numberOfAccounts'>
         {showNoDataText ? (
           <div
             style={{

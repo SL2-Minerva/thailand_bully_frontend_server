@@ -11,6 +11,7 @@ import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
+import ExportExcel from '../ExportExcel'
 
 const onCapture = () => {
   const pictureId = document.getElementById('messagesBydays')
@@ -36,6 +37,8 @@ export interface LineProps {
   result: any
   loading: boolean
   keywordsColor?: any
+  apiParams: any
+  setIsLoading: any
 }
 
 export const chartLabel = (data: any) => {
@@ -54,8 +57,20 @@ export const chartLabel = (data: any) => {
 const MessagesByDays = (props: LineProps) => {
   const { t } = useTranslation()
 
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, result, loading, keywordsColor } =
-    props
+  const {
+    white,
+    labelColor,
+    borderColor,
+    gridLineColor,
+    chartId,
+    params,
+    highlight,
+    result,
+    loading,
+    keywordsColor,
+    setIsLoading,
+    apiParams
+  } = props
 
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -362,6 +377,15 @@ const MessagesByDays = (props: LineProps) => {
               <Download fontSize='medium' sx={{ mr: 2 }} />
               PNG
             </MenuItem>
+            <ExportExcel
+              setIsLoading={setIsLoading}
+              params={params}
+              apiParams={apiParams}
+              reportNo={reportNo}
+              setAnchorEl={setAnchorEl}
+              fileName = 'Daily Messages by Day(Voice).xlsx'
+              apiPath = '/export/export-voice'
+            />
           </Menu>
         </span>
       </div>

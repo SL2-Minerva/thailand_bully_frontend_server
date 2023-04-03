@@ -13,6 +13,7 @@ import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 import { lineOptions } from 'src/utils/const'
+import ExportExcel from '../ExportExcel'
 
 const onCapture = () => {
   const pictureId = document.getElementById('messageByTime')
@@ -25,8 +26,20 @@ const onCapture = () => {
 
 const MessagesByTime = (props: LineProps) => {
   const { t } = useTranslation()
-  const { white, labelColor, borderColor, gridLineColor, keywordsColor, chartId, params, highlight, result, loading } =
-    props
+  const {
+    white,
+    labelColor,
+    borderColor,
+    gridLineColor,
+    keywordsColor,
+    chartId,
+    params,
+    highlight,
+    result,
+    loading,
+    setIsLoading,
+    apiParams
+  } = props
 
   const [label, setLabel] = useState<string[]>([])
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
@@ -305,6 +318,15 @@ const MessagesByTime = (props: LineProps) => {
               <Download fontSize='medium' sx={{ mr: 2 }} />
               PNG
             </MenuItem>
+            <ExportExcel
+              setIsLoading={setIsLoading}
+              params={params}
+              apiParams={apiParams}
+              reportNo={reportNo}
+              setAnchorEl={setAnchorEl}
+              fileName='Daily Messages by Time(Voice).xlsx'
+              apiPath='/export/export-voice'
+            />
           </Menu>
         </span>
       </div>

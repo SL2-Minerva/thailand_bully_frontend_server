@@ -16,7 +16,7 @@ const FooterContent = () => {
       <Typography sx={{ mr: 2 }}>
         {`© ${new Date().getFullYear()}, Made By `}
         <Box component='span' sx={{ color: 'error.main' }}>
-          Cornea-AI Team
+          Cornea-AI
         </Box>
         <Link target='_blank' href='https://pixinvent.com/'>
 
