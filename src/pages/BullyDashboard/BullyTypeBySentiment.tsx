@@ -14,6 +14,7 @@ import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 import { lineOptions } from 'src/utils/const'
+import ExportExcel from '../VoiceDashboard/ExportExcel'
 
 const onCapture = () => {
   const pictureId = document.getElementById('typeBySentiment')
@@ -26,7 +27,19 @@ const onCapture = () => {
 
 const BullyTypeBySentiment = (props: LineProps) => {
   const { t } = useTranslation()
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
+  const {
+    white,
+    labelColor,
+    borderColor,
+    gridLineColor,
+    chartId,
+    params,
+    highlight,
+    resultBy,
+    loading,
+    apiParams,
+    setIsLoading
+  } = props
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const [label, setLabel] = useState<string[]>([])
@@ -317,6 +330,15 @@ const BullyTypeBySentiment = (props: LineProps) => {
               <Download fontSize='medium' sx={{ mr: 2 }} />
               PNG
             </MenuItem>
+            <ExportExcel
+              setIsLoading={setIsLoading}
+              params={params}
+              apiParams={apiParams}
+              reportNo={reportNo}
+              setAnchorEl={setAnchorEl}
+              fileName='Bully Type: Daily Messages by Sentiment.xlsx'
+              apiPath='/export/export-bully'
+            />
           </Menu>
         </span>
       </div>

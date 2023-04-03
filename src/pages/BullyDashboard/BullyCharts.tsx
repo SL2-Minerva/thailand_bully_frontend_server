@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button, Grid, useTheme } from '@mui/material'
+import { Backdrop, Button, CircularProgress, Grid, useTheme } from '@mui/material'
 
 import {
   GetBullyDailyBy,
@@ -144,6 +144,9 @@ const BullyCharts = (data: Props) => {
 
   return (
     <>
+      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
+        <CircularProgress color='inherit' />
+      </Backdrop>
       {resultReportPermission?.includes('93') ? (
         <Grid id='chart1' item xs={12} md={4}>
           <PercentageOfBully
@@ -198,6 +201,8 @@ const BullyCharts = (data: Props) => {
             highlight={highlight === 'chart3' ? true : false}
             resultBy={resultBullyByDay}
             loading={loadingBullyBy}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -219,6 +224,8 @@ const BullyCharts = (data: Props) => {
             highlight={highlight === 'chart4' ? true : false}
             resultBy={resultBullyByTime}
             loading={loadingBullyBy}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -240,6 +247,8 @@ const BullyCharts = (data: Props) => {
             highlight={highlight === 'chart5' ? true : false}
             resultBy={resultBullyByDevice}
             loading={loadingBullyBy}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -261,6 +270,8 @@ const BullyCharts = (data: Props) => {
             highlight={highlight === 'chart6' ? true : false}
             resultBy={resultBullyByAccount}
             loading={loadingBullyBy}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -282,6 +293,8 @@ const BullyCharts = (data: Props) => {
             highlight={highlight === 'chart7' ? true : false}
             resultBy={resultBullyByChannel}
             loading={loadingBullyBy}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -303,6 +316,8 @@ const BullyCharts = (data: Props) => {
             highlight={highlight === 'chart8' ? true : false}
             resultBy={resultBullyBySentiment}
             loading={loadingBullyBy}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -362,6 +377,8 @@ const BullyCharts = (data: Props) => {
             highlight={highlight === 'chart11' ? true : false}
             loading={loadingBullyTypeBy}
             resultBy={resultBullyTypeByDay}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -383,6 +400,8 @@ const BullyCharts = (data: Props) => {
             highlight={highlight === 'chart12' ? true : false}
             loading={loadingBullyTypeBy}
             resultBy={resultBullyTypeByTime}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -404,6 +423,8 @@ const BullyCharts = (data: Props) => {
             highlight={highlight === 'chart13' ? true : false}
             loading={loadingBullyTypeBy}
             resultBy={resultBullyTypeByDevice}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -425,6 +446,8 @@ const BullyCharts = (data: Props) => {
             highlight={highlight === 'chart14' ? true : false}
             loading={loadingBullyTypeBy}
             resultBy={resultBullyTypeByAccount}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -446,6 +469,8 @@ const BullyCharts = (data: Props) => {
             highlight={highlight === 'chart15' ? true : false}
             loading={loadingBullyTypeBy}
             resultBy={resultBullyTypeByChannel}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -467,6 +492,8 @@ const BullyCharts = (data: Props) => {
             highlight={highlight === 'chart16' ? true : false}
             loading={loadingBullyTypeBy}
             resultBy={resultBullyTypeBySenitment}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (

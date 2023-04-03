@@ -14,6 +14,7 @@ import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 import { lineOptions } from 'src/utils/const'
+import ExportExcel from '../VoiceDashboard/ExportExcel'
 
 const onCapture = () => {
   const pictureId = document.getElementById('typeByDevice')
@@ -25,7 +26,19 @@ const onCapture = () => {
 }
 
 const BullyTypeByDevice = (props: LineProps) => {
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
+  const {
+    white,
+    labelColor,
+    borderColor,
+    gridLineColor,
+    chartId,
+    params,
+    highlight,
+    resultBy,
+    loading,
+    apiParams,
+    setIsLoading
+  } = props
   const { t } = useTranslation()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [label, setLabel] = useState<string[]>([])
@@ -52,7 +65,6 @@ const BullyTypeByDevice = (props: LineProps) => {
   const handleChooseChart = (data: string) => {
     setChooseChart(data)
   }
-
 
   const chartRef = useRef()
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -254,25 +266,25 @@ const BullyTypeByDevice = (props: LineProps) => {
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text='Bully Type: Daily Message by Device' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip
-          arrow
-          title={
-            <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
-            </span>
-          }
-        >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text='Bully Type: Daily Message by Device' />}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <IconButton
+          <IconButton
             size='large'
             onClick={() => {
               handleChooseChart('bar')
@@ -317,6 +329,15 @@ const BullyTypeByDevice = (props: LineProps) => {
               <Download fontSize='medium' sx={{ mr: 2 }} />
               PNG
             </MenuItem>
+            <ExportExcel
+              setIsLoading={setIsLoading}
+              params={params}
+              apiParams={apiParams}
+              reportNo={reportNo}
+              setAnchorEl={setAnchorEl}
+              fileName='Bully Type: Daily Messages by Device.xlsx'
+              apiPath='/export/export-bully'
+            />
           </Menu>
         </span>
       </div>
