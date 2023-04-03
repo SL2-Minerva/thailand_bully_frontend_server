@@ -97,6 +97,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               chartId='Chart 3'
               loading={quickViewData?.loadingSentimentByDay}
               resultBy={quickViewData?.resultSentimentByDay}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart4' ? (
             <SentimentByTime
@@ -111,6 +113,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               chartId='Chart 4'
               loading={quickViewData?.loadingSentimentByDay}
               resultBy={quickViewData?.resultSentimentByTime}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart5' ? (
             <SentimentByDevice
@@ -125,6 +129,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               chartId='Chart 5'
               loading={quickViewData?.loadingSentimentByDay}
               resultBy={quickViewData?.resultSentimentByDevice}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart6' ? (
             <SentimentByAccount
@@ -139,6 +145,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               loading={quickViewData?.loadingSentimentByDay}
               resultBy={quickViewData?.resultSentimentByAccount}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart7' ? (
             <SentimentByChannel
@@ -153,6 +161,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               loading={quickViewData?.loadingSentimentByDay}
               resultBy={quickViewData?.resultSentimentByChannel}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart8' ? (
             <SentimentByBullyLevel
@@ -167,6 +177,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               params={params}
               loading={quickViewData?.loadingSentimentByDay}
               resultBy={quickViewData?.resultSentimentByBullyLevel}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart9' ? (
             <SentimentByBullyType
@@ -181,6 +193,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               chartId='Chart 9'
               loading={quickViewData?.loadingSentimentByDay}
               resultBy={quickViewData?.resultSentimentByBullyType}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : (
             ''
