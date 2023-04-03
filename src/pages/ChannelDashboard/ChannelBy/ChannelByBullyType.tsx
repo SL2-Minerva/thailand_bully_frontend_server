@@ -14,6 +14,7 @@ import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 import { lineOptions } from 'src/utils/const'
+import ExportExcel from 'src/pages/VoiceDashboard/ExportExcel'
 
 const onCapture = () => {
   const pictureId = document.getElementById('byBullyType')
@@ -26,7 +27,18 @@ const onCapture = () => {
 
 const ChannelByBullyType = (props: LineProps) => {
   const { t } = useTranslation()
-  const { labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
+  const {
+    labelColor,
+    borderColor,
+    gridLineColor,
+    chartId,
+    params,
+    highlight,
+    resultBy,
+    loading,
+    setIsLoading,
+    apiParams
+  } = props
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const [label, setLabel] = useState<string[]>([])
@@ -234,7 +246,7 @@ const ChannelByBullyType = (props: LineProps) => {
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <IconButton
+          <IconButton
             size='large'
             onClick={() => {
               handleChooseChart('bar')
@@ -279,11 +291,20 @@ const ChannelByBullyType = (props: LineProps) => {
               <Download fontSize='medium' sx={{ mr: 2 }} />
               PNG
             </MenuItem>
+            <ExportExcel
+              setIsLoading={setIsLoading}
+              params={params}
+              apiParams={apiParams}
+              reportNo={reportNo}
+              setAnchorEl={setAnchorEl}
+              fileName='Daily Messages by Bully Type(channel).xlsx'
+              apiPath='/export/export-channel'
+            />
           </Menu>
         </span>
       </div>
 
-      <CardContent id="byBullyType">
+      <CardContent id='byBullyType'>
         {showNoDataText ? (
           <div
             style={{

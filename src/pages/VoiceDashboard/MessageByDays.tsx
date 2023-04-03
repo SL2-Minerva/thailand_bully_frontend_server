@@ -26,6 +26,8 @@ export interface LineProps {
   loading?: any
   resultByPrevious?: any
   keywordsColor?: any
+  apiParams?:any
+  setIsLoading?: any
 }
 
 const MessagesByDays = (props: LineProps) => {

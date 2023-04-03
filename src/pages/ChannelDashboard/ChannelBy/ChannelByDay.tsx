@@ -14,6 +14,7 @@ import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 import { lineOptions } from 'src/utils/const'
+import ExportExcel from 'src/pages/VoiceDashboard/ExportExcel'
 
 const onCapture = () => {
   const pictureId = document.getElementById('channelByDay')
@@ -26,7 +27,19 @@ const onCapture = () => {
 
 const ChannelByDay = (props: LineProps) => {
   const { t } = useTranslation()
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, loading } = props
+  const {
+    white,
+    labelColor,
+    borderColor,
+    gridLineColor,
+    chartId,
+    params,
+    highlight,
+    resultBy,
+    loading,
+    setIsLoading,
+    apiParams
+  } = props
   const [chooseChart, setChooseChart] = useState<string>('bar')
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -281,7 +294,7 @@ const ChannelByDay = (props: LineProps) => {
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <IconButton
+          <IconButton
             size='large'
             onClick={() => {
               handleChooseChart('bar')
@@ -326,11 +339,20 @@ const ChannelByDay = (props: LineProps) => {
               <Download fontSize='medium' sx={{ mr: 2 }} />
               PNG
             </MenuItem>
+            <ExportExcel
+              setIsLoading={setIsLoading}
+              params={params}
+              apiParams={apiParams}
+              reportNo={reportNo}
+              setAnchorEl={setAnchorEl}
+              fileName='Daily Messages by Day(channel).xlsx'
+              apiPath='/export/export-channel'
+            />
           </Menu>
         </span>
       </div>
 
-      <CardContent id="channelByDay">
+      <CardContent id='channelByDay'>
         {showNoDataText ? (
           <div
             style={{
