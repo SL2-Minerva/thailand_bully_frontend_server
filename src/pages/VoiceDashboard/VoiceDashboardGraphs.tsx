@@ -125,6 +125,9 @@ const VoiceDashboardGraphs = (data: Props) => {
         params={params}
         resultMessagesByAll={resultMessagesByAll}
         loadingMessagesByAll={loadingMessagesByAll}
+        apiParams={apiParams}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
 
       {resultReportPermission?.includes('30') ? (
@@ -136,6 +139,8 @@ const VoiceDashboardGraphs = (data: Props) => {
             resultNumbersOfAccounts={resultNumbersOfAccounts}
             loadingNumbersOfAccounts={loadingNumbersOfAccountsComparison}
             keywordsColor={keywordGraphColors}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (

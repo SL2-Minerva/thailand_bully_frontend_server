@@ -33,7 +33,7 @@ interface DialogInfoProps {
 }
 
 const QuickViewModal = (props: DialogInfoProps) => {
-  const { show, setShow, params, chartId, keywordsColor, quickViewData, apiParams, isLoading, setIsLoading  } = props
+  const { show, setShow, params, chartId, keywordsColor, quickViewData, apiParams, isLoading, setIsLoading } = props
 
   const theme = useTheme()
 
@@ -94,6 +94,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               keywordsColor={keywordsColor}
               result={quickViewData?.resultMessagesByAll?.messageByDay}
               loading={quickViewData?.oadingMessagesByAll}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart4' ? (
             <MessagesByTime
@@ -109,6 +111,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               keywordsColor={keywordsColor}
               result={quickViewData?.resultMessagesByAll?.messageByTime}
               loading={quickViewData?.loadingMessagesByAll}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart5' ? (
             <MessagesByDevices
@@ -124,6 +128,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               keywordsColor={keywordsColor}
               result={quickViewData?.resultMessagesByAll?.messageByDevice}
               loading={quickViewData?.loadingMessagesByAll}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart6' ? (
             <MessagesByAccount
@@ -139,6 +145,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               keywordsColor={keywordsColor}
               result={quickViewData?.resultMessagesByAll?.messageByAccount}
               loading={quickViewData?.loadingMessagesByAll}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart7' ? (
             <MessagesByChannel
@@ -154,6 +162,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               keywordsColor={keywordsColor}
               result={quickViewData?.resultMessagesByAll?.messageByChannel}
               loading={quickViewData?.loadingMessagesByAll}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart8' ? (
             <MessagesBySentiment
@@ -169,6 +179,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               keywordsColor={keywordsColor}
               result={quickViewData?.resultMessagesByAll?.messageBySentiment}
               loading={quickViewData?.loadingMessagesByAll}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart9' ? (
             <MessagesByBullyLevel
@@ -184,6 +196,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               keywordsColor={keywordsColor}
               result={quickViewData?.resultMessagesByAll?.messageByLevel}
               loading={quickViewData?.loadingMessagesByAll}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : chartId === 'chart10' ? (
             <MessagesByBullyType
@@ -199,6 +213,8 @@ const QuickViewModal = (props: DialogInfoProps) => {
               keywordsColor={keywordsColor}
               result={quickViewData?.resultMessagesByAll?.messageByType}
               loading={quickViewData?.loadingMessagesByAll}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           ) : (
             ''

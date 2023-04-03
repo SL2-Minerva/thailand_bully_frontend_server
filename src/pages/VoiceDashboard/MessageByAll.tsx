@@ -13,19 +13,22 @@ const MessageByAll = ({
   params,
   highlight,
   resultReportPermission,
-  keywordsColor, 
-  resultMessagesByAll, 
-  loadingMessagesByAll
+  keywordsColor,
+  resultMessagesByAll,
+  loadingMessagesByAll,
+  setIsLoading,
+  apiParams
 }: {
   params: any
   highlight: string
   resultReportPermission: any
-  keywordsColor: any,
-  resultMessagesByAll : any,
-  loadingMessagesByAll : boolean
+  keywordsColor: any
+  resultMessagesByAll: any
+  loadingMessagesByAll: boolean
+  apiParams: any
+  isLoading: boolean
+  setIsLoading: any
 }) => {
-  
-
   const theme = useTheme()
 
   const whiteColor = '#fff'
@@ -53,7 +56,9 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageByDay}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart3' ? true : false}
-            keywordsColor = {keywordsColor}
+            keywordsColor={keywordsColor}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -74,8 +79,9 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageByTime}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart4' ? true : false}
-            keywordsColor = {keywordsColor}
-
+            keywordsColor={keywordsColor}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -96,7 +102,9 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageByDevice}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart5' ? true : false}
-            keywordsColor = {keywordsColor}
+            keywordsColor={keywordsColor}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -118,7 +126,9 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageByAccount}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart6' ? true : false}
-            keywordsColor = {keywordsColor}
+            keywordsColor={keywordsColor}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -140,7 +150,9 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageByChannel}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart7' ? true : false}
-            keywordsColor = {keywordsColor}
+            keywordsColor={keywordsColor}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -162,7 +174,9 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageBySentiment}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart8' ? true : false}
-            keywordsColor = {keywordsColor}
+            keywordsColor={keywordsColor}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -184,7 +198,9 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageByLevel}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart9' ? true : false}
-            keywordsColor = {keywordsColor}
+            keywordsColor={keywordsColor}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -206,7 +222,9 @@ const MessageByAll = ({
             result={resultMessagesByAll?.messageByType}
             loading={loadingMessagesByAll}
             highlight={highlight === 'chart10' ? true : false}
-            keywordsColor = {keywordsColor}
+            keywordsColor={keywordsColor}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (

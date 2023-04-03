@@ -412,6 +412,23 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                 defaultValue={defaultValue}
               />
             </Grid>
+            {/* <Grid item xs={12}>
+              <Autocomplete
+                disableCloseOnSelect
+                multiple
+                id='autocomplete-grouped'
+                groupBy={ReportOptions => ReportOptions?.groupName}
+                getOptionLabel={ReportOptions => ReportOptions?.title}
+                renderInput={params => <TextField {...params} label='Reports' />}
+                options={ReportOptions}
+                value={reportIds}
+                onChange = {(event: any, newValue: any) => {
+                  setReportIds(newValue);
+                }}
+
+                defaultValue={defaultValue}
+              />
+            </Grid> */}
           </Grid>
         </DialogContent>
         <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>

@@ -440,32 +440,32 @@ export const ReportOptions = [
     id: '12'
   },
   {
-    groupName: 'Overall Dashboard',
+    groupName: 'Word Clouds',
     title: 'Word Clouds',
     id: '13'
   },
   {
-    groupName: 'Overall Dashboard',
+    groupName: 'Word Clouds',
     title: 'Total Message(Word clouds)',
     id: '14'
   },
   {
-    groupName: 'Overall Dashboard',
+    groupName: 'Word Clouds',
     title: 'Word Clouds(Platforms)',
     id: '15'
   },
   {
-    groupName: 'Overall Dashboard',
+    groupName: 'Word Clouds',
     title: 'Accounts(Platforms)',
     id: '17'
   },
   {
-    groupName: 'Overall Dashboard',
+    groupName: 'Word Clouds',
     title: 'Word Clouds(Sentiment)',
     id: '18'
   },
   {
-    groupName: 'Overall Dashboard',
+    groupName: 'Word Clouds',
     title: 'Accounts(Sentiment)',
     id: '19'
   },
