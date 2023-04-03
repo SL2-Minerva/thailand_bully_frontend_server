@@ -291,7 +291,7 @@ const EngagementGraphs = (data: Props) => {
         ) : (
           ''
         )}
-        {resultReportPermission?.includes('61') ? (
+        {resultReportPermission?.includes('110') ? (
           <Grid item xs={12} md={12} id='chart8'>
             <EngagementByType
               white={whiteColor}

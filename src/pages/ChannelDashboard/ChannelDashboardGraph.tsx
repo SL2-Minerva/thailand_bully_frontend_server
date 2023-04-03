@@ -1,4 +1,4 @@
-import { Card, CardHeader, Grid } from '@mui/material'
+import { Backdrop, Card, CardHeader, CircularProgress, Grid } from '@mui/material'
 import { StyledTooltip } from '../dashboard/overall'
 import DailyMessageGraph from './DailyMessageGraph'
 
@@ -131,6 +131,9 @@ const ChannelDashboardGraphs = (data: Props) => {
 
   return (
     <>
+      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
+        <CircularProgress color='inherit' />
+      </Backdrop>
       {resultReportPermission?.includes('44') ? (
         <Grid item xs={12} md={4} id='chart1'>
           <DailyMessagePieChart
@@ -183,6 +186,8 @@ const ChannelDashboardGraphs = (data: Props) => {
             resultBy={resultChannelByDay}
             loading={loadingChannelBy}
             keywordsColor={GraphicColors}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -205,6 +210,8 @@ const ChannelDashboardGraphs = (data: Props) => {
             resultBy={resultChannelByTime}
             loading={loadingChannelBy}
             keywordsColor={GraphicColors}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -227,6 +234,8 @@ const ChannelDashboardGraphs = (data: Props) => {
             resultBy={resultChannelByDevice}
             loading={loadingChannelBy}
             keywordsColor={GraphicColors}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -249,6 +258,8 @@ const ChannelDashboardGraphs = (data: Props) => {
             resultBy={resultChannelByAccount}
             loading={loadingChannelBy}
             keywordsColor={GraphicColors}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -271,6 +282,8 @@ const ChannelDashboardGraphs = (data: Props) => {
             resultBy={resultChannelBySentiment}
             loading={loadingChannelBy}
             keywordsColor={GraphicColors}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -292,6 +305,8 @@ const ChannelDashboardGraphs = (data: Props) => {
             resultBy={resultChannelByBullyLevel}
             loading={loadingChannelBy}
             keywordsColor={GraphicColors}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (
@@ -313,6 +328,8 @@ const ChannelDashboardGraphs = (data: Props) => {
             resultBy={resultChannelByBullyType}
             loading={loadingChannelBy}
             keywordsColor={GraphicColors}
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
           />
         </Grid>
       ) : (

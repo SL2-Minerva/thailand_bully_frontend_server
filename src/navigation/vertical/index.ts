@@ -20,6 +20,7 @@ const navigation = (): VerticalNavItemsType => {
     showBullyDashboard,
     showEngagementDashboard,
     showSentimentDashboard,
+    showWordCloud,
     resultIsAdmin
   } = UserPermission()
 
@@ -96,7 +97,10 @@ const navigation = (): VerticalNavItemsType => {
   if (showBullyDashboard) {
     reportDashboardList.push(bullyDashboard)
   }
-  reportDashboardList.push(wordCloudDashboard)
+
+  if (showWordCloud) {
+    reportDashboardList.push(wordCloudDashboard)
+  }
   reportDashboardList.push(sna)
 
   const UserPermissionData = resultPermission?.user?.authorized_view
@@ -116,24 +120,26 @@ const navigation = (): VerticalNavItemsType => {
       }
     : null
 
-  const OrganizationPermission = resultPermission?.user?.authorized_view ? {
-    title: 'Organized MGT',
-    icon: HomeAnalytics,
-    children: [
-      {
-        title: 'Organized Group MGT',
-        path: '/organized-mgt/organized-group'
-      },
-      {
-        title: 'Organized Type MGT',
-        path: '/organized-mgt/organized-type'
-      },
-      {
+  const OrganizationPermission = resultPermission?.user?.authorized_view
+    ? {
         title: 'Organized MGT',
-        path: '/organized-mgt/management'
+        icon: HomeAnalytics,
+        children: [
+          {
+            title: 'Organized Group MGT',
+            path: '/organized-mgt/organized-group'
+          },
+          {
+            title: 'Organized Type MGT',
+            path: '/organized-mgt/organized-type'
+          },
+          {
+            title: 'Organized MGT',
+            path: '/organized-mgt/management'
+          }
+        ]
       }
-    ]
-  } : null;
+    : null
 
   const sourceMgt = resultIsAdmin
     ? {
@@ -200,8 +206,8 @@ const navigation = (): VerticalNavItemsType => {
     icon: VectorArrangeBelow,
     openInNewTab: true,
     externalLink: true,
-    path : 'http://202.44.231.31:8080'
-    
+    path: 'http://202.44.231.31:8080'
+
     // path: 'http://onlinecorpus.net'
   }
 

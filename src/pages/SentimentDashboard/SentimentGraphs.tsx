@@ -131,7 +131,7 @@ const SentimentGraph = (data: Props) => {
   return (
     <>
       <Grid container spacing={3} mt={2}>
-        {resultReportPermission?.includes('76') ? (
+        {resultReportPermission?.includes('77') ? (
           <Grid id='chart1' item xs={12} md={4}>
             <PercentageOfSentiments
               resultFilterData={resultFilterData}
@@ -145,7 +145,7 @@ const SentimentGraph = (data: Props) => {
         ) : (
           ''
         )}
-        {resultReportPermission?.includes('77') ? (
+        {resultReportPermission?.includes('76') ? (
           <Grid id='chart2' item xs={12} md={8}>
             <DailySenitment
               white={whiteColor}

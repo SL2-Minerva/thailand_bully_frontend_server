@@ -1,7 +1,7 @@
 // export const API_PATH = process.env.NEXT_PUBLIC_APP_ENV === 'localhost' ? 'http://127.0.0.1:8000/api' : 'http://202.44.231.31/api';
 
 export const API_PATH =
-  process.env.NEXT_PUBLIC_APP_ENV === 'localhost' ? 'http://127.0.0.1:8000/api' : 'https://cornea-analysis.com/api'
+  process.env.NEXT_PUBLIC_APP_ENV === 'localhost' ? 'http://127.0.0.1:8001/api' : 'https://cornea-analysis.com/api'
 
 export const lineOptions = {
   responsive: true,
@@ -691,6 +691,11 @@ export const ReportOptions = [
   },
   {
     groupName: 'Engagement Dashboard',
+    title: 'Engagement Trans by Engagement Type',
+    id: '110'
+  },
+  {
+    groupName: 'Engagement Dashboard',
     title: 'Percentage of Engagement Type ',
     id: '64'
   },
@@ -816,7 +821,7 @@ export const ReportOptions = [
   },
   {
     groupName: 'Sentiment Dashboard',
-    title: 'Engagement Type Comparison',
+    title: 'Sentiment Type Comparison',
     id: '89'
   },
   {
@@ -831,7 +836,7 @@ export const ReportOptions = [
   },
   {
     groupName: 'Sentiment Dashboard',
-    title: 'Keywords',
+    title: 'Sentiment Type by Keyword',
     id: '92'
   },
   {
