@@ -61,25 +61,37 @@ export const chartLabel = (data: any) => {
   let labels: any[] = []
 
   // let labelsArrayLength;
-  const labelValue: string[] = []
+  const labelValue: any[] = []
 
   for (let i = 0; i < data?.length; i++) {
     const dataValue = data[i]?.value
     const label: any[] = []
 
     for (let j = 0; j < dataValue?.length; j++) {
-      label.push(dataValue[j]?.date)
+      label.push(dataValue[j]?.date || dataValue[j]?.date_m)
     }
 
     labels = [...labels, ...label]
   }
 
+  // if (labels && labels?.length > 0) {
+  //   const filterArray = [...new Set(labels)]
+  //   for (let i = 0; i < filterArray?.length; i++) {
+  //     labelValue.push(moment(filterArray[i]).format('DD/MM/YYYY'))
+  //   }
+  //   labelValue.sort()
+  // }
+
   if (labels && labels?.length > 0) {
     const filterArray = [...new Set(labels)]
     for (let i = 0; i < filterArray?.length; i++) {
-      labelValue.push(moment(filterArray[i]).format('DD/MM/YYYY'))
+      labelValue.push(new Date(filterArray[i]));
     }
-    labelValue.sort()
+    labelValue.sort((date1, date2) => date1 - date2);
+
+    for (let i = 0; i < labelValue?.length; i++) {
+      labelValue[i] = moment(labelValue[i]).format('DD/MM/YYYY')
+    }
   }
 
   return labelValue
@@ -279,7 +291,7 @@ const DailyEngagement = (props: LineProps) => {
       const total = data[i]?.value
 
       const modifiedData = labels.map((node: any) => {
-        const oldInfo = total.find((item: any) => moment(item?.date).format('DD/MM/YYYY') === node)
+        const oldInfo = total.find((item: any) => moment(item?.date || item?.date_m).format('DD/MM/YYYY') === node)
         if (oldInfo) {
           return {
             ...node,

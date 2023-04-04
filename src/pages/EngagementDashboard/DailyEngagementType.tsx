@@ -51,7 +51,7 @@ const chartLabel = (data: any) => {
 
   let labels: any[] = []
   let labelsArrayLength
-  const labelValue: string[] = []
+  const labelValue: any[] = []
   for (let i = 0; i < data?.length; i++) {
     const label = data[i]?.value
     if (data?.length - 1 !== i) {
@@ -67,11 +67,22 @@ const chartLabel = (data: any) => {
     }
   }
 
+  // if (labels?.length > 0) {
+  //   for (let i = 0; i < labels?.length; i++) {
+  //     labelValue.push(moment(labels[i]?.date_m).format('DD/MM/YYYY'))
+  //   }
+  //   labelValue.sort()
+  // }
+
   if (labels?.length > 0) {
     for (let i = 0; i < labels?.length; i++) {
-      labelValue.push(moment(labels[i]?.date_m).format('DD/MM/YYYY'))
+      labelValue.push(new Date(labels[i]?.date_m))
     }
-    labelValue.sort()
+    labelValue.sort((date1, date2) => date1 - date2);
+
+    for (let i = 0; i < labelValue?.length; i++) {
+      labelValue[i] = moment(labelValue[i]).format('DD/MM/YYYY')
+    }
   }
 
   return labelValue
