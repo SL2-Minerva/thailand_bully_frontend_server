@@ -13,6 +13,7 @@ import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 import { lineOptions } from 'src/utils/const'
+import ExportExcel from '../VoiceDashboard/ExportExcel'
 
 const onCapture = () => {
   const pictureId = document.getElementById('byTime')
@@ -36,7 +37,9 @@ const EngagementByTime = (props: LineProps) => {
     highlight,
     loading,
     resultBy,
-    keywordsColor
+    keywordsColor,
+    apiParams,
+    setIsLoading
   } = props
 
   const [label, setLabel] = useState<string[]>([])
@@ -317,6 +320,15 @@ const EngagementByTime = (props: LineProps) => {
               <Download fontSize='medium' sx={{ mr: 2 }} />
               PNG
             </MenuItem>
+            <ExportExcel
+              setIsLoading={setIsLoading}
+              params={params}
+              apiParams={apiParams}
+              reportNo={reportNo}
+              setAnchorEl={setAnchorEl}
+              fileName='Daily Engagement Trans by Time.xlsx'
+              apiPath='/export/export-engagement'
+            />
           </Menu>
         </span>
       </div>

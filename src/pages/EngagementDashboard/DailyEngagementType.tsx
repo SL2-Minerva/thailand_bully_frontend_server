@@ -18,6 +18,7 @@ import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
+import ExportExcel from '../VoiceDashboard/ExportExcel'
 
 // excel export
 // import axios, { AxiosRequestConfig } from 'axios'
@@ -97,10 +98,9 @@ const DailyEngagementType = (props: LineProps) => {
     highlight,
     resultBy,
     loading,
-    keywordsColor
-
-    // apiParams,
-    // setIsLoading
+    keywordsColor,
+    apiParams,
+    setIsLoading
   } = props
 
   // const [ chartData, setChartData ] = useState();
@@ -451,15 +451,15 @@ const DailyEngagementType = (props: LineProps) => {
               <Download fontSize='medium' sx={{ mr: 2 }} />
               PNG
             </MenuItem>
-            {/* <MenuItem
-              onClick={() => {
-                excelExport()
-                setAnchorEl(null)
-              }}
-            >
-              <MicrosoftExcel fontSize='medium' sx={{ mr: 2 }} />
-              Excel
-            </MenuItem> */}
+            <ExportExcel
+              setIsLoading={setIsLoading}
+              params={params}
+              apiParams={apiParams}
+              reportNo={reportNo}
+              setAnchorEl={setAnchorEl}
+              fileName='Daily Engagement Type by Date.xlsx'
+              apiPath='/export/export-engagement'
+            />
           </Menu>
         </span>
       </div>
