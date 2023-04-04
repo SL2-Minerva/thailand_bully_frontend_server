@@ -1,4 +1,4 @@
-import { Button, Grid } from '@mui/material'
+import { Backdrop, Button, CircularProgress, Grid } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const'
 
@@ -145,6 +145,9 @@ const EngagementGraphs = (data: Props) => {
 
   return (
     <>
+      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
+        <CircularProgress color='inherit' />
+      </Backdrop>
       <Grid container spacing={3} mt={2}>
         {resultReportPermission?.includes('57') ? (
           <Grid id='chart1' item xs={12} md={4}>
@@ -202,6 +205,8 @@ const EngagementGraphs = (data: Props) => {
               resultBy={resultEngagementByDay}
               loading={loadingEngagementBy}
               keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (
@@ -223,6 +228,8 @@ const EngagementGraphs = (data: Props) => {
               resultBy={resultEngagementByTime}
               loading={loadingEngagementBy}
               keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (
@@ -244,6 +251,8 @@ const EngagementGraphs = (data: Props) => {
               resultBy={resultEngagementByDevice}
               loading={loadingEngagementBy}
               keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (
@@ -265,6 +274,8 @@ const EngagementGraphs = (data: Props) => {
               loading={loadingEngagementBy}
               resultBy={resultEngagementByAccount}
               keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (
@@ -286,6 +297,8 @@ const EngagementGraphs = (data: Props) => {
               loading={loadingEngagementBy}
               resultBy={resultEngagementChannel}
               keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (
@@ -307,6 +320,8 @@ const EngagementGraphs = (data: Props) => {
               loading={loadingEngagementBy}
               resultBy={resultKeywordByEngagementType}
               keywordsColor={keywordGraphColors ?? EngagementTransChartColor}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
             />
           </Grid>
         ) : (
@@ -373,6 +388,8 @@ const EngagementGraphs = (data: Props) => {
                 resultBy={resultEngagementTypeByDay}
                 loading={loadingEngagementType}
                 keywordsColor={EngagementTypeColors}
+                apiParams={apiParams}
+                setIsLoading={setIsLoading}
               />
             </Grid>
           ) : (
@@ -395,6 +412,8 @@ const EngagementGraphs = (data: Props) => {
                 resultBy={resultEngagementTypeByTime}
                 loading={loadingEngagementType}
                 keywordsColor={EngagementTypeColors}
+                apiParams={apiParams}
+                setIsLoading={setIsLoading}
               />
             </Grid>
           ) : (
@@ -417,6 +436,8 @@ const EngagementGraphs = (data: Props) => {
                 resultBy={resultEngagementTypeByDevice}
                 loading={loadingEngagementType}
                 keywordsColor={EngagementTypeColors}
+                apiParams={apiParams}
+                setIsLoading={setIsLoading}
               />
             </Grid>
           ) : (
@@ -438,6 +459,8 @@ const EngagementGraphs = (data: Props) => {
                 resultBy={resultEngagementTypeByAccount}
                 loading={loadingEngagementType}
                 keywordsColor={EngagementTypeColors}
+                apiParams={apiParams}
+                setIsLoading={setIsLoading}
               />
             </Grid>
           ) : (
@@ -460,6 +483,8 @@ const EngagementGraphs = (data: Props) => {
                 resultBy={resultEngagementTypeByChannel}
                 loading={loadingEngagementType}
                 keywordsColor={EngagementTypeColors}
+                apiParams={apiParams}
+                setIsLoading={setIsLoading}
               />
             </Grid>
           ) : (
