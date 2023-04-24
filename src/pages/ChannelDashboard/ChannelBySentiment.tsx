@@ -127,7 +127,7 @@ const ChannelBySentiment = ({
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title={<Translations text='Channel by Sentiement' />}
+            title={<Translations text='Channel by Sentiment' />}
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           />
           <StyledTooltip

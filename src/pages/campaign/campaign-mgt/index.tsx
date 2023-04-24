@@ -36,7 +36,7 @@ const CampaignManagement = () => {
   const router = useRouter()
   const [campaignName, setCampaignName] = useState<string>('')
 
-  const [organization, setOrganization] = useState<string>('')
+  const [organization, setOrganization] = useState<string>(localStorage.getItem('organizationId') || '')
   const [status, setStatus] = useState<string>('')
   const [date, setDate] = useState<Date | null>(null)
   const [endDate, setEndDate] = useState<Date | null>(null)
