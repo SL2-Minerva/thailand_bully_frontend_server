@@ -124,12 +124,14 @@ const KeywordForm = (props: any) => {
     if (type === 'keyword_or') {
       // console.log(values, i, values[i])
       values[i].keyword_or = newTextKeyword
-      setKeywordCount(keywordCount + 1)
+     
+      // setKeywordCount(keywordCount + 1)
     }
 
     if (type === 'keyword_and') {
       values[i].keyword_and = [...list, '']
-      setKeywordCount(keywordCount + 1)
+      
+      // setKeywordCount(keywordCount + 1)
     }
 
     if (type === 'keyword_exclude') {
@@ -147,13 +149,15 @@ const KeywordForm = (props: any) => {
     if (type === 'keyword_or') {
       values[indexValue].keyword_or = news
       values[indexValue].delete_keyword_or = delete_keyword_or ? [...delete_keyword_or, removed[0]] : removed
-      setKeywordCount(keywordCount - 1)
+     
+      // setKeywordCount(keywordCount - 1)
     }
 
     if (type === 'keyword_and') {
       values[indexValue].keyword_and = news
       values[indexValue].delete_keyword_and = delete_keyword_and ? [...delete_keyword_and, removed[0]] : removed
-      setKeywordCount(keywordCount - 1)
+      
+      // setKeywordCount(keywordCount - 1)
     }
 
     if (type === 'keyword_exclude') {
@@ -209,18 +213,32 @@ const KeywordForm = (props: any) => {
 
   function handleTextKeyword(i: number, e: any, list: any, current: any, type: any, indexValue: number) {
     let textKeywords
+
+    if(!e.target.value && type !=='keyword_exclude') {
+      const keywordsCounting = keywordCount - 2;
+      setKeywordCount(keywordsCounting)
+
+    }
+
     if (list.length <= 0) {
       textKeywords = [...list, e.target.value]
       const checkInputKeywords = CheckKeywords(e.target.value, keywords)
 
       // setCheckKeyword(checkInputKeywords)
 
+      console.log("events", e.target.value, e.target.value.length)
       if (type === 'keyword_or') {
         setCheckKeywordOr(checkInputKeywords)
+        if(e.target.value?.length === 1) {
+          setKeywordCount(keywordCount + 1)
+        }
       }
 
       if (type === 'keyword_and') {
         setCheckKeywordAnd(checkInputKeywords)
+        if(e.target.value?.length === 1) {
+          setKeywordCount(keywordCount + 1)
+        }
       }
 
       if (type === 'keyword_exclude') {
@@ -232,12 +250,21 @@ const KeywordForm = (props: any) => {
       const checkInputKeywords = CheckKeywords(e.target.value, keywords)
 
       // setCheckKeyword(checkInputKeywords)
+      console.log("events", e.target.value, e.target.value.length)
+
       if (type === 'keyword_or') {
         setCheckKeywordOr(checkInputKeywords)
+        if(e.target.value?.length  === 1) {
+          setKeywordCount(keywordCount + 1)
+        }
+        
       }
 
       if (type === 'keyword_and') {
         setCheckKeywordAnd(checkInputKeywords)
+        if(e.target.value?.length === 1) {
+          setKeywordCount(keywordCount + 1)
+        }
       }
 
       if (type === 'keyword_exclude') {

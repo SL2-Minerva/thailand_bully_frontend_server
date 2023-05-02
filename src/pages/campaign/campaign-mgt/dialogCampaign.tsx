@@ -81,7 +81,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
   const [checkKeywordAnd, setCheckKeywordAnd] = useState<boolean>(false)
   const [checkKeywordOr, setCheckKeywordOr] = useState<boolean>(false)
   const [checkKeywordExclude, setCheckKeywordExclude] = useState<boolean>(false)
-  const [keywordCount, setKeywordCount ] = useState<number>(3);
+  const [keywordCount, setKeywordCount ] = useState<number>(1);
   const initailAndColor = GenerateRandomColor()
 
   const [keywords, setKeywords] = useState([
@@ -122,13 +122,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
         color_and: andColor
       }
     ]
-    setKeywordCount(keywordCount + 3)
+    setKeywordCount(keywordCount + 1)
     setKeywords(news)
   }
 
   function removeKeyword(current: any) {
     const results = keywords.filter(keyword => keyword.id !== current.id)
-    setKeywordCount(keywordCount - 3)
+    setKeywordCount(keywordCount - 1)
     setKeywords(results)
   }
 
@@ -281,7 +281,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
       }
     } else {
       const andColor = GenerateRandomColor()
-      setKeywordCount(3)
+      setKeywordCount(1)
       setCampaignName('')
       setDescription('')
       setDomain('')
