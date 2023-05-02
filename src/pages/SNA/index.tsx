@@ -200,7 +200,7 @@ const SNA = () => {
     interaction: {
       dragNodes: true,
       dragView: true,
-      zoomSpeed: 3,
+      zoomSpeed: 3
     },
     manipulation: false,
     layout: {
@@ -508,7 +508,27 @@ const SNA = () => {
             <Grid item xs={12}>
               {resultNetworkGraph ? (
                 <>
-                  <Graph graph={graphData} options={options} />
+                  <Graph
+                    graph={graphData}
+                    options={options}
+                    events={{
+                      selectNode: event => {
+                        const { nodes } = event
+                        if (nodes.length == 1) {
+                          const nodesData = resultSentimentNetwork?.nodes;
+                          
+                          for(let i = 0; i<nodesData?.length; i++) {
+
+                            if(nodes[0] === nodesData[i].id)
+                            {
+                              window.open(nodesData[i].link_message, '_blank');
+                              break;
+                            }
+                          }
+                        }
+                      }
+                    }}
+                  />
                 </>
               ) : (
                 <div

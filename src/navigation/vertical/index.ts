@@ -10,6 +10,7 @@ import VectorArrangeBelow from 'mdi-material-ui/VectorArrangeBelow'
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
 import { UserPermission } from 'src/services/api/users/role'
+import { ClipboardTextClockOutline } from 'mdi-material-ui'
 
 const navigation = (): VerticalNavItemsType => {
   const {
@@ -211,6 +212,12 @@ const navigation = (): VerticalNavItemsType => {
     // path: 'http://onlinecorpus.net'
   }
 
+  const log = {
+    title: 'Activity Log',
+    path : '/ActivityLog',
+    icon: ClipboardTextClockOutline
+  }
+
   const sideMenuBar: any[] = []
 
   if (UserPermissionData) {
@@ -232,7 +239,7 @@ const navigation = (): VerticalNavItemsType => {
   // if (ContentPermission) {
   //   sideMenuBar.push(ContentPermission)
   // }
-
+  sideMenuBar.push(log);
   if (LinkOut) {
     sideMenuBar.push(LinkOut)
   }
