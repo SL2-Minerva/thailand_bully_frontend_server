@@ -92,8 +92,7 @@ const SNAByBullyType = () => {
     if (type === 'campaign') {
       setCampaign(e.target.value)
       localStorage.setItem('campaign', e.target.value)
-
-    } else if (type==='limit'){
+    } else if (type === 'limit') {
       setLimit(e.target.value)
     } else {
       setPlatformId(e.target.value)
@@ -112,21 +111,21 @@ const SNAByBullyType = () => {
     const [start, end] = dates
     setDate(start)
     setEndDate(end)
-    localStorage.setItem('startDate', moment(start)?.format('YYYY-MM-DD'));
-    localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'));
+    localStorage.setItem('startDate', moment(start)?.format('YYYY-MM-DD'))
+    localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'))
   }
 
   const handleOnChangePreviousDate = (dates: any) => {
     const [start, end] = dates
     setPreviousDate(start)
     setPreviousEndDate(end)
-    localStorage.setItem('previousStartDate', moment(start)?.format('YYYY-MM-DD'));
-    localStorage.setItem('previousEndDate', moment(end)?.format('YYYY-MM-DD'));
+    localStorage.setItem('previousStartDate', moment(start)?.format('YYYY-MM-DD'))
+    localStorage.setItem('previousEndDate', moment(end)?.format('YYYY-MM-DD'))
   }
 
   const checkKeywordId = (data: any, keywordId: string | number) => {
     const index = data.indexOf(keywordId)
-    
+
     if (index > -1) {
       data.splice(index, 1)
     } else {
@@ -212,16 +211,15 @@ const SNAByBullyType = () => {
   }, [errorUserPermission])
 
   useEffect(() => {
-    if(resultCampaiganList?.length>0) {
+    if (resultCampaiganList?.length > 0) {
       const value = localStorage.getItem('campaign')
-      if(value) {
-        setCampaign(value) 
+      if (value) {
+        setCampaign(value)
       } else {
         setCampaign(resultCampaiganList[0]?.id)
       }
     }
-  },[resultCampaiganList])
-
+  }, [resultCampaiganList])
 
   useEffect(() => {
     if (!loadingNetworkGraph && resultBullyTypeNetwork) {
@@ -229,7 +227,7 @@ const SNAByBullyType = () => {
     } else {
       setGraphData(initialGraph)
     }
-  },[loadingNetworkGraph])
+  }, [loadingNetworkGraph])
 
   useEffect(() => {
     if (localStorage.getItem('dateSelect')) {
@@ -492,7 +490,25 @@ const SNAByBullyType = () => {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               {resultNetworkGraph ? (
-                <Graph graph={graphData} options={options} />
+                <Graph
+                  graph={graphData}
+                  options={options}
+                  events={{
+                    selectNode: event => {
+                      const { nodes } = event
+                      if (nodes.length == 1) {
+                        const nodesData = resultBullyTypeNetwork?.nodes
+
+                        for (let i = 0; i < nodesData?.length; i++) {
+                          if (nodes[0] === nodesData[i].id) {
+                            window.open(nodesData[i].link_message, '_blank')
+                            break
+                          }
+                        }
+                      }
+                    }
+                  }}
+                />
               ) : (
                 <div
                   style={{

@@ -514,9 +514,17 @@ const SNA = () => {
                     events={{
                       selectNode: event => {
                         const { nodes } = event
-                        console.log("nodes", nodes, "events:", event)
                         if (nodes.length == 1) {
-                          console.log("nodes value : ", nodes)
+                          const nodesData = resultSentimentNetwork?.nodes;
+                          
+                          for(let i = 0; i<nodesData?.length; i++) {
+
+                            if(nodes[0] === nodesData[i].id)
+                            {
+                              window.open(nodesData[i].link_message, '_blank');
+                              break;
+                            }
+                          }
                         }
                       }
                     }}

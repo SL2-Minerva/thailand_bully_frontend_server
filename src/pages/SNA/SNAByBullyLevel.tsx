@@ -46,13 +46,13 @@ const SNAByBullyLevel = () => {
   )
   const [campaign, setCampaign] = useState<string>('1')
   const [platformId, setPlatformId] = useState<string>('all')
-  const [limit, setLimit] = useState<string>('1000');
+  const [limit, setLimit] = useState<string>('1000')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
   const [period, setPeriod] = useState<string>('last7days')
   const [showPreviousDatepicker, setShowPreviousDatepicker] = useState<boolean>(false)
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
-  const [graphData, setGraphData] = useState<any>(initialGraph);
+  const [graphData, setGraphData] = useState<any>(initialGraph)
 
   const router = useRouter()
 
@@ -92,8 +92,7 @@ const SNAByBullyLevel = () => {
     if (type === 'campaign') {
       setCampaign(e.target.value)
       localStorage.setItem('campaign', e.target.value)
-
-    } else if (type==='limit'){
+    } else if (type === 'limit') {
       setLimit(e.target.value)
     } else {
       setPlatformId(e.target.value)
@@ -112,21 +111,21 @@ const SNAByBullyLevel = () => {
     const [start, end] = dates
     setDate(start)
     setEndDate(end)
-    localStorage.setItem('startDate', moment(start)?.format('YYYY-MM-DD'));
-    localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'));
+    localStorage.setItem('startDate', moment(start)?.format('YYYY-MM-DD'))
+    localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'))
   }
 
   const handleOnChangePreviousDate = (dates: any) => {
     const [start, end] = dates
     setPreviousDate(start)
     setPreviousEndDate(end)
-    localStorage.setItem('previousStartDate', moment(start)?.format('YYYY-MM-DD'));
-    localStorage.setItem('previousEndDate', moment(end)?.format('YYYY-MM-DD'));
+    localStorage.setItem('previousStartDate', moment(start)?.format('YYYY-MM-DD'))
+    localStorage.setItem('previousEndDate', moment(end)?.format('YYYY-MM-DD'))
   }
 
   const checkKeywordId = (data: any, keywordId: string | number) => {
     const index = data.indexOf(keywordId)
-    
+
     if (index > -1) {
       data.splice(index, 1)
     } else {
@@ -212,16 +211,15 @@ const SNAByBullyLevel = () => {
   }, [errorUserPermission])
 
   useEffect(() => {
-    if(resultCampaiganList?.length>0) {
+    if (resultCampaiganList?.length > 0) {
       const value = localStorage.getItem('campaign')
-      if(value) {
-        setCampaign(value) 
+      if (value) {
+        setCampaign(value)
       } else {
         setCampaign(resultCampaiganList[0]?.id)
       }
     }
-  },[resultCampaiganList])
-
+  }, [resultCampaiganList])
 
   useEffect(() => {
     if (!loadingNetworkGraph && resultBullyLevelNetwork) {
@@ -229,7 +227,7 @@ const SNAByBullyLevel = () => {
     } else {
       setGraphData(initialGraph)
     }
-  },[loadingNetworkGraph])
+  }, [loadingNetworkGraph])
 
   useEffect(() => {
     if (localStorage.getItem('dateSelect')) {
@@ -446,7 +444,7 @@ const SNAByBullyLevel = () => {
                     return (
                       <Grid item xs={6} md={1.2} key={index}>
                         <Button
-                        fullWidth
+                          fullWidth
                           sx={{
                             bgcolor:
                               filterKeyword?.indexOf(keywords?.id) > -1
@@ -492,7 +490,25 @@ const SNAByBullyLevel = () => {
             <Grid item xs={12}>
               {resultNetworkGraph ? (
                 <>
-                  <Graph graph={graphData} options={options} />
+                  <Graph
+                    graph={graphData}
+                    options={options}
+                    events={{
+                      selectNode: event => {
+                        const { nodes } = event
+                        if (nodes.length == 1) {
+                          const nodesData = resultBullyLevelNetwork?.nodes
+
+                          for (let i = 0; i < nodesData?.length; i++) {
+                            if (nodes[0] === nodesData[i].id) {
+                              window.open(nodesData[i].link_message, '_blank')
+                              break
+                            }
+                          }
+                        }
+                      }
+                    }}
+                  />
                 </>
               ) : (
                 <div
