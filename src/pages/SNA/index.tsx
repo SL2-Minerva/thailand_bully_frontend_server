@@ -200,7 +200,7 @@ const SNA = () => {
     interaction: {
       dragNodes: true,
       dragView: true,
-      zoomSpeed: 3,
+      zoomSpeed: 3
     },
     manipulation: false,
     layout: {
@@ -508,7 +508,19 @@ const SNA = () => {
             <Grid item xs={12}>
               {resultNetworkGraph ? (
                 <>
-                  <Graph graph={graphData} options={options} />
+                  <Graph
+                    graph={graphData}
+                    options={options}
+                    events={{
+                      selectNode: event => {
+                        const { nodes } = event
+                        console.log("nodes", nodes, "events:", event)
+                        if (nodes.length == 1) {
+                          console.log("nodes value : ", nodes)
+                        }
+                      }
+                    }}
+                  />
                 </>
               ) : (
                 <div
