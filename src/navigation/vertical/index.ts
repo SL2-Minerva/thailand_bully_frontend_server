@@ -214,7 +214,7 @@ const navigation = (): VerticalNavItemsType => {
 
   const log = {
     title: 'Activity Log',
-    path : '/ActivityLog',
+    path: '/ActivityLog',
     icon: ClipboardTextClockOutline
   }
 
@@ -239,7 +239,11 @@ const navigation = (): VerticalNavItemsType => {
   // if (ContentPermission) {
   //   sideMenuBar.push(ContentPermission)
   // }
-  sideMenuBar.push(log);
+
+  if (resultIsAdmin) {
+    sideMenuBar.push(log)
+  }
+
   if (LinkOut) {
     sideMenuBar.push(LinkOut)
   }
