@@ -49,29 +49,28 @@ const Transition = forwardRef(function Transition(
 })
 
 const getReportIds = (data: any) => {
-  if(data && data?.length === 0) return [];
+  if (data && data?.length === 0) return []
 
-  const reportIds : any[] = []
-  if(data?.length > 0 ) {
-    for (let i = 0; i<data?.length; i++) {
-      reportIds.push(data[i]?.id);
+  const reportIds: any[] = []
+  if (data?.length > 0) {
+    for (let i = 0; i < data?.length; i++) {
+      reportIds.push(data[i]?.id)
     }
   }
 
-  return reportIds;
+  return reportIds
 }
-
 
 const DialogRoleInfo = (props: DialogRoleInfoProps) => {
   const { show, setShow, action, current } = props
 
   const [roleName, setRoleName] = useState(current?.user_role_name ?? '')
   const [roleDescription, setDescription] = useState(current?.user_role_description ?? '')
-  const [ reportIds, setReportIds ] = useState<any[]>();
-  const {resultReportChartList} = ReportListPermission();
-  const defaultValue: any[] = [];
-  const [ errorRoleName, setErrorRoleName ] = useState<boolean>(false);
-  const [ errorDescription, setErrorDescription ] = useState<boolean>(false);
+  const [reportIds, setReportIds] = useState<any[]>()
+  const { resultReportChartList } = ReportListPermission()
+  const defaultValue: any[] = []
+  const [errorRoleName, setErrorRoleName] = useState<boolean>(false)
+  const [errorDescription, setErrorDescription] = useState<boolean>(false)
 
   const [permission, setPermission] = useState<any>({
     user: {
@@ -101,34 +100,119 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
       authorized_delete: true,
       authorized_view: true,
       authorized_export: true
+    },
+    activity_log: {
+      authorized_create: false,
+      authorized_edit: false,
+      authorized_delete: false,
+      authorized_view: false,
+      authorized_export: false
+    },
+    sna_by_sentiment: {
+      authorized_create: false,
+      authorized_edit: false,
+      authorized_delete: false,
+      authorized_view: false,
+      authorized_export: false
+    },
+    sna_by_bully_type: {
+      authorized_create: false,
+      authorized_edit: false,
+      authorized_delete: false,
+      authorized_view: false,
+      authorized_export: false
+    },
+    sna_by_bully_level: {
+      authorized_create: false,
+      authorized_edit: false,
+      authorized_delete: false,
+      authorized_view: false,
+      authorized_export: false
+    },
+    corpus: {
+      authorized_create: false,
+      authorized_edit: false,
+      authorized_delete: false,
+      authorized_view: false,
+      authorized_export: false
     }
-  });
+  })
 
-  if ( current?.authorized_report && current?.authorized_report?.length> 0) {
-    const reports = current?.authorized_report;
-    const reportTitleIds : any[] = [];
-    for ( let i=0; i<reports?.length; i++) {
-      const reportId = parseInt(reports[i]) - 1;
+  if (current?.authorized_report && current?.authorized_report?.length > 0) {
+    const reports = current?.authorized_report
+    const reportTitleIds: any[] = []
+    for (let i = 0; i < reports?.length; i++) {
+      const reportId = parseInt(reports[i]) - 1
       reportTitleIds.push(reportId)
     }
-    
-    ( reportTitleIds || []).map((value) => {
-      defaultValue.push(resultReportChartList[value])})
-  }
 
+    ;(reportTitleIds || []).map(value => {
+      defaultValue.push(resultReportChartList[value])
+    })
+  }
 
   useEffect(() => {
     setRoleName(current?.user_role_name ?? '')
     setDescription(current?.user_role_description ?? '')
-    setErrorDescription(false);
-    setErrorRoleName(false);
+    setErrorDescription(false)
+    setErrorRoleName(false)
 
     if (action === 'edit') {
-      setReportIds(defaultValue);
-      if ( current?.permission ) {
-        setPermission(current?.permission ) 
-      } else {
+      setReportIds(defaultValue)
+      if (current?.permission) {
+        setPermission(current?.permission)
+        const permissions = current?.permission;
+        
+        if (!permissions?.activity_log) {
+          permissions.activity_log =  {
+            authorized_create: false,
+            authorized_edit: false,
+            authorized_delete: false,
+            authorized_view: false,
+            authorized_export: false
+          };
+        }
 
+        if (!permissions?.sna_by_bully_level) {
+          permissions.sna_by_bully_level = {
+            authorized_create: false,
+            authorized_edit: false,
+            authorized_delete: false,
+            authorized_view: false,
+            authorized_export: false
+          };
+        }
+
+        if (!permissions?.sna_by_bully_type) {
+          permissions.sna_by_bully_type = {
+            authorized_create: false,
+            authorized_edit: false,
+            authorized_delete: false,
+            authorized_view: false,
+            authorized_export: false
+          };
+        }
+
+        if (!permissions?.sna_by_sentiment) {
+          permissions.sna_by_sentiment = {
+            authorized_create: false,
+            authorized_edit: false,
+            authorized_delete: false,
+            authorized_view: false,
+            authorized_export: false
+          };
+        }
+
+        if (!permissions?.corpus) {
+          permissions.corpus = {
+            authorized_create: false,
+            authorized_edit: false,
+            authorized_delete: false,
+            authorized_view: false,
+            authorized_export: false
+          };
+        }
+      } else {
         setPermission({
           user: {
             authorized_create: true,
@@ -157,12 +241,45 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
             authorized_delete: true,
             authorized_view: true,
             authorized_export: true
+          },
+          activity_log: {
+            authorized_create: false,
+            authorized_edit: false,
+            authorized_delete: false,
+            authorized_view: false,
+            authorized_export: false
+          },
+          sna_by_sentiment: {
+            authorized_create: false,
+            authorized_edit: false,
+            authorized_delete: false,
+            authorized_view: false,
+            authorized_export: false
+          },
+          sna_by_bully_type: {
+            authorized_create: false,
+            authorized_edit: false,
+            authorized_delete: false,
+            authorized_view: false,
+            authorized_export: false
+          },
+          sna_by_bully_level: {
+            authorized_create: false,
+            authorized_edit: false,
+            authorized_delete: false,
+            authorized_view: false,
+            authorized_export: false
+          },
+          corpus: {
+            authorized_create: false,
+            authorized_edit: false,
+            authorized_delete: false,
+            authorized_view: false,
+            authorized_export: false
           }
-        }) 
+        })
       }
-    }
-
-    else {
+    } else {
       setPermission({
         user: {
           authorized_create: true,
@@ -191,21 +308,55 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
           authorized_delete: true,
           authorized_view: true,
           authorized_export: true
+        },
+        activity_log: {
+          authorized_create: false,
+          authorized_edit: false,
+          authorized_delete: false,
+          authorized_view: false,
+          authorized_export: false
+        },
+        sna_by_sentiment: {
+          authorized_create: false,
+          authorized_edit: false,
+          authorized_delete: false,
+          authorized_view: false,
+          authorized_export: false
+        },
+        sna_by_bully_type: {
+          authorized_create: false,
+          authorized_edit: false,
+          authorized_delete: false,
+          authorized_view: false,
+          authorized_export: false
+        },
+        sna_by_bully_level: {
+          authorized_create: false,
+          authorized_edit: false,
+          authorized_delete: false,
+          authorized_view: false,
+          authorized_export: false
+        },
+        corpus: {
+          authorized_create: false,
+          authorized_edit: false,
+          authorized_delete: false,
+          authorized_view: false,
+          authorized_export: false
         }
       })
     }
-  }, [current]);
+  }, [current])
 
   // const [permission, setPermission] = useState<any>(current.permission ?? [])
 
   const handleSubmit = () => {
-    if(roleName && roleDescription) {
+    if (roleName && roleDescription) {
       if (action === 'create') {
         axios
           .post(
             authConfig.createRole,
             {
-              
               role_name: roleName,
               role_description: roleDescription,
               permission: permission,
@@ -218,47 +369,45 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
             }
           )
           .then(() => {
-  
             // console.log('res', res)
-            onClose();
-  
+            onClose()
+
             // setShow(false);
           })
       } else {
         axios
-        .put(
-          authConfig.updateRole,
-          {
-            id: current?.id,
-            role_name: roleName,
-            role_description: roleDescription,
-            permission: permission, 
-            authorized_report: getReportIds(reportIds),
-            status: current?.status
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+          .put(
+            authConfig.updateRole,
+            {
+              id: current?.id,
+              role_name: roleName,
+              role_description: roleDescription,
+              permission: permission,
+              authorized_report: getReportIds(reportIds),
+              status: current?.status
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
+              }
             }
-          }
-        )
-        .then(() => {
-          // console.log('res', res)
-          onClose();
-  
-          // setShow(false)
-        })
+          )
+          .then(() => {
+            // console.log('res', res)
+            onClose()
+
+            // setShow(false)
+          })
       }
     } else {
-      if(!roleName) {
-        setErrorRoleName(true);
+      if (!roleName) {
+        setErrorRoleName(true)
       }
 
       if (!roleDescription) {
-        setErrorDescription(true);
+        setErrorDescription(true)
       }
     }
-    
   }
 
   const handleChecked = (e: any, row: any, key: any) => {
@@ -272,8 +421,8 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
   }
 
   const onClose = () => {
-    setShow(false);
-    setReportIds([]);
+    setShow(false)
+    setReportIds([])
   }
 
   return (
@@ -288,11 +437,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
         onBackdropClick={onClose}
       >
         <DialogContent sx={{ pb: 6, px: { xs: 8, sm: 15 }, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
-          <IconButton
-            size='small'
-            onClick={onClose}
-            sx={{ position: 'absolute', right: '1rem', top: '1rem' }}
-          >
+          <IconButton size='small' onClick={onClose} sx={{ position: 'absolute', right: '1rem', top: '1rem' }}>
             <Close />
           </IconButton>
           <Box sx={{ mb: 8, textAlign: 'center' }}>
@@ -308,14 +453,14 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                 placeholder='Role Name'
                 value={roleName}
                 onChange={e => {
-                  setRoleName(e.target.value);
-                  if(!e.target.value) {
+                  setRoleName(e.target.value)
+                  if (!e.target.value) {
                     setErrorRoleName(true)
                   } else {
                     setErrorRoleName(false)
                   }
                 }}
-                error={errorRoleName ? true: false}
+                error={errorRoleName ? true : false}
               />
               {errorRoleName && <FormHelperText sx={{ color: 'error.main' }}>Role Name is required</FormHelperText>}
             </Grid>
@@ -327,16 +472,17 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                 value={roleDescription}
                 onChange={e => {
                   setDescription(e.target.value)
-                  if(!e.target.value) {
+                  if (!e.target.value) {
                     setErrorDescription(true)
                   } else {
                     setErrorDescription(false)
                   }
                 }}
-                error={errorDescription ? true: false}
+                error={errorDescription ? true : false}
               />
-              {errorDescription && <FormHelperText sx={{ color: 'error.main' }}>Description is required</FormHelperText>}
-
+              {errorDescription && (
+                <FormHelperText sx={{ color: 'error.main' }}>Description is required</FormHelperText>
+              )}
             </Grid>
             <Grid item xs={12}>
               <TableContainer component={Paper}>
@@ -351,46 +497,66 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {
-                      permission && Object.keys(permission).map((row, index) => ( 
-                        <TableRow
-                          key={index}
-                          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
+                    {permission &&
+                      Object.keys(permission).map((row, index) => (
+                        <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                           <TableCell component='th' scope='row'>
                             {row}
                           </TableCell>
                           <TableCell align='left'>
                             <Checkbox
-                              checked={permission[row].authorized_create === 1 ? true : permission[row].authorized_create ? true : false}
+                              checked={
+                                permission[row].authorized_create === 1
+                                  ? true
+                                  : permission[row].authorized_create
+                                  ? true
+                                  : false
+                              }
                               onChange={e => handleChecked(e, row, 'create')}
                               inputProps={{ 'aria-label': 'controlled' }}
                             />
                           </TableCell>
                           <TableCell align='left'>
                             <Checkbox
-                              checked={permission[row].authorized_edit === 1 ? true : permission[row].authorized_edit ? true : false}
+                              checked={
+                                permission[row].authorized_edit === 1
+                                  ? true
+                                  : permission[row].authorized_edit
+                                  ? true
+                                  : false
+                              }
                               onChange={e => handleChecked(e, row, 'edit')}
                               inputProps={{ 'aria-label': 'controlled' }}
                             />
                           </TableCell>
                           <TableCell align='left'>
                             <Checkbox
-                              checked={permission[row].authorized_view === 1 ? true : permission[row].authorized_view ? true : false}
+                              checked={
+                                permission[row].authorized_view === 1
+                                  ? true
+                                  : permission[row].authorized_view
+                                  ? true
+                                  : false
+                              }
                               onChange={e => handleChecked(e, row, 'view')}
                               inputProps={{ 'aria-label': 'controlled' }}
                             />
                           </TableCell>
                           <TableCell align='left'>
                             <Checkbox
-                              checked={permission[row].authorized_export === 1 ? true : permission[row].authorized_export ? true : false}
+                              checked={
+                                permission[row].authorized_export === 1
+                                  ? true
+                                  : permission[row].authorized_export
+                                  ? true
+                                  : false
+                              }
                               onChange={e => handleChecked(e, row, 'export')}
                               inputProps={{ 'aria-label': 'controlled' }}
                             />
                           </TableCell>
                         </TableRow>
-                      ))
-                    }
+                      ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -405,10 +571,9 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                 renderInput={params => <TextField {...params} label='Reports' />}
                 options={resultReportChartList}
                 value={reportIds}
-                onChange = {(event: any, newValue: any) => {
-                  setReportIds(newValue);
+                onChange={(event: any, newValue: any) => {
+                  setReportIds(newValue)
                 }}
-
                 defaultValue={defaultValue}
               />
             </Grid>
