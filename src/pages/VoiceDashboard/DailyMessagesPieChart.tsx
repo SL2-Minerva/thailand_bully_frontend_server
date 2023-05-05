@@ -1,7 +1,7 @@
 // ** MUI Imports
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, IconButton, LinearProgress, Menu, MenuItem, Paper } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Paper } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -17,6 +17,7 @@ import { GraphicColors } from 'src/utils/const'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import CustomeLabels from './CustomLabel'
 
 const onCapture = () => {
   const pictureId = document.getElementById('percentageVoice')
@@ -35,6 +36,27 @@ interface Props {
   keywordsColor: any
 }
 Chart.register(DoughnutLabel)
+
+export const getLabelColor = (data: any) => {
+  const labels: any = []
+
+  for (let i = 0; i < data?.length; i++) {
+    labels.push(data[i].keywordName)
+  }
+
+  return labels
+}
+
+export const getColors = (data: any) => {
+  const channelColor: any = []
+
+  for (let i = 0; i < data?.length; i++) {
+    channelColor.push(data[i]?.color)
+  }
+
+  return channelColor
+}
+
 const DailyMessagePieChart = (props: Props) => {
   const { chartId, params, highlight, keywordsColor } = props
   const [apiParams, setApiParams] = useState<any>()
@@ -253,7 +275,7 @@ const DailyMessagePieChart = (props: Props) => {
   }, [params])
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 400 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }} square variant='outlined'>
       {loadingPercentageMessage && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -303,6 +325,17 @@ const DailyMessagePieChart = (props: Props) => {
 
       <CardContent id="percentageVoice">
         <Grid container spacing={3}>
+        <Grid item xs={12}>
+            <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
+              <CustomeLabels
+                data={currentData || previousData}
+                labels={getLabelColor(keywordsColor)}
+                color={getColors(keywordsColor)}
+                itemsCountPerPage={50}
+                showValue={false}
+              />
+            </Box>
+          </Grid>
           <Grid item xs={12} md={6}>
             {showNoDataText ? (
               <div

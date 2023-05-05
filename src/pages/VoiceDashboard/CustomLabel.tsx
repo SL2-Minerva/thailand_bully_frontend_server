@@ -1,4 +1,5 @@
 import { Box, Grid } from '@mui/material'
+import Translations from 'src/layouts/components/Translations'
 import { GraphicColors } from 'src/utils/const'
 
 interface customeLabel {
@@ -34,7 +35,7 @@ customeLabel) => {
               }}
               mr={0.3}
             ></Box>
-            <Box style={{ color: '#5A5A68', fontSize: '12px' }}>{label}</Box>
+            <Box style={{ color: '#5A5A68', fontSize: '12px' }}><Translations text={label}/></Box>
           </Grid>
         )
       })}

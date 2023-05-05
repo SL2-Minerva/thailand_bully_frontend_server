@@ -2,7 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -17,6 +17,7 @@ import { GraphicColors } from 'src/utils/const'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import CustomeLabels from '../VoiceDashboard/CustomLabel'
 
 Chart.register(DoughnutLabel)
 
@@ -183,6 +184,26 @@ const DonutChart = (props: MessageData) => {
     return returnData
   }
 
+  const getLabelColor = (data: any) => {
+    const labels: any = []
+
+    for (let i = 0; i < data?.length; i++) {
+      labels.push(data[i].keywordName)
+    }
+
+    return labels
+  }
+
+  const getColors = (data: any) => {
+    const channelColor: any = []
+
+    for (let i = 0; i < data?.length; i++) {
+      channelColor.push(data[i]?.color)
+    }
+
+    return channelColor
+  }
+
   useEffect(() => {
     if (resultFilterData) {
       const currentMessageData = resultFilterData?.prcentage_of_messages_current
@@ -276,6 +297,17 @@ const DonutChart = (props: MessageData) => {
 
       <CardContent id='percentagePies'>
         <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
+              <CustomeLabels
+                data={currentData || previousData}
+                labels={getLabelColor(keywordsColor)}
+                color={getColors(keywordsColor)}
+                itemsCountPerPage={50}
+                showValue={false}
+              />
+            </Box>
+          </Grid>
           <Grid item xs={12} md={6}>
             {showNoDataText ? (
               <div
@@ -290,7 +322,7 @@ const DonutChart = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={currentData} options={options as any} height={370} />
+              <Doughnut data={currentData} options={options as any} height={300} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>
@@ -307,7 +339,7 @@ const DonutChart = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={previousData} options={optionsPrevious as any} height={370} />
+              <Doughnut data={previousData} options={optionsPrevious as any} height={300} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>
