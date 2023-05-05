@@ -22,6 +22,12 @@ const navigation = (): VerticalNavItemsType => {
     showEngagementDashboard,
     showSentimentDashboard,
     showWordCloud,
+    showSNA,
+    showCorpus,
+    showActivityLog,
+    showSNAByBullyLevel,
+    showSNAByBullyType,
+    showSNABySentiment,
     resultIsAdmin
   } = UserPermission()
 
@@ -60,22 +66,38 @@ const navigation = (): VerticalNavItemsType => {
     path: '/WordCloud'
   }
 
+  const snaBySentiment = {
+      title: 'By Sentiment',
+      path: '/SNA'
+  }
+
+  const SNAByBullyLevel = {
+    title: 'By Bully Level',
+    path: '/SNA/SNAByBullyLevel'
+  }
+
+  const SNAByBullyType = {
+    title: 'By Bully Type',
+    path: '/SNA/SNAByBullyType'
+  }
+
+  const snaList : any [] = [];
+ 
+  if (showSNABySentiment) {
+    snaList.push(snaBySentiment)
+  }
+
+  if (showSNAByBullyLevel) {
+    snaList.push(SNAByBullyLevel)
+  }
+
+  if (showSNAByBullyType) {
+    snaList.push(SNAByBullyType)
+  }
+
   const sna = {
     title: 'SNA',
-    children: [
-      {
-        title: 'By Sentiment',
-        path: '/SNA'
-      },
-      {
-        title: 'By Bully Level',
-        path: '/SNA/SNAByBullyLevel'
-      },
-      {
-        title: 'By Bully Type',
-        path: '/SNA/SNAByBullyType'
-      }
-    ]
+    children: snaList
   }
 
   const reportDashboardList: any[] = []
@@ -102,7 +124,10 @@ const navigation = (): VerticalNavItemsType => {
   if (showWordCloud) {
     reportDashboardList.push(wordCloudDashboard)
   }
-  reportDashboardList.push(sna)
+
+  if (showSNA) {
+    reportDashboardList.push(sna)
+  }
 
   const UserPermissionData = resultPermission?.user?.authorized_view
     ? {
@@ -240,126 +265,16 @@ const navigation = (): VerticalNavItemsType => {
   //   sideMenuBar.push(ContentPermission)
   // }
 
-  if (resultIsAdmin) {
+  if (resultIsAdmin || showActivityLog) {
     sideMenuBar.push(log)
   }
 
-  if (LinkOut) {
+  if ((resultIsAdmin || showCorpus) && LinkOut) {
     sideMenuBar.push(LinkOut)
   }
 
   return sideMenuBar
 
-  // return [
-  //   {
-  //     title: 'User Permission',
-  //     icon: CogOutline,
-  //     children: [
-  //       {
-  //         title: 'User MGT',
-  //         path: '/apps/user/list'
-  //       },
-  //       {
-  //         title: 'User Role MGT',
-  //         path: '/apps/user/list/roleManagement'
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     title: 'Organized MGT',
-  //     icon: HomeAnalytics,
-  //     children: [
-  //       {
-  //         title: 'Organized Group MGT',
-  //         path: '/organized-mgt/organized-group'
-  //       },
-  //       {
-  //         title: 'Organized Type MGT',
-  //         path: '/organized-mgt/organized-type'
-  //       },
-  //       {
-  //         title: 'Organized MGT',
-  //         path: '/organized-mgt/management'
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     title: 'Campaign MGT',
-  //     icon: Pin,
-  //     children: [
-  //       {
-  //         title: 'Source MGT',
-  //         path: '/campaign/source-mgt'
-  //       },
-  //       {
-  //         title: 'Domain MGT',
-  //         path: '/campaign/domain-mgt'
-  //       },
-  //       {
-  //         title: 'Campaign MGT',
-  //         path: '/campaign/campaign-mgt'
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     title: 'Reports',
-  //     icon: Finance,
-  //     children: [
-  //       {
-  //         title: 'Overall Dashboard',
-  //         path: '/dashboard/overall'
-  //       },
-  //       {
-  //         title: 'Voice Dashboard',
-  //         path: '/VoiceDashboard'
-  //       },
-  //       {
-  //         title: 'Channel Dashboard',
-  //         path: '/ChannelDashboard'
-  //       },
-  //       {
-  //         title: 'Engagement Dashboard',
-  //         path: '/EngagementDashboard'
-  //       },
-  //       {
-  //         title: 'Sentiment Dashboard',
-  //         path: '/SentimentDashboard'
-  //       },
-  //       {
-  //         title: 'Bully Dashboard',
-  //         path: '/BullyDashboard'
-  //       }
-
-  //       // ,
-  //       // {
-  //       //   title: 'Network Graph',
-  //       //   path: '/content/content-mgt/NetworkGraph'
-  //       // },
-  //       // {
-  //       //   title: 'Report',
-  //       //   path: '/report/report'
-  //       // },
-  //       // {
-  //       //   title: 'System Log Report',
-  //       //   path: '/report/system-log'
-  //       // }
-  //     ]
-  //   },
-  //   {
-  //     title: 'Content',
-  //     icon: NewspaperVariantMultiple,
-  //     children: [
-  //       {
-  //         title: 'Contents',
-  //         path: '/content/homepage'
-  //       },
-  //       {
-  //         title: 'Content MGT',
-  //         path: '/content/content-mgt'
-  //       }
-  //     ]
-  //   },
-  // ]
 }
 
 export default navigation

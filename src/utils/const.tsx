@@ -335,7 +335,7 @@ export const BullyTypeColorCode = [
   },
   {
     name: 'Harassment',
-    color: '#89033d'
+    color: '#89023E'
   },
   {
     name: 'HateSpeech',
@@ -343,7 +343,7 @@ export const BullyTypeColorCode = [
   },
   {
     name: 'Violence',
-    color: '#34213e'
+    color: '#F10707'
   }
 ]
 

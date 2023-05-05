@@ -68,7 +68,7 @@ const CampaignManagement = () => {
 
   const { list } = Organization.getList(reload)
 
-  const { resultPermission,resultIsAdmin, errorUserPermission } = UserPermission()
+  const { resultPermission, resultIsAdmin, errorUserPermission } = UserPermission()
 
   const handleOrganization = useCallback((e: SelectChangeEvent) => {
     setOrganization(e.target.value)
@@ -291,6 +291,7 @@ const CampaignManagement = () => {
                     <TableCell align='center'>Domain</TableCell>
                     <TableCell align='center'>Organization</TableCell>
                     <TableCell align='center'>Status</TableCell>
+                    <TableCell align='center'>Created By</TableCell>
                     {resultPermission?.campaign?.authorized_edit ? <TableCell align='center'>Action</TableCell> : <></>}
                   </TableRow>
                 </TableHead>
@@ -336,6 +337,9 @@ const CampaignManagement = () => {
                               />
                             </TableCell>
                             <TableCell align='center'>
+                              {campaignList.created_by ? campaignList.created_by : '-'}
+                            </TableCell>
+                            <TableCell align='center'>
                               <a href='#' style={{ color: 'grey' }}>
                                 <PencilOutline
                                   onClick={() => {
@@ -346,12 +350,17 @@ const CampaignManagement = () => {
                             </TableCell>
                           </>
                         ) : (
-                          <TableCell align='center'>
-                            <Switch
-                              key={index}
-                              checked={campaignList.status === 1 ? true : campaignList.status ? true : false}
-                            />
-                          </TableCell>
+                          <>
+                            <TableCell align='center'>
+                              <Switch
+                                key={index}
+                                checked={campaignList.status === 1 ? true : campaignList.status ? true : false}
+                              />
+                            </TableCell>
+                            <TableCell align='center'>
+                              {campaignList?.created_by ? campaignList?.created_by : '-'}
+                            </TableCell>
+                          </>
                         )}
                       </TableRow>
                     ))}
