@@ -83,15 +83,15 @@ const navigation = (): VerticalNavItemsType => {
 
   const snaList : any [] = [];
  
-  if (showSNABySentiment) {
+  if (showSNABySentiment || resultIsAdmin) {
     snaList.push(snaBySentiment)
   }
 
-  if (showSNAByBullyLevel) {
+  if (showSNAByBullyLevel || resultIsAdmin) {
     snaList.push(SNAByBullyLevel)
   }
 
-  if (showSNAByBullyType) {
+  if (showSNAByBullyType || resultIsAdmin) {
     snaList.push(SNAByBullyType)
   }
 
@@ -125,7 +125,7 @@ const navigation = (): VerticalNavItemsType => {
     reportDashboardList.push(wordCloudDashboard)
   }
 
-  if (showSNA) {
+  if (showSNA || resultIsAdmin) {
     reportDashboardList.push(sna)
   }
 
