@@ -1,7 +1,7 @@
 // ** MUI Imports
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, IconButton, LinearProgress, Menu, MenuItem, Paper } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Paper } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -16,6 +16,8 @@ import { EngagementTransChartColor } from 'src/utils/const'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import CustomeLabels from '../VoiceDashboard/CustomLabel'
+import { getColors, getLabelColor } from '../VoiceDashboard/DailyMessagesPieChart'
 
 const onCapture = () => {
   const pictureId = document.getElementById('percentageTrans')
@@ -299,6 +301,17 @@ const PercentageOfEngangement = (props: MessageData) => {
 
       <CardContent id="percentageTrans">
         <Grid container spacing={3}>
+        <Grid item xs={12}>
+            <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
+              <CustomeLabels
+                data={currentData || previousData}
+                labels={getLabelColor(keywordsColor)}
+                color={getColors(keywordsColor)}
+                itemsCountPerPage={50}
+                showValue={false}
+              />
+            </Box>
+          </Grid>
           <Grid item xs={12} md={6}>
             {showNoDataText ? (
               <div

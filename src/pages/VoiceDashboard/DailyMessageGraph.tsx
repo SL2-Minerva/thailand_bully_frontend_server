@@ -398,7 +398,7 @@ const DailyMessageGraph = (props: Props) => {
   }, [params, apiParams])
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 400 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }} square variant='outlined'>
       {loadingDailyMessage && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>

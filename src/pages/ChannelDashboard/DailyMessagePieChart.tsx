@@ -17,7 +17,7 @@ import { GraphicColors } from 'src/utils/const'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
-import SourceService from 'src/services/api/source/SourceApi'
+import { ActiveChannel } from 'src/services/api/source/SourceApi'
 
 const onCapture = () => {
   const pictureId = document.getElementById('percentageGraph')
@@ -61,7 +61,7 @@ const DailyMessagePieChart = (props: Props) => {
       }
     ]
   }
-  const { result_source_list } = SourceService()
+  const { result_source_list } = ActiveChannel()
   const [previousData, setPreviousData] = useState<any>(initValue)
   const [currentData, setCurrentData] = useState<any>(initValue)
   const [currentPeriod, setCurrentPeriod] = useState<string>('')

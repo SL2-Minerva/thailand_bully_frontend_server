@@ -44,4 +44,39 @@ const SourceService = (reload?: boolean, page?: number) => {
     }
   }
 
+  export const ActiveChannel = (reload?: boolean, page?: number) => {
+    let params;
+
+    if(page ||  page === 0  ) {
+      params = {
+        page: page,
+        limit : 100
+      }
+    }
+
+    const [{data: res, loading, error} ] = CallAPI<{data?: any;}>({
+      url: `/source/list`,
+      method: "GET",
+      params : params,
+      data: {
+        reload: reload
+      }
+    });
+
+    const responseData = res?.data;
+    const activeSource : any = [];
+    for (let i = 0; i<responseData?.length; i++) {
+      if (responseData[i]?.status) {
+        activeSource.push(responseData[i]);
+      }
+    }
+
+    return{
+        result_source_list: activeSource?.length > 0 ? activeSource :  null,
+        total : res?.data?.total || 0,
+        result_source_list_load: loading,
+        error_source_list: error,
+    }
+  }
+
   export default  SourceService;
