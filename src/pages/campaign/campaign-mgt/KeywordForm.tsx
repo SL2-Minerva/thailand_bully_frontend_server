@@ -345,6 +345,7 @@ const KeywordForm = (props: any) => {
             sx={{ mt: 3.5 }}
             placeholder='Enter Keyword'
             label='Keyword'
+            required
             value={keywords[indexNumber]?.name || ''}
             onChange={e => handleChangeLabel(indexNumber, e)}
           />

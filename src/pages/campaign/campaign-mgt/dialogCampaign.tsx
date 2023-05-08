@@ -82,7 +82,6 @@ const DialogCampaign = (props: DialogInfoProps) => {
   const [checkKeywordOr, setCheckKeywordOr] = useState<boolean>(false)
   const [checkKeywordExclude, setCheckKeywordExclude] = useState<boolean>(false)
   const [keywordCount, setKeywordCount] = useState<number>(1)
-
   const [remainingKeywordCount, setRemainingKeywordCount] = useState<number>(keywordLimit)
 
   const [removeKeywords, setRemoveKeywords] = useState<any>([])
@@ -132,8 +131,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
   }
 
   function removeKeyword(current: any) {
-    if(current.name) {
-      setRemoveKeywords([...removeKeywords, current.name])
+    if (current.id) {
+      setRemoveKeywords([...removeKeywords, current.id])
     }
     const results = keywords.filter(keyword => keyword.id !== current.id)
     setKeywordCount(keywordCount - 1)
@@ -190,6 +189,19 @@ const DialogCampaign = (props: DialogInfoProps) => {
     ])
     setRemoveKeywords([])
   }
+
+  // const checkKeywordName = (values: any) => {
+  //   if (values?.length > 0) {
+  //     for (let j = 0; j < values.length; j++) {
+  //       if (values[j]?.name === '') {
+  //         return true
+  //         break
+  //       }
+  //     }
+
+  //     return false
+  //   }
+  // }
 
   const createNewCampaign = async () => {
     // const startdate = new Date(date);
@@ -276,20 +288,20 @@ const DialogCampaign = (props: DialogInfoProps) => {
           let keywordCounts = keywords.length
 
           for (let i = 0; i < keywords.length; i++) {
-            let keywordAndCount = 0;
-            let keywordOrCount = 0;
-            for(let j=0; j< keywords[i]?.keyword_and?.length; j++) {
+            let keywordAndCount = 0
+            let keywordOrCount = 0
+            for (let j = 0; j < keywords[i]?.keyword_and?.length; j++) {
               if (keywords[i]?.keyword_and[j] !== '') {
-                keywordAndCount = keywordAndCount + 1;
+                keywordAndCount = keywordAndCount + 1
               }
             }
 
-            for(let j=0; j< keywords[i]?.keyword_or?.length; j++) {
+            for (let j = 0; j < keywords[i]?.keyword_or?.length; j++) {
               if (keywords[i]?.keyword_or[j] !== '') {
-                keywordOrCount = keywordOrCount + 1;
+                keywordOrCount = keywordOrCount + 1
               }
             }
-           
+
             keywordCounts = keywordCounts + keywordAndCount + keywordOrCount
             setKeywordCount(keywordCounts)
           }
@@ -456,7 +468,10 @@ const DialogCampaign = (props: DialogInfoProps) => {
                           Add Keyword
                         </Button>
 
-                        <p style={{marginTop: '20px', color: 'red'}}> Remaining Keyword Limit : {remainingKeywordCount} </p>
+                        <p style={{ marginTop: '20px', color: 'red' }}>
+                          {' '}
+                          Remaining Keyword Limit : {remainingKeywordCount}{' '}
+                        </p>
                       </>
                     )}
                   </Grid>
@@ -533,13 +548,26 @@ const DialogCampaign = (props: DialogInfoProps) => {
               </Grid>
             </Grid>
           </div>
+          {/* {showKeywordEmpty ? (
+            <div>
+              <p style={{ textAlign: 'center', color: 'red', marginTop: '10px' }}> Keyword Name must not be empty! </p>
+            </div>
+          ) : (
+            ''
+          )} */}
         </DialogContent>
         <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
           <Button
             variant='contained'
             sx={{ mr: 2 }}
             onClick={() => {
-              if (!checkKeyword && !checkKeywordAnd && !checkKeywordExclude && !checkKeywordOr && !showErrorFrequency) {
+              if (
+                !checkKeyword &&
+                !checkKeywordAnd &&
+                !checkKeywordExclude &&
+                !checkKeywordOr &&
+                !showErrorFrequency
+              ) {
                 createNewCampaign()
               }
             }}
