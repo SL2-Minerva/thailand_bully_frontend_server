@@ -28,7 +28,7 @@ import Close from 'mdi-material-ui/Close'
 import axios from 'axios'
 import authConfig from '../../../../configs/auth'
 import { ReportListPermission } from 'src/services/api/users/role'
-import { FormControl, FormControlLabel, FormHelperText, Switch } from '@mui/material'
+import { FormHelperText } from '@mui/material'
 
 // import { ReportOptions } from 'src/utils/const'
 
@@ -71,7 +71,8 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
   const defaultValue: any[] = []
   const [errorRoleName, setErrorRoleName] = useState<boolean>(false)
   const [errorDescription, setErrorDescription] = useState<boolean>(false)
-  const [isAdmin, setIsAdmin] = useState<boolean | number>(false)
+
+  // const [isAdmin, setIsAdmin] = useState<boolean | number>(false)
 
   const [permission, setPermission] = useState<any>({
     user: {
@@ -185,7 +186,8 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
     setDescription(current?.user_role_description ?? '')
     setErrorDescription(false)
     setErrorRoleName(false)
-    setIsAdmin(current?.is_admin ?? false)
+
+    // setIsAdmin(current?.is_admin ?? false)
 
     if (action === 'edit') {
       setReportIds(defaultValue)
@@ -474,9 +476,9 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
     }
   }, [current])
 
-  const handleChangeAdmin = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsAdmin(event.target.checked ? 1 : 0)
-  }
+  // const handleChangeAdmin = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setIsAdmin(event.target.checked ? 1 : 0)
+  // }
 
   const handleSubmit = () => {
     if (roleName && roleDescription) {
@@ -488,8 +490,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
               role_name: roleName,
               role_description: roleDescription,
               permission: permission,
-              authorized_report: getReportIds(reportIds),
-              is_admin: isAdmin
+              authorized_report: getReportIds(reportIds)
             },
             {
               headers: {
@@ -513,8 +514,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
               role_description: roleDescription,
               permission: permission,
               authorized_report: getReportIds(reportIds),
-              status: current?.status,
-              is_admin: isAdmin
+              status: current?.status
             },
             {
               headers: {
@@ -709,7 +709,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
               />
             </Grid>
 
-            <Grid item sm={6} xs={12} mt={3}>
+            {/* <Grid item sm={6} xs={12} mt={3}>
               <FormControl>
                 <FormControlLabel
                   control={<Switch checked={isAdmin == 1 ? true : false} onChange={handleChangeAdmin} />}
@@ -717,7 +717,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                   labelPlacement='start'
                 />
               </FormControl>
-            </Grid>
+            </Grid> */}
           </Grid>
         </DialogContent>
         <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
