@@ -29,7 +29,7 @@ const OrganizationType = () => {
   const [action, setAction] = useState<string>('create')
   const [page, setPage] = useState(0)
   const [pageCount, setPageCount] = useState<number>(0)
-  const { resultPermission, errorUserPermission } = UserPermission()
+  const { resultPermission, errorUserPermission, resultIsAdmin } = UserPermission()
 
   const toggleCreate = () => {
     setAction('create')
@@ -100,7 +100,7 @@ const OrganizationType = () => {
           <CardContent>
             <CardContent>
               <TableContainer component={Paper}>
-                {resultPermission?.user?.authorized_create ? (
+                {resultIsAdmin || resultPermission?.organized_type_mgt?.authorized_create ? (
                   <Box
                     sx={{
                       p: 5,
@@ -127,7 +127,11 @@ const OrganizationType = () => {
                       <TableCell>Organizaton Type</TableCell>
                       <TableCell align='center'>Description</TableCell>
                       <TableCell align='center'>Status</TableCell>
-                      {resultPermission?.user?.authorized_edit ? <TableCell align='center'>Action</TableCell> : ''}
+                      {resultIsAdmin || resultPermission?.organized_type_mgt?.authorized_edit ? (
+                        <TableCell align='center'>Action</TableCell>
+                      ) : (
+                        ''
+                      )}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -146,7 +150,7 @@ const OrganizationType = () => {
                               {row.organization_type_name}
                             </TableCell>
                             <TableCell align='center'>{row.organization_type_description}</TableCell>
-                            {resultPermission?.user?.authorized_edit ? (
+                            {resultIsAdmin || resultPermission?.organized_type_mgt?.authorized_edit ? (
                               <>
                                 <TableCell align='center'>
                                   <Switch

@@ -29,7 +29,7 @@ const RoleManagement = () => {
   const [page, setPage] = useState(0)
   const [pageCount, setPageCount] = useState<number>(0)
 
-  const { resultPermission, errorUserPermission } = UserPermission()
+  const { resultPermission, errorUserPermission, resultIsAdmin } = UserPermission()
   const { resultRoleList, total } = role_list(showDialog, page)
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -88,7 +88,7 @@ const RoleManagement = () => {
           <CardHeader title='Role Management' sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }} />
           <CardContent>
             <TableContainer component={Paper}>
-              {resultPermission?.user?.authorized_create ? (
+              {resultIsAdmin || resultPermission?.user_role?.authorized_create ? (
                 <Box
                   sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
                 >
@@ -116,7 +116,7 @@ const RoleManagement = () => {
                     <TableCell>Role Name</TableCell>
                     <TableCell align='center'>Description</TableCell>
                     <TableCell align='center'>Status</TableCell>
-                    {resultPermission?.user?.authorized_edit ? <TableCell align='center'>Action</TableCell> : ''}
+                    {resultIsAdmin || resultPermission?.user_role?.authorized_edit ? <TableCell align='center'>Action</TableCell> : ''}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -134,7 +134,7 @@ const RoleManagement = () => {
                           {row.user_role_name}
                         </TableCell>
                         <TableCell align='center'>{row.user_role_description}</TableCell>
-                        {resultPermission?.user?.authorized_edit ? (
+                        {resultIsAdmin || resultPermission?.user_role?.authorized_edit ? (
                           <>
                             <TableCell align='center'>
                               <Switch

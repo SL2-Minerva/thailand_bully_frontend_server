@@ -81,7 +81,11 @@ const DialogCampaign = (props: DialogInfoProps) => {
   const [checkKeywordAnd, setCheckKeywordAnd] = useState<boolean>(false)
   const [checkKeywordOr, setCheckKeywordOr] = useState<boolean>(false)
   const [checkKeywordExclude, setCheckKeywordExclude] = useState<boolean>(false)
-  const [keywordCount, setKeywordCount ] = useState<number>(1);
+  const [keywordCount, setKeywordCount] = useState<number>(1)
+  const [remainingKeywordCount, setRemainingKeywordCount] = useState<number>(keywordLimit)
+
+  const [removeKeywords, setRemoveKeywords] = useState<any>([])
+
   const initailAndColor = GenerateRandomColor()
 
   const [keywords, setKeywords] = useState([
@@ -98,7 +102,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
       delete_keyword_and: [''],
       delete_keyword_exclude: [''],
       color: GenerateRandomColor(),
-      color_and:initailAndColor
+      color_and: initailAndColor
     }
   ])
 
@@ -127,6 +131,9 @@ const DialogCampaign = (props: DialogInfoProps) => {
   }
 
   function removeKeyword(current: any) {
+    if (current.id) {
+      setRemoveKeywords([...removeKeywords, current.id])
+    }
     const results = keywords.filter(keyword => keyword.id !== current.id)
     setKeywordCount(keywordCount - 1)
     setKeywords(results)
@@ -147,7 +154,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
   function handleFrequency(event: any) {
     const frequencyValue = event.target.value
-    if(resultIsAdmin) {
+    if (resultIsAdmin) {
       setFrequency(frequencyValue)
     } else {
       if (frequencyValue < originalFrequency) {
@@ -155,10 +162,9 @@ const DialogCampaign = (props: DialogInfoProps) => {
       } else {
         setShowErrorFrequency('')
       }
-  
+
       setFrequency(frequencyValue)
     }
-    
   }
 
   function closeDialogBox() {
@@ -178,10 +184,24 @@ const DialogCampaign = (props: DialogInfoProps) => {
         delete_keyword_and: [''],
         delete_keyword_exclude: [''],
         color: GenerateRandomColor(),
-        color_and: andColor,
+        color_and: andColor
       }
     ])
+    setRemoveKeywords([])
   }
+
+  // const checkKeywordName = (values: any) => {
+  //   if (values?.length > 0) {
+  //     for (let j = 0; j < values.length; j++) {
+  //       if (values[j]?.name === '') {
+  //         return true
+  //         break
+  //       }
+  //     }
+
+  //     return false
+  //   }
+  // }
 
   const createNewCampaign = async () => {
     // const startdate = new Date(date);
@@ -210,12 +230,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
       start_at: format(date ? date : new Date(), 'yyyy-MM-dd'),
       end_at: format(endDate ? endDate : new Date(), 'yyyy-MM-dd'),
       keywords: keywords,
-      id: current.id ?? undefined
+      id: current.id ?? undefined,
+      delete_keyword: []
     }
 
     if (action === 'edit') {
       input_data.id = current.id
-
+      input_data.delete_keyword = removeKeywords
       axios
         .put(`${API_PATH}/campaign/update`, input_data, {
           headers: {
@@ -264,16 +285,26 @@ const DialogCampaign = (props: DialogInfoProps) => {
         if (current.keyword && current.keyword.length > 0) {
           setKeywords(current.keyword)
           const keywords = current.keyword
-          let keywordCounts = keywords.length;
+          let keywordCounts = keywords.length
 
-          for(let i=0; i<keywords.length; i++) {
-            const keywordAndCount = keywords[i]?.keyword_and?.length;
-            const keywordOrCount = keywords[i]?.keyword_and?.length;
-            keywordCounts = keywordCounts + keywordAndCount + keywordOrCount;
+          for (let i = 0; i < keywords.length; i++) {
+            let keywordAndCount = 0
+            let keywordOrCount = 0
+            for (let j = 0; j < keywords[i]?.keyword_and?.length; j++) {
+              if (keywords[i]?.keyword_and[j] !== '') {
+                keywordAndCount = keywordAndCount + 1
+              }
+            }
+
+            for (let j = 0; j < keywords[i]?.keyword_or?.length; j++) {
+              if (keywords[i]?.keyword_or[j] !== '') {
+                keywordOrCount = keywordOrCount + 1
+              }
+            }
+
+            keywordCounts = keywordCounts + keywordAndCount + keywordOrCount
             setKeywordCount(keywordCounts)
-            
-            // console.log("keyword Count", keywordCounts);
-          } 
+          }
         }
 
         const campaignStatus = current.status === 1 ? true : false
@@ -310,17 +341,9 @@ const DialogCampaign = (props: DialogInfoProps) => {
     }
   }, [current, action])
 
-  // useEffect(() => {
-  //   if (current) {
-  //     console.log(current.keywords)
-  //     setCampaignName(current.name)
-  //     setDescription(current.description)
-  //     setDomain(current.domain_id)
-  //     setDate(new Date(current.start_at))
-  //     setEndDate(new Date(current.end_at))
-  //     setKeywords(current.keywords)
-  //   }
-  // }, [current])
+  useEffect(() => {
+    setRemainingKeywordCount(keywordLimit - keywordCount)
+  }, [keywordCount])
 
   return (
     <Card>
@@ -422,9 +445,9 @@ const DialogCampaign = (props: DialogInfoProps) => {
                         setCheckKeywordOr={setCheckKeywordOr}
                         checkKeywordExclude={checkKeywordExclude}
                         setCheckKeywordExclude={setCheckKeywordExclude}
-                        keywordCount = {keywordCount}
-                        setKeywordCount = {setKeywordCount}
-                        keywordLimit = {keywordLimit}
+                        keywordCount={keywordCount}
+                        setKeywordCount={setKeywordCount}
+                        keywordLimit={keywordLimit}
                       />
                     )
                   }}
@@ -435,14 +458,21 @@ const DialogCampaign = (props: DialogInfoProps) => {
                     {keywordCount >= keywordLimit ? (
                       ''
                     ) : (
-                      <Button
-                        size='small'
-                        variant='contained'
-                        startIcon={<Plus fontSize='small' />}
-                        onClick={addKeyword}
-                      >
-                        Add Keyword
-                      </Button>
+                      <>
+                        <Button
+                          size='small'
+                          variant='contained'
+                          startIcon={<Plus fontSize='small' />}
+                          onClick={addKeyword}
+                        >
+                          Add Keyword
+                        </Button>
+
+                        <p style={{ marginTop: '20px', color: 'red' }}>
+                          {' '}
+                          Remaining Keyword Limit : {remainingKeywordCount}{' '}
+                        </p>
+                      </>
                     )}
                   </Grid>
                 </Grid>
@@ -518,13 +548,26 @@ const DialogCampaign = (props: DialogInfoProps) => {
               </Grid>
             </Grid>
           </div>
+          {/* {showKeywordEmpty ? (
+            <div>
+              <p style={{ textAlign: 'center', color: 'red', marginTop: '10px' }}> Keyword Name must not be empty! </p>
+            </div>
+          ) : (
+            ''
+          )} */}
         </DialogContent>
         <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
           <Button
             variant='contained'
             sx={{ mr: 2 }}
             onClick={() => {
-              if (!checkKeyword && !checkKeywordAnd && !checkKeywordExclude && !checkKeywordOr && !showErrorFrequency) {
+              if (
+                !checkKeyword &&
+                !checkKeywordAnd &&
+                !checkKeywordExclude &&
+                !checkKeywordOr &&
+                !showErrorFrequency
+              ) {
                 createNewCampaign()
               }
             }}

@@ -36,7 +36,7 @@ const OrganizationGroup = () => {
     setShowCreate(true)
     setCurrent({})
   }
-  const { resultPermission, errorUserPermission } = UserPermission()
+  const { resultPermission, errorUserPermission, resultIsAdmin } = UserPermission()
 
   const { result_organization_group_list, total, error_organization_group_list } = OrganzationGroupServiceList(
     reload,
@@ -101,7 +101,7 @@ const OrganizationGroup = () => {
           <CardHeader title='Organization Group Management' />
           <CardContent>
             <TableContainer component={Paper}>
-              {resultPermission?.user?.authorized_create ? (
+              {resultIsAdmin || resultPermission?.organized_group_mgt?.authorized_create ? (
                 <Box
                   sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
                 >
@@ -122,7 +122,7 @@ const OrganizationGroup = () => {
                     <TableCell align='center'>Orangization Group</TableCell>
                     <TableCell align='center'>Description</TableCell>
                     <TableCell align='center'>Status</TableCell>
-                    {resultPermission?.user?.authorized_edit ? <TableCell align='center'>Action</TableCell> : ''}
+                    {resultIsAdmin || resultPermission?.organized_group_mgt?.authorized_edit ? <TableCell align='center'>Action</TableCell> : ''}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -141,7 +141,7 @@ const OrganizationGroup = () => {
                         </TableCell>
                         <TableCell align='center'>{row.organization_group_name}</TableCell>
                         <TableCell align='center'>{row.organization_group_description}</TableCell>
-                        {resultPermission?.user?.authorized_edit ? (
+                        {resultIsAdmin || resultPermission?.organized_group_mgt?.authorized_edit ? (
                           <>
                             <TableCell align='center'>
                               <Switch

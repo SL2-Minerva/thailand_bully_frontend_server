@@ -143,14 +143,16 @@ const KeywordForm = (props: any) => {
 
   function removeTextKeyword(i: number, indexValue: number, list: any, type: any) {
     const values = [...keywords]
+
+    if(list[i] !== '' && type !== 'keyword_exclude') {
+      setKeywordCount(keywordCount - 1)
+    }
     const news = list.filter((item: any, index: number) => index !== i)
     const removed = list.filter((item: any, index: number) => index === i)
 
     if (type === 'keyword_or') {
       values[indexValue].keyword_or = news
       values[indexValue].delete_keyword_or = delete_keyword_or ? [...delete_keyword_or, removed[0]] : removed
-     
-      // setKeywordCount(keywordCount - 1)
     }
 
     if (type === 'keyword_and') {
@@ -195,17 +197,18 @@ const KeywordForm = (props: any) => {
 
   const removeKeywordColors = (i: number, indexValue: number, colorList: any, type: any) => {
     const values = [...keywords]
-    const news = colorList.filter((item: any, index: number) => index !== i)
+    
     if (type === 'keyword_or') {
+      const news = colorList.filter((item: any, index: number) => index !== i)
       values[indexValue].keyword_or_color = news
     }
 
     if (type === 'keyword_and') {
-      values[indexValue].keyword_and_color = news
+      values[indexValue].keyword_and_color = colorList
     }
 
     if (type === 'keyword_exclude') {
-      values[indexValue].keyword_exclude_color = news
+      values[indexValue].keyword_exclude_color = colorList
     }
 
     setKeywords(values)
@@ -250,7 +253,6 @@ const KeywordForm = (props: any) => {
       const checkInputKeywords = CheckKeywords(e.target.value, keywords)
 
       // setCheckKeyword(checkInputKeywords)
-      console.log("events", e.target.value, e.target.value.length)
 
       if (type === 'keyword_or') {
         setCheckKeywordOr(checkInputKeywords)
@@ -343,6 +345,7 @@ const KeywordForm = (props: any) => {
             sx={{ mt: 3.5 }}
             placeholder='Enter Keyword'
             label='Keyword'
+            required
             value={keywords[indexNumber]?.name || ''}
             onChange={e => handleChangeLabel(indexNumber, e)}
           />
