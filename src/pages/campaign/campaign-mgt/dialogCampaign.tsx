@@ -276,8 +276,20 @@ const DialogCampaign = (props: DialogInfoProps) => {
           let keywordCounts = keywords.length
 
           for (let i = 0; i < keywords.length; i++) {
-            const keywordAndCount = keywords[i]?.keyword_and?.length
-            const keywordOrCount = keywords[i]?.keyword_and?.length
+            let keywordAndCount = 0;
+            let keywordOrCount = 0;
+            for(let j=0; j< keywords[i]?.keyword_and?.length; j++) {
+              if (keywords[i]?.keyword_and[j] !== '') {
+                keywordAndCount = keywordAndCount + 1;
+              }
+            }
+
+            for(let j=0; j< keywords[i]?.keyword_or?.length; j++) {
+              if (keywords[i]?.keyword_or[j] !== '') {
+                keywordOrCount = keywordOrCount + 1;
+              }
+            }
+           
             keywordCounts = keywordCounts + keywordAndCount + keywordOrCount
             setKeywordCount(keywordCounts)
           }
