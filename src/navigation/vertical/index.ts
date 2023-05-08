@@ -31,6 +31,31 @@ const navigation = (): VerticalNavItemsType => {
     resultIsAdmin
   } = UserPermission()
 
+  const userMgt = {
+    title: 'User MGT',
+    path: '/apps/user/list'
+  }
+
+  const userRoleMgt = {
+    title: 'User Role MGT',
+    path: '/apps/user/list/roleManagement'
+  }
+
+   const organizedGroupMGT = {
+    title: 'Organized Group MGT',
+    path: '/organized-mgt/organized-group'
+  }
+
+  const organizedTypeMGT = {
+    title: 'Organized Type MGT',
+    path: '/organized-mgt/organized-type'
+  }
+  
+  const organizedMgt = {
+    title: 'Organized MGT',
+    path: '/organized-mgt/management'
+  }
+
   const overallDashboard = {
     title: 'Overall Dashboard',
     path: '/dashboard/overall'
@@ -67,8 +92,8 @@ const navigation = (): VerticalNavItemsType => {
   }
 
   const snaBySentiment = {
-      title: 'By Sentiment',
-      path: '/SNA'
+    title: 'By Sentiment',
+    path: '/SNA'
   }
 
   const SNAByBullyLevel = {
@@ -81,8 +106,30 @@ const navigation = (): VerticalNavItemsType => {
     path: '/SNA/SNAByBullyType'
   }
 
-  const snaList : any [] = [];
- 
+  const userPermissionList : any [] = [];
+  const organizedList : any [] = [];
+  if (resultIsAdmin || resultPermission?.user?.authorized_view) {
+    userPermissionList.push(userMgt)
+  }
+
+  if (resultIsAdmin || resultPermission?.user_role?.authorized_view) {
+    userPermissionList.push(userRoleMgt)
+  }
+
+  if (resultIsAdmin || resultPermission?.organized_group_mgt?.authorized_view) {
+    organizedList.push(organizedGroupMGT)
+  }
+
+  if (resultIsAdmin || resultPermission?.organized_type_mgt?.authorized_view) {
+    organizedList.push(organizedTypeMGT)
+  }
+
+  if (resultIsAdmin || resultPermission?.organized_mgt?.authorized_view) {
+    organizedList.push(organizedMgt)
+  }
+
+  const snaList: any[] = []
+
   if (showSNABySentiment || resultIsAdmin) {
     snaList.push(snaBySentiment)
   }
@@ -129,41 +176,19 @@ const navigation = (): VerticalNavItemsType => {
     reportDashboardList.push(sna)
   }
 
-  const UserPermissionData = resultPermission?.user?.authorized_view
+  const UserPermissionData = userPermissionList.length > 0 
     ? {
         title: 'User Permission',
         icon: CogOutline,
-        children: [
-          {
-            title: 'User MGT',
-            path: '/apps/user/list'
-          },
-          {
-            title: 'User Role MGT',
-            path: '/apps/user/list/roleManagement'
-          }
-        ]
+        children: userPermissionList
       }
     : null
 
-  const OrganizationPermission = resultPermission?.user?.authorized_view
+  const OrganizationPermission = organizedList.length > 0
     ? {
         title: 'Organized MGT',
         icon: HomeAnalytics,
-        children: [
-          {
-            title: 'Organized Group MGT',
-            path: '/organized-mgt/organized-group'
-          },
-          {
-            title: 'Organized Type MGT',
-            path: '/organized-mgt/organized-type'
-          },
-          {
-            title: 'Organized MGT',
-            path: '/organized-mgt/management'
-          }
-        ]
+        children: organizedList
       }
     : null
 
@@ -212,21 +237,6 @@ const navigation = (): VerticalNavItemsType => {
       }
     : null
 
-  // const ContentPermission = {
-  //   title: 'Content',
-  //   icon: NewspaperVariantMultiple,
-  //   children: [
-  //     {
-  //       title: 'Contents',
-  //       path: '/content/homepage'
-  //     },
-  //     {
-  //       title: 'Content MGT',
-  //       path: '/content/content-mgt'
-  //     }
-  //   ]
-  // }
-
   const LinkOut = {
     title: 'Corpus',
     icon: VectorArrangeBelow,
@@ -274,7 +284,6 @@ const navigation = (): VerticalNavItemsType => {
   }
 
   return sideMenuBar
-
 }
 
 export default navigation

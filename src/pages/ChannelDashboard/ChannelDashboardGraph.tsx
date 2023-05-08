@@ -9,13 +9,15 @@ import {
   GetEngagementBy,
   GetSentimentBy
 } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
-import ChannelBySentiment from './ChannelBySentiment'
+
+// import ChannelBySentiment from './ChannelBySentiment'
+// import SentimentLevelChart from './SentimentLevelChart'
+
 import QuickView from './QuickView'
 import { Information } from 'mdi-material-ui'
 import DailyMessagePieChart from './DailyMessagePieChart'
 import EngagementRate from './EngagementRate'
 import SentimentScore from './SenitmentScore'
-import SentimentLevelChart from './SentimentLevelChart'
 import { ChannelColorCode, GraphicColors } from 'src/utils/const'
 import QuickViewModal from './QuickViewModal'
 import ChannelByDay from './ChannelBy/ChannelByDay'
@@ -28,6 +30,7 @@ import ChannelByBullyType from './ChannelBy/ChannelByBullyType'
 import Translations from 'src/layouts/components/Translations'
 import { useTheme } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
+import SentimentLevelsByChannel from './SentimentLevelsByChannel'
 
 interface Props {
   params: any
@@ -150,7 +153,6 @@ const ChannelDashboardGraphs = (data: Props) => {
       ) : (
         ''
       )}
-
       {resultReportPermission?.includes('45') ? (
         <Grid item xs={12} md={8} id='chart2'>
           <DailyMessageGraph
@@ -169,7 +171,6 @@ const ChannelDashboardGraphs = (data: Props) => {
       ) : (
         ''
       )}
-
       {resultReportPermission?.includes('46') ? (
         <Grid item xs={12} md={12} id='chart3'>
           <ChannelByDay
@@ -193,7 +194,6 @@ const ChannelDashboardGraphs = (data: Props) => {
       ) : (
         ''
       )}
-
       {resultReportPermission?.includes('47') ? (
         <Grid item xs={12} md={12} id='chart4'>
           <ChannelByTime
@@ -217,7 +217,6 @@ const ChannelDashboardGraphs = (data: Props) => {
       ) : (
         ''
       )}
-
       {resultReportPermission?.includes('48') ? (
         <Grid item xs={12} md={12} id='chart5'>
           <ChannelByDevice
@@ -241,7 +240,6 @@ const ChannelDashboardGraphs = (data: Props) => {
       ) : (
         ''
       )}
-
       {resultReportPermission?.includes('49') ? (
         <Grid item xs={12} md={12} id='chart6'>
           <ChannelByAccount
@@ -265,7 +263,6 @@ const ChannelDashboardGraphs = (data: Props) => {
       ) : (
         ''
       )}
-
       {resultReportPermission?.includes('50') ? (
         <Grid item xs={12} md={12} id='chart7'>
           <ChannelBySentimentComparison
@@ -335,7 +332,6 @@ const ChannelDashboardGraphs = (data: Props) => {
       ) : (
         ''
       )}
-
       {resultReportPermission?.includes('53') ? (
         <>
           <Grid item xs={12} id='chart10'>
@@ -456,7 +452,6 @@ const ChannelDashboardGraphs = (data: Props) => {
       ) : (
         ''
       )}
-
       {resultReportPermission?.includes('54') ? (
         <Grid item xs={12} md={6} id='chart11'>
           <EngagementRate
@@ -499,7 +494,7 @@ const ChannelDashboardGraphs = (data: Props) => {
       ) : (
         ''
       )}
-      {resultReportPermission?.includes('56') ? (
+      {/* {resultReportPermission?.includes('56') ? (
         <Grid container spacing={4} ml={3} mt={2} id='chart13'>
           <Grid item xs={12} md={6}>
             <ChannelBySentiment
@@ -522,8 +517,22 @@ const ChannelDashboardGraphs = (data: Props) => {
         </Grid>
       ) : (
         ''
+      )} */}
+      
+      {resultReportPermission?.includes('56') ? (
+        <Grid container spacing={4} ml={3} mt={2} id='chart13'>
+          <Grid item xs={12}>
+            <SentimentLevelsByChannel
+              chartId='Chart 13'
+              resultBy={resultChannelSentimentLevel}
+              loading={loadingSentimentBy}
+              resultSentimentLevel={resultSentimentLevel}
+            />
+          </Grid>
+        </Grid>
+      ) : (
+        ''
       )}
-
       <QuickView setHighlight={setHighlight} setShowQuickView={setShowQuickView} />
       <QuickViewModal
         show={showQuickView}

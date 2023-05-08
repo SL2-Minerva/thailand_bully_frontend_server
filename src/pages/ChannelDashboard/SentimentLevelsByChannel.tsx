@@ -1,0 +1,179 @@
+// ** MUI Imports
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardContent from '@mui/material/CardContent'
+import { Grid, IconButton, LinearProgress, Menu, MenuItem, TableBody, TableCell, TableContainer } from '@mui/material'
+import { Table, TableRow, TableHead } from '@mui/material'
+
+// ** Third Party Imports
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
+import Translations from 'src/layouts/components/Translations'
+import { MouseEvent, useEffect, useState } from 'react'
+import SentimentEachGraph from '../dashboard/SentimentEachGraph'
+
+import * as htmlToImage from 'html-to-image'
+import { saveAs } from 'file-saver'
+import { DotsVertical, Download } from 'mdi-material-ui'
+import NumberOfEachMessage from '../dashboard/NumberOfEachMessage'
+import { ChannelColors } from 'src/utils/const'
+
+const onCapture = () => {
+  const pictureId = document.getElementById('shareOfVoices')
+  if (pictureId) {
+    htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
+      saveAs(dataUrl, 'Channel by Sentiment.png')
+    })
+  }
+}
+
+const SentimentLevelsByChannel = ({
+  chartId,
+  resultSentimentLevel,
+  resultBy,
+  loading
+}: {
+  chartId: string
+  keywordsColor?: any
+  resultSentimentLevel: any
+  resultBy: any
+  loading: boolean
+}) => {
+  const reportNo = '3.2.015'
+
+  const [tableData, setTableData] = useState<any[]>([])
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  const rowOptionsOpen = Boolean(anchorEl)
+
+  const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleRowOptionsClose = () => {
+    setAnchorEl(null)
+  }
+
+  useEffect(() => {
+    console.log('result by', resultBy, 'result sentiment by', resultSentimentLevel)
+    if (resultBy && resultSentimentLevel) {
+      const data: any = []
+
+      for (let i = 0; i < resultBy?.length; i++) {
+        if(i < resultSentimentLevel.length) {
+            data.push({
+                keyword_name: resultBy[i]?.keyword_name,
+                total: resultBy[i]?.total_value,
+                Negative: resultSentimentLevel[i]?.negative,
+                Neutral: resultSentimentLevel[i]?.neutral,
+                Positive: resultSentimentLevel[i]?.positive
+              })
+        } else {
+            data.push({
+                keyword_name: resultBy[i]?.keyword_name,
+                total: resultBy[i]?.total_value,
+                Negative: 0,
+                Neutral: 0,
+                Positive: 0
+              })
+        }
+       
+      }
+
+      setTableData(data)
+    }
+  }, [resultSentimentLevel, resultBy])
+
+  return (
+    <Card sx={{ minheight: 450 }}>
+      {loading && <LinearProgress style={{ width: '100%' }} />}
+
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader title={<Translations text='Channel by Sentiment' />} titleTypographyProps={{ variant: 'h6' }} />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
+          </StyledTooltip>
+        </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
+            <DotsVertical />
+          </IconButton>
+          <Menu
+            keepMounted
+            anchorEl={anchorEl}
+            open={rowOptionsOpen}
+            onClose={handleRowOptionsClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            PaperProps={{ style: { minWidth: '8rem' } }}
+          >
+            <MenuItem
+              onClick={() => {
+                onCapture()
+                setAnchorEl(null)
+              }}
+            >
+              <Download fontSize='medium' sx={{ mr: 2 }} />
+              PNG
+            </MenuItem>
+          </Menu>
+        </span>
+      </div>
+      <CardContent id='shareOfVoices'>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <TableContainer>
+              <Table size='small' sx={{ overflow: 'auto' }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell></TableCell>
+                    <TableCell>Channel By Sentiment</TableCell>
+                    <TableCell sx={{ textAlign: 'right', backgroundColor: '#dadadade' }}>Negative</TableCell>
+                    <TableCell sx={{ textAlign: 'center', backgroundColor: '#dadadade' }}>Neutral</TableCell>
+                    <TableCell sx={{ backgroundColor: '#dadadade' }}>Positive</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {(tableData || []).map((shareVoice: any, index: number) => {
+                    return (
+                      <TableRow key={index}>
+                        <TableCell sx={{ textAlign: 'right', maxWidth: 120, paddingRight: '0px' }}>
+                          {shareVoice?.keyword_name}
+                        </TableCell>
+                        <TableCell sx={{ minWidth: 100, maxWidth: 300, paddingLeft: '0px' }}>
+                          <NumberOfEachMessage
+                            keywordsColor={ChannelColors[index]}
+                            resultShareOfVoiceChart={shareVoice}
+                          />
+                        </TableCell>
+                        <TableCell colSpan={3} sx={{ maxWidth: 300 }}>
+                          <SentimentEachGraph resultSentimentLevel={shareVoice} />
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
+  )
+}
+
+export default SentimentLevelsByChannel

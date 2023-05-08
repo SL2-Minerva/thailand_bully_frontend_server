@@ -28,7 +28,7 @@ import Close from 'mdi-material-ui/Close'
 import axios from 'axios'
 import authConfig from '../../../../configs/auth'
 import { ReportListPermission } from 'src/services/api/users/role'
-import { FormHelperText } from '@mui/material'
+import { FormControl, FormControlLabel, FormHelperText, Switch } from '@mui/material'
 
 // import { ReportOptions } from 'src/utils/const'
 
@@ -71,9 +71,38 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
   const defaultValue: any[] = []
   const [errorRoleName, setErrorRoleName] = useState<boolean>(false)
   const [errorDescription, setErrorDescription] = useState<boolean>(false)
+  const [isAdmin, setIsAdmin] = useState<boolean | number>(false)
 
   const [permission, setPermission] = useState<any>({
     user: {
+      authorized_create: true,
+      authorized_edit: true,
+      authorized_delete: true,
+      authorized_view: true,
+      authorized_export: true
+    },
+    user_role: {
+      authorized_create: true,
+      authorized_edit: true,
+      authorized_delete: true,
+      authorized_view: true,
+      authorized_export: true
+    },
+    organized_mgt: {
+      authorized_create: true,
+      authorized_edit: true,
+      authorized_delete: true,
+      authorized_view: true,
+      authorized_export: true
+    },
+    organized_type_mgt: {
+      authorized_create: true,
+      authorized_edit: true,
+      authorized_delete: true,
+      authorized_view: true,
+      authorized_export: true
+    },
+    organized_group_mgt: {
       authorized_create: true,
       authorized_edit: true,
       authorized_delete: true,
@@ -156,21 +185,62 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
     setDescription(current?.user_role_description ?? '')
     setErrorDescription(false)
     setErrorRoleName(false)
+    setIsAdmin(current?.is_admin ?? false)
 
     if (action === 'edit') {
       setReportIds(defaultValue)
       if (current?.permission) {
         setPermission(current?.permission)
-        const permissions = current?.permission;
-        
+        const permissions = current?.permission
+
+        if (!permissions?.user_role) {
+          permissions.user_role = {
+            authorized_create: true,
+            authorized_edit: true,
+            authorized_delete: true,
+            authorized_view: true,
+            authorized_export: true
+          }
+        }
+
+        if (!permissions?.organized_mgt) {
+          permissions.organized_mgt = {
+            authorized_create: true,
+            authorized_edit: true,
+            authorized_delete: true,
+            authorized_view: true,
+            authorized_export: true
+          }
+        }
+
+        if (!permissions?.organized_type_mgt) {
+          permissions.organized_type_mgt = {
+            authorized_create: true,
+            authorized_edit: true,
+            authorized_delete: true,
+            authorized_view: true,
+            authorized_export: true
+          }
+        }
+
+        if (!permissions?.organized_group_mgt) {
+          permissions.organized_group_mgt = {
+            authorized_create: true,
+            authorized_edit: true,
+            authorized_delete: true,
+            authorized_view: true,
+            authorized_export: true
+          }
+        }
+
         if (!permissions?.activity_log) {
-          permissions.activity_log =  {
+          permissions.activity_log = {
             authorized_create: false,
             authorized_edit: false,
             authorized_delete: false,
             authorized_view: false,
             authorized_export: false
-          };
+          }
         }
 
         if (!permissions?.sna_by_bully_level) {
@@ -180,7 +250,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
             authorized_delete: false,
             authorized_view: false,
             authorized_export: false
-          };
+          }
         }
 
         if (!permissions?.sna_by_bully_type) {
@@ -190,7 +260,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
             authorized_delete: false,
             authorized_view: false,
             authorized_export: false
-          };
+          }
         }
 
         if (!permissions?.sna_by_sentiment) {
@@ -200,7 +270,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
             authorized_delete: false,
             authorized_view: false,
             authorized_export: false
-          };
+          }
         }
 
         if (!permissions?.corpus) {
@@ -210,11 +280,39 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
             authorized_delete: false,
             authorized_view: false,
             authorized_export: false
-          };
+          }
         }
       } else {
         setPermission({
           user: {
+            authorized_create: true,
+            authorized_edit: true,
+            authorized_delete: true,
+            authorized_view: true,
+            authorized_export: true
+          },
+          user_role: {
+            authorized_create: true,
+            authorized_edit: true,
+            authorized_delete: true,
+            authorized_view: true,
+            authorized_export: true
+          },
+          organized_mgt: {
+            authorized_create: true,
+            authorized_edit: true,
+            authorized_delete: true,
+            authorized_view: true,
+            authorized_export: true
+          },
+          organized_type_mgt: {
+            authorized_create: true,
+            authorized_edit: true,
+            authorized_delete: true,
+            authorized_view: true,
+            authorized_export: true
+          },
+          organized_group_mgt: {
             authorized_create: true,
             authorized_edit: true,
             authorized_delete: true,
@@ -288,6 +386,34 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
           authorized_view: true,
           authorized_export: true
         },
+        user_role: {
+          authorized_create: true,
+          authorized_edit: true,
+          authorized_delete: true,
+          authorized_view: true,
+          authorized_export: true
+        },
+        organized_mgt: {
+          authorized_create: true,
+          authorized_edit: true,
+          authorized_delete: true,
+          authorized_view: true,
+          authorized_export: true
+        },
+        organized_type_mgt: {
+          authorized_create: true,
+          authorized_edit: true,
+          authorized_delete: true,
+          authorized_view: true,
+          authorized_export: true
+        },
+        organized_group_mgt: {
+          authorized_create: true,
+          authorized_edit: true,
+          authorized_delete: true,
+          authorized_view: true,
+          authorized_export: true
+        },
         campaign: {
           authorized_create: true,
           authorized_edit: true,
@@ -348,7 +474,9 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
     }
   }, [current])
 
-  // const [permission, setPermission] = useState<any>(current.permission ?? [])
+  const handleChangeAdmin = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsAdmin(event.target.checked ? 1 : 0)
+  }
 
   const handleSubmit = () => {
     if (roleName && roleDescription) {
@@ -360,7 +488,8 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
               role_name: roleName,
               role_description: roleDescription,
               permission: permission,
-              authorized_report: getReportIds(reportIds)
+              authorized_report: getReportIds(reportIds),
+              is_admin: isAdmin
             },
             {
               headers: {
@@ -384,7 +513,8 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
               role_description: roleDescription,
               permission: permission,
               authorized_report: getReportIds(reportIds),
-              status: current?.status
+              status: current?.status,
+              is_admin: isAdmin
             },
             {
               headers: {
@@ -484,6 +614,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                 <FormHelperText sx={{ color: 'error.main' }}>Description is required</FormHelperText>
               )}
             </Grid>
+
             <Grid item xs={12}>
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -577,23 +708,16 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                 defaultValue={defaultValue}
               />
             </Grid>
-            {/* <Grid item xs={12}>
-              <Autocomplete
-                disableCloseOnSelect
-                multiple
-                id='autocomplete-grouped'
-                groupBy={ReportOptions => ReportOptions?.groupName}
-                getOptionLabel={ReportOptions => ReportOptions?.title}
-                renderInput={params => <TextField {...params} label='Reports' />}
-                options={ReportOptions}
-                value={reportIds}
-                onChange = {(event: any, newValue: any) => {
-                  setReportIds(newValue);
-                }}
 
-                defaultValue={defaultValue}
-              />
-            </Grid> */}
+            <Grid item sm={6} xs={12} mt={3}>
+              <FormControl>
+                <FormControlLabel
+                  control={<Switch checked={isAdmin == 1 ? true : false} onChange={handleChangeAdmin} />}
+                  label='Is Admin ? '
+                  labelPlacement='start'
+                />
+              </FormControl>
+            </Grid>
           </Grid>
         </DialogContent>
         <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>

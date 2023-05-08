@@ -44,7 +44,7 @@ const OrganizedManagement = () => {
   const router = useRouter()
 
   // const { list, total } = Organization.getList(reload, page)
-  const { resultPermission, errorUserPermission } = UserPermission()
+  const { resultPermission, errorUserPermission, resultIsAdmin } = UserPermission()
 
   const { result_organization_group_list } = OrganzationGroupServiceList(reload)
   const { result_organization_type_list } = OrganizationTypeService(reload)
@@ -265,7 +265,7 @@ const OrganizedManagement = () => {
       <Grid item md={12} xs={12}>
         <Card>
           <CardContent>
-            {resultPermission?.user?.authorized_create ? (
+            { resultIsAdmin || resultPermission?.organized_mgt?.authorized_create ? (
               <Box
                 sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
               >
@@ -288,7 +288,7 @@ const OrganizedManagement = () => {
                     <TableCell align='center'>Organization Group</TableCell>
                     <TableCell align='center'>Organziation Type</TableCell>
                     <TableCell align='center'>Status</TableCell>
-                    {resultPermission?.user?.authorized_edit ? <TableCell align='center'>Action</TableCell> : ''}
+                    {resultIsAdmin || resultPermission?.organized_mgt?.authorized_edit ? <TableCell align='center'>Action</TableCell> : ''}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -308,7 +308,7 @@ const OrganizedManagement = () => {
                         <TableCell align='center'>{row.name}</TableCell>
                         <TableCell align='center'>{row.group}</TableCell>
                         <TableCell align='center'>{row.type}</TableCell>
-                        {resultPermission?.user?.authorized_edit ? (
+                        {resultIsAdmin || resultPermission?.organized_mgt?.authorized_edit ? (
                           <>
                             <TableCell align='center'>
                               <Switch

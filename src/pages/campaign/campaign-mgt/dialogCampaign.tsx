@@ -82,6 +82,11 @@ const DialogCampaign = (props: DialogInfoProps) => {
   const [checkKeywordOr, setCheckKeywordOr] = useState<boolean>(false)
   const [checkKeywordExclude, setCheckKeywordExclude] = useState<boolean>(false)
   const [keywordCount, setKeywordCount ] = useState<number>(1);
+
+  // const [remainingKeywordCount, setRemainingKeywordCount ] = useState<number>(keywordLimit);
+
+  const [removeKeywords, setRemoveKeywords ] = useState<any>([]);
+
   const initailAndColor = GenerateRandomColor()
 
   const [keywords, setKeywords] = useState([
@@ -127,6 +132,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
   }
 
   function removeKeyword(current: any) {
+    setRemoveKeywords([...removeKeywords, current.name]);
     const results = keywords.filter(keyword => keyword.id !== current.id)
     setKeywordCount(keywordCount - 1)
     setKeywords(results)
@@ -181,6 +187,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
         color_and: andColor,
       }
     ])
+    setRemoveKeywords([]);
   }
 
   const createNewCampaign = async () => {
@@ -210,12 +217,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
       start_at: format(date ? date : new Date(), 'yyyy-MM-dd'),
       end_at: format(endDate ? endDate : new Date(), 'yyyy-MM-dd'),
       keywords: keywords,
-      id: current.id ?? undefined
+      id: current.id ?? undefined,
+      delete_keyword : []
     }
 
     if (action === 'edit') {
       input_data.id = current.id
-
+      input_data.delete_keyword = removeKeywords
       axios
         .put(`${API_PATH}/campaign/update`, input_data, {
           headers: {
@@ -311,16 +319,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
   }, [current, action])
 
   // useEffect(() => {
-  //   if (current) {
-  //     console.log(current.keywords)
-  //     setCampaignName(current.name)
-  //     setDescription(current.description)
-  //     setDomain(current.domain_id)
-  //     setDate(new Date(current.start_at))
-  //     setEndDate(new Date(current.end_at))
-  //     setKeywords(current.keywords)
-  //   }
-  // }, [current])
+  //   setKeywordCount(keywordLimit - keywordCount);
+  // }, [keywordCount])
 
   return (
     <Card>
