@@ -24,6 +24,7 @@ import Paper from '@mui/material/Paper'
 import { GetActivityLog } from 'src/services/api/activityLog/ActivityLog'
 import { useRouter } from 'next/router'
 import Translations from 'src/layouts/components/Translations'
+import moment from 'moment'
 
 const ActivityLog = () => {
   const router = useRouter()
@@ -143,7 +144,7 @@ const ActivityLog = () => {
                           )}
                         </TableCell>
                         <TableCell align='center'>{activityLog.request_by_name}</TableCell>
-                        <TableCell align='center'> {activityLog.created_at} </TableCell>
+                        <TableCell align='center'> {moment(activityLog.created_at).format('DD-MM-YYYY HH:MM')} </TableCell>
                       </TableRow>
                     )
                   })}
