@@ -131,11 +131,34 @@ const DialogCampaign = (props: DialogInfoProps) => {
   }
 
   function removeKeyword(current: any) {
+
+    let keywordsCount = 1;
+
+    if(current?.keyword_and?.length > 0) {
+      const keywordAnd = current.keyword_and;
+      
+      for (let i = 0; i<keywordAnd.length; i ++) {
+        if(keywordAnd[i] !== '') {
+          keywordsCount = keywordsCount + 1;
+        }
+      }
+    }
+
+    if(current?.keyword_or?.length > 0) {
+      const keywordOr = current.keyword_or;
+      
+      for (let i = 0; i<keywordOr.length; i ++) {
+        if(keywordOr[i] !== '') {
+          keywordsCount = keywordsCount + 1;
+        }
+      }
+    }
+
     if (current.id) {
       setRemoveKeywords([...removeKeywords, current.id])
     }
     const results = keywords.filter(keyword => keyword.id !== current.id)
-    setKeywordCount(keywordCount - 1)
+    setKeywordCount(keywordCount - keywordsCount)
     setKeywords(results)
   }
 

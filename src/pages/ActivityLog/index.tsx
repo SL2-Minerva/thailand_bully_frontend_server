@@ -11,13 +11,56 @@ import {
   TableBody,
   Chip,
   Table,
-  TableRow
+  TableRow,
+  Box,
+  Pagination,
+  SelectChangeEvent,
+  InputLabel,
+  Select,
+  MenuItem
 } from '@mui/material'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Paper from '@mui/material/Paper'
+import { GetActivityLog } from 'src/services/api/activityLog/ActivityLog'
+import { useRouter } from 'next/router'
+import Translations from 'src/layouts/components/Translations'
 
 const ActivityLog = () => {
+  const router = useRouter()
+
   const [keyword, setKeyword] = useState('')
+  const [page, setPage] = useState(0)
+  const [pageCount, setPageCount] = useState<number>(0)
+  const [statusCode, setStatusCode] = useState('')
+  const { resultActivityLog, total, errorActivityLog } = GetActivityLog(page, keyword, statusCode)
+
+  const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value - 1)
+  }
+
+  useEffect(() => {
+    if (total > 0) {
+      setPageCount(Math.ceil(total / 10))
+    }
+  }, [total])
+
+  useEffect(() => {
+    if (errorActivityLog) {
+      window.localStorage.removeItem('userData')
+      window.localStorage.clear()
+      localStorage.clear()
+      router.push('/login')
+      window.location.reload()
+    }
+  }, [errorActivityLog])
+
+  useEffect(() => {
+    setPage(0)
+  }, [keyword, statusCode])
+
+  const handleStatusCode = useCallback((e: SelectChangeEvent) => {
+    setStatusCode(e.target.value)
+  }, [])
 
   return (
     <Grid container spacing={2}>
@@ -38,6 +81,32 @@ const ActivityLog = () => {
                   />
                 </FormControl>
               </Grid>
+              <Grid item sm={4} xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id='plan-select'>
+                    <Translations text='Status Code' />
+                  </InputLabel>
+                  <Select
+                    fullWidth
+                    value={statusCode}
+                    id='select-status'
+                    label='Select Status Code'
+                    labelId='statusCode-select'
+                    onChange={e => {
+                      handleStatusCode(e)
+                    }}
+                    inputProps={{ placeholder: 'Select Status Code' }}
+                  >
+                    <MenuItem value=''>All</MenuItem>
+                    <MenuItem value='200'>200</MenuItem>
+                    <MenuItem value='400'>400</MenuItem>
+                    <MenuItem value='401'>401</MenuItem>
+                    <MenuItem value='403'>403</MenuItem>
+                    <MenuItem value='404'>404</MenuItem>
+                    <MenuItem value='500'>500</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
             </Grid>
           </CardContent>
         </Card>
@@ -53,55 +122,47 @@ const ActivityLog = () => {
                   <TableRow>
                     <TableCell align='center'>No.</TableCell>
                     <TableCell align='center'>Endpoint</TableCell>
-                    <TableCell align='center'>Error Code</TableCell>
+                    <TableCell align='center'>Feature</TableCell>
+                    <TableCell align='center'>Status Code</TableCell>
+                    <TableCell align='center'>Requested By</TableCell>
                     <TableCell align='center'> Timestamp </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow>
-                    <TableCell align='center'>1</TableCell>
-                    <TableCell align='center'>Info not found</TableCell>
-                    <TableCell align='center'>
-                      <Chip label='404' variant='outlined' color='error' />
-                    </TableCell>
-                    <TableCell align='center'>02/05/2023 12:12</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align='center'>2</TableCell>
-                    <TableCell align='center'>Info not authorized</TableCell>
-                    <TableCell align='center'>
-                      <Chip label='401' variant='outlined' color='error' />
-                    </TableCell>
-                    <TableCell align='center'>02/05/2023 12:12</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align='center'>3</TableCell>
-                    <TableCell align='center'>xxxxx</TableCell>
-                    <TableCell align='center'>
-                      <Chip label='500' variant='outlined' color='error' />
-                    </TableCell>
-                    <TableCell align='center'>02/05/2023 12:12</TableCell>
-
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align='center'>4</TableCell>
-                    <TableCell align='center'>xxxxxx</TableCell>
-                    <TableCell align='center'>
-                      <Chip label='403' variant='outlined' color='error' />
-                    </TableCell>
-                    <TableCell align='center'>02/05/2023 12:12</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align='center'>5</TableCell>
-                    <TableCell align='center'>Info not found</TableCell>
-                    <TableCell align='center'>
-                      <Chip label='404' variant='outlined' color='error' />
-                    </TableCell>
-                    <TableCell align='center'>02/05/2023 13:13</TableCell>
-                  </TableRow>
+                  {(resultActivityLog || []).map((activityLog: any, index: number) => {
+                    return (
+                      <TableRow key={index}>
+                        <TableCell align='center'>{index + 1 + page * 10}</TableCell>
+                        <TableCell align='center'>{activityLog.end_point}</TableCell>
+                        <TableCell align='center'>{activityLog.feature}</TableCell>
+                        <TableCell align='center'>
+                          {activityLog.status_code === 200 ? (
+                            <Chip label={activityLog.status_code} variant='outlined' color='success' />
+                          ) : (
+                            <Chip label={activityLog.status_code} variant='outlined' color='error' />
+                          )}
+                        </TableCell>
+                        <TableCell align='center'>{activityLog.request_by_name}</TableCell>
+                        <TableCell align='center'> {activityLog.created_at} </TableCell>
+                      </TableRow>
+                    )
+                  })}
                 </TableBody>
               </Table>
             </TableContainer>
+            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+              {total > 0 ? (
+                <Pagination
+                  count={pageCount}
+                  page={page + 1}
+                  onChange={handleChangePagination}
+                  variant='outlined'
+                  color='primary'
+                />
+              ) : (
+                ''
+              )}
+            </Box>
           </CardContent>
         </Card>
       </Grid>
