@@ -547,7 +547,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
       ...permissionNew,
       [row.toLowerCase()]: { ...permissionNew[row.toLowerCase()], [`authorized_${key}`]: e.target.checked }
     }
-    setPermission(permissionNew)
+    setPermission(permissionNew) 
   }
 
   const onClose = () => {
