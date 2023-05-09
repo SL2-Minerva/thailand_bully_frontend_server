@@ -24,7 +24,7 @@ import { Organization } from 'src/services/api/organization/organization'
 import axios from 'axios'
 import authConfig from '../../../../configs/auth'
 import { API_PATH } from 'src/utils/const'
-import { role_list } from '../../../../services/api/users/role'
+import { UserPermission, role_list } from '../../../../services/api/users/role'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
@@ -48,6 +48,9 @@ interface DialogInfoProps {
 const DialogEditUserInfo = (props: DialogInfoProps) => {
   const { show, setShow, action, current, setCurrent } = props
 
+  const { resultIsAdmin } = UserPermission()
+
+
   const [organization, setOrganization] = useState<any>(current?.organization_id ?? '')
   const [name, setName] = useState<string>(current?.name ?? '')
   const [email, setEmail] = useState<string>(current?.email ?? '')
@@ -56,7 +59,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
   const [role_id, setRole] = useState<any>(current?.role_id ?? '')
   const [status, setStatus] = useState<string>(current?.status ?? '')
   const [showPassword, setShowPassword] = useState(false)
-const [isAdmin, setIsAdmin] = useState<boolean | number>(current?.is_admin ?? false)
+  const [isAdmin, setIsAdmin] = useState<boolean | number>(current?.is_admin ?? false)
 
   const handleClickShowPassword = () => setShowPassword(show => !show)
 
@@ -72,7 +75,7 @@ const [isAdmin, setIsAdmin] = useState<boolean | number>(current?.is_admin ?? fa
       axios
         .post(
           `${API_PATH}/user/update/${current?.id}`,
-          { name, password, email, company, organization_id: organization, role_id, status, is_admin: isAdmin },
+          { name, email, company, organization_id: organization, role_id, status, is_admin: isAdmin },
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
@@ -95,7 +98,7 @@ const [isAdmin, setIsAdmin] = useState<boolean | number>(current?.is_admin ?? fa
       axios
         .post(
           `${API_PATH}/user/create/`,
-          { name, password, email, company, organization_id: organization, role_id, status,is_admin: isAdmin },
+          { name, password, email, company, organization_id: organization, role_id, status, is_admin: isAdmin },
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
@@ -148,7 +151,7 @@ const [isAdmin, setIsAdmin] = useState<boolean | number>(current?.is_admin ?? fa
         scroll='body'
         onClose={() => {
           setShow(false)
-          onClose();
+          onClose()
           setCurrent()
         }}
         TransitionComponent={Transition}
@@ -163,7 +166,7 @@ const [isAdmin, setIsAdmin] = useState<boolean | number>(current?.is_admin ?? fa
             size='small'
             onClick={() => {
               setShow(false)
-              onClose();
+              onClose()
               setCurrent()
             }}
             sx={{ position: 'absolute', right: '1rem', top: '1rem' }}
@@ -186,32 +189,37 @@ const [isAdmin, setIsAdmin] = useState<boolean | number>(current?.is_admin ?? fa
                 autoComplete='off'
               />
             </Grid>
-            <Grid item sm={6} xs={12}>
-              <TextField
-                fullWidth
-                id='filled-password-input'
-                label='Password'
-                autoComplete='new-password'
-                variant='outlined'
-                onChange={e => setPassword(e.target.value)}
-                value={password}
-                type={showPassword ? 'text' : 'password'}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end'>
-                      <IconButton
-                        aria-label='toggle password visibility'
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge='end'
-                      >
-                        {showPassword ? <EyeOutline /> : <EyeOffOutline />}
-                      </IconButton>
-                    </InputAdornment>
-                  )
-                }}
-              />
-            </Grid>
+            {action === 'edit' ? (
+              ''
+            ) : (
+              <Grid item sm={6} xs={12}>
+                <TextField
+                  fullWidth
+                  id='filled-password-input'
+                  label='Password'
+                  autoComplete='new-password'
+                  variant='outlined'
+                  onChange={e => setPassword(e.target.value)}
+                  value={password}
+                  type={showPassword ? 'text' : 'password'}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position='end'>
+                        <IconButton
+                          aria-label='toggle password visibility'
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge='end'
+                        >
+                          {showPassword ? <EyeOutline /> : <EyeOffOutline />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              </Grid>
+            )}
+
             <Grid item sm={6} xs={12}>
               <TextField
                 fullWidth
@@ -292,15 +300,19 @@ const [isAdmin, setIsAdmin] = useState<boolean | number>(current?.is_admin ?? fa
               </FormControl>
             </Grid>
 
-            <Grid item sm={6} xs={12} mt={3}>
-              <FormControl>
-                <FormControlLabel
-                  control={<Switch checked={isAdmin == 1 ? true : false} onChange={handleChangeAdmin} />}
-                  label='Is Admin ? '
-                  labelPlacement='start'
-                />
-              </FormControl>
-            </Grid>
+            {resultIsAdmin === 1 || resultIsAdmin ? (
+              <Grid item sm={6} xs={12} mt={3}>
+                <FormControl>
+                  <FormControlLabel
+                    control={<Switch checked={isAdmin == 1 ? true : false} onChange={handleChangeAdmin} />}
+                    label='Is Admin ? '
+                    labelPlacement='start'
+                  />
+                </FormControl>
+              </Grid>
+            ) : (
+              ''
+            )}
           </Grid>
         </DialogContent>
         <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
