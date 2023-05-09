@@ -28,7 +28,7 @@ import { role_list } from '../../../../services/api/users/role'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
-import { InputAdornment } from '@mui/material'
+import { FormControlLabel, InputAdornment, Switch } from '@mui/material'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -56,6 +56,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
   const [role_id, setRole] = useState<any>(current?.role_id ?? '')
   const [status, setStatus] = useState<string>(current?.status ?? '')
   const [showPassword, setShowPassword] = useState(false)
+const [isAdmin, setIsAdmin] = useState<boolean | number>(current?.is_admin ?? false)
 
   const handleClickShowPassword = () => setShowPassword(show => !show)
 
@@ -71,7 +72,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
       axios
         .post(
           `${API_PATH}/user/update/${current?.id}`,
-          { name, password, email, company, organization_id: organization, role_id, status },
+          { name, password, email, company, organization_id: organization, role_id, status, is_admin: isAdmin },
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
@@ -94,7 +95,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
       axios
         .post(
           `${API_PATH}/user/create/`,
-          { name, password, email, company, organization_id: organization, role_id, status },
+          { name, password, email, company, organization_id: organization, role_id, status,is_admin: isAdmin },
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
@@ -125,6 +126,11 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
     setRole('')
     setStatus('')
     setPassword('')
+    setIsAdmin(current?.is_admin ?? false)
+  }
+
+  const handleChangeAdmin = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsAdmin(event.target.checked ? 1 : 0)
   }
 
   useEffect(() => {
@@ -283,6 +289,16 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
                   <MenuItem value='1'>Active</MenuItem>
                   <MenuItem value='0'>Inactive</MenuItem>
                 </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item sm={6} xs={12} mt={3}>
+              <FormControl>
+                <FormControlLabel
+                  control={<Switch checked={isAdmin == 1 ? true : false} onChange={handleChangeAdmin} />}
+                  label='Is Admin ? '
+                  labelPlacement='start'
+                />
               </FormControl>
             </Grid>
           </Grid>

@@ -71,9 +71,6 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
   const defaultValue: any[] = []
   const [errorRoleName, setErrorRoleName] = useState<boolean>(false)
   const [errorDescription, setErrorDescription] = useState<boolean>(false)
-
-  // const [isAdmin, setIsAdmin] = useState<boolean | number>(false)
-
   const [permission, setPermission] = useState<any>({
     user: {
       authorized_create: true,
@@ -186,9 +183,6 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
     setDescription(current?.user_role_description ?? '')
     setErrorDescription(false)
     setErrorRoleName(false)
-
-    // setIsAdmin(current?.is_admin ?? false)
-
     if (action === 'edit') {
       setReportIds(defaultValue)
       if (current?.permission) {
@@ -475,10 +469,6 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
       })
     }
   }, [current])
-
-  // const handleChangeAdmin = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setIsAdmin(event.target.checked ? 1 : 0)
-  // }
 
   const handleSubmit = () => {
     if (roleName && roleDescription) {
