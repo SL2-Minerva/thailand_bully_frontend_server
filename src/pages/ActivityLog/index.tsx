@@ -149,7 +149,7 @@ const ActivityLog = () => {
                         <TableCell align='center'>{activityLog.request_by_name}</TableCell>
                         <TableCell align='center'>
                           {' '}
-                          {moment(activityLog.created_at).format('DD-MM-YYYY HH:MM')}{' '}
+                          {moment(activityLog.created_at).format('DD-MM-YYYY HH:mm')}{' '}
                         </TableCell>
                       </TableRow>
                     )
