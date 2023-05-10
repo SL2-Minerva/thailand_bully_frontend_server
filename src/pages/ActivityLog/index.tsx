@@ -122,8 +122,9 @@ const ActivityLog = () => {
                 <TableHead>
                   <TableRow>
                     <TableCell align='center'>No.</TableCell>
-                    <TableCell align='center'>Endpoint</TableCell>
                     <TableCell align='center'>Feature</TableCell>
+                    <TableCell align='center'>Method</TableCell>
+                    <TableCell align='center'>Endpoint</TableCell>
                     <TableCell align='center'>Status Code</TableCell>
                     <TableCell align='center'>Requested By</TableCell>
                     <TableCell align='center'> Timestamp </TableCell>
@@ -134,8 +135,10 @@ const ActivityLog = () => {
                     return (
                       <TableRow key={index}>
                         <TableCell align='center'>{index + 1 + page * 10}</TableCell>
-                        <TableCell align='center'>{activityLog.end_point}</TableCell>
                         <TableCell align='center'>{activityLog.feature}</TableCell>
+                        <TableCell align='center'><span style={{color:'#4e1eec'}}>{activityLog.method}</span></TableCell>
+                        <TableCell align='center'>{activityLog.end_point}</TableCell>
+
                         <TableCell align='center'>
                           {activityLog.status_code === 200 ? (
                             <Chip label={activityLog.status_code} variant='outlined' color='success' />
@@ -144,7 +147,10 @@ const ActivityLog = () => {
                           )}
                         </TableCell>
                         <TableCell align='center'>{activityLog.request_by_name}</TableCell>
-                        <TableCell align='center'> {moment(activityLog.created_at).format('DD-MM-YYYY HH:MM')} </TableCell>
+                        <TableCell align='center'>
+                          {' '}
+                          {moment(activityLog.created_at).format('DD-MM-YYYY HH:MM')}{' '}
+                        </TableCell>
                       </TableRow>
                     )
                   })}
