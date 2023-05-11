@@ -125,6 +125,7 @@ const ActivityLog = () => {
                     <TableCell align='center'>Feature</TableCell>
                     <TableCell align='center'>Method</TableCell>
                     <TableCell align='center'>Endpoint</TableCell>
+                    <TableCell align='center'>Status</TableCell>
                     <TableCell align='center'>Status Code</TableCell>
                     <TableCell align='center'>Requested By</TableCell>
                     <TableCell align='center'> Timestamp </TableCell>
@@ -136,8 +137,17 @@ const ActivityLog = () => {
                       <TableRow key={index}>
                         <TableCell align='center'>{index + 1 + page * 10}</TableCell>
                         <TableCell align='center'>{activityLog.feature}</TableCell>
-                        <TableCell align='center'><span style={{color:'#4e1eec'}}>{activityLog.method}</span></TableCell>
+                        <TableCell align='center'>
+                          <span style={{ color: '#4e1eec' }}>{activityLog.method}</span>
+                        </TableCell>
                         <TableCell align='center'>{activityLog.end_point}</TableCell>
+                        <TableCell align='center'>
+                          {activityLog.status_code === 200 ? (
+                            <span style={{ color: '#4fac24' }}>{activityLog.status}</span>
+                          ) : (
+                            <span style={{ color: '#FF4D49' }}>{activityLog.status}</span>
+                          )}
+                        </TableCell>
 
                         <TableCell align='center'>
                           {activityLog.status_code === 200 ? (
