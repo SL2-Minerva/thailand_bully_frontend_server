@@ -12,11 +12,10 @@ import { createStyles, makeStyles } from '@mui/styles'
 import Translations from 'src/layouts/components/Translations'
 
 const defaultTheme = createTheme()
-const useStyles = makeStyles(
+export const useStyles = makeStyles(
   () =>
     createStyles({
       root: {
-        border: `1px solid #cccc00`,
         position: 'relative',
         overflow: 'hidden',
         width: '100%',
@@ -31,31 +30,35 @@ const useStyles = makeStyles(
         justifyContent: 'center'
       },
       bar: {
-        height: '100%',
-        '&.low': {
-          backgroundColor: '#cccc00'
-        },
-        '&.medium': {
-          backgroundColor: '#cccc00'
-        },
-        '&.high': {
-          backgroundColor: '#cccc00'
-        }
+        height: '100%'
       }
     }),
   { defaultTheme }
 )
 interface ProgressBarProps {
   value: number
+  sentiment: string
 }
 
 const ProgressBar = React.memo(function ProgressBar(props: ProgressBarProps) {
-  const { value } = props
+  const { value, sentiment } = props
   const valueInPercent = value
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
+    <div
+      className={classes.root}
+      style={{
+        border:
+          sentiment === 'positive'
+            ? `1px solid #63a375`
+            : sentiment === 'negative'
+            ? `1px solid #c73e1e`
+            : sentiment === 'neutral'
+            ? `1px solid #f5b95f`
+            : `1px solid #cccc00`
+      }}
+    >
       <div className={classes.value}>{`${valueInPercent.toLocaleString()} %`}</div>
       <div
         className={clsx(classes.bar, {
@@ -63,13 +66,23 @@ const ProgressBar = React.memo(function ProgressBar(props: ProgressBarProps) {
           medium: valueInPercent >= 30 && valueInPercent <= 70,
           high: valueInPercent > 70
         })}
-        style={{ maxWidth: `${valueInPercent}%` }}
+        style={{
+          maxWidth: `${valueInPercent}%`,
+          backgroundColor:
+            sentiment === 'positive'
+              ? `#63a375`
+              : sentiment === 'negative'
+              ? `#c73e1e`
+              : sentiment === 'neutral'
+              ? `#f5b95f`
+              : `#cccc00`
+        }}
       />
     </div>
   )
 })
 export function renderProgress(params: any) {
-  return <ProgressBar value={Number(params.value)!} />
+  return <ProgressBar value={Number(params.value)!} sentiment={params?.field} />
 }
 
 export const changeToFixedValue = (params: any) => {
