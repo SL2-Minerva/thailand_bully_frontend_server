@@ -35,7 +35,7 @@ import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { API_PATH } from 'src/utils/const'
 import { useTranslation } from 'react-i18next'
-import { FormHelperText } from '@mui/material'
+import { FormHelperText, FormLabel, Radio, RadioGroup } from '@mui/material'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -87,6 +87,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
   const [removeKeywords, setRemoveKeywords] = useState<any>([])
 
   const initailAndColor = GenerateRandomColor()
+  const [selectedValue, setSelectedValue] = useState('private')
 
   const [keywords, setKeywords] = useState([
     {
@@ -131,25 +132,24 @@ const DialogCampaign = (props: DialogInfoProps) => {
   }
 
   function removeKeyword(current: any) {
+    let keywordsCount = 1
 
-    let keywordsCount = 1;
+    if (current?.keyword_and?.length > 0) {
+      const keywordAnd = current.keyword_and
 
-    if(current?.keyword_and?.length > 0) {
-      const keywordAnd = current.keyword_and;
-      
-      for (let i = 0; i<keywordAnd.length; i ++) {
-        if(keywordAnd[i] !== '') {
-          keywordsCount = keywordsCount + 1;
+      for (let i = 0; i < keywordAnd.length; i++) {
+        if (keywordAnd[i] !== '') {
+          keywordsCount = keywordsCount + 1
         }
       }
     }
 
-    if(current?.keyword_or?.length > 0) {
-      const keywordOr = current.keyword_or;
-      
-      for (let i = 0; i<keywordOr.length; i ++) {
-        if(keywordOr[i] !== '') {
-          keywordsCount = keywordsCount + 1;
+    if (current?.keyword_or?.length > 0) {
+      const keywordOr = current.keyword_or
+
+      for (let i = 0; i < keywordOr.length; i++) {
+        if (keywordOr[i] !== '') {
+          keywordsCount = keywordsCount + 1
         }
       }
     }
@@ -250,6 +250,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
       status: status ? 1 : 0,
       description: description,
       frequency: frequency,
+      privacy_campaign : selectedValue,
       start_at: format(date ? date : new Date(), 'yyyy-MM-dd'),
       end_at: format(endDate ? endDate : new Date(), 'yyyy-MM-dd'),
       keywords: keywords,
@@ -304,7 +305,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
         setEndDate(new Date(current.end_at))
         setFrequency(current.frequency)
         setOriginalFrequency(frequencyDefault)
-
+        setSelectedValue(current.privacy_campaign)
         if (current.keyword && current.keyword.length > 0) {
           setKeywords(current.keyword)
           const keywords = current.keyword
@@ -361,12 +362,17 @@ const DialogCampaign = (props: DialogInfoProps) => {
       setDate(null)
       setEndDate(null)
       setStatus(true)
+      setSelectedValue('')
     }
   }, [current, action])
 
   useEffect(() => {
     setRemainingKeywordCount(keywordLimit - keywordCount)
   }, [keywordCount])
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedValue(event.target.value)
+  }
 
   return (
     <Card>
@@ -442,6 +448,41 @@ const DialogCampaign = (props: DialogInfoProps) => {
                     placeholder={t('frequencyPlaceHolder')}
                   />
                   {showErrorFrequency ? <p style={{ color: 'red', fontSize: '14px' }}>{showErrorFrequency}</p> : ''}
+                </FormControl>
+              </Grid>
+
+              <Grid item sm={12} xs={12}>
+                <FormControl sx={{ mt: 3, ml: 5 }}>
+                  <FormLabel id='demo-row-radio-buttons-group-label'>Campaign Privacy</FormLabel>
+                  <RadioGroup row aria-labelledby='demo-row-radio-buttons-group-label' name='row-radio-buttons-group'>
+                    <FormControlLabel
+                      value='private'
+                      control={<Radio value='private' checked={selectedValue === 'private'} onChange={handleChange} />}
+                      label='Private'
+                    />
+                    <FormControlLabel
+                      value='share_organize'
+                      control={
+                        <Radio
+                          value='share_organize'
+                          checked={selectedValue === 'share_organize'}
+                          onChange={handleChange}
+                        />
+                      }
+                      label='Share to Organize'
+                    />
+                    {resultIsAdmin ? (
+                      <FormControlLabel
+                        value='share_all'
+                        control={
+                          <Radio value='share_all' checked={selectedValue === 'share_all'} onChange={handleChange} />
+                        }
+                        label='Share to All'
+                      />
+                    ) : (
+                      ''
+                    )}
+                  </RadioGroup>
                 </FormControl>
               </Grid>
             </Grid>
@@ -584,13 +625,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
             variant='contained'
             sx={{ mr: 2 }}
             onClick={() => {
-              if (
-                !checkKeyword &&
-                !checkKeywordAnd &&
-                !checkKeywordExclude &&
-                !checkKeywordOr &&
-                !showErrorFrequency
-              ) {
+              if (!checkKeyword && !checkKeywordAnd && !checkKeywordExclude && !checkKeywordOr && !showErrorFrequency) {
                 createNewCampaign()
               }
             }}
