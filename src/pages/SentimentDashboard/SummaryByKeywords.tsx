@@ -232,50 +232,7 @@ const SummaryByKeywords = ({
             </Button>
           </Grid>
         </Grid>
-        {/* <TableContainer sx={{ maxHeight: 500 }}>
-            <Table size="small" stickyHeader={true}>
-                    <TableHead style={{ backgroundColor: "green"}}>
-                        <TableRow>
-                            <TableCell variant="head"> Keywords </TableCell>
-                            <TableCell variant="head"> Total Message </TableCell>
-                            <TableCell variant="head"> % </TableCell>
-                            <TableCell variant="head"> Positive </TableCell>
-                            <TableCell variant="head"> Neutral </TableCell>
-                            <TableCell variant="head"> Negative </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {
-                            (resultSummaryByKeywords||[])?.map((summary: any, index:any) => {
-                                return(
-                                    <TableRow key={index}>
-                                        <TableCell><b>{summary.keyword_name}</b></TableCell>
-                                        <TableCell>{summary.total_messages}</TableCell>
-                                        <TableCell>{summary.percentage}%</TableCell>
-                                        <TableCell>
-                                            <LinearProgressBar value={summary.positive} />
-                                        </TableCell>
-                                        <TableCell>
-                                            <LinearProgressBar value={summary.neutral} />
-                                        </TableCell>
-                                        <TableCell>
-                                             <LinearProgressBar value= {summary.negative} />
-                                        </TableCell>
-                                    </TableRow>
-                                )
-                            })
-                        }
-                    </TableBody>
-                    
-            </Table>
-            </TableContainer>
-            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
-                {
-                    total > 0 ? 
-                    <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
-                    : ""
-                }
-            </Box> */}
+        
         {resultSummaryByKeywords ? (
           <DataGrid
             autoHeight
