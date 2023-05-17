@@ -5,45 +5,25 @@ import {
   CardContent,
   FormControl,
   TextField,
-  TableContainer,
-  TableHead,
-  TableCell,
-  TableBody,
-  Chip,
-  Table,
-  TableRow,
-  Box,
-  Pagination,
   SelectChangeEvent,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  Chip
 } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
-import Paper from '@mui/material/Paper'
 import { GetActivityLog } from 'src/services/api/activityLog/ActivityLog'
 import { useRouter } from 'next/router'
 import Translations from 'src/layouts/components/Translations'
 import moment from 'moment'
+import { DataGrid, GridValueGetterParams } from '@mui/x-data-grid'
 
 const ActivityLog = () => {
   const router = useRouter()
 
   const [keyword, setKeyword] = useState('')
-  const [page, setPage] = useState(0)
-  const [pageCount, setPageCount] = useState<number>(0)
   const [statusCode, setStatusCode] = useState('')
-  const { resultActivityLog, total, errorActivityLog } = GetActivityLog(page, keyword, statusCode)
-
-  const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value - 1)
-  }
-
-  useEffect(() => {
-    if (total > 0) {
-      setPageCount(Math.ceil(total / 10))
-    }
-  }, [total])
+  const { resultActivityLog, errorActivityLog } = GetActivityLog(keyword, statusCode)
 
   useEffect(() => {
     if (errorActivityLog) {
@@ -55,13 +35,75 @@ const ActivityLog = () => {
     }
   }, [errorActivityLog])
 
-  useEffect(() => {
-    setPage(0)
-  }, [keyword, statusCode])
-
   const handleStatusCode = useCallback((e: SelectChangeEvent) => {
     setStatusCode(e.target.value)
   }, [])
+
+  function renderStatusCode(params: any) {
+    return params.value === 200 ? (
+      <Chip label={params.value} variant='outlined' color='success' />
+    ) : (
+      <Chip label={params.value} variant='outlined' color='error' />
+    )
+  }
+
+  function renderMethod(params: any) {
+    return <span style={{ color: '#4e1eec' }}>{params.value}</span>
+  }
+
+  function renderStatusText(params: any) {
+    return params.value === 'สถานะปกติ' ? (
+      <span style={{ color: '#4fac24' }}>{params.value}</span>
+    ) : (
+      <span style={{ color: '#FF4D49' }}>{params.value}</span>
+    )
+  }
+
+  const columns = [
+    {
+      field: 'id',
+      headerName: '#'
+    },
+    {
+      field: 'feature',
+      headerName: 'Feature',
+      flex: 1
+    },
+    {
+      field: 'method',
+      headerName: 'Method',
+      flex: 1,
+      renderCell: renderMethod
+    },
+    {
+      field: 'end_point',
+      headerName: 'Endpoint',
+      flex: 1
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      flex: 1,
+      renderCell: renderStatusText
+    },
+    {
+      field: 'status_code',
+      headerName: 'Status Code',
+      flex: 1,
+      renderCell: renderStatusCode
+    },
+    {
+      field: 'request_by_name',
+      headerName: 'Requested By',
+      flex: 1
+    },
+    {
+      field: 'created_at',
+      headerName: 'Timestamp',
+      flex: 1,
+      valueGetter: (params: GridValueGetterParams) => `${moment(params.row.created_at).format('DD-MM-YYYY HH:mm')}`
+    }
+  ]
 
   return (
     <Grid container spacing={2}>
@@ -117,69 +159,18 @@ const ActivityLog = () => {
         <Card>
           <CardHeader title='Activity Log' />
           <CardContent>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align='center'>No.</TableCell>
-                    <TableCell align='center'>Feature</TableCell>
-                    <TableCell align='center'>Method</TableCell>
-                    <TableCell align='center'>Endpoint</TableCell>
-                    <TableCell align='center'>Status</TableCell>
-                    <TableCell align='center'>Status Code</TableCell>
-                    <TableCell align='center'>Requested By</TableCell>
-                    <TableCell align='center'> Timestamp </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {(resultActivityLog || []).map((activityLog: any, index: number) => {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell align='center'>{index + 1 + page * 10}</TableCell>
-                        <TableCell align='center'>{activityLog.feature}</TableCell>
-                        <TableCell align='center'>
-                          <span style={{ color: '#4e1eec' }}>{activityLog.method}</span>
-                        </TableCell>
-                        <TableCell align='center'>{activityLog.end_point}</TableCell>
-                        <TableCell align='center'>
-                          {activityLog.status_code === 200 ? (
-                            <span style={{ color: '#4fac24' }}>{activityLog.status}</span>
-                          ) : (
-                            <span style={{ color: '#FF4D49' }}>{activityLog.status}</span>
-                          )}
-                        </TableCell>
-
-                        <TableCell align='center'>
-                          {activityLog.status_code === 200 ? (
-                            <Chip label={activityLog.status_code} variant='outlined' color='success' />
-                          ) : (
-                            <Chip label={activityLog.status_code} variant='outlined' color='error' />
-                          )}
-                        </TableCell>
-                        <TableCell align='center'>{activityLog.request_by_name}</TableCell>
-                        <TableCell align='center'>
-                          {' '}
-                          {moment(activityLog.created_at).format('DD-MM-YYYY HH:mm')}{' '}
-                        </TableCell>
-                      </TableRow>
-                    )
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
-              {total > 0 ? (
-                <Pagination
-                  count={pageCount}
-                  page={page + 1}
-                  onChange={handleChangePagination}
-                  variant='outlined'
-                  color='primary'
-                />
-              ) : (
-                ''
-              )}
-            </Box>
+            {resultActivityLog ? (
+              <DataGrid
+                autoHeight
+                rows={resultActivityLog}
+                columns={columns}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
+                getRowId={row => row.id}
+              />
+            ) : (
+              ''
+            )}
           </CardContent>
         </Card>
       </Grid>
