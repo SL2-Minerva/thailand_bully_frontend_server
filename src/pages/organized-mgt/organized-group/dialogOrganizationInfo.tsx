@@ -69,7 +69,8 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
     setValue('total_user', current?.total_user || 0)
     setValue('msg_transaction', current?.msg_transaction || 0)
     setValue('frequency', current?.frequency || '')
-
+    setValue ('campaign_per_organize', current?.campaign_per_organize || 0);
+    setValue('campaign_per_user', current?.campaign_per_user || 0);
     setValue('domains', current?.domains || [])
     setValue('platform', current?.platform || [])
     setValue('customer_service', current?.customer_service ? true : false)
@@ -80,7 +81,9 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
   }, [current])
 
   const schema = yup.object().shape({
-    organization_group_name: yup.string().required()
+    organization_group_name: yup.string().required(),
+    campaign_per_organize : yup.number().required(),
+    campaign_per_user : yup.number().required()
   })
 
   const {
@@ -127,6 +130,8 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
     errors.frequency = false
     errors.msg_transaction = false
     errors.total_user = false
+    errors.campaign_per_user = false
+    errors.campaign_per_organize = false
   })
 
   const onClose = () => {
@@ -251,15 +256,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                   )}
                 </FormControl>
               </Grid>
-              {/* <Grid item sm={12} xs={12}>
-              <FormControl fullWidth>
-                <Typography>Keyword Condition</Typography>
-                    <RadioGroup row aria-label='controlled' name='controlled' value={value} onChange={handleChange}>
-                    <FormControlLabel value='controlled-checked' control={<Radio />} label='Include/Exclude' />
-                    <FormControlLabel value='controlled-unchecked' control={<Radio />} label='none' />
-                </RadioGroup>
-              </FormControl>
-            </Grid> */}
+
               <Grid item sm={12} xs={12}>
                 <Controller
                   name='msg_transaction'
@@ -338,6 +335,48 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                     )}
                   />
                 </FormControl>
+              </Grid>
+
+              <Grid item sm={12} xs={12}>
+                <Controller
+                  name='campaign_per_organize'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <TextField
+                      value={value}
+                      label='Number of Campaign Per Organize'
+                      type='number'
+                      fullWidth
+                      onChange={onChange}
+                      placeholder='Number of Campaign Per Organize'
+                      error={errors?.campaign_per_organize ? true : false}
+                    />
+                  )}
+                />
+                {errors.campaign_per_organize && (
+                  <FormHelperText sx={{ color: 'error.main' }}>{errors.campaign_per_organize.message}</FormHelperText>
+                )}
+              </Grid>
+
+              <Grid item sm={12} xs={12}>
+                <Controller
+                  name='campaign_per_user'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <TextField
+                      value={value}
+                      label='Number of Campaign Per User'
+                      type='number'
+                      fullWidth
+                      onChange={onChange}
+                      placeholder='Number of Campaign Per User'
+                      error={errors?.campaign_per_user ? true : false}
+                    />
+                  )}
+                />
+                {errors.campaign_per_user && (
+                  <FormHelperText sx={{ color: 'error.main' }}>{errors.campaign_per_user.message}</FormHelperText>
+                )}
               </Grid>
 
               <Grid item sm={12} xs={12}>
