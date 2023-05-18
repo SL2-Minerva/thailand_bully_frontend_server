@@ -68,7 +68,7 @@ const CampaignManagement = () => {
 
   const { list } = Organization.getList(reload)
 
-  const { resultPermission, resultIsAdmin, errorUserPermission } = UserPermission()
+  const { resultPermission, resultIsAdmin, errorUserPermission, resultUserInfo } = UserPermission(reload)
 
   const handleOrganization = useCallback((e: SelectChangeEvent) => {
     setOrganization(e.target.value)
@@ -273,11 +273,25 @@ const CampaignManagement = () => {
                 <Box
                   sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
                 >
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-                    <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                      Add
-                    </Button>
-                  </Box>
+                  {resultUserInfo?.campaign_per_organize === null || resultUserInfo?.campaign_per_user === null ? (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                      <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
+                        Add
+                      </Button>
+                    </Box>
+                  ) : (
+                    <>
+                      {resultUserInfo?.campaign_per_organize > 0 && resultUserInfo?.campaign_per_user > 0 ? (
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                          <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
+                            Add
+                          </Button>
+                        </Box>
+                      ) : (
+                        ''
+                      )}
+                    </>
+                  )}
                 </Box>
               ) : (
                 <></>
@@ -391,6 +405,8 @@ const CampaignManagement = () => {
           keywordLimit={keyword_limit}
           resultIsAdmin={resultIsAdmin}
           frequencyDefault={frequencyDefault}
+          reload={reload}
+          setReload={setReload}
         />
       </Grid>
     </Grid>

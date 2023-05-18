@@ -58,10 +58,11 @@ const RolesService = () => {
   }
 }
 
-export const UserPermission = () => {
+export const UserPermission = (reload?: boolean) => {
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/user/info`,
-    method: 'GET'
+    method: 'GET',
+    data: reload
   })
 
   const overallDashboard = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
@@ -219,6 +220,7 @@ export const UserPermission = () => {
   return {
     resultPermission: res?.data?.permission || null,
     resultReportPermission: res?.data?.authorized_report || [],
+    resultUserInfo : res?.data?.info || null,
     resultIsAdmin: res?.data?.is_admin || false,
     showOverallDashboard: showOverallDashboard,
     showVoiceDashboard: showVoiceDashboard,

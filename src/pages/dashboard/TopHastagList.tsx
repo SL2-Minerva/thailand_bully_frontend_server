@@ -61,7 +61,7 @@ const TopHashtagList = ({ resultTopKeywords, loadingTopKeywords, chartId }: Prop
                   >
                     <TableCell sx={tableCellStyle}>{hashtag?.hashtag}</TableCell>
                     <TableCell width='30%'>{hashtag?.no_of_message?.toLocaleString('en-US')}</TableCell>
-                    <TableCell width='40%'>{hashtag?.percentage && hashtag?.percentage?.toFixed(4)}</TableCell>
+                    <TableCell width='40%'>{hashtag?.percentage && hashtag?.percentage?.toFixed(2)}</TableCell>
                   </TableRow>
                 )
               })}

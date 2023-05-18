@@ -52,7 +52,9 @@ interface DialogInfoProps {
   table: any
   keywordLimit: number
   resultIsAdmin: any
-  frequencyDefault: number
+  frequencyDefault: number,
+  reload: boolean
+  setReload : any
 }
 
 const RepeaterWrapper = styled(CardContent)<CardContentProps>(({ theme }) => ({
@@ -64,7 +66,7 @@ const RepeaterWrapper = styled(CardContent)<CardContentProps>(({ theme }) => ({
 }))
 
 const DialogCampaign = (props: DialogInfoProps) => {
-  const { show, setShow, action, current, keywordLimit, resultIsAdmin, frequencyDefault } = props
+  const { show, setShow, action, current, keywordLimit, resultIsAdmin, frequencyDefault, reload, setReload } = props
   const { t } = useTranslation()
 
   const [domain, setDomain] = useState<string>('')
@@ -245,7 +247,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
     const input_data = {
       name: campaignName,
-      organization_id: 1,
+      organization_id: localStorage.getItem('organizationId'),
       domain_id: parseInt(domain),
       status: status ? 1 : 0,
       description: description,
@@ -272,6 +274,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
           console.log('response', status, data)
 
           closeDialogBox()
+          setReload(!reload)
         })
         .catch((ex: any) => {
           console.log(ex)
@@ -288,6 +291,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
           console.log(data, status)
 
           closeDialogBox()
+          setReload(!reload);
         })
         .catch((ex: any) => {
           console.log(ex)
