@@ -4,7 +4,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { DataGrid, GridValueGetterParams } from '@mui/x-data-grid'
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import Translations from 'src/layouts/components/Translations'
 
 const EngagementSummary = ({
@@ -35,22 +35,30 @@ const EngagementSummary = ({
 
   const reportNo = '4.2.025'
 
-  const columns = [
-    { field: 'infulencer', headerName: 'Influencer', flex: 1, sortable: false },
+  const columns : GridColDef[] = [
+    {
+      field: 'infulencer',
+      headerName: 'Influencer',
+      flex: 1,
+      sortable: false,
+      headerAlign: 'center'
+    },
     {
       field: 'total',
       headerName: 'Total',
       flex: 1,
+      headerAlign: 'center',
       valueGetter: (params: GridValueGetterParams) => `${params.row.total?.toLocaleString('en-US')}`
     },
-    { field: 'share', headerName: 'Share', flex: 1 },
-    { field: 'comment', headerName: 'Comment', flex: 1 },
-    { field: 'reaction', headerName: 'Reaction', flex: 1 },
+    { field: 'share', headerName: 'Share', flex: 1, headerAlign: 'center' },
+    { field: 'comment', headerName: 'Comment', flex: 1, headerAlign: 'center' },
+    { field: 'reaction', headerName: 'Reaction', flex: 1, headerAlign: 'center' },
 
     {
       field: 'period_over_preiod',
       headerName: 'Period over Period',
       flex: 1,
+      headerAlign: 'center',
       valueGetter: (params: GridValueGetterParams) => `${params.row.period_over_preiod}`
     },
 
@@ -58,6 +66,7 @@ const EngagementSummary = ({
       field: 'period_over_period_percentage',
       headerName: 'Period over Period (%)',
       flex: 1,
+      headerAlign: 'center',
       valueGetter: (params: GridValueGetterParams) => `${params.row.period_over_period_percentage}`
     }
   ]
@@ -83,14 +92,21 @@ const EngagementSummary = ({
       </span>
       <CardContent>
         {resultSummary ? (
-          <DataGrid
-            autoHeight
-            rows={resultSummary}
-            columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
-            getRowId={row => row.message_id}
-          />
+            <DataGrid
+              autoHeight
+              rows={resultSummary}
+              columns={columns}
+              pageSize={10}
+              rowsPerPageOptions={[10]}
+              getRowId={row => row.message_id}
+              sx={{
+                '& .MuiDataGrid-cell': {
+                  textAlign: 'center',
+                  display: 'flex',
+                  justifyContent: 'center'
+                }
+              }}
+            />
         ) : (
           <div
             style={{

@@ -180,7 +180,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                       </Typography>
                     ) : (
                       <>
-                        <Typography variant='h6' mt={4}>
+                        <Typography variant='h6'>
                           {totalEngagement?.reaction?.type === 'plus' ? (
                             <ChevronUp fontSize='large' sx={{ color: 'success.main' }} />
                           ) : (

@@ -29,9 +29,7 @@ const onCapture = () => {
 const CommentSentiment = ({ params, chartId }: { params: any; chartId: string }) => {
   const [apiParams, setApiParams] = useState<any>()
 
-  const { resultSentimentType, loadingFilterData } = GetSentimentType(
-    apiParams
-  )
+  const { resultSentimentType, loadingFilterData } = GetSentimentType(apiParams)
   const reportNo = '1.1.019'
 
   const theme = useTheme()
@@ -96,13 +94,13 @@ const CommentSentiment = ({ params, chartId }: { params: any; chartId: string })
         period: params?.period,
         fillter_keywords: params?.keywordIds
       })
-    } 
+    }
     if (
       params?.period === 'customrange' &&
       params?.endDate &&
       params?.previousEndDate &&
-      params?.date !== params?.endDate
-      && params?.previousDate !== params?.previousEndDate
+      params?.date !== params?.endDate &&
+      params?.previousDate !== params?.previousEndDate
     ) {
       setApiParams({
         campaign_id: params?.campaign,
@@ -120,21 +118,21 @@ const CommentSentiment = ({ params, chartId }: { params: any; chartId: string })
   return (
     <Card style={{ minHeight: 410, maxHeight: 500 }}>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
-      
+
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader title='Comment Sentiment' titleTypographyProps={{ variant: 'h6' }} />
-        <StyledTooltip
-          arrow
-          title={
-            <span>
-              {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
-            </span>
-          }
-        >
-          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
-        </StyledTooltip>
-      </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader title='Comment Sentiment' titleTypographyProps={{ variant: 'h6' }} />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
+          </StyledTooltip>
+        </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
@@ -166,7 +164,7 @@ const CommentSentiment = ({ params, chartId }: { params: any; chartId: string })
           </Menu>
         </span>
       </div>
-      <CardContent id="commentSentiment">
+      <CardContent id='commentSentiment'>
         <Grid container spacing={3}>
           <Grid item xs={8}>
             {resultSentimentType?.negative_percentage ||
@@ -192,25 +190,36 @@ const CommentSentiment = ({ params, chartId }: { params: any; chartId: string })
             resultSentimentType?.neutral_percentage ||
             resultSentimentType?.positive_percentage ? (
               <>
-                <span>
-                  <ThumbUp />{' '}
-                  {resultSentimentType?.positive_percentage
-                    ? 'Positive ' + resultSentimentType?.positive_percentage + '%'
-                    : ''}
+                <span style={{ display: 'flex' }}>
+                  <span style={{ paddingTop: '5px' }}>
+                    <ThumbUp style={{ fontSize: '20px' }} />
+                  </span>
+                  <span style={{ paddingTop: '3px', paddingLeft: '9px', fontSize: '13px' }}>
+                    {resultSentimentType?.positive_percentage
+                      ? 'Positive ' + resultSentimentType?.positive_percentage + '%'
+                      : ''}
+                  </span>
                 </span>
-                <br />
-                <span>
-                  <ThumbsUpDown />{' '}
-                  {resultSentimentType?.neutral_percentage
-                    ? 'Neutral ' + resultSentimentType?.neutral_percentage + '%'
-                    : ''}
+
+                <span style={{ display: 'flex' }}>
+                  <span style={{ paddingTop: '5px' }}>
+                    <ThumbsUpDown style={{ fontSize: '24px' }} />
+                  </span>
+                  <span style={{ padding: '6px', fontSize: '13px' }}>
+                    {resultSentimentType?.neutral_percentage
+                      ? 'Neutral ' + resultSentimentType?.neutral_percentage + '%'
+                      : ''}
+                  </span>
                 </span>
-                <br />
-                <span>
-                  <ThumbDown />{' '}
-                  {resultSentimentType?.negative_percentage
-                    ? 'Negative ' + resultSentimentType?.negative_percentage + '%'
-                    : ''}
+                <span style={{ display: 'flex' }}>
+                  <span style={{ paddingTop: '5px' }}>
+                    <ThumbDown style={{ fontSize: '20px' }} />
+                  </span>
+                  <span style={{ paddingTop: '3px', paddingLeft: '9px', fontSize: '13px' }}>
+                    {resultSentimentType?.negative_percentage
+                      ? 'Negative ' + resultSentimentType?.negative_percentage + '%'
+                      : ''}
+                  </span>
                 </span>
               </>
             ) : (

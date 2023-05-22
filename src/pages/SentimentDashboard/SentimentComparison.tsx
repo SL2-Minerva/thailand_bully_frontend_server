@@ -83,7 +83,7 @@ const SentimentComparisonTable = ({
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Sentiment Type Comparison: Period over Period' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          titleTypographyProps={{ variant: 'body2', color: highlight ? 'green' : '#4c4e64de' }}
           subheader='Period over Period'
         />
         <StyledTooltip
@@ -127,7 +127,7 @@ const SentimentComparisonTable = ({
                   <TableRow key={index}>
                     <TableCell>{comparison.keyword_name}</TableCell>
                     <TableCell align='center'>
-                      <Typography variant='h5'>{comparison.total?.toLocaleString('en-US')}</Typography>
+                      <Typography variant='h6'>{comparison.total?.toLocaleString('en-US')}</Typography>
                     </TableCell>
                     <TableCell align='left'>
                       <span style={{ display: 'flex', justifyContent: 'center' }}>
@@ -135,24 +135,24 @@ const SentimentComparisonTable = ({
                           <>
                             {comparison.comparison?.type === 'plus' ? (
                               <ChevronUp
-                                fontSize='large'
+                                fontSize='medium'
                                 sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
                               />
                             ) : (
                               <ChevronDown
-                                fontSize='large'
+                                fontSize='medium'
                                 sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
                               />
                             )}
-                            <Typography variant='h5'>
+                            <Typography variant='h6'>
                               {comparison.comparison?.value?.toLocaleString('en-US')}
-                              <Typography variant='h6'>{comparison.comparison?.percentage} %</Typography>
+                              <Typography variant='body2'>{comparison.comparison?.percentage} %</Typography>
                             </Typography>
                           </>
                         ) : (
-                          <Typography variant='h5'>
+                          <Typography variant='h6'>
                             {comparison.comparison?.value ? comparison.comparison?.value : 0}
-                            <Typography variant='h6'>
+                            <Typography variant='body2'>
                               {comparison.comparison?.percentage ? comparison.comparison?.percentage : 0} %
                             </Typography>
                           </Typography>
@@ -165,24 +165,24 @@ const SentimentComparisonTable = ({
                           <>
                             {comparison.positive?.type === 'plus' ? (
                               <ChevronUp
-                                fontSize='large'
+                                fontSize='medium'
                                 sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
                               />
                             ) : (
                               <ChevronDown
-                                fontSize='large'
+                                fontSize='medium'
                                 sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
                               />
                             )}
-                            <Typography variant='h5'>
+                            <Typography variant='h6'>
                               {comparison.positive?.value?.toLocaleString('en-US')}
-                              <Typography variant='h6'>{comparison.positive?.percentage} %</Typography>
+                              <Typography variant='body2'>{comparison.positive?.percentage} %</Typography>
                             </Typography>
                           </>
                         ) : (
-                          <Typography variant='h5'>
+                          <Typography variant='h6'>
                             {comparison.positive?.value ? comparison.positive?.value : 0}
-                            <Typography variant='h6'>
+                            <Typography variant='body2'>
                               {comparison.positive?.percentage ? comparison.positive?.percentage : 0} %
                             </Typography>
                           </Typography>
@@ -195,24 +195,24 @@ const SentimentComparisonTable = ({
                           <>
                             {comparison.neutral?.type === 'plus' ? (
                               <ChevronUp
-                                fontSize='large'
+                                fontSize='medium'
                                 sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
                               />
                             ) : (
                               <ChevronDown
-                                fontSize='large'
+                                fontSize='medium'
                                 sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
                               />
                             )}
-                            <Typography variant='h5'>
+                            <Typography variant='h6'>
                               {comparison.neutral?.value?.toLocaleString('en-US')}
-                              <Typography variant='h6'>{comparison.neutral?.percentage} %</Typography>
+                              <Typography variant='body2'>{comparison.neutral?.percentage} %</Typography>
                             </Typography>
                           </>
                         ) : (
-                          <Typography variant='h5'>
+                          <Typography variant='h6'>
                             {comparison.neutral?.value ? comparison.neutral?.value : 0}
-                            <Typography variant='h6'>
+                            <Typography variant='body2'>
                               {comparison.neutral?.percentage ? comparison.neutral?.percentage : 0} %
                             </Typography>
                           </Typography>
@@ -225,24 +225,24 @@ const SentimentComparisonTable = ({
                           <>
                             {comparison.negative?.type === 'plus' ? (
                               <ChevronUp
-                                fontSize='large'
+                                fontSize='medium'
                                 sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
                               />
                             ) : (
                               <ChevronDown
-                                fontSize='large'
+                                fontSize='medium'
                                 sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
                               />
                             )}
-                            <Typography variant='h5'>
+                            <Typography variant='h6'>
                               {comparison.negative?.value?.toLocaleString('en-US')}
-                              <Typography variant='h6'>{comparison.negative?.percentage} %</Typography>
+                              <Typography variant='body2'>{comparison.negative?.percentage} %</Typography>
                             </Typography>
                           </>
                         ) : (
-                          <Typography variant='h5'>
+                          <Typography variant='h6'>
                             {comparison.negative?.value ? comparison.negative?.value : 0}
-                            <Typography variant='h6'>
+                            <Typography variant='body2'>
                               {comparison.negative?.percentage ? comparison.negative?.percentage : 0} %
                             </Typography>
                           </Typography>

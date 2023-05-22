@@ -94,11 +94,11 @@ const KeywordTable = ({ params, chartId }: { params: any; chartId: string }) => 
                     <TableCell sx={cellStyle}>
                       <b>{keyword.keyword}</b>
                     </TableCell>
-                    <TableCell>{keyword.message}</TableCell>
-                    <TableCell>{keyword.engagement}</TableCell>
-                    <TableCell>{keyword.accounts}</TableCell>
-                    <TableCell>{keyword.average_message}</TableCell>
-                    <TableCell>{keyword.average_engagement}</TableCell>
+                    <TableCell sx={{textAlign:'center'}}>{keyword.message}</TableCell>
+                    <TableCell sx={{textAlign:'center'}}>{keyword.engagement}</TableCell>
+                    <TableCell sx={{textAlign:'center'}}>{keyword.accounts}</TableCell>
+                    <TableCell sx={{textAlign:'center'}}>{keyword.average_message}</TableCell>
+                    <TableCell sx={{textAlign:'center'}}>{keyword.average_engagement}</TableCell>
                   </TableRow>
                 )
               })}
