@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import React, { useEffect } from 'react'
-import { DataGrid, GridValueGetterParams } from '@mui/x-data-grid'
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import clsx from 'clsx'
 import { createTheme } from '@mui/material'
 import { createStyles, makeStyles } from '@mui/styles'
@@ -128,23 +128,27 @@ const SummaryByKeywords = ({
 
   const reportNo = '5.2.019'
 
-  const columns = [
-    { field: 'keyword_name', headerName: 'Keywords', flex: 1, sortable: false },
+  const columns: GridColDef[] = [
+    { field: 'keyword_name', headerName: 'Keywords', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
     {
       field: 'total_messages',
       headerName: 'Total Message',
       flex: 1,
+      align: 'center',
+      headerAlign: 'center',
       valueGetter: (params: GridValueGetterParams) => `${params.row.total_messages?.toLocaleString('en-US')}`
     },
     {
       field: 'percentage',
       headerName: ' %',
       flex: 1,
+      align: 'center',
+      headerAlign: 'center',
       valueGetter: (params: GridValueGetterParams) => `${params.row.percentage?.toFixed(4) + '%'}`
     },
-    { field: 'positive', headerName: ' Positive', flex: 1, renderCell: renderProgress },
-    { field: 'neutral', headerName: ' Neutral', flex: 1, renderCell: renderProgress },
-    { field: 'negative', headerName: ' Negative', flex: 1, renderCell: renderProgress }
+    { field: 'positive', headerName: ' Positive', flex: 1, renderCell: renderProgress, headerAlign: 'center' },
+    { field: 'neutral', headerName: ' Neutral', flex: 1, renderCell: renderProgress, headerAlign: 'center' },
+    { field: 'negative', headerName: ' Negative', flex: 1, renderCell: renderProgress, headerAlign: 'center' }
   ]
 
   return (
@@ -232,7 +236,7 @@ const SummaryByKeywords = ({
             </Button>
           </Grid>
         </Grid>
-        
+
         {resultSummaryByKeywords ? (
           <DataGrid
             autoHeight

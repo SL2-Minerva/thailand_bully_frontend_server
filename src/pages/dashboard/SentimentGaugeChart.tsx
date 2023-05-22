@@ -139,7 +139,7 @@ const SentimentGaugeChart = ({ params, chartId }: { params: any; chartId: string
           </Grid>
           <Grid item xs={4}>
             <h1>{resultSentimentScore?.neutral_value}</h1>
-            <p>{resultSentimentScore?.text || '-'}</p>
+            <p style={{paddingLeft: '13px'}}>{resultSentimentScore?.text || '-'}</p>
           </Grid>
         </Grid>
 

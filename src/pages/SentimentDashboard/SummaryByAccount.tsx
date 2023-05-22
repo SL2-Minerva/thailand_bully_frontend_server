@@ -6,7 +6,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { useEffect } from 'react'
 import { changeToFixedValue, renderProgress } from './SummaryByKeywords'
-import { DataGrid } from '@mui/x-data-grid'
+import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import Translations from 'src/layouts/components/Translations'
 
 const SummaryByAccount = ({
@@ -46,12 +46,40 @@ const SummaryByAccount = ({
 
   const reportNo = '5.2.017'
 
-  const columns = [
+  const columns: GridColDef[] = [
     { field: 'infulencer', headerName: 'Influencer', flex: 1, sortable: false },
-    { field: 'sentiment_score', headerName: 'Sentiment Score ', flex: 1, renderCell: changeToFixedValue },
-    { field: 'positive', headerName: ' Positive', flex: 1, renderCell: renderProgress },
-    { field: 'neutral', headerName: ' Neutral', flex: 1, renderCell: renderProgress },
-    { field: 'negative', headerName: ' Negative', flex: 1, renderCell: renderProgress }
+    {
+      field: 'sentiment_score',
+      headerName: 'Sentiment Score ',
+      flex: 1,
+      renderCell: changeToFixedValue,
+      align: 'center',
+      headerAlign: 'center'
+    },
+    {
+      field: 'positive',
+      headerName: ' Positive',
+      flex: 1,
+      renderCell: renderProgress,
+      align: 'center',
+      headerAlign: 'center'
+    },
+    {
+      field: 'neutral',
+      headerName: ' Neutral',
+      flex: 1,
+      renderCell: renderProgress,
+      align: 'center',
+      headerAlign: 'center'
+    },
+    {
+      field: 'negative',
+      headerName: ' Negative',
+      flex: 1,
+      renderCell: renderProgress,
+      align: 'center',
+      headerAlign: 'center'
+    }
   ]
 
   return (
@@ -139,48 +167,6 @@ const SummaryByAccount = ({
             </Button>
           </Grid>
         </Grid>
-        {/* <TableContainer sx={{ maxHeight: 500 }}>
-            <Table size="small" stickyHeader={true}>
-                    <TableHead style={{ backgroundColor: "green"}}>
-                        <TableRow>
-                            <TableCell variant="head"> Influencer </TableCell>
-                            <TableCell variant="head"> Sentiment Score </TableCell>
-                            <TableCell variant="head"> Positive </TableCell>
-                            <TableCell variant="head"> Neutral </TableCell>
-                            <TableCell variant="head"> Negative </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {
-                            (resultSummaryByAccount||[])?.map((summary: any, index:any) => {
-                                return(
-                                    <TableRow key={index}>
-                                        <TableCell><b>{summary.infulencer}</b></TableCell>
-                                        <TableCell>{summary.sentiment_score}</TableCell>
-                                        <TableCell>
-                                            <LinearProgressBar value={summary.positive} />
-                                        </TableCell>
-                                        <TableCell>
-                                            <LinearProgressBar value={summary.neutral} />
-                                        </TableCell>
-                                        <TableCell>
-                                             <LinearProgressBar value= {summary.negative} />
-                                        </TableCell>
-                                    </TableRow>
-                                )
-                            })
-                        }
-                    </TableBody>
-                    
-            </Table>
-            </TableContainer>
-            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}> 
-                {
-                    total > 0 ? 
-                    <Pagination count={pageCount} page={page+1} onChange={handleChangePagination} variant='outlined' color='primary'/>
-                    : ""
-                }
-            </Box> */}
 
         {resultSummaryByAccount ? (
           <DataGrid

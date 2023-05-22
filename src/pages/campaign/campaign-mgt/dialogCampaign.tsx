@@ -72,6 +72,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
   const [domain, setDomain] = useState<string>('')
   const [originalFrequency, setOriginalFrequency] = useState<number>(0)
   const [frequency, setFrequency] = useState<number>(0)
+  const [msgTransaction, setMsgTransaction] = useState<number>(0);
   const [showErrorFrequency, setShowErrorFrequency] = useState<string>('')
   const [date, setDate] = useState<Date | null>(new Date())
   const [endDate, setEndDate] = useState<Date | null>(new Date())
@@ -177,6 +178,10 @@ const DialogCampaign = (props: DialogInfoProps) => {
     setDescription(event.target.value)
   }
 
+  function handleMsgTransaction(event: any) {
+    setMsgTransaction(event.target.value)
+  }
+
   function handleFrequency(event: any) {
     const frequencyValue = event.target.value
     if (resultIsAdmin) {
@@ -257,7 +262,8 @@ const DialogCampaign = (props: DialogInfoProps) => {
       end_at: format(endDate ? endDate : new Date(), 'yyyy-MM-dd'),
       keywords: keywords,
       id: current.id ?? undefined,
-      delete_keyword: []
+      delete_keyword: [],
+      msg_transaction: msgTransaction
     }
 
     if (action === 'edit') {
@@ -308,6 +314,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
         setDate(new Date(current.start_at))
         setEndDate(new Date(current.end_at))
         setFrequency(current.frequency)
+        setMsgTransaction(current.msg_transaction)
         setOriginalFrequency(frequencyDefault)
         setSelectedValue(current.privacy_campaign)
         if (current.keyword && current.keyword.length > 0) {
@@ -367,6 +374,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
       setEndDate(null)
       setStatus(true)
       setSelectedValue('')
+      setMsgTransaction(0);
     }
   }, [current, action])
 
@@ -452,6 +460,19 @@ const DialogCampaign = (props: DialogInfoProps) => {
                     placeholder={t('frequencyPlaceHolder')}
                   />
                   {showErrorFrequency ? <p style={{ color: 'red', fontSize: '14px' }}>{showErrorFrequency}</p> : ''}
+                </FormControl>
+              </Grid>
+
+              <Grid item sm={12} xs={12}>
+                <FormControl fullWidth>
+                  <TextField
+                    fullWidth
+                    type='number'
+                    label='Number Of Message Transaction '
+                    value={msgTransaction}
+                    onChange={handleMsgTransaction}
+                    placeholder='Message Transaction'
+                  />
                 </FormControl>
               </Grid>
 

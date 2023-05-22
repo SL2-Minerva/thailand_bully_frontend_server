@@ -35,7 +35,7 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
                   <Typography sx={{ fontSize: '1.5vw', fontWeight: 'bold', mt: 1 }}>Total Message</Typography>
                 </span>
                 <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Typography variant='h5'>{totalMessage?.totalSentiment?.totalValue}</Typography>
+                  <Typography variant='h5' sx={{pt:'5px'}}>{totalMessage?.totalSentiment?.totalValue}</Typography>
 
                   <Box>
                     <Box sx={{ display: 'flex', alignItems: 'center' , mr : 15}}>
@@ -75,7 +75,7 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
                   </Typography>
                 </span>
                 <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Typography variant='h5'>
+                  <Typography variant='h5' sx={{pt:'5px'}}>
                     {/* { totalMessage?.totalMessage?.type === 'plus' ? "+" : "-" } */}
                     {totalMessage?.positive?.totalValue}
                   </Typography>
@@ -117,7 +117,7 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
                   </Typography>
                 </span>
                 <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Typography variant='h5'>
+                  <Typography variant='h5' sx={{pt:'5px'}}>
                     {/* { totalMessage?.totalMessage?.type === 'plus' ? "+" : "-" } */}
                     {totalMessage?.neutral?.totalValue}
                   </Typography>
@@ -126,7 +126,7 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
                     <Box sx={{ display: 'flex', alignItems: 'center' , mr : 15}}>
                       {totalMessage?.neutral?.comparison ? (
                         <>
-                          <Typography variant='h6' mt={4}>
+                          <Typography variant='h6'>
                             {totalMessage?.neutral?.type === 'plus' ? (
                               <ChevronUp fontSize='large' sx={{ color: 'success.main' }} />
                             ) : (
@@ -159,13 +159,13 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
                   </Typography>
                 </span>
                 <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Typography variant='h5'>{totalMessage?.negative?.totalValue}</Typography>
+                  <Typography variant='h5' sx={{pt:'5px'}}>{totalMessage?.negative?.totalValue}</Typography>
 
                   <Box>
                     <Box sx={{ display: 'flex', alignItems: 'center' , mr : 15}}>
                       {totalMessage?.negative?.comparison ? (
                         <>
-                          <Typography variant='h6' mt={4}>
+                          <Typography variant='h6'>
                             {totalMessage?.negative?.type === 'plus' ? (
                               <ChevronUp fontSize='large' sx={{ color: 'success.main' }} />
                             ) : (

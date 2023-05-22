@@ -94,9 +94,9 @@ const EngagementTypeComparison = ({
                                   )}
                                 </>
                               )}
-                              <Typography sx={{ fontSize: '1.3vw' }}>
+                              <Typography variant='h6'>
                                 {comparison.total?.value?.toLocaleString('en-US')}
-                                <Typography variant='body1'>{comparison.total?.percentage} %</Typography>
+                                <Typography variant='body2'>{comparison.total?.percentage} %</Typography>
                               </Typography>
                             </span>
                           </TableCell>
@@ -119,9 +119,9 @@ const EngagementTypeComparison = ({
                                   )}
                                 </>
                               )}
-                              <Typography sx={{ fontSize: '1.3vw' }}>
+                              <Typography variant='h6'>
                                 {comparison.share?.value?.toLocaleString('en-US')}
-                                <Typography variant='body1'>{comparison.share?.percentage} %</Typography>
+                                <Typography variant='body2'>{comparison.share?.percentage} %</Typography>
                               </Typography>
                             </span>
                           </TableCell>
@@ -145,9 +145,9 @@ const EngagementTypeComparison = ({
                                 </>
                               )}
 
-                              <Typography sx={{ fontSize: '1.3vw' }}>
+                              <Typography variant='h6'>
                                 {comparison.comment?.value?.toLocaleString('en-US')}
-                                <Typography variant='body1'>{comparison.comment?.percentage} %</Typography>
+                                <Typography variant='body2'>{comparison.comment?.percentage} %</Typography>
                               </Typography>
                             </span>
                           </TableCell>
@@ -171,9 +171,9 @@ const EngagementTypeComparison = ({
                                 </>
                               )}
 
-                              <Typography sx={{ fontSize: '1.3vw' }}>
+                              <Typography variant='h6'>
                                 {comparison.reaction?.value?.toLocaleString('en-US')}
-                                <Typography variant='body1'>{comparison.reaction?.percentage} %</Typography>
+                                <Typography variant='body2'>{comparison.reaction?.percentage} %</Typography>
                               </Typography>
                             </span>
                           </TableCell>

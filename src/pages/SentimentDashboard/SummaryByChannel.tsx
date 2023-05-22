@@ -6,7 +6,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { useEffect } from 'react'
 import { changeToFixedValue, renderProgress } from './SummaryByKeywords'
-import { DataGrid } from '@mui/x-data-grid'
+import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import Translations from 'src/layouts/components/Translations'
 
 const SummaryByChannel = ({
@@ -45,12 +45,40 @@ const SummaryByChannel = ({
 
   const reportNo = '5.2.018'
 
-  const columns = [
-    { field: 'channel', headerName: 'Channel', flex: 1, sortable: false },
-    { field: 'sentiment_score', headerName: 'Sentiment Score ', flex: 1, renderCell: changeToFixedValue },
-    { field: 'positive', headerName: ' Positive', flex: 1, renderCell: renderProgress },
-    { field: 'neutral', headerName: ' Neutral', flex: 1, renderCell: renderProgress },
-    { field: 'negative', headerName: ' Negative', flex: 1, renderCell: renderProgress }
+  const columns: GridColDef[] = [
+    { field: 'channel', headerName: 'Channel', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
+    {
+      field: 'sentiment_score',
+      headerName: 'Sentiment Score ',
+      flex: 1,
+      renderCell: changeToFixedValue,
+      align: 'center',
+      headerAlign: 'center'
+    },
+    {
+      field: 'positive',
+      headerName: ' Positive',
+      flex: 1,
+      renderCell: renderProgress,
+      align: 'center',
+      headerAlign: 'center'
+    },
+    {
+      field: 'neutral',
+      headerName: ' Neutral',
+      flex: 1,
+      renderCell: renderProgress,
+      align: 'center',
+      headerAlign: 'center'
+    },
+    {
+      field: 'negative',
+      headerName: ' Negative',
+      flex: 1,
+      renderCell: renderProgress,
+      align: 'center',
+      headerAlign: 'center'
+    }
   ]
 
   return (
