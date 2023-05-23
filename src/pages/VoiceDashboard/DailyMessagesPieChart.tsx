@@ -1,7 +1,7 @@
 // ** MUI Imports
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Paper } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -58,12 +58,10 @@ export const getColors = (data: any) => {
 }
 
 const DailyMessagePieChart = (props: Props) => {
-  const { chartId, params, highlight, keywordsColor } = props
+  const { params, highlight, keywordsColor } = props
   const [apiParams, setApiParams] = useState<any>()
 
-  const { resultPercentageMessage, loadingPercentageMessage } = GetPercentageMessage(
-    apiParams
-  )
+  const { resultPercentageMessage, loadingPercentageMessage } = GetPercentageMessage(apiParams)
 
   const initValue = {
     labels: [],
@@ -157,7 +155,7 @@ const DailyMessagePieChart = (props: Props) => {
       },
       tooltip: {
         callbacks: {
-          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+          label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
       },
       doughnutlabel: {
@@ -187,7 +185,7 @@ const DailyMessagePieChart = (props: Props) => {
       },
       tooltip: {
         callbacks: {
-          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+          label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
       },
       doughnutlabel: {
@@ -241,7 +239,7 @@ const DailyMessagePieChart = (props: Props) => {
     }
   }, [resultPercentageMessage, keywordsColor])
 
-  const reportNo = '2.1.001'
+  // const reportNo = '2.1.001'
 
   useEffect(() => {
     if (params?.period !== 'customrange') {
@@ -253,13 +251,13 @@ const DailyMessagePieChart = (props: Props) => {
         period: params?.period,
         fillter_keywords: params?.keywordIds
       })
-    } 
+    }
     if (
       params?.period === 'customrange' &&
       params?.endDate &&
       params?.previousEndDate &&
-      params?.date !== params?.endDate
-      && params?.previousDate !== params?.previousEndDate
+      params?.date !== params?.endDate &&
+      params?.previousDate !== params?.previousEndDate
     ) {
       setApiParams({
         campaign_id: params?.campaign,
@@ -278,19 +276,29 @@ const DailyMessagePieChart = (props: Props) => {
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }} square variant='outlined'>
       {loadingPercentageMessage && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text='Percentage of Messages' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          subheader='Period over Period Comparison'
-          subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip arrow title={<span>
-          {chartId} <br/> {'Report Level 1(' + reportNo + ')'}
-        </span>}>
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text='Percentage of Messages' />}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            subheader='Period over Period Comparison'
+            subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart1Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart1Description' />
+                </Typography>
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
@@ -323,9 +331,9 @@ const DailyMessagePieChart = (props: Props) => {
         </span>
       </div>
 
-      <CardContent id="percentageVoice">
+      <CardContent id='percentageVoice'>
         <Grid container spacing={3}>
-        <Grid item xs={12}>
+          <Grid item xs={12}>
             <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
               <CustomeLabels
                 data={currentData || previousData}

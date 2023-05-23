@@ -1,4 +1,4 @@
-import { Backdrop, Card, CardHeader, CircularProgress, Grid } from '@mui/material'
+import { Backdrop, Card, CardHeader, CircularProgress, Grid, Typography } from '@mui/material'
 import { StyledTooltip } from '../dashboard/overall'
 import DailyMessageGraph from './DailyMessageGraph'
 
@@ -345,8 +345,14 @@ const ChannelDashboardGraphs = (data: Props) => {
                   arrow
                   title={
                     <span>
-                      Chart 10
-                      <br /> Report Level 2(3.3.012)
+                      <span>
+                        <Typography variant='h6' sx={{ color: 'white' }}>
+                          <Translations text='channelChart10Title' />
+                        </Typography>
+                        <Typography variant='body2' sx={{ color: 'white' }}>
+                          <Translations text='channelChart10Description' />
+                        </Typography>
+                      </span>
                     </span>
                   }
                 >
@@ -518,7 +524,7 @@ const ChannelDashboardGraphs = (data: Props) => {
       ) : (
         ''
       )} */}
-      
+
       {resultReportPermission?.includes('56') ? (
         <Grid container spacing={4} ml={3} mt={2} id='chart13'>
           <Grid item xs={12}>

@@ -10,7 +10,8 @@ import {
   LinearProgress,
   MenuItem,
   Select,
-  SelectChangeEvent
+  SelectChangeEvent,
+  Typography
 } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
 import SourceService from 'src/services/api/source/SourceApi'
@@ -22,7 +23,7 @@ import 'd3-transition'
 import { select } from 'd3-selection'
 import AccountList from './AccountList'
 
-const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string }) => {
+const WordCloudChannel = ({ params }: { params: any; chartId: string }) => {
   const [platformId, setPlatformId] = useState<string>('1')
   const { result_source_list } = SourceService()
   const [word, setWord] = useState<string>('')
@@ -34,7 +35,7 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
     setPlatformId(e.target.value)
   }, [])
 
-  const reportNo = '1.2.023'
+  // const reportNo = '1.2.023'
 
   function getCallback(callback: any) {
     return function (word: any, event: any) {
@@ -116,7 +117,12 @@ const WordCloudChannel = ({ params, chartId }: { params: any; chartId: string })
               arrow
               title={
                 <span>
-                  {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                  <Typography variant='h6' sx={{ color: 'white' }}>
+                    <Translations text='wordCloudChart3Title' />
+                  </Typography>
+                  <Typography variant='body2' sx={{ color: 'white' }}>
+                    <Translations text='wordCloudChart3Description' />
+                  </Typography>
                 </span>
               }
             >

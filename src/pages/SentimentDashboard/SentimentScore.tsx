@@ -13,7 +13,6 @@ import { Information, ApproximatelyEqual } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
 
 const SenitmentScore = ({
-  chartId,
   highlight,
   resultSenitmentScore,
   loadingSentimentScore
@@ -24,7 +23,7 @@ const SenitmentScore = ({
   resultSenitmentScore: any
   loadingSentimentScore: boolean
 }) => {
-  const reportNo = '5.2.015'
+  // const reportNo = '5.2.015'
 
   return (
     <Card sx={{ minHeight: 520 }}>
@@ -38,7 +37,12 @@ const SenitmentScore = ({
           arrow
           title={
             <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              <Typography variant='h6' sx={{ color: 'white' }}>
+                <Translations text='sentimentChart13Title' />
+              </Typography>
+              <Typography variant='body2' sx={{ color: 'white' }}>
+                <Translations text='sentimentChart13Description' />
+              </Typography>
             </span>
           }
         >

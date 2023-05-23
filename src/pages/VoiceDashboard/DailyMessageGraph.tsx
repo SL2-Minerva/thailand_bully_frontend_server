@@ -11,7 +11,7 @@ import { useEffect, useRef, useState, MouseEvent } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { InteractionItem } from 'chart.js'
 import moment from 'moment'
-import { IconButton, LinearProgress, Menu, MenuItem, Paper } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import MessageDetail from './MessageDetail'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
@@ -76,9 +76,9 @@ export const chartLabel = (data: any) => {
   if (labels && labels?.length > 0) {
     const filterArray = [...new Set(labels)]
     for (let i = 0; i < filterArray?.length; i++) {
-      labelValue.push(new Date(filterArray[i]));
+      labelValue.push(new Date(filterArray[i]))
     }
-    labelValue.sort((date1, date2) => date1 - date2);
+    labelValue.sort((date1, date2) => date1 - date2)
 
     for (let i = 0; i < labelValue?.length; i++) {
       labelValue[i] = moment(labelValue[i]).format('DD/MM/YYYY')
@@ -99,7 +99,6 @@ const onCapture = () => {
 const DailyMessageGraph = (props: Props) => {
   const {
     type,
-    chartId,
     params,
     highlight,
     keywordsColor,
@@ -386,7 +385,7 @@ const DailyMessageGraph = (props: Props) => {
           end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
           period: params?.period,
           report_number: reportNo,
-          page_name: params?.page,
+          page_name: params?.page
 
           // keyword_id: paramsId?.keywordId || keywordId || '',
           // classification_id: paramsId?.classification_id || '',
@@ -419,8 +418,12 @@ const DailyMessageGraph = (props: Props) => {
             arrow
             title={
               <span>
-                {chartId} <br />
-                {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart2Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart2Description' />
+                </Typography>
               </span>
             }
           >

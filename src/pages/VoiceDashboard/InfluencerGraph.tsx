@@ -14,7 +14,7 @@ import { Information } from 'mdi-material-ui'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { useEffect, useRef, useState, MouseEvent } from 'react'
 import { InteractionItem } from 'chart.js'
-import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import MessageDetail from './MessageDetail'
 import moment from 'moment'
@@ -60,7 +60,6 @@ const chartLabel = (data: any) => {
 }
 
 const InfluencerGraph = ({
-  chartId,
   params,
   highlight,
   resultNumbersOfAccounts,
@@ -376,7 +375,12 @@ const InfluencerGraph = ({
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart11Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart11Description' />
+                </Typography>
               </span>
             }
           >

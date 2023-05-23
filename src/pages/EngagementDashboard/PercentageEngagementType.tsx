@@ -2,7 +2,7 @@
 import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -40,9 +40,10 @@ interface MessageData {
 }
 
 const PercentageOfEngangementType = (props: MessageData) => {
-  const { type, chartId, highlight, resultEngagementType, loadingEngagementType, keywordsColor } = props
+  const { type, highlight, resultEngagementType, loadingEngagementType, keywordsColor } = props
   const colors = keywordsColor
-  const reportNo = '4.1.011'
+  
+  // const reportNo = '4.1.011'
   const initValue = {
     labels: [],
     datasets: [
@@ -235,7 +236,12 @@ const PercentageOfEngangementType = (props: MessageData) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart9Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart9Description' />
+                </Typography>
               </span>
             }
           >

@@ -11,7 +11,7 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import Switch from '@mui/material/Switch'
-import { PencilOutline } from 'mdi-material-ui'
+import { PencilOutline, TrashCanOutline } from 'mdi-material-ui'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
@@ -23,13 +23,14 @@ import MenuItem from '@mui/material/MenuItem'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DialogCampaign from './dialogCampaign'
-import { CampaignSearchList } from 'src/services/api/campaign/CampaignAPI'
+import { CampaignDelete, CampaignSearchList } from 'src/services/api/campaign/CampaignAPI'
 import { Organization } from 'src/services/api/organization/organization'
 import DomainList from 'src/services/api/domains/DomainAPI'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { UserPermission } from 'src/services/api/users/role'
 import { useRouter } from 'next/router'
+import Swal from 'sweetalert2'
 
 const CampaignManagement = () => {
   // const [campaignName, setCampaignName] = useState<string>('')
@@ -69,6 +70,8 @@ const CampaignManagement = () => {
   const { list } = Organization.getList(reload)
 
   const { resultPermission, resultIsAdmin, errorUserPermission, resultUserInfo } = UserPermission(reload)
+
+  const { removeCampaign } = CampaignDelete()
 
   const handleOrganization = useCallback((e: SelectChangeEvent) => {
     setOrganization(e.target.value)
@@ -358,6 +361,44 @@ const CampaignManagement = () => {
                                 <PencilOutline
                                   onClick={() => {
                                     handleEdit(index)
+                                  }}
+                                />
+                              </a>
+                              <a href='#' style={{ color: 'grey', marginLeft: '5px' }}>
+                                <TrashCanOutline
+                                  onClick={() => {
+                                    Swal.fire({
+                                      title: 'Are you sure?',
+                                      text: "You won't be able to revert this!",
+                                      icon: 'warning',
+                                      showCancelButton: true,
+                                      confirmButtonColor: '#3085d6',
+                                      cancelButtonColor: '#d33',
+                                      confirmButtonText: 'Yes, delete it!'
+                                    })
+                                      .then(result => {
+                                        if (result.isConfirmed) {
+                                          removeCampaign(campaignList)
+                                            .then(result => {
+                                              if (result) {
+                                                setReload(!reload)
+                                                Swal.fire('Deleted!', 'Your file has been deleted.', 'success')
+                                              } else {
+                                                Swal.fire('Somenthing went wrong!', 'Please try again.', 'error')
+                                              }
+                                            })
+                                            .catch(ex => {
+                                              if (ex) {
+                                                Swal.fire('Somenthing went wrong!', ex?.message ? ex?.message : 'Please try again.', 'error')
+                                              }
+                                            })
+                                        }
+                                      })
+                                      .catch(ex => {
+                                        if (ex) {
+                                          Swal.fire('Somenthing went wrong!', 'Please try again.', 'error')
+                                        }
+                                      })
                                   }}
                                 />
                               </a>

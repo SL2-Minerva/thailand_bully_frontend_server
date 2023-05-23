@@ -2,7 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -256,7 +256,12 @@ const DonutChart = (props: MessageData) => {
             arrow
             title={
               <span>
-                Chart 1 <br /> Report Level 1(1.1.001)
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='overallChart1Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='overallChart1Description' />
+                </Typography>
               </span>
             }
           >

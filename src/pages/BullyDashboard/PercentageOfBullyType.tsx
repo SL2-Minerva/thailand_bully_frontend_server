@@ -2,7 +2,7 @@
 import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -42,7 +42,7 @@ interface MessageData {
 
 const PercentageOfBullyType = (props: MessageData) => {
   const { t } = useTranslation()
-  const { type, chartId, highlight, resultBullyTypePercentage, loadingBullyTypePercentage } = props
+  const { type, highlight, resultBullyTypePercentage, loadingBullyTypePercentage } = props
   const colors = BullyTypeColors
 
   const initValue = {
@@ -272,7 +272,7 @@ const PercentageOfBullyType = (props: MessageData) => {
     }
   }, [resultBullyTypePercentage, t])
 
-  const reportNo = '6.1.011'
+  // const reportNo = '6.1.011'
 
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} square variant='outlined'>
@@ -289,8 +289,13 @@ const PercentageOfBullyType = (props: MessageData) => {
           arrow
           title={
             <span>
-              {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
-            </span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='bullyChart9Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='bullyChart9Description' />
+                </Typography>
+              </span>
           }
         >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />

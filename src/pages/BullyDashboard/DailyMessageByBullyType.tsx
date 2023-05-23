@@ -13,7 +13,7 @@ import { BullyTypeColorCode } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
-import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
@@ -102,7 +102,6 @@ const DailyMessgesByBullyType = (props: LineProps) => {
     gridLineColor,
     params,
     type,
-    chartId,
     highlight,
     resultBullyTypeFilterData,
     loadingBullyTypeFilterData,
@@ -431,7 +430,12 @@ const DailyMessgesByBullyType = (props: LineProps) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='bullyChart10Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='bullyChart10Description' />
+                </Typography>
               </span>
             }
           >

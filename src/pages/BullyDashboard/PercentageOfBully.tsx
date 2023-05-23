@@ -2,7 +2,7 @@
 import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -43,7 +43,7 @@ interface MessageData {
 
 const PercentageOfBully = (props: MessageData) => {
   const { t } = useTranslation()
-  const { type, chartId, highlight, resultBullyLevelPercentage, loadingBullyLevelPercentage } = props
+  const { type, highlight, resultBullyLevelPercentage, loadingBullyLevelPercentage } = props
   const colors = BullyLevelColors
 
   const initValue = {
@@ -89,7 +89,7 @@ const PercentageOfBully = (props: MessageData) => {
       },
       tooltip: {
         callbacks: {
-          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+          label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
       },
       doughnutlabel: {
@@ -119,7 +119,7 @@ const PercentageOfBully = (props: MessageData) => {
       },
       tooltip: {
         callbacks: {
-          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+          label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
       },
       doughnutlabel: {
@@ -199,10 +199,9 @@ const PercentageOfBully = (props: MessageData) => {
           setShowNoDataText(false)
           setCurrentTotal(currentMessageData[0]?.value?.total)
 
-          if(!currentMessageData[0]?.bully_level) {
+          if (!currentMessageData[0]?.bully_level) {
             setShowNoDataText(true)
           }
-
         } else {
           setShowNoDataText(true)
           setCurrentTotal(0)
@@ -219,7 +218,7 @@ const PercentageOfBully = (props: MessageData) => {
         if (previousMessageData?.length > 0) {
           setShowNoDataTextPrevious(false)
           setPreviousTotal(previousMessageData[0]?.value?.total)
-          if(!previousMessageData[0]?.bully_level) {
+          if (!previousMessageData[0]?.bully_level) {
             setShowNoDataTextPrevious(true)
           }
         } else {
@@ -239,28 +238,36 @@ const PercentageOfBully = (props: MessageData) => {
     }
   }, [t, resultBullyLevelPercentage])
 
-  const reportNo = '6.1.001'
+  // const reportNo = '6.1.001'
 
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} square variant='outlined'>
       {loadingBullyLevelPercentage && <LinearProgress style={{ width: '100%' }} />}
-      
+
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text={title} />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          subheader='Period over Period Comparison'
-          subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip arrow title={
-            <span>
-              {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
-            </span>
-          }>
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text={title} />}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            subheader='Period over Period Comparison'
+            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='bullyChart1Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='bullyChart1Description' />
+                </Typography>
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
@@ -295,7 +302,7 @@ const PercentageOfBully = (props: MessageData) => {
 
       <CardContent id='percentageBullyLevel'>
         <Grid container spacing={3}>
-        {!showNoDataText || !showNoDataTextPrevious ? (
+          {!showNoDataText || !showNoDataTextPrevious ? (
             <Grid item xs={12}>
               <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
                 <CustomeLabels

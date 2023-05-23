@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { Card, CardContent, CardHeader, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -87,7 +87,7 @@ export const chartDatasets = (currentData: any, previousData: any) => {
 }
 
 const EngagementRate = (props: LineProps) => {
-  const { labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, resultByPrevious, loading } =
+  const { labelColor, borderColor, gridLineColor, params, highlight, resultBy, resultByPrevious, loading } =
     props
 
   const [label, setLabel] = useState<string[]>([])
@@ -262,7 +262,12 @@ const EngagementRate = (props: LineProps) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='channelChart11Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='channelChart11Description' />
+                </Typography>
               </span>
             }
           >
@@ -301,7 +306,7 @@ const EngagementRate = (props: LineProps) => {
         </span>
       </div>
 
-      <CardContent id="engagementRateChannel">
+      <CardContent id='engagementRateChannel'>
         {showNoDataText ? (
           <div
             style={{

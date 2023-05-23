@@ -1,4 +1,4 @@
-import { Grid, Button, LinearProgress } from '@mui/material'
+import { Grid, Button, LinearProgress, Typography } from '@mui/material'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -95,7 +95,6 @@ const SummaryByKeywords = ({
   resultSummaryByKeywords,
   total,
   loadingSummaryByKeywords,
-  chartId,
   highlight,
   topKeyword,
   setTopKeyword
@@ -126,7 +125,7 @@ const SummaryByKeywords = ({
     }
   }, [total])
 
-  const reportNo = '5.2.019'
+  // const reportNo = '5.2.019'
 
   const columns: GridColDef[] = [
     { field: 'keyword_name', headerName: 'Keywords', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
@@ -163,7 +162,12 @@ const SummaryByKeywords = ({
           arrow
           title={
             <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              <Typography variant='h6' sx={{ color: 'white' }}>
+                <Translations text='sentimentChart17Title' />
+              </Typography>
+              <Typography variant='body2' sx={{ color: 'white' }}>
+                <Translations text='sentimentChart17Description' />
+              </Typography>
             </span>
           }
         >

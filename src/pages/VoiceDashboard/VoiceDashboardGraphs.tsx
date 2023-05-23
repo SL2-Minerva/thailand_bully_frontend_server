@@ -157,9 +157,9 @@ const VoiceDashboardGraphs = (data: Props) => {
               icon={<MessageText />}
               totalText='Messages'
               totalValue={resultTotalMessages?.total_message}
-              chartId='Chart 12'
+              chartId='voiceChart12Title' //chart 12
               highlight={highlight === 'chart12' ? true : false}
-              reportNo='2.2.014'
+              reportNo='voiceChart12Description' // 2.2.014
               loading={loadingNumbersOfAccountsComparison}
             />
           </Grid>
@@ -175,9 +175,9 @@ const VoiceDashboardGraphs = (data: Props) => {
               icon={<AccountGroup />}
               totalText='Accounts'
               totalValue={resultTotalAccounts?.total_account || resultTotalAccounts?.total_message}
-              chartId='Chart 13'
+              chartId='voiceChart13Title' //Chart 13
               highlight={highlight === 'chart13' ? true : false}
-              reportNo='2.2.015'
+              reportNo='voiceChart13Description' //2.2.015
               loading={loadingNumbersOfAccountsComparison}
             />
           </Grid>

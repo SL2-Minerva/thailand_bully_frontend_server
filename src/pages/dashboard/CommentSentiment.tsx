@@ -3,7 +3,7 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
-import { Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -26,11 +26,12 @@ const onCapture = () => {
   }
 }
 
-const CommentSentiment = ({ params, chartId }: { params: any; chartId: string }) => {
+const CommentSentiment = ({ params }: { params: any; chartId: string }) => {
   const [apiParams, setApiParams] = useState<any>()
 
   const { resultSentimentType, loadingFilterData } = GetSentimentType(apiParams)
-  const reportNo = '1.1.019'
+
+  // const reportNo = '1.1.019'
 
   const theme = useTheme()
   const labelColor = theme.palette.text.primary
@@ -126,7 +127,12 @@ const CommentSentiment = ({ params, chartId }: { params: any; chartId: string })
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='overallChart11Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='overallChart11Description' />
+                </Typography>
               </span>
             }
           >

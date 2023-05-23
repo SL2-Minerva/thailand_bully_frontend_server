@@ -1,7 +1,7 @@
 // ** MUI Imports
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Paper } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -41,7 +41,6 @@ Chart.register(DoughnutLabel)
 const DailyMessagePieChart = (props: Props) => {
   const {
     type,
-    chartId,
     highlight,
     resultPercentageChannelCurrent,
     resultPercentageChannelPrevious,
@@ -244,7 +243,7 @@ const DailyMessagePieChart = (props: Props) => {
     }
   }, [resultPercentageChannelCurrent, resultPercentageChannelPrevious, keywordsColor])
 
-  const reportNo = '3.1.001'
+  // const reportNo = '3.1.001'
 
   // const getLabels = (current: any, previous: any) => {
   //   const union = Array.from(new Set([...current, ...previous]))
@@ -297,7 +296,12 @@ const DailyMessagePieChart = (props: Props) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='channelChart1Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='channelChart1Description' />
+                </Typography>
               </span>
             }
           >

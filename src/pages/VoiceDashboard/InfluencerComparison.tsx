@@ -90,7 +90,12 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text={chartId ? chartId : ''} />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text={reportNo? reportNo : ''} />
+                </Typography>
               </span>
             }
           >

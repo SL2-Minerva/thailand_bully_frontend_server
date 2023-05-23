@@ -1,4 +1,13 @@
-import { Table, TableRow, TableHead, TableCell, TableContainer, TableBody, LinearProgress } from '@mui/material'
+import {
+  Table,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableContainer,
+  TableBody,
+  LinearProgress,
+  Typography
+} from '@mui/material'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -29,8 +38,9 @@ export const tableCellStyle = {
   // textOverflow: "ellipsis",
 }
 
-const TopSiteList = ({ chartId, resultTopKeywords, loadingTopKeywords }: Props) => {
-  const reportNo = '1.2.012'
+const TopSiteList = ({ resultTopKeywords, loadingTopKeywords }: Props) => {
+  
+  // const reportNo = '1.2.012'
 
   return (
     <Card sx={{ maxHeight: 360, minHeight: 360 }}>
@@ -41,8 +51,12 @@ const TopSiteList = ({ chartId, resultTopKeywords, loadingTopKeywords }: Props) 
           arrow
           title={
             <span>
-              {chartId} <br />
-              {' Report Level 2(' + reportNo + ')'}
+              <Typography variant='h6' sx={{ color: 'white' }}>
+                <Translations text='overallChart8Title' />
+              </Typography>
+              <Typography variant='body2' sx={{ color: 'white' }}>
+                <Translations text='overallChart8Description' />
+              </Typography>
             </span>
           }
         >

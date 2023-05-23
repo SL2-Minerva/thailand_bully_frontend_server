@@ -9,7 +9,7 @@ import { getChartData, initValue } from './KeywordComparisonByBullyType'
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js'
 
 import { Radar } from 'react-chartjs-2'
-import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
@@ -26,7 +26,6 @@ const onCapture = () => {
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend)
 
 const KeywordComparisonByChannel = ({
-  chartId,
   highlight,
   resultKeywordComparisonByChannel,
   loadingKeywordComparisonByChannel,
@@ -67,7 +66,7 @@ const KeywordComparisonByChannel = ({
     }
   }, [resultKeywordComparisonByChannel, keywordColors])
 
-  const reportNo = '2.2.025'
+  // const reportNo = '2.2.025'
 
   return (
     <Card>
@@ -83,7 +82,12 @@ const KeywordComparisonByChannel = ({
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart21Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart21Description' />
+                </Typography>
               </span>
             }
           >
@@ -121,7 +125,7 @@ const KeywordComparisonByChannel = ({
           </Menu>
         </span>
       </div>
-      <CardContent id="keywordComparison">
+      <CardContent id='keywordComparison'>
         {showNoDataText ? (
           <div
             style={{

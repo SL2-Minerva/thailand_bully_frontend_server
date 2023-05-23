@@ -2,7 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -29,7 +29,6 @@ const onCapture = () => {
 }
 Chart.register(DoughnutLabel)
 const DevicesComparison = ({
-  chartId,
   highlight,
   resultDevicesComparison,
   loadingDevicesComparison
@@ -142,7 +141,7 @@ const DevicesComparison = ({
     ]
   }
 
-  const reportNo = '2.2.023'
+  // const reportNo = '2.2.023'
 
   useEffect(() => {
     if (resultDevicesComparison) {
@@ -172,8 +171,13 @@ const DevicesComparison = ({
           arrow
           title={
             <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
-            </span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart19Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart19Description' />
+                </Typography>
+              </span>
           }
         >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />

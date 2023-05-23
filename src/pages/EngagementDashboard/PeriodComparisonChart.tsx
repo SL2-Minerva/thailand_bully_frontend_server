@@ -12,7 +12,8 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow
+  TableRow,
+  Typography
 } from '@mui/material'
 import { Information } from 'mdi-material-ui'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
@@ -260,7 +261,12 @@ const PeriodComparisonChart = (props: LineProps) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text={chartId} />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text={reportNo} />
+                </Typography>
               </span>
             }
           >

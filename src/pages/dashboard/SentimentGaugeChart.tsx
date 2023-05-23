@@ -1,7 +1,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 import dynamic from 'next/dynamic'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
@@ -24,14 +24,12 @@ const onCapture = () => {
 
 const GaugeChart = dynamic(() => import('react-gauge-chart'), { ssr: false })
 
-const SentimentGaugeChart = ({ params, chartId }: { params: any; chartId: string }) => {
+const SentimentGaugeChart = ({ params }: { params: any; chartId: string }) => {
   const [apiParams, setApiParams] = useState<any>()
 
-  const { resultSentimentScore, loadingFilterData } = GetSentimentScore(
-    apiParams
-  )
+  const { resultSentimentScore, loadingFilterData } = GetSentimentScore(apiParams)
 
-  const reportNo = '1.1.018'
+  // const reportNo = '1.1.018'
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const rowOptionsOpen = Boolean(anchorEl)
@@ -53,13 +51,13 @@ const SentimentGaugeChart = ({ params, chartId }: { params: any; chartId: string
         period: params?.period,
         fillter_keywords: params?.keywordIds
       })
-    } 
+    }
     if (
       params?.period === 'customrange' &&
       params?.endDate &&
       params?.previousEndDate &&
-      params?.date !== params?.endDate
-      && params?.previousDate !== params?.previousEndDate
+      params?.date !== params?.endDate &&
+      params?.previousDate !== params?.previousEndDate
     ) {
       setApiParams({
         campaign_id: params?.campaign,
@@ -84,7 +82,12 @@ const SentimentGaugeChart = ({ params, chartId }: { params: any; chartId: string
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='overallChart10Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='overallChart10Description' />
+                </Typography>
               </span>
             }
           >
@@ -122,7 +125,7 @@ const SentimentGaugeChart = ({ params, chartId }: { params: any; chartId: string
           </Menu>
         </span>
       </div>
-      <CardContent id="sentimentScore">
+      <CardContent id='sentimentScore'>
         <Grid container spacing={4}>
           <Grid item xs={8}>
             <GaugeChart
@@ -139,7 +142,7 @@ const SentimentGaugeChart = ({ params, chartId }: { params: any; chartId: string
           </Grid>
           <Grid item xs={4}>
             <h1>{resultSentimentScore?.neutral_value}</h1>
-            <p style={{paddingLeft: '13px'}}>{resultSentimentScore?.text || '-'}</p>
+            <p style={{ paddingLeft: '13px' }}>{resultSentimentScore?.text || '-'}</p>
           </Grid>
         </Grid>
 

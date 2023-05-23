@@ -1,4 +1,4 @@
-import { Table, TableRow, TableHead, TableCell, TableContainer, TableBody, LinearProgress } from '@mui/material'
+import { Table, TableRow, TableHead, TableCell, TableContainer, TableBody, LinearProgress, Typography } from '@mui/material'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -17,8 +17,8 @@ interface Props {
   loadingTopKeywords: boolean
 }
 
-const TopHashtagList = ({ resultTopKeywords, loadingTopKeywords, chartId }: Props) => {
-  const reportNo = '1.2.015'
+const TopHashtagList = ({ resultTopKeywords, loadingTopKeywords }: Props) => {
+  // const reportNo = '1.2.015'
 
   return (
     <Card sx={{ maxHeight: 360, minHeight: 360 }}>
@@ -29,8 +29,12 @@ const TopHashtagList = ({ resultTopKeywords, loadingTopKeywords, chartId }: Prop
           arrow
           title={
             <span>
-              {chartId} <br />
-              {' Report Level 2(' + reportNo + ')'}
+              <Typography variant='h6' sx={{ color: 'white' }}>
+                <Translations text='overallChart9Title' />
+              </Typography>
+              <Typography variant='body2' sx={{ color: 'white' }}>
+                <Translations text='overallChart9Description' />
+              </Typography>
             </span>
           }
         >

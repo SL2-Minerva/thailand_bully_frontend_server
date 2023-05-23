@@ -9,7 +9,7 @@ import { ApexOptions } from 'apexcharts'
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
@@ -65,7 +65,6 @@ const ChartDataEngagement = (data: any, type: string) => {
 
 const EngagmentComparisonChart = ({
   highlight,
-  chartId,
   resultComparison,
   loadingComparison
 }: {
@@ -148,28 +147,35 @@ const EngagmentComparisonChart = ({
     }
   }
 
-  const reportNo = '4.2.024'
+  // const reportNo = '4.2.024'
 
   return (
     <Card sx={{ minHeight: 560 }}>
       {loadingComparison && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text='Engagement Type Proportion' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip
-          arrow
-          title={
-            <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
-            </span>
-          }
-        >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text='Engagement Type Proportion' />}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                <span>
+                  <Typography variant='h6' sx={{ color: 'white' }}>
+                    <Translations text='engagementChart20Title' />
+                  </Typography>
+                  <Typography variant='body2' sx={{ color: 'white' }}>
+                    <Translations text='engagementChart20Description' />
+                  </Typography>
+                </span>
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
@@ -202,7 +208,7 @@ const EngagmentComparisonChart = ({
         </span>
       </div>
 
-      <CardContent id="engagementProption">
+      <CardContent id='engagementProption'>
         {resultComparison ? (
           <ReactApexcharts type='bar' height={420} series={series} options={options} />
         ) : (

@@ -1,4 +1,4 @@
-import { Grid, Button, LinearProgress } from '@mui/material'
+import { Grid, Button, LinearProgress, Typography } from '@mui/material'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -13,7 +13,6 @@ const SummaryByAccount = ({
   resultSummaryByAccount,
   total,
   loadingSummaryByAccount,
-  chartId,
   highlight,
   topAccount,
   setTopAccount
@@ -44,7 +43,7 @@ const SummaryByAccount = ({
     }
   }, [total])
 
-  const reportNo = '5.2.017'
+  // const reportNo = '5.2.017'
 
   const columns: GridColDef[] = [
     { field: 'infulencer', headerName: 'Influencer', flex: 1, sortable: false },
@@ -94,7 +93,12 @@ const SummaryByAccount = ({
           arrow
           title={
             <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              <Typography variant='h6' sx={{ color: 'white' }}>
+                <Translations text='sentimentChart15Title' />
+              </Typography>
+              <Typography variant='body2' sx={{ color: 'white' }}>
+                <Translations text='sentimentChart15Description' />
+              </Typography>
             </span>
           }
         >

@@ -41,21 +41,32 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                 >
                   <Translations text='Total Engagement' />
                 </Typography>
-                <StyledTooltip arrow title={<span>Chart 16<br/> Report Level 2 (4.2.020)</span>}>
+                <StyledTooltip
+                  arrow
+                  title={
+                    <span>
+                      <Typography variant='h6' sx={{ color: 'white' }}>
+                        <Translations text='engagementChart16Title' />
+                      </Typography>
+                      <Typography variant='body2' sx={{ color: 'white' }}>
+                        <Translations text='engagementChart16Description' />
+                      </Typography>
+                    </span>
+                  }
+                >
                   <Information
                     style={{ margin: '2px 0px 0px 5px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }}
                   />
                 </StyledTooltip>
               </span>
               <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant='h5' sx={{mt:1.5}}>
+                <Typography variant='h5' sx={{ mt: 1.5 }}>
                   {totalEngagement?.totalEngagement?.totalValue}
                 </Typography>
 
                 <Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', mr: 15 }}>
                     {totalEngagement?.totalEngagement?.comparison == 0 ? (
-
                       <Typography variant='h6' mt={2}>
                         {totalEngagement?.totalEngagement?.comparison}%
                       </Typography>
@@ -84,15 +95,15 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
               </Grid>
             </Grid>
             <Grid item xs={6} md={3}>
-              <span style={{ display: 'flex'}}>
+              <span style={{ display: 'flex' }}>
                 <Share fontSize='large' />
-                <Typography sx={{ marginLeft: '20px',fontSize: '1.5vw', fontWeight: 'bold', mt: 1  }}>
-                  Share
-                </Typography>
+                <Typography sx={{ marginLeft: '20px', fontSize: '1.5vw', fontWeight: 'bold', mt: 1 }}>Share</Typography>
               </span>
 
               <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant='h5' sx={{mt:1.5}}>{totalEngagement?.share?.totalValue}</Typography>
+                <Typography variant='h5' sx={{ mt: 1.5 }}>
+                  {totalEngagement?.share?.totalValue}
+                </Typography>
 
                 <Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', mr: 15 }}>
@@ -124,14 +135,16 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
             </Grid>
 
             <Grid item xs={6} md={3}>
-              <span style={{ display: 'flex'}}>
+              <span style={{ display: 'flex' }}>
                 <Message fontSize='large' />
-                <Typography sx={{ marginLeft: '20px',fontSize: '1.5vw', fontWeight: 'bold', mt: 1  }}>
+                <Typography sx={{ marginLeft: '20px', fontSize: '1.5vw', fontWeight: 'bold', mt: 1 }}>
                   Comment
                 </Typography>
               </span>
               <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant='h5' sx={{mt:1.5}}>{totalEngagement?.comment?.totalValue}</Typography>
+                <Typography variant='h5' sx={{ mt: 1.5 }}>
+                  {totalEngagement?.comment?.totalValue}
+                </Typography>
 
                 <Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', mr: 15 }}>
@@ -165,15 +178,17 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
             <Grid item xs={6} md={3}>
               <span style={{ display: 'flex' }}>
                 <StickerEmoji fontSize='large' />
-                <Typography sx={{ marginLeft: '20px',fontSize: '1.5vw', fontWeight: 'bold', mt: 1  }}>
+                <Typography sx={{ marginLeft: '20px', fontSize: '1.5vw', fontWeight: 'bold', mt: 1 }}>
                   Reaction
                 </Typography>
               </span>
               <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant='h5' sx={{mt:1.5}}>{totalEngagement?.reaction?.totalValue}</Typography>
+                <Typography variant='h5' sx={{ mt: 1.5 }}>
+                  {totalEngagement?.reaction?.totalValue}
+                </Typography>
 
                 <Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 15}}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 15 }}>
                     {totalEngagement?.reaction?.comparison == 0 ? (
                       <Typography variant='h6' mt={2}>
                         {totalEngagement?.reaction?.comparison}%

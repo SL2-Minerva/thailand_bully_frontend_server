@@ -1,7 +1,7 @@
 // ** MUI Imports
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Paper } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -41,7 +41,7 @@ interface MessageData {
 }
 
 const PercentageOfEngangement = (props: MessageData) => {
-  const { type, chartId, highlight, resultFilterData, loadingFilterData, keywordsColor } = props
+  const { type, highlight, resultFilterData, loadingFilterData, keywordsColor } = props
   const colors = keywordsColor ?? EngagementTransChartColor
   const initValue = {
     labels: [],
@@ -82,7 +82,7 @@ const PercentageOfEngangement = (props: MessageData) => {
       },
       tooltip: {
         callbacks: {
-          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+          label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
       },
       doughnutlabel: {
@@ -108,11 +108,11 @@ const PercentageOfEngangement = (props: MessageData) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-       display: false
+        display: false
       },
       tooltip: {
         callbacks: {
-          label: (context : any) => context?.label + ': ' + context?.formattedValue + '%'
+          label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
       },
       doughnutlabel: {
@@ -169,8 +169,8 @@ const PercentageOfEngangement = (props: MessageData) => {
     for (let i = 0; i < labels?.length; i++) {
       for (let j = 0; j < keywordColor?.length; j++) {
         if (keywordColor[j]?.keywordName === labels[i]) {
-          colors.push(keywordColor[j]?.color )
-          
+          colors.push(keywordColor[j]?.color)
+
           // if(keywordColor[j]?.color !== '#')
           // {
           //   colors.push(keywordColor[j]?.color )
@@ -197,7 +197,7 @@ const PercentageOfEngangement = (props: MessageData) => {
 
   const title = type === 'transaction' ? 'Percentage of Engagement Trans' : 'Percentage of Engagement Type'
 
-  const reportNo = '4.1.001'
+  // const reportNo = '4.1.001'
 
   useEffect(() => {
     if (resultFilterData) {
@@ -250,23 +250,31 @@ const PercentageOfEngangement = (props: MessageData) => {
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }} square variant='outlined'>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
-      
+
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text={title} />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          subheader='Period over Period Comparison'
-          subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip arrow title={
-            <span>
-              {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
-            </span>
-          }>
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text={title} />}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            subheader='Period over Period Comparison'
+            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart1Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart1Description' />
+                </Typography>
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
@@ -299,9 +307,9 @@ const PercentageOfEngangement = (props: MessageData) => {
         </span>
       </div>
 
-      <CardContent id="percentageTrans">
+      <CardContent id='percentageTrans'>
         <Grid container spacing={3}>
-        <Grid item xs={12}>
+          <Grid item xs={12}>
             <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
               <CustomeLabels
                 data={currentData || previousData}

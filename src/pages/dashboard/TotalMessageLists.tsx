@@ -16,7 +16,6 @@ import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
 
 const TotalMessageLists = ({
-  chartId,
   resultWordClouds,
   loadingWordClouds,
   total
@@ -30,7 +29,7 @@ const TotalMessageLists = ({
   // const [pageCount, setPageCount] = useState<number>(0)
   // const [page, setPage] = useState<number>(0)
 
-  const reportNo = '1.2.022'
+  // const reportNo = '1.2.022'
 
   // useEffect(() => {
   //   if (total > 0) {
@@ -58,7 +57,12 @@ const TotalMessageLists = ({
           arrow
           title={
             <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              <Typography variant='h6' sx={{ color: 'white' }}>
+                <Translations text='wordCloudChart2Title' />
+              </Typography>
+              <Typography variant='body2' sx={{ color: 'white' }}>
+                <Translations text='wordCloudChart2Description' />
+              </Typography>
             </span>
           }
         >
