@@ -2,7 +2,7 @@
 import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, IconButton, LinearProgress, Menu, MenuItem, TableBody } from '@mui/material'
+import { Grid, IconButton, LinearProgress, Menu, MenuItem, TableBody, Typography } from '@mui/material'
 import { Table, TableRow, TableHead, TableCell } from '@mui/material'
 
 // ** Third Party Imports
@@ -17,7 +17,6 @@ import ShareOfChannelGraph from './ShareOfChannelGraph'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
-
 
 const getMaxValue = (data: any) => {
   if (!data) return 1000
@@ -47,7 +46,6 @@ const getKeywordColor = (shareofVoiceData: any, color: any) => {
 const ShareOfChannel = ({
   resultShareOfChannel,
   resultShareofChannelPlatform,
-  chartId,
   highlight,
   type,
   loading,
@@ -111,7 +109,19 @@ const ShareOfChannel = ({
             title={<Translations text={title || ''} />}
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
           />
-          <StyledTooltip arrow title={chartId}>
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='bullyChart17Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='bullyChart17Description' />
+                </Typography>
+              </span>
+            }
+          >
             <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
           </StyledTooltip>
         </span>
@@ -146,7 +156,7 @@ const ShareOfChannel = ({
           </Menu>
         </span>
       </div>
-      <CardContent id="shareOfChannel">
+      <CardContent id='shareOfChannel'>
         <Grid container spacing={3}>
           {/* <Grid item md={5} xs={12}>
             {resultShareOfChannel ? (

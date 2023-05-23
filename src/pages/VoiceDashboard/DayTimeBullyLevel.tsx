@@ -1,7 +1,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 
 // ** Third Party Imports
 import { ApexOptions } from 'apexcharts'
@@ -36,7 +36,7 @@ interface Props {
 }
 
 const DayTimeBullyLevel = (props: Props) => {
-  const { chartId, params, highlight, resultTimeByBullyLevel, resultDayByBullyLevel, loadingByBullyLevel } = props
+  const { params, highlight, resultTimeByBullyLevel, resultDayByBullyLevel, loadingByBullyLevel } = props
 
   const [seriesHour, setSeriesHour] = useState([{ name: '', data: [] }])
   const [seriesDays, setSeriesDays] = useState([{ name: '', data: [] }])
@@ -163,24 +163,29 @@ const DayTimeBullyLevel = (props: Props) => {
   return (
     <Card>
       {loadingByBullyLevel && <LinearProgress style={{ width: '100%' }} />}
-      
+
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text='Day & Time by Bully Level' />}
-          titleTypographyProps={{ variant: 'h4', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip
-          arrow
-          title={
-            <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
-            </span>
-          }
-        >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text='Day & Time by Bully Level' />}
+            titleTypographyProps={{ variant: 'h4', color: highlight ? 'green' : '#4c4e64de' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart16Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart16Description' />
+                </Typography>
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
@@ -212,7 +217,7 @@ const DayTimeBullyLevel = (props: Props) => {
           </Menu>
         </span>
       </div>
-      <CardContent id="dayTimeBullyLevel">
+      <CardContent id='dayTimeBullyLevel'>
         <Grid container spacing={3}>
           <Grid item xs={4}>
             {!resultDayByBullyLevel ? (

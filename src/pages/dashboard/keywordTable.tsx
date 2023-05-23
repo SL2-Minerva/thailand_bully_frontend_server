@@ -1,4 +1,13 @@
-import { Table, TableRow, TableHead, TableCell, TableBody, TableContainer, LinearProgress } from '@mui/material'
+import {
+  Table,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableBody,
+  TableContainer,
+  LinearProgress,
+  Typography
+} from '@mui/material'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -17,13 +26,11 @@ const cellStyle = {
   backgroundColor: 'lightgrey !important'
 }
 
-const KeywordTable = ({ params, chartId }: { params: any; chartId: string }) => {
+const KeywordTable = ({ params }: { params: any; chartId: string }) => {
   const [apiParams, setApiParams] = useState<any>()
-  const { resultKeywords, loadingFilterData } = GetKeyWords(
-    apiParams
-  )
+  const { resultKeywords, loadingFilterData } = GetKeyWords(apiParams)
 
-  const reportNo = '1.1.008'
+  // const reportNo = '1.1.008'
 
   useEffect(() => {
     if (params?.period !== 'customrange') {
@@ -35,13 +42,13 @@ const KeywordTable = ({ params, chartId }: { params: any; chartId: string }) => 
         period: params?.period,
         fillter_keywords: params?.keywordIds
       })
-    } 
+    }
     if (
       params?.period === 'customrange' &&
       params?.endDate &&
       params?.previousEndDate &&
-      params?.date !== params?.endDate
-      && params?.previousDate !== params?.previousEndDate
+      params?.date !== params?.endDate &&
+      params?.previousDate !== params?.previousEndDate
     ) {
       setApiParams({
         campaign_id: params?.campaign,
@@ -65,7 +72,12 @@ const KeywordTable = ({ params, chartId }: { params: any; chartId: string }) => 
           arrow
           title={
             <span>
-              {chartId} <br /> {'Report Level 1(' + reportNo + ')'}
+              <Typography variant='h6' sx={{ color: 'white' }}>
+                <Translations text='overallChart6Title' />
+              </Typography>
+              <Typography variant='body2' sx={{ color: 'white' }}>
+                <Translations text='overallChart6Description' />
+              </Typography>
             </span>
           }
         >
@@ -94,11 +106,11 @@ const KeywordTable = ({ params, chartId }: { params: any; chartId: string }) => 
                     <TableCell sx={cellStyle}>
                       <b>{keyword.keyword}</b>
                     </TableCell>
-                    <TableCell sx={{textAlign:'center'}}>{keyword.message}</TableCell>
-                    <TableCell sx={{textAlign:'center'}}>{keyword.engagement}</TableCell>
-                    <TableCell sx={{textAlign:'center'}}>{keyword.accounts}</TableCell>
-                    <TableCell sx={{textAlign:'center'}}>{keyword.average_message}</TableCell>
-                    <TableCell sx={{textAlign:'center'}}>{keyword.average_engagement}</TableCell>
+                    <TableCell sx={{ textAlign: 'center' }}>{keyword.message}</TableCell>
+                    <TableCell sx={{ textAlign: 'center' }}>{keyword.engagement}</TableCell>
+                    <TableCell sx={{ textAlign: 'center' }}>{keyword.accounts}</TableCell>
+                    <TableCell sx={{ textAlign: 'center' }}>{keyword.average_message}</TableCell>
+                    <TableCell sx={{ textAlign: 'center' }}>{keyword.average_engagement}</TableCell>
                   </TableRow>
                 )
               })}

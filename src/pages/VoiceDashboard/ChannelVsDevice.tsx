@@ -1,7 +1,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 
 // ** Third Party Imports
 import { ApexOptions } from 'apexcharts'
@@ -26,7 +26,6 @@ const onCapture = () => {
   }
 }
 const ChannelVsDevice = ({
-  chartId,
   highlight,
   resultDeviceVsChannel,
   loadingDeviceVsChannel
@@ -100,31 +99,36 @@ const ChannelVsDevice = ({
     }
   }, [resultDeviceVsChannel])
 
-  const reportNo = '2.2.024'
+  // const reportNo = '2.2.024'
 
   return (
     <Card style={{ minHeight: 550, maxHeight: 550 }}>
       {loadingDeviceVsChannel && <LinearProgress style={{ width: '100%' }} />}
-      
+
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text='Channel vs. Device: Period over Period Comparison' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          subheader='Period over Period Comparison'
-          subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip
-          arrow
-          title={
-            <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
-            </span>
-          }
-        >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text='Channel vs. Device: Period over Period Comparison' />}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            subheader='Period over Period Comparison'
+            subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart20Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart20Description' />
+                </Typography>
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
@@ -156,7 +160,7 @@ const ChannelVsDevice = ({
           </Menu>
         </span>
       </div>
-      <CardContent id="channelVsDevice">
+      <CardContent id='channelVsDevice'>
         <Grid container spacing={1}>
           <Grid item xs={12} height={315}>
             {!resultDeviceVsChannel ? (

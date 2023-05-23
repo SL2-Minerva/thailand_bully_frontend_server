@@ -1,7 +1,7 @@
 import ReactWordcloud from 'react-wordcloud'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/scale.css'
-import { Card, CardHeader, LinearProgress } from '@mui/material'
+import { Card, CardHeader, LinearProgress, Typography } from '@mui/material'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
@@ -9,7 +9,6 @@ import 'd3-transition'
 import { select } from 'd3-selection'
 
 const WordCloud = ({
-  chartId,
   resultWordClouds,
   loadingWordClouds,
   setWord
@@ -20,7 +19,8 @@ const WordCloud = ({
   loadingWordClouds: boolean
   setWord: any
 }) => {
-  const reportNo = '1.2.021'
+
+  // const reportNo = '1.2.021'
 
   function getCallback(callback: any) {
     return function (word: any, event: any) {
@@ -58,7 +58,12 @@ const WordCloud = ({
           arrow
           title={
             <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              <Typography variant='h6' sx={{ color: 'white' }}>
+                <Translations text='wordCloudChart1Title' />
+              </Typography>
+              <Typography variant='body2' sx={{ color: 'white' }}>
+                <Translations text='wordCloudChart1Description' />
+              </Typography>
             </span>
           }
         >

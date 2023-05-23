@@ -1,4 +1,4 @@
-import { Table, TableRow, TableHead, TableCell, TableContainer, TableBody, LinearProgress } from '@mui/material'
+import { Table, TableRow, TableHead, TableCell, TableContainer, TableBody, LinearProgress, Typography } from '@mui/material'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -16,7 +16,7 @@ interface Props {
   loadingTopKeywords: boolean
 }
 
-const MainKeyWordTable = ({ params, resultTopKeywords, loadingTopKeywords, chartId }: Props) => {
+const MainKeyWordTable = ({ params, resultTopKeywords, loadingTopKeywords }: Props) => {
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [keywordId, setKeywordId] = useState<number>()
 
@@ -31,9 +31,13 @@ const MainKeyWordTable = ({ params, resultTopKeywords, loadingTopKeywords, chart
           arrow
           title={
             <span>
-              {chartId} <br />
-              {' Report Level 2(' + reportNo + ')'}
-            </span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='overallChart7Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='overallChart7Description' />
+                </Typography>
+              </span>
           }
         >
           <Information style={{ marginTop: '22px', fontSize: '29px' }} />

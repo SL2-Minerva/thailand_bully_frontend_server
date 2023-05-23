@@ -84,7 +84,7 @@ const KeyStatusReport = (props: KeyStatusProps) => {
                 {icon}
               </CustomAvatar>
             </Grid>
-            <Grid item xs={6} sx={{marginTop: '20px'}}>
+            <Grid item xs={6} sx={{ marginTop: '20px' }}>
               <Typography variant='caption' sx={{ fontWeight: 'bold' }}>
                 <Translations text={totalText} />
               </Typography>
@@ -96,7 +96,7 @@ const KeyStatusReport = (props: KeyStatusProps) => {
             </Grid>
           </Grid>
           <Grid container spacing={1}>
-            <Grid item xs={8} sx={{marginTop: '20px'}}>
+            <Grid item xs={8} sx={{ marginTop: '20px' }}>
               <Typography variant='caption' sx={{ mt: 7, fontWeight: 'bold' }}>
                 {averageText}
               </Typography>
@@ -118,7 +118,14 @@ const KeyStatusReport = (props: KeyStatusProps) => {
               arrow
               title={
                 <>
-                  {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+                  <span>
+                    <Typography variant='h6' sx={{ color: 'white' }}>
+                      <Translations text={chartId ? chartId : ''} />
+                    </Typography>
+                    <Typography variant='body2' sx={{ color: 'white' }}>
+                      <Translations text={reportNo ? reportNo: ''} />
+                    </Typography>
+                  </span>
                 </>
               }
             >

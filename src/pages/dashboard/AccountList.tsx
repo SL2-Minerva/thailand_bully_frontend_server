@@ -6,7 +6,6 @@ import AccountDetail from './AccountDetail'
 import { StyledTooltip } from './overall'
 
 const AccountList = ({
-  chartId,
   cardHeader,
   title,
   networkTitle,
@@ -25,18 +24,31 @@ const AccountList = ({
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [current, setCurrent] = useState<any>({})
   const [keywordId, setKeywordId] = useState<any>()
-  const [authorName, setAuthorName] = useState<string>('');
-  const [messageId, setMessageId] = useState<string>('');
+  const [authorName, setAuthorName] = useState<string>('')
+  const [messageId, setMessageId] = useState<string>('')
 
   const reportNo = '1.2.02'
-  const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
+
+  // const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
     <Card sx={{ maxHeight: 493, minHeight: 493, overflow: 'auto' }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title={<Translations text={cardHeader} />} titleTypographyProps={{ variant: 'h6' }} />
-        <StyledTooltip arrow title={chartTitle || ''}>
+        <StyledTooltip
+          arrow
+          title={
+            <span>
+              <Typography variant='h6' sx={{ color: 'white' }}>
+                <Translations text='wordCloudChart4Title' />
+              </Typography>
+              <Typography variant='body2' sx={{ color: 'white' }}>
+                <Translations text='wordCloudChart4Description' />
+              </Typography>
+            </span>
+          }
+        >
           <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
@@ -58,7 +70,9 @@ const AccountList = ({
                 </Grid>
                 <Grid item sm={7} xs={7}>
                   <Typography variant='h6'>{keyword.author}</Typography>
-                  <Typography variant='subtitle1'>{keyword.total_message} <Translations text='Popular Word' /></Typography>
+                  <Typography variant='subtitle1'>
+                    {keyword.total_message} <Translations text='Popular Word' />
+                  </Typography>
                   <Typography variant='subtitle1'>{keyword.engagements} Engagements/posts</Typography>
                 </Grid>
                 <Grid item sm={2} xs={2} mt={5}>
@@ -110,8 +124,8 @@ const AccountList = ({
           reportNo={reportNo}
           authorName={authorName}
           setAuthorName={setAuthorName}
-          message_id = {messageId}
-          setMessage_id = {setMessageId}
+          message_id={messageId}
+          setMessage_id={setMessageId}
         />
       ) : (
         ''

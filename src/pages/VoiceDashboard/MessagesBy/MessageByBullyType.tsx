@@ -1,4 +1,4 @@
-import { CardContent, CardHeader, IconButton, LinearProgress, Menu, MenuItem, Paper } from '@mui/material'
+import { CardContent, CardHeader, IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, Line } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -31,7 +31,6 @@ const MessagesByBullyType = (props: LineProps) => {
     labelColor,
     borderColor,
     gridLineColor,
-    chartId,
     params,
     highlight,
     result,
@@ -264,7 +263,12 @@ const MessagesByBullyType = (props: LineProps) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart10Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart10Description' />
+                </Typography>
               </span>
             }
           >
@@ -323,8 +327,8 @@ const MessagesByBullyType = (props: LineProps) => {
               apiParams={apiParams}
               reportNo={reportNo}
               setAnchorEl={setAnchorEl}
-              fileName = 'Daily Messages by Bully Type(Voice).xlsx'
-              apiPath = '/export/export-voice'
+              fileName='Daily Messages by Bully Type(Voice).xlsx'
+              apiPath='/export/export-voice'
             />
           </Menu>
         </span>

@@ -9,7 +9,7 @@ import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler,
 
 import { Radar } from 'react-chartjs-2'
 import { getChartData, initValue } from './KeywordComparisonByBullyType'
-import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
@@ -26,7 +26,6 @@ const onCapture = () => {
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend)
 
 const KeywordComparisonBySentiment = ({
-  chartId,
   highlight,
   resultKeywordComparisonBySentiment,
   loadingKeywordComparisonBySentiment,
@@ -68,29 +67,34 @@ const KeywordComparisonBySentiment = ({
     }
   }, [resultKeywordComparisonBySentiment, keywordsColor])
 
-  const reportNo = '2.2.026'
+  // const reportNo = '2.2.026'
 
   return (
     <Card>
       {loadingKeywordComparisonBySentiment && <LinearProgress style={{ width: '100%' }} />}
-      
+
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text='Percentage of Keyword Comparison by Sentiment' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip
-          arrow
-          title={
-            <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
-            </span>
-          }
-        >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text='Percentage of Keyword Comparison by Sentiment' />}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart22Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart22Description' />
+                </Typography>
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
@@ -122,7 +126,7 @@ const KeywordComparisonBySentiment = ({
           </Menu>
         </span>
       </div>
-      <CardContent id="bySentiment">
+      <CardContent id='bySentiment'>
         {showNoDataText ? (
           <div
             style={{

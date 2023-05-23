@@ -13,7 +13,6 @@ import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
 
 const EngagementTypeComparison = ({
-  chartId,
   highlight,
   resultEngagementComparison,
   loadingEngagementComparison
@@ -24,7 +23,8 @@ const EngagementTypeComparison = ({
   resultEngagementComparison: any
   loadingEngagementComparison: boolean
 }) => {
-  const reportNo = '4.2.023'
+
+  // const reportNo = '4.2.023'
 
   return (
     <Card sx={{ minHeight: 560 }}>
@@ -39,7 +39,14 @@ const EngagementTypeComparison = ({
           arrow
           title={
             <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              <span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart19Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart19Description' />
+                </Typography>
+              </span>
             </span>
           }
         >

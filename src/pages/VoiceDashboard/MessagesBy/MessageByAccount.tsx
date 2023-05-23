@@ -1,4 +1,4 @@
-import { Paper, CardContent, CardHeader, LinearProgress, IconButton, Menu, MenuItem } from '@mui/material'
+import { Paper, CardContent, CardHeader, LinearProgress, IconButton, Menu, MenuItem, Typography } from '@mui/material'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, Line } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -31,7 +31,6 @@ const MessagesByAccount = (props: LineProps) => {
     labelColor,
     borderColor,
     gridLineColor,
-    chartId,
     params,
     highlight,
     result,
@@ -264,7 +263,12 @@ const MessagesByAccount = (props: LineProps) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart6Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart6Description' />
+                </Typography>
               </span>
             }
           >
@@ -323,8 +327,8 @@ const MessagesByAccount = (props: LineProps) => {
               apiParams={apiParams}
               reportNo={reportNo}
               setAnchorEl={setAnchorEl}
-              fileName = 'Daily Messages by Account(Voice).xlsx'
-              apiPath = '/export/export-voice'
+              fileName='Daily Messages by Account(Voice).xlsx'
+              apiPath='/export/export-voice'
             />
           </Menu>
         </span>

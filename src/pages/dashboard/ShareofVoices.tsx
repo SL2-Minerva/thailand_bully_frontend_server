@@ -47,14 +47,15 @@ const onCapture = () => {
 //   }
 // })(MuiTableCell);
 
-const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartId: string; keywordsColor: any }) => {
+const ShareOfVoices = ({ params, keywordsColor }: { params: any; chartId: string; keywordsColor: any }) => {
 
   const [apiParams, setApiParams] = useState<any>()
 
   const { resultShareOfVoice, loadingShareOfVoice } = GetShareOfVoice(
    apiParams
   )
-  const reportNo = '1.1.020'
+
+  // const reportNo = '1.1.020'
 
   const { resultSentimentLevel } = GetSentimentLevel(
    apiParams
@@ -221,7 +222,12 @@ const ShareOfVoices = ({ params, chartId, keywordsColor }: { params: any; chartI
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='overallChart12Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='overallChart12Description' />
+                </Typography>
               </span>
             }
           >

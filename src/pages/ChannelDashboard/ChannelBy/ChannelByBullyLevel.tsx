@@ -1,4 +1,4 @@
-import { Paper, CardContent, CardHeader, LinearProgress, IconButton, Menu, MenuItem } from '@mui/material'
+import { Paper, CardContent, CardHeader, LinearProgress, IconButton, Menu, MenuItem, Typography } from '@mui/material'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, Line } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -74,7 +74,6 @@ const ChannelByBullyLevel = (props: LineProps) => {
     labelColor,
     borderColor,
     gridLineColor,
-    chartId,
     params,
     highlight,
     resultBy,
@@ -284,7 +283,12 @@ const ChannelByBullyLevel = (props: LineProps) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='channelChart8Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='channelChart8Description' />
+                </Typography>
               </span>
             }
           >

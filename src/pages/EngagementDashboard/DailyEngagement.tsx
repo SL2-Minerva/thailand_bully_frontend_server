@@ -11,7 +11,7 @@ import MessageDetail from './MessageDetail'
 import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { IconButton, LinearProgress, Menu, MenuItem, Paper } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
 import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
@@ -85,9 +85,9 @@ export const chartLabel = (data: any) => {
   if (labels && labels?.length > 0) {
     const filterArray = [...new Set(labels)]
     for (let i = 0; i < filterArray?.length; i++) {
-      labelValue.push(new Date(filterArray[i]));
+      labelValue.push(new Date(filterArray[i]))
     }
-    labelValue.sort((date1, date2) => date1 - date2);
+    labelValue.sort((date1, date2) => date1 - date2)
 
     for (let i = 0; i < labelValue?.length; i++) {
       labelValue[i] = moment(labelValue[i]).format('DD/MM/YYYY')
@@ -107,7 +107,6 @@ const DailyEngagement = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    chartId,
     highlight,
     resultFilterData,
     loadingFilterData,
@@ -377,7 +376,12 @@ const DailyEngagement = (props: LineProps) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart2Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart2Description' />
+                </Typography>
               </span>
             }
           >

@@ -2,7 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, IconButton, LinearProgress, Menu, MenuItem, TableBody, TableCell, TableContainer } from '@mui/material'
+import { Grid, IconButton, LinearProgress, Menu, MenuItem, TableBody, TableCell, TableContainer, Typography } from '@mui/material'
 import { Table, TableRow, TableHead } from '@mui/material'
 
 // ** Third Party Imports
@@ -28,7 +28,6 @@ const onCapture = () => {
 }
 
 const SentimentLevelsByChannel = ({
-  chartId,
   resultSentimentLevel,
   resultBy,
   loading
@@ -39,7 +38,7 @@ const SentimentLevelsByChannel = ({
   resultBy: any
   loading: boolean
 }) => {
-  const reportNo = '3.2.015'
+  // const reportNo = '3.2.015'
 
   const [tableData, setTableData] = useState<any[]>([])
 
@@ -60,24 +59,23 @@ const SentimentLevelsByChannel = ({
       const data: any = []
 
       for (let i = 0; i < resultBy?.length; i++) {
-        if(i < resultSentimentLevel.length) {
-            data.push({
-                keyword_name: resultBy[i]?.keyword_name,
-                total: resultBy[i]?.total_value,
-                Negative: resultSentimentLevel[i]?.negative,
-                Neutral: resultSentimentLevel[i]?.neutral,
-                Positive: resultSentimentLevel[i]?.positive
-              })
+        if (i < resultSentimentLevel.length) {
+          data.push({
+            keyword_name: resultBy[i]?.keyword_name,
+            total: resultBy[i]?.total_value,
+            Negative: resultSentimentLevel[i]?.negative,
+            Neutral: resultSentimentLevel[i]?.neutral,
+            Positive: resultSentimentLevel[i]?.positive
+          })
         } else {
-            data.push({
-                keyword_name: resultBy[i]?.keyword_name,
-                total: resultBy[i]?.total_value,
-                Negative: 0,
-                Neutral: 0,
-                Positive: 0
-              })
+          data.push({
+            keyword_name: resultBy[i]?.keyword_name,
+            total: resultBy[i]?.total_value,
+            Negative: 0,
+            Neutral: 0,
+            Positive: 0
+          })
         }
-       
       }
 
       setTableData(data)
@@ -95,7 +93,14 @@ const SentimentLevelsByChannel = ({
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <span>
+                  <Typography variant='h6' sx={{ color: 'white' }}>
+                    <Translations text='channelChart14Title' />
+                  </Typography>
+                  <Typography variant='body2' sx={{ color: 'white' }}>
+                    <Translations text='channelChart14Description' />
+                  </Typography>
+                </span>
               </span>
             }
           >

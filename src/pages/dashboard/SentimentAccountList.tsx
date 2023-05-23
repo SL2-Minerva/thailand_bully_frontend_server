@@ -6,7 +6,6 @@ import AccountDetail from './AccountDetail'
 import { StyledTooltip } from './overall'
 
 const SentimentAccountList = ({
-  chartId,
   cardHeader,
   title,
   networkTitle,
@@ -26,7 +25,7 @@ const SentimentAccountList = ({
   const [current, setCurrent] = useState<any>({})
   const [keywordId, setKeywordId] = useState<any>()
   const [authorName, setAuthorName] = useState<string>('')
-  const [messageId, setMessageId] = useState<string>('');
+  const [messageId, setMessageId] = useState<string>('')
 
   const reportNo = '1.2.02'
 
@@ -39,7 +38,12 @@ const SentimentAccountList = ({
           arrow
           title={
             <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              <Typography variant='h6' sx={{ color: 'white' }}>
+                <Translations text='wordCloudChart6Title' />
+              </Typography>
+              <Typography variant='body2' sx={{ color: 'white' }}>
+                <Translations text='wordCloudChart6Description' />
+              </Typography>
             </span>
           }
         >
@@ -116,8 +120,8 @@ const SentimentAccountList = ({
           reportNo={reportNo}
           authorName={authorName}
           setAuthorName={setAuthorName}
-          message_id = {messageId}
-          setMessage_id = {setMessageId}
+          message_id={messageId}
+          setMessage_id={setMessageId}
         />
       ) : (
         ''

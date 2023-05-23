@@ -11,7 +11,7 @@ import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import MessageDetail from './MessageDetail'
-import { IconButton, LinearProgress, Menu, MenuItem, Paper } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
 import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
@@ -105,7 +105,6 @@ const DailyEngagementType = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    chartId,
     highlight,
     resultBy,
     loading,
@@ -409,7 +408,12 @@ const DailyEngagementType = (props: LineProps) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart10Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart10Description' />
+                </Typography>
               </span>
             }
           >

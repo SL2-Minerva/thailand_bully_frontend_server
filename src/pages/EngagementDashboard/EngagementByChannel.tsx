@@ -1,4 +1,4 @@
-import { Paper, CardContent, CardHeader, LinearProgress, IconButton, Menu, MenuItem } from '@mui/material'
+import { Paper, CardContent, CardHeader, LinearProgress, IconButton, Menu, MenuItem, Typography } from '@mui/material'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, Line } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -29,7 +29,6 @@ const EngagementByChannel = (props: LineProps) => {
     labelColor,
     borderColor,
     gridLineColor,
-    chartId,
     params,
     highlight,
     resultBy,
@@ -260,7 +259,12 @@ const EngagementByChannel = (props: LineProps) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart7Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart7Description' />
+                </Typography>
               </span>
             }
           >
@@ -268,7 +272,7 @@ const EngagementByChannel = (props: LineProps) => {
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <IconButton
+          <IconButton
             size='large'
             onClick={() => {
               handleChooseChart('bar')

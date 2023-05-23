@@ -2,7 +2,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -29,7 +29,6 @@ const onCapture = () => {
 }
 Chart.register(DoughnutLabel)
 const PlatformsComparison = ({
-  chartId,
   highlight,
   resultPlatformComparison,
   loadingPlatformComparison
@@ -162,7 +161,7 @@ const PlatformsComparison = ({
     }
   }, [resultPlatformComparison])
 
-  const reportNo = '2.2.022'
+  // const reportNo = '2.2.022'
 
   return (
     <Card style={{ minHeight: 550 }}>
@@ -180,7 +179,12 @@ const PlatformsComparison = ({
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart18Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart18Description' />
+                </Typography>
               </span>
             }
           >

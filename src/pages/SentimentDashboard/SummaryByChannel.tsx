@@ -1,4 +1,4 @@
-import { Grid, Button, LinearProgress } from '@mui/material'
+import { Grid, Button, LinearProgress, Typography } from '@mui/material'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -13,7 +13,6 @@ const SummaryByChannel = ({
   resultSummaryByChannel,
   total,
   loadingSummaryByChannel,
-  chartId,
   highlight,
   topChannel,
   setTopChannel
@@ -43,7 +42,7 @@ const SummaryByChannel = ({
     }
   }, [total])
 
-  const reportNo = '5.2.018'
+  // const reportNo = '5.2.018'
 
   const columns: GridColDef[] = [
     { field: 'channel', headerName: 'Channel', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
@@ -93,7 +92,12 @@ const SummaryByChannel = ({
           arrow
           title={
             <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              <Typography variant='h6' sx={{ color: 'white' }}>
+                <Translations text='sentimentChart16Title' />
+              </Typography>
+              <Typography variant='body2' sx={{ color: 'white' }}>
+                <Translations text='sentimentChart16Description' />
+              </Typography>
             </span>
           }
         >

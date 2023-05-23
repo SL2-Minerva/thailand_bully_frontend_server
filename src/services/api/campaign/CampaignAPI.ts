@@ -40,6 +40,35 @@ const CreateCampaign = () => {
   }
 }
 
+export const CampaignDelete = () => {
+  const [{ data: res, loading, error }, fire] = CallAPI<{
+    code: 0 | 1;
+    message: string;
+    data: any;
+  }>(
+    {
+      url: `/campaign/delete`,
+      method: "PUT",
+    },
+    {
+      manual: true,
+    }
+  );
+
+  return {
+    resultCampaignDelete: res?.data,
+    loadingCampaignDelete: loading,
+    errorCampaignDelete: error,
+    removeCampaign: (campaign: any) => {
+      return fire({
+        url: `/campaign/delete?${campaign.id}`,
+        method: "PUT",
+        data: campaign,
+      });
+    },
+  };
+};
+
 export const CampaignList = (reload?: boolean, is_fillter?: boolean, fillter?: any, page?: number) => {
   let query = ''
   

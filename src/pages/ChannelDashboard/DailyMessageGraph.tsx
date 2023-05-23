@@ -11,7 +11,7 @@ import { useEffect, useRef, useState, MouseEvent } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { InteractionItem } from 'chart.js'
 import moment from 'moment'
-import { IconButton, LinearProgress, Menu, MenuItem, Paper } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import { ChannelColorCode } from 'src/utils/const'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
@@ -99,7 +99,6 @@ export const chartLabel = (data: any) => {
 const DailyMessageGraph = (props: Props) => {
   const {
     type,
-    chartId,
     params,
     highlight,
     resultDailyChannel,
@@ -372,7 +371,12 @@ const DailyMessageGraph = (props: Props) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='channelChart2Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='channelChart2Description' />
+                </Typography>
               </span>
             }
           >

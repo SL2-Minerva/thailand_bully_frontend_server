@@ -15,7 +15,7 @@ import { InteractionItem } from 'chart.js'
 // import DotsVertical from 'mdi-material-ui/DotsVertical'
 
 import { StyledTooltip } from './overall'
-import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import { FilePngBox, ChartBarStacked, ChartLine, MicrosoftExcel, Download, Information } from 'mdi-material-ui'
 
@@ -72,9 +72,9 @@ const chartLabel = (data: any) => {
   if (labels && labels?.length > 0) {
     const filterArray = [...new Set(labels)]
     for (let i = 0; i < filterArray?.length; i++) {
-      labelValue.push(new Date(filterArray[i]));
+      labelValue.push(new Date(filterArray[i]))
     }
-    labelValue.sort((date1, date2) => date1 - date2);
+    labelValue.sort((date1, date2) => date1 - date2)
 
     for (let i = 0; i < labelValue?.length; i++) {
       labelValue[i] = moment(labelValue[i]).format('DD/MM/YYYY')
@@ -369,7 +369,7 @@ const StackedChart = (props: LineProps) => {
       })
       .catch(() => {
         setIsLoading(false)
-        toast.error("Somenthing went wrong")
+        toast.error('Somenthing went wrong')
       })
   }
 
@@ -388,8 +388,12 @@ const StackedChart = (props: LineProps) => {
             arrow
             title={
               <span>
-                Chart 2 <br />
-                {'Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='overallChart2Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='overallChart2Description' />
+                </Typography>
               </span>
             }
           >

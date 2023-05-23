@@ -518,9 +518,9 @@ const EngagementGraphs = (data: Props) => {
                 type='channel'
                 chartTitle='Engagement'
                 colorType='engagementDefault'
-                chartId='Chart 17'
+                chartId='engagementChart17Title'  // Chart 17
                 highlight={highlight === 'chart17' ? true : false}
-                reportNo='4.2.021'
+                reportNo='engagementChart17Description'  // 4.2.021
                 loadingSenitmentComparisonByEngagement={loadingPeriodComparisonBySenitment}
                 resultSentimentComparisonByEngagement={resultPeriodComparisonByChannel}
               />

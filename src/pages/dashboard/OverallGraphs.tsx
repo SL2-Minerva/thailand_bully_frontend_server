@@ -148,8 +148,8 @@ const OverallGraphs = (data: Props) => {
                 totalValue={resultTotalMessagePerDay?.total_message?.toString() || '0'}
                 averageText='Average Message per Day'
                 averageValue={resultTotalMessagePerDay?.average_message?.toString() || '0'}
-                chartId='Chart 3'
-                reportNo='1.1.005'
+                chartId='overallChart3Title'  //Chart 3
+                reportNo='overallChart3Description' //1.1.005
                 loading={loadingTotalKeystats}
               />
             </Grid>
@@ -171,8 +171,8 @@ const OverallGraphs = (data: Props) => {
                 totalValue={resultTotalEngagement?.total_engagement?.toString() || '0'}
                 averageText='Avg. Engagement per Day'
                 averageValue={resultTotalEngagement?.average_engagement?.toString() || '0'}
-                chartId='Chart 4'
-                reportNo='1.1.006'
+                chartId='overallChart4Title'  //Chart 4
+                reportNo='overallChart4Description' //1.1.006
                 loading={loadingTotalKeystats}
               />
             </Grid>
@@ -194,8 +194,8 @@ const OverallGraphs = (data: Props) => {
                 totalValue={resultTotalAccount?.total_account?.toString() || '0'}
                 averageText='Average Account per Day'
                 averageValue={resultTotalAccount?.average_account?.toString() || '0'}
-                chartId='Chart 5'
-                reportNo='1.1.007'
+                chartId='overallChart5Title'  //Chart 5
+                reportNo='overallChart5Description' //1.1.007
                 loading={loadingTotalKeystats}
               />
             </Grid>

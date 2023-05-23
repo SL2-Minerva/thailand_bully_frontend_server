@@ -12,7 +12,8 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow
+  TableRow,
+  Typography
 } from '@mui/material'
 import { Information } from 'mdi-material-ui'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
@@ -80,7 +81,6 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
     type,
     chartTitle,
     colorType,
-    chartId,
     resultPeriodComparisonBySenitment,
     loadingPeriodComparisonBySenitment,
     highlight
@@ -230,30 +230,36 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
     labels: label || [],
     datasets: dataset
   }
-  const reportNo = '4.2.022'
+
+  // const reportNo = '4.2.022'
 
   return (
     <Card sx={{ minHeight: 713 }}>
       {loadingPeriodComparisonBySenitment && <LinearProgress style={{ width: '100%' }} />}
-      
+
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text={getTitle(type, chartTitle)} />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip
-          arrow
-          title={
-            <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
-            </span>
-          }
-        >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text={getTitle(type, chartTitle)} />}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart18Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart18Description' />
+                </Typography>
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />

@@ -1,7 +1,7 @@
 import ReactWordcloud from 'react-wordcloud'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/scale.css'
-import { Button, Card, CardHeader, Grid, LinearProgress } from '@mui/material'
+import { Button, Card, CardHeader, Grid, LinearProgress, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
@@ -11,7 +11,7 @@ import SentimentAccountList from './SentimentAccountList'
 import 'd3-transition'
 import { select } from 'd3-selection'
 
-const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string }) => {
+const WordCloudSentiment = ({ params }: { params: any; chartId: string }) => {
   const [sentiment, setSentiment] = useState('positive')
   const [word, setWord] = useState<string>('')
   const [apiParams, setApiParams] = useState<any>()
@@ -100,7 +100,12 @@ const WordCloudSentiment = ({ params, chartId }: { params: any; chartId: string 
               arrow
               title={
                 <span>
-                  {chartId} <br /> Report Level 2(1.2.025)
+                  <Typography variant='h6' sx={{ color: 'white' }}>
+                    <Translations text='wordCloudChart5Title' />
+                  </Typography>
+                  <Typography variant='body2' sx={{ color: 'white' }}>
+                    <Translations text='wordCloudChart5Description' />
+                  </Typography>
                 </span>
               }
             >

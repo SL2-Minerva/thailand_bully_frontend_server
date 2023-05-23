@@ -16,7 +16,6 @@ import Translations from 'src/layouts/components/Translations'
 
 const SentimentComparisonTable = ({
   params,
-  chartId,
   highlight
 }: {
   params: any
@@ -27,9 +26,7 @@ const SentimentComparisonTable = ({
   const [pageCount, setPageCount] = useState<number>(0)
   const [apiParams, setApiParams] = useState<any>()
 
-  const { resultSentimentComparison, total, loadingSentimentComparison } = GetSentimentComparison(
-    apiParams
-  )
+  const { resultSentimentComparison, total, loadingSentimentComparison } = GetSentimentComparison(apiParams)
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value - 1)
   }
@@ -40,7 +37,8 @@ const SentimentComparisonTable = ({
       console.log(resultSentimentComparison)
     }
   }, [total])
-  const reportNo = '5.2.016'
+
+  // const reportNo = '5.2.016'
 
   useEffect(() => {
     if (params?.period !== 'customrange') {
@@ -90,7 +88,12 @@ const SentimentComparisonTable = ({
           arrow
           title={
             <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              <Typography variant='h6' sx={{ color: 'white' }}>
+                <Translations text='sentimentChart14Title' />
+              </Typography>
+              <Typography variant='body2' sx={{ color: 'white' }}>
+                <Translations text='sentimentChart14Description' />
+              </Typography>
             </span>
           }
         >

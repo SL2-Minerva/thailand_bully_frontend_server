@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { Card, CardContent, CardHeader, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -23,7 +23,7 @@ const onCapture = () => {
 }
 
 const SentimentScore = (props: LineProps) => {
-  const { labelColor, borderColor, gridLineColor, chartId, params, highlight, resultBy, resultByPrevious, loading } =
+  const { labelColor, borderColor, gridLineColor, params, highlight, resultBy, resultByPrevious, loading } =
     props
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
@@ -194,7 +194,14 @@ const SentimentScore = (props: LineProps) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <span>
+                  <Typography variant='h6' sx={{ color: 'white' }}>
+                    <Translations text='channelChart12Title' />
+                  </Typography>
+                  <Typography variant='body2' sx={{ color: 'white' }}>
+                    <Translations text='channelChart12Description' />
+                  </Typography>
+                </span>
               </span>
             }
           >
@@ -233,7 +240,7 @@ const SentimentScore = (props: LineProps) => {
         </span>
       </div>
 
-      <CardContent id="sentimentScoreChannel">
+      <CardContent id='sentimentScoreChannel'>
         {showNoDataText ? (
           <div
             style={{

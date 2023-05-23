@@ -1,4 +1,4 @@
-import { LinearProgress } from '@mui/material'
+import { LinearProgress, Typography } from '@mui/material'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -10,7 +10,6 @@ import Translations from 'src/layouts/components/Translations'
 const EngagementSummary = ({
   resultSummary,
   loadingSummary,
-  chartId,
   highlight
 }: {
   topKeyword: string
@@ -33,9 +32,9 @@ const EngagementSummary = ({
   //     }
   // }, [totalSummary]);
 
-  const reportNo = '4.2.025'
+  // const reportNo = '4.2.025'
 
-  const columns : GridColDef[] = [
+  const columns: GridColDef[] = [
     {
       field: 'infulencer',
       headerName: 'Influencer',
@@ -83,7 +82,14 @@ const EngagementSummary = ({
           arrow
           title={
             <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+              <span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart21Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='engagementChart21Description' />
+                </Typography>
+              </span>
             </span>
           }
         >
@@ -92,21 +98,21 @@ const EngagementSummary = ({
       </span>
       <CardContent>
         {resultSummary ? (
-            <DataGrid
-              autoHeight
-              rows={resultSummary}
-              columns={columns}
-              pageSize={10}
-              rowsPerPageOptions={[10]}
-              getRowId={row => row.message_id}
-              sx={{
-                '& .MuiDataGrid-cell': {
-                  textAlign: 'center',
-                  display: 'flex',
-                  justifyContent: 'center'
-                }
-              }}
-            />
+          <DataGrid
+            autoHeight
+            rows={resultSummary}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            getRowId={row => row.message_id}
+            sx={{
+              '& .MuiDataGrid-cell': {
+                textAlign: 'center',
+                display: 'flex',
+                justifyContent: 'center'
+              }
+            }}
+          />
         ) : (
           <div
             style={{

@@ -1,7 +1,7 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 
 // ** Third Party Imports
 import { ApexOptions } from 'apexcharts'
@@ -36,7 +36,7 @@ interface Props {
 }
 
 const DayTimeSentiment = (props: Props) => {
-  const { chartId, params, highlight, resultDayBySentiment, resultTimeBySentiment, loadingBySentiment } = props
+  const { params, highlight, resultDayBySentiment, resultTimeBySentiment, loadingBySentiment } = props
 
   const [seriesHour, setSeriesHour] = useState([{ name: '', data: [] }])
   const [seriesDays, setSeriesDays] = useState([{ name: '', data: [] }])
@@ -166,8 +166,13 @@ const DayTimeSentiment = (props: Props) => {
           arrow
           title={
             <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
-            </span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart15Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart15Description' />
+                </Typography>
+              </span>
           }
         >
           <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />

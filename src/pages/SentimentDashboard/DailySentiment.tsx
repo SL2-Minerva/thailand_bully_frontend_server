@@ -12,7 +12,7 @@ import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { SentimentColors } from 'src/utils/const'
-import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
 import { GetSortData } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
@@ -100,7 +100,6 @@ const DailySenitment = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    chartId,
     highlight,
     resultFilterData,
     loadingFilterData,
@@ -405,7 +404,12 @@ const DailySenitment = (props: LineProps) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='sentimentChart2Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='sentimentChart2Description' />
+                </Typography>
               </span>
             }
           >

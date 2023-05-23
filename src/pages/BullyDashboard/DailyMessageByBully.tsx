@@ -13,7 +13,7 @@ import { BullyLevelColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import MessageDetail from '../ChannelDashboard/MessageDetail'
-import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
 import { GetSortBullyData } from 'src/services/api/dashboards/bully/BullyDashboardAPI'
@@ -74,7 +74,7 @@ const chartLabel = (data: any) => {
     for (let i = 0; i < labels?.length; i++) {
       labelValue.push(new Date(labels[i]?.date_m))
     }
-    labelValue.sort((date1, date2) => date1 - date2);
+    labelValue.sort((date1, date2) => date1 - date2)
 
     for (let i = 0; i < labelValue?.length; i++) {
       labelValue[i] = moment(labelValue[i]).format('DD/MM/YYYY')
@@ -102,7 +102,6 @@ const DailyMessgeByBully = (props: LineProps) => {
     gridLineColor,
     params,
     type,
-    chartId,
     highlight,
     resultFilterData,
     loadingFilterData,
@@ -384,7 +383,12 @@ const DailyMessgeByBully = (props: LineProps) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='bullyChart2Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='bullyChart2Description' />
+                </Typography>
               </span>
             }
           >

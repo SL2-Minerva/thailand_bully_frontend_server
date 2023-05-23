@@ -1,5 +1,5 @@
 import { StyledTooltip } from '../dashboard/overall'
-import { Backdrop, Card, CardHeader, CircularProgress, Grid } from '@mui/material'
+import { Backdrop, Card, CardHeader, CircularProgress, Grid, Typography } from '@mui/material'
 import {
   FilterByCampaignId,
   GetPeriodComparison,
@@ -340,8 +340,12 @@ const SentimentGraph = (data: Props) => {
                     arrow
                     title={
                       <span>
-                        Chart 10
-                        <br /> Report Level 2(5.2.012)
+                        <Typography variant='h6' sx={{ color: 'white' }}>
+                          <Translations text='sentimentChart10Title' />
+                        </Typography>
+                        <Typography variant='body2' sx={{ color: 'white' }}>
+                          <Translations text='sentimentChart10Description' />
+                        </Typography>
                       </span>
                     }
                   >
@@ -400,9 +404,9 @@ const SentimentGraph = (data: Props) => {
               type='engagementType'
               chartTitle='Sentiment Comparison'
               colorType='sentimentComparison'
-              chartId='Chart 12'
+              chartId='sentimentChart12Title'  // chart 12
               highlight={highlight === 'chart12' ? true : false}
-              reportNo='5.2.014'
+              reportNo='sentimentChart12Description'  //5.2.014
               resultSentimentComparisonByEngagement={resultSentimentComparisonByEngagement}
               loadingSenitmentComparisonByEngagement={loadingSentimentComparison}
             />

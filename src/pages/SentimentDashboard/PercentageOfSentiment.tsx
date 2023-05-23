@@ -2,7 +2,7 @@
 import Paper from '@mui/material/Paper'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -41,7 +41,7 @@ interface MessageData {
 }
 
 const PercentageOfSentiments = (props: MessageData) => {
-  const { chartId, highlight, resultFilterData, loadingFilterData } = props
+  const { highlight, resultFilterData, loadingFilterData } = props
   const colors = SentimentColors
   const { t } = useTranslation()
   const initValue = {
@@ -181,7 +181,7 @@ const PercentageOfSentiments = (props: MessageData) => {
     return returnData
   }
 
-  const reportNo = '5.1.001'
+  // const reportNo = '5.1.001'
 
   useEffect(() => {
     if (resultFilterData) {
@@ -242,26 +242,31 @@ const PercentageOfSentiments = (props: MessageData) => {
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} square variant='outlined'>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
-      
+
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text='Percentage of Sentiment Type' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          subheader='Period over Period Comparison'
-          subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip
-          arrow
-          title={
-            <span>
-              {chartId} <br /> {' Report Level 1(' + reportNo + ')'}
-            </span>
-          }
-        >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text='Percentage of Sentiment Type' />}
+            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            subheader='Period over Period Comparison'
+            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='sentimentChartTitle' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='sentimentChartDescription' />
+                </Typography>
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
@@ -294,7 +299,7 @@ const PercentageOfSentiments = (props: MessageData) => {
         </span>
       </div>
 
-      <CardContent id="percentageSentiment">
+      <CardContent id='percentageSentiment'>
         <Grid container spacing={2}>
           {!showNoDataText || !showNoDataTextPrevious ? (
             <Grid item xs={12}>

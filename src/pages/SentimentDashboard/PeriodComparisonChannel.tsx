@@ -12,7 +12,8 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow
+  TableRow,
+  Typography
 } from '@mui/material'
 import { Information } from 'mdi-material-ui'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
@@ -87,7 +88,6 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
     gridLineColor,
     type,
     chartTitle,
-    chartId,
     resultSenitmentComparisonByChannel,
     loadingSenitmentComparisonByChannel,
     highlight
@@ -224,7 +224,7 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
     datasets: dataset
   }
 
-  const reportNo = '5.2.013'
+  // const reportNo = '5.2.013'
 
   return (
     <Card>
@@ -241,7 +241,12 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='sentimentChart11Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='sentimentChart11Description' />
+                </Typography>
               </span>
             }
           >

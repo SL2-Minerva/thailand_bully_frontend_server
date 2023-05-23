@@ -1,4 +1,4 @@
-import { Paper, CardContent, CardHeader, LinearProgress, IconButton, Menu, MenuItem } from '@mui/material'
+import { Paper, CardContent, CardHeader, LinearProgress, IconButton, Menu, MenuItem, Typography } from '@mui/material'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent, Line } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -32,7 +32,6 @@ const SentimentByDevice = (props: LineProps) => {
     labelColor,
     borderColor,
     gridLineColor,
-    chartId,
     params,
     highlight,
     resultBy,
@@ -262,7 +261,12 @@ const SentimentByDevice = (props: LineProps) => {
             arrow
             title={
               <span>
-                {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='sentimentChart5Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='sentimentChart5Description' />
+                </Typography>
               </span>
             }
           >

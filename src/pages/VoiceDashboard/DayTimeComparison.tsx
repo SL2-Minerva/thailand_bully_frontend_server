@@ -11,7 +11,7 @@ import { MouseEvent, useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
-import { IconButton, LinearProgress, Menu, MenuItem } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 import { TimeAxis } from 'src/utils/const'
 import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
@@ -28,7 +28,6 @@ const onCapture = () => {
 }
 const DayTimeComparison = ({
   params,
-  chartId,
   highlight,
   resultDayTimeComparison,
   loadingDayTimeComparison
@@ -108,24 +107,29 @@ const DayTimeComparison = ({
   return (
     <Card>
       {loadingDayTimeComparison && <LinearProgress style={{ width: '100%' }} />}
-     
+
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text='Day & Time' />}
-          titleTypographyProps={{ variant: 'h4', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip
-          arrow
-          title={
-            <span>
-              {chartId} <br /> {' Report Level 2(' + reportNo + ')'}
-            </span>
-          }
-        >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text='Day & Time' />}
+            titleTypographyProps={{ variant: 'h4', color: highlight ? 'green' : '#4c4e64de' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
+                <Typography variant='h6' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart14Title' />
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'white' }}>
+                  <Translations text='voiceChart14Description' />
+                </Typography>
+              </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          </StyledTooltip>
+        </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
@@ -157,7 +161,7 @@ const DayTimeComparison = ({
           </Menu>
         </span>
       </div>
-      <CardContent id="dayTimeComparison">
+      <CardContent id='dayTimeComparison'>
         {showNoDataText ? (
           <div
             style={{
