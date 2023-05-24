@@ -40,7 +40,9 @@ interface Props {
   setCampaign: any
   tilte: string
   platformId: string
-  setPlatformId: any
+  setPlatformId: any,
+  status: string
+  setStatus: any
 }
 
 const Filter = (props: Props) => {
@@ -60,7 +62,9 @@ const Filter = (props: Props) => {
     setCampaign,
     tilte,
     setPlatformId,
-    platformId
+    platformId, 
+    status, 
+    setStatus
   } = props
   const { resultCampaiganList } = CampaignList()
   const { result_source_list } = SourceService()
@@ -140,16 +144,21 @@ const Filter = (props: Props) => {
     const [start, end] = dates
     setDate(start)
     setEndDate(end)
-    localStorage.setItem('startDate', moment(start)?.format('YYYY-MM-DD'));
-    localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'));
+    localStorage.setItem('startDate', moment(start)?.format('YYYY-MM-DD'))
+    localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'))
   }
+
+  const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
+    setStatus(e.target.value)
+    localStorage.setItem('status', e.target.value)
+}, [])
 
   const handleOnChangePreviousDate = (dates: any) => {
     const [start, end] = dates
     setPreviousDate(start)
     setPreviousEndDate(end)
-    localStorage.setItem('previousStartDate', moment(start)?.format('YYYY-MM-DD'));
-    localStorage.setItem('previousEndDate', moment(end)?.format('YYYY-MM-DD'));
+    localStorage.setItem('previousStartDate', moment(start)?.format('YYYY-MM-DD'))
+    localStorage.setItem('previousEndDate', moment(end)?.format('YYYY-MM-DD'))
   }
 
   const CustomInput = forwardRef((props: PickerProps, ref) => {
@@ -170,19 +179,18 @@ const Filter = (props: Props) => {
       const value = localStorage.getItem('dateSelect')
       periodSet(value)
     }
-
   }, [])
 
   useEffect(() => {
-    if(resultCampaiganList?.length>0) {
+    if (resultCampaiganList?.length > 0) {
       const value = localStorage.getItem('campaign')
-      if(value) {
-        setCampaign(value) 
+      if (value) {
+        setCampaign(value)
       } else {
         setCampaign(resultCampaiganList[0]?.id)
       }
     }
-  },[resultCampaiganList])
+  }, [resultCampaiganList])
 
   return (
     <Grid item xs={12}>
@@ -190,7 +198,7 @@ const Filter = (props: Props) => {
         <CardHeader title={tilte} />
         <CardContent>
           <Grid container spacing={2}>
-            <Grid item sm={4} xs={12} mb={3}>
+            <Grid item sm={3} xs={12} mb={3}>
               <FormControl fullWidth>
                 <InputLabel id='plan-select'>
                   <Translations text='Period of time' />
@@ -227,7 +235,33 @@ const Filter = (props: Props) => {
               </FormControl>
             </Grid>
 
-            <Grid item sm={4} xs={12}>
+            <Grid item sm={3} xs={12}>
+              <FormControl fullWidth>
+                <InputLabel id='plan-select'>
+                  <Translations text='Status' />
+                </InputLabel>
+                <Select
+                  fullWidth
+                  value={status}
+                  id='select-date'
+                  label={<Translations text='Status' />}
+                  labelId='date-select'
+                  onChange={(e: SelectChangeEvent) => {
+                    handleSelectStatus(e)
+                  }}
+                  inputProps={{ placeholder: 'Select Status' }}
+                >
+                  <MenuItem value='1'>
+                    <Translations text='Active' />
+                  </MenuItem>
+                  <MenuItem value='0'>
+                    <Translations text='InActive' />
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item sm={3} xs={12}>
               <FormControl fullWidth>
                 <InputLabel id='plan-select'>
                   <Translations text='Campaign Name' />
@@ -255,36 +289,36 @@ const Filter = (props: Props) => {
               </FormControl>
             </Grid>
 
-            <Grid item sm={4} xs={12}>
-                  <FormControl fullWidth>
-                    <InputLabel id='plan-select'>
-                      <Translations text='Channel' />
-                    </InputLabel>
-                    <Select
-                      fullWidth
-                      value={platformId}
-                      id='select-platform'
-                      label='Select Paltform'
-                      labelId='platform-select'
-                      onChange={e => {
-                        handleSelectList(e, 'platform')
-                      }}
-                      inputProps={{ placeholder: 'Select Platform' }}
-                    >
-                      <MenuItem value='all'>ALL</MenuItem>
-                      {result_source_list &&
-                        result_source_list?.map((item: any, index: number) => {
-                          return (
-                            <MenuItem key={index} value={item.id}>
-                              {item.name}
-                            </MenuItem>
-                          )
-                        })}
-                    </Select>
-                  </FormControl>
-                </Grid>
+            <Grid item sm={3} xs={12}>
+              <FormControl fullWidth>
+                <InputLabel id='plan-select'>
+                  <Translations text='Channel' />
+                </InputLabel>
+                <Select
+                  fullWidth
+                  value={platformId}
+                  id='select-platform'
+                  label='Select Paltform'
+                  labelId='platform-select'
+                  onChange={e => {
+                    handleSelectList(e, 'platform')
+                  }}
+                  inputProps={{ placeholder: 'Select Platform' }}
+                >
+                  <MenuItem value='all'>ALL</MenuItem>
+                  {result_source_list &&
+                    result_source_list?.map((item: any, index: number) => {
+                      return (
+                        <MenuItem key={index} value={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      )
+                    })}
+                </Select>
+              </FormControl>
+            </Grid>
 
-            <Grid item sm={4} xs={12}>
+            <Grid item sm={3} xs={12}>
               <Box>
                 <DatePickerWrapper>
                   <DatePicker
@@ -304,7 +338,7 @@ const Filter = (props: Props) => {
               </Box>
             </Grid>
             {showPreviousDatepicker ? (
-              <Grid item sm={4} xs={12}>
+              <Grid item sm={3} xs={12}>
                 <Box>
                   <DatePickerWrapper>
                     <DatePicker
@@ -330,7 +364,6 @@ const Filter = (props: Props) => {
             ) : (
               ''
             )}
-            
           </Grid>
         </CardContent>
       </Card>

@@ -28,6 +28,7 @@ const ChannelDashboard = () => {
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [loadingKeyword, setLoadingKeyword] = useState<boolean>(true);
   const [platformId, setPlatformId] = useState<string>('all') 
+  const [status, setStatus] = useState(localStorage.getItem('status') || '1');
 
   const params = {
     campaign: campaign,
@@ -95,6 +96,8 @@ const ChannelDashboard = () => {
         setCampaign={setCampaign}
         setPlatformId = {setPlatformId}
         platformId = {platformId}
+        status={status}
+        setStatus={setStatus}
       />
 
       {campaign ? (
