@@ -61,7 +61,7 @@ const SNAByBullyType = () => {
   const { errorUserPermission } = UserPermission()
   const { resultCampaiganList } = CampaignList()
   const { result_source_list } = SourceService()
-  const { resultNetworkGraph, resultBullyTypeNetwork, loadingNetworkGraph } = GetNetworkGraph(
+  const { resultNetworkGraph, loadingNetworkGraph } = GetNetworkGraph(
     campaign,
     platformId,
     date,
@@ -72,6 +72,7 @@ const SNAByBullyType = () => {
     '',
     '',
     'sna',
+    'bullyType',
     keyword,
     limit
   )
@@ -230,8 +231,8 @@ const SNAByBullyType = () => {
   }, [resultCampaiganList])
 
   useEffect(() => {
-    if (!loadingNetworkGraph && resultBullyTypeNetwork) {
-      setGraphData(resultBullyTypeNetwork)
+    if (!loadingNetworkGraph && resultNetworkGraph) {
+      setGraphData(resultNetworkGraph)
     } else {
       setGraphData(initialGraph)
     }
@@ -532,7 +533,7 @@ const SNAByBullyType = () => {
                     selectNode: event => {
                       const { nodes } = event
                       if (nodes.length == 1) {
-                        const nodesData = resultBullyTypeNetwork?.nodes
+                        const nodesData = resultNetworkGraph?.nodes
 
                         for (let i = 0; i < nodesData?.length; i++) {
                           if (nodes[0] === nodesData[i].id) {
