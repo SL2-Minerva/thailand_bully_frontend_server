@@ -47,19 +47,12 @@ const onCapture = () => {
 //   }
 // })(MuiTableCell);
 
-const ShareOfVoices = ({ params, keywordsColor }: { params: any; chartId: string; keywordsColor: any }) => {
-
-  const [apiParams, setApiParams] = useState<any>()
-
-  const { resultShareOfVoice, loadingShareOfVoice } = GetShareOfVoice(
-   apiParams
-  )
+const ShareOfVoices = ({ apiParams, keywordsColor }: { apiParams: any; chartId: string; keywordsColor: any }) => {
+  const { resultShareOfVoice, loadingShareOfVoice } = GetShareOfVoice(apiParams)
 
   // const reportNo = '1.1.020'
 
-  const { resultSentimentLevel } = GetSentimentLevel(
-   apiParams
-  )
+  const { resultSentimentLevel } = GetSentimentLevel(apiParams)
 
   const [tableData, setTableData] = useState<any[]>([])
 
@@ -74,27 +67,30 @@ const ShareOfVoices = ({ params, keywordsColor }: { params: any; chartId: string
     setAnchorEl(null)
   }
 
+  const handleData = () => {
+    const data: any = []
+    for (let i = 0; i < resultShareOfVoice?.length; i++) {
+      data.push({
+        keyword_id: resultShareOfVoice[i]?.keyword_id,
+        keyword_name: resultShareOfVoice[i]?.keyword_name,
+        campaign_id: resultShareOfVoice[i]?.campaign_id,
+        campaign_name: resultShareOfVoice[i]?.campaign_name,
+        organization_id: resultShareOfVoice[i]?.organization_id,
+        organization_name: resultShareOfVoice[i]?.organization_name,
+        number_of_message: resultShareOfVoice[i]?.total,
+        value: resultShareOfVoice[i]?.value,
+        Negative: resultSentimentLevel[i]?.Negative,
+        Neutral: resultSentimentLevel[i]?.Neutral,
+        Positive: resultSentimentLevel[i]?.Positive
+      })
+    }
+
+    setTableData(data)
+  }
+
   useEffect(() => {
     if (resultShareOfVoice && resultSentimentLevel) {
-      const data: any = []
-
-      for (let i = 0; i < resultShareOfVoice?.length; i++) {
-        data.push({
-          keyword_id: resultShareOfVoice[i]?.keyword_id,
-          keyword_name: resultShareOfVoice[i]?.keyword_name,
-          campaign_id: resultShareOfVoice[i]?.campaign_id,
-          campaign_name: resultShareOfVoice[i]?.campaign_name,
-          organization_id: resultShareOfVoice[i]?.organization_id,
-          organization_name: resultShareOfVoice[i]?.organization_name,
-          number_of_message: resultShareOfVoice[i]?.total,
-          value: resultShareOfVoice[i]?.value,
-          Negative: resultSentimentLevel[i]?.Negative,
-          Neutral: resultSentimentLevel[i]?.Neutral,
-          Positive: resultSentimentLevel[i]?.Positive
-        })
-      }
-
-      setTableData(data)
+      handleData();
     }
   }, [resultSentimentLevel, resultShareOfVoice])
 
@@ -180,37 +176,6 @@ const ShareOfVoices = ({ params, keywordsColor }: { params: any; chartId: string
     return colors
   }
 
-  useEffect(() => {
-    if (params?.period !== 'customrange') {
-      setApiParams({
-        campaign_id: params?.campaign,
-        source: params?.platformId,
-        start_date: params?.date,
-        end_date: params?.endDate,
-        period: params?.period,
-        fillter_keywords: params?.keywordIds
-      })
-    } 
-    if (
-      params?.period === 'customrange' &&
-      params?.endDate &&
-      params?.previousEndDate &&
-      params?.date !== params?.endDate
-      && params?.previousDate !== params?.previousEndDate
-    ) {
-      setApiParams({
-        campaign_id: params?.campaign,
-        source: params?.platformId,
-        start_date: params?.date,
-        end_date: params?.endDate,
-        period: params?.period,
-        start_date_period: params?.previousDate,
-        end_date_period: params?.previousEndDate,
-        fillter_keywords: params?.keywordIds
-      })
-    }
-  }, [params])
-
   return (
     <Card sx={{ minheight: 450 }}>
       {loadingShareOfVoice && <LinearProgress style={{ width: '100%' }} />}
@@ -265,7 +230,7 @@ const ShareOfVoices = ({ params, keywordsColor }: { params: any; chartId: string
           </Menu>
         </span>
       </div>
-      <CardContent id="shareOfVoices">
+      <CardContent id='shareOfVoices'>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <TableContainer>
