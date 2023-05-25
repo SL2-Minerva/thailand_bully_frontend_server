@@ -112,11 +112,7 @@ const OverallGraphs = (data: Props) => {
         {resultReportPermission?.includes('12') ? (
           <>
             <Grid id='chart12' item xs={12}>
-              <ShareOfVoices
-                apiParams={apiParams}
-                chartId='Chart 12'
-                keywordsColor={keywordGraphColors}
-              />
+              <ShareOfVoices apiParams={apiParams} chartId='Chart 12' keywordsColor={keywordGraphColors} />
             </Grid>
           </>
         ) : (

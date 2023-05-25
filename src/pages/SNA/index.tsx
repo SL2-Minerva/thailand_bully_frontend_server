@@ -79,7 +79,8 @@ const SNA = () => {
     '',
     'sna',
     keyword,
-    limit
+    limit,
+    'sentiment'
   )
   const { resultKeywordList, keywordsColor } = GetKeyWordsList(campaign)
 

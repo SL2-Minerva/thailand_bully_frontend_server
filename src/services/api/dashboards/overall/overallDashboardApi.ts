@@ -354,7 +354,8 @@ export const GetNetworkGraph = (
   messageId?: any,
   reportNo?: string,
   fillter_keywords?: any,
-  limit?: any
+  limit?: any, 
+  type? : string
 ) => {
   let params: any = {}
   params = {
@@ -375,11 +376,13 @@ export const GetNetworkGraph = (
     params.start_date_period =  previousDate ? moment(previousDate).format('YYYY-MM-DD') : ''
     params.end_date_period = previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : ''
     params.fillter_keywords = fillter_keywords
+    params.sna_type = type
   } else {
     params.start_date = start_date ? moment(start_date).format('YYYY-MM-DD') : ''
     params.end_date =  end_date ? moment(end_date).format('YYYY-MM-DD') : ''
     params.period = period
     params.fillter_keywords = fillter_keywords
+    params.sna_type = type
   }
 
   if (platformId) {

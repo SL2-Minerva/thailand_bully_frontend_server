@@ -73,7 +73,8 @@ const SNAByBullyType = () => {
     '',
     'sna',
     keyword,
-    limit
+    limit,
+    'bullyType'
   )
   const { resultKeywordList, keywordsColor } = GetKeyWordsList(campaign)
 
