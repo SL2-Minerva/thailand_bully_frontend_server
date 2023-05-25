@@ -82,7 +82,8 @@ const DialogOrganization = (props: DialogInfoProps) => {
     setValue('status', current?.status === 1 ? true : false)
     setValue('organization_type_id', current?.organization_type_id || '')
     setValue('organization_group_id', current?.organization_group_id || '')
-    setValue('msg_transaction', current?.msg_transaction || 0)
+
+    // setValue('msg_transaction', current?.msg_transaction || 0)
 
     if (action === 'edit') {
       setValue('id', current?.id)
@@ -185,7 +186,7 @@ const DialogOrganization = (props: DialogInfoProps) => {
                 </FormControl>
               </Grid>
 
-              {action === 'edit' ? (
+              {/* {action === 'edit' ? (
                 <Grid item sm={12} xs={12}>
                   <Controller
                     name='msg_transaction'
@@ -208,7 +209,7 @@ const DialogOrganization = (props: DialogInfoProps) => {
                 </Grid>
               ) : (
                 ''
-              )}
+              )} */}
 
               <Grid item sm={6} xs={12}>
                 <FormControl fullWidth>
