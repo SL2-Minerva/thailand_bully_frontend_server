@@ -15,7 +15,7 @@ import Fade, { FadeProps } from '@mui/material/Fade'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Select  from '@mui/material/Select'
+import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
@@ -77,11 +77,14 @@ const DialogOrganization = (props: DialogInfoProps) => {
   })
 
   useEffect(() => {
-    setValue('description', current?.description || "")
-    setValue('name', current?.name || "")
+    setValue('description', current?.description || '')
+    setValue('name', current?.name || '')
     setValue('status', current?.status === 1 ? true : false)
-    setValue('organization_type_id', current?.organization_type_id || "")
-    setValue('organization_group_id', current?.organization_group_id || "")
+    setValue('organization_type_id', current?.organization_type_id || '')
+    setValue('organization_group_id', current?.organization_group_id || '')
+
+    // setValue('msg_transaction', current?.msg_transaction || 0)
+
     if (action === 'edit') {
       setValue('id', current?.id)
     }
@@ -89,7 +92,6 @@ const DialogOrganization = (props: DialogInfoProps) => {
 
   const onSubmit = (data: FormData) => {
     if (action === 'create') {
-
       axios
         .post(authConfig.createOrganization, data, {
           headers: {
@@ -113,7 +115,6 @@ const DialogOrganization = (props: DialogInfoProps) => {
         })
     }
   }
-
 
   return (
     <Card>
@@ -184,6 +185,31 @@ const DialogOrganization = (props: DialogInfoProps) => {
                   )}
                 </FormControl>
               </Grid>
+
+              {/* {action === 'edit' ? (
+                <Grid item sm={12} xs={12}>
+                  <Controller
+                    name='msg_transaction'
+                    control={control}
+                    render={({ field: { value, onChange } }) => (
+                      <TextField
+                        value={value}
+                        label='Number of Message Transaction'
+                        type='number'
+                        fullWidth
+                        onChange={onChange}
+                        placeholder='Number of Message Transaction'
+                        error={errors?.msg_transaction ? true : false}
+                      />
+                    )}
+                  />
+                  {errors.msg_transaction && (
+                    <FormHelperText sx={{ color: 'error.main' }}>{errors.msg_transaction.message}</FormHelperText>
+                  )}
+                </Grid>
+              ) : (
+                ''
+              )} */}
 
               <Grid item sm={6} xs={12}>
                 <FormControl fullWidth>

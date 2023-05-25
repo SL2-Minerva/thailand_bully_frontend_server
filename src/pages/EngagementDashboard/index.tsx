@@ -27,6 +27,7 @@ const EngagementDashboard = () => {
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [loadingKeyword, setLoadingKeyword] = useState<boolean>(true)
   const [platformId, setPlatformId] = useState<string>('all') 
+  const [status, setStatus] = useState(localStorage.getItem('status') || '1');
 
   const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
 
@@ -132,6 +133,8 @@ const EngagementDashboard = () => {
           setCampaign={setCampaignType}
           setPlatformId = {setPlatformId}
           platformId = {platformId}
+          setStatus={setStatus}
+          status ={status}
         />
       </Grid>
 

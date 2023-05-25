@@ -25,6 +25,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { makeStyles } from '@mui/styles'
 
 interface LineProps {
   white: string
@@ -43,6 +44,13 @@ interface LineProps {
   resultPeriodComparisonBySenitment: any
   loadingPeriodComparisonBySenitment: boolean
 }
+
+const useStyles = makeStyles(() => ({
+  cell_short: {
+    fontSize: "10px",
+    width: 10
+  }
+}));
 
 const chartLabel = (data: any) => {
   if (!data) return []
@@ -232,6 +240,7 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
   }
 
   // const reportNo = '4.2.022'
+  const classes = useStyles();
 
   return (
     <Card sx={{ minHeight: 713 }}>
@@ -314,10 +323,10 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
           <Grid item xs={12}>
             {resultPeriodComparisonBySenitment?.value ? (
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                <Table aria-label='simple table'>
                   <TableHead>
                     <TableRow>
-                      <TableCell width={30}>
+                      <TableCell className={classes.cell_short}>
                         {resultPeriodComparisonBySenitment?.share ? 'Share' : 'Positive'}
                       </TableCell>
                       {(
@@ -326,7 +335,7 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
                         []
                       )?.map((share: any, index: number) => {
                         return (
-                          <TableCell align='left' key={index}>
+                          <TableCell align='center' key={index}>
                             {share} %
                           </TableCell>
                         )
@@ -340,7 +349,7 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
                         []
                       )?.map((comment: any, index: number) => {
                         return (
-                          <TableCell align='left' key={index}>
+                          <TableCell align='center' key={index}>
                             {comment} %
                           </TableCell>
                         )
@@ -354,7 +363,7 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
                         []
                       )?.map((reaction: any, index: number) => {
                         return (
-                          <TableCell align='left' key={index}>
+                          <TableCell align='center' key={index}>
                             {reaction} %
                           </TableCell>
                         )

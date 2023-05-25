@@ -1,7 +1,10 @@
 import { CallAPI } from 'src/services/CallAPI'
 
-export const GetActivityLog = (search?: string, statusCode?: string) => {
-  const params : any = {}
+export const GetActivityLog = (search?: string, statusCode?: string, page?: number) => {
+  const params : any = {
+    page: page,
+    limit: 10
+  }
 
   if (search !== '') {
     params.search = search
@@ -18,7 +21,7 @@ export const GetActivityLog = (search?: string, statusCode?: string) => {
   })
 
   return {
-    resultActivityLog: res?.data || null,
+    resultActivityLog: res?.data?.activity_log || null,
     total: res?.data?.total || 0,
     loadingActivityLog: loading,
     errorActivityLog: error

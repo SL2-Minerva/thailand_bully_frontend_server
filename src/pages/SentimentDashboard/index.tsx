@@ -15,6 +15,8 @@ const SentimentDashboard = () => {
 
   const [date, setDate] = useState<DateType>(new Date(localStorage.getItem('startDate') || calculateDate(6)))
   const [endDate, setEndDate] = useState<DateType>(new Date(localStorage.getItem('endDate') || new Date()))
+  const [status, setStatus] = useState(localStorage.getItem('status') || '1');
+
   const [previousDate, setPreviousDate] = useState<DateType>(
     new Date(localStorage.getItem('previousStartDate') || new Date())
   )
@@ -94,6 +96,8 @@ const SentimentDashboard = () => {
           setCampaign={setCampaign}
           setPlatformId = {setPlatformId}
           platformId = {platformId}
+          status={status}
+          setStatus = {setStatus}
         />
       </Grid>
 

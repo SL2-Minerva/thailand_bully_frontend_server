@@ -327,10 +327,10 @@ const PeriodComparisonChart = (props: LineProps) => {
           <Grid item xs={12}>
             {resultSentimentComparisonByEngagement?.value ? (
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 500 }} aria-label='simple table'>
+                <Table aria-label='simple table'>
                   <TableHead>
                     <TableRow>
-                      <TableCell width={30}>
+                      <TableCell width='10'>
                         {resultSentimentComparisonByEngagement?.share ? 'Share' : 'Positive'}
                       </TableCell>
                       {(
@@ -347,7 +347,9 @@ const PeriodComparisonChart = (props: LineProps) => {
                       {/* <TableCell align='center'>{resultSentimentComparisonByEngagement?.share || resultSentimentComparisonByEngagement?.positive || ""}</TableCell> */}
                     </TableRow>
                     <TableRow>
-                      <TableCell>{resultSentimentComparisonByEngagement?.comment ? 'Comment' : 'Neutral'}</TableCell>
+                      <TableCell width='10'>
+                        {resultSentimentComparisonByEngagement?.comment ? 'Comment' : 'Neutral'}
+                      </TableCell>
                       {(
                         resultSentimentComparisonByEngagement?.comment ||
                         resultSentimentComparisonByEngagement?.neutral ||
@@ -362,7 +364,9 @@ const PeriodComparisonChart = (props: LineProps) => {
                       {/* <TableCell align='center'>{resultSentimentComparisonByEngagement?.comment || resultSentimentComparisonByEngagement?.neutral || ""}</TableCell> */}
                     </TableRow>
                     <TableRow>
-                      <TableCell>{resultSentimentComparisonByEngagement?.comment ? 'Reaction' : 'Negative'}</TableCell>
+                      <TableCell width='10'>
+                        {resultSentimentComparisonByEngagement?.comment ? 'Reaction' : 'Negative'}
+                      </TableCell>
                       {(
                         resultSentimentComparisonByEngagement?.reaction ||
                         resultSentimentComparisonByEngagement?.negative ||
