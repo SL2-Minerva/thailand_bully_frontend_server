@@ -18,7 +18,7 @@ import { GetActivityLog } from 'src/services/api/activityLog/ActivityLog'
 import { useRouter } from 'next/router'
 import Translations from 'src/layouts/components/Translations'
 import moment from 'moment'
-import { DataGrid, GridValueGetterParams } from '@mui/x-data-grid'
+import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid'
 
 const ActivityLog = () => {
   const router = useRouter()
@@ -68,49 +68,59 @@ const ActivityLog = () => {
     )
   }
 
-  const columns = [
+  const columns: GridColDef[] = [
     {
       field: 'id',
-      headerName: '#'
+      headerName: '#',
+      sortable: false,
+      renderCell: (params: GridRenderCellParams<any>) =>
+          params.api.getRowIndexRelativeToVisibleRows(params.row.id) + 1 + (page * 10)
     },
     {
       field: 'feature',
       headerName: 'Feature',
-      flex: 1
+      flex: 1,
+      sortable: false
     },
     {
       field: 'method',
       headerName: 'Method',
       flex: 1,
-      renderCell: renderMethod
+      renderCell: renderMethod,
+      sortable: false
     },
     {
       field: 'end_point',
       headerName: 'Endpoint',
-      flex: 1
+      flex: 1,
+      sortable: false
     },
     {
       field: 'status',
       headerName: 'Status',
       flex: 1,
-      renderCell: renderStatusText
+      renderCell: renderStatusText,
+      sortable: false
     },
     {
       field: 'status_code',
       headerName: 'Status Code',
       flex: 1,
-      renderCell: renderStatusCode
+      renderCell: renderStatusCode,
+      sortable: false
     },
     {
       field: 'request_by_name',
       headerName: 'Requested By',
-      flex: 1
+      flex: 1,
+      sortable: false
     },
     {
       field: 'created_at',
       headerName: 'Timestamp',
       flex: 1,
-      valueGetter: (params: GridValueGetterParams) => `${moment(params.row.created_at).format('DD-MM-YYYY HH:mm')}`
+      valueGetter: (params: GridValueGetterParams) => `${moment(params.row.created_at).format('DD-MM-YYYY HH:mm')}`,
+      sortable: false
     }
   ]
 
@@ -183,9 +193,10 @@ const ActivityLog = () => {
                 rows={resultActivityLog}
                 columns={columns}
                 getRowId={row => row.id}
-                hideFooterPagination = {true}
+                hideFooterPagination={true}
                 pageSize={10}
                 rowsPerPageOptions={[10]}
+                disableColumnMenu={true}
               />
             ) : (
               ''
