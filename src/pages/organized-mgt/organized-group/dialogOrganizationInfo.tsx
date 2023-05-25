@@ -64,7 +64,8 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
     setValue('organization_group_name', current?.organization_group_name || '')
     setValue('total_keyword', current?.total_keyword || '')
     setValue('keyword_condition', current?.keyword_condition || '')
-    setValue('msg_transaction', current?.keyword_condition || '')
+
+    // setValue('msg_transaction', current?.keyword_condition || '')
     setValue('platform', current?.platform || '')
     setValue('total_user', current?.total_user || 0)
     setValue('msg_transaction', current?.msg_transaction || 0)
