@@ -45,6 +45,7 @@ const ActivityLog = () => {
 
   const handleStatusCode = useCallback((e: SelectChangeEvent) => {
     setStatusCode(e.target.value)
+    setPage(0)
   }, [])
 
   function renderStatusCode(params: any) {
