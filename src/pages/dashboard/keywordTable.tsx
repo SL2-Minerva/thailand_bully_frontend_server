@@ -15,7 +15,6 @@ import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import { GetKeyWords } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
-import { useEffect, useState } from 'react'
 
 const cellStyle = {
   width: 250,
@@ -26,42 +25,12 @@ const cellStyle = {
   backgroundColor: 'lightgrey !important'
 }
 
-const KeywordTable = ({ params }: { params: any; chartId: string }) => {
-  const [apiParams, setApiParams] = useState<any>()
+const KeywordTable = ({ apiParams }: { apiParams: any; chartId: string }) => {
+
   const { resultKeywords, loadingFilterData } = GetKeyWords(apiParams)
 
   // const reportNo = '1.1.008'
 
-  useEffect(() => {
-    if (params?.period !== 'customrange') {
-      setApiParams({
-        campaign_id: params?.campaign,
-        source: params?.platformId,
-        start_date: params?.date,
-        end_date: params?.endDate,
-        period: params?.period,
-        fillter_keywords: params?.keywordIds
-      })
-    }
-    if (
-      params?.period === 'customrange' &&
-      params?.endDate &&
-      params?.previousEndDate &&
-      params?.date !== params?.endDate &&
-      params?.previousDate !== params?.previousEndDate
-    ) {
-      setApiParams({
-        campaign_id: params?.campaign,
-        source: params?.platformId,
-        start_date: params?.date,
-        end_date: params?.endDate,
-        period: params?.period,
-        start_date_period: params?.previousDate,
-        end_date_period: params?.previousEndDate,
-        fillter_keywords: params?.keywordIds
-      })
-    }
-  }, [params])
 
   return (
     <Card>

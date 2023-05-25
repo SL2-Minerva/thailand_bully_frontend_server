@@ -67,8 +67,9 @@ const ShareOfVoices = ({ apiParams, keywordsColor }: { apiParams: any; chartId: 
     setAnchorEl(null)
   }
 
-  const handleData = () => {
-    const data: any = []
+  useEffect(() => {
+    if (resultShareOfVoice && resultSentimentLevel) {
+      const data: any = []
     for (let i = 0; i < resultShareOfVoice?.length; i++) {
       data.push({
         keyword_id: resultShareOfVoice[i]?.keyword_id,
@@ -77,20 +78,15 @@ const ShareOfVoices = ({ apiParams, keywordsColor }: { apiParams: any; chartId: 
         campaign_name: resultShareOfVoice[i]?.campaign_name,
         organization_id: resultShareOfVoice[i]?.organization_id,
         organization_name: resultShareOfVoice[i]?.organization_name,
-        number_of_message: resultShareOfVoice[i]?.total,
-        value: resultShareOfVoice[i]?.value,
-        Negative: resultSentimentLevel[i]?.Negative,
-        Neutral: resultSentimentLevel[i]?.Neutral,
-        Positive: resultSentimentLevel[i]?.Positive
+        number_of_message: resultShareOfVoice[i]?.total || 0,
+        value: resultShareOfVoice[i]?.value || 0,
+        Negative: resultSentimentLevel[i]?.Negative || 0,
+        Neutral: resultSentimentLevel[i]?.Neutral || 0,
+        Positive: resultSentimentLevel[i]?.Positive || 0
       })
     }
 
     setTableData(data)
-  }
-
-  useEffect(() => {
-    if (resultShareOfVoice && resultSentimentLevel) {
-      handleData();
     }
   }, [resultSentimentLevel, resultShareOfVoice])
 
