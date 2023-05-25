@@ -9,7 +9,9 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Chip
+  Chip,
+  Pagination,
+  Box
 } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
 import { GetActivityLog } from 'src/services/api/activityLog/ActivityLog'
@@ -23,7 +25,13 @@ const ActivityLog = () => {
 
   const [keyword, setKeyword] = useState('')
   const [statusCode, setStatusCode] = useState('')
-  const { resultActivityLog, errorActivityLog } = GetActivityLog(keyword, statusCode)
+  const [page, setPage] = useState(0)
+  const [pageCount, setPageCount] = useState<number>(0)
+  const { resultActivityLog, errorActivityLog, total } = GetActivityLog(keyword, statusCode, page)
+
+  const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value - 1)
+  }
 
   useEffect(() => {
     if (errorActivityLog) {
@@ -105,6 +113,12 @@ const ActivityLog = () => {
     }
   ]
 
+  useEffect(() => {
+    if (total > 0) {
+      setPageCount(Math.ceil(total / 10))
+    }
+  }, [total])
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -118,7 +132,10 @@ const ActivityLog = () => {
                     fullWidth
                     value={keyword}
                     label='Search'
-                    onChange={e => setKeyword(e.target.value)}
+                    onChange={e => {
+                      setKeyword(e.target.value)
+                      setPage(0)
+                    }}
                     placeholder='Search'
                     autoComplete='off'
                   />
@@ -164,13 +181,27 @@ const ActivityLog = () => {
                 autoHeight
                 rows={resultActivityLog}
                 columns={columns}
+                getRowId={row => row.id}
+                hideFooterPagination = {true}
                 pageSize={10}
                 rowsPerPageOptions={[10]}
-                getRowId={row => row.id}
               />
             ) : (
               ''
             )}
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              {total > 0 ? (
+                <Pagination
+                  count={pageCount}
+                  page={page + 1}
+                  onChange={handleChangePagination}
+                  variant='outlined'
+                  color='primary'
+                />
+              ) : (
+                ''
+              )}
+            </Box>
           </CardContent>
         </Card>
       </Grid>
