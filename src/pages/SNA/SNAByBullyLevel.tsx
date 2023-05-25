@@ -61,7 +61,7 @@ const SNAByBullyLevel = () => {
   const { errorUserPermission } = UserPermission()
   const { resultCampaiganList } = CampaignList()
   const { result_source_list } = SourceService()
-  const { resultNetworkGraph, resultBullyLevelNetwork, loadingNetworkGraph } = GetNetworkGraph(
+  const { resultNetworkGraph, loadingNetworkGraph } = GetNetworkGraph(
     campaign,
     platformId,
     date,
@@ -72,9 +72,9 @@ const SNAByBullyLevel = () => {
     '',
     '',
     'sna',
+    "bullyLevel",
     keyword,
-    limit,
-    "bullyLevel"
+    limit
   )
   const { resultKeywordList, keywordsColor } = GetKeyWordsList(campaign)
 
@@ -230,8 +230,8 @@ const SNAByBullyLevel = () => {
   }, [resultCampaiganList])
 
   useEffect(() => {
-    if (!loadingNetworkGraph && resultBullyLevelNetwork) {
-      setGraphData(resultBullyLevelNetwork)
+    if (!loadingNetworkGraph && resultNetworkGraph) {
+      setGraphData(resultNetworkGraph)
     } else {
       setGraphData(initialGraph)
     }
@@ -532,7 +532,7 @@ const SNAByBullyLevel = () => {
                       selectNode: event => {
                         const { nodes } = event
                         if (nodes.length == 1) {
-                          const nodesData = resultBullyLevelNetwork?.nodes
+                          const nodesData = resultNetworkGraph?.nodes
 
                           for (let i = 0; i < nodesData?.length; i++) {
                             if (nodes[0] === nodesData[i].id) {

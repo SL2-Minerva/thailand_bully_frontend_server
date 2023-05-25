@@ -67,7 +67,7 @@ const SNA = () => {
   const { errorUserPermission } = UserPermission()
   const { resultCampaiganList } = CampaignList()
   const { result_source_list } = SourceService()
-  const { resultNetworkGraph, resultSentimentNetwork, loadingNetworkGraph } = GetNetworkGraph(
+  const { resultNetworkGraph, loadingNetworkGraph } = GetNetworkGraph(
     campaign,
     platformId,
     date,
@@ -78,9 +78,9 @@ const SNA = () => {
     '',
     '',
     'sna',
+    'sentiment',
     keyword,
-    limit,
-    'sentiment'
+    limit
   )
   const { resultKeywordList, keywordsColor } = GetKeyWordsList(campaign)
 
@@ -256,8 +256,8 @@ const SNA = () => {
   }, [])
 
   useEffect(() => {
-    if (!loadingNetworkGraph && resultSentimentNetwork) {
-      setGraphData(resultSentimentNetwork)
+    if (!loadingNetworkGraph && resultNetworkGraph) {
+      setGraphData(resultNetworkGraph)
     } else {
       setGraphData(initialGraph)
     }
@@ -551,7 +551,7 @@ const SNA = () => {
                       selectNode: event => {
                         const { nodes } = event
                         if (nodes.length == 1) {
-                          const nodesData = resultSentimentNetwork?.nodes;
+                          const nodesData = resultNetworkGraph?.nodes;
                           
                           for(let i = 0; i<nodesData?.length; i++) {
 

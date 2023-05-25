@@ -41,8 +41,11 @@ const initialGraph = {
 
 const DialogNetworkGraphByFitler = (props: DialogInfoProps) => {
   const { showDialog, setShowDialog, params, keywordId, messageId, setMessageId, reportNo, title } = props
-  const [selectedValue, setSelectedValue] = useState('bySentiment')
-  const { resultNetworkGraph, resultBullyLevelNetwork, resultBullyTypeNetwork, resultSentimentNetwork, loadingNetworkGraph } = GetNetworkGraph(
+  const [selectedValue, setSelectedValue] = useState('sentiment')
+  const {
+    resultNetworkGraph,
+    loadingNetworkGraph
+  } = GetNetworkGraph(
     params?.campaign,
     params?.platformId,
     params?.date,
@@ -52,7 +55,8 @@ const DialogNetworkGraphByFitler = (props: DialogInfoProps) => {
     params?.previousEndDate,
     keywordId,
     messageId,
-    reportNo
+    reportNo,
+    selectedValue
   )
 
   // const [ graph, setGraph ] = useState(initialGraph);
@@ -78,13 +82,6 @@ const DialogNetworkGraphByFitler = (props: DialogInfoProps) => {
     setSelectedValue(event.target.value)
   }
 
-  // useEffect(() => {
-  //   if (resultNetworkGraph) {
-  //     console.log("get data from api", resultNetworkGraph);
-  //     setGraph(resultNetworkGraph);
-  //   }
-  // },[resultNetworkGraph]);
-
   return (
     <Card>
       <Dialog
@@ -108,22 +105,24 @@ const DialogNetworkGraphByFitler = (props: DialogInfoProps) => {
           </Box>
 
           <Grid container spacing={1}>
-            <FormControl sx={{mt:3 , ml: 5}}>
+            <FormControl sx={{ mt: 3, ml: 5 }}>
               {/* <FormLabel id='demo-row-radio-buttons-group-label'>Filter</FormLabel> */}
               <RadioGroup row aria-labelledby='demo-row-radio-buttons-group-label' name='row-radio-buttons-group'>
                 <FormControlLabel
-                  value='bySentiment'
-                  control={<Radio value='bySentiment' checked={selectedValue === 'bySentiment'} onChange={handleChange} />}
+                  value='sentiment'
+                  control={<Radio value='sentiment' checked={selectedValue === 'sentiment'} onChange={handleChange} />}
                   label='By Sentiment'
                 />
                 <FormControlLabel
-                  value='byBullyLevel'
-                  control={<Radio value='byBullyLevel' checked={selectedValue === 'byBullyLevel'} onChange={handleChange} />}
+                  value='bullyLevel'
+                  control={
+                    <Radio value='bullyLevel' checked={selectedValue === 'bullyLevel'} onChange={handleChange} />
+                  }
                   label='By Bully Level'
                 />
                 <FormControlLabel
-                  value='byBullyType'
-                  control={<Radio value='byBullyType' checked={selectedValue === 'byBullyType'} onChange={handleChange} />}
+                  value='bullyType'
+                  control={<Radio value='bullyType' checked={selectedValue === 'bullyType'} onChange={handleChange} />}
                   label='By Bully Type'
                 />
               </RadioGroup>
@@ -131,8 +130,8 @@ const DialogNetworkGraphByFitler = (props: DialogInfoProps) => {
           </Grid>
 
           <Grid container spacing={3}>
-            <Grid item xs={12}> 
-            {
+            <Grid item xs={12}>
+              {/* {
                selectedValue === 'bySentiment' ? 
                <Graph graph={resultNetworkGraph?.sentiment ? resultSentimentNetwork : resultNetworkGraph ? resultNetworkGraph :initialGraph} options={options} />
                : selectedValue === 'byBullyLevel' ? 
@@ -140,10 +139,11 @@ const DialogNetworkGraphByFitler = (props: DialogInfoProps) => {
                : selectedValue === 'byBullyType' ?
                <Graph graph={resultNetworkGraph?.bullyType ? resultBullyTypeNetwork : resultNetworkGraph ? resultNetworkGraph : initialGraph} options={options} />
                :
-               <Graph graph={resultNetworkGraph ? resultNetworkGraph : initialGraph} options={options} />
+               
 
-            }
-              
+            } */}
+
+              <Graph graph={resultNetworkGraph ? resultNetworkGraph : initialGraph} options={options} />
             </Grid>
           </Grid>
         </DialogContent>

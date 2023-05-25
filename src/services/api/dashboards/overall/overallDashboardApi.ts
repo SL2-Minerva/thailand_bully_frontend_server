@@ -76,10 +76,7 @@ export const TotalKeyStats = (apiParams: any) => {
   }
 }
 
-export const GetKeyWords = (
-  params : any
-) => {
-  
+export const GetKeyWords = (params: any) => {
   const [{ data: response, loading, error }] = CallAPI<{ data: any }>({
     url: `/dashboard-overall/keyword-summary`,
     method: 'GET',
@@ -107,10 +104,7 @@ export const GetTopKeywords = (apiParams: any) => {
   }
 }
 
-export const GetSentimentScore = (
-  params : any
-) => {
-
+export const GetSentimentScore = (params: any) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/sentiment-score`,
     method: 'GET',
@@ -124,9 +118,7 @@ export const GetSentimentScore = (
   }
 }
 
-export const GetSentimentType = (
-  params : any
-) => {
+export const GetSentimentType = (params: any) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/sentiment-type`,
     method: 'GET',
@@ -174,10 +166,7 @@ export const GetShareOfVoiceChart = (
   }
 }
 
-export const GetShareOfVoice = (
-  params : any
-) => {
-  
+export const GetShareOfVoice = (params: any) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/share-of-voice`,
     method: 'GET',
@@ -191,10 +180,7 @@ export const GetShareOfVoice = (
   }
 }
 
-export const GetSentimentLevel = (
-  params : any
-) => {
-
+export const GetSentimentLevel = (params: any) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/sentiment-level`,
     method: 'GET',
@@ -208,9 +194,7 @@ export const GetSentimentLevel = (
   }
 }
 
-export const GetWordClouds = (
-  params : any
-) => {
+export const GetWordClouds = (params: any) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/word-clouds`,
     method: 'GET',
@@ -225,9 +209,7 @@ export const GetWordClouds = (
   }
 }
 
-export const GetWordCloudsPlatform = (
-  params: any
-) => {
+export const GetWordCloudsPlatform = (params: any) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/word-clouds-platform`,
     method: 'GET',
@@ -247,9 +229,7 @@ export const GetWordCloudsPlatform = (
   }
 }
 
-export const GetWordCloudsSentiment = (
-  params : any
-) => {
+export const GetWordCloudsSentiment = (params: any) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-overall/word-clouds-position`,
     method: 'GET',
@@ -353,9 +333,9 @@ export const GetNetworkGraph = (
   keywordId?: any,
   messageId?: any,
   reportNo?: string,
+  type?: string,
   fillter_keywords?: any,
-  limit?: any, 
-  type? : string
+  limit?: any
 ) => {
   let params: any = {}
   params = {
@@ -365,21 +345,23 @@ export const GetNetworkGraph = (
     report_number: reportNo || ''
   }
 
-  if (period === 'customrange' &&
-  end_date &&
-  previousEndDate &&
-  start_date !== end_date
-  && previousDate !== previousEndDate) {
+  if (
+    period === 'customrange' &&
+    end_date &&
+    previousEndDate &&
+    start_date !== end_date &&
+    previousDate !== previousEndDate
+  ) {
     params.start_date = start_date ? moment(start_date).format('YYYY-MM-DD') : ''
-    params.end_date =  end_date ? moment(end_date).format('YYYY-MM-DD') : ''
+    params.end_date = end_date ? moment(end_date).format('YYYY-MM-DD') : ''
     params.period = period
-    params.start_date_period =  previousDate ? moment(previousDate).format('YYYY-MM-DD') : ''
+    params.start_date_period = previousDate ? moment(previousDate).format('YYYY-MM-DD') : ''
     params.end_date_period = previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : ''
     params.fillter_keywords = fillter_keywords
     params.sna_type = type
   } else {
     params.start_date = start_date ? moment(start_date).format('YYYY-MM-DD') : ''
-    params.end_date =  end_date ? moment(end_date).format('YYYY-MM-DD') : ''
+    params.end_date = end_date ? moment(end_date).format('YYYY-MM-DD') : ''
     params.period = period
     params.fillter_keywords = fillter_keywords
     params.sna_type = type
@@ -402,27 +384,14 @@ export const GetNetworkGraph = (
     method: 'GET',
     params: params
   })
-
-  const sentiment = {
-    nodes: response?.data?.sentiment?.nodes ?? [],
-    edges: response?.data?.sentiment?.edges ?? []
-  }
-
-  const bullyLevel = {
-    nodes: response?.data?.bullyLevel?.nodes ?? [],
-    edges: response?.data?.bullyLevel?.edges ?? []
-  }
-
-  const bullyType = {
-    nodes: response?.data?.bullyType?.nodes ?? [],
-    edges: response?.data?.bullyType?.edges ?? []
+  
+  const snaData = {
+    nodes: response?.data?.nodes ?? [],
+    edges: response?.data?.edges ?? []
   }
 
   return {
-    resultNetworkGraph: response?.data || null,
-    resultSentimentNetwork: sentiment || null,
-    resultBullyLevelNetwork: bullyLevel || null,
-    resultBullyTypeNetwork: bullyType || null,
+    resultNetworkGraph: snaData,
     loadingNetworkGraph: loading,
     errorNetworkGraph: error
   }
