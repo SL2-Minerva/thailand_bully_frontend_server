@@ -178,7 +178,7 @@ const ShareOfChannel = ({
                             <TableCell sx={{ maxWidth: 200 }}></TableCell>
                             {(shareVoice.value || []).map((value: any, key: number) => {
                               return (
-                                <TableCell variant='head' key={key}>
+                                <TableCell variant='head' key={key} align='center'>
                                   {value?.channel === 'facebook' ? (
                                     <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
                                   ) : value?.channel === 'twitter' ? (
@@ -225,7 +225,7 @@ const ShareOfChannel = ({
                         </TableCell>
                         {(shareVoice.value || []).map((value: any, key: number) => {
                           return (
-                            <TableCell key={key}>
+                            <TableCell key={key} align='center'>
                               <span style={{ border: value?.highlight ? '1px solid red' : '', padding: '4px' }}>
                                 {value?.percentage > 0 ? <>{value?.percentage?.toFixed(2) + '%'}</> : '0%'}
                               </span>

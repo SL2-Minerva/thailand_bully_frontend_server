@@ -314,8 +314,14 @@ export const GetDetailMessage = (
     params: params
   })
 
+  let date = ""
+  if(response?.data?.message?.length > 0) {
+    date = response?.data?.message[0]?.day  + ", " + response?.data?.message[0]?.post_date 
+  }
+
   return {
     resultMessageDetail: response?.data?.message || null,
+    resultDate : date ||  '',
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
@@ -434,8 +440,14 @@ export const GetMessageDetailVoiceDashboard = (paramData: any) => {
     params: paramData
   })
 
+  let date = ""
+  if(response?.data?.message?.length > 0) {
+    date = response?.data?.message[0]?.day  + ", " + response?.data?.message[0]?.post_date 
+  }
+
   return {
     resultMessageDetail: response?.data?.message || null,
+    resultDate: date,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
@@ -449,8 +461,14 @@ export const GetMessageDetailChannelDashboard = (paramData: any) => {
     params: paramData
   })
 
+  let date = ""
+  if(response?.data?.message?.length > 0) {
+    date = response?.data?.message[0]?.day  + ", " + response?.data?.message[0]?.post_date 
+  }
+
   return {
     resultMessageDetail: response?.data?.message || null,
+    resultDate: date,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
@@ -464,8 +482,14 @@ export const GetMessageDetailEngagementDashboard = (paramData: any) => {
     params: paramData
   })
 
+  let date = ""
+  if(response?.data?.message?.length > 0) {
+    date = response?.data?.message[0]?.day  + ", " + response?.data?.message[0]?.post_date 
+  }
+
   return {
     resultMessageDetail: response?.data?.message || null,
+    resultDate: date,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
@@ -479,8 +503,14 @@ export const GetMessageDetailSentimentDashboard = (paramData: any) => {
     params: paramData
   })
 
+  let date = ""
+  if(response?.data?.message?.length > 0) {
+    date = response?.data?.message[0]?.day  + ", " + response?.data?.message[0]?.post_date 
+  }
+
   return {
     resultMessageDetail: response?.data?.message || null,
+    resultDate: date,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
@@ -493,9 +523,14 @@ export const GetMessageDetailBullyDashboard = (paramData: any) => {
     method: 'GET',
     params: paramData
   })
+  let date = ""
+  if(response?.data?.message?.length > 0) {
+    date = response?.data?.message[0]?.day  + ", " + response?.data?.message[0]?.post_date 
+  }
 
   return {
     resultMessageDetail: response?.data?.message || null,
+    resultDate: date,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
