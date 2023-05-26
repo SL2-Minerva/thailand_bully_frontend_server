@@ -14,7 +14,7 @@ import DialogNetworkGraph from '../dashboard/DialogNetworkGraph'
 import { GetMessageDetailBullyDashboard } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
-import { CheckCircle, OpenInNew } from 'mdi-material-ui'
+import { OpenInNew } from 'mdi-material-ui'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -26,12 +26,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   }
 }))
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover
-  },
-
-  // hide last border
+const StyledTableRow = styled(TableRow)(() => ({
   '&:last-child td, &:last-child th': {
     border: 0
   }
@@ -106,7 +101,8 @@ const MessageDetail = (props: DialogInfoProps) => {
   if (params?.Llabel) {
     paramData.Llabel = params?.Llabel
   }
-  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetailBullyDashboard(paramData)
+  const { resultMessageDetail, totalMessage, loadingMessageDetail, resultDate } =
+    GetMessageDetailBullyDashboard(paramData)
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value - 1)
@@ -152,24 +148,25 @@ const MessageDetail = (props: DialogInfoProps) => {
             </Typography>
           </Box>
 
+          <Box sx={{ mb: 3, ml: 2 }}>
+            <Typography sx={{ mb: 3, lineHeight: '2rem', fontSize: '18px' }}>{resultDate}</Typography>
+          </Box>
+
           <TableContainer component={Paper}>
             <Table style={{ minWidth: '00px' }} aria-label='customized table'>
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>No.</StyledTableCell>
-                  <StyledTableCell>Message Detail</StyledTableCell>
-                  <StyledTableCell>Message Type</StyledTableCell>
-                  <StyledTableCell>Account Name</StyledTableCell>
-                  <StyledTableCell>Post Date</StyledTableCell>
-                  <StyledTableCell>Post Time</StyledTableCell>
-                  <StyledTableCell>Day</StyledTableCell>
-                  <StyledTableCell>Device</StyledTableCell>
-                  <StyledTableCell>Channel</StyledTableCell>
-                  <StyledTableCell>Sentiment</StyledTableCell>
-                  <StyledTableCell>Bully Level</StyledTableCell>
-                  <StyledTableCell>Bully Type</StyledTableCell>
-                  <StyledTableCell>Parent</StyledTableCell>
-                  <StyledTableCell>Link</StyledTableCell>
+                  <StyledTableCell align='center'>No.</StyledTableCell>
+                  <StyledTableCell align='center'>Message Detail</StyledTableCell>
+                  <StyledTableCell align='center'>Message Type</StyledTableCell>
+                  <StyledTableCell align='center'>Account Name</StyledTableCell>
+                  <StyledTableCell align='center'>Post Time</StyledTableCell>
+                  <StyledTableCell align='center'>Device</StyledTableCell>
+                  <StyledTableCell align='center'>Channel</StyledTableCell>
+                  <StyledTableCell align='center'>Sentiment</StyledTableCell>
+                  <StyledTableCell align='center'>Bully Level</StyledTableCell>
+                  <StyledTableCell align='center'>Bully Type</StyledTableCell>
+                  <StyledTableCell align='center'>Link</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -180,7 +177,10 @@ const MessageDetail = (props: DialogInfoProps) => {
                     onClick={() => {
                       setMessageId(messageDetail.message_id)
                     }}
-                    style={{ cursor: 'pointer' }}
+                    sx={{
+                      cursor: 'pointer',
+                      backgroundColor: messageDetail.parent ? '#00ff0038' : '#fff'
+                    }}
                   >
                     <StyledTableCell
                       onClick={() => {
@@ -195,6 +195,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                       }}
                       component='th'
                       scope='row'
+                      width={300}
                     >
                       {messageDetail.message_detail}
                     </StyledTableCell>
@@ -217,35 +218,45 @@ const MessageDetail = (props: DialogInfoProps) => {
                         setShowDialog(true)
                       }}
                     >
-                      {messageDetail.post_date}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      onClick={() => {
-                        setShowDialog(true)
-                      }}
-                    >
                       {messageDetail.post_time}
                     </StyledTableCell>
+
                     <StyledTableCell
                       onClick={() => {
                         setShowDialog(true)
                       }}
                     >
-                      {messageDetail.day}
+                      {messageDetail.device === 'android' ? (
+                        <img alt={'logo'} width={25} height={25} src={`/images/logos/android.png`} />
+                      ) : messageDetail.device === 'webapp' ? (
+                        <img alt={'logo'} width={25} height={25} src={`/images/logos/website.png`} />
+                      ) : messageDetail.device === 'iphone' ? (
+                        <img alt={'logo'} width={25} height={25} src={`/images/logos/ios.png`} />
+                      ) : (
+                        '-'
+                      )}
                     </StyledTableCell>
                     <StyledTableCell
+                      align='center'
                       onClick={() => {
                         setShowDialog(true)
                       }}
                     >
-                      {messageDetail.device}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      onClick={() => {
-                        setShowDialog(true)
-                      }}
-                    >
-                      {messageDetail.channel || '-'}
+                      {messageDetail?.channel === 'facebook' ? (
+                        <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
+                      ) : messageDetail?.channel === 'twitter' ? (
+                        <img alt={'logo'} width={25} height={25} src={`/images/logos/twitter.png`} />
+                      ) : messageDetail?.channel === 'youtube' ? (
+                        <img width={28} height={28} alt={'logo'} src={`/images/logos/youtube-text.png`} />
+                      ) : messageDetail?.channel === 'instagram' ? (
+                        <img width={28} alt={'logo'} height={28} src={`/images/logos/instagram.png`} />
+                      ) : messageDetail?.channel === 'pantip' ? (
+                        <img width={28} alt={'logo'} height={28} src={`/images/logos/pantip.png`} />
+                      ) : messageDetail?.channel === 'google' ? (
+                        <img width={25} alt={'logo'} height={25} src={`/images/logos/google.png`} />
+                      ) : (
+                        <span style={{ textTransform: 'uppercase' }}>{messageDetail?.channel}</span>
+                      )}
                     </StyledTableCell>
                     <StyledTableCell
                       onClick={() => {
@@ -268,18 +279,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                     >
                       {messageDetail.bully_type}
                     </StyledTableCell>
-                    <StyledTableCell
-                      onClick={() => {
-                        setShowDialog(true)
-                      }}
-                    >
-                      {messageDetail.parent ? (
-                        <CheckCircle style={{ color: 'green' }} />
-                      ) : (
-                        ''
-                      )}
-                    </StyledTableCell>
-                    <StyledTableCell>
+                    <StyledTableCell align='center'>
                       {messageDetail.link_message ? (
                         <a href={messageDetail.link_message} target='_blank' rel='noopener noreferrer'>
                           <OpenInNew style={{ color: '#0047ff9e' }} />
