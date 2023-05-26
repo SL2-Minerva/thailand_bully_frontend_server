@@ -48,7 +48,8 @@ const SNA = () => {
   const [previousEndDate, setPreviousEndDate] = useState<DateType>(
     new Date(localStorage.getItem('previousEndDate') || new Date())
   )
-  const [status, setStatus] = useState(localStorage.getItem('status') || '1');
+
+  // const [status, setStatus] = useState(localStorage.getItem('status') || '1');
 
   const [campaign, setCampaign] = useState<string>('1')
   const [platformId, setPlatformId] = useState<string>('all')
@@ -108,10 +109,10 @@ const SNA = () => {
     }
   }, [])
 
-  const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
-    setStatus(e.target.value)
-    localStorage.setItem('status', e.target.value)
-}, [])
+//   const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
+//     setStatus(e.target.value)
+//     localStorage.setItem('status', e.target.value)
+// }, [])
 
   const handleDateSelect = useCallback((e: any) => {
     const value = e.target?.value ? e.target?.value : e
@@ -270,7 +271,7 @@ const SNA = () => {
           <CardHeader title='Filter' />
           <CardContent>
             <Grid container spacing={6} mt={2}>
-              <Grid item sm={3} xs={12}>
+              <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id='plan-select'>
                     <Translations text='Period of time' />
@@ -309,7 +310,7 @@ const SNA = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item sm={3} xs={12}>
+              {/* <Grid item sm={4} xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='plan-select'>
                       <Translations text='Status' />
@@ -333,9 +334,9 @@ const SNA = () => {
                       </MenuItem>
                     </Select>
                   </FormControl>
-                </Grid>
+                </Grid> */}
                 
-              <Grid item sm={3} xs={12}>
+              <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id='plan-select'>
                     <Translations text='Campaign Name' />
@@ -362,7 +363,7 @@ const SNA = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item sm={3} xs={12}>
+              <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id='plan-select'>
                     <Translations text='Channel' />
@@ -390,7 +391,7 @@ const SNA = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item sm={3} xs={12}>
+              <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id='plan-select'>
                     <Translations text='Limit' />
@@ -415,7 +416,7 @@ const SNA = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item sm={3} xs={12}>
+              <Grid item sm={4} xs={12}>
                 <Box>
                   <DatePickerWrapper>
                     <DatePicker
@@ -439,7 +440,7 @@ const SNA = () => {
                 </Box>
               </Grid>
               {showPreviousDatepicker ? (
-                <Grid item sm={3} xs={12}>
+                <Grid item sm={4} xs={12}>
                   <Box>
                     <DatePickerWrapper>
                       <DatePicker

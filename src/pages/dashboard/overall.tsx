@@ -101,7 +101,9 @@ const OverallDashboard = () => {
 
   const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
   const [loadingKeyword, setLoadingKeyword] = useState<boolean>(true)
-  const [status, setStatus] = useState(localStorage.getItem('status') || '1');
+
+  //status dropdown
+  // const [status, setStatus] = useState(localStorage.getItem('status') || '1');
   const router = useRouter()
 
   const { resultCampaiganList } = CampaignList()
@@ -151,10 +153,10 @@ const OverallDashboard = () => {
     }
   }, [])
 
-  const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
-      setStatus(e.target.value)
-      localStorage.setItem('status', e.target.value)
-  }, [])
+  // const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
+  //     setStatus(e.target.value)
+  //     localStorage.setItem('status', e.target.value)
+  // }, [])
 
   const handleDateSelect = useCallback((e: any) => {
     const value = e.target?.value ? e.target?.value : e
@@ -320,7 +322,7 @@ const OverallDashboard = () => {
             <CardHeader title='Overall Dashboard' />
             <CardContent>
               <Grid container spacing={6}>
-                <Grid item sm={3} xs={12}>
+                <Grid item sm={4} xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='plan-select'>
                       <Translations text='Period of time' />
@@ -359,7 +361,7 @@ const OverallDashboard = () => {
                   </FormControl>
                 </Grid>
 
-                <Grid item sm={3} xs={12}>
+                {/* <Grid item sm={3} xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='plan-select'>
                       <Translations text='Status' />
@@ -383,9 +385,9 @@ const OverallDashboard = () => {
                       </MenuItem>
                     </Select>
                   </FormControl>
-                </Grid>
+                </Grid> */}
 
-                <Grid item sm={3} xs={12}>
+                <Grid item sm={4} xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='plan-select'>
                       <Translations text='Campaign Name' />
@@ -412,7 +414,7 @@ const OverallDashboard = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item sm={3} xs={12}>
+                <Grid item sm={4} xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='plan-select'>
                       <Translations text='Channel' />
@@ -440,7 +442,7 @@ const OverallDashboard = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item sm={3} xs={12}>
+                <Grid item sm={4} xs={12}>
                   <Box>
                     <DatePickerWrapper>
                       <DatePicker

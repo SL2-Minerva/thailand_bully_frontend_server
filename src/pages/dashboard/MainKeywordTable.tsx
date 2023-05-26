@@ -52,8 +52,8 @@ const MainKeyWordTable = ({ params, resultTopKeywords, loadingTopKeywords }: Pro
                 <TableCell variant='head' sx={{ backgroundColor: 'white !important' }}>
                   {' '}
                 </TableCell>
-                <TableCell variant='head'> No. of Messages </TableCell>
-                <TableCell variant='head'> % </TableCell>
+                <TableCell variant='head'  align='center'> No. of Messages </TableCell>
+                <TableCell variant='head'  align='center'> % </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -68,8 +68,8 @@ const MainKeyWordTable = ({ params, resultTopKeywords, loadingTopKeywords }: Pro
                     }}
                   >
                     <TableCell sx={tableCellStyle}>{keyword?.keyword}</TableCell>
-                    <TableCell>{keyword?.no_of_message}</TableCell>
-                    <TableCell>{keyword?.percentage}</TableCell>
+                    <TableCell  align='center'>{keyword?.no_of_message}</TableCell>
+                    <TableCell  align='center'>{keyword?.percentage}</TableCell>
                   </TableRow>
                 )
               })}

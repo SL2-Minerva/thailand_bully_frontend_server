@@ -59,7 +59,6 @@ const WordCloudChannel = ({ params }: { params: any; chartId: string }) => {
   }
 
   const callbacks = {
-    // getWordColor: (word:any) => (word.value > 50 ? "orange" : "purple"),
     getWordTooltip: (word: any) => `The word "${word.text}" appears ${word.value} times.`,
     onWordClick: getCallback('onWordClick'),
     onWordMouseOut: getCallback('onWordMouseOut'),

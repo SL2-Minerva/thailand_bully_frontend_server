@@ -70,7 +70,7 @@ const WordCloudGraphs = (data: Props) => {
       {resultReportPermission?.includes('13') ||
       resultReportPermission?.includes('15') ||
       resultReportPermission?.includes('18') ? (
-        <Grid container spacing={3} mt={2}>
+        <Grid container spacing={3} mt={4}>
           <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
             <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
             <Button
@@ -141,7 +141,7 @@ const WordCloudGraphs = (data: Props) => {
 
       {resultReportPermission?.includes('13') ? (
         <>
-          <Grid container spacing={3} mt={2}>
+          <Grid container spacing={3} mt={4}>
             <Grid id='chart13' item xs={12} md={6}>
               <WordCloud
                 params={params}
@@ -167,7 +167,7 @@ const WordCloudGraphs = (data: Props) => {
       )}
 
       {resultReportPermission?.includes('15') ? (
-        <Grid container spacing={3} mt={2}>
+        <Grid container spacing={3} mt={4}>
           <Grid id='chart15' item xs={12}>
             <WordCloudChannel params={params} chartId='Chart 15' />
           </Grid>

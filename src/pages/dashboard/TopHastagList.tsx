@@ -49,8 +49,8 @@ const TopHashtagList = ({ resultTopKeywords, loadingTopKeywords }: Props) => {
                 <TableCell variant='head' sx={{ backgroundColor: 'white !important' }}>
                   {' '}
                 </TableCell>
-                <TableCell variant='head'> No. of Messages </TableCell>
-                <TableCell variant='head'> % </TableCell>
+                <TableCell variant='head'  align='center'> No. of Messages </TableCell>
+                <TableCell variant='head'  align='center'> % </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -64,8 +64,8 @@ const TopHashtagList = ({ resultTopKeywords, loadingTopKeywords }: Props) => {
                     }}
                   >
                     <TableCell sx={tableCellStyle}>{hashtag?.hashtag}</TableCell>
-                    <TableCell width='30%'>{hashtag?.no_of_message?.toLocaleString('en-US')}</TableCell>
-                    <TableCell width='40%'>{hashtag?.percentage && hashtag?.percentage?.toFixed(2)}</TableCell>
+                    <TableCell width='40%'  align='center'>{hashtag?.no_of_message?.toLocaleString('en-US')}</TableCell>
+                    <TableCell width='30%'  align='center'>{hashtag?.percentage && hashtag?.percentage?.toFixed(2)}</TableCell>
                   </TableRow>
                 )
               })}
