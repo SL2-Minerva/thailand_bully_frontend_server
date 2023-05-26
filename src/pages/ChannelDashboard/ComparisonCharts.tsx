@@ -1,0 +1,194 @@
+import { GetEngagementBy } from 'src/services/api/dashboards/channel/ChannelDashboardApi'
+import Translations from 'src/layouts/components/Translations'
+import { Information } from 'mdi-material-ui'
+import EngagementRate from './EngagementRate'
+import { StyledTooltip } from '../dashboard/overall'
+import ChannelComparison from './ChannelComparison'
+import { useTheme } from '@mui/material/styles'
+import { Card, CardHeader, Grid, Typography } from '@mui/material'
+
+interface Props {
+    apiParams : any
+    resultReportPermission : any
+    highlight : string
+    params : any
+}
+
+const ComparisonCharts = (props: Props) => {
+  const { apiParams, resultReportPermission, highlight, params } = props
+    
+  const theme = useTheme()
+
+  const whiteColor = '#fff'
+  const lineChartYellow = '#d4e157'
+  const lineChartPrimary = '#787EFF'
+  const lineChartWarning = '#ff9800'
+  const labelColor = theme.palette.text.primary
+  const borderColor = theme.palette.action.focus
+  const gridLineColor = theme.palette.action.focus
+  const {
+    resultEngagementRate,
+    resultEngagementRatePrevious,
+    resultFacebookComparison,
+    resultInstagramComparison,
+    resultTwitterComparison,
+    resultPantipComparison,
+    resultYoutubeComparison,
+    resultGoogleComparison,
+    loadingEngagementBy
+  } = GetEngagementBy(apiParams)
+
+  return (
+    <>
+      {resultReportPermission?.includes('53') ? (
+        <>
+          <Grid item xs={12} id='chart10'>
+            <Card>
+              <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <CardHeader
+                  title={<Translations text='Channel Comparison: Period over Period' />}
+                  titleTypographyProps={{ variant: 'h6', color: highlight === 'chart10' ? 'green' : '#4c4e64de' }}
+                />
+                <StyledTooltip
+                  arrow
+                  title={
+                    <span>
+                      <span>
+                        <Typography variant='h6' sx={{ color: 'white' }}>
+                          <Translations text='channelChart10Title' />
+                        </Typography>
+                        <Typography variant='body2' sx={{ color: 'white' }}>
+                          <Translations text='channelChart10Description' />
+                        </Typography>
+                      </span>
+                    </span>
+                  }
+                >
+                  <Information
+                    style={{
+                      marginTop: '22px',
+                      fontSize: '29px',
+                      color: highlight === 'chart10' ? 'green' : '#4c4e64de'
+                    }}
+                  />
+                </StyledTooltip>
+              </span>
+            </Card>
+          </Grid>
+
+          <Grid container spacing={4} ml={3} mt={2}>
+            <Grid item xs={6} md={2}>
+              {resultFacebookComparison ? (
+                <ChannelComparison
+                  color='#3b5998'
+                  trendNumber={resultFacebookComparison?.percentage}
+                  trend={resultFacebookComparison?.type}
+                  totalText='Facebook'
+                  totalValue={resultFacebookComparison?.comparison_value}
+                  loading={loadingEngagementBy}
+                />
+              ) : (
+                ''
+              )}
+            </Grid>
+            <Grid item xs={6} md={2}>
+              {resultTwitterComparison ? (
+                <ChannelComparison
+                  color='#00aced'
+                  trendNumber={resultTwitterComparison?.percentage}
+                  trend={resultTwitterComparison?.type}
+                  totalText='Twitter'
+                  totalValue={resultTwitterComparison?.comparison_value}
+                  loading={loadingEngagementBy}
+                />
+              ) : (
+                ''
+              )}
+            </Grid>
+            <Grid item xs={6} md={2}>
+              {resultYoutubeComparison ? (
+                <ChannelComparison
+                  color='#e31010'
+                  trendNumber={resultYoutubeComparison?.percentage}
+                  trend={resultYoutubeComparison?.type}
+                  totalText='Youtube'
+                  totalValue={resultYoutubeComparison?.comparison_value}
+                  loading={loadingEngagementBy}
+                />
+              ) : (
+                ''
+              )}
+            </Grid>
+            <Grid item xs={6} md={2}>
+              {resultInstagramComparison ? (
+                <ChannelComparison
+                  color='#d62976'
+                  trendNumber={resultInstagramComparison?.percentage}
+                  trend={resultInstagramComparison?.type}
+                  totalText='Instagram'
+                  totalValue={resultInstagramComparison?.comparison_value}
+                  loading={loadingEngagementBy}
+                />
+              ) : (
+                ''
+              )}
+            </Grid>
+            <Grid item xs={6} md={2}>
+              {resultGoogleComparison ? (
+                <ChannelComparison
+                  color='#F4B400'
+                  trendNumber={resultGoogleComparison?.percentage}
+                  trend={resultGoogleComparison?.type}
+                  totalText='Google'
+                  totalValue={resultGoogleComparison?.comparison_value}
+                  loading={loadingEngagementBy}
+                />
+              ) : (
+                ''
+              )}
+            </Grid>
+            <Grid item xs={6} md={2}>
+              {resultPantipComparison ? (
+                <ChannelComparison
+                  color='#642c8c'
+                  trendNumber={resultPantipComparison?.percentage}
+                  trend={resultPantipComparison?.type}
+                  totalText='Pantip'
+                  totalValue={resultPantipComparison?.comparison_value}
+                  loading={loadingEngagementBy}
+                />
+              ) : (
+                ''
+              )}
+            </Grid>
+          </Grid>
+        </>
+      ) : (
+        ''
+      )}
+      {resultReportPermission?.includes('54') ? (
+        <Grid item xs={12} md={6} id='chart11'>
+          <EngagementRate
+            white={whiteColor}
+            labelColor={labelColor}
+            success={lineChartYellow}
+            borderColor={borderColor}
+            primary={lineChartPrimary}
+            warning={lineChartWarning}
+            gridLineColor={gridLineColor}
+            params={params}
+            chartId='Chart 11'
+            highlight={highlight === 'chart11' ? true : false}
+            resultBy={resultEngagementRate}
+            loading={loadingEngagementBy}
+            resultByPrevious={resultEngagementRatePrevious}
+          />
+        </Grid>
+      ) : (
+        ''
+      )}
+    </>
+  )
+}
+
+export default ComparisonCharts

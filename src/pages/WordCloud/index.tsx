@@ -94,7 +94,8 @@ const WordCloudDashboard = () => {
   const [campaign, setCampaign] = useState<string>('')
   const [platformId, setPlatformId] = useState<string>('all')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
-  const [status, setStatus] = useState(localStorage.getItem('status') || '1');
+
+  // const [status, setStatus] = useState(localStorage.getItem('status') || '1');
 
   // const [reload] = useState<boolean>(false)
   const [topKeyword, setTopKeyword] = useState<string>('all')
@@ -157,10 +158,10 @@ const WordCloudDashboard = () => {
     }
   }, [])
 
-  const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
-    setStatus(e.target.value)
-    localStorage.setItem('status', e.target.value)
-}, [])
+  //   const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
+  //     setStatus(e.target.value)
+  //     localStorage.setItem('status', e.target.value)
+  // }, [])
 
   const handleDateSelect = useCallback((e: any) => {
     const value = e.target?.value ? e.target?.value : e
@@ -222,16 +223,16 @@ const WordCloudDashboard = () => {
     const [start, end] = dates
     setDate(start)
     setEndDate(end)
-    localStorage.setItem('startDate', moment(start)?.format('YYYY-MM-DD'));
-    localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'));
+    localStorage.setItem('startDate', moment(start)?.format('YYYY-MM-DD'))
+    localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'))
   }
 
   const handleOnChangePreviousDates = (dates: any) => {
     const [start, end] = dates
     setPreviousDate(start)
     setPreviousEndDate(end)
-    localStorage.setItem('previousStartDate', moment(start)?.format('YYYY-MM-DD'));
-    localStorage.setItem('previousEndDate', moment(end)?.format('YYYY-MM-DD'));
+    localStorage.setItem('previousStartDate', moment(start)?.format('YYYY-MM-DD'))
+    localStorage.setItem('previousEndDate', moment(end)?.format('YYYY-MM-DD'))
   }
 
   const CustomInput = forwardRef((props: PickerProps, ref) => {
@@ -326,7 +327,7 @@ const WordCloudDashboard = () => {
             <CardHeader title='Word Clouds' />
             <CardContent>
               <Grid container spacing={6}>
-                <Grid item sm={3} xs={12}>
+                <Grid item sm={4} xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='plan-select'>
                       <Translations text='Period of time' />
@@ -365,7 +366,7 @@ const WordCloudDashboard = () => {
                   </FormControl>
                 </Grid>
 
-                <Grid item sm={3} xs={12}>
+                {/* <Grid item sm={3} xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='plan-select'>
                       <Translations text='Status' />
@@ -389,9 +390,9 @@ const WordCloudDashboard = () => {
                       </MenuItem>
                     </Select>
                   </FormControl>
-                </Grid>
-                
-                <Grid item sm={3} xs={12}>
+                </Grid> */}
+
+                <Grid item sm={4} xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='plan-select'>
                       <Translations text='Campaign Name' />
@@ -418,7 +419,7 @@ const WordCloudDashboard = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item sm={3} xs={12}>
+                <Grid item sm={4} xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='plan-select'>
                       <Translations text='Channel' />
@@ -446,7 +447,7 @@ const WordCloudDashboard = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item sm={3} xs={12}>
+                <Grid item sm={4} xs={12}>
                   <Box>
                     <DatePickerWrapper>
                       <DatePicker
@@ -470,7 +471,7 @@ const WordCloudDashboard = () => {
                   </Box>
                 </Grid>
                 {showPreviousDatepicker ? (
-                  <Grid item sm={3} xs={12}>
+                  <Grid item sm={4} xs={12}>
                     <Box>
                       <DatePickerWrapper>
                         <DatePicker

@@ -71,8 +71,8 @@ const TopSiteList = ({ resultTopKeywords, loadingTopKeywords }: Props) => {
                 <TableCell variant='head' sx={{ backgroundColor: 'white !important' }}>
                   {' '}
                 </TableCell>
-                <TableCell variant='head'> No. of Messages </TableCell>
-                <TableCell variant='head'> % </TableCell>
+                <TableCell variant='head'  align='center'> No. of Messages </TableCell>
+                <TableCell variant='head'  align='center'> % </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -88,8 +88,8 @@ const TopSiteList = ({ resultTopKeywords, loadingTopKeywords }: Props) => {
                     // style={{ cursor: 'pointer' }}
                   >
                     <TableCell sx={tableCellStyle}>{topsite?.site_domain}</TableCell>
-                    <TableCell>{topsite?.no_of_message?.toLocaleString('en-US')}</TableCell>
-                    <TableCell>{topsite?.percentage}</TableCell>
+                    <TableCell  align='center'>{topsite?.no_of_message?.toLocaleString('en-US')}</TableCell>
+                    <TableCell  align='center'>{topsite?.percentage}</TableCell>
                   </TableRow>
                 )
               })}

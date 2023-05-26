@@ -68,14 +68,14 @@ const AccountList = ({
                 <Grid item sm={2} xs={2}>
                   <Avatar sx={{ height: 50, width: 50, marginTop: '1rem', ml: 2 }} />
                 </Grid>
-                <Grid item sm={7} xs={7}>
+                <Grid item sm={7} xs={7} mt={2} mb={2}>
                   <Typography variant='h6'>{keyword.author}</Typography>
                   <Typography variant='subtitle1'>
                     {keyword.total_message} <Translations text='Popular Word' />
                   </Typography>
                   <Typography variant='subtitle1'>{keyword.engagements} Engagements/posts</Typography>
                 </Grid>
-                <Grid item sm={2} xs={2} mt={5}>
+                <Grid item sm={2} xs={2} mt={7}>
                   {keyword?.source_name == 'facebook' ? (
                     <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
                   ) : keyword?.source_name == 'twitter' ? (

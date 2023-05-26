@@ -28,7 +28,7 @@ const onCapture = () => {
   }
 }
 interface Props {
-  params: any
+  apiParams: any
   type: string
   chartId: string
   highlight: boolean

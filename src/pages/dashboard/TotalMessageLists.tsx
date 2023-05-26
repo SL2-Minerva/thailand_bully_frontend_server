@@ -26,24 +26,6 @@ const TotalMessageLists = ({
   loadingWordClouds: boolean
   total: number
 }) => {
-  // const [pageCount, setPageCount] = useState<number>(0)
-  // const [page, setPage] = useState<number>(0)
-
-  // const reportNo = '1.2.022'
-
-  // useEffect(() => {
-  //   if (total > 0) {
-  //     setPageCount(Math.ceil(total / 10))
-  //   }
-  // }, [total])
-
-  // const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-  //   setPage(value - 1)
-  // }
-
-  // useEffect(() => {
-  //   setPage(0)
-  // }, [params?.topKeyword])
 
   return (
     <Card sx={{ maxHeight: 470, minHeight: 470 }}>
@@ -78,32 +60,32 @@ const TotalMessageLists = ({
           <Table size='small'>
             <TableHead sx={{ backgroundColor: 'lightgrey !important' }}>
               <TableRow>
-                <TableCell variant='head'> No. </TableCell>
-                <TableCell variant='head'>
+                <TableCell variant='head' align='center'> No. </TableCell>
+                <TableCell variant='head' align='center'>
                   {' '}
                   <Translations text='Popular Word' />{' '}
                 </TableCell>
-                <TableCell variant='head'>
+                <TableCell variant='head' align='center'>
                   {' '}
                   <Translations text='Amount' />{' '}
                 </TableCell>
-                <TableCell variant='head'> % </TableCell>
+                <TableCell variant='head' align='center'> % </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {(resultWordClouds?.word_clouds_table || [])?.map((keyword: any, index: any) => {
                 return (
                   <TableRow key={index}>
-                    <TableCell sx={{ backgroundColor: '#d3d3d338 !important' }}>
+                    <TableCell sx={{ backgroundColor: '#d3d3d338 !important' }} align='center'>
                       {/* <b>{index + 1 + page * 7}</b> */}
                       <b>{index + 1 }</b>
 
                     </TableCell>
-                    <TableCell>
+                    <TableCell align='center'>
                       <span style={{ fontWeight: 'bold' }}>{keyword.keyword}</span>
                     </TableCell>
-                    <TableCell>{keyword.total}</TableCell>
-                    <TableCell>{keyword.percent} %</TableCell>
+                    <TableCell align='center'>{keyword.total}</TableCell>
+                    <TableCell align='center'>{keyword.percent} %</TableCell>
                   </TableRow>
                 )
               })}
@@ -119,19 +101,6 @@ const TotalMessageLists = ({
             </TableBody>
           </Table>
         </TableContainer>
-        {/* <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center' }}>
-          {total > 0 && params?.topKeyword === 'all' ? (
-            <Pagination
-              count={pageCount}
-              page={page + 1}
-              onChange={handleChangePagination}
-              variant='outlined'
-              color='primary'
-            />
-          ) : (
-            ''
-          )}
-        </Box> */}
       </CardContent>
     </Card>
   )

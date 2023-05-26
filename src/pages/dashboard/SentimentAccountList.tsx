@@ -64,9 +64,9 @@ const SentimentAccountList = ({
             >
               <Grid container spacing={2}>
                 <Grid item sm={2} xs={2}>
-                  <Avatar sx={{ height: 50, width: 50, marginTop: '1rem', ml: 2 }} />
+                  <Avatar sx={{ height: 50, width: 50, marginTop: '1.3rem', ml: 2 }} />
                 </Grid>
-                <Grid item sm={7} xs={7}>
+                <Grid item sm={7} xs={7} mt={2} mb={2}>
                   <Typography variant='h6'>{keyword.author}</Typography>
                   <Typography variant='subtitle1'>{keyword.total_message} messages</Typography>
                   <Typography variant='subtitle1'>{keyword.engagements} Engagements/posts</Typography>

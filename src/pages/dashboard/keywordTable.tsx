@@ -61,11 +61,11 @@ const KeywordTable = ({ apiParams }: { apiParams: any; chartId: string }) => {
                 <TableCell variant='head' style={{ backgroundColor: 'white' }}>
                   {' '}
                 </TableCell>
-                <TableCell variant='head'> Message </TableCell>
-                <TableCell variant='head'> Engagement </TableCell>
-                <TableCell variant='head'> Accounts </TableCell>
-                <TableCell variant='head'> Average message per day </TableCell>
-                <TableCell variant='head'> Average Engagement per day </TableCell>
+                <TableCell variant='head' align='center'> Message </TableCell>
+                <TableCell variant='head' align='center'> Engagement </TableCell>
+                <TableCell variant='head' align='center'> Accounts </TableCell>
+                <TableCell variant='head' align='center'> Average message per day </TableCell>
+                <TableCell variant='head' align='center'> Average Engagement per day </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
