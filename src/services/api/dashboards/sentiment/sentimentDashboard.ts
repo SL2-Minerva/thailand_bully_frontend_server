@@ -478,7 +478,11 @@ export const GetPeriodComparison = (params: any) => {
   }
 }
 
-export const GetSentimentComparison = (params: any) => {
+export const GetSentimentComparison = (params: any, page: number , limit : number) => {
+  if(page)  {
+    params.page = page
+    params.limit = limit
+  }
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-sentiment/sentiment-comparison`,
     method: 'GET',

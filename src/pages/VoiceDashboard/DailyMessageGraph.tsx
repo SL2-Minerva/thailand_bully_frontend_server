@@ -25,6 +25,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 import { API_PATH } from 'src/utils/const'
 import authConfig from 'src/configs/auth'
 import toast from 'react-hot-toast'
+import { GetDailyMessages } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
 interface Props {
   type: string
@@ -32,11 +33,11 @@ interface Props {
   params: any
   keywordsColor: any
   highlight?: boolean
-  resultDailyMessage: any
-  loadingDailyMessage: boolean
   apiParams: any
   isLoading: boolean
   setIsLoading: any
+  quickViewData: any
+  setQuickViewData: any
 }
 export const getSeries = (seriesData: any) => {
   if (!seriesData) return []
@@ -97,16 +98,7 @@ const onCapture = () => {
 }
 
 const DailyMessageGraph = (props: Props) => {
-  const {
-    type,
-    params,
-    highlight,
-    keywordsColor,
-    resultDailyMessage,
-    loadingDailyMessage,
-    setIsLoading,
-    apiParams
-  } = props
+  const { type, params, highlight, keywordsColor, setIsLoading, apiParams, quickViewData, setQuickViewData } = props
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
@@ -122,7 +114,7 @@ const DailyMessageGraph = (props: Props) => {
   const rowOptionsOpen = Boolean(anchorEl)
   const [chooseChart, setChooseChart] = useState<string>('bar')
   const [paramsData, setParamsData] = useState<any>()
-
+  const { resultDailyMessage, loadingDailyMessage } = GetDailyMessages(apiParams)
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
@@ -316,6 +308,12 @@ const DailyMessageGraph = (props: Props) => {
       setDataset([])
       setShowNoDataText(true)
     }
+
+    setQuickViewData({
+      ...quickViewData,
+      resultDailyMessage: resultDailyMessage,
+      loadingDailyMessage: loadingDailyMessage
+    })
   }, [resultDailyMessage, keywordsColor])
 
   const reportNo = '2.2.002'

@@ -14,10 +14,11 @@ import { OpenInNew } from 'mdi-material-ui'
 import { GetDetailMessage } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from './DialogNetworkGraphByFilter'
+import moment from 'moment'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#e8d63aa1',
+    backgroundColor: '#e8d63a',
     color: theme.palette.common.black
   },
   [`&.${tableCellClasses.body}`]: {
@@ -66,7 +67,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
 
   const platformId = params?.platformId || ''
 
-  const { resultMessageDetail, totalMessage, loadingMessageDetail, resultDate } = GetDetailMessage(
+  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetDetailMessage(
     params?.campaign,
     platformId,
     params?.date,
@@ -133,12 +134,8 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
             </Typography>
           </Box>
 
-          <Box sx={{ mb: 3, ml: 2 }}>
-            <Typography sx={{ mb: 3, lineHeight: '2rem', fontSize: '18px' }}>{resultDate}</Typography>
-          </Box>
-
-          <TableContainer component={Paper}>
-            <Table aria-label='customized table'>
+          <TableContainer component={Paper} style={{maxHeight: 700}}>
+            <Table aria-label='customized table' stickyHeader>
               <TableHead>
                 <TableRow>
                   <StyledTableCell align='center'>No.</StyledTableCell>
@@ -158,12 +155,14 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                 {(resultMessageDetail || []).map((messageDetail: any, index: number) => (
                   <StyledTableRow
                     sx={{
-                      cursor: 'pointer',
+                      cursor: messageDetail.parent ? 'pointer' : '',
                       backgroundColor: messageDetail.parent ? '#00ff0038' : '#fff'
                     }}
                     key={index}
                     onClick={() => {
-                      setMessageId(messageDetail.message_id)
+                      if (messageDetail.parent) {
+                        setMessageId(messageDetail.message_id)
+                      }
                     }}
                   >
                     <StyledTableCell
@@ -179,11 +178,22 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                       onClick={() => {
                         setShowDialog(true)
                       }}
-                      width={300}
+                      style={{ overflow: 'hidden', width: '300px' }}
                     >
-                      {messageDetail.message_detail}
+                      <span
+                        style={{
+                          overflow: 'hidden',
+                          display: '-webkit-box',
+                          WebkitBoxOrient: 'vertical',
+                          WebkitLineClamp: 3,
+                          whiteSpace: 'pre-wrap'
+                        }}
+                      >
+                        {messageDetail.message_detail}
+                      </span>
                     </StyledTableCell>
                     <StyledTableCell
+                      align='center'
                       component='th'
                       scope='row'
                       onClick={() => {
@@ -206,7 +216,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                         setShowDialog(true)
                       }}
                     >
-                      {messageDetail.post_time}
+                      {moment(messageDetail.post_date)?.format('DD.MM.YYYY') + ', ' + messageDetail.post_time}
                     </StyledTableCell>
                     <StyledTableCell
                       align='center'

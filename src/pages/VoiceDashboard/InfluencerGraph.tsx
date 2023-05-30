@@ -198,69 +198,6 @@ const InfluencerGraph = ({
     }
   }
 
-  // const chartDatasets = (data: any, labels: any, keywordColor: any) => {
-  //   if (!data) return []
-  //   let totalAmount: number[] = []
-  //   let keywordName = ''
-  //   const returnData: StackChartDataset[] = []
-  //   const color = []
-  //   for (let i = 0; i < data?.length; i++) {
-  //     // totalAmount = data[i].data
-  //     keywordName = data[i].name
-  //     for (let j = 0; j < keywordColor?.length; j++) {
-  //       if (keywordColor[j]?.keywordName === keywordName) {
-  //         color.push(keywordColor[j]?.color)
-  //       }
-  //     }
-  //     totalAmount = []
-  //     const total = data[i]?.date
-  //     const dataArray: any[] = []
-  //     for (let j = 0; j < total?.length; j++) {
-  //       dataArray.push({
-  //         total_at_date: data[i]?.data[j],
-  //         date: moment(total[j]).format('DD/MM/YYYY')
-  //       })
-  //     }
-
-  //     const modifiedData = labels.map((node: any) => {
-  //       const oldInfo = dataArray.find((item: any) => item?.date === node)
-  //       if (oldInfo) {
-  //         return {
-  //           ...node,
-  //           total_at_date: oldInfo?.total_at_date || 0,
-  //           date: oldInfo?.date || node
-  //         }
-  //       } else {
-  //         return { ...node, total_at_date: 0, date: node }
-  //       }
-  //     })
-
-  //     for (let j = 0; j < modifiedData?.length; j++) {
-  //       totalAmount.push(modifiedData[j].total_at_date)
-  //     }
-
-  //     const chartDataset: StackChartDataset = {
-  //       fill: false,
-  //       tension: 0.2,
-  //       pointRadius: 4,
-  //       label: keywordName,
-  //       pointHoverRadius: 5,
-  //       pointStyle: 'circle',
-  //       borderColor: color[i],
-  //       backgroundColor: color[i],
-  //       pointHoverBorderWidth: 5,
-  //       pointHoverBorderColor: '#fff',
-  //       pointBorderColor: 'transparent',
-  //       pointHoverBackgroundColor: color[i],
-  //       data: totalAmount
-  //     }
-
-  //     returnData.push(chartDataset)
-  //   }
-
-  //   return returnData
-  // }
-
   const chartDatasets = (data: any, labels: any, keywordColor: any) => {
     if (!data) return []
     let totalAmount: number[] = []

@@ -313,15 +313,9 @@ export const GetDetailMessage = (
     method: 'GET',
     params: params
   })
-
-  let date = ""
-  if(response?.data?.message?.length > 0) {
-    date = response?.data?.message[0]?.day  + ", " + response?.data?.message[0]?.post_date 
-  }
-
+  
   return {
     resultMessageDetail: response?.data?.message || null,
-    resultDate : date ||  '',
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error

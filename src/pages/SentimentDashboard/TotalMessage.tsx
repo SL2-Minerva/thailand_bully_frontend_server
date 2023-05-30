@@ -18,6 +18,7 @@ import { LinearProgress } from '@mui/material'
 interface InfluencerComparisonProps {
   totalMessage?: any
   loadingTotalSentiment?: boolean
+  apiParams: any
 }
 
 const TotalMessage = (props: InfluencerComparisonProps) => {

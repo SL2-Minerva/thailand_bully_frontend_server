@@ -1,5 +1,5 @@
 // ** React Imports
-import { Ref, forwardRef, ReactElement, useEffect } from 'react'
+import { Ref, forwardRef, ReactElement, useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -28,6 +28,10 @@ import * as yup from 'yup'
 import FormHelperText from '@mui/material/FormHelperText'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import DatePicker from '@mui/lab/DatePicker'
+import moment from 'moment'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -49,6 +53,7 @@ interface DialogInfoProps {
 
 const DialogOrganization = (props: DialogInfoProps) => {
   const { show, setShow, action, current, types, groups } = props
+  const [date, setDate] = useState<Date | null>(null)
 
   const schema = yup.object().shape({
     name: yup.string().required(),
@@ -83,7 +88,10 @@ const DialogOrganization = (props: DialogInfoProps) => {
     setValue('organization_type_id', current?.organization_type_id || '')
     setValue('organization_group_id', current?.organization_group_id || '')
 
-    // setValue('msg_transaction', current?.msg_transaction || 0)
+    setValue('transaction_limit', current?.transaction_limit || 0)
+    setValue('transaction_reamining', current?.transaction_reamining || 0)
+    setValue('transaction_start_at', current?.transaction_start_at || null)
+    setDate(current?.transaction_start_at || null);
 
     if (action === 'edit') {
       setValue('id', current?.id)
@@ -186,30 +194,69 @@ const DialogOrganization = (props: DialogInfoProps) => {
                 </FormControl>
               </Grid>
 
-              {/* {action === 'edit' ? (
-                <Grid item sm={12} xs={12}>
-                  <Controller
-                    name='msg_transaction'
-                    control={control}
-                    render={({ field: { value, onChange } }) => (
-                      <TextField
-                        value={value}
-                        label='Number of Message Transaction'
-                        type='number'
-                        fullWidth
-                        onChange={onChange}
-                        placeholder='Number of Message Transaction'
-                        error={errors?.msg_transaction ? true : false}
-                      />
+              {action === 'edit' ? (
+                <>
+                  <Grid item sm={12} xs={12}>
+                    <Controller
+                      name='transaction_limit'
+                      control={control}
+                      render={({ field: { value, onChange } }) => (
+                        <TextField
+                          value={value}
+                          label='Number of Message Transaction'
+                          type='number'
+                          fullWidth
+                          onChange={onChange}
+                          placeholder='Number of Message Transaction'
+                          error={errors?.transaction_limit ? true : false}
+                        />
+                      )}
+                    />
+                    {errors.transaction_limit && (
+                      <FormHelperText sx={{ color: 'error.main' }}>{errors.transaction_limit.message}</FormHelperText>
                     )}
-                  />
-                  {errors.msg_transaction && (
-                    <FormHelperText sx={{ color: 'error.main' }}>{errors.msg_transaction.message}</FormHelperText>
-                  )}
-                </Grid>
+                  </Grid>
+                  <Grid item sm={6} xs={12}>
+                    <Controller
+                      name='transaction_reamining'
+                      control={control}
+                      render={({ field: { value, onChange } }) => (
+                        <TextField
+                          value={value}
+                          label='Number of Transaction Remaining'
+                          type='number'
+                          fullWidth
+                          onChange={onChange}
+                          placeholder='Number of Message Transaction'
+                          error={errors?.transaction_reamining ? true : false}
+                        />
+                      )}
+                    />
+                    {errors.transaction_reamining && (
+                      <FormHelperText sx={{ color: 'error.main' }}>
+                        {errors.transaction_reamining.message}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+
+                  <Grid item sm={6} xs={12}>
+                    <FormControl fullWidth>
+                      <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                          views={['year', 'month', 'day']}
+                          inputFormat='yyyy-MM-dd'
+                          label='Transaction Start At'
+                          value={date}
+                          onChange={newValue => {setDate(newValue); setValue('transaction_start_at', moment(newValue).format('YYYY-MM-DD'))}}
+                          renderInput={params => <TextField {...params} />}
+                        />
+                      </LocalizationProvider>
+                    </FormControl>
+                  </Grid>
+                </>
               ) : (
                 ''
-              )} */}
+              )}
 
               <Grid item sm={6} xs={12}>
                 <FormControl fullWidth>
