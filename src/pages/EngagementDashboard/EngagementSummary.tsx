@@ -1,4 +1,4 @@
-import { LinearProgress, Typography } from '@mui/material'
+import { Box, LinearProgress, Pagination, Typography } from '@mui/material'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -6,11 +6,16 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import Translations from 'src/layouts/components/Translations'
+import { useEffect } from 'react'
 
 const EngagementSummary = ({
   resultSummary,
   loadingSummary,
-  highlight
+  highlight,
+  page, 
+  setPage, 
+  pageCount, 
+  setPageCount
 }: {
   topKeyword: string
   params: any
@@ -18,20 +23,12 @@ const EngagementSummary = ({
   highlight: boolean
   resultSummary: any
   loadingSummary: boolean
+  page: number
+  setPage: any
+  pageCount: number
+  setPageCount: any
 }) => {
-  // const [page, setPage] = useState(0);
-  // const [pageCount, setPageCount] = useState<number>(0);
-
-  // const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-  //     setPage(value-1);
-  // };
-
-  // useEffect(()=> {
-  //     if (totalSummary > 0) {
-  //     //  setPageCount(Math.ceil(totalSummary / 10));
-  //     }
-  // }, [totalSummary]);
-
+  
   // const reportNo = '4.2.025'
 
   const columns: GridColDef[] = [
@@ -70,6 +67,16 @@ const EngagementSummary = ({
     }
   ]
 
+  const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value - 1)
+  }
+
+  useEffect(() => {
+    if (resultSummary?.total > 0) {
+      setPageCount(Math.ceil(resultSummary?.total / 10))
+    }
+  }, [resultSummary])
+
   return (
     <Card>
       {loadingSummary && <LinearProgress style={{ width: '100%' }} />}
@@ -98,21 +105,24 @@ const EngagementSummary = ({
       </span>
       <CardContent>
         {resultSummary ? (
-          <DataGrid
-            autoHeight
-            rows={resultSummary}
-            columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
-            getRowId={row => row.message_id}
-            sx={{
-              '& .MuiDataGrid-cell': {
-                textAlign: 'center',
-                display: 'flex',
-                justifyContent: 'center'
-              }
-            }}
-          />
+          <>
+            <DataGrid
+              autoHeight
+              rows={resultSummary?.data}
+              columns={columns}
+              pageSize={10}
+              rowsPerPageOptions={[10]}
+              hideFooterPagination={true}
+              getRowId={row => row.message_id}
+              sx={{
+                '& .MuiDataGrid-cell': {
+                  textAlign: 'center',
+                  display: 'flex',
+                  justifyContent: 'center'
+                }
+              }}
+            />
+          </>
         ) : (
           <div
             style={{
@@ -126,6 +136,20 @@ const EngagementSummary = ({
             <Translations text='no data' />
           </div>
         )}
+
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          {resultSummary?.total > 0 ? (
+            <Pagination
+              count={pageCount}
+              page={page + 1}
+              onChange={handleChangePagination}
+              variant='outlined'
+              color='primary'
+            />
+          ) : (
+            ''
+          )}
+        </Box>
       </CardContent>
     </Card>
   )

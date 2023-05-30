@@ -57,6 +57,8 @@ const EngagementGraphs = (data: Props) => {
   const [topKeyword, setTopKeyword] = useState<string>('all')
   const [apiParams, setApiParams] = useState<any>()
   const [isLoading, setIsLoading] = useState(false)
+  const [page, setPage] = useState(0)
+  const [pageCount, setPageCount] = useState<number>(0)
 
   const { resultFilterData, loadingFilterData } = FilterByCampaignId(apiParams)
   const {
@@ -87,7 +89,7 @@ const EngagementGraphs = (data: Props) => {
     resultSummary,
     loadingPeriodComparisonBySenitment,
     resultPeriodComparisonByChannel
-  } = GetEngagementComparisonBy(apiParams, params?.topKeyword)
+  } = GetEngagementComparisonBy(apiParams, params?.topKeyword, page)
 
   const quickViewData = {
     resultFilterData: resultFilterData,
@@ -650,6 +652,10 @@ const EngagementGraphs = (data: Props) => {
                   highlight={highlight === 'chart21' ? true : false}
                   resultSummary={resultSummary}
                   loadingSummary={loadingPeriodComparisonBySenitment}
+                  page={page}
+                  setPage={setPage}
+                  pageCount={pageCount}
+                  setPageCount={setPageCount}
                 />
               </Grid>
             </>
