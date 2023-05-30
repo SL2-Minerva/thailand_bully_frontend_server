@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography'
 // import useMediaQuery from '@mui/material/useMediaQuery'
 // import { Theme } from '@mui/material/styles'
 
-
 const FooterContent = () => {
   // ** Var
   // const hidden = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
@@ -14,13 +13,12 @@ const FooterContent = () => {
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
       <Typography sx={{ mr: 2 }}>
-        {`© ${new Date().getFullYear()}, Made By `}
+        {`Copyright © 2023 by `}
         <Box component='span' sx={{ color: 'error.main' }}>
-          Cornea-AI
+          MINERVA CONSULTANT CO.,LTD
         </Box>
-        <Link target='_blank' href='https://pixinvent.com/'>
-
-        </Link>
+        {`. All right reserved.`}
+        <Link target='_blank' href='https://pixinvent.com/'></Link>
       </Typography>
     </Box>
   )

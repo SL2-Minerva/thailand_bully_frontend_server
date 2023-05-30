@@ -8,20 +8,23 @@ import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import InputLabel from '@mui/material/InputLabel'
 import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import FormControl from '@mui/material/FormControl'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import InputAdornment from '@mui/material/InputAdornment'
 
 // ** Icons Imports
-import Key from 'mdi-material-ui/Key'
+// import Key from 'mdi-material-ui/Key'
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
-import LockOpenOutline from 'mdi-material-ui/LockOpenOutline'
+import { Typography } from '@mui/material'
+import { ChangePassword } from 'src/services/api/users/users'
+import { useRouter } from 'next/router'
 
 // ** Custom Components Imports
-import CustomAvatar from 'src/@core/components/mui/avatar'
+// import CustomAvatar from 'src/@core/components/mui/avatar'
+// import LockOpenOutline from 'mdi-material-ui/LockOpenOutline'
+// import Typography from '@mui/material/Typography'
 
 interface State {
   newPassword: string
@@ -42,6 +45,12 @@ const TabSecurity = () => {
     showCurrentPassword: false,
     showConfirmNewPassword: false
   })
+
+  const router = useRouter()
+
+  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false)
+  const [errorText, setErrorText] = useState<string>('')
+  const { callChangePassword } = ChangePassword()
 
   // Handle Current Password
   const handleCurrentPasswordChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -76,6 +85,34 @@ const TabSecurity = () => {
     event.preventDefault()
   }
 
+  const submitChanges = () => {
+    if (values.newPassword === values.confirmNewPassword) {
+      //call api
+      const formData = {
+        id: localStorage.getItem('id'),
+        new_password: values.newPassword,
+        old_password: values.currentPassword
+      }
+      setShowErrorMessage(false)
+
+      callChangePassword(formData)
+        .then(data => {
+          if (data) {
+            router.push('/apps/user/list/')
+          }
+        })
+        .catch((ex: any) => {
+          if (ex) {
+            setShowErrorMessage(true)
+            setErrorText(ex?.response?.data?.msg)
+          }
+        })
+    } else {
+      setShowErrorMessage(true)
+      setErrorText('New Password and Confirm Password must be the same! Please check again.')
+    }
+  }
+
   return (
     <form>
       <CardContent>
@@ -86,6 +123,7 @@ const TabSecurity = () => {
                 <FormControl fullWidth>
                   <InputLabel htmlFor='account-settings-current-password'>Current Password</InputLabel>
                   <OutlinedInput
+                    required
                     label='Current Password'
                     value={values.currentPassword}
                     id='account-settings-current-password'
@@ -111,6 +149,7 @@ const TabSecurity = () => {
                 <FormControl fullWidth>
                   <InputLabel htmlFor='account-settings-new-password'>New Password</InputLabel>
                   <OutlinedInput
+                    required
                     label='New Password'
                     value={values.newPassword}
                     id='account-settings-new-password'
@@ -136,6 +175,7 @@ const TabSecurity = () => {
                 <FormControl fullWidth>
                   <InputLabel htmlFor='account-settings-confirm-new-password'>Confirm New Password</InputLabel>
                   <OutlinedInput
+                    required
                     label='Confirm New Password'
                     value={values.confirmNewPassword}
                     id='account-settings-confirm-new-password'
@@ -156,17 +196,27 @@ const TabSecurity = () => {
                   />
                 </FormControl>
               </Grid>
+
+              <Grid item xs={12}>
+                {showErrorMessage ? (
+                  <Typography variant='body2' sx={{ color: 'red' }}>
+                    {errorText}
+                  </Typography>
+                ) : (
+                  ''
+                )}
+              </Grid>
             </Grid>
           </Grid>
 
           <Grid item sm={6} xs={12} sx={{ display: 'flex', mt: 2.5, alignItems: 'flex-end', justifyContent: 'center' }}>
-            <img alt='avatar' src='/images/pages/account-settings-security-illustration.png' />
+            {/* <img alt='avatar' src='/images/pages/account-settings-security-illustration.png' /> */}
           </Grid>
         </Grid>
 
         <Divider sx={{ mt: 0, mb: 6 }} />
 
-        <Box sx={{ mb: 11, display: 'flex', alignItems: 'center' }}>
+        {/* <Box sx={{ mb: 11, display: 'flex', alignItems: 'center' }}>
           <Key sx={{ mr: 4 }} />
           <Typography variant='h5'>Two-factor authentication</Typography>
         </Box>
@@ -192,12 +242,19 @@ const TabSecurity = () => {
               a password to log in. Learn more.
             </Typography>
           </Box>
-        </Box>
+        </Box> */}
 
         <Box>
-          <Button variant='contained' sx={{ mr: 4 }}>
-            Save Changes
-          </Button>
+          {values.confirmNewPassword && values.newPassword && values.currentPassword ? (
+            <Button variant='contained' sx={{ mr: 4 }} onClick={submitChanges}>
+              Save Changes
+            </Button>
+          ) : (
+            <Button variant='contained' sx={{ mr: 4 }} color='secondary'>
+              Save Changes
+            </Button>
+          )}
+
           <Button
             type='reset'
             variant='outlined'

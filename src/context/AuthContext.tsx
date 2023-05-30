@@ -97,6 +97,14 @@ const AuthProvider = ({ children }: Props) => {
             setUser({ ...data.info })
             await window.localStorage.setItem('userData', JSON.stringify(data.info))
             localStorage.setItem('organizationId', data.info?.organization_id)
+            localStorage.setItem('id', data?.info?.id);
+            localStorage.setItem('userName', data.info?.name)
+            localStorage.setItem('isAdmin',data.isAdmin);
+            localStorage.setItem('organizationName', data.organization?.name);
+            localStorage.setItem('organizationGrpName', data.organization_group?.organization_group_name);
+
+            localStorage.setItem('email', data.info?.email);
+
             const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
 
             router.replace(redirectURL as string)

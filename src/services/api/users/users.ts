@@ -14,6 +14,21 @@ export const userlist = (paged?: number, filter?: string) => {
   }
 }
 
+export const GetInfoTransaction = () => {
+  const [{data: res, loading, error} ] = CallAPI<{data?: any;}>({
+    url: `/user/info-transaction`,
+    method: 'GET',
+  });
+  
+  return{
+    userInfoTransaction: res?.data ||  null,
+    loadingInfoTransaction: loading,
+    errorInfoTransaction: error,
+  }
+}
+
+
+
 
 const UserService = (userId: number) => {
   const [{ data, loading, error }, store] = CallAPI<{
@@ -134,6 +149,43 @@ export const ResetPasswordRequest = () => {
           })
           .catch(ex => {
             reject(ex.toString())
+          })
+      })
+    }
+  }
+}
+
+export const ChangePassword = () => {
+  const [{ data, loading, error }, store] = CallAPI<{
+    code: 0 | 1
+    message: string
+    data: any
+  }>(
+    {
+      url: `/auth/reset-password`,
+      method: 'POST'
+    },
+    { manual: true }
+  )
+
+  return {
+    resultChangePassword: data?.data,
+    loadingChangePassword: loading,
+    errorChangePassword: error,
+    callChangePassword: (formData: any) => {
+      return new Promise((resolve, reject) => {
+        store({
+          data: formData
+        })
+          .then(({ data: { data, code, message } }) => {
+            if (code === 0) {
+              reject(message)
+            } else {
+              resolve(data)
+            }
+          })
+          .catch(ex => {
+            reject(ex)
           })
       })
     }

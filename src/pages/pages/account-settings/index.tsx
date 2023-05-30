@@ -11,18 +11,20 @@ import { styled } from '@mui/material/styles'
 import MuiTab, { TabProps } from '@mui/material/Tab'
 
 // ** Icons Imports
-import BellOutline from 'mdi-material-ui/BellOutline'
+// import BellOutline from 'mdi-material-ui/BellOutline'
+// import BookmarkOutline from 'mdi-material-ui/BookmarkOutline'
+// import InformationOutline from 'mdi-material-ui/InformationOutline'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
 import LockOpenOutline from 'mdi-material-ui/LockOpenOutline'
-import BookmarkOutline from 'mdi-material-ui/BookmarkOutline'
-import InformationOutline from 'mdi-material-ui/InformationOutline'
+
 
 // ** Demo Tabs Imports
-import TabInfo from 'src/views/pages/account-settings/TabInfo'
+// import TabInfo from 'src/views/pages/account-settings/TabInfo'
+// import TabNotifications from 'src/views/pages/account-settings/TabNotifications'
+// import TabBilling from 'src/views/pages/account-settings/TabBilling'
+
 import TabAccount from 'src/views/pages/account-settings/TabAccount'
-import TabBilling from 'src/views/pages/account-settings/TabBilling'
 import TabSecurity from 'src/views/pages/account-settings/TabSecurity'
-import TabNotifications from 'src/views/pages/account-settings/TabNotifications'
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
@@ -46,7 +48,7 @@ const TabName = styled('span')(({ theme }) => ({
 
 const AccountSettings = () => {
   // ** State
-  const [value, setValue] = useState<string>('account')
+  const [value, setValue] = useState<string>('security')
 
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue)
@@ -65,7 +67,7 @@ const AccountSettings = () => {
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <AccountOutline sx={{ fontSize: '1.125rem' }} />
-                <TabName>Account</TabName>
+                <TabName>User Info</TabName>
               </Box>
             }
           />
@@ -78,7 +80,7 @@ const AccountSettings = () => {
               </Box>
             }
           />
-          <Tab
+          {/* <Tab
             value='info'
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -104,7 +106,7 @@ const AccountSettings = () => {
                 <TabName>Notifications</TabName>
               </Box>
             }
-          />
+          /> */}
         </TabList>
 
         <TabPanel sx={{ p: 0 }} value='account'>
@@ -113,7 +115,7 @@ const AccountSettings = () => {
         <TabPanel sx={{ p: 0 }} value='security'>
           <TabSecurity />
         </TabPanel>
-        <TabPanel sx={{ p: 0 }} value='info'>
+        {/* <TabPanel sx={{ p: 0 }} value='info'>
           <TabInfo />
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='billing'>
@@ -121,7 +123,7 @@ const AccountSettings = () => {
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='notifications'>
           <TabNotifications />
-        </TabPanel>
+        </TabPanel> */}
       </TabContext>
     </Card>
   )
