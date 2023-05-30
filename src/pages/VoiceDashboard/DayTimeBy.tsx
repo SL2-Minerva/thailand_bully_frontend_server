@@ -1,5 +1,4 @@
 import { Grid } from '@mui/material'
-import { useEffect, useState } from 'react'
 import { GetDayTimeByAll } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 import DayTimeBullyLevel from './DayTimeBullyLevel'
 import DayTimeBullyType from './DayTimeBullyType'
@@ -9,13 +8,15 @@ import DayTimeSentiment from './DayTimeSentiment'
 const DayTimeBy = ({
   params,
   highlight,
-  resultReportPermission
+  resultReportPermission,
+  apiParams
+
 }: {
   params: any
   highlight: string
   resultReportPermission: any
+  apiParams: any
 }) => {
-  const [apiParams, setApiParams] = useState<any>()
 
   const {
     resultDayByBullyLevel,
@@ -29,37 +30,6 @@ const DayTimeBy = ({
   } = GetDayTimeByAll(
     apiParams
   )
-
-  useEffect(() => {
-    if (params?.period !== 'customrange') {
-      setApiParams({
-        campaign_id: params?.campaign,
-        source: params?.platformId,
-        start_date: params?.date,
-        end_date: params?.endDate,
-        period: params?.period,
-        fillter_keywords: params?.keywordIds
-      })
-    }
-    if (
-      params?.period === 'customrange' &&
-      params?.endDate &&
-      params?.previousEndDate &&
-      params?.date !== params?.endDate &&
-      params?.previousDate !== params?.previousEndDate
-    ) {
-      setApiParams({
-        campaign_id: params?.campaign,
-        source: params?.platformId,
-        start_date: params?.date,
-        end_date: params?.endDate,
-        period: params?.period,
-        start_date_period: params?.previousDate,
-        end_date_period: params?.previousEndDate,
-        fillter_keywords: params?.keywordIds
-      })
-    }
-  }, [params])
 
   return (
     <>

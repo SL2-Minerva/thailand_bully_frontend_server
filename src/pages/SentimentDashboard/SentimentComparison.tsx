@@ -15,18 +15,17 @@ import { useEffect, useState } from 'react'
 import Translations from 'src/layouts/components/Translations'
 
 const SentimentComparisonTable = ({
-  params,
+  apiParams,
   highlight
 }: {
-  params: any
   chartId: string
   highlight: boolean
+  apiParams: any
 }) => {
   const [page, setPage] = useState(0)
   const [pageCount, setPageCount] = useState<number>(0)
-  const [apiParams, setApiParams] = useState<any>()
 
-  const { resultSentimentComparison, total, loadingSentimentComparison } = GetSentimentComparison(apiParams)
+  const { resultSentimentComparison, total, loadingSentimentComparison } = GetSentimentComparison(apiParams, page, 10)
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value - 1)
   }
@@ -39,41 +38,6 @@ const SentimentComparisonTable = ({
   }, [total])
 
   // const reportNo = '5.2.016'
-
-  useEffect(() => {
-    if (params?.period !== 'customrange') {
-      setApiParams({
-        campaign_id: params?.campaign,
-        source: params?.platformId,
-        start_date: params?.date,
-        end_date: params?.endDate,
-        period: params?.period,
-        fillter_keywords: params?.keywordIds,
-        page: page,
-        limit: 10
-      })
-    }
-    if (
-      params?.period === 'customrange' &&
-      params?.endDate &&
-      params?.previousEndDate &&
-      params?.date !== params?.endDate &&
-      params?.previousDate !== params?.previousEndDate
-    ) {
-      setApiParams({
-        campaign_id: params?.campaign,
-        source: params?.platformId,
-        start_date: params?.date,
-        end_date: params?.endDate,
-        period: params?.period,
-        start_date_period: params?.previousDate,
-        end_date_period: params?.previousEndDate,
-        fillter_keywords: params?.keywordIds,
-        page: page,
-        limit: 10
-      })
-    }
-  }, [params])
 
   return (
     <Card>

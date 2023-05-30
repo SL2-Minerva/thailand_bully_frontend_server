@@ -92,7 +92,7 @@ const OverallGraphs = (data: Props) => {
         )}
       </Grid>
 
-      <Grid container spacing={3} mt={2}>
+      <Grid container spacing={5} mt={2}>
         {apiParams ? (
           <TopKeywordsSummary apiParams={apiParams} params={params} resultReportPermission={resultReportPermission} />
         ) : (
@@ -100,7 +100,7 @@ const OverallGraphs = (data: Props) => {
         )}
       </Grid>
 
-      <Grid container spacing={3} mt={2}>
+      <Grid container spacing={3} mt={3}>
         {resultReportPermission?.includes('10') && apiParams ? (
           <Grid id='chart10' item xs={12} md={6}>
             <SentimentGaugeChart apiParams={apiParams} chartId='Chart 10' />

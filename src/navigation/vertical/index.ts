@@ -10,7 +10,7 @@ import VectorArrangeBelow from 'mdi-material-ui/VectorArrangeBelow'
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
 import { UserPermission } from 'src/services/api/users/role'
-import { ClipboardTextClockOutline } from 'mdi-material-ui'
+import { ClipboardTextClockOutline, TableOfContents } from 'mdi-material-ui'
 
 const navigation = (): VerticalNavItemsType => {
   const {
@@ -41,7 +41,7 @@ const navigation = (): VerticalNavItemsType => {
     path: '/apps/user/list/roleManagement'
   }
 
-   const organizedGroupMGT = {
+  const organizedGroupMGT = {
     title: 'Organized Group MGT',
     path: '/organized-mgt/organized-group'
   }
@@ -50,7 +50,7 @@ const navigation = (): VerticalNavItemsType => {
     title: 'Organized Type MGT',
     path: '/organized-mgt/organized-type'
   }
-  
+
   const organizedMgt = {
     title: 'Organized MGT',
     path: '/organized-mgt/management'
@@ -106,8 +106,8 @@ const navigation = (): VerticalNavItemsType => {
     path: '/SNA/SNAByBullyType'
   }
 
-  const userPermissionList : any [] = [];
-  const organizedList : any [] = [];
+  const userPermissionList: any[] = []
+  const organizedList: any[] = []
   if (resultIsAdmin || resultPermission?.user?.authorized_view) {
     userPermissionList.push(userMgt)
   }
@@ -176,21 +176,23 @@ const navigation = (): VerticalNavItemsType => {
     reportDashboardList.push(sna)
   }
 
-  const UserPermissionData = userPermissionList.length > 0 
-    ? {
-        title: 'User Permission',
-        icon: CogOutline,
-        children: userPermissionList
-      }
-    : null
+  const UserPermissionData =
+    userPermissionList.length > 0
+      ? {
+          title: 'User Permission',
+          icon: CogOutline,
+          children: userPermissionList
+        }
+      : null
 
-  const OrganizationPermission = organizedList.length > 0
-    ? {
-        title: 'Organized MGT',
-        icon: HomeAnalytics,
-        children: organizedList
-      }
-    : null
+  const OrganizationPermission =
+    organizedList.length > 0
+      ? {
+          title: 'Organized MGT',
+          icon: HomeAnalytics,
+          children: organizedList
+        }
+      : null
 
   const sourceMgt = resultIsAdmin
     ? {
@@ -205,6 +207,20 @@ const navigation = (): VerticalNavItemsType => {
         path: '/campaign/domain-mgt'
       }
     : null
+
+  const ContentPermission = {
+    title: 'Content',
+    icon: TableOfContents,
+    children: [{
+      title : 'Content', 
+      path: '/content/homepage'
+
+    }, {
+      title : 'Content-MGT',
+      path : '/content/content-mgt'
+    }
+  ]  
+  }
 
   const campaignMenu = []
 
@@ -271,9 +287,9 @@ const navigation = (): VerticalNavItemsType => {
     sideMenuBar.push(ReportPermission)
   }
 
-  // if (ContentPermission) {
-  //   sideMenuBar.push(ContentPermission)
-  // }
+  if (ContentPermission) {
+    sideMenuBar.push(ContentPermission)
+  }
 
   if (resultIsAdmin || showActivityLog) {
     sideMenuBar.push(log)

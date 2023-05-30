@@ -29,11 +29,11 @@ const onCapture = () => {
 }
 
 interface Props {
-  params: any
   type: string
   chartId: string
   highlight?: boolean
   keywordsColor: any
+  apiParams: any
 }
 Chart.register(DoughnutLabel)
 
@@ -58,8 +58,7 @@ export const getColors = (data: any) => {
 }
 
 const DailyMessagePieChart = (props: Props) => {
-  const { params, highlight, keywordsColor } = props
-  const [apiParams, setApiParams] = useState<any>()
+  const { highlight, keywordsColor, apiParams } = props
 
   const { resultPercentageMessage, loadingPercentageMessage } = GetPercentageMessage(apiParams)
 
@@ -240,37 +239,6 @@ const DailyMessagePieChart = (props: Props) => {
   }, [resultPercentageMessage, keywordsColor])
 
   // const reportNo = '2.1.001'
-
-  useEffect(() => {
-    if (params?.period !== 'customrange') {
-      setApiParams({
-        campaign_id: params?.campaign,
-        source: params?.platformId,
-        start_date: params?.date,
-        end_date: params?.endDate,
-        period: params?.period,
-        fillter_keywords: params?.keywordIds
-      })
-    }
-    if (
-      params?.period === 'customrange' &&
-      params?.endDate &&
-      params?.previousEndDate &&
-      params?.date !== params?.endDate &&
-      params?.previousDate !== params?.previousEndDate
-    ) {
-      setApiParams({
-        campaign_id: params?.campaign,
-        source: params?.platformId,
-        start_date: params?.date,
-        end_date: params?.endDate,
-        period: params?.period,
-        start_date_period: params?.previousDate,
-        end_date_period: params?.previousEndDate,
-        fillter_keywords: params?.keywordIds
-      })
-    }
-  }, [params])
 
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }} square variant='outlined'>

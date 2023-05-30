@@ -1,37 +1,30 @@
 import { Grid } from '@mui/material'
-import MessagesByAccount from './MessagesBy/MessageByAccount'
-import MessagesByChannel from './MessagesBy/MessagesByChannel'
-import MessagesBySentiment from './MessagesBy/MessagesBySentiment'
-import MessagesByBullyLevel from './MessagesBy/MessageByBullyLevel'
-import MessagesByBullyType from './MessagesBy/MessageByBullyType'
-import MessagesByDays from './MessagesBy/MessageByDays'
-import MessagesByTime from './MessagesBy/MessageByTime'
-import MessagesByDevices from './MessagesBy/MessageByDevice'
-import { useTheme } from '@mui/material/styles'
-import { GetMessagesByAll } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
+import SentimentScore from './SentimentScore'
+import SentimentScorePercentage from './SentimentScorePercentage'
+import { GetSenitmemntBy } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
+import SentimentByDay from './SentimentByDay'
+import SentimentByTime from './SentimentByTime'
+import SentimentByDevice from './SentimentByDevice'
+import SentimentByBullyType from './SentimentByBullyType'
+import SentimentByBullyLevel from './SentimentByBullyLevel'
+import SentimentByChannel from './SentitmentByChannel'
+import SentimentByAccount from './SentimentByAccount'
 import { useEffect } from 'react'
 
-const MessageByAll = ({
-  params,
-  highlight,
-  resultReportPermission,
-  keywordsColor,
-  setIsLoading,
-  apiParams,
-  quickViewData,
-  setQuickViewData
-}: {
+interface Props {
+  theme: any
+  apiParams: any
+  resultReportPermission: any
   params: any
   highlight: string
-  resultReportPermission: any
-  keywordsColor: any
-  apiParams: any
-  isLoading: boolean
   setIsLoading: any
   quickViewData: any
   setQuickViewData: any
-}) => {
-  const theme = useTheme()
+}
+
+const SentimentBy = (props: Props) => {
+  const { theme, apiParams, resultReportPermission, params, highlight, setIsLoading, quickViewData, setQuickViewData } =
+    props
 
   const whiteColor = '#fff'
   const lineChartYellow = '#d4e157'
@@ -41,22 +34,47 @@ const MessageByAll = ({
   const borderColor = theme.palette.action.focus
   const gridLineColor = theme.palette.action.focus
 
-  const { resultMessagesByAll, loadingMessagesByAll } = GetMessagesByAll(apiParams)
+  const {
+    resultSenitmentScore,
+    resultSentimentByAccount,
+    resultSentimentByBullyLevel,
+    resultSentimentByBullyType,
+    resultSentimentByChannel,
+    resultSentimentByDay,
+    resultSentimentByDevice,
+    resultSentimentByTime,
+    loadingSentimentByDay
+  } = GetSenitmemntBy(apiParams)
 
   useEffect(() => {
     setQuickViewData({
       ...quickViewData,
-      resultMessagesByAll: resultMessagesByAll,
-      loadingMessagesByAll: loadingMessagesByAll
+      resultSenitmentScore: resultSenitmentScore,
+      resultSentimentByAccount: resultSentimentByAccount,
+      resultSentimentByBullyLevel: resultSentimentByBullyLevel,
+      resultSentimentByBullyType: resultSentimentByBullyType,
+      resultSentimentByChannel: resultSentimentByChannel,
+      resultSentimentByDay: resultSentimentByDay,
+      resultSentimentByDevice: resultSentimentByDevice,
+      resultSentimentByTime: resultSentimentByTime
     })
-
-  }, [resultMessagesByAll, loadingMessagesByAll])
+  }, [
+    loadingSentimentByDay,
+    resultSenitmentScore,
+    resultSentimentByAccount,
+    resultSentimentByBullyLevel,
+    resultSentimentByBullyType,
+    resultSentimentByChannel,
+    resultSentimentByDay,
+    resultSentimentByDevice,
+    resultSentimentByTime
+  ])
 
   return (
     <>
-      {resultReportPermission?.includes('22') ? (
+      {resultReportPermission?.includes('78') ? (
         <Grid item xs={12} md={12} id='chart3'>
-          <MessagesByDays
+          <SentimentByDay
             white={whiteColor}
             labelColor={labelColor}
             success={lineChartYellow}
@@ -64,12 +82,11 @@ const MessageByAll = ({
             primary={lineChartPrimary}
             warning={lineChartWarning}
             gridLineColor={gridLineColor}
+            params={params}
             chartId='Chart 3'
-            params={params}
-            result={resultMessagesByAll?.messageByDay}
-            loading={loadingMessagesByAll}
             highlight={highlight === 'chart3' ? true : false}
-            keywordsColor={keywordsColor}
+            resultBy={resultSentimentByDay}
+            loading={loadingSentimentByDay}
             apiParams={apiParams}
             setIsLoading={setIsLoading}
           />
@@ -77,9 +94,9 @@ const MessageByAll = ({
       ) : (
         ''
       )}
-      {resultReportPermission?.includes('23') ? (
+      {resultReportPermission?.includes('79') ? (
         <Grid item xs={12} md={12} id='chart4'>
-          <MessagesByTime
+          <SentimentByTime
             white={whiteColor}
             labelColor={labelColor}
             success={lineChartYellow}
@@ -87,12 +104,11 @@ const MessageByAll = ({
             primary={lineChartPrimary}
             warning={lineChartWarning}
             gridLineColor={gridLineColor}
+            params={params}
             chartId='Chart 4'
-            params={params}
-            result={resultMessagesByAll?.messageByTime}
-            loading={loadingMessagesByAll}
             highlight={highlight === 'chart4' ? true : false}
-            keywordsColor={keywordsColor}
+            loading={loadingSentimentByDay}
+            resultBy={resultSentimentByTime}
             apiParams={apiParams}
             setIsLoading={setIsLoading}
           />
@@ -100,9 +116,9 @@ const MessageByAll = ({
       ) : (
         ''
       )}
-      {resultReportPermission?.includes('24') ? (
+      {resultReportPermission?.includes('80') ? (
         <Grid item xs={12} md={12} id='chart5'>
-          <MessagesByDevices
+          <SentimentByDevice
             white={whiteColor}
             labelColor={labelColor}
             success={lineChartYellow}
@@ -110,12 +126,11 @@ const MessageByAll = ({
             primary={lineChartPrimary}
             warning={lineChartWarning}
             gridLineColor={gridLineColor}
-            chartId='Chart 5'
             params={params}
-            result={resultMessagesByAll?.messageByDevice}
-            loading={loadingMessagesByAll}
+            chartId='Chart 5'
             highlight={highlight === 'chart5' ? true : false}
-            keywordsColor={keywordsColor}
+            loading={loadingSentimentByDay}
+            resultBy={resultSentimentByDevice}
             apiParams={apiParams}
             setIsLoading={setIsLoading}
           />
@@ -123,10 +138,9 @@ const MessageByAll = ({
       ) : (
         ''
       )}
-
-      {resultReportPermission?.includes('25') ? (
+      {resultReportPermission?.includes('81') ? (
         <Grid item xs={12} md={12} id='chart6'>
-          <MessagesByAccount
+          <SentimentByAccount
             white={whiteColor}
             labelColor={labelColor}
             success={lineChartYellow}
@@ -136,10 +150,9 @@ const MessageByAll = ({
             gridLineColor={gridLineColor}
             chartId='Chart 6'
             params={params}
-            result={resultMessagesByAll?.messageByAccount}
-            loading={loadingMessagesByAll}
             highlight={highlight === 'chart6' ? true : false}
-            keywordsColor={keywordsColor}
+            loading={loadingSentimentByDay}
+            resultBy={resultSentimentByAccount}
             apiParams={apiParams}
             setIsLoading={setIsLoading}
           />
@@ -147,10 +160,9 @@ const MessageByAll = ({
       ) : (
         ''
       )}
-
-      {resultReportPermission?.includes('26') ? (
+      {resultReportPermission?.includes('82') ? (
         <Grid item xs={12} md={12} id='chart7'>
-          <MessagesByChannel
+          <SentimentByChannel
             white={whiteColor}
             labelColor={labelColor}
             success={lineChartYellow}
@@ -158,12 +170,11 @@ const MessageByAll = ({
             primary={lineChartPrimary}
             warning={lineChartWarning}
             gridLineColor={gridLineColor}
-            params={params}
             chartId='Chart 7'
-            result={resultMessagesByAll?.messageByChannel}
-            loading={loadingMessagesByAll}
+            params={params}
             highlight={highlight === 'chart7' ? true : false}
-            keywordsColor={keywordsColor}
+            loading={loadingSentimentByDay}
+            resultBy={resultSentimentByChannel}
             apiParams={apiParams}
             setIsLoading={setIsLoading}
           />
@@ -171,10 +182,9 @@ const MessageByAll = ({
       ) : (
         ''
       )}
-
-      {resultReportPermission?.includes('27') ? (
+      {resultReportPermission?.includes('83') ? (
         <Grid item xs={12} md={12} id='chart8'>
-          <MessagesBySentiment
+          <SentimentByBullyLevel
             white={whiteColor}
             labelColor={labelColor}
             success={lineChartYellow}
@@ -182,12 +192,11 @@ const MessageByAll = ({
             primary={lineChartPrimary}
             warning={lineChartWarning}
             gridLineColor={gridLineColor}
-            params={params}
             chartId='Chart 8'
-            result={resultMessagesByAll?.messageBySentiment}
-            loading={loadingMessagesByAll}
+            params={params}
             highlight={highlight === 'chart8' ? true : false}
-            keywordsColor={keywordsColor}
+            loading={loadingSentimentByDay}
+            resultBy={resultSentimentByBullyLevel}
             apiParams={apiParams}
             setIsLoading={setIsLoading}
           />
@@ -195,10 +204,9 @@ const MessageByAll = ({
       ) : (
         ''
       )}
-
-      {resultReportPermission?.includes('28') ? (
+      {resultReportPermission?.includes('84') ? (
         <Grid item xs={12} md={12} id='chart9'>
-          <MessagesByBullyLevel
+          <SentimentByBullyType
             white={whiteColor}
             labelColor={labelColor}
             success={lineChartYellow}
@@ -208,10 +216,9 @@ const MessageByAll = ({
             gridLineColor={gridLineColor}
             params={params}
             chartId='Chart 9'
-            result={resultMessagesByAll?.messageByLevel}
-            loading={loadingMessagesByAll}
             highlight={highlight === 'chart9' ? true : false}
-            keywordsColor={keywordsColor}
+            loading={loadingSentimentByDay}
+            resultBy={resultSentimentByBullyType}
             apiParams={apiParams}
             setIsLoading={setIsLoading}
           />
@@ -220,26 +227,26 @@ const MessageByAll = ({
         ''
       )}
 
-      {resultReportPermission?.includes('29') ? (
-        <Grid item xs={12} md={12} id='chart10'>
-          <MessagesByBullyType
-            white={whiteColor}
-            labelColor={labelColor}
-            success={lineChartYellow}
-            borderColor={borderColor}
-            primary={lineChartPrimary}
-            warning={lineChartWarning}
-            gridLineColor={gridLineColor}
-            params={params}
-            chartId='Chart 10'
-            result={resultMessagesByAll?.messageByType}
-            loading={loadingMessagesByAll}
-            highlight={highlight === 'chart10' ? true : false}
-            keywordsColor={keywordsColor}
-            apiParams={apiParams}
-            setIsLoading={setIsLoading}
-          />
-        </Grid>
+      {resultReportPermission?.includes('88') ? (
+        <>
+          <Grid item xs={12} md={6} id='chart13'>
+            <SentimentScore
+              params={params}
+              chartId='Chart 13'
+              highlight={highlight === 'chart13' ? true : false}
+              resultSenitmentScore={resultSenitmentScore?.senitment_score_data}
+              loadingSentimentScore={loadingSentimentByDay}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <SentimentScorePercentage
+              params={params}
+              highlight={highlight === 'chart13' ? true : false}
+              resultSentimentScorePercentage={resultSenitmentScore?.senitment_score_percentage || []}
+              loadingSentimentScore={loadingSentimentByDay}
+            />
+          </Grid>
+        </>
       ) : (
         ''
       )}
@@ -247,4 +254,4 @@ const MessageByAll = ({
   )
 }
 
-export default MessageByAll
+export default SentimentBy
