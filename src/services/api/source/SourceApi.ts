@@ -17,6 +17,19 @@ import { CallAPI } from "src/services/CallAPI";
 
 // export default  list ;
 
+export const GetPublicSourceList = () => {
+  const [{data: res, loading, error} ] = CallAPI<{data?: any;}>({
+    url: `/source/public-source`,
+    method: 'GET',
+  });
+  
+  return{
+    publicSourceList: res?.data ||  null,
+    loadingPublicSourceList: loading,
+    errorPublicSourceList: error,
+  }
+}
+
 const SourceService = (reload?: boolean, page?: number) => {
     let params;
 

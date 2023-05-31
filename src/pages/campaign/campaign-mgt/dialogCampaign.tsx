@@ -573,7 +573,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                 </Grid>
               </RepeaterWrapper>
               <Grid item xs={12} mt={3}>
-                {(checkKeyword || checkKeywordAnd || checkKeywordOr || checkKeywordExclude) && (
+                {(checkKeyword || checkKeywordAnd || checkKeywordOr) && (
                   <FormHelperText sx={{ color: 'red', textAlign: 'center', fontSize: '14px' }}>
                     Keywords must be different value.
                   </FormHelperText>
@@ -656,7 +656,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
             variant='contained'
             sx={{ mr: 2 }}
             onClick={() => {
-              if (!checkKeyword && !checkKeywordAnd && !checkKeywordExclude && !checkKeywordOr && !showErrorFrequency) {
+              if (!checkKeyword && !checkKeywordAnd && !checkKeywordOr && !showErrorFrequency) {
                 createNewCampaign()
               }
             }}

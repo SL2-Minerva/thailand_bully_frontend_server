@@ -45,7 +45,7 @@ const SNAByBullyType = () => {
     new Date(localStorage.getItem('previousEndDate') || new Date())
   )
 
-  const [status, setStatus] = useState(localStorage.getItem('status') || '1');
+  const [status, setStatus] = useState(localStorage.getItem('status') || '1')
 
   const [campaign, setCampaign] = useState<string>('1')
   const [platformId, setPlatformId] = useState<string>('all')
@@ -87,7 +87,7 @@ const SNAByBullyType = () => {
 
     return (
       <FormControl fullWidth>
-        <TextField inputRef={ref} label={props.label || ''} {...props} value={value} />
+        <TextField inputRef={ref} label={props.label || ''} {...props} value={value} size='small' />
       </FormControl>
     )
   })
@@ -103,9 +103,9 @@ const SNAByBullyType = () => {
     }
   }, [])
 
-    const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
-      setStatus(e.target.value)
-      localStorage.setItem('status', e.target.value)
+  const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
+    setStatus(e.target.value)
+    localStorage.setItem('status', e.target.value)
   }, [])
 
   const handleDateSelect = useCallback((e: any) => {
@@ -252,13 +252,14 @@ const SNAByBullyType = () => {
         <Card>
           <CardHeader title='Filter' />
           <CardContent>
-            <Grid container spacing={6} mt={2}>
+            <Grid container spacing={6}>
               <Grid item sm={3} xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id='plan-select'>
                     <Translations text='Period of time' />
                   </InputLabel>
                   <Select
+                    size='small'
                     fullWidth
                     value={dateSelect}
                     id='select-date'
@@ -298,6 +299,7 @@ const SNAByBullyType = () => {
                     <Translations text='Status' />
                   </InputLabel>
                   <Select
+                    size='small'
                     fullWidth
                     value={status}
                     id='select-date'
@@ -327,6 +329,7 @@ const SNAByBullyType = () => {
                     <Translations text='Campaign Name' />
                   </InputLabel>
                   <Select
+                    size='small'
                     fullWidth
                     value={campaign}
                     id='select-campaign'
@@ -354,6 +357,7 @@ const SNAByBullyType = () => {
                     <Translations text='Channel' />
                   </InputLabel>
                   <Select
+                    size='small'
                     fullWidth
                     value={platformId}
                     id='select-platform'
@@ -382,6 +386,7 @@ const SNAByBullyType = () => {
                     <Translations text='Limit' />
                   </InputLabel>
                   <Select
+                    size='small'
                     fullWidth
                     value={limit}
                     id='select-limit'

@@ -14,7 +14,7 @@ import {
   Typography
 } from '@mui/material'
 import { useCallback } from 'react'
-import SourceService from 'src/services/api/source/SourceApi'
+import { GetPublicSourceList } from 'src/services/api/source/SourceApi'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { GetWordCloudsPlatform } from 'src/services/api/dashboards/overall/overallDashboardApi'
@@ -33,7 +33,7 @@ interface Props {
 
 const ChannelWordCloud = (props: Props) => {
   const { apiParams, platformId, setPlatformId, setWord, params } = props
-  const { result_source_list } = SourceService()
+  const { publicSourceList } = GetPublicSourceList()
 
   const { resultWordCloudsPlatform, loadingWordCloudsPlatform } = GetWordCloudsPlatform(apiParams)
 
@@ -108,13 +108,14 @@ const ChannelWordCloud = (props: Props) => {
                   id='select-platform'
                   label='Select Channel'
                   labelId='platform-select'
+                  size='small'
                   onChange={e => {
                     handleSelectList(e)
                   }}
                   inputProps={{ placeholder: 'Select Channel' }}
                 >
-                  {result_source_list &&
-                    result_source_list.map((item: any, index: number) => {
+                  {publicSourceList &&
+                    publicSourceList.map((item: any, index: number) => {
                       return (
                         <MenuItem key={index} value={item.id}>
                           {item.name}

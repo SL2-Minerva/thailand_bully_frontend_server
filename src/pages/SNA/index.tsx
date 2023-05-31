@@ -93,7 +93,7 @@ const SNA = () => {
 
     return (
       <FormControl fullWidth>
-        <TextField inputRef={ref} label={props.label || ''} {...props} value={value} />
+        <TextField inputRef={ref} label={props.label || ''} {...props} value={value} size='small'/>
       </FormControl>
     )
   })
@@ -270,13 +270,13 @@ const SNA = () => {
         <Card>
           <CardHeader title='Filter' />
           <CardContent>
-            <Grid container spacing={6} mt={2}>
+            <Grid container spacing={6}>
               <Grid item sm={3} xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id='plan-select'>
                     <Translations text='Period of time' />
                   </InputLabel>
-                  <Select
+                  <Select size="small"
                     fullWidth
                     value={dateSelect}
                     id='select-date'
@@ -315,7 +315,7 @@ const SNA = () => {
                     <InputLabel id='plan-select'>
                       <Translations text='Status' />
                     </InputLabel>
-                    <Select
+                    <Select size="small"
                       fullWidth
                       value={status}
                       id='select-date'
@@ -344,7 +344,7 @@ const SNA = () => {
                   <InputLabel id='plan-select'>
                     <Translations text='Campaign Name' />
                   </InputLabel>
-                  <Select
+                  <Select size="small"
                     fullWidth
                     value={campaign}
                     id='select-campaign'
@@ -371,7 +371,7 @@ const SNA = () => {
                   <InputLabel id='plan-select'>
                     <Translations text='Channel' />
                   </InputLabel>
-                  <Select
+                  <Select size="small"
                     fullWidth
                     value={platformId}
                     id='select-platform'
@@ -399,7 +399,7 @@ const SNA = () => {
                   <InputLabel id='plan-select'>
                     <Translations text='Limit' />
                   </InputLabel>
-                  <Select
+                  <Select size="small"
                     fullWidth
                     value={limit}
                     id='select-limit'
