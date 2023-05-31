@@ -238,7 +238,7 @@ const OverallDashboard = () => {
 
     return (
       <FormControl fullWidth>
-        <TextField inputRef={ref} label={props.label || ''} {...props} value={value} />
+        <TextField inputRef={ref} label={props.label || ''} {...props} value={value} size='small' />
       </FormControl>
     )
   })
@@ -328,6 +328,7 @@ const OverallDashboard = () => {
                       <Translations text='Period of time' />
                     </InputLabel>
                     <Select
+                     size="small"
                       fullWidth
                       value={dateSelect}
                       id='select-date'
@@ -367,6 +368,7 @@ const OverallDashboard = () => {
                       <Translations text='Status' />
                     </InputLabel>
                     <Select
+                     size="small"
                       fullWidth
                       value={status}
                       id='select-date'
@@ -396,6 +398,7 @@ const OverallDashboard = () => {
                       <Translations text='Campaign Name' />
                     </InputLabel>
                     <Select
+                     size="small"
                       fullWidth
                       value={campaign}
                       id='select-campaign'
@@ -423,6 +426,7 @@ const OverallDashboard = () => {
                       <Translations text='Channel' />
                     </InputLabel>
                     <Select
+                     size="small"
                       fullWidth
                       value={platformId}
                       id='select-platform'

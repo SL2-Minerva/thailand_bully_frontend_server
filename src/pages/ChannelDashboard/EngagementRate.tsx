@@ -254,7 +254,7 @@ const EngagementRate = (props: LineProps) => {
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title={<Translations text='Engagement Rate' />}
+            title={<Translations text='Total Engagement By Channel' />}
             titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
             subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
           />

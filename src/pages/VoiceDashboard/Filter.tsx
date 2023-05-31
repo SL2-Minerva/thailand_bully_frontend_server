@@ -40,7 +40,7 @@ interface Props {
   setCampaign: any
   tilte: string
   platformId: string
-  setPlatformId: any,
+  setPlatformId: any
   status: string
   setStatus: any
 }
@@ -62,8 +62,8 @@ const Filter = (props: Props) => {
     setCampaign,
     tilte,
     setPlatformId,
-    platformId, 
-    status, 
+    platformId,
+    status,
     setStatus
   } = props
   const { resultCampaiganList } = CampaignLists(status)
@@ -151,7 +151,7 @@ const Filter = (props: Props) => {
   const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
     setStatus(e.target.value)
     localStorage.setItem('status', e.target.value)
-}, [])
+  }, [])
 
   const handleOnChangePreviousDate = (dates: any) => {
     const [start, end] = dates
@@ -169,7 +169,7 @@ const Filter = (props: Props) => {
 
     return (
       <FormControl fullWidth>
-        <TextField inputRef={ref} label={props.label || ''} {...props} value={value} />
+        <TextField inputRef={ref} label={props.label || ''} {...props} value={value} size='small'/>
       </FormControl>
     )
   })
@@ -211,6 +211,7 @@ const Filter = (props: Props) => {
                   labelId='date-select'
                   onChange={handleDateSelect}
                   inputProps={{ placeholder: 'Select Period' }}
+                  size='small'
                 >
                   <MenuItem value='1'>
                     <Translations text='Today' />
@@ -241,6 +242,7 @@ const Filter = (props: Props) => {
                   <Translations text='Status' />
                 </InputLabel>
                 <Select
+                  size='small'
                   fullWidth
                   value={status}
                   id='select-date'
@@ -270,6 +272,7 @@ const Filter = (props: Props) => {
                   <Translations text='Campaign Name' />
                 </InputLabel>
                 <Select
+                  size='small'
                   fullWidth
                   value={campaign}
                   id='select-campaign'
@@ -298,6 +301,7 @@ const Filter = (props: Props) => {
                   <Translations text='Channel' />
                 </InputLabel>
                 <Select
+                  size='small'
                   fullWidth
                   value={platformId}
                   id='select-platform'

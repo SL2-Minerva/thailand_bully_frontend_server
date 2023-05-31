@@ -108,6 +108,7 @@ const ChannelWordCloud = (props: Props) => {
                   id='select-platform'
                   label='Select Channel'
                   labelId='platform-select'
+                  size='small'
                   onChange={e => {
                     handleSelectList(e)
                   }}

@@ -243,7 +243,7 @@ const WordCloudDashboard = () => {
 
     return (
       <FormControl fullWidth>
-        <TextField inputRef={ref} label={props.label || ''} {...props} value={value} />
+        <TextField inputRef={ref} label={props.label || ''} {...props} value={value} size='small' />
       </FormControl>
     )
   })
@@ -333,6 +333,7 @@ const WordCloudDashboard = () => {
                       <Translations text='Period of time' />
                     </InputLabel>
                     <Select
+                      size='small'
                       fullWidth
                       value={dateSelect}
                       id='select-date'
@@ -371,6 +372,7 @@ const WordCloudDashboard = () => {
                       <Translations text='Status' />
                     </InputLabel>
                     <Select
+                      size='small'
                       fullWidth
                       value={status}
                       id='select-date'
@@ -399,6 +401,7 @@ const WordCloudDashboard = () => {
                       <Translations text='Campaign Name' />
                     </InputLabel>
                     <Select
+                      size='small'
                       fullWidth
                       value={campaign}
                       id='select-campaign'
@@ -426,6 +429,7 @@ const WordCloudDashboard = () => {
                       <Translations text='Channel' />
                     </InputLabel>
                     <Select
+                      size='small'
                       fullWidth
                       value={platformId}
                       id='select-platform'
