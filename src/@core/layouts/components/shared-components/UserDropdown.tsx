@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, SyntheticEvent, Fragment } from 'react'
+import React, { useState, SyntheticEvent, Fragment } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import Menu from '@mui/material/Menu'
 import Badge from '@mui/material/Badge'
 import Avatar from '@mui/material/Avatar'
+import clsx from 'clsx'
 
 // import Divider from '@mui/material/Divider'
 import MenuItem from '@mui/material/MenuItem'
@@ -27,14 +28,49 @@ import LogoutVariant from 'mdi-material-ui/LogoutVariant'
 
 // ** Context
 import { useAuth } from 'src/hooks/useAuth'
+import { GetInfoTransaction } from 'src/services/api/users/users'
 
 // ** Type Imports
 import { Settings } from 'src/@core/context/settingsContext'
 import { Box, Divider, Typography } from '@mui/material'
 import { CogOutline } from 'mdi-material-ui'
+import { createStyles, makeStyles } from '@mui/styles'
+import { createTheme } from '@mui/material'
+
+const defaultTheme = createTheme()
+
+export const useStyles = makeStyles(
+  () =>
+    createStyles({
+      root: {
+        position: 'relative',
+        overflow: 'hidden',
+        width: '100%',
+        height: 16,
+        borderRadius: 2
+      },
+      value: {
+        position: 'absolute',
+        lineHeight: '14px',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        fontSize: '13px'
+      },
+      bar: {
+        height: '100%'
+      }
+    }),
+  { defaultTheme }
+)
 
 interface Props {
   settings: Settings
+}
+
+interface ProgressBarProps {
+  value: number
+  color: string
 }
 
 // ** Styled Components
@@ -46,9 +82,44 @@ const BadgeContentSpan = styled('span')(({ theme }) => ({
   boxShadow: `0 0 0 2px ${theme.palette.background.paper}`
 }))
 
+const ProgressBar = React.memo(function ProgressBar(props: ProgressBarProps) {
+  const { value, color } = props
+  const valueInPercent = value
+  const classes = useStyles()
+
+  return (
+    <div
+      className={classes.root}
+      style={{
+        border: `1px solid ` + color
+      }}
+    >
+      {valueInPercent ? (
+        <>
+          <div className={classes.value}>{`${valueInPercent ? valueInPercent.toLocaleString() : ''}`}</div>
+          <div
+            className={clsx(classes.bar, {
+              low: valueInPercent < 30,
+              medium: valueInPercent >= 30 && valueInPercent <= 70,
+              high: valueInPercent > 70
+            })}
+            style={{
+              maxWidth: `${valueInPercent ? valueInPercent : ''}`,
+              backgroundColor: color
+            }}
+          />
+        </>
+      ) : (
+        ''
+      )}
+    </div>
+  )
+})
+
 const UserDropdown = (props: Props) => {
   // ** Props
   const { settings } = props
+  const { userInfoTransaction } = GetInfoTransaction()
 
   // ** States
   const [anchorEl, setAnchorEl] = useState<Element | null>(null)
@@ -136,6 +207,22 @@ const UserDropdown = (props: Props) => {
             </Box>
           </Box>
         </Box>
+        <Divider sx={{ mt: 0, mb: 1 }} />
+        <MenuItem sx={{ p: 2 }}>
+          {userInfoTransaction ? (
+            <Box>
+              <Typography variant='caption' sx={{fontSize: '10px'}}>
+                Transaction per month start({userInfoTransaction?.transaction_start_at})
+              </Typography>
+              <Box sx={{ display: 'flex', mt: 2 }}>
+                <ProgressBar value={Number(userInfoTransaction?.transaction_reamining)!} color='#cccc00' />
+                <ProgressBar value={Number(userInfoTransaction?.transaction_limit)!} color='#fff' />
+              </Box>
+            </Box>
+          ) : (
+            ''
+          )}
+        </MenuItem>
         <Divider sx={{ mt: 0, mb: 1 }} />
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/account-settings')}>
           <Box sx={styles}>

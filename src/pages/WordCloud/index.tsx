@@ -27,7 +27,7 @@ import { styled } from '@mui/material/styles'
 import 'chart.js/auto'
 import 'react-datepicker/dist/react-datepicker.css'
 
-import { CampaignList } from 'src/services/api/campaign/CampaignAPI'
+import { CampaignLists } from 'src/services/api/campaign/CampaignAPI'
 
 import SourceService from 'src/services/api/source/SourceApi'
 
@@ -95,7 +95,7 @@ const WordCloudDashboard = () => {
   const [platformId, setPlatformId] = useState<string>('all')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
 
-  // const [status, setStatus] = useState(localStorage.getItem('status') || '1');
+  const [status, setStatus] = useState(localStorage.getItem('status') || '1')
 
   // const [reload] = useState<boolean>(false)
   const [topKeyword, setTopKeyword] = useState<string>('all')
@@ -111,7 +111,7 @@ const WordCloudDashboard = () => {
 
   const router = useRouter()
 
-  const { resultCampaiganList } = CampaignList()
+  const { resultCampaiganList } = CampaignLists(status)
 
   const { resultReportPermission, errorUserPermission } = UserPermission()
 
@@ -158,10 +158,10 @@ const WordCloudDashboard = () => {
     }
   }, [])
 
-  //   const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
-  //     setStatus(e.target.value)
-  //     localStorage.setItem('status', e.target.value)
-  // }, [])
+  const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
+    setStatus(e.target.value)
+    localStorage.setItem('status', e.target.value)
+  }, [])
 
   const handleDateSelect = useCallback((e: any) => {
     const value = e.target?.value ? e.target?.value : e
@@ -327,7 +327,7 @@ const WordCloudDashboard = () => {
             <CardHeader title='Word Clouds' />
             <CardContent>
               <Grid container spacing={6}>
-                <Grid item sm={4} xs={12}>
+                <Grid item sm={3} xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='plan-select'>
                       <Translations text='Period of time' />
@@ -365,7 +365,35 @@ const WordCloudDashboard = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item sm={4} xs={12}>
+                <Grid item sm={3} xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel id='plan-select'>
+                      <Translations text='Status' />
+                    </InputLabel>
+                    <Select
+                      fullWidth
+                      value={status}
+                      id='select-date'
+                      label={<Translations text='Status' />}
+                      labelId='date-select'
+                      onChange={(e: SelectChangeEvent) => {
+                        handleSelectStatus(e)
+                      }}
+                      inputProps={{ placeholder: 'Select Status' }}
+                    >
+                      <MenuItem value='all'>
+                        <Translations text='All' />
+                      </MenuItem>
+                      <MenuItem value='1'>
+                        <Translations text='Active' />
+                      </MenuItem>
+                      <MenuItem value='0'>
+                        <Translations text='InActive' />
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item sm={3} xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='plan-select'>
                       <Translations text='Campaign Name' />
@@ -392,7 +420,7 @@ const WordCloudDashboard = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item sm={4} xs={12}>
+                <Grid item sm={3} xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='plan-select'>
                       <Translations text='Channel' />
@@ -420,7 +448,7 @@ const WordCloudDashboard = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item sm={4} xs={12}>
+                <Grid item sm={3} xs={12}>
                   <Box>
                     <DatePickerWrapper>
                       <DatePicker
@@ -444,7 +472,7 @@ const WordCloudDashboard = () => {
                   </Box>
                 </Grid>
                 {showPreviousDatepicker ? (
-                  <Grid item sm={4} xs={12}>
+                  <Grid item sm={3} xs={12}>
                     <Box>
                       <DatePickerWrapper>
                         <DatePicker
