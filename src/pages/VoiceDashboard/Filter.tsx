@@ -11,7 +11,7 @@ import {
   SelectChangeEvent,
   TextField
 } from '@mui/material'
-import { CampaignList } from 'src/services/api/campaign/CampaignAPI'
+import { CampaignLists } from 'src/services/api/campaign/CampaignAPI'
 import { calculateDate, get1stAndLastDayOfMonth, PickerProps } from '../dashboard/overall'
 
 import DatePicker from 'react-datepicker'
@@ -63,11 +63,10 @@ const Filter = (props: Props) => {
     tilte,
     setPlatformId,
     platformId, 
-
-    // status, 
-    // setStatus
+    status, 
+    setStatus
   } = props
-  const { resultCampaiganList } = CampaignList()
+  const { resultCampaiganList } = CampaignLists(status)
   const { result_source_list } = SourceService()
 
   const [showPreviousDatepicker, setShowPreviousDatepicker] = useState<boolean>(false)
@@ -149,10 +148,10 @@ const Filter = (props: Props) => {
     localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'))
   }
 
-//   const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
-//     setStatus(e.target.value)
-//     localStorage.setItem('status', e.target.value)
-// }, [])
+  const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
+    setStatus(e.target.value)
+    localStorage.setItem('status', e.target.value)
+}, [])
 
   const handleOnChangePreviousDate = (dates: any) => {
     const [start, end] = dates
@@ -199,7 +198,7 @@ const Filter = (props: Props) => {
         <CardHeader title={tilte} />
         <CardContent>
           <Grid container spacing={2}>
-            <Grid item sm={4} xs={12} mb={3}>
+            <Grid item sm={3} xs={12} mb={3}>
               <FormControl fullWidth>
                 <InputLabel id='plan-select'>
                   <Translations text='Period of time' />
@@ -236,7 +235,7 @@ const Filter = (props: Props) => {
               </FormControl>
             </Grid>
 
-            {/* <Grid item sm={4} xs={12}>
+            <Grid item sm={3} xs={12}>
               <FormControl fullWidth>
                 <InputLabel id='plan-select'>
                   <Translations text='Status' />
@@ -252,6 +251,9 @@ const Filter = (props: Props) => {
                   }}
                   inputProps={{ placeholder: 'Select Status' }}
                 >
+                  <MenuItem value='all'>
+                    <Translations text='All' />
+                  </MenuItem>
                   <MenuItem value='1'>
                     <Translations text='Active' />
                   </MenuItem>
@@ -260,9 +262,9 @@ const Filter = (props: Props) => {
                   </MenuItem>
                 </Select>
               </FormControl>
-            </Grid> */}
+            </Grid>
 
-            <Grid item sm={4} xs={12}>
+            <Grid item sm={3} xs={12}>
               <FormControl fullWidth>
                 <InputLabel id='plan-select'>
                   <Translations text='Campaign Name' />
@@ -290,7 +292,7 @@ const Filter = (props: Props) => {
               </FormControl>
             </Grid>
 
-            <Grid item sm={4} xs={12}>
+            <Grid item sm={3} xs={12}>
               <FormControl fullWidth>
                 <InputLabel id='plan-select'>
                   <Translations text='Channel' />
@@ -319,7 +321,7 @@ const Filter = (props: Props) => {
               </FormControl>
             </Grid>
 
-            <Grid item sm={4} xs={12}>
+            <Grid item sm={3} xs={12}>
               <Box>
                 <DatePickerWrapper>
                   <DatePicker
@@ -339,7 +341,7 @@ const Filter = (props: Props) => {
               </Box>
             </Grid>
             {showPreviousDatepicker ? (
-              <Grid item sm={4} xs={12}>
+              <Grid item sm={3} xs={12}>
                 <Box>
                   <DatePickerWrapper>
                     <DatePicker

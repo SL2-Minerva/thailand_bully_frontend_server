@@ -13,11 +13,10 @@ const FooterContent = () => {
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
       <Typography sx={{ mr: 2 }}>
-        {`Copyright © 2023 by `}
-        <Box component='span' sx={{ color: 'error.main' }}>
-          MINERVA CONSULTANT CO.,LTD
-        </Box>
-        {`. All right reserved.`}
+        {`Copyright © 2023 by MINERVA CONSULTANT CO.,LTD. All right reserved.`}
+        {/* <Box component='span' sx={{ color: 'error.main' }}>
+          
+        </Box> */}
         <Link target='_blank' href='https://pixinvent.com/'></Link>
       </Typography>
     </Box>

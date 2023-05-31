@@ -24,15 +24,15 @@ import { select } from 'd3-selection'
 import AccountList from '../dashboard/AccountList'
 
 interface Props {
-    apiParams : any
-    platformId : string
-    setPlatformId: any
-    setWord: any
-    params: any
+  apiParams: any
+  platformId: string
+  setPlatformId: any
+  setWord: any
+  params: any
 }
 
-const ChannelWordCloud = (props : Props) => {
-    const {apiParams, platformId, setPlatformId, setWord, params} = props;
+const ChannelWordCloud = (props: Props) => {
+  const { apiParams, platformId, setPlatformId, setWord, params } = props
   const { result_source_list } = SourceService()
 
   const { resultWordCloudsPlatform, loadingWordCloudsPlatform } = GetWordCloudsPlatform(apiParams)
@@ -58,9 +58,10 @@ const ChannelWordCloud = (props : Props) => {
           }
         })
         .transition()
-        .attr('background', 'white')
-        .attr('font-size', isActive ? '300%' : '100%')
         .attr('text-decoration', isActive ? 'underline' : 'none')
+
+        // .attr('background', 'white')
+        // .attr('font-size', isActive ? '300%' : '100%')
     }
   }
 
@@ -124,7 +125,7 @@ const ChannelWordCloud = (props : Props) => {
               </FormControl>
             </Grid>
           </Grid>
-          <div style={{ height: 400, width: 500 }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
             {loadingWordCloudsPlatform ? (
               ''
             ) : (
@@ -142,7 +143,21 @@ const ChannelWordCloud = (props : Props) => {
                     <Translations text='no data' />
                   </div>
                 ) : (
-                  <ReactWordcloud words={resultWordCloudsPlatform?.word_clouds_platform || []} callbacks={callbacks} />
+                  <ReactWordcloud
+                    options={{
+                      enableTooltip: true,
+                      deterministic: false,
+                      fontFamily: 'impact',
+                      fontSizes: [12, 70],
+                      fontStyle: 'normal',
+                      fontWeight: 'normal',
+                      padding: 1,
+                      spiral: 'archimedean',
+                      transitionDuration: 1000
+                    }}
+                    words={resultWordCloudsPlatform?.word_clouds_platform || []}
+                    callbacks={callbacks}
+                  />
                 )}
               </>
             )}

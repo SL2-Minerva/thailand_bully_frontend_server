@@ -77,7 +77,7 @@ export const CampaignList = (reload?: boolean, is_fillter?: boolean, fillter?: a
       .map(key => `${key}=${fillter[key]}`)
       .join('&')}`
   }
-  let params;
+  let params : any;
 
     if(page ||  page === 0  ) {
       params = {
@@ -92,6 +92,24 @@ export const CampaignList = (reload?: boolean, is_fillter?: boolean, fillter?: a
     params: params,
     data: {
       reload: reload
+    }
+  })
+  
+  return {
+    resultCampaiganList: res?.data || null,
+    total: res?.data?.total || 0,
+    loadingCampaiganList: loading,
+    errorCampaiganList: error
+  }
+}
+
+export const CampaignLists = (status?: string) => {
+
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/campaign/list`,
+    method: 'GET',
+    params: {
+      status : status
     }
   })
   

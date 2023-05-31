@@ -11,49 +11,45 @@ import 'd3-transition'
 import { select } from 'd3-selection'
 
 interface Props {
-    apiParams : any
-    setSentiment : any
-    setWord : any
-    sentiment: string
-    params : any
+  apiParams: any
+  setSentiment: any
+  setWord: any
+  sentiment: string
+  params: any
 }
 
 const SentimentWordCloud = (props: Props) => {
-    const {apiParams, setSentiment, setWord, sentiment, params} = props;
-    const { resultWordCloudsSentiment, loadingWordCloudsSentiment } = GetWordCloudsSentiment(apiParams)
+  const { apiParams, setSentiment, setWord, sentiment, params } = props
+  const { resultWordCloudsSentiment, loadingWordCloudsSentiment } = GetWordCloudsSentiment(apiParams)
 
-    const chooseSentiment = (value: string) => {
-      setSentiment(value)
-    }
-  
-    function getCallback(callback: any) {
-      return function (word: any, event: any) {
-        const isActive = callback !== 'onWordMouseOut'
-        const element = event.target
-        const text = select(element)
-        text
-          .on('click', () => {
-            if (isActive && word) {
-              const selectedWord = word?.text
-              setWord(selectedWord)
-            }
-          })
-          .transition()
-          .attr('background', 'white')
-          .attr('font-size', isActive ? '300%' : '100%')
-          .attr('text-decoration', isActive ? 'underline' : 'none')
-      }
-    }
-  
-    
-    const callbacks = {
-        // getWordColor: (word:any) => (word.value > 50 ? "orange" : "purple"),
-        getWordTooltip: (word: any) => `The word "${word.text}" appears ${word.value} times.`,
-        onWordClick: getCallback('onWordClick'),
-        onWordMouseOut: getCallback('onWordMouseOut'),
-        onWordMouseOver: getCallback('onWordMouseOver')
-      }
+  const chooseSentiment = (value: string) => {
+    setSentiment(value)
+  }
 
+  function getCallback(callback: any) {
+    return function (word: any, event: any) {
+      const isActive = callback !== 'onWordMouseOut'
+      const element = event.target
+      const text = select(element)
+      text
+        .on('click', () => {
+          if (isActive && word) {
+            const selectedWord = word?.text
+            setWord(selectedWord)
+          }
+        })
+        .transition()
+        .attr('text-decoration', isActive ? 'underline' : 'none')
+    }
+  }
+
+  const callbacks = {
+    // getWordColor: (word:any) => (word.value > 50 ? "orange" : "purple"),
+    getWordTooltip: (word: any) => `The word "${word.text}" appears ${word.value} times.`,
+    onWordClick: getCallback('onWordClick'),
+    onWordMouseOut: getCallback('onWordMouseOut'),
+    onWordMouseOver: getCallback('onWordMouseOver')
+  }
 
   return (
     <>
@@ -106,7 +102,7 @@ const SentimentWordCloud = (props: Props) => {
               </Button>
             </Grid>
           </Grid>
-          <div style={{ height: 400, width: 500 }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
             {!loadingWordCloudsSentiment ? (
               <>
                 {!resultWordCloudsSentiment?.word_clouds_position ||
@@ -122,7 +118,21 @@ const SentimentWordCloud = (props: Props) => {
                     <Translations text='no data' />
                   </div>
                 ) : (
-                  <ReactWordcloud callbacks={callbacks} words={resultWordCloudsSentiment?.word_clouds_position || []} />
+                  <ReactWordcloud
+                    options={{
+                      enableTooltip: true,
+                      deterministic: false,
+                      fontFamily: 'impact',
+                      fontSizes: [12, 70],
+                      fontStyle: 'normal',
+                      fontWeight: 'normal',
+                      padding: 1,
+                      spiral: 'archimedean',
+                      transitionDuration: 1000
+                    }}
+                    callbacks={callbacks}
+                    words={resultWordCloudsSentiment?.word_clouds_position || []}
+                  />
                 )}
               </>
             ) : (

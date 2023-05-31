@@ -19,7 +19,6 @@ const WordCloud = ({
   loadingWordClouds: boolean
   setWord: any
 }) => {
-
   // const reportNo = '1.2.021'
 
   function getCallback(callback: any) {
@@ -35,8 +34,6 @@ const WordCloud = ({
           }
         })
         .transition()
-        .attr('background', 'white')
-        .attr('font-size', isActive ? '300%' : '100%')
         .attr('text-decoration', isActive ? 'underline' : 'none')
     }
   }
@@ -70,7 +67,7 @@ const WordCloud = ({
           <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
-      <div style={{ height: 400, width: 500 }}>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
         {!loadingWordClouds ? (
           <>
             {!resultWordClouds?.word_clouds || resultWordClouds?.word_clouds?.length == 0 ? (
@@ -85,7 +82,23 @@ const WordCloud = ({
                 <Translations text='no data' />
               </div>
             ) : (
-              <ReactWordcloud words={resultWordClouds?.word_clouds || []} callbacks={callbacks} />
+              <ReactWordcloud
+                options={{
+                  colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b'],
+                  enableTooltip: true,
+                  deterministic: false,
+                  fontFamily: 'impact',
+                  fontSizes: [12, 70],
+                  fontStyle: 'normal',
+                  fontWeight: 'normal',
+                  padding: 1,
+                  scale: 'sqrt',
+                  spiral: 'archimedean',
+                  transitionDuration: 1000
+                }}
+                words={resultWordClouds?.word_clouds || []}
+                callbacks={callbacks}
+              />
             )}
           </>
         ) : (
