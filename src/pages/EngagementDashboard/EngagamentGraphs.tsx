@@ -150,7 +150,7 @@ const EngagementGraphs = (data: Props) => {
       <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
         <CircularProgress color='inherit' />
       </Backdrop>
-      <Grid container spacing={4} mt={2}>
+      <Grid container spacing={4} mt={0.3}>
         {resultReportPermission?.includes('57') ? (
           <Grid id='chart1' item xs={12} md={4}>
             <PercentageOfEngangement
