@@ -1,5 +1,4 @@
-import { Table, TableRow, TableHead, TableCell, TableContainer, TableBody, LinearProgress, Typography } from '@mui/material'
-import Card from '@mui/material/Card'
+import { Table, Paper, TableRow, TableHead, TableCell, TableContainer, TableBody, LinearProgress, Typography } from '@mui/material'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useState } from 'react'
@@ -23,7 +22,7 @@ const MainKeyWordTable = ({ params, resultTopKeywords, loadingTopKeywords }: Pro
   const reportNo = '1.2.009'
 
   return (
-    <Card sx={{ maxHeight: 360, minHeight: 360 }}>
+    <Paper sx={{ maxHeight: 360, minHeight: 360,border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loadingTopKeywords && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title={<Translations text='Main Keyword' />} titleTypographyProps={{ variant: 'h6' }} />
@@ -101,7 +100,7 @@ const MainKeyWordTable = ({ params, resultTopKeywords, loadingTopKeywords }: Pro
           ''
         )}
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

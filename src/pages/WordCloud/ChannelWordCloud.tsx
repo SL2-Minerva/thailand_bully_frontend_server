@@ -2,13 +2,13 @@ import ReactWordcloud from 'react-wordcloud'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/scale.css'
 import {
-  Card,
   CardHeader,
   FormControl,
   Grid,
   InputLabel,
   LinearProgress,
   MenuItem,
+  Paper,
   Select,
   SelectChangeEvent,
   Typography
@@ -60,8 +60,8 @@ const ChannelWordCloud = (props: Props) => {
         .transition()
         .attr('text-decoration', isActive ? 'underline' : 'none')
 
-        // .attr('background', 'white')
-        // .attr('font-size', isActive ? '300%' : '100%')
+      // .attr('background', 'white')
+      // .attr('font-size', isActive ? '300%' : '100%')
     }
   }
 
@@ -75,7 +75,11 @@ const ChannelWordCloud = (props: Props) => {
   return (
     <>
       <Grid item xs={12} md={6}>
-        <Card sx={{ maxHeight: 500, minHeight: 500, overflow: 'auto' }}>
+        <Paper
+          style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 500, minHeight: 500, overflow: 'auto' }}
+          square
+          variant='outlined'
+        >
           {loadingWordCloudsPlatform && <LinearProgress style={{ width: '100%' }} />}
           <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <CardHeader
@@ -163,7 +167,7 @@ const ChannelWordCloud = (props: Props) => {
               </>
             )}
           </div>
-        </Card>
+        </Paper>
       </Grid>
       <Grid id='chart16' item xs={12} md={6}>
         <AccountList

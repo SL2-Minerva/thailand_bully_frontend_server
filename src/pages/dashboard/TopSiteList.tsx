@@ -6,9 +6,9 @@ import {
   TableContainer,
   TableBody,
   LinearProgress,
-  Typography
+  Typography,
+  Paper
 } from '@mui/material'
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from './overall'
@@ -43,7 +43,7 @@ const TopSiteList = ({ resultTopKeywords, loadingTopKeywords }: Props) => {
   // const reportNo = '1.2.012'
 
   return (
-    <Card sx={{ maxHeight: 360, minHeight: 360 }}>
+    <Paper sx={{ maxHeight: 360, minHeight: 360, border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loadingTopKeywords && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title='Top Sites' titleTypographyProps={{ variant: 'h6' }} />
@@ -120,7 +120,7 @@ const TopSiteList = ({ resultTopKeywords, loadingTopKeywords }: Props) => {
           ''
         )} */}
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

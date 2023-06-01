@@ -3,7 +3,6 @@ import { ReactNode } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
@@ -15,7 +14,7 @@ import Grid from '@mui/material/Grid'
 // ** Icons Imports
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
-import { Avatar, Chip, LinearProgress } from '@mui/material'
+import { Avatar, Chip, LinearProgress, Paper } from '@mui/material'
 import { FacebookIcon, googleIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const'
 
 interface InfluencerComparisonProps {
@@ -48,11 +47,11 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
       ? googleIcon
       : FacebookIcon
 
-  const percentageValue = trendNumber ? trendNumber + '%' : '';
+  const percentageValue = trendNumber ? trendNumber + '%' : ''
 
   return (
     <>
-      <Card>
+      <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
         {loading && <LinearProgress style={{ width: '100%' }} />}
         <CardContent>
           <Box>
@@ -60,7 +59,7 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
               <Grid item xs={12}>
                 <span style={{ display: 'flex', justifyContent: 'center' }}>
                   <Avatar sx={{ width: 30, height: 30 }}>
-                    <img src={imgPath} width={30} height={30} alt=""/>
+                    <img src={imgPath} width={30} height={30} alt='' />
                   </Avatar>
                   <Chip
                     label={totalText}
@@ -92,23 +91,20 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
                 <Grid mt={4}>
                   <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        {
-                            trendNumber !=  0 ?
-                            <>
-                                <TrendIcon fontSize='large' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }} />
+                      {trendNumber != 0 ? (
+                        <>
+                          <TrendIcon
+                            fontSize='large'
+                            sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}
+                          />
 
-                                <Typography variant='h6' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
-                                    {percentageValue}
-                                </Typography>
-                            </>
-
-                            :
-                            <Typography variant='h6'>
-                                {0 + '%'}
-                            </Typography>
-
-                        }
-                      
+                          <Typography variant='h6' sx={{ color: trend === 'plus' ? 'success.main' : 'error.main' }}>
+                            {percentageValue}
+                          </Typography>
+                        </>
+                      ) : (
+                        <Typography variant='h6'>{0 + '%'}</Typography>
+                      )}
                     </Box>
                   </Box>
                 </Grid>
@@ -116,7 +112,7 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
             </Grid>
           </Box>
         </CardContent>
-      </Card>
+      </Paper>
     </>
   )
 }

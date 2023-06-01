@@ -1,7 +1,6 @@
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
+import { Grid, IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 
 // ** Third Party Imports
 import { ApexOptions } from 'apexcharts'
@@ -161,7 +160,7 @@ const DayTimeBullyLevel = (props: Props) => {
   }, [yIndexTime, xIndexTime])
 
   return (
-    <Card>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loadingByBullyLevel && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -268,7 +267,7 @@ const DayTimeBullyLevel = (props: Props) => {
           ''
         )}
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

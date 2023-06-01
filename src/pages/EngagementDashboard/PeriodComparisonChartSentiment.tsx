@@ -1,5 +1,4 @@
 import {
-  Card,
   CardContent,
   CardHeader,
   Grid,
@@ -47,10 +46,10 @@ interface LineProps {
 
 const useStyles = makeStyles(() => ({
   cell_short: {
-    fontSize: "10px",
+    fontSize: '10px',
     width: 10
   }
-}));
+}))
 
 const chartLabel = (data: any) => {
   if (!data) return []
@@ -240,10 +239,10 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
   }
 
   // const reportNo = '4.2.022'
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
-    <Card sx={{ minHeight: 713 }}>
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7, minHeight: 713 }} square variant='outlined'>
       {loadingPeriodComparisonBySenitment && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -378,7 +377,7 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
           </Grid>
         </Grid>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

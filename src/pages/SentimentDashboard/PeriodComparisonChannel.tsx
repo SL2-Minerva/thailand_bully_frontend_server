@@ -1,5 +1,4 @@
 import {
-  Card,
   CardContent,
   CardHeader,
   Grid,
@@ -227,7 +226,7 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
   // const reportNo = '5.2.013'
 
   return (
-    <Card>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 ,minHeight: 713 }} square variant='outlined'>
       {loadingSenitmentComparisonByChannel && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -365,7 +364,7 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
           </Grid>
         </Grid>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

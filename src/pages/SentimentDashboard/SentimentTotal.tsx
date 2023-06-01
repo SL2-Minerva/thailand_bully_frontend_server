@@ -1,5 +1,5 @@
 import { StyledTooltip } from '../dashboard/overall'
-import { Card, CardHeader, Grid, Typography } from '@mui/material'
+import { CardHeader, Grid, Paper, Typography } from '@mui/material'
 import TotalMessage from './TotalMessage'
 import PeriodComparisonChart from '../EngagementDashboard/PeriodComparisonChart'
 import { Information } from 'mdi-material-ui'
@@ -38,7 +38,7 @@ const SentimentTotal = (props: Props) => {
       {resultReportPermission?.includes('85') ? (
         <>
           <Grid item xs={12}>
-            <Card id='chart10'>
+            <Paper id='chart10' sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
               <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                   title={<Translations text='Total Messages by Sentiment Type' />}
@@ -66,7 +66,7 @@ const SentimentTotal = (props: Props) => {
                   />
                 </StyledTooltip>
               </span>
-            </Card>
+            </Paper>
           </Grid>
           <Grid item xs={12} md={12}>
             <TotalMessage

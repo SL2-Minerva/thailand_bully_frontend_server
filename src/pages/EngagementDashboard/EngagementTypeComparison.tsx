@@ -1,8 +1,7 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, LinearProgress, TableBody, TableContainer, Typography } from '@mui/material'
+import { Grid, LinearProgress, Paper, TableBody, TableContainer, Typography } from '@mui/material'
 import { Table, TableRow, TableHead, TableCell } from '@mui/material'
 
 // ** Icons Imports
@@ -23,11 +22,10 @@ const EngagementTypeComparison = ({
   resultEngagementComparison: any
   loadingEngagementComparison: boolean
 }) => {
-
   // const reportNo = '4.2.023'
 
   return (
-    <Card sx={{ minHeight: 560 }}>
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7, minHeight: 560 }} square variant='outlined'>
       {loadingEngagementComparison && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -206,7 +204,7 @@ const EngagementTypeComparison = ({
           </Grid>
         </Grid>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

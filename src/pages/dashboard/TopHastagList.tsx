@@ -1,5 +1,14 @@
-import { Table, TableRow, TableHead, TableCell, TableContainer, TableBody, LinearProgress, Typography } from '@mui/material'
-import Card from '@mui/material/Card'
+import {
+  Paper,
+  Table,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableContainer,
+  TableBody,
+  LinearProgress,
+  Typography
+} from '@mui/material'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from './overall'
@@ -21,7 +30,7 @@ const TopHashtagList = ({ resultTopKeywords, loadingTopKeywords }: Props) => {
   // const reportNo = '1.2.015'
 
   return (
-    <Card sx={{ maxHeight: 360, minHeight: 360 }}>
+    <Paper sx={{ maxHeight: 360, minHeight: 360, border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loadingTopKeywords && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title='Top Hashtag' titleTypographyProps={{ variant: 'h6' }} />
@@ -49,8 +58,14 @@ const TopHashtagList = ({ resultTopKeywords, loadingTopKeywords }: Props) => {
                 <TableCell variant='head' sx={{ backgroundColor: 'white !important' }}>
                   {' '}
                 </TableCell>
-                <TableCell variant='head'  align='center'> No. of Messages </TableCell>
-                <TableCell variant='head'  align='center'> % </TableCell>
+                <TableCell variant='head' align='center'>
+                  {' '}
+                  No. of Messages{' '}
+                </TableCell>
+                <TableCell variant='head' align='center'>
+                  {' '}
+                  %{' '}
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -64,8 +79,12 @@ const TopHashtagList = ({ resultTopKeywords, loadingTopKeywords }: Props) => {
                     }}
                   >
                     <TableCell sx={tableCellStyle}>{hashtag?.hashtag}</TableCell>
-                    <TableCell width='40%'  align='center'>{hashtag?.no_of_message?.toLocaleString('en-US')}</TableCell>
-                    <TableCell width='30%'  align='center'>{hashtag?.percentage && hashtag?.percentage?.toFixed(2)}</TableCell>
+                    <TableCell width='40%' align='center'>
+                      {hashtag?.no_of_message?.toLocaleString('en-US')}
+                    </TableCell>
+                    <TableCell width='30%' align='center'>
+                      {hashtag?.percentage && hashtag?.percentage?.toFixed(2)}
+                    </TableCell>
                   </TableRow>
                 )
               })}
@@ -96,7 +115,7 @@ const TopHashtagList = ({ resultTopKeywords, loadingTopKeywords }: Props) => {
                         /> : ""
                     } */}
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

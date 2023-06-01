@@ -1,8 +1,7 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Typography, Paper } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -164,7 +163,8 @@ const PlatformsComparison = ({
   // const reportNo = '2.2.022'
 
   return (
-    <Card style={{ minHeight: 550 }}>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1,minHeight: 550 }} square variant='outlined'>
+
       {loadingPlatformComparison && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -280,7 +280,7 @@ const PlatformsComparison = ({
           </Grid>
         </Grid>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

@@ -148,7 +148,7 @@ const BullyCharts = (data: Props) => {
         <CircularProgress color='inherit' />
       </Backdrop>
       {resultReportPermission?.includes('93') ? (
-        <Grid id='chart1' item xs={12} md={4}>
+        <Grid id='chart1' item xs={12} md={4} mt={2}>
           <PercentageOfBully
             resultBullyLevelPercentage={resultBullyLevelPercentage}
             loadingBullyLevelPercentage={loadingFilterData}
@@ -162,7 +162,7 @@ const BullyCharts = (data: Props) => {
         ''
       )}
       {resultReportPermission?.includes('94') ? (
-        <Grid id='chart2' item xs={12} md={8}>
+        <Grid id='chart2' item xs={12} md={8} mt={2}>
           <DailyMessgeByBully
             white={whiteColor}
             labelColor={labelColor}

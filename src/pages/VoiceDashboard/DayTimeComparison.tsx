@@ -1,4 +1,3 @@
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
@@ -11,7 +10,7 @@ import { MouseEvent, useEffect, useState } from 'react'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import DailyMessageDetail from '../dashboard/DailyMessageDetail'
-import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import { TimeAxis } from 'src/utils/const'
 import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
@@ -105,7 +104,7 @@ const DayTimeComparison = ({
   const reportNo = '2.2.016'
 
   return (
-    <Card>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loadingDayTimeComparison && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -191,7 +190,7 @@ const DayTimeComparison = ({
           ''
         )}
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

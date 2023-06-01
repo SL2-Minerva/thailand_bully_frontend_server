@@ -1,9 +1,8 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
-import { Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
+import { Grid, IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -85,7 +84,7 @@ const CommentSentiment = ({ apiParams }: { apiParams: any; chartId: string }) =>
   }
 
   return (
-    <Card style={{ minHeight: 410, maxHeight: 500 }}>
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7  , minHeight: 410, maxHeight: 500, }} square variant='outlined'>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -202,7 +201,7 @@ const CommentSentiment = ({ apiParams }: { apiParams: any; chartId: string }) =>
           </Grid>
         </Grid>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

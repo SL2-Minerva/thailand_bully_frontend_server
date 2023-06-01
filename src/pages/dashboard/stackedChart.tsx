@@ -1,5 +1,4 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
@@ -15,7 +14,7 @@ import { InteractionItem } from 'chart.js'
 // import DotsVertical from 'mdi-material-ui/DotsVertical'
 
 import { StyledTooltip } from './overall'
-import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import { FilePngBox, ChartBarStacked, ChartLine, MicrosoftExcel, Download, Information } from 'mdi-material-ui'
 
@@ -374,7 +373,7 @@ const StackedChart = (props: LineProps) => {
   }
 
   return (
-    <Card sx={{ minHeight: 580, maxHeight: 600 }}>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 587, maxHeight: 600 }} square variant='outlined'>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -496,7 +495,7 @@ const StackedChart = (props: LineProps) => {
           ''
         )}
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

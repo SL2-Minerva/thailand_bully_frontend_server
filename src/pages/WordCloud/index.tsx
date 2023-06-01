@@ -1,7 +1,6 @@
 import { forwardRef, useCallback, useEffect, useState } from 'react'
 import {
   Grid,
-  Card,
   CardHeader,
   CardContent,
   InputLabel,
@@ -9,7 +8,8 @@ import {
   Box,
   Tooltip,
   tooltipClasses,
-  TooltipProps
+  TooltipProps,
+  Paper
 } from '@mui/material'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
@@ -323,7 +323,7 @@ const WordCloudDashboard = () => {
     <>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Card>
+          <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
             <CardHeader title='Word Clouds' />
             <CardContent>
               <Grid container spacing={6}>
@@ -504,7 +504,7 @@ const WordCloudDashboard = () => {
                 )}
               </Grid>
             </CardContent>
-          </Card>
+          </Paper>
         </Grid>
       </Grid>
 

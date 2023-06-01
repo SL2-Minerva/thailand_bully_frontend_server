@@ -1,7 +1,6 @@
 import { forwardRef, useCallback, useEffect, useState } from 'react'
 import {
   Grid,
-  Card,
   CardHeader,
   CardContent,
   InputLabel,
@@ -9,7 +8,8 @@ import {
   Box,
   LinearProgress,
   Typography,
-  Button
+  Button,
+  Paper
 } from '@mui/material'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
@@ -249,7 +249,7 @@ const SNAByBullyType = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Card>
+        <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
           <CardHeader title='Filter' />
           <CardContent>
             <Grid container spacing={6}>
@@ -458,11 +458,11 @@ const SNAByBullyType = () => {
               )}
             </Grid>
           </CardContent>
-        </Card>
+        </Paper>
       </Grid>
       <Grid container spacing={2} mt={2}>
         <Grid item xs={12} ml={2}>
-          <Card>
+          <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
             <CardHeader title='Keyword Filter'></CardHeader>
             <CardContent>
               <Grid container spacing={2}>
@@ -518,12 +518,12 @@ const SNAByBullyType = () => {
                   })}
               </Grid>
             </CardContent>
-          </Card>
+          </Paper>
         </Grid>
       </Grid>
 
-      <Grid item xs={12}>
-        <Card>
+      <Grid item xs={12} mt={2}>
+        <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
           {loadingNetworkGraph && <LinearProgress style={{ width: '100%' }} />}
 
           <Box sx={{ mb: 8, textAlign: 'center' }}>
@@ -569,7 +569,7 @@ const SNAByBullyType = () => {
               )}
             </Grid>
           </Grid>
-        </Card>
+        </Paper>
       </Grid>
     </Grid>
   )

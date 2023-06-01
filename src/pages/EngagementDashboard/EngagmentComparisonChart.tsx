@@ -1,4 +1,3 @@
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
@@ -9,7 +8,7 @@ import { ApexOptions } from 'apexcharts'
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
@@ -150,7 +149,7 @@ const EngagmentComparisonChart = ({
   // const reportNo = '4.2.024'
 
   return (
-    <Card sx={{ minHeight: 560 }}>
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7, minHeight: 560 }} square variant='outlined'>
       {loadingComparison && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -225,7 +224,7 @@ const EngagmentComparisonChart = ({
           </div>
         )}
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

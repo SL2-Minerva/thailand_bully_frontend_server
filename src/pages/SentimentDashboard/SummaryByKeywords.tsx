@@ -1,5 +1,4 @@
-import { Grid, Button, LinearProgress, Typography } from '@mui/material'
-import Card from '@mui/material/Card'
+import { Grid, Button, LinearProgress, Typography, Paper } from '@mui/material'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
@@ -151,7 +150,7 @@ const SummaryByKeywords = ({
   ]
 
   return (
-    <Card>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loadingSummaryByKeywords && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -254,7 +253,7 @@ const SummaryByKeywords = ({
           ''
         )}
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

@@ -57,7 +57,7 @@ const SentimentByCharts = (props: Props) => {
       )}
 
       {resultReportPermission?.includes('56') ? (
-        <Grid container spacing={4} ml={3} mt={2} id='chart13'>
+        <Grid container spacing={2} ml={3} mt={2} id='chart13'>
           <Grid item xs={12}>
             <SentimentLevelsByChannel
               chartId='Chart 13'

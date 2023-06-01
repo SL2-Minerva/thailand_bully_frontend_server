@@ -1,41 +1,40 @@
-import { Button, Card, CardContent, CardHeader, Grid, LinearProgress } from '@mui/material'
+import { Button, CardContent, CardHeader, Grid, LinearProgress, Paper } from '@mui/material'
 import { useEffect } from 'react'
 import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { wordBreaks } from './overall'
 
 interface Props {
-    campaign: string
-    keyword : string
-    setKeyword: any
-    filterKeyword: any
-    setFilterKeyword: any
-    checkKeywordId: any
-    setKeywordLoading?: any
+  campaign: string
+  keyword: string
+  setKeyword: any
+  filterKeyword: any
+  setFilterKeyword: any
+  checkKeywordId: any
+  setKeywordLoading?: any
 }
 
 const KeywordFilters = (data: Props) => {
-
-    const {campaign, keyword, setKeyword, filterKeyword, setFilterKeyword, checkKeywordId , setKeywordLoading} = data;
+  const { campaign, keyword, setKeyword, filterKeyword, setFilterKeyword, checkKeywordId, setKeywordLoading } = data
 
   const { resultKeywordList, loadingKeywordList, keywordsColor } = GetKeyWordsList(campaign)
 
   useEffect(() => {
-    if(setKeywordLoading) {
-        setKeywordLoading(loadingKeywordList)
+    if (setKeywordLoading) {
+      setKeywordLoading(loadingKeywordList)
     }
   }, [loadingKeywordList])
 
   return (
     <Grid container spacing={2} mt={2}>
       <Grid item xs={12}>
-        <Card>
-        {loadingKeywordList && <LinearProgress style={{ width: '100%' }} />}
+        <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+          {loadingKeywordList && <LinearProgress style={{ width: '100%' }} />}
           <CardHeader title='Filter'></CardHeader>
           <CardContent>
             <Grid container spacing={4}>
               <Grid item xs={6} md={1}>
                 <Button
-                fullWidth
+                  fullWidth
                   onClick={() => {
                     if (keyword === 'all') {
                       setKeyword('')
@@ -93,7 +92,7 @@ const KeywordFilters = (data: Props) => {
                 })}
             </Grid>
           </CardContent>
-        </Card>
+        </Paper>
       </Grid>
     </Grid>
   )

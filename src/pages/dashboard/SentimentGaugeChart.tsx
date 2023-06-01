@@ -1,7 +1,6 @@
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
+import { Grid, IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import dynamic from 'next/dynamic'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
@@ -42,7 +41,7 @@ const SentimentGaugeChart = ({ apiParams }: { apiParams: any; chartId: string })
 
 
   return (
-    <Card style={{ minHeight: 410, maxHeight: 500 }}>
+      <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 410, maxHeight: 500 }} square variant='outlined'>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -124,7 +123,7 @@ const SentimentGaugeChart = ({ apiParams }: { apiParams: any; chartId: string })
           </Grid>
         </Grid>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

@@ -1,8 +1,18 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, IconButton, LinearProgress, Menu, MenuItem, TableBody, TableCell, TableContainer, Typography } from '@mui/material'
+import {
+  Grid,
+  IconButton,
+  LinearProgress,
+  Menu,
+  MenuItem,
+  Paper,
+  TableBody,
+  TableCell,
+  TableContainer,
+  Typography
+} from '@mui/material'
 import { Table, TableRow, TableHead } from '@mui/material'
 
 // ** Third Party Imports
@@ -83,7 +93,7 @@ const SentimentLevelsByChannel = ({
   }, [resultSentimentLevel, resultBy])
 
   return (
-    <Card sx={{ minheight: 450 }}>
+    <Paper style={{ minHeight: 450, border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
       {loading && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -177,7 +187,7 @@ const SentimentLevelsByChannel = ({
           </Grid>
         </Grid>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

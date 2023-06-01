@@ -1,7 +1,6 @@
 import { forwardRef, useCallback, useEffect, useState } from 'react'
 import {
   Grid,
-  Card,
   CardHeader,
   CardContent,
   InputLabel,
@@ -9,7 +8,8 @@ import {
   Box,
   Tooltip,
   tooltipClasses,
-  TooltipProps
+  TooltipProps,
+  Paper
 } from '@mui/material'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
@@ -84,8 +84,12 @@ export const wordBreaks = (data: any) => {
 const OverallDashboard = () => {
   const [date, setDate] = useState<any>(new Date(localStorage.getItem('startDate') || calculateDate(6)))
   const [endDate, setEndDate] = useState<any>(new Date(localStorage.getItem('endDate') || new Date()))
-  const [previousDate, setPreviousDate] = useState<any>(new Date(localStorage.getItem('previousStartDate') || new Date()))
-  const [previousEndDate, setPreviousEndDate] = useState<any>(new Date(localStorage.getItem('previousEndDate') || new Date()))
+  const [previousDate, setPreviousDate] = useState<any>(
+    new Date(localStorage.getItem('previousStartDate') || new Date())
+  )
+  const [previousEndDate, setPreviousEndDate] = useState<any>(
+    new Date(localStorage.getItem('previousEndDate') || new Date())
+  )
   const [campaign, setCampaign] = useState<string>('')
   const [platformId, setPlatformId] = useState<string>('all')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
@@ -103,7 +107,7 @@ const OverallDashboard = () => {
   const [loadingKeyword, setLoadingKeyword] = useState<boolean>(true)
 
   //status dropdown
-  const [status, setStatus] = useState(localStorage.getItem('status') || '1');
+  const [status, setStatus] = useState(localStorage.getItem('status') || '1')
   const router = useRouter()
 
   const { resultCampaiganList } = CampaignLists(status)
@@ -154,8 +158,8 @@ const OverallDashboard = () => {
   }, [])
 
   const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
-      setStatus(e.target.value)
-      localStorage.setItem('status', e.target.value)
+    setStatus(e.target.value)
+    localStorage.setItem('status', e.target.value)
   }, [])
 
   const handleDateSelect = useCallback((e: any) => {
@@ -218,16 +222,16 @@ const OverallDashboard = () => {
     const [start, end] = dates
     setDate(start)
     setEndDate(end)
-    localStorage.setItem('startDate', moment(start)?.format('YYYY-MM-DD'));
-    localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'));
+    localStorage.setItem('startDate', moment(start)?.format('YYYY-MM-DD'))
+    localStorage.setItem('endDate', moment(end)?.format('YYYY-MM-DD'))
   }
 
   const handleOnChangePreviousDates = (dates: any) => {
     const [start, end] = dates
     setPreviousDate(start)
     setPreviousEndDate(end)
-    localStorage.setItem('previousStartDate', moment(start)?.format('YYYY-MM-DD'));
-    localStorage.setItem('previousEndDate', moment(end)?.format('YYYY-MM-DD'));
+    localStorage.setItem('previousStartDate', moment(start)?.format('YYYY-MM-DD'))
+    localStorage.setItem('previousEndDate', moment(end)?.format('YYYY-MM-DD'))
   }
 
   const CustomInput = forwardRef((props: PickerProps, ref) => {
@@ -318,7 +322,7 @@ const OverallDashboard = () => {
     <>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Card>
+          <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
             <CardHeader title='Overall Dashboard' />
             <CardContent>
               <Grid container spacing={6}>
@@ -328,7 +332,7 @@ const OverallDashboard = () => {
                       <Translations text='Period of time' />
                     </InputLabel>
                     <Select
-                     size="small"
+                      size='small'
                       fullWidth
                       value={dateSelect}
                       id='select-date'
@@ -368,7 +372,7 @@ const OverallDashboard = () => {
                       <Translations text='Status' />
                     </InputLabel>
                     <Select
-                     size="small"
+                      size='small'
                       fullWidth
                       value={status}
                       id='select-date'
@@ -398,7 +402,7 @@ const OverallDashboard = () => {
                       <Translations text='Campaign Name' />
                     </InputLabel>
                     <Select
-                     size="small"
+                      size='small'
                       fullWidth
                       value={campaign}
                       id='select-campaign'
@@ -426,7 +430,7 @@ const OverallDashboard = () => {
                       <Translations text='Channel' />
                     </InputLabel>
                     <Select
-                     size="small"
+                      size='small'
                       fullWidth
                       value={platformId}
                       id='select-platform'
@@ -501,7 +505,7 @@ const OverallDashboard = () => {
                 )}
               </Grid>
             </CardContent>
-          </Card>
+          </Paper>
         </Grid>
       </Grid>
 
