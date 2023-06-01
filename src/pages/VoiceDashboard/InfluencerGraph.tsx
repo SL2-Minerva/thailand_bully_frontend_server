@@ -1,4 +1,3 @@
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
@@ -14,7 +13,7 @@ import { Information } from 'mdi-material-ui'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { useEffect, useRef, useState, MouseEvent } from 'react'
 import { InteractionItem } from 'chart.js'
-import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import MessageDetail from './MessageDetail'
 import moment from 'moment'
@@ -47,9 +46,9 @@ const chartLabel = (data: any) => {
   if (labels && labels?.length > 0) {
     const filterArray = [...new Set(labels)]
     for (let i = 0; i < filterArray?.length; i++) {
-      labelValue.push(new Date(filterArray[i]));
+      labelValue.push(new Date(filterArray[i]))
     }
-    labelValue.sort((date1, date2) => date1 - date2);
+    labelValue.sort((date1, date2) => date1 - date2)
 
     for (let i = 0; i < labelValue?.length; i++) {
       labelValue[i] = moment(labelValue[i]).format('DD/MM/YYYY')
@@ -74,7 +73,7 @@ const InfluencerGraph = ({
   resultNumbersOfAccounts: any
   loadingNumbersOfAccounts: boolean
   keywordsColor: any
-  apiParams: any 
+  apiParams: any
   setIsLoading: any
 }) => {
   const [label, setLabel] = useState<string[]>([])
@@ -299,7 +298,7 @@ const InfluencerGraph = ({
   }
 
   return (
-    <Card style={{ height: 520 }}>
+    <Paper sx={{ height: 520, border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loadingNumbersOfAccounts && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -376,8 +375,8 @@ const InfluencerGraph = ({
               apiParams={apiParams}
               reportNo={reportNo}
               setAnchorEl={setAnchorEl}
-              fileName = 'Number of Accounts(Voice).xlsx'
-              apiPath = '/export/export-voice'
+              fileName='Number of Accounts(Voice).xlsx'
+              apiPath='/export/export-voice'
             />
           </Menu>
         </span>
@@ -419,7 +418,7 @@ const InfluencerGraph = ({
       ) : (
         ''
       )}
-    </Card>
+    </Paper>
   )
 }
 

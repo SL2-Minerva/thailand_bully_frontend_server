@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
+import { Paper, CardContent, CardHeader, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -180,7 +180,7 @@ const SentimentScore = (props: LineProps) => {
   const reportNo = '3.2.014'
 
   return (
-    <Card>
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant ='outlined'>
       {loading && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -269,7 +269,7 @@ const SentimentScore = (props: LineProps) => {
           ''
         )}
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

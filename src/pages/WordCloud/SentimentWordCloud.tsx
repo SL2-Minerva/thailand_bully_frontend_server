@@ -1,7 +1,7 @@
 import ReactWordcloud from 'react-wordcloud'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/scale.css'
-import { Button, Card, CardHeader, Grid, LinearProgress, Typography } from '@mui/material'
+import { Button, CardHeader, Grid, LinearProgress, Paper, Typography } from '@mui/material'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { GetWordCloudsSentiment } from 'src/services/api/dashboards/overall/overallDashboardApi'
@@ -54,7 +54,11 @@ const SentimentWordCloud = (props: Props) => {
   return (
     <>
       <Grid item xs={12} md={6}>
-        <Card sx={{ maxHeight: 500, minHeight: 500, overflow: 'auto' }}>
+        <Paper
+          style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 500, minHeight: 500, overflow: 'auto' }}
+          square
+          variant='outlined'
+        >
           {loadingWordCloudsSentiment && <LinearProgress style={{ width: '100%' }} />}
           <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <CardHeader
@@ -139,7 +143,7 @@ const SentimentWordCloud = (props: Props) => {
               ''
             )}
           </div>
-        </Card>
+        </Paper>
       </Grid>
       <Grid id='chart18' item xs={12} md={6}>
         <SentimentAccountList

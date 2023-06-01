@@ -6,7 +6,6 @@ import { ThemeColor } from 'src/@core/layouts/types'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
@@ -22,7 +21,7 @@ import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
-import { LinearProgress } from '@mui/material'
+import { LinearProgress, Paper } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 
 interface KeyStatusProps {
@@ -74,34 +73,35 @@ const KeyStatusReport = (props: KeyStatusProps) => {
   const TrendIcon = type === 'plus' ? ChevronUp : ChevronDown
 
   return (
-    <Card sx={{ minHeight: 300, maxHeight: 300 }}>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 300, maxHeight: 300 }} square variant='outlined'>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box>
           <Grid container spacing={1}>
-            <Grid item xs={2}>
+            <Grid item xs={2} display='flex' justifyContent='center'>
               <CustomAvatar skin='light' variant='rounded' color={color} sx={{ mt: 5 }}>
                 {icon}
               </CustomAvatar>
             </Grid>
-            <Grid item xs={6} sx={{ marginTop: '20px' }}>
+            <Grid item xs={6} mt={'20px'} display='flex' justifyContent='center'>
               <Typography variant='caption' sx={{ fontWeight: 'bold' }}>
                 <Translations text={totalText} />
               </Typography>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={3} display='flex' justifyContent='center'>
               <Typography variant='body1' sx={{ mt: 5, fontWeight: 'bold' }}>
                 <b>{totalValue}</b>
               </Typography>
             </Grid>
           </Grid>
-          <Grid container spacing={1}>
-            <Grid item xs={8} sx={{ marginTop: '20px' }}>
+          <Grid container spacing={1} mb={1}>
+            <Grid item xs={1} display='flex' justifyContent='center'></Grid>
+            <Grid item xs={7} display='flex' justifyContent='center'>
               <Typography variant='caption' sx={{ mt: 7, fontWeight: 'bold' }}>
                 {averageText}
               </Typography>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3} display='flex' justifyContent='center'>
               <Typography variant='body1' sx={{ mt: 5, fontWeight: 'bold' }}>
                 {averageValue}
               </Typography>
@@ -123,7 +123,7 @@ const KeyStatusReport = (props: KeyStatusProps) => {
                       <Translations text={chartId ? chartId : ''} />
                     </Typography>
                     <Typography variant='body2' sx={{ color: 'white' }}>
-                      <Translations text={reportNo ? reportNo: ''} />
+                      <Translations text={reportNo ? reportNo : ''} />
                     </Typography>
                   </span>
                 </>
@@ -133,20 +133,23 @@ const KeyStatusReport = (props: KeyStatusProps) => {
             </StyledTooltip>
           </span>
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-          <Typography variant='h6' sx={{ mb: 1 }}>
-            {stats}
-          </Typography>
+        <Grid container>
+          <Grid item xs={6} display='flex' justifyContent='center'>
+            <Typography variant='h6'>{stats}</Typography>
+          </Grid>
 
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography variant='h6' sx={{ color: type == 'plus' ? 'success.main' : 'error.main' }}>
-              {trendNumber + '%'}
-            </Typography>
-            <TrendIcon fontSize='large' sx={{ color: type == 'plus' ? 'success.main' : 'error.main' }} />
-          </Box>
-        </Box>
+          <Grid item xs={6} sx={{ dispaly: 'flex', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Typography variant='h6' sx={{ color: type == 'plus' ? 'success.main' : 'error.main' }}>
+                {trendNumber + '%'}
+              </Typography>
+              <TrendIcon fontSize='large' sx={{ color: type == 'plus' ? 'success.main' : 'error.main' }} />
+            </Box>
+          </Grid>
+        </Grid>
+        {/* <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}></Box> */}
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

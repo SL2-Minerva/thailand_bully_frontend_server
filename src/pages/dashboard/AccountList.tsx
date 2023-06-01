@@ -1,4 +1,4 @@
-import { Avatar, Card, CardHeader, Grid, LinearProgress, Typography } from '@mui/material'
+import { Avatar, Card, CardHeader, Grid, LinearProgress, Paper, Typography } from '@mui/material'
 import { Information } from 'mdi-material-ui'
 import { useState } from 'react'
 import Translations from 'src/layouts/components/Translations'
@@ -32,7 +32,11 @@ const AccountList = ({
   // const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Card sx={{ maxHeight: 493, minHeight: 493, overflow: 'auto' }}>
+    <Paper
+      style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 493, minHeight: 493, overflow: 'auto' }}
+      square
+      variant='outlined'
+    >
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title={<Translations text={cardHeader} />} titleTypographyProps={{ variant: 'h6' }} />
@@ -130,7 +134,7 @@ const AccountList = ({
       ) : (
         ''
       )}
-    </Card>
+    </Paper>
   )
 }
 

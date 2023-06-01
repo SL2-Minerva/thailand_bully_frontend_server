@@ -1,4 +1,3 @@
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
@@ -11,7 +10,7 @@ import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler,
 
 import { Radar } from 'react-chartjs-2'
 import { GraphicColors } from 'src/utils/const'
-import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
@@ -52,7 +51,7 @@ export const getChartData = (data: any, keywordColor: any) => {
         data: data[i].data || [],
         backgroundColor: color || GraphicColors[i],
         borderColor: color || GraphicColors[i],
-        borderWidth: 1,
+        borderWidth: 2,
         fill: false
       })
     }
@@ -105,7 +104,7 @@ const KeywordComparisonByBullyType = ({
   // const reportNo = '2.2.028'
 
   return (
-    <Card>
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant ='outlined'>
       {loadingKeywordComparisonByBullyType && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -178,7 +177,7 @@ const KeywordComparisonByBullyType = ({
           <Radar data={charData} height={100} />
         )}
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

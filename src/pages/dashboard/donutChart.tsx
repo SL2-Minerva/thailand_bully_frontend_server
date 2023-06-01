@@ -1,8 +1,7 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
+import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 
 // ** Third Party Imports
 
@@ -242,7 +241,7 @@ const DonutChart = (props: MessageData) => {
   }, [resultFilterData, keywordsColor])
 
   return (
-    <Card sx={{ minHeight: 570 }}>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 570 }} square variant='outlined'>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -357,7 +356,7 @@ const DonutChart = (props: MessageData) => {
           </Grid>
         </Grid>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

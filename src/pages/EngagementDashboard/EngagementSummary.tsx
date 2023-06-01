@@ -1,5 +1,4 @@
-import { Box, LinearProgress, Pagination, Typography } from '@mui/material'
-import Card from '@mui/material/Card'
+import { Box, LinearProgress, Pagination, Typography, Paper } from '@mui/material'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
@@ -78,7 +77,8 @@ const EngagementSummary = ({
   }, [resultSummary])
 
   return (
-    <Card>
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
+
       {loadingSummary && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -151,7 +151,7 @@ const EngagementSummary = ({
           )}
         </Box>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

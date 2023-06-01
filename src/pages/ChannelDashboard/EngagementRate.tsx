@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
+import { CardContent, CardHeader, IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { Bar, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
@@ -87,8 +87,7 @@ export const chartDatasets = (currentData: any, previousData: any) => {
 }
 
 const EngagementRate = (props: LineProps) => {
-  const { labelColor, borderColor, gridLineColor, params, highlight, resultBy, resultByPrevious, loading } =
-    props
+  const { labelColor, borderColor, gridLineColor, params, highlight, resultBy, resultByPrevious, loading } = props
 
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -249,7 +248,7 @@ const EngagementRate = (props: LineProps) => {
   const reportNo = '3.2.013'
 
   return (
-    <Card sx={{ minHeight: 518 }}>
+    <Paper style={{ minHeight: 518, border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -335,7 +334,7 @@ const EngagementRate = (props: LineProps) => {
           ''
         )}
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

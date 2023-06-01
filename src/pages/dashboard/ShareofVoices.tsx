@@ -1,5 +1,4 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import {
@@ -11,7 +10,8 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  Typography
+  Typography,
+  Paper
 } from '@mui/material'
 import { Table, TableRow, TableHead } from '@mui/material'
 
@@ -70,23 +70,23 @@ const ShareOfVoices = ({ apiParams, keywordsColor }: { apiParams: any; chartId: 
   useEffect(() => {
     if (resultShareOfVoice && resultSentimentLevel) {
       const data: any = []
-    for (let i = 0; i < resultShareOfVoice?.length; i++) {
-      data.push({
-        keyword_id: resultShareOfVoice[i]?.keyword_id,
-        keyword_name: resultShareOfVoice[i]?.keyword_name,
-        campaign_id: resultShareOfVoice[i]?.campaign_id,
-        campaign_name: resultShareOfVoice[i]?.campaign_name,
-        organization_id: resultShareOfVoice[i]?.organization_id,
-        organization_name: resultShareOfVoice[i]?.organization_name,
-        number_of_message: resultShareOfVoice[i]?.total || 0,
-        value: resultShareOfVoice[i]?.value || 0,
-        Negative: resultSentimentLevel[i]?.Negative || 0,
-        Neutral: resultSentimentLevel[i]?.Neutral || 0,
-        Positive: resultSentimentLevel[i]?.Positive || 0
-      })
-    }
+      for (let i = 0; i < resultShareOfVoice?.length; i++) {
+        data.push({
+          keyword_id: resultShareOfVoice[i]?.keyword_id,
+          keyword_name: resultShareOfVoice[i]?.keyword_name,
+          campaign_id: resultShareOfVoice[i]?.campaign_id,
+          campaign_name: resultShareOfVoice[i]?.campaign_name,
+          organization_id: resultShareOfVoice[i]?.organization_id,
+          organization_name: resultShareOfVoice[i]?.organization_name,
+          number_of_message: resultShareOfVoice[i]?.total || 0,
+          value: resultShareOfVoice[i]?.value || 0,
+          Negative: resultSentimentLevel[i]?.Negative || 0,
+          Neutral: resultSentimentLevel[i]?.Neutral || 0,
+          Positive: resultSentimentLevel[i]?.Positive || 0
+        })
+      }
 
-    setTableData(data)
+      setTableData(data)
     }
   }, [resultSentimentLevel, resultShareOfVoice])
 
@@ -173,7 +173,7 @@ const ShareOfVoices = ({ apiParams, keywordsColor }: { apiParams: any; chartId: 
   }
 
   return (
-    <Card sx={{ minheight: 450 }}>
+    <Paper sx={{ minheight: 450, border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loadingShareOfVoice && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -267,7 +267,7 @@ const ShareOfVoices = ({ apiParams, keywordsColor }: { apiParams: any; chartId: 
           </Grid>
         </Grid>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

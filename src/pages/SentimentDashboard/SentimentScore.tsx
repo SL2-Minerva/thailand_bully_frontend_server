@@ -1,8 +1,7 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, LinearProgress, TableContainer, Typography } from '@mui/material'
+import { Grid, LinearProgress, Paper, TableContainer, Typography } from '@mui/material'
 import { Table, TableRow, TableHead, TableCell } from '@mui/material'
 
 // ** Icons Imports
@@ -26,7 +25,7 @@ const SenitmentScore = ({
   // const reportNo = '5.2.015'
 
   return (
-    <Card sx={{ minHeight: 520 }}>
+     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 ,minHeight: 520 }} square variant='outlined'>
       {loadingSentimentScore && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -135,7 +134,7 @@ const SenitmentScore = ({
           </Grid>
         </Grid>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

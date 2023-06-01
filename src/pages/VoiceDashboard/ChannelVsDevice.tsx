@@ -1,7 +1,6 @@
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Grid, IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
+import { Grid, IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 
 // ** Third Party Imports
 import { ApexOptions } from 'apexcharts'
@@ -102,7 +101,7 @@ const ChannelVsDevice = ({
   // const reportNo = '2.2.024'
 
   return (
-    <Card style={{ minHeight: 550, maxHeight: 550 }}>
+    <Paper style={{ minHeight: 550, maxHeight: 550, border: `3px solid #fff`, borderRadius: 7 }} square variant ='outlined'>
       {loadingDeviceVsChannel && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -181,7 +180,7 @@ const ChannelVsDevice = ({
           </Grid>
         </Grid>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

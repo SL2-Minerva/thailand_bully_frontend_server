@@ -6,9 +6,9 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography
+  Typography,
+  Paper
 } from '@mui/material'
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from './overall'
@@ -26,9 +26,12 @@ const TotalMessageLists = ({
   loadingWordClouds: boolean
   total: number
 }) => {
-
   return (
-    <Card sx={{ maxHeight: 470, minHeight: 470 }}>
+    <Paper
+      style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 470, minHeight: 470 }}
+      square
+      variant='outlined'
+    >
       {loadingWordClouds && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -60,7 +63,10 @@ const TotalMessageLists = ({
           <Table size='small'>
             <TableHead sx={{ backgroundColor: 'lightgrey !important' }}>
               <TableRow>
-                <TableCell variant='head' align='center'> No. </TableCell>
+                <TableCell variant='head' align='center'>
+                  {' '}
+                  No.{' '}
+                </TableCell>
                 <TableCell variant='head' align='center'>
                   {' '}
                   <Translations text='Popular Word' />{' '}
@@ -69,7 +75,10 @@ const TotalMessageLists = ({
                   {' '}
                   <Translations text='Amount' />{' '}
                 </TableCell>
-                <TableCell variant='head' align='center'> % </TableCell>
+                <TableCell variant='head' align='center'>
+                  {' '}
+                  %{' '}
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -78,8 +87,7 @@ const TotalMessageLists = ({
                   <TableRow key={index}>
                     <TableCell sx={{ backgroundColor: '#d3d3d338 !important' }} align='center'>
                       {/* <b>{index + 1 + page * 7}</b> */}
-                      <b>{index + 1 }</b>
-
+                      <b>{index + 1}</b>
                     </TableCell>
                     <TableCell align='center'>
                       <span style={{ fontWeight: 'bold' }}>{keyword.keyword}</span>
@@ -102,7 +110,7 @@ const TotalMessageLists = ({
           </Table>
         </TableContainer>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

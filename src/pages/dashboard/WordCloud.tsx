@@ -1,7 +1,7 @@
 import ReactWordcloud from 'react-wordcloud'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/scale.css'
-import { Card, CardHeader, LinearProgress, Typography } from '@mui/material'
+import { Paper, CardHeader, LinearProgress, Typography } from '@mui/material'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
@@ -47,7 +47,11 @@ const WordCloud = ({
   }
 
   return (
-    <Card sx={{ maxHeight: 470, minHeight: 470, overflow: 'auto' }}>
+    <Paper
+      style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 470, minHeight: 470, overflow: 'auto' }}
+      square
+      variant='outlined'
+    >
       {loadingWordClouds && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title='Word Clouds' titleTypographyProps={{ variant: 'h6' }} />
@@ -105,7 +109,7 @@ const WordCloud = ({
           ''
         )}
       </div>
-    </Card>
+    </Paper>
   )
 }
 

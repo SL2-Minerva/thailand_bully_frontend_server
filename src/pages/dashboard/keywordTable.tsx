@@ -6,9 +6,9 @@ import {
   TableBody,
   TableContainer,
   LinearProgress,
-  Typography
+  Typography,
+  Paper
 } from '@mui/material'
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from './overall'
@@ -33,7 +33,7 @@ const KeywordTable = ({ apiParams }: { apiParams: any; chartId: string }) => {
 
 
   return (
-    <Card>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title={<Translations text='Keyword Summary' />} titleTypographyProps={{ variant: 'h6' }} />
@@ -97,7 +97,7 @@ const KeywordTable = ({ apiParams }: { apiParams: any; chartId: string }) => {
           </Table>
         </TableContainer>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

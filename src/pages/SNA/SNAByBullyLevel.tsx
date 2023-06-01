@@ -1,7 +1,6 @@
 import { forwardRef, useCallback, useEffect, useState } from 'react'
 import {
   Grid,
-  Card,
   CardHeader,
   CardContent,
   InputLabel,
@@ -9,7 +8,8 @@ import {
   Box,
   LinearProgress,
   Typography,
-  Button
+  Button,
+  Paper
 } from '@mui/material'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
@@ -44,8 +44,8 @@ const SNAByBullyLevel = () => {
   const [previousEndDate, setPreviousEndDate] = useState<DateType>(
     new Date(localStorage.getItem('previousEndDate') || new Date())
   )
-  
-  const [status, setStatus] = useState(localStorage.getItem('status') || '1');
+
+  const [status, setStatus] = useState(localStorage.getItem('status') || '1')
 
   const [campaign, setCampaign] = useState<string>('1')
   const [platformId, setPlatformId] = useState<string>('all')
@@ -87,7 +87,7 @@ const SNAByBullyLevel = () => {
 
     return (
       <FormControl fullWidth>
-        <TextField inputRef={ref} label={props.label || ''} {...props} value={value} size='small'/>
+        <TextField inputRef={ref} label={props.label || ''} {...props} value={value} size='small' />
       </FormControl>
     )
   })
@@ -110,9 +110,9 @@ const SNAByBullyLevel = () => {
     periodSet(value)
   }, [])
 
-    const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
-      setStatus(e.target.value)
-      localStorage.setItem('status', e.target.value)
+  const handleSelectStatus = useCallback((e: SelectChangeEvent) => {
+    setStatus(e.target.value)
+    localStorage.setItem('status', e.target.value)
   }, [])
 
   const handleOnChangeDate = (dates: any) => {
@@ -248,7 +248,7 @@ const SNAByBullyLevel = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Card>
+        <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
           <CardHeader title='Filter' />
           <CardContent>
             <Grid container spacing={6}>
@@ -257,7 +257,8 @@ const SNAByBullyLevel = () => {
                   <InputLabel id='plan-select'>
                     <Translations text='Period of time' />
                   </InputLabel>
-                  <Select size="small"
+                  <Select
+                    size='small'
                     fullWidth
                     value={dateSelect}
                     id='select-date'
@@ -292,40 +293,42 @@ const SNAByBullyLevel = () => {
               </Grid>
 
               <Grid item sm={3} xs={12}>
-                  <FormControl fullWidth>
-                    <InputLabel id='plan-select'>
-                      <Translations text='Status' />
-                    </InputLabel>
-                    <Select size="small"
-                      fullWidth
-                      value={status}
-                      id='select-date'
-                      label={<Translations text='Status' />}
-                      labelId='date-select'
-                      onChange={(e: SelectChangeEvent) => {
-                        handleSelectStatus(e)
-                      }}
-                      inputProps={{ placeholder: 'Select Status' }}
-                    >
-                      <MenuItem value='all'>
-                        <Translations text='All' />
-                      </MenuItem>
-                      <MenuItem value='1'>
-                        <Translations text='Active' />
-                      </MenuItem>
-                      <MenuItem value='0'>
-                        <Translations text='InActive' />
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
+                <FormControl fullWidth>
+                  <InputLabel id='plan-select'>
+                    <Translations text='Status' />
+                  </InputLabel>
+                  <Select
+                    size='small'
+                    fullWidth
+                    value={status}
+                    id='select-date'
+                    label={<Translations text='Status' />}
+                    labelId='date-select'
+                    onChange={(e: SelectChangeEvent) => {
+                      handleSelectStatus(e)
+                    }}
+                    inputProps={{ placeholder: 'Select Status' }}
+                  >
+                    <MenuItem value='all'>
+                      <Translations text='All' />
+                    </MenuItem>
+                    <MenuItem value='1'>
+                      <Translations text='Active' />
+                    </MenuItem>
+                    <MenuItem value='0'>
+                      <Translations text='InActive' />
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
 
               <Grid item sm={3} xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id='plan-select'>
                     <Translations text='Campaign Name' />
                   </InputLabel>
-                  <Select size="small"
+                  <Select
+                    size='small'
                     fullWidth
                     value={campaign}
                     id='select-campaign'
@@ -352,7 +355,8 @@ const SNAByBullyLevel = () => {
                   <InputLabel id='plan-select'>
                     <Translations text='Channel' />
                   </InputLabel>
-                  <Select size="small"
+                  <Select
+                    size='small'
                     fullWidth
                     value={platformId}
                     id='select-platform'
@@ -380,7 +384,8 @@ const SNAByBullyLevel = () => {
                   <InputLabel id='plan-select'>
                     <Translations text='Limit' />
                   </InputLabel>
-                  <Select size="small"
+                  <Select
+                    size='small'
                     fullWidth
                     value={limit}
                     id='select-limit'
@@ -452,11 +457,11 @@ const SNAByBullyLevel = () => {
               )}
             </Grid>
           </CardContent>
-        </Card>
+        </Paper>
       </Grid>
       <Grid container spacing={2} mt={2}>
         <Grid item xs={12} ml={2}>
-          <Card>
+          <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
             <CardHeader title='Keyword Filter'></CardHeader>
             <CardContent>
               <Grid container spacing={2}>
@@ -512,11 +517,11 @@ const SNAByBullyLevel = () => {
                   })}
               </Grid>
             </CardContent>
-          </Card>
+          </Paper>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Card>
+      <Grid item xs={12} mt={2}>
+        <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
           {loadingNetworkGraph && <LinearProgress style={{ width: '100%' }} />}
 
           <Box sx={{ mb: 8, textAlign: 'center' }}>
@@ -564,7 +569,7 @@ const SNAByBullyLevel = () => {
               )}
             </Grid>
           </Grid>
-        </Card>
+        </Paper>
       </Grid>
     </Grid>
   )

@@ -1,8 +1,7 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { Box, Grid, LinearProgress, Pagination, Typography } from '@mui/material'
+import { Box, Grid, LinearProgress, Pagination, Paper, Typography } from '@mui/material'
 import { Table, TableRow, TableHead, TableCell } from '@mui/material'
 
 // ** Icons Imports
@@ -40,7 +39,8 @@ const SentimentComparisonTable = ({
   // const reportNo = '5.2.016'
 
   return (
-    <Card>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+
       {loadingSentimentComparison && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -245,7 +245,7 @@ const SentimentComparisonTable = ({
           </Grid>
         </Grid>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

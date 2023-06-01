@@ -1,4 +1,3 @@
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
@@ -8,7 +7,7 @@ import { ApexOptions } from 'apexcharts'
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { SentimentAllColors } from 'src/utils/const'
-import { LinearProgress } from '@mui/material'
+import { LinearProgress, Paper } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 
 const Labels = (data: any) => {
@@ -21,7 +20,7 @@ const Labels = (data: any) => {
       labels.push(data[i].keyword_name || '')
     }
   }
-  
+
   return labels
 }
 
@@ -45,7 +44,7 @@ const ChartDataSentiment = (data: any, type: string) => {
       }
     }
   }
-  
+
   return value
 }
 
@@ -77,7 +76,7 @@ const SentimentScorePercentage = ({
       name: 'Positive',
       data: positiveData || []
     }
-  ];
+  ]
 
   const options: ApexOptions = {
     chart: {
@@ -123,7 +122,7 @@ const SentimentScorePercentage = ({
   }
 
   return (
-    <Card sx={{minHeight: 520}}>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 520 }} square variant='outlined'>
       {loadingSentimentScore && <LinearProgress style={{ width: '100%' }} />}
       <CardHeader title='' titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }} />
       <CardContent>
@@ -141,16 +140,15 @@ const SentimentScorePercentage = ({
           </div>
         ) : (
           <>
-            {
-              negativeData?.length > 0 || positiveData?.length> 0 || neutralData?.length> 0 ? 
+            {negativeData?.length > 0 || positiveData?.length > 0 || neutralData?.length > 0 ? (
               <ReactApexcharts type='bar' height={430} series={series} options={options} />
-              :
-              ""
-            }
+            ) : (
+              ''
+            )}
           </>
         )}
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

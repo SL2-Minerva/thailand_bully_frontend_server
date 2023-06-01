@@ -1,4 +1,3 @@
-import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { MouseEvent, useEffect, useState } from 'react'
@@ -8,7 +7,7 @@ import { getChartData, initValue } from './KeywordComparisonByBullyType'
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js'
 
 import { Radar } from 'react-chartjs-2'
-import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
@@ -68,7 +67,7 @@ const KeywordComparisonByBullyLevel = ({
   // const reportNo = '2.2.027'
 
   return (
-    <Card>
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant ='outlined'>
       {loadingKeywordComparisonByBullyLevel && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -141,7 +140,7 @@ const KeywordComparisonByBullyLevel = ({
           <Radar data={charData} height={100} />
         )}
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

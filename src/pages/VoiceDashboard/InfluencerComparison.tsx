@@ -6,7 +6,6 @@ import { ThemeColor } from 'src/@core/layouts/types'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
@@ -22,7 +21,7 @@ import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { LinearProgress } from '@mui/material'
+import { LinearProgress, Paper } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 
 interface InfluencerComparisonProps {
@@ -50,7 +49,7 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
       : 'Number of Accounts: Period over Period Comparison'
 
   return (
-    <Card style={{ height: 250 }}>
+    <Paper sx={{ height: 250, border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box>
@@ -60,12 +59,12 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
                 {icon}
               </CustomAvatar>
             </Grid>
-            <Grid item xs={5} p={4}>
-              <Typography variant='h5'>
+            <Grid item xs={5} p={4} >
+              <Typography variant='h5' sx={{ display: 'flex', alignItems: 'center' }}>
                 {trend === 'plus' ? '+' : ''}
                 {totalValue?.toLocaleString('en-US')}
               </Typography>
-              <Typography variant='h6' sx={{ m: 3 }}>
+              <Typography variant='h6' sx={{ display: 'flex', alignItems: 'center' }}>
                 <b>{totalText}</b>
               </Typography>
             </Grid>
@@ -103,7 +102,7 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
           </StyledTooltip>
         </span>
       </CardContent>
-    </Card>
+    </Paper>
   )
 }
 

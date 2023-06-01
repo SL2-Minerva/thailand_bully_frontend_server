@@ -5,7 +5,7 @@ import EngagementRate from './EngagementRate'
 import { StyledTooltip } from '../dashboard/overall'
 import ChannelComparison from './ChannelComparison'
 import { useTheme } from '@mui/material/styles'
-import { Card, CardHeader, Grid, Typography } from '@mui/material'
+import { CardHeader, Grid, Paper, Typography } from '@mui/material'
 
 interface Props {
     apiParams : any
@@ -43,7 +43,7 @@ const ComparisonCharts = (props: Props) => {
       {resultReportPermission?.includes('53') ? (
         <>
           <Grid item xs={12} id='chart10'>
-            <Card>
+          <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant ='outlined'>
               <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                   title={<Translations text='Channel Comparison: Period over Period' />}
@@ -73,10 +73,10 @@ const ComparisonCharts = (props: Props) => {
                   />
                 </StyledTooltip>
               </span>
-            </Card>
+            </Paper>
           </Grid>
 
-          <Grid container spacing={4} ml={3} mt={2}>
+          <Grid container spacing={2} ml={3} mt={2}>
             <Grid item xs={6} md={2}>
               {resultFacebookComparison ? (
                 <ChannelComparison

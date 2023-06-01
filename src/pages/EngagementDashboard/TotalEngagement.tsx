@@ -1,6 +1,5 @@
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
@@ -15,7 +14,7 @@ import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { Share, StickerEmoji, Message } from 'mdi-material-ui'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { LinearProgress } from '@mui/material'
+import { LinearProgress, Paper } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 
 interface InfluencerComparisonProps {
@@ -30,7 +29,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
 
   return (
     <>
-      <Card>
+      <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
         {loading && <LinearProgress style={{ width: '100%' }} />}
         <CardContent>
           <Grid container spacing={2}>
@@ -217,7 +216,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
             </Grid>
           </Grid>
         </CardContent>
-      </Card>
+      </Paper>
     </>
   )
 }
