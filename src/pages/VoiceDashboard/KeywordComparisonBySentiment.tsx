@@ -69,7 +69,7 @@ const KeywordComparisonBySentiment = ({
   // const reportNo = '2.2.026'
 
   return (
-    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant ='outlined'>
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
       {loadingKeywordComparisonBySentiment && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>

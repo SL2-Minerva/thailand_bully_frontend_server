@@ -242,7 +242,7 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
   const classes = useStyles()
 
   return (
-    <Paper style={{ border: `3px solid #fff`, borderRadius: 7, minHeight: 713 }} square variant='outlined'>
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7, minHeight: 713 }} >
       {loadingPeriodComparisonBySenitment && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>

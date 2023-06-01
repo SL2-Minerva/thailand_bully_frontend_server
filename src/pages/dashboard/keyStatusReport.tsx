@@ -73,7 +73,7 @@ const KeyStatusReport = (props: KeyStatusProps) => {
   const TrendIcon = type === 'plus' ? ChevronUp : ChevronDown
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 300, maxHeight: 300 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 300, maxHeight: 300 }} >
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box>

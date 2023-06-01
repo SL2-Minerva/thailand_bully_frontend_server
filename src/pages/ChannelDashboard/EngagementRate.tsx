@@ -248,7 +248,7 @@ const EngagementRate = (props: LineProps) => {
   const reportNo = '3.2.013'
 
   return (
-    <Paper style={{ minHeight: 518, border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
+    <Paper style={{ minHeight: 518, border: `3px solid #fff`, borderRadius: 7 }} >
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>

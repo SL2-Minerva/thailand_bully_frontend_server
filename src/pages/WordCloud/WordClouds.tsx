@@ -18,7 +18,7 @@ const WordClouds = (props: Props) => {
     <>
       {resultReportPermission?.includes('13') ? (
         <>
-          <Grid container spacing={3} mt={4}>
+          <Grid container spacing={3} mt={2}>
             <Grid id='chart13' item xs={12} md={6}>
               <WordCloud
                 params={params}

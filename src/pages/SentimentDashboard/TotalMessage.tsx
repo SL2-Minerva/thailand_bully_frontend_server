@@ -26,7 +26,7 @@ const TotalMessage = (props: InfluencerComparisonProps) => {
 
   return (
     <>
-      <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+      <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
         {loadingTotalSentiment && <LinearProgress style={{ width: '100%' }} />}
         <CardContent>
           <Grid container spacing={2}>

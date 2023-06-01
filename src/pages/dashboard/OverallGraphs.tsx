@@ -62,7 +62,7 @@ const OverallGraphs = (data: Props) => {
       <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
         <CircularProgress color='inherit' />
       </Backdrop>
-      <Grid container spacing={3} mt={2}>
+      <Grid container spacing={3} mt={1}>
         {apiParams ? (
           <OverallCharts
             theme={theme}
@@ -78,11 +78,11 @@ const OverallGraphs = (data: Props) => {
         )}
       </Grid>
 
-      <Grid container spacing={3} mt={2}>
+      <Grid container spacing={3} mt={1}>
         {apiParams ? <KeyStatus apiParams={apiParams} resultReportPermission={resultReportPermission} /> : ''}
       </Grid>
 
-      <Grid container spacing={3} mt={2}>
+      <Grid container spacing={3} mt={1}>
         {resultReportPermission?.includes('6') && apiParams ? (
           <Grid id='chart6' item xs={12}>
             <KeywordTable apiParams={apiParams} chartId='Chart 6' />
@@ -92,7 +92,7 @@ const OverallGraphs = (data: Props) => {
         )}
       </Grid>
 
-      <Grid container spacing={5} mt={2}>
+      <Grid container spacing={3} mt={1}>
         {apiParams ? (
           <TopKeywordsSummary apiParams={apiParams} params={params} resultReportPermission={resultReportPermission} />
         ) : (
@@ -100,7 +100,7 @@ const OverallGraphs = (data: Props) => {
         )}
       </Grid>
 
-      <Grid container spacing={3} mt={3}>
+      <Grid container spacing={3} mt={1}>
         {resultReportPermission?.includes('10') && apiParams ? (
           <Grid id='chart10' item xs={12} md={6}>
             <SentimentGaugeChart apiParams={apiParams} chartId='Chart 10' />
@@ -116,7 +116,7 @@ const OverallGraphs = (data: Props) => {
           ''
         )}
       </Grid>
-      <Grid container spacing={3} mt={2}>
+      <Grid container spacing={3} mt={1}>
         {resultReportPermission?.includes('12') && apiParams ? (
           <Grid id='chart12' item xs={12}>
             <ShareOfVoices apiParams={apiParams} chartId='Chart 12' keywordsColor={keywordGraphColors} />

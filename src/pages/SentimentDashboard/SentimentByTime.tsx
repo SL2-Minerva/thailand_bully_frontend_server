@@ -246,7 +246,7 @@ const SentimentByTime = (props: LineProps) => {
   const reportNo = '5.2.004'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>

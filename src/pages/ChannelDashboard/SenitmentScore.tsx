@@ -180,7 +180,7 @@ const SentimentScore = (props: LineProps) => {
   const reportNo = '3.2.014'
 
   return (
-    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant ='outlined'>
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>

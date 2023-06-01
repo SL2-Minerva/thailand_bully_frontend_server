@@ -8,15 +8,15 @@ import { useTheme } from '@mui/material/styles'
 import { CardHeader, Grid, Paper, Typography } from '@mui/material'
 
 interface Props {
-    apiParams : any
-    resultReportPermission : any
-    highlight : string
-    params : any
+  apiParams: any
+  resultReportPermission: any
+  highlight: string
+  params: any
 }
 
 const ComparisonCharts = (props: Props) => {
   const { apiParams, resultReportPermission, highlight, params } = props
-    
+
   const theme = useTheme()
 
   const whiteColor = '#fff'
@@ -43,7 +43,7 @@ const ComparisonCharts = (props: Props) => {
       {resultReportPermission?.includes('53') ? (
         <>
           <Grid item xs={12} id='chart10'>
-          <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant ='outlined'>
+            <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
               <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                   title={<Translations text='Channel Comparison: Period over Period' />}
@@ -76,7 +76,7 @@ const ComparisonCharts = (props: Props) => {
             </Paper>
           </Grid>
 
-          <Grid container spacing={2} ml={3} mt={2}>
+          <Grid container spacing={3} ml={2} mt={2}>
             <Grid item xs={6} md={2}>
               {resultFacebookComparison ? (
                 <ChannelComparison

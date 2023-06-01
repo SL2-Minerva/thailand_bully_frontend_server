@@ -45,7 +45,7 @@ const WordCloudChannel = ({ params }: { params: any; chartId: string }) => {
   }, [params, platformId, word])
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={3}>
       {apiParams ? (
         <ChannelWordCloud
           apiParams={apiParams}

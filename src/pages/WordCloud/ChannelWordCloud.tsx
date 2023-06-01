@@ -77,8 +77,6 @@ const ChannelWordCloud = (props: Props) => {
       <Grid item xs={12} md={6}>
         <Paper
           style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 500, minHeight: 500, overflow: 'auto' }}
-          square
-          variant='outlined'
         >
           {loadingWordCloudsPlatform && <LinearProgress style={{ width: '100%' }} />}
           <span style={{ display: 'flex', justifyContent: 'flex-start' }}>

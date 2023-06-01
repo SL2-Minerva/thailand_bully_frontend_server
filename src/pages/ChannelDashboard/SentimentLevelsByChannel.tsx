@@ -93,7 +93,7 @@ const SentimentLevelsByChannel = ({
   }, [resultSentimentLevel, resultBy])
 
   return (
-    <Paper style={{ minHeight: 450, border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
+    <Paper style={{ minHeight: 450, border: `3px solid #fff`, borderRadius: 7 }} >
       {loading && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -157,7 +157,7 @@ const SentimentLevelsByChannel = ({
                   <TableRow>
                     <TableCell></TableCell>
                     <TableCell>Channel By Sentiment</TableCell>
-                    <TableCell sx={{ textAlign: 'right', backgroundColor: '#dadadade' }}>Negative</TableCell>
+                    <TableCell sx={{ textAlign: 'center', backgroundColor: '#dadadade' }}>Negative</TableCell>
                     <TableCell sx={{ textAlign: 'center', backgroundColor: '#dadadade' }}>Neutral</TableCell>
                     <TableCell sx={{ backgroundColor: '#dadadade' }}>Positive</TableCell>
                   </TableRow>
@@ -169,7 +169,7 @@ const SentimentLevelsByChannel = ({
                         <TableCell sx={{ textAlign: 'right', maxWidth: 120, paddingRight: '0px' }}>
                           {shareVoice?.keyword_name}
                         </TableCell>
-                        <TableCell sx={{ minWidth: 100, maxWidth: 300, paddingLeft: '0px' }}>
+                        <TableCell sx={{ minWidth: 100, maxWidth: 300, paddingLeft: '0px', paddingRight: '90px' }}>
                           <NumberOfEachMessage
                             keywordsColor={ChannelColors[index]}
                             resultShareOfVoiceChart={shareVoice}

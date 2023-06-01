@@ -241,7 +241,7 @@ const PercentageOfBully = (props: MessageData) => {
   // const reportNo = '6.1.001'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} >
       {loadingBullyLevelPercentage && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>

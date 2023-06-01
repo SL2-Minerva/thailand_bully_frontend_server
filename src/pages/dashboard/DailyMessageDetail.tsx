@@ -134,7 +134,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
             </Typography>
           </Box>
 
-          <TableContainer component={Paper} style={{maxHeight: 700}}>
+          <TableContainer component={Paper} style={{maxHeight: 640}}>
             <Table aria-label='customized table' stickyHeader>
               <TableHead>
                 <TableRow>

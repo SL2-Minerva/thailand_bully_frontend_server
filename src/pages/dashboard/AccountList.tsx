@@ -33,10 +33,7 @@ const AccountList = ({
 
   return (
     <Paper
-      style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 493, minHeight: 493, overflow: 'auto' }}
-      square
-      variant='outlined'
-    >
+      style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 493, minHeight: 499, overflow: 'auto' }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title={<Translations text={cardHeader} />} titleTypographyProps={{ variant: 'h6' }} />

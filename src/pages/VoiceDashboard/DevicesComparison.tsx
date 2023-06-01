@@ -155,7 +155,7 @@ const DevicesComparison = ({
   }, [resultDevicesComparison])
 
   return (
-    <Paper style={{ minHeight: 550, border: `3px solid #fff`, borderRadius: 7 }} square variant ='outlined'>
+    <Paper style={{ minHeight: 550, border: `3px solid #fff`, borderRadius: 7 }} >
       {loadingDevicesComparison && <LinearProgress style={{ width: '100%' }} />}
       
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>

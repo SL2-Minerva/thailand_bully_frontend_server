@@ -46,16 +46,16 @@ export const useStyles = makeStyles(
         position: 'relative',
         overflow: 'hidden',
         width: '100%',
-        height: 16,
+        height: 24,
         borderRadius: 2
       },
       value: {
         position: 'absolute',
-        lineHeight: '14px',
+        lineHeight: '19px',
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
-        fontSize: '13px'
+        fontSize: '14px'
       },
       bar: {
         height: '100%'
@@ -135,7 +135,7 @@ const UserDropdown = (props: Props) => {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleDropdownClose = (url?: string) => {
+  const handleDropdownClosed = (url?: string) => {
     if (url) {
       router.push(url)
     }
@@ -158,7 +158,7 @@ const UserDropdown = (props: Props) => {
 
   const handleLogout = () => {
     logout()
-    handleDropdownClose()
+    handleDropdownClosed()
     localStorage.removeItem('language')
   }
 
@@ -179,8 +179,8 @@ const UserDropdown = (props: Props) => {
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
-        onClose={() => handleDropdownClose()}
-        sx={{ '& .MuiMenu-paper': { width: 230, mt: 4 } }}
+        onClose={() => handleDropdownClosed()}
+        sx={{ '& .MuiMenu-paper': { width: 300, mt: 4 } }}
         anchorOrigin={{ vertical: 'bottom', horizontal: direction === 'ltr' ? 'right' : 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: direction === 'ltr' ? 'right' : 'left' }}
       >
@@ -201,22 +201,19 @@ const UserDropdown = (props: Props) => {
               <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
                 {localStorage.getItem('organizationName')}
               </Typography>
-              {/* <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                {localStorage.getItem('isAdmin') == '1' ? 'Admin Role' : 'User Role'}
-              </Typography> */}
             </Box>
           </Box>
         </Box>
         <Divider sx={{ mt: 0, mb: 1 }} />
         <MenuItem sx={{ p: 2 }}>
           {userInfoTransaction ? (
-            <Box>
-              <Typography variant='caption' sx={{fontSize: '10px'}}>
+            <Box sx={{width: '400px'}}>
+              <Typography variant='caption' sx={{fontSize: '12px'}}>
                 Transaction per month start({userInfoTransaction?.transaction_start_at})
               </Typography>
               <Box sx={{ display: 'flex', mt: 2 }}>
                 <ProgressBar value={Number(userInfoTransaction?.transaction_reamining)!} color='#cccc00' />
-                <ProgressBar value={Number(userInfoTransaction?.transaction_limit)!} color='#fff' />
+                <ProgressBar value={Number(userInfoTransaction?.transaction_limit)!} color='#666cff08' />
               </Box>
             </Box>
           ) : (
@@ -224,7 +221,7 @@ const UserDropdown = (props: Props) => {
           )}
         </MenuItem>
         <Divider sx={{ mt: 0, mb: 1 }} />
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/account-settings')}>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClosed('/pages/account-settings')}>
           <Box sx={styles}>
             <CogOutline sx={{ mr: 2 }} />
             Change Password
@@ -235,32 +232,32 @@ const UserDropdown = (props: Props) => {
           Logout
         </MenuItem>
 
-        {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/user/view/12')}>
+        {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClosed('/apps/user/view/12')}>
           <Box sx={styles}>
             <AccountOutline sx={{ mr: 2 }} />
             Profile
           </Box>
         </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/email')}>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClosed('/apps/email')}>
           <Box sx={styles}>
             <EmailOutline sx={{ mr: 2 }} />
             Inbox
           </Box>
         </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/chat')}>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClosed('/apps/chat')}>
           <Box sx={styles}>
             <MessageOutline sx={{ mr: 2 }} />
             Chat
           </Box>
         </MenuItem>
         <Divider />
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/pricing')}>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClosed('/pages/pricing')}>
           <Box sx={styles}>
             <CurrencyUsd sx={{ mr: 2 }} />
             Pricing
           </Box>
         </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/faq')}>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClosed('/pages/faq')}>
           <Box sx={styles}>
             <HelpCircleOutline sx={{ mr: 2 }} />
             FAQ

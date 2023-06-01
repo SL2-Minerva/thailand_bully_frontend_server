@@ -62,7 +62,7 @@ const SentimentGraph = (data: Props) => {
       <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
         <CircularProgress color='inherit' />
       </Backdrop>
-      <Grid container spacing={3} mt={2}>
+      <Grid container spacing={4} mt={2}>
         {apiParams ? (
           <>
             <DailyBy

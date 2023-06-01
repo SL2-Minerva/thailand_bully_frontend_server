@@ -152,7 +152,7 @@ const DayTimeSentiment = (props: Props) => {
   const reportNo = '2.2.017'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
       {loadingBySentiment && <LinearProgress style={{ width: '100%' }} />}
      
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>

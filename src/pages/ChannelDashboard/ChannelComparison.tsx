@@ -51,7 +51,7 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
 
   return (
     <>
-      <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
+      <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
         {loading && <LinearProgress style={{ width: '100%' }} />}
         <CardContent>
           <Box>

@@ -148,7 +148,7 @@ const WordCloudGraphs = (data: Props) => {
       )}
 
       {resultReportPermission?.includes('15') ? (
-        <Grid container spacing={3} mt={4}>
+        <Grid container spacing={4} mt={1}>
           <Grid id='chart15' item xs={12}>
             <WordCloudChannel params={params} chartId='Chart 15'/>
           </Grid>
@@ -157,7 +157,7 @@ const WordCloudGraphs = (data: Props) => {
         ''
       )}
       {resultReportPermission?.includes('18') ? (
-        <Grid container spacing={3} mt={2}>
+        <Grid container spacing={4} mt={2}>
           <Grid id='chart17' item xs={12} md={12}>
             <WordCloudSentiment chartId='Chart 18' params={params} />
           </Grid>
