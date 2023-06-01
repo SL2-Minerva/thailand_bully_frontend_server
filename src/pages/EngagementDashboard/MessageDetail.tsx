@@ -18,7 +18,7 @@ import { OpenInNew } from 'mdi-material-ui'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#e8d63aa1',
+    backgroundColor: '#e8d63a',
     color: theme.palette.common.black
   },
   [`&.${tableCellClasses.body}`]: {
@@ -104,7 +104,8 @@ const MessageDetail = (props: DialogInfoProps) => {
     paramData.Llabel = params.Llabel
   }
 
-  const { resultMessageDetail, totalMessage, loadingMessageDetail, resultDate } = GetMessageDetailEngagementDashboard(paramData)
+  const { resultMessageDetail, totalMessage, loadingMessageDetail } =
+    GetMessageDetailEngagementDashboard(paramData)
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value - 1)
@@ -150,12 +151,8 @@ const MessageDetail = (props: DialogInfoProps) => {
             </Typography>
           </Box>
 
-          <Box sx={{ mb: 3, ml: 2 }}>
-            <Typography sx={{ mb: 3, lineHeight: '2rem', fontSize: '18px' }}>{resultDate}</Typography>
-          </Box>
-
-          <TableContainer component={Paper}>
-            <Table style={{ minWidth: '00px' }} aria-label='customized table'>
+          <TableContainer component={Paper} sx={{maxHeight: '640px'}}>
+            <Table style={{ minWidth: '00px' }} aria-label='customized table' stickyHeader>
               <TableHead>
                 <TableRow>
                   <StyledTableCell align='center'>Message Description</StyledTableCell>
@@ -175,12 +172,15 @@ const MessageDetail = (props: DialogInfoProps) => {
                 {(resultMessageDetail || []).map((messageDetail: any, index: number) => (
                   <StyledTableRow
                     sx={{
-                      cursor: 'pointer',
+                      cursor: messageDetail.parent ? 'pointer' : '',
                       backgroundColor: messageDetail.parent ? '#00ff0038' : '#fff'
                     }}
                     key={index}
                     onClick={() => {
-                      setShowDialog(true), setMessageId(messageDetail.message_id)
+                      if (messageDetail.parent) {
+                        setShowDialog(true)
+                        setMessageId(messageDetail.message_id)
+                      }
                     }}
                   >
                     <StyledTableCell component='th' scope='row' width={300}>
@@ -189,7 +189,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                     <StyledTableCell align='center'>{messageDetail.message_type}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.account_name}</StyledTableCell>
                     <StyledTableCell align='center'>{messageDetail.bully_level}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.post_time}</StyledTableCell>
+                    <StyledTableCell align='center'>{moment(messageDetail.post_date)?.format('DD.MM.YYYY') + ', ' + messageDetail.post_time}</StyledTableCell>
                     <StyledTableCell align='center'>
                       {messageDetail.device === 'android' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/android.png`} />

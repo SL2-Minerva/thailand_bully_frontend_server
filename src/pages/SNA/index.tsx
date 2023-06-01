@@ -539,7 +539,7 @@ const SNA = () => {
           </Paper>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} mt={2}>
         <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
           {loadingNetworkGraph && <LinearProgress style={{ width: '100%' }} />}
 

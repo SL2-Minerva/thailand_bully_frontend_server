@@ -18,7 +18,7 @@ import { OpenInNew } from 'mdi-material-ui'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#e8d63aa1',
+    backgroundColor: '#e8d63a',
     color: theme.palette.common.black
   },
   [`&.${tableCellClasses.body}`]: {
@@ -122,7 +122,7 @@ const MessageDetail = (props: DialogInfoProps) => {
     paramData.select_period = params?.select_period
   }
 
-  const { resultMessageDetail, totalMessage, loadingMessageDetail, resultDate } = GetMessageDetailVoiceDashboard(paramData)
+  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetailVoiceDashboard(paramData)
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value - 1)
@@ -171,12 +171,8 @@ const MessageDetail = (props: DialogInfoProps) => {
             </Typography>
           </Box>
 
-          <Box sx={{ mb: 3, ml: 2 }}>
-            <Typography sx={{ mb: 3, lineHeight: '2rem', fontSize: '18px' }}>{resultDate}</Typography>
-          </Box>
-
-          <TableContainer component={Paper}>
-            <Table style={{ minWidth: '00px' }} aria-label='customized table'>
+          <TableContainer component={Paper} sx={{maxHeight: '640px'}}>
+            <Table style={{ minWidth: '00px' }} aria-label='customized table' stickyHeader>
               <TableHead>
                 <TableRow>
                   <StyledTableCell align='center'>No.</StyledTableCell>
@@ -198,10 +194,12 @@ const MessageDetail = (props: DialogInfoProps) => {
                     key={index}
                     hover={true}
                     onClick={() => {
-                      setMessageId(messageDetail.message_id)
+                      if (messageDetail.parent) {
+                        setMessageId(messageDetail.message_id)
+                      }
                     }}
                     sx={{
-                      cursor: 'pointer',
+                      cursor: messageDetail.parent ? 'pointer' : '',
                       backgroundColor: messageDetail.parent ? '#00ff0038' : '#fff'
                     }}
                   >
@@ -245,7 +243,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                         setShowDialog(true)
                       }}
                     >
-                      {messageDetail.post_time}
+                      {moment(messageDetail.post_date)?.format('DD.MM.YYYY') + ', ' + messageDetail.post_time}
                     </StyledTableCell>
                     
                     <StyledTableCell
