@@ -57,10 +57,11 @@ const EngagementGraphs = (data: Props) => {
   const [topKeyword, setTopKeyword] = useState<string>('all')
   const [apiParams, setApiParams] = useState<any>()
   const [isLoading, setIsLoading] = useState(false)
-  const [page, setPage] = useState(0)
-  const [pageCount, setPageCount] = useState<number>(0)
+  const [page, setPage] = useState(1)
+  const [pageCount, setPageCount] = useState<number>(1)
 
   const { resultFilterData, loadingFilterData } = FilterByCampaignId(apiParams)
+
   const {
     resultEngagementByTime,
     resultEngagementByAccount,
@@ -86,10 +87,9 @@ const EngagementGraphs = (data: Props) => {
     resultComparison,
     resultEngagementComparison,
     resultPeriodComparisonBySenitment,
-    resultSummary,
     loadingPeriodComparisonBySenitment,
     resultPeriodComparisonByChannel
-  } = GetEngagementComparisonBy(apiParams, params?.topKeyword, page)
+  } = GetEngagementComparisonBy(apiParams)
 
   const quickViewData = {
     resultFilterData: resultFilterData,
@@ -645,18 +645,21 @@ const EngagementGraphs = (data: Props) => {
                 </Grid>
               </Grid>
               <Grid item xs={12} id='chart21'>
-                <EngagementSummary
-                  topKeyword={topKeyword}
-                  params={params}
-                  chartId='Chart 21'
-                  highlight={highlight === 'chart21' ? true : false}
-                  resultSummary={resultSummary}
-                  loadingSummary={loadingPeriodComparisonBySenitment}
-                  page={page}
-                  setPage={setPage}
-                  pageCount={pageCount}
-                  setPageCount={setPageCount}
-                />
+                {apiParams ? (
+                  <EngagementSummary
+                    topKeyword={topKeyword}
+                    params={params}
+                    chartId='Chart 21'
+                    highlight={highlight === 'chart21' ? true : false}
+                    page={page}
+                    setPage={setPage}
+                    pageCount={pageCount}
+                    setPageCount={setPageCount}
+                    apiParams={apiParams}
+                  />
+                ) : (
+                  ''
+                )}
               </Grid>
             </>
           ) : (

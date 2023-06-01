@@ -529,19 +529,11 @@ export const GetPeriodComparisonByChannel = (
   }
 }
 
-export const GetEngagementComparisonBy = (params: any, select?: any, page?: number) => {
-  if (select) {
-    params.select = select
-  }
-
+export const GetEngagementComparisonBy = (params: any) => {
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-engagement/engagement-comparison-by`,
     method: 'GET',
-    params: {
-      ...params,
-      page: page, 
-      limit: 10
-    }
+    params: params
   })
 
   return {
@@ -550,9 +542,30 @@ export const GetEngagementComparisonBy = (params: any, select?: any, page?: numb
     resultPeriodComparisonBySenitment: res?.data?.EngagementPeriodSentiment || null,
     resultEngagementComparison: res?.data?.EngagementTypeComparison || null,
     resultComparison: res?.data?.EngagementActionComparison || null,
-    resultSummary: res?.data?.EngagementByInfulencer || null,
     loadingPeriodComparisonBySenitment: loading,
     errorPeriodComparisonBySenitment: error
+  }
+}
+
+export const GetEngagementSummary = (params: any, select?: any, page?: number) => {
+  if (select) {
+    params.select = select
+  }
+
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-engagement/engagement-comparison-account`,
+    method: 'GET',
+    params: {
+      ...params,
+      page: page,
+      limit: 10
+    }
+  })
+
+  return {
+    resultSummary: res?.data?.EngagementByInfulencer || null,
+    loadingSummary: loading,
+    errorSummary: error
   }
 }
 
