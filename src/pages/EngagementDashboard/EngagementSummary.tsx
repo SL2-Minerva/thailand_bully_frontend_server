@@ -6,28 +6,27 @@ import { Information } from 'mdi-material-ui'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import Translations from 'src/layouts/components/Translations'
 import { useEffect } from 'react'
+import { GetEngagementSummary } from 'src/services/api/dashboards/engagement/EngagementApi'
 
 const EngagementSummary = ({
-  resultSummary,
-  loadingSummary,
   highlight,
-  page, 
-  setPage, 
-  pageCount, 
-  setPageCount
+  page,
+  setPage,
+  pageCount,
+  setPageCount,
+  apiParams,
+  params
 }: {
   topKeyword: string
   params: any
   chartId: string
   highlight: boolean
-  resultSummary: any
-  loadingSummary: boolean
   page: number
   setPage: any
   pageCount: number
   setPageCount: any
+  apiParams: any
 }) => {
-  
   // const reportNo = '4.2.025'
 
   const columns: GridColDef[] = [
@@ -66,8 +65,10 @@ const EngagementSummary = ({
     }
   ]
 
+  const { resultSummary, loadingSummary } = GetEngagementSummary(apiParams, params?.topKeyword, page)
+
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value - 1)
+    setPage(value)
   }
 
   useEffect(() => {
@@ -78,7 +79,6 @@ const EngagementSummary = ({
 
   return (
     <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
-
       {loadingSummary && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -141,7 +141,7 @@ const EngagementSummary = ({
           {resultSummary?.total > 0 ? (
             <Pagination
               count={pageCount}
-              page={page + 1}
+              page={page}
               onChange={handleChangePagination}
               variant='outlined'
               color='primary'
