@@ -150,7 +150,7 @@ const EngagementGraphs = (data: Props) => {
       <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
         <CircularProgress color='inherit' />
       </Backdrop>
-      <Grid container spacing={3} mt={2}>
+      <Grid container spacing={4} mt={2}>
         {resultReportPermission?.includes('57') ? (
           <Grid id='chart1' item xs={12} md={4}>
             <PercentageOfEngangement
@@ -331,354 +331,352 @@ const EngagementGraphs = (data: Props) => {
         )}
       </Grid>
 
-      <Grid container spacing={3} mt={2}>
-        <Grid container spacing={3} mt={2}>
-          {resultReportPermission?.includes('64') ? (
-            <Grid id='chart9' item xs={12} md={4}>
-              <PercentageOfEngangementType
-                params={params}
-                type='type'
-                chartId='Chart 9'
-                highlight={highlight === 'chart9' ? true : false}
-                resultEngagementType={resultEngagementPercentage}
-                loadingEngagementType={loadingEngagementType}
-                keywordsColor={EngagementTypeColors}
-              />
-            </Grid>
-          ) : (
-            ''
-          )}
-          {resultReportPermission?.includes('65') ? (
-            <Grid id='chart10' item xs={12} md={8}>
-              <DailyEngagementType
-                white={whiteColor}
-                labelColor={labelColor}
-                success={lineChartYellow}
-                borderColor={borderColor}
-                primary={lineChartPrimary}
-                warning={lineChartWarning}
-                gridLineColor={gridLineColor}
-                params={params}
-                type='type'
-                chartId='Chart 10'
-                highlight={highlight === 'chart10' ? true : false}
-                resultBy={resultEngagementPercentage}
-                loading={loadingEngagementType}
-                keywordsColor={EngagementTypeColors}
-                apiParams={apiParams}
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-              />
-            </Grid>
-          ) : (
-            ''
-          )}
-          {resultReportPermission?.includes('66') ? (
-            <Grid item xs={12} md={12} id='chart11'>
-              <EngagementTypeByDay
-                white={whiteColor}
-                labelColor={labelColor}
-                success={lineChartYellow}
-                borderColor={borderColor}
-                primary={lineChartPrimary}
-                warning={lineChartWarning}
-                gridLineColor={gridLineColor}
-                params={params}
-                colorType='engagementType'
-                chartId='Chart 11'
-                highlight={highlight === 'chart11' ? true : false}
-                resultBy={resultEngagementTypeByDay}
-                loading={loadingEngagementType}
-                keywordsColor={EngagementTypeColors}
-                apiParams={apiParams}
-                setIsLoading={setIsLoading}
-              />
-            </Grid>
-          ) : (
-            ''
-          )}
-          {resultReportPermission?.includes('67') ? (
-            <Grid item xs={12} md={12} id='chart10'>
-              <EngagementTypeByTime
-                white={whiteColor}
-                labelColor={labelColor}
-                success={lineChartYellow}
-                borderColor={borderColor}
-                primary={lineChartPrimary}
-                warning={lineChartWarning}
-                gridLineColor={gridLineColor}
-                params={params}
-                colorType='engagementType'
-                chartId='Chart 12'
-                highlight={highlight === 'chart12' ? true : false}
-                resultBy={resultEngagementTypeByTime}
-                loading={loadingEngagementType}
-                keywordsColor={EngagementTypeColors}
-                apiParams={apiParams}
-                setIsLoading={setIsLoading}
-              />
-            </Grid>
-          ) : (
-            ''
-          )}
-          {resultReportPermission?.includes('68') ? (
-            <Grid item xs={12} md={12} id='chart13'>
-              <EngagementTypeByDevice
-                white={whiteColor}
-                labelColor={labelColor}
-                success={lineChartYellow}
-                borderColor={borderColor}
-                primary={lineChartPrimary}
-                warning={lineChartWarning}
-                gridLineColor={gridLineColor}
-                params={params}
-                colorType='engagementType'
-                chartId='Chart 13'
-                highlight={highlight === 'chart13' ? true : false}
-                resultBy={resultEngagementTypeByDevice}
-                loading={loadingEngagementType}
-                keywordsColor={EngagementTypeColors}
-                apiParams={apiParams}
-                setIsLoading={setIsLoading}
-              />
-            </Grid>
-          ) : (
-            ''
-          )}
-          {resultReportPermission?.includes('69') ? (
-            <Grid item xs={12} md={12} id='chart14'>
-              <EngagementTypeByAccount
-                white={whiteColor}
-                labelColor={labelColor}
-                success={lineChartYellow}
-                borderColor={borderColor}
-                primary={lineChartPrimary}
-                warning={lineChartWarning}
-                gridLineColor={gridLineColor}
-                params={params}
-                chartId='Chart 14'
-                highlight={highlight === 'chart14' ? true : false}
-                resultBy={resultEngagementTypeByAccount}
-                loading={loadingEngagementType}
-                keywordsColor={EngagementTypeColors}
-                apiParams={apiParams}
-                setIsLoading={setIsLoading}
-              />
-            </Grid>
-          ) : (
-            ''
-          )}
+      <Grid container spacing={4} mt={1}>
+        {resultReportPermission?.includes('64') ? (
+          <Grid id='chart9' item xs={12} md={4}>
+            <PercentageOfEngangementType
+              params={params}
+              type='type'
+              chartId='Chart 9'
+              highlight={highlight === 'chart9' ? true : false}
+              resultEngagementType={resultEngagementPercentage}
+              loadingEngagementType={loadingEngagementType}
+              keywordsColor={EngagementTypeColors}
+            />
+          </Grid>
+        ) : (
+          ''
+        )}
+        {resultReportPermission?.includes('65') ? (
+          <Grid id='chart10' item xs={12} md={8}>
+            <DailyEngagementType
+              white={whiteColor}
+              labelColor={labelColor}
+              success={lineChartYellow}
+              borderColor={borderColor}
+              primary={lineChartPrimary}
+              warning={lineChartWarning}
+              gridLineColor={gridLineColor}
+              params={params}
+              type='type'
+              chartId='Chart 10'
+              highlight={highlight === 'chart10' ? true : false}
+              resultBy={resultEngagementPercentage}
+              loading={loadingEngagementType}
+              keywordsColor={EngagementTypeColors}
+              apiParams={apiParams}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
+          </Grid>
+        ) : (
+          ''
+        )}
+        {resultReportPermission?.includes('66') ? (
+          <Grid item xs={12} md={12} id='chart11'>
+            <EngagementTypeByDay
+              white={whiteColor}
+              labelColor={labelColor}
+              success={lineChartYellow}
+              borderColor={borderColor}
+              primary={lineChartPrimary}
+              warning={lineChartWarning}
+              gridLineColor={gridLineColor}
+              params={params}
+              colorType='engagementType'
+              chartId='Chart 11'
+              highlight={highlight === 'chart11' ? true : false}
+              resultBy={resultEngagementTypeByDay}
+              loading={loadingEngagementType}
+              keywordsColor={EngagementTypeColors}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
+            />
+          </Grid>
+        ) : (
+          ''
+        )}
+        {resultReportPermission?.includes('67') ? (
+          <Grid item xs={12} md={12} id='chart10'>
+            <EngagementTypeByTime
+              white={whiteColor}
+              labelColor={labelColor}
+              success={lineChartYellow}
+              borderColor={borderColor}
+              primary={lineChartPrimary}
+              warning={lineChartWarning}
+              gridLineColor={gridLineColor}
+              params={params}
+              colorType='engagementType'
+              chartId='Chart 12'
+              highlight={highlight === 'chart12' ? true : false}
+              resultBy={resultEngagementTypeByTime}
+              loading={loadingEngagementType}
+              keywordsColor={EngagementTypeColors}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
+            />
+          </Grid>
+        ) : (
+          ''
+        )}
+        {resultReportPermission?.includes('68') ? (
+          <Grid item xs={12} md={12} id='chart13'>
+            <EngagementTypeByDevice
+              white={whiteColor}
+              labelColor={labelColor}
+              success={lineChartYellow}
+              borderColor={borderColor}
+              primary={lineChartPrimary}
+              warning={lineChartWarning}
+              gridLineColor={gridLineColor}
+              params={params}
+              colorType='engagementType'
+              chartId='Chart 13'
+              highlight={highlight === 'chart13' ? true : false}
+              resultBy={resultEngagementTypeByDevice}
+              loading={loadingEngagementType}
+              keywordsColor={EngagementTypeColors}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
+            />
+          </Grid>
+        ) : (
+          ''
+        )}
+        {resultReportPermission?.includes('69') ? (
+          <Grid item xs={12} md={12} id='chart14'>
+            <EngagementTypeByAccount
+              white={whiteColor}
+              labelColor={labelColor}
+              success={lineChartYellow}
+              borderColor={borderColor}
+              primary={lineChartPrimary}
+              warning={lineChartWarning}
+              gridLineColor={gridLineColor}
+              params={params}
+              chartId='Chart 14'
+              highlight={highlight === 'chart14' ? true : false}
+              resultBy={resultEngagementTypeByAccount}
+              loading={loadingEngagementType}
+              keywordsColor={EngagementTypeColors}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
+            />
+          </Grid>
+        ) : (
+          ''
+        )}
 
-          {resultReportPermission?.includes('70') ? (
-            <Grid item xs={12} md={12} id='chart15'>
-              <EngagementTypeByChannel
-                white={whiteColor}
-                labelColor={labelColor}
-                success={lineChartYellow}
-                borderColor={borderColor}
-                primary={lineChartPrimary}
-                warning={lineChartWarning}
-                gridLineColor={gridLineColor}
-                params={params}
-                chartId='Chart 15'
-                highlight={highlight === 'chart15' ? true : false}
-                resultBy={resultEngagementTypeByChannel}
-                loading={loadingEngagementType}
-                keywordsColor={EngagementTypeColors}
-                apiParams={apiParams}
-                setIsLoading={setIsLoading}
-              />
-            </Grid>
-          ) : (
-            ''
-          )}
+        {resultReportPermission?.includes('70') ? (
+          <Grid item xs={12} md={12} id='chart15'>
+            <EngagementTypeByChannel
+              white={whiteColor}
+              labelColor={labelColor}
+              success={lineChartYellow}
+              borderColor={borderColor}
+              primary={lineChartPrimary}
+              warning={lineChartWarning}
+              gridLineColor={gridLineColor}
+              params={params}
+              chartId='Chart 15'
+              highlight={highlight === 'chart15' ? true : false}
+              resultBy={resultEngagementTypeByChannel}
+              loading={loadingEngagementType}
+              keywordsColor={EngagementTypeColors}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
+            />
+          </Grid>
+        ) : (
+          ''
+        )}
 
-          {resultReportPermission?.includes('71') ? (
-            <>
-              <Grid item xs={12} md={12} id='chart16'>
-                <TotalEngagement
-                  totalEngagement={resultTotalEngagement}
-                  highlight={highlight === 'chart16' ? true : false}
-                  loading={loadingPeriodComparisonBySenitment}
-                />
-              </Grid>
-            </>
-          ) : (
-            ''
-          )}
-          {resultReportPermission?.includes('72') ? (
-            <Grid item xs={12} md={6} id='chart17'>
-              <PeriodComparisonChart
-                white={whiteColor}
-                labelColor={labelColor}
-                success={lineChartYellow}
-                borderColor={borderColor}
-                primary={lineChartPrimary}
-                warning={lineChartWarning}
-                gridLineColor={gridLineColor}
-                params={params}
-                type='channel'
-                chartTitle='Engagement'
-                colorType='engagementDefault'
-                chartId='engagementChart17Title'  // Chart 17
-                highlight={highlight === 'chart17' ? true : false}
-                reportNo='engagementChart17Description'  // 4.2.021
-                loadingSenitmentComparisonByEngagement={loadingPeriodComparisonBySenitment}
-                resultSentimentComparisonByEngagement={resultPeriodComparisonByChannel}
+        {resultReportPermission?.includes('71') ? (
+          <>
+            <Grid item xs={12} md={12} id='chart16'>
+              <TotalEngagement
+                totalEngagement={resultTotalEngagement}
+                highlight={highlight === 'chart16' ? true : false}
+                loading={loadingPeriodComparisonBySenitment}
               />
             </Grid>
-          ) : (
-            ''
-          )}
-          {resultReportPermission?.includes('73') ? (
-            <Grid item xs={12} md={6} id='chart18'>
-              <PeriodComparisonChartSentiment
-                white={whiteColor}
-                labelColor={labelColor}
-                success={lineChartYellow}
-                borderColor={borderColor}
-                primary={lineChartPrimary}
-                warning={lineChartWarning}
-                gridLineColor={gridLineColor}
+          </>
+        ) : (
+          ''
+        )}
+        {resultReportPermission?.includes('72') ? (
+          <Grid item xs={12} md={6} id='chart17'>
+            <PeriodComparisonChart
+              white={whiteColor}
+              labelColor={labelColor}
+              success={lineChartYellow}
+              borderColor={borderColor}
+              primary={lineChartPrimary}
+              warning={lineChartWarning}
+              gridLineColor={gridLineColor}
+              params={params}
+              type='channel'
+              chartTitle='Engagement'
+              colorType='engagementDefault'
+              chartId='engagementChart17Title' // Chart 17
+              highlight={highlight === 'chart17' ? true : false}
+              reportNo='engagementChart17Description' // 4.2.021
+              loadingSenitmentComparisonByEngagement={loadingPeriodComparisonBySenitment}
+              resultSentimentComparisonByEngagement={resultPeriodComparisonByChannel}
+            />
+          </Grid>
+        ) : (
+          ''
+        )}
+        {resultReportPermission?.includes('73') ? (
+          <Grid item xs={12} md={6} id='chart18'>
+            <PeriodComparisonChartSentiment
+              white={whiteColor}
+              labelColor={labelColor}
+              success={lineChartYellow}
+              borderColor={borderColor}
+              primary={lineChartPrimary}
+              warning={lineChartWarning}
+              gridLineColor={gridLineColor}
+              params={params}
+              type='sentiment'
+              chartTitle='Engagement'
+              colorType='SentimentComparisonEngagment'
+              chartId='Chart 18'
+              highlight={highlight === 'chart18' ? true : false}
+              resultPeriodComparisonBySenitment={resultPeriodComparisonBySenitment}
+              loadingPeriodComparisonBySenitment={loadingPeriodComparisonBySenitment}
+            />
+          </Grid>
+        ) : (
+          ''
+        )}
+        {resultReportPermission?.includes('74') ? (
+          <>
+            <Grid item xs={12} md={7} id='chart19'>
+              <EngagementTypeComparison
                 params={params}
-                type='sentiment'
-                chartTitle='Engagement'
-                colorType='SentimentComparisonEngagment'
-                chartId='Chart 18'
-                highlight={highlight === 'chart18' ? true : false}
-                resultPeriodComparisonBySenitment={resultPeriodComparisonBySenitment}
-                loadingPeriodComparisonBySenitment={loadingPeriodComparisonBySenitment}
+                chartId='Chart 19'
+                highlight={highlight === 'chart19' ? true : false}
+                resultEngagementComparison={resultEngagementComparison}
+                loadingEngagementComparison={loadingPeriodComparisonBySenitment}
               />
             </Grid>
-          ) : (
-            ''
-          )}
-          {resultReportPermission?.includes('74') ? (
-            <>
-              <Grid item xs={12} md={7} id='chart19'>
-                <EngagementTypeComparison
+            <Grid item xs={12} md={5} id='chart20'>
+              <EngagmentComparisonChart
+                params={params}
+                chartId='chart 20'
+                highlight={highlight === 'chart20' ? true : false}
+                resultComparison={resultComparison}
+                loadingComparison={loadingPeriodComparisonBySenitment}
+              />
+            </Grid>
+          </>
+        ) : (
+          ''
+        )}
+        {resultReportPermission?.includes('75') ? (
+          <>
+            <Grid container spacing={3} mt={2}>
+              <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end', overflowX: 'auto' }}>
+                <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
+                <Button
+                  variant='contained'
+                  color={topKeyword === 'top10' ? 'warning' : 'inherit'}
+                  size='medium'
+                  sx={{ marginRight: '20px' }}
+                  onClick={() => {
+                    handleTopKeywords('top10')
+                  }}
+                >
+                  {' '}
+                  Top 10
+                </Button>
+                <Button
+                  variant='contained'
+                  color={topKeyword === 'top20' ? 'warning' : 'inherit'}
+                  size='medium'
+                  sx={{ marginRight: '20px' }}
+                  onClick={() => {
+                    handleTopKeywords('top20')
+                  }}
+                >
+                  {' '}
+                  Top 20
+                </Button>
+                <Button
+                  variant='contained'
+                  color={topKeyword === 'top50' ? 'warning' : 'inherit'}
+                  size='medium'
+                  sx={{ marginRight: '20px' }}
+                  onClick={() => {
+                    handleTopKeywords('top50')
+                  }}
+                >
+                  {' '}
+                  Top 50
+                </Button>
+                <Button
+                  variant='contained'
+                  color={topKeyword === 'top100' ? 'warning' : 'inherit'}
+                  size='medium'
+                  sx={{ marginRight: '20px' }}
+                  onClick={() => {
+                    handleTopKeywords('top100')
+                  }}
+                >
+                  {' '}
+                  Top 100
+                </Button>
+                <Button
+                  variant='contained'
+                  color={topKeyword === 'all' ? 'warning' : 'inherit'}
+                  size='medium'
+                  sx={{ marginRight: '20px' }}
+                  onClick={() => {
+                    handleTopKeywords('all')
+                  }}
+                >
+                  {' '}
+                  ALL{' '}
+                </Button>
+              </Grid>
+            </Grid>
+            <Grid item xs={12} id='chart21'>
+              {apiParams ? (
+                <EngagementSummary
+                  topKeyword={topKeyword}
                   params={params}
-                  chartId='Chart 19'
-                  highlight={highlight === 'chart19' ? true : false}
-                  resultEngagementComparison={resultEngagementComparison}
-                  loadingEngagementComparison={loadingPeriodComparisonBySenitment}
+                  chartId='Chart 21'
+                  highlight={highlight === 'chart21' ? true : false}
+                  page={page}
+                  setPage={setPage}
+                  pageCount={pageCount}
+                  setPageCount={setPageCount}
+                  apiParams={apiParams}
                 />
-              </Grid>
-              <Grid item xs={12} md={5} id='chart20'>
-                <EngagmentComparisonChart
-                  params={params}
-                  chartId='chart 20'
-                  highlight={highlight === 'chart20' ? true : false}
-                  resultComparison={resultComparison}
-                  loadingComparison={loadingPeriodComparisonBySenitment}
-                />
-              </Grid>
-            </>
-          ) : (
-            ''
-          )}
-          {resultReportPermission?.includes('75') ? (
-            <>
-              <Grid container spacing={3} mt={2}>
-                <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end', overflowX: 'auto' }}>
-                  <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
-                  <Button
-                    variant='contained'
-                    color={topKeyword === 'top10' ? 'warning' : 'inherit'}
-                    size='medium'
-                    sx={{ marginRight: '20px' }}
-                    onClick={() => {
-                      handleTopKeywords('top10')
-                    }}
-                  >
-                    {' '}
-                    Top 10
-                  </Button>
-                  <Button
-                    variant='contained'
-                    color={topKeyword === 'top20' ? 'warning' : 'inherit'}
-                    size='medium'
-                    sx={{ marginRight: '20px' }}
-                    onClick={() => {
-                      handleTopKeywords('top20')
-                    }}
-                  >
-                    {' '}
-                    Top 20
-                  </Button>
-                  <Button
-                    variant='contained'
-                    color={topKeyword === 'top50' ? 'warning' : 'inherit'}
-                    size='medium'
-                    sx={{ marginRight: '20px' }}
-                    onClick={() => {
-                      handleTopKeywords('top50')
-                    }}
-                  >
-                    {' '}
-                    Top 50
-                  </Button>
-                  <Button
-                    variant='contained'
-                    color={topKeyword === 'top100' ? 'warning' : 'inherit'}
-                    size='medium'
-                    sx={{ marginRight: '20px' }}
-                    onClick={() => {
-                      handleTopKeywords('top100')
-                    }}
-                  >
-                    {' '}
-                    Top 100
-                  </Button>
-                  <Button
-                    variant='contained'
-                    color={topKeyword === 'all' ? 'warning' : 'inherit'}
-                    size='medium'
-                    sx={{ marginRight: '20px' }}
-                    onClick={() => {
-                      handleTopKeywords('all')
-                    }}
-                  >
-                    {' '}
-                    ALL{' '}
-                  </Button>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} id='chart21'>
-                {apiParams ? (
-                  <EngagementSummary
-                    topKeyword={topKeyword}
-                    params={params}
-                    chartId='Chart 21'
-                    highlight={highlight === 'chart21' ? true : false}
-                    page={page}
-                    setPage={setPage}
-                    pageCount={pageCount}
-                    setPageCount={setPageCount}
-                    apiParams={apiParams}
-                  />
-                ) : (
-                  ''
-                )}
-              </Grid>
-            </>
-          ) : (
-            ''
-          )}
-        </Grid>
-        <QuickView setHighlight={setHighlight} setShowQuickView={setShowQuickView} />
-        <QuickViewModal
-          show={showQuickView}
-          setShow={setShowQuickView}
-          params={params}
-          chartId={highlight}
-          quickViewData={quickViewData}
-          keywordsColor={keywordGraphColors}
-          apiParams={apiParams}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-        />
+              ) : (
+                ''
+              )}
+            </Grid>
+          </>
+        ) : (
+          ''
+        )}
       </Grid>
+      <QuickView setHighlight={setHighlight} setShowQuickView={setShowQuickView} />
+      <QuickViewModal
+        show={showQuickView}
+        setShow={setShowQuickView}
+        params={params}
+        chartId={highlight}
+        quickViewData={quickViewData}
+        keywordsColor={keywordGraphColors}
+        apiParams={apiParams}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+      />
     </>
   )
 }

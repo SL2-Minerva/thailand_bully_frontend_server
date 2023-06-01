@@ -122,7 +122,7 @@ const SentimentScorePercentage = ({
   }
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 520 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 520 }} >
       {loadingSentimentScore && <LinearProgress style={{ width: '100%' }} />}
       <CardHeader title='' titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }} />
       <CardContent>

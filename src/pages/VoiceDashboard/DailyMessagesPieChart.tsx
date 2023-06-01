@@ -241,7 +241,7 @@ const DailyMessagePieChart = (props: Props) => {
   // const reportNo = '2.1.001'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }} >
       {loadingPercentageMessage && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>

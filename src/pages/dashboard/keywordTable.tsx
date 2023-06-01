@@ -33,7 +33,7 @@ const KeywordTable = ({ apiParams }: { apiParams: any; chartId: string }) => {
 
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title={<Translations text='Keyword Summary' />} titleTypographyProps={{ variant: 'h6' }} />

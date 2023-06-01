@@ -267,7 +267,7 @@ const SNA = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
+        <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
           <CardHeader title='Filter' />
           <CardContent>
             <Grid container spacing={6}>
@@ -480,7 +480,7 @@ const SNA = () => {
       </Grid>
       <Grid container spacing={2} mt={2}>
         <Grid item xs={12} ml={2}>
-          <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
+          <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
             <CardHeader title='Keyword Filter'></CardHeader>
             <CardContent>
               <Grid container spacing={2}>
@@ -540,7 +540,7 @@ const SNA = () => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
+        <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
           {loadingNetworkGraph && <LinearProgress style={{ width: '100%' }} />}
 
           <Box sx={{ mb: 8, textAlign: 'center' }}>

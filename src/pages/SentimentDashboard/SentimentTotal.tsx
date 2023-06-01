@@ -38,7 +38,7 @@ const SentimentTotal = (props: Props) => {
       {resultReportPermission?.includes('85') ? (
         <>
           <Grid item xs={12}>
-            <Paper id='chart10' sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+            <Paper id='chart10' sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
               <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                   title={<Translations text='Total Messages by Sentiment Type' />}

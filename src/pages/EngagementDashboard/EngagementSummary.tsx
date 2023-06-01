@@ -78,7 +78,7 @@ const EngagementSummary = ({
   }, [resultSummary])
 
   return (
-    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} square variant='outlined'>
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
       {loadingSummary && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader

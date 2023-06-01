@@ -49,7 +49,7 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
       : 'Number of Accounts: Period over Period Comparison'
 
   return (
-    <Paper sx={{ height: 250, border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+    <Paper sx={{ height: 250, border: `3px solid #fff`, borderRadius: 1 }} >
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box>

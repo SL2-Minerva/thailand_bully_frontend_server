@@ -194,7 +194,7 @@ const Filter = (props: Props) => {
 
   return (
     <Grid item xs={12}>
-      <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+      <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
         <CardHeader title={tilte} />
         <CardContent>
           <Grid container spacing={2}>

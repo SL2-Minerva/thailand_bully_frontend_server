@@ -150,7 +150,7 @@ const SummaryByKeywords = ({
   ]
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
       {loadingSummaryByKeywords && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader

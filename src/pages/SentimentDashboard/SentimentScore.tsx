@@ -25,7 +25,7 @@ const SenitmentScore = ({
   // const reportNo = '5.2.015'
 
   return (
-     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 ,minHeight: 520 }} square variant='outlined'>
+     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 ,minHeight: 520 }} >
       {loadingSentimentScore && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader

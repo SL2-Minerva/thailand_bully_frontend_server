@@ -248,7 +248,7 @@ const PercentageOfEngangement = (props: MessageData) => {
   }, [resultFilterData, keywordsColor])
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }} >
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>

@@ -240,7 +240,7 @@ const MessagesByDays = (props: LineProps) => {
   const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
       {loadingMessagesByDay && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader

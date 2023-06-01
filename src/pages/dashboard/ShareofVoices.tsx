@@ -173,7 +173,7 @@ const ShareOfVoices = ({ apiParams, keywordsColor }: { apiParams: any; chartId: 
   }
 
   return (
-    <Paper sx={{ minheight: 450, border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+    <Paper sx={{ minheight: 450, border: `3px solid #fff`, borderRadius: 1 }} >
       {loadingShareOfVoice && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>

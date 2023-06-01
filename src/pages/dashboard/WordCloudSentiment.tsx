@@ -45,7 +45,7 @@ const WordCloudSentiment = ({ params }: { chartId: string; params: any }) => {
   }, [params, sentiment, word])
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={3}>
       {apiParams ? (
         <SentimentWordCloud
           apiParams={apiParams}

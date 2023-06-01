@@ -255,7 +255,7 @@ const EngagementByDay = (props: LineProps) => {
   }
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: '300px' }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: '300px' }} >
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>

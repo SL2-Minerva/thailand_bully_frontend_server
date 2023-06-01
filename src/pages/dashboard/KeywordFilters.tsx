@@ -27,7 +27,7 @@ const KeywordFilters = (data: Props) => {
   return (
     <Grid container spacing={2} mt={2}>
       <Grid item xs={12}>
-        <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} square variant='outlined'>
+        <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
           {loadingKeywordList && <LinearProgress style={{ width: '100%' }} />}
           <CardHeader title='Filter'></CardHeader>
           <CardContent>

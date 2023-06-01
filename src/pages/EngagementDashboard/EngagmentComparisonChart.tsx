@@ -149,7 +149,7 @@ const EngagmentComparisonChart = ({
   // const reportNo = '4.2.024'
 
   return (
-    <Paper style={{ border: `3px solid #fff`, borderRadius: 7, minHeight: 560 }} square variant='outlined'>
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7, minHeight: 560 }} >
       {loadingComparison && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>

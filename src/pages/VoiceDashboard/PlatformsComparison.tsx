@@ -163,7 +163,7 @@ const PlatformsComparison = ({
   // const reportNo = '2.2.022'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1,minHeight: 550 }} square variant='outlined'>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1,minHeight: 550 }} >
 
       {loadingPlatformComparison && <LinearProgress style={{ width: '100%' }} />}
 

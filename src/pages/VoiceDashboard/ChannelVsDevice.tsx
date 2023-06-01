@@ -101,7 +101,7 @@ const ChannelVsDevice = ({
   // const reportNo = '2.2.024'
 
   return (
-    <Paper style={{ minHeight: 550, maxHeight: 550, border: `3px solid #fff`, borderRadius: 7 }} square variant ='outlined'>
+    <Paper style={{ minHeight: 550, maxHeight: 550, border: `3px solid #fff`, borderRadius: 7 }} >
       {loadingDeviceVsChannel && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
