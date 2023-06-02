@@ -76,7 +76,7 @@ const ComparisonCharts = (props: Props) => {
             </Paper>
           </Grid>
 
-          <Grid container spacing={3} ml={2} mt={2}>
+          <Grid container spacing={3} pl={3} pt={3}>
             <Grid item xs={6} md={2}>
               {resultFacebookComparison ? (
                 <ChannelComparison

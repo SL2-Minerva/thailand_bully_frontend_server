@@ -147,7 +147,7 @@ const BullyCharts = (data: Props) => {
       <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
         <CircularProgress color='inherit' />
       </Backdrop>
-      <Grid container spacing={3} pl={2} pt={2}>
+      <Grid container spacing={3} pt={2} pl={2}>
         {resultReportPermission?.includes('93') ? (
           <Grid id='chart1' item xs={12} md={4} mt={2}>
             <PercentageOfBully

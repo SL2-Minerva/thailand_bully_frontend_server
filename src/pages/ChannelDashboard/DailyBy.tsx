@@ -41,7 +41,7 @@ const DailyBy = (props: Props) => {
   return (
     <>
       {resultReportPermission?.includes('44') && apiParams ? (
-        <Grid item xs={12} md={4} id='chart1'>
+        <Grid item xs={12} md={4} id='chart1' mt={1}>
           <DailyMessagePieChart
             apiParams={apiParams}
             type='channel'
@@ -57,7 +57,7 @@ const DailyBy = (props: Props) => {
         ''
       )}
       {resultReportPermission?.includes('45') && apiParams ? (
-        <Grid item xs={12} md={8} id='chart2'>
+        <Grid item xs={12} md={8} id='chart2' mt={1}>
           <DailyMessageGraph
             params={params}
             type='channel'

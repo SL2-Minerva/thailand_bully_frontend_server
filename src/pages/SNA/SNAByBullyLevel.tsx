@@ -459,7 +459,7 @@ const SNAByBullyLevel = () => {
           </CardContent>
         </Paper>
       </Grid>
-      <Grid container spacing={2} mt={2}>
+      <Grid container spacing={2} mt={1}>
         <Grid item xs={12} ml={2}>
           <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
             <CardHeader title='Keyword Filter'></CardHeader>
@@ -520,7 +520,7 @@ const SNAByBullyLevel = () => {
           </Paper>
         </Grid>
       </Grid>
-      <Grid item xs={12} mt={2}>
+      <Grid item xs={12} mt={1}>
         <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
           {loadingNetworkGraph && <LinearProgress style={{ width: '100%' }} />}
 

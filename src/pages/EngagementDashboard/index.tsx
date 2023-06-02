@@ -26,8 +26,8 @@ const EngagementDashboard = () => {
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [loadingKeyword, setLoadingKeyword] = useState<boolean>(true)
-  const [platformId, setPlatformId] = useState<string>('all') 
-  const [status, setStatus] = useState(localStorage.getItem('status') || '1');
+  const [platformId, setPlatformId] = useState<string>('all')
+  const [status, setStatus] = useState(localStorage.getItem('status') || '1')
 
   const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
 
@@ -114,7 +114,7 @@ const EngagementDashboard = () => {
 
   return (
     <>
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         <Filter
           tilte='Engagement Dashboard'
           date={date}
@@ -131,32 +131,36 @@ const EngagementDashboard = () => {
           setDateSelect={setDateSelect}
           campaign={campaignType}
           setCampaign={setCampaignType}
-          setPlatformId = {setPlatformId}
-          platformId = {platformId}
+          setPlatformId={setPlatformId}
+          platformId={platformId}
           setStatus={setStatus}
-          status ={status}
+          status={status}
         />
       </Grid>
 
       {campaignType ? (
-        <KeywordFilters
-          campaign={campaignType}
-          keyword={keyword}
-          setKeyword={setKeyword}
-          filterKeyword={filterKeyword}
-          setFilterKeyword={setFilterKeyword}
-          checkKeywordId={checkKeywordId}
-        />
+        <Grid container spacing={3} pl={3} pt={2}>
+          <KeywordFilters
+            campaign={campaignType}
+            keyword={keyword}
+            setKeyword={setKeyword}
+            filterKeyword={filterKeyword}
+            setFilterKeyword={setFilterKeyword}
+            checkKeywordId={checkKeywordId}
+          />
+        </Grid>
       ) : (
         ''
       )}
 
       {!loadingKeyword && keywordGraphColors ? (
-        <EngagementGraphs
-          params={params}
-          resultReportPermission={resultReportPermission}
-          keywordGraphColors={keywordGraphColors}
-        />
+        <Grid container spacing={3} pl={3} pt={2}>
+          <EngagementGraphs
+            params={params}
+            resultReportPermission={resultReportPermission}
+            keywordGraphColors={keywordGraphColors}
+          />
+        </Grid>
       ) : (
         ''
       )}

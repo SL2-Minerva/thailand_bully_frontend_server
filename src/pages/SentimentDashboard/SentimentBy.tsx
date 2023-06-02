@@ -229,7 +229,7 @@ const SentimentBy = (props: Props) => {
 
       {resultReportPermission?.includes('88') ? (
         <>
-          <Grid item xs={12} md={6} id='chart13' mt={1}>
+          <Grid item xs={12} md={6} id='chart13'>
             <SentimentScore
               params={params}
               chartId='Chart 13'
@@ -238,7 +238,7 @@ const SentimentBy = (props: Props) => {
               loadingSentimentScore={loadingSentimentByDay}
             />
           </Grid>
-          <Grid item xs={12} md={6} mt={1}>
+          <Grid item xs={12} md={6}>
             <SentimentScorePercentage
               params={params}
               highlight={highlight === 'chart13' ? true : false}

@@ -102,7 +102,7 @@ const SentimentDashboard = () => {
       </Grid>
 
       {campaign ? (
-        <Grid container ml={2}>
+        <Grid container spacing={3} ml={2} pt={2}>
           <KeywordFilters
             campaign={campaign}
             keyword={keyword}

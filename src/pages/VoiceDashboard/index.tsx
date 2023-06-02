@@ -20,9 +20,9 @@ const VoiceDashboard = () => {
   const [endDate, setEndDate] = useState<any>(new Date(localStorage.getItem('endDate') || new Date()))
   const [period, setPeriod] = useState<string>('last7days')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
-  const [status, setStatus] = useState(localStorage.getItem('status') || '1');
+  const [status, setStatus] = useState(localStorage.getItem('status') || '1')
   const [campaign, setCampaign] = useState<string>('')
-  const [platformId, setPlatformId] = useState<string>('all') 
+  const [platformId, setPlatformId] = useState<string>('all')
   const [previousDate, setPreviousDate] = useState<any>(
     new Date(localStorage.getItem('previousStartDate') || new Date())
   )
@@ -118,7 +118,7 @@ const VoiceDashboard = () => {
   }, [campaign])
 
   return (
-    <Grid container spacing={4}>
+    <Grid container spacing={3}>
       <Filter
         tilte='Voice Dashboard'
         date={date}
@@ -135,83 +135,14 @@ const VoiceDashboard = () => {
         setDateSelect={setDateSelect}
         campaign={campaign}
         setCampaign={setCampaign}
-        setPlatformId = {setPlatformId}
-        platformId = {platformId}
-        status = {status}
+        setPlatformId={setPlatformId}
+        platformId={platformId}
+        status={status}
         setStatus={setStatus}
       />
-      {/* <Grid container spacing={2} mt={2} ml={3}>
-        <Grid item xs={12}>
-          <Card>
-            <CardHeader title='Filter'></CardHeader>
-            <CardContent>
-              <Grid container spacing={2}>
-                <Grid item xs={6} md={1}>
-                  <Button
-                    sx={{ mb: 2 }}
-                    onClick={() => {
-                      if (keyword === 'all') {
-                        setKeyword('')
-
-                        // setKeywordGraphColor(keywordsColor || GraphicColors)
-                      } else {
-                        setKeyword('all')
-                        setFilterKeyword([])
-
-                        // setFilterColor([])
-                        // setKeywordGraphColor(keywordsColor || GraphicColors)
-                      }
-                    }}
-                    variant='contained'
-                    color={keyword === 'all' ? 'primary' : 'secondary'}
-                  >
-                    ALL
-                  </Button>
-                </Grid>
-
-                {resultKeywordList &&
-                  (resultKeywordList || []).map((keywords: any, index: number) => {
-                    return (
-                      <Grid item xs={6} md={1.2} key={index}>
-                        <Button
-                          sx={{
-                            mb: 2,
-                            bgcolor:
-                              filterKeyword?.indexOf(keywords?.id) > -1
-                                ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
-                                : keyword === 'all'
-                                ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
-                                : 'grey',
-                            ':hover': {
-                              bgcolor:
-                                filterKeyword?.indexOf(keywords?.id) > -1
-                                  ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
-                                  : keyword === 'all'
-                                  ? keywordsColor && keywordsColor[index] !== '#' ? keywordsColor[index] : 'black'
-                                  : 'grey'
-                            }
-                          }}
-                          onClick={() => {
-                            checkKeywordId(
-                              filterKeyword,
-                              keywords?.id
-                            )
-                          }}
-                          variant='contained'
-                        >
-                          <span style={{ wordWrap: 'break-word' }}>{wordBreaks(keywords.name)}</span>
-                        </Button>
-                      </Grid>
-                    )
-                  })}
-              </Grid>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid> */}
 
       {campaign ? (
-        <Grid container ml={4}>
+        <Grid container spacing={3} ml={3} pt={2}>
           <KeywordFilters
             campaign={campaign}
             keyword={keyword}
@@ -226,11 +157,13 @@ const VoiceDashboard = () => {
       )}
 
       {!loadingKeyword && keywordGraphColors && keyword ? (
-        <VoiceDashboardGraphs
-          params={params}
-          resultReportPermission={resultReportPermission}
-          keywordGraphColors={keywordGraphColors}
-        />
+        <Grid container spacing={3} pl={3} pt={2}>
+          <VoiceDashboardGraphs
+            params={params}
+            resultReportPermission={resultReportPermission}
+            keywordGraphColors={keywordGraphColors}
+          />
+        </Grid>
       ) : (
         ''
       )}

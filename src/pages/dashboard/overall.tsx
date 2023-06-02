@@ -322,7 +322,7 @@ const OverallDashboard = () => {
     <>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
+          <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
             <CardHeader title='Overall Dashboard' />
             <CardContent>
               <Grid container spacing={6}>
@@ -510,26 +510,30 @@ const OverallDashboard = () => {
       </Grid>
 
       {campaign ? (
-        <KeywordFilters
-          campaign={campaign}
-          keyword={keyword}
-          setKeyword={setKeyword}
-          filterKeyword={filterKeyword}
-          setFilterKeyword={setFilterKeyword}
-          checkKeywordId={checkKeywordId}
-        />
+        <Grid container spacing={3} pl={3} pt={2}>
+          <KeywordFilters
+            campaign={campaign}
+            keyword={keyword}
+            setKeyword={setKeyword}
+            filterKeyword={filterKeyword}
+            setFilterKeyword={setFilterKeyword}
+            checkKeywordId={checkKeywordId}
+          />
+        </Grid>
       ) : (
         ''
       )}
 
       {!loadingKeyword && keywordGraphColors ? (
-        <OverallGraphs
-          params={params}
-          setTopKeyword={setTopKeyword}
-          resultReportPermission={resultReportPermission}
-          keywordGraphColors={keywordGraphColors}
-          topKeyword={topKeyword}
-        />
+        <Grid container spacing={3} pl={3} pt={2}>
+          <OverallGraphs
+            params={params}
+            setTopKeyword={setTopKeyword}
+            resultReportPermission={resultReportPermission}
+            keywordGraphColors={keywordGraphColors}
+            topKeyword={topKeyword}
+          />
+        </Grid>
       ) : (
         ''
       )}

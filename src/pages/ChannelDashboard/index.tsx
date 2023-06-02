@@ -26,9 +26,9 @@ const ChannelDashboard = () => {
   const [campaign, setCampaign] = useState<string>('')
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
-  const [loadingKeyword, setLoadingKeyword] = useState<boolean>(true);
-  const [platformId, setPlatformId] = useState<string>('all') 
-  const [status, setStatus] = useState(localStorage.getItem('status') || '1');
+  const [loadingKeyword, setLoadingKeyword] = useState<boolean>(true)
+  const [platformId, setPlatformId] = useState<string>('all')
+  const [status, setStatus] = useState(localStorage.getItem('status') || '1')
 
   const params = {
     campaign: campaign,
@@ -77,7 +77,7 @@ const ChannelDashboard = () => {
   }, [errorUserPermission])
 
   return (
-    <Grid container spacing={4}>
+    <Grid container spacing={3}>
       <Filter
         tilte='Channel Dashboard'
         date={date}
@@ -94,14 +94,14 @@ const ChannelDashboard = () => {
         setDateSelect={setDateSelect}
         campaign={campaign}
         setCampaign={setCampaign}
-        setPlatformId = {setPlatformId}
-        platformId = {platformId}
+        setPlatformId={setPlatformId}
+        platformId={platformId}
         status={status}
         setStatus={setStatus}
       />
 
       {campaign ? (
-        <Grid container ml={4}>
+        <Grid container spacing={3} ml={3} pt={2}>
           <KeywordFilters
             campaign={campaign}
             keyword={keyword}
@@ -117,7 +117,9 @@ const ChannelDashboard = () => {
       )}
 
       {!loadingKeyword && keyword ? (
-        <ChannelDashboardGraphs params={params} resultReportPermission={resultReportPermission} />
+        <Grid container spacing={3} pl={3} pt={2}>
+          <ChannelDashboardGraphs params={params} resultReportPermission={resultReportPermission} />
+        </Grid>
       ) : (
         ''
       )}
