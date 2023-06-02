@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, useEffect, MouseEvent, useCallback, ReactElement } from 'react'
+import { useState, useEffect, MouseEvent, useCallback } from 'react'
 
 // ** Next Import
 // import Link from 'next/link'
@@ -9,7 +9,7 @@ import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Menu from '@mui/material/Menu'
 import Grid from '@mui/material/Grid'
-import { DataGrid } from '@mui/x-data-grid'
+import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import MenuItem from '@mui/material/MenuItem'
 
 // import { styled } from '@mui/material/styles'
@@ -26,13 +26,9 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 
 // ** Icons Imports
-import Laptop from 'mdi-material-ui/Laptop'
-import ChartDonut from 'mdi-material-ui/ChartDonut'
-import CogOutline from 'mdi-material-ui/CogOutline'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
 import PencilOutline from 'mdi-material-ui/PencilOutline'
 import DeleteOutline from 'mdi-material-ui/DeleteOutline'
-import AccountOutline from 'mdi-material-ui/AccountOutline'
 import Button from '@mui/material/Button'
 
 // ** Store Imports
@@ -60,22 +56,22 @@ import { UserPermission } from 'src/services/api/users/role'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 
-interface UserRoleType {
-  [key: string]: ReactElement
-}
+// interface UserRoleType {
+//   [key: string]: ReactElement
+// }
 
 interface UserStatusType {
   [key: string]: ThemeColor
 }
 
 // ** Vars
-const userRoleObj: UserRoleType = {
-  admin: <Laptop sx={{ mr: 2, color: 'error.main' }} />,
-  author: <CogOutline sx={{ mr: 2, color: 'warning.main' }} />,
-  editor: <PencilOutline sx={{ mr: 2, color: 'info.main' }} />,
-  maintainer: <ChartDonut sx={{ mr: 2, color: 'success.main' }} />,
-  subscriber: <AccountOutline sx={{ mr: 2, color: 'primary.main' }} />
-}
+// const userRoleObj: UserRoleType = {
+//   admin: <Laptop sx={{ mr: 2, color: 'error.main' }} />,
+//   author: <CogOutline sx={{ mr: 2, color: 'warning.main' }} />,
+//   editor: <PencilOutline sx={{ mr: 2, color: 'info.main' }} />,
+//   maintainer: <ChartDonut sx={{ mr: 2, color: 'success.main' }} />,
+//   subscriber: <AccountOutline sx={{ mr: 2, color: 'primary.main' }} />
+// }
 
 interface CellType {
   row: UsersType
@@ -322,17 +318,13 @@ const UserList = () => {
     handleList()
   }, [addUserOpen, show, refreshDelete])
 
-  const columns = [
+  const columns : GridColDef[] = [
     {
-      flex: 0.2,
-      minWidth: 230,
       field: 'id',
       headerName: 'ID',
-      renderCell: ({ row }: CellType) => {
-        const { id } = row
-
-        return <Box sx={{ display: 'flex', alignItems: 'center' }}>{id}</Box>
-      }
+      renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
+      align: 'center',
+      headerAlign: 'center'
     },
     {
       flex: 0.2,
@@ -357,7 +349,8 @@ const UserList = () => {
             </Box>
           </Box>
         )
-      }
+      },
+      headerAlign: 'center'
     },
     {
       flex: 0.2,
@@ -370,36 +363,33 @@ const UserList = () => {
             {row.email}
           </Typography>
         )
-      }
+      },
+      align: 'center',
+      headerAlign: 'center'
     },
     {
       flex: 0.15,
-      field: 'organization',
+      field: 'organization_name',
       minWidth: 150,
       headerName: 'Organization',
-      renderCell: ({ row }: CellType) => {
-        return (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {userRoleObj[row.company]}
-            <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
-              {row.company}
-            </Typography>
-          </Box>
-        )
-      }
+      align: 'center',
+      headerAlign: 'center'
     },
     {
       flex: 0.15,
       minWidth: 120,
       headerName: 'Organization Group',
-      field: 'group',
-      renderCell: ({ row }: CellType) => {
-        return (
-          <Typography variant='subtitle1' noWrap sx={{ textTransform: 'capitalize' }}>
-            {row.group}
-          </Typography>
-        )
-      }
+      field: 'organization_group_name',
+      align: 'center',
+      headerAlign: 'center'
+    },
+    {
+      flex: 0.15,
+      minWidth: 120,
+      headerName: 'Organization Type',
+      field: 'organization_type_name',
+      align: 'center',
+      headerAlign: 'center'
     },
     {
       flex: 0.1,
@@ -416,7 +406,9 @@ const UserList = () => {
             sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
           />
         )
-      }
+      },
+      align: 'center',
+      headerAlign: 'center'
     },
     {
       flex: 0.1,
@@ -435,7 +427,9 @@ const UserList = () => {
             setRefreshDelete={setRefreshDelete}
           />
         )
-      }
+      },
+      align: 'center',
+      headerAlign: 'center'
     }
   ]
 
@@ -577,6 +571,7 @@ const UserList = () => {
               rowsPerPageOptions={[10, 25, 50]}
               sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
               onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
+              disableColumnMenu={true}
             />
           </Card>
         </Grid>

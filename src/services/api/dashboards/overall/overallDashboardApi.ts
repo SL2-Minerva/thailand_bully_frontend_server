@@ -309,13 +309,26 @@ export const GetDetailMessage = (
     params.author_name = authorName
   }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-    url: `/dashboard-overall/level-three/`,
+    // url: `/dashboard-overall/level-three/`,
+
+    url: `/level-three-table/`,
     method: 'GET',
     params: params
   })
-  
+
+  const responseData = []
+  const res = response?.data?.message
+  if (res) {
+    for (let i = 0; i < res?.length; i++) {
+      responseData.push({
+        ...res[i],
+        id: i + 1
+      })
+    }
+  }
+
   return {
-    resultMessageDetail: response?.data?.message || null,
+    resultMessageDetail: response?.data?.message ? responseData : null,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
@@ -384,7 +397,7 @@ export const GetNetworkGraph = (
     method: 'GET',
     params: params
   })
-  
+
   const snaData = {
     nodes: response?.data?.nodes ?? [],
     edges: response?.data?.edges ?? []
@@ -429,13 +442,24 @@ export const GetMessageDetailOverall = (paramData: any) => {
 
 export const GetMessageDetailVoiceDashboard = (paramData: any) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-    url: `/dashboard-voice/level-three/`,
+    // url: `/dashboard-voice/level-three/`,
+    url: `/level-three-table/`,
     method: 'GET',
     params: paramData
   })
+  const responseData = []
+  const res = response?.data?.message
+  if (res) {
+    for (let i = 0; i < res?.length; i++) {
+      responseData.push({
+        ...res[i],
+        id: i + 1
+      })
+    }
+  }
 
   return {
-    resultMessageDetail: response?.data?.message || null,
+    resultMessageDetail: response?.data?.message ? responseData : null,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
@@ -448,10 +472,10 @@ export const GetMessageDetailChannelDashboard = (paramData: any) => {
     method: 'GET',
     params: paramData
   })
-  
+
   return {
     resultMessageDetail: response?.data?.message || null,
-   
+
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
@@ -467,7 +491,7 @@ export const GetMessageDetailEngagementDashboard = (paramData: any) => {
 
   return {
     resultMessageDetail: response?.data?.message || null,
-   
+
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
@@ -483,7 +507,7 @@ export const GetMessageDetailSentimentDashboard = (paramData: any) => {
 
   return {
     resultMessageDetail: response?.data?.message || null,
-   
+
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error

@@ -298,7 +298,7 @@ const InfluencerGraph = ({
   }
 
   return (
-    <Paper sx={{ height: 520, border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ height: 514, border: `3px solid #fff`, borderRadius: 1 }} >
       {loadingNumbersOfAccounts && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>

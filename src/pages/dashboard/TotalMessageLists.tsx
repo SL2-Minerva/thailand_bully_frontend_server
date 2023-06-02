@@ -27,11 +27,7 @@ const TotalMessageLists = ({
   total: number
 }) => {
   return (
-    <Paper
-      style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 470, minHeight: 470 }}
-      square
-      variant='outlined'
-    >
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 470, minHeight: 470 }}>
       {loadingWordClouds && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader

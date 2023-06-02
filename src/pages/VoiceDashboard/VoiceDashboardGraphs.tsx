@@ -65,7 +65,7 @@ const VoiceDashboardGraphs = (data: Props) => {
       {apiParams ? (
         <>
           {resultReportPermission?.includes('20') ? (
-            <Grid item xs={12} md={4} id='chart1'>
+            <Grid item xs={12} md={4} id='chart1' mt={1}>
               <DailyMessagePieChart
                 keywordsColor={keywordGraphColors}
                 apiParams={apiParams}
@@ -85,7 +85,7 @@ const VoiceDashboardGraphs = (data: Props) => {
       {apiParams ? (
         <>
           {resultReportPermission?.includes('21') ? (
-            <Grid item xs={12} md={8} id='chart2'>
+            <Grid item xs={12} md={8} id='chart2' mt={1}>
               <DailyMessageGraph
                 keywordsColor={keywordGraphColors}
                 type='message'

@@ -58,7 +58,7 @@ const NumberOfAccounts = (props: Props) => {
           ''
         )}
         {resultReportPermission?.includes('32') ? (
-          <Grid item xs={12} mt={5} id='chart13'>
+          <Grid item xs={12} mt={3} id='chart13'>
             <InfluencerComparison
               color='primary'
               trendNumber={resultTotalAccounts?.percentage || ''}

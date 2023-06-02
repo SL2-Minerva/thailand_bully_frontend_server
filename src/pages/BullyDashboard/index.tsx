@@ -26,8 +26,8 @@ const BullyDashboard = () => {
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [loadingKeyword, setLoadingKeyword] = useState<boolean>(true)
-  const [platformId, setPlatformId] = useState<string>('all') 
-  const [status, setStatus] = useState(localStorage.getItem('status') || '1');
+  const [platformId, setPlatformId] = useState<string>('all')
+  const [status, setStatus] = useState(localStorage.getItem('status') || '1')
 
   const { resultReportPermission, errorUserPermission } = UserPermission()
 
@@ -74,7 +74,7 @@ const BullyDashboard = () => {
   }, [errorUserPermission])
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={3}>
       <Grid item xs={12}>
         <Filter
           tilte='Bully Dashboard'
@@ -92,14 +92,14 @@ const BullyDashboard = () => {
           setDateSelect={setDateSelect}
           campaign={campaign}
           setCampaign={setCampaign}
-          setPlatformId = {setPlatformId}
-          platformId = {platformId}
+          setPlatformId={setPlatformId}
+          platformId={platformId}
           status={status}
-          setStatus ={setStatus}
+          setStatus={setStatus}
         />
       </Grid>
       {campaign ? (
-        <Grid container ml={2}>
+        <Grid container spacing={3} ml={3} pt={2}>
           <KeywordFilters
             campaign={campaign}
             keyword={keyword}
@@ -114,7 +114,14 @@ const BullyDashboard = () => {
         ''
       )}
 
-      {!loadingKeyword ? <BullyCharts params={params} resultReportPermission={resultReportPermission} /> : ''}
+      {!loadingKeyword ? (
+        <Grid container spacing={3} ml={1} pt={2}>
+          {' '}
+          <BullyCharts params={params} resultReportPermission={resultReportPermission} />{' '}
+        </Grid>
+      ) : (
+        ''
+      )}
     </Grid>
   )
 }

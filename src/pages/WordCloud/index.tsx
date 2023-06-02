@@ -323,7 +323,7 @@ const WordCloudDashboard = () => {
     <>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
+          <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
             <CardHeader title='Word Clouds' />
             <CardContent>
               <Grid container spacing={6}>
@@ -509,14 +509,16 @@ const WordCloudDashboard = () => {
       </Grid>
 
       {campaign ? (
-        <KeywordFilters
-          campaign={campaign}
-          keyword={keyword}
-          setKeyword={setKeyword}
-          filterKeyword={filterKeyword}
-          setFilterKeyword={setFilterKeyword}
-          checkKeywordId={checkKeywordId}
-        />
+        <Grid container spacing={3} pl={3} pt={2}>
+          <KeywordFilters
+            campaign={campaign}
+            keyword={keyword}
+            setKeyword={setKeyword}
+            filterKeyword={filterKeyword}
+            setFilterKeyword={setFilterKeyword}
+            checkKeywordId={checkKeywordId}
+          />
+        </Grid>
       ) : (
         ''
       )}
