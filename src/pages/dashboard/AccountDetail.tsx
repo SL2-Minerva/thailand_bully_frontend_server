@@ -144,7 +144,7 @@ const AccountDetail = (props: DialogInfoProps) => {
                       setShowDialog(true), setMessageId(row.message_id)
                     }}
                   >
-                    <TableCell style={{ whiteSpace: 'normal', width: 800 }}  align='center'>{row.message_detail}</TableCell>
+                    <TableCell style={{ whiteSpace: 'normal', width: 800 }}  align='left'>{row.message_detail}</TableCell>
                     <TableCell  align='center'>{row.account_name}</TableCell>
                     <TableCell  align='center'>
                       {row?.channel == 'facebook' ? (

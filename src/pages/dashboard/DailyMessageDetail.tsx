@@ -46,8 +46,8 @@ export const StyledDataGrid = withStyles({
       },
 
       '& div div div div >.MuiDataGrid-cell': {
-        borderBottom: 'none',
-        minHeight: '60px !important',
+        borderBottom: 'none !important',
+        minHeight: '70px !important'
       }
     }
   }
@@ -126,7 +126,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
       field: 'message_detail',
       headerName: 'Message Detail',
       flex: 1,
-      align: 'center',
+      align: 'left',
       headerAlign: 'center',
       sortable: false,
       minWidth: 300,
