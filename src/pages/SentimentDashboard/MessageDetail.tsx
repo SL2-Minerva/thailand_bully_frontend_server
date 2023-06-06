@@ -1,12 +1,4 @@
 import { forwardRef, ReactElement, Ref, useEffect, useState } from 'react'
-import { styled } from '@mui/material/styles'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell, { tableCellClasses } from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Paper from '@mui/material/Paper'
 import Fade, { FadeProps } from '@mui/material/Fade'
 import { Box, Card, Dialog, DialogContent, IconButton, LinearProgress, Pagination, Typography } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
@@ -14,23 +6,9 @@ import DialogNetworkGraph from '../dashboard/DialogNetworkGraph'
 import { GetMessageDetailSentimentDashboard } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
-import {  OpenInNew } from 'mdi-material-ui'
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#e8d63a',
-    color: theme.palette.common.black
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14
-  }
-}))
-
-const StyledTableRow = styled(TableRow)(() => ({
-  '&:last-child td, &:last-child th': {
-    border: 0
-  }
-}))
+import { OpenInNew } from 'mdi-material-ui'
+import { GridColDef } from '@mui/x-data-grid'
+import { StyledDataGrid } from '../dashboard/DailyMessageDetail'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -59,6 +37,7 @@ const MessageDetail = (props: DialogInfoProps) => {
   const [page, setPage] = useState(0)
   const [messageId, setMessageId] = useState<number | string>()
   const [pageCount, setPageCount] = useState<number>(0)
+  const [data, setData] = useState<any>([])
 
   let paramData: any = {}
   const todayDate = new Date()
@@ -98,11 +77,170 @@ const MessageDetail = (props: DialogInfoProps) => {
       label: params?.label
     }
   }
+
+  const columns: GridColDef[] = [
+    {
+      field: 'id',
+      headerName: '#',
+      sortable: false,
+      renderCell: index => index.api.getRowIndex(index.row.id) + 1 + +page * 10
+    },
+    {
+      field: 'message_detail',
+      headerName: 'Message Detail',
+      flex: 1,
+      align: 'center',
+      headerAlign: 'center',
+      sortable: false,
+      minWidth: 300,
+      renderCell: params => (
+        <span
+          style={{
+            overflow: 'hidden',
+            display: '-webkit-box',
+            WebkitBoxOrient: 'vertical',
+            WebkitLineClamp: 3,
+            whiteSpace: 'pre-wrap'
+          }}
+        >
+          {params.row.message_detail}
+        </span>
+      )
+    },
+    {
+      field: 'message_type',
+      headerName: 'Message Type',
+      flex: 1,
+      align: 'center',
+      headerAlign: 'center'
+    },
+    {
+      field: 'account_name',
+      minWidth: 210,
+      headerName: 'Account Name',
+      flex: 1,
+      align: 'center',
+      headerAlign: 'center'
+    },
+    {
+      field: 'post_time',
+      headerName: 'Post Time',
+      flex: 1,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: params => (
+        <span>
+          {' '}
+          {moment(params.row.post_date).format('DD.MM.YYYY')} <br /> {params.row.post_time}
+        </span>
+      )
+    },
+    {
+      field: 'device',
+      headerName: 'Deivce',
+      flex: 1,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: params => (
+        <span>
+          {params.row.device === 'android' ? (
+            <img alt={'logo'} width={25} height={25} src={`/images/logos/android.png`} />
+          ) : params.row.device === 'webapp' || params.row.device === 'website' ? (
+            <img alt={'logo'} width={25} height={25} src={`/images/logos/website.png`} />
+          ) : params.row.device === 'iphone' || params.row.device === 'iOS' || params.row.device === 'ios' ? (
+            <img alt={'logo'} width={25} height={25} src={`/images/logos/ios.png`} />
+          ) : (
+            '-'
+          )}
+        </span>
+      )
+    },
+    {
+      field: 'channel',
+      headerName: 'Channel',
+      flex: 1,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: params => (
+        <span>
+          {params.row?.channel === 'facebook' ? (
+            <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
+          ) : params.row?.channel === 'twitter' ? (
+            <img alt={'logo'} width={25} height={25} src={`/images/logos/twitter.png`} />
+          ) : params.row?.channel === 'youtube' ? (
+            <img width={28} height={28} alt={'logo'} src={`/images/logos/youtube-text.png`} />
+          ) : params.row?.channel === 'instagram' ? (
+            <img width={28} alt={'logo'} height={28} src={`/images/logos/instagram.png`} />
+          ) : params.row?.channel === 'pantip' ? (
+            <img width={28} alt={'logo'} height={28} src={`/images/logos/pantip.png`} />
+          ) : params.row?.channel === 'google' ? (
+            <img width={25} alt={'logo'} height={25} src={`/images/logos/google.png`} />
+          ) : (
+            <span style={{ textTransform: 'uppercase' }}>{params.row?.channel}</span>
+          )}
+        </span>
+      )
+    },
+    {
+      field: 'engagement',
+      headerName: 'Engagement',
+      flex: 1,
+      align: 'center',
+      headerAlign: 'center'
+    },
+    {
+      field: 'sentiment',
+      headerName: 'Sentiment',
+      flex: 1,
+      align: 'center',
+      headerAlign: 'center'
+    },
+    {
+      field: 'bully_level',
+      headerName: 'Bully Level',
+      flex: 1,
+      align: 'center',
+      headerAlign: 'center'
+    },
+    {
+      field: 'bully_type',
+      headerName: 'Bully Type',
+      flex: 1,
+      align: 'center',
+      headerAlign: 'center'
+    },
+    {
+      field: 'link_message',
+      headerName: 'Link',
+      flex: 1,
+      align: 'center',
+      headerAlign: 'center',
+      sortable: false,
+      renderCell: params => (
+        <span>
+          {params.row.link_message ? (
+            <a
+              href={params.row.link_message}
+              target='_blank'
+              rel='noopener noreferrer'
+              onClick={event => {
+                event.stopPropagation()
+              }}
+            >
+              <OpenInNew style={{ color: '#0047ff9e' }} />
+            </a>
+          ) : (
+            ''
+          )}
+        </span>
+      )
+    }
+  ]
+
   if (params?.Llabel) {
     paramData.Llabel = params?.Llabel
   }
-  const { resultMessageDetail, totalMessage, loadingMessageDetail } =
-    GetMessageDetailSentimentDashboard(paramData)
+  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetailSentimentDashboard(paramData)
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value - 1)
@@ -127,6 +265,15 @@ const MessageDetail = (props: DialogInfoProps) => {
     }
   }, [totalMessage])
 
+  useEffect(() => {
+    if (loadingMessageDetail) {
+      setData([])
+    }
+    if (!loadingMessageDetail && resultMessageDetail) {
+      setData(resultMessageDetail)
+    }
+  }, [loadingMessageDetail, resultMessageDetail])
+
   return (
     <Card>
       <Dialog
@@ -137,7 +284,7 @@ const MessageDetail = (props: DialogInfoProps) => {
         onClose={onCloseDialog}
         TransitionComponent={Transition}
       >
-        <DialogContent sx={{ pb: 6, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
+        <DialogContent sx={{ pb: 6, pt: { xs: 3, sm: 6 }, position: 'relative' }}>
           <IconButton size='small' onClick={onCloseDialog} sx={{ position: 'absolute', right: '1rem', top: '1rem' }}>
             <Close />
           </IconButton>
@@ -148,150 +295,53 @@ const MessageDetail = (props: DialogInfoProps) => {
             </Typography>
           </Box>
 
-          <TableContainer component={Paper} sx={{maxHeight: '640px'}}>
-            <Table style={{ minWidth: '00px' }} aria-label='customized table' stickyHeader>
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>No.</StyledTableCell>
-                  <StyledTableCell>Message Detail</StyledTableCell>
-                  <StyledTableCell>Message Type</StyledTableCell>
-                  <StyledTableCell>Account Name</StyledTableCell>
-                  <StyledTableCell>Post Time</StyledTableCell>
-                  <StyledTableCell>Device</StyledTableCell>
-                  <StyledTableCell>Channel</StyledTableCell>
-                  <StyledTableCell>Sentiment</StyledTableCell>
-                  <StyledTableCell>Bully Level</StyledTableCell>
-                  <StyledTableCell>Bully Type</StyledTableCell>
-                  <StyledTableCell>Link</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {(resultMessageDetail || []).map((messageDetail: any, index: number) => (
-                  <StyledTableRow
-                    key={index}
-                    hover={true}
-                    onClick={() => {
-                      if (messageDetail.parent) {
-                        setMessageId(messageDetail.message_id)
-                      }
-                    }}
-                    sx={{
-                      cursor: messageDetail.parent ? 'pointer' : '',
-                      backgroundColor: messageDetail.parent ? '#00ff0038' : '#fff'
-                    }}
-                  >
-                    <StyledTableCell
-                      onClick={() => {
-                        setShowDialog(true)
-                      }}
-                    >
-                      <b>{index + 1 + page * 10}</b>
-                    </StyledTableCell>
-                    <StyledTableCell
-                      onClick={() => {
-                        setShowDialog(true)
-                      }}
-                      component='th'
-                      scope='row'
-                      width={300}
-                    >
-                      {messageDetail.message_detail}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      onClick={() => {
-                        setShowDialog(true)
-                      }}
-                    >
-                      {messageDetail.message_type || '-'}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      onClick={() => {
-                        setShowDialog(true)
-                      }}
-                    >
-                      {messageDetail.account_name}
-                    </StyledTableCell>
+          {resultMessageDetail ? (
+            <StyledDataGrid
+              autoHeight
+              rows={data}
+              columns={columns}
+              pageSize={10}
+              rowsPerPageOptions={[10]}
+              getRowId={row => row.id}
+              hideFooterPagination={true}
+              disableColumnMenu={true}
+              sx={{
+                '.highlight': {
+                  cursor: 'pointer',
+                  bgcolor: '#00ff0038'
+                },
+                '& .MuiDataGrid-row': {
+                  maxHeight: 'none !important',
+                  pb: '15px',
+                  pt: '15px',
+                  borderBottom: '1px solid #8080802e',
+                },
+                '&>.MuiDataGrid-main': {
+                  '&>.MuiDataGrid-columnHeaders': {
+                    borderBottom: 'none'
+                  },
 
-                    <StyledTableCell
-                      onClick={() => {
-                        setShowDialog(true)
-                      }}
-                    >
-                      {moment(messageDetail.post_date)?.format('DD.MM.YYYY') + ', ' + messageDetail.post_time}
-                    </StyledTableCell>
+                  '& div div div div >.MuiDataGrid-cell': {
+                    borderBottom: 'none'
+                  }
+                }
+              }}
+              getRowClassName={params => {
+                return params.row.parent ? 'highlight' : ''
+              }}
+              onRowClick={params => {
+                if (params.row.parent) {
+                  setMessageId(params.row.message_id)
+                  setShowDialog(true)
+                }
+              }}
+            />
+          ) : (
+            <Typography variant='body1' sx={{ textAlign: 'center' }}>
+              There is no data
+            </Typography>
+          )}
 
-                    <StyledTableCell
-                      onClick={() => {
-                        setShowDialog(true)
-                      }}
-                    >
-                      {messageDetail.device === 'android' ? (
-                        <img alt={'logo'} width={25} height={25} src={`/images/logos/android.png`} />
-                      ) : messageDetail.device === 'webapp' ? (
-                        <img alt={'logo'} width={25} height={25} src={`/images/logos/website.png`} />
-                      ) : messageDetail.device === 'iphone' ? (
-                        <img alt={'logo'} width={25} height={25} src={`/images/logos/ios.png`} />
-                      ) : (
-                        '-'
-                      )}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      onClick={() => {
-                        setShowDialog(true)
-                      }}
-                    >
-                      {messageDetail?.channel === 'facebook' ? (
-                        <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
-                      ) : messageDetail?.channel === 'twitter' ? (
-                        <img alt={'logo'} width={25} height={25} src={`/images/logos/twitter.png`} />
-                      ) : messageDetail?.channel === 'youtube' ? (
-                        <img width={28} height={28} alt={'logo'} src={`/images/logos/youtube-text.png`} />
-                      ) : messageDetail?.channel === 'instagram' ? (
-                        <img width={28} alt={'logo'} height={28} src={`/images/logos/instagram.png`} />
-                      ) : messageDetail?.channel === 'pantip' ? (
-                        <img width={28} alt={'logo'} height={28} src={`/images/logos/pantip.png`} />
-                      ) : messageDetail?.channel === 'google' ? (
-                        <img width={25} alt={'logo'} height={25} src={`/images/logos/google.png`} />
-                      ) : (
-                        <span style={{ textTransform: 'uppercase' }}>{messageDetail?.channel}</span>
-                      )}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      onClick={() => {
-                        setShowDialog(true)
-                      }}
-                    >
-                      {messageDetail.sentiment || '-'}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      onClick={() => {
-                        setShowDialog(true)
-                      }}
-                    >
-                      {messageDetail.bully_level}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      onClick={() => {
-                        setShowDialog(true)
-                      }}
-                    >
-                      {messageDetail.bully_type}
-                    </StyledTableCell>
-
-                    <StyledTableCell>
-                      {messageDetail.link_message ? (
-                        <a href={messageDetail.link_message} target='_blank' rel='noopener noreferrer'>
-                          <OpenInNew style={{ color: '#0047ff9e' }} />
-                        </a>
-                      ) : (
-                        ''
-                      )}
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
           <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
             <Pagination
               count={pageCount}

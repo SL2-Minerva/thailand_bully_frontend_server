@@ -91,7 +91,7 @@ const DialogOrganization = (props: DialogInfoProps) => {
     setValue('transaction_limit', current?.transaction_limit || 0)
     setValue('transaction_reamining', current?.transaction_reamining || 0)
     setValue('transaction_start_at', current?.transaction_start_at || null)
-    setDate(current?.transaction_start_at || null);
+    setDate(current?.transaction_start_at || null)
 
     if (action === 'edit') {
       setValue('id', current?.id)
@@ -194,70 +194,6 @@ const DialogOrganization = (props: DialogInfoProps) => {
                 </FormControl>
               </Grid>
 
-              {action === 'edit' ? (
-                <>
-                  <Grid item sm={12} xs={12}>
-                    <Controller
-                      name='transaction_limit'
-                      control={control}
-                      render={({ field: { value, onChange } }) => (
-                        <TextField
-                          value={value}
-                          label='Number of Message Transaction'
-                          type='number'
-                          fullWidth
-                          onChange={onChange}
-                          placeholder='Number of Message Transaction'
-                          error={errors?.transaction_limit ? true : false}
-                        />
-                      )}
-                    />
-                    {errors.transaction_limit && (
-                      <FormHelperText sx={{ color: 'error.main' }}>{errors.transaction_limit.message}</FormHelperText>
-                    )}
-                  </Grid>
-                  <Grid item sm={6} xs={12}>
-                    <Controller
-                      name='transaction_reamining'
-                      control={control}
-                      render={({ field: { value, onChange } }) => (
-                        <TextField
-                          value={value}
-                          label='Number of Transaction Remaining'
-                          type='number'
-                          fullWidth
-                          onChange={onChange}
-                          placeholder='Number of Message Transaction'
-                          error={errors?.transaction_reamining ? true : false}
-                        />
-                      )}
-                    />
-                    {errors.transaction_reamining && (
-                      <FormHelperText sx={{ color: 'error.main' }}>
-                        {errors.transaction_reamining.message}
-                      </FormHelperText>
-                    )}
-                  </Grid>
-
-                  <Grid item sm={6} xs={12}>
-                    <FormControl fullWidth>
-                      <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DatePicker
-                          views={['year', 'month', 'day']}
-                          inputFormat='yyyy-MM-dd'
-                          label='Transaction Start At'
-                          value={date}
-                          onChange={newValue => {setDate(newValue); setValue('transaction_start_at', moment(newValue).format('YYYY-MM-DD'))}}
-                          renderInput={params => <TextField {...params} />}
-                        />
-                      </LocalizationProvider>
-                    </FormControl>
-                  </Grid>
-                </>
-              ) : (
-                ''
-              )}
-
               <Grid item sm={6} xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id='plan-select'>Organization Group</InputLabel>
@@ -318,6 +254,76 @@ const DialogOrganization = (props: DialogInfoProps) => {
                 </FormControl>
               </Grid>
 
+              {action === 'edit' ? (
+                <>
+                  <Grid item sm={6} xs={12}>
+                    <Controller
+                      name='transaction_limit'
+                      control={control}
+                      render={({ field: { value, onChange } }) => (
+                        <TextField
+                          value={value}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          label='Number of Message Transaction'
+                          type='number'
+                          fullWidth
+                          onChange={onChange}
+                          placeholder='Number of Message Transaction'
+                          error={errors?.transaction_limit ? true : false}
+                        />
+                      )}
+                    />
+                    {errors.transaction_limit && (
+                      <FormHelperText sx={{ color: 'error.main' }}>{errors.transaction_limit.message}</FormHelperText>
+                    )}
+                  </Grid>
+                  <Grid item sm={6} xs={12}>
+                    <Controller
+                      name='transaction_reamining'
+                      control={control}
+                      render={({ field: { value, onChange } }) => (
+                        <TextField
+                          value={value}
+                          label='Number of Transaction Remaining'
+                          type='number'
+                          fullWidth
+                          onChange={onChange}
+                          placeholder='Number of Message Transaction'
+                          error={errors?.transaction_reamining ? true : false}
+                        />
+                      )}
+                    />
+                    {errors.transaction_reamining && (
+                      <FormHelperText sx={{ color: 'error.main' }}>
+                        {errors.transaction_reamining.message}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+
+                  <Grid item sm={6} xs={12}>
+                    <FormControl fullWidth>
+                      <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                          views={['year', 'month', 'day']}
+                          inputFormat='yyyy-MM-dd'
+                          label='Transaction Start At'
+                          value={date}
+                          onChange={newValue => {
+                            setDate(newValue)
+                            setValue('transaction_start_at', moment(newValue).format('YYYY-MM-DD'))
+                          }}
+                          renderInput={params => <TextField {...params} />}
+                        />
+                      </LocalizationProvider>
+                    </FormControl>
+                  </Grid>
+                </>
+              ) : (
+                ''
+              )}
+
               <Grid item sm={6} xs={12}>
                 <FormControl>
                   <Controller
@@ -329,6 +335,7 @@ const DialogOrganization = (props: DialogInfoProps) => {
                         control={<Switch checked={value} onChange={onChange} />}
                         label='Status : '
                         labelPlacement='start'
+                        sx={{mt: 2}}
                       />
                     )}
                   />

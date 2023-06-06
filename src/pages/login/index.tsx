@@ -54,7 +54,8 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 // import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
 import MuiCard, { CardProps } from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustrationsV1'
+
+// import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustrationsV1'
 
 // ** Styled Components
 const Card = styled(MuiCard)<CardProps>(({ theme }) => ({
@@ -123,7 +124,8 @@ const LoginPage = () => {
       <Box
         className='content-center'
         sx={{
-          background:' rgba(55,26,168,1) linear-gradient(to bottom, rgba(102,74,207,1) 0%, rgba(55,26,168,1) 39%,rgba(2,0,36,1) 100%)',
+          background:
+            ' rgba(55,26,168,1) linear-gradient(to bottom, rgba(102,74,207,1) 0%, rgba(55,26,168,1) 39%,rgba(2,0,36,1) 100%)',
           backgroundImage:
             'linear-gradient(to bottom, rgba(245, 246, 252, 0.24), rgba(2,0,36,1)), url(/images/cornea.png)'
         }}
@@ -231,7 +233,60 @@ const LoginPage = () => {
             </form>
           </CardContent>
         </Card>
-        <FooterIllustrationsV1 />
+        {/* <FooterIllustrationsV1 /> */}
+      </Box>
+
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: '1%',
+          left: '2%'
+        }}
+        className='desktop'
+      >
+        <Typography
+          sx={{ mr: 2, color: 'white', mb: '8px' }}
+        >{`Copyright © 2023 by MINERVA CONSULTANT CO.,LTD. All right reserved.`}</Typography>
+
+        <Box sx={{ position: 'absolute', bottom: '2px', right: '4%' }}>
+          <Box className='logo-login-footer' sx={{ display: 'flex', justifyContent: 'center' }}>
+            <img src='/images/footerLogo.png' alt='logo' />
+            <Typography variant='body2' sx={{ color: 'white', ml: 4, mt: 5 }}>
+              Granted by Thai Media Fund
+              {/* <Typography variant='caption' sx={{ color: 'white', display: 'flex', justifyContent: 'center' }}>
+              มอบให้โดยกองทุนสื่อไทย
+            </Typography> */}
+            </Typography>
+            <br />
+          </Box>
+        </Box>
+      </Box>
+
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: '2%'
+        }}
+        className='mobile table'
+      >
+        <Typography
+          sx={{ mr: 2, color: 'white', textAlign: 'center' }}
+        >{`Copyright © 2023 by MINERVA CONSULTANT CO.,LTD. All right reserved.`}</Typography>
+
+        <Box className='logo-login-footer mobile table'>
+          <img
+            src='/images/footerLogo.png'
+            alt='logo'
+            style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto' }}
+          />
+          <br />
+          <Typography variant='body2' sx={{ color: 'white', ml: 4, display: 'flex', justifyContent: 'center' }}>
+            Granted by Thai Media Fund
+            {/* <Typography variant='caption' sx={{ color: 'white', display: 'flex', justifyContent: 'center' }}>
+              มอบให้โดยกองทุนสื่อไทย
+            </Typography> */}
+          </Typography>
+        </Box>
       </Box>
     </>
   )

@@ -9,6 +9,7 @@ import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from './DialogNetworkGraphByFilter'
 import moment from 'moment'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { withStyles } from '@mui/styles'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -31,12 +32,33 @@ interface DialogInfoProps {
   networkTitle?: any
 }
 
+export const StyledDataGrid = withStyles({
+  root: {
+    '& .MuiDataGrid-row': {
+      maxHeight: 'none !important',
+      height: '90px',
+      paddingTop:'15px',
+      borderBottom: '1px solid #8080802e'
+    },
+    '&>.MuiDataGrid-main': {
+      '&>.MuiDataGrid-columnHeaders': {
+        borderBottom: 'none'
+      },
+
+      '& div div div div >.MuiDataGrid-cell': {
+        borderBottom: 'none'
+      }
+    }
+  }
+})(DataGrid);
+
 const DailyMessageDetail = (props: DialogInfoProps) => {
   const { show, setShow, current, params, keywordId, setKeywordId, reportNo, title, networkTitle } = props
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [page, setPage] = useState(0)
   const [messageId, setMessageId] = useState<number | string>()
   const [pageCount, setPageCount] = useState<number>(0)
+  const [data, setData] = useState<any>([])
 
   const platformId = params?.platformId || ''
 
@@ -77,6 +99,15 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
     }
   }, [totalMessage])
 
+  useEffect(() => {
+    if (loadingMessageDetail) {
+      setData([])
+    }
+    if (!loadingMessageDetail && resultMessageDetail) {
+      setData(resultMessageDetail)
+    }
+  }, [loadingMessageDetail, resultMessageDetail])
+
   const cardTitle = title ? title : 'Daily Messages: Message Transactions'
   const titleNetwork = networkTitle ? networkTitle : 'Daily Messages: Social Network Analysis'
 
@@ -85,7 +116,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
       field: 'id',
       headerName: '#',
       sortable: false,
-      renderCell: index => index.api.getRowIndex(index.row.id) + 1 + + page * 10
+      renderCell: index => index.api.getRowIndex(index.row.id) + 1 + +page * 10
 
       // renderCell: (params: GridRenderCellParams<any>) =>
       //   params.api.getRowIndexRelativeToVisibleRows(params.row.index) + 1 + page * 10
@@ -96,6 +127,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
       flex: 1,
       align: 'center',
       headerAlign: 'center',
+      sortable: false,
       minWidth: 300,
       renderCell: params => (
         <span
@@ -103,8 +135,8 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
             overflow: 'hidden',
             display: '-webkit-box',
             WebkitBoxOrient: 'vertical',
-            WebkitLineClamp: 2,
-            whiteSpace: 'pre-wrap'
+            WebkitLineClamp: 3,
+            whiteSpace: 'pre-wrap',
           }}
         >
           {params.row.message_detail}
@@ -219,10 +251,18 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
       flex: 1,
       align: 'center',
       headerAlign: 'center',
+      sortable: false,
       renderCell: params => (
         <span>
           {params.row.link_message ? (
-            <a href={params.row.link_message} target='_blank' rel='noopener noreferrer' onClick={(event)=> {event.stopPropagation()}}>
+            <a
+              href={params.row.link_message}
+              target='_blank'
+              rel='noopener noreferrer'
+              onClick={event => {
+                event.stopPropagation()
+              }}
+            >
               <OpenInNew style={{ color: '#0047ff9e' }} />
             </a>
           ) : (
@@ -246,7 +286,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
         <DialogContent
           sx={{
             pb: 6,
-            pt: { xs: 8, sm: 12.5 },
+            pt: { xs: 3, sm: 6 },
             position: 'relative'
           }}
         >
@@ -261,13 +301,13 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
           </Box>
 
           {resultMessageDetail ? (
-            <DataGrid
+            <StyledDataGrid
               autoHeight
-              rows={resultMessageDetail}
+              rows={data}
               columns={columns}
               pageSize={10}
               rowsPerPageOptions={[10]}
-              getRowId={row => row.id }
+              getRowId={row => row.id}
               hideFooterPagination={true}
               disableColumnMenu={true}
               sx={{
@@ -287,7 +327,9 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
               }}
             />
           ) : (
-            <Typography variant='body1' sx={{textAlign:'center'}}>There is no data</Typography>
+            <Typography variant='body1' sx={{ textAlign: 'center' }}>
+              There is no data
+            </Typography>
           )}
 
           <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>

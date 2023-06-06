@@ -34,7 +34,7 @@ interface DialogInfoProps {
   networkTitle?: any
   authorName: string
   setAuthorName: any
-  message_id: string, 
+  message_id: string
   setMessage_id: any
 }
 
@@ -75,7 +75,7 @@ const AccountDetail = (props: DialogInfoProps) => {
     params?.page,
     params?.label,
     params?.ylabel,
-    'level3', 
+    'level3',
     authorName,
     message_id
   )
@@ -126,11 +126,14 @@ const AccountDetail = (props: DialogInfoProps) => {
             <Table aria-label='customized table'>
               <TableHead sx={{ backgroundColor: '#e8d63aa1 !important' }}>
                 <TableRow>
-                  <TableCell variant='head'> Message Detail </TableCell>
-                  <TableCell variant='head'> Account Name </TableCell>
-                  <TableCell variant='head'> Channel/Platform </TableCell>
-                  <TableCell variant='head'> Post Date </TableCell>
-                  <TableCell variant='head'> Post Time </TableCell>
+                  <TableCell variant='head' align='center'>
+                    {' '}
+                    Message Detail{' '}
+                  </TableCell>
+                  <TableCell variant='head' align='center'> Account Name </TableCell>
+                  <TableCell variant='head' align='center'> Channel/Platform </TableCell>
+                  <TableCell variant='head' align='center'> Post Date </TableCell>
+                  <TableCell variant='head' align='center'> Post Time </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -141,11 +144,27 @@ const AccountDetail = (props: DialogInfoProps) => {
                       setShowDialog(true), setMessageId(row.message_id)
                     }}
                   >
-                    <TableCell style={{ whiteSpace: 'normal', width: 300 }}>{row.message_detail}</TableCell>
-                    <TableCell>{row.account_name}</TableCell>
-                    <TableCell>{row.channel || '-'}</TableCell>
-                    <TableCell>{row.post_date}</TableCell>
-                    <TableCell> {row.post_time}</TableCell>
+                    <TableCell style={{ whiteSpace: 'normal', width: 800 }}  align='center'>{row.message_detail}</TableCell>
+                    <TableCell  align='center'>{row.account_name}</TableCell>
+                    <TableCell  align='center'>
+                      {row?.channel == 'facebook' ? (
+                        <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
+                      ) : row?.channel == 'twitter' ? (
+                        <img alt={'logo'} width={34} height={34} src={`/images/logos/twitter.png`} />
+                      ) : row?.channel == 'youtube' ? (
+                        <img width={34} height={34} alt={'logo'} src={`/images/logos/youtube-text.png`} />
+                      ) : row?.channel == 'instagram' ? (
+                        <img width={34} alt={'logo'} height={34} src={`/images/logos/instagram.png`} />
+                      ) : row?.channel == 'pantip' ? (
+                        <img width={34} alt={'logo'} height={34} src={`/images/logos/pantip.png`} />
+                      ) : row?.channel == 'google' ? (
+                        <img width={34} alt={'logo'} height={34} src={`/images/logos/google.png`} />
+                      ) : (
+                        <span style={{ textTransform: 'uppercase' }}>{row?.channel}</span>
+                      )}
+                    </TableCell>
+                    <TableCell  align='center'>{row.post_date}</TableCell>
+                    <TableCell align='center'> {row.post_time}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
