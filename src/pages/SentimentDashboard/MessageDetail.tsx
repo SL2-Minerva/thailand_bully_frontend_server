@@ -1,6 +1,6 @@
 import { forwardRef, ReactElement, Ref, useEffect, useState } from 'react'
 import Fade, { FadeProps } from '@mui/material/Fade'
-import { Box, Card, Dialog, DialogContent, IconButton, LinearProgress, Pagination, Typography } from '@mui/material'
+import { Box, Card, Dialog, DialogContent, IconButton, LinearProgress, Pagination, TableCell, Typography } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
 import DialogNetworkGraph from '../dashboard/DialogNetworkGraph'
 import { GetMessageDetailSentimentDashboard } from 'src/services/api/dashboards/overall/overallDashboardApi'
@@ -94,8 +94,8 @@ const MessageDetail = (props: DialogInfoProps) => {
       sortable: false,
       minWidth: 300,
       renderCell: params => (
-        <span
-          style={{
+        <TableCell
+          sx={{
             overflow: 'hidden',
             display: '-webkit-box',
             WebkitBoxOrient: 'vertical',
@@ -104,7 +104,7 @@ const MessageDetail = (props: DialogInfoProps) => {
           }}
         >
           {params.row.message_detail}
-        </span>
+        </TableCell>
       )
     },
     {
@@ -309,21 +309,6 @@ const MessageDetail = (props: DialogInfoProps) => {
                 '.highlight': {
                   cursor: 'pointer',
                   bgcolor: '#00ff0038'
-                },
-                '& .MuiDataGrid-row': {
-                  maxHeight: 'none !important',
-                  pb: '15px',
-                  pt: '15px',
-                  borderBottom: '1px solid #8080802e',
-                },
-                '&>.MuiDataGrid-main': {
-                  '&>.MuiDataGrid-columnHeaders': {
-                    borderBottom: 'none'
-                  },
-
-                  '& div div div div >.MuiDataGrid-cell': {
-                    borderBottom: 'none'
-                  }
                 }
               }}
               getRowClassName={params => {
