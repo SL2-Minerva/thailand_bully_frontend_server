@@ -7,7 +7,8 @@ import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
 import { OpenInNew } from 'mdi-material-ui'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { GridColDef } from '@mui/x-data-grid'
+import { StyledDataGrid } from '../dashboard/DailyMessageDetail'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -51,6 +52,7 @@ const MessageDetail = (props: DialogInfoProps) => {
   const [page, setPage] = useState(0)
   const [messageId, setMessageId] = useState<number | string>()
   const [pageCount, setPageCount] = useState<number>(0)
+  const [data, setData] = useState<any>([])
 
   let paramData: any = {}
   const todayDate = new Date()
@@ -126,6 +128,15 @@ const MessageDetail = (props: DialogInfoProps) => {
     }
   }, [totalMessage])
 
+  useEffect(() => {
+    if(loadingMessageDetail) {
+      setData([]);
+    }
+    if (!loadingMessageDetail && resultMessageDetail) {
+      setData(resultMessageDetail)
+    }
+  }, [loadingMessageDetail, resultMessageDetail])
+
   const columns: GridColDef[] = [
     {
       field: 'id',
@@ -142,6 +153,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       flex: 1,
       align: 'center',
       headerAlign: 'center',
+      sortable: false,
       minWidth: 300,
       renderCell: params => (
         <span
@@ -149,7 +161,7 @@ const MessageDetail = (props: DialogInfoProps) => {
             overflow: 'hidden',
             display: '-webkit-box',
             WebkitBoxOrient: 'vertical',
-            WebkitLineClamp: 2,
+            WebkitLineClamp: 3,
             whiteSpace: 'pre-wrap'
           }}
         >
@@ -265,6 +277,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       flex: 1,
       align: 'center',
       headerAlign: 'center',
+      sortable: false,
       renderCell: params => (
         <span>
           {params.row.link_message ? (
@@ -296,7 +309,7 @@ const MessageDetail = (props: DialogInfoProps) => {
         onClose={onCloseDialog}
         TransitionComponent={Transition}
       >
-        <DialogContent sx={{ pb: 6, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
+        <DialogContent sx={{ pb: 6, pt: { xs: 3, sm: 6 }, position: 'relative' }}>
           <IconButton size='small' onClick={onCloseDialog} sx={{ position: 'absolute', right: '1rem', top: '1rem' }}>
             <Close />
           </IconButton>
@@ -463,9 +476,9 @@ const MessageDetail = (props: DialogInfoProps) => {
           </TableContainer> */}
 
           {resultMessageDetail ? (
-            <DataGrid
+            <StyledDataGrid
               autoHeight
-              rows={resultMessageDetail}
+              rows={data}
               columns={columns}
               pageSize={10}
               rowsPerPageOptions={[10]}
@@ -476,6 +489,21 @@ const MessageDetail = (props: DialogInfoProps) => {
                 '.highlight': {
                   cursor: 'pointer',
                   bgcolor: '#00ff0038'
+                },
+                '& .MuiDataGrid-row': {
+                  maxHeight: 'none !important',
+                  pb: '15px',
+                  pt: '15px',
+                  borderBottom: '1px solid #8080802e',
+                },
+                '&>.MuiDataGrid-main': {
+                  '&>.MuiDataGrid-columnHeaders': {
+                    borderBottom: 'none'
+                  },
+
+                  '& div div div div >.MuiDataGrid-cell': {
+                    borderBottom: 'none'
+                  }
                 }
               }}
               getRowClassName={params => {

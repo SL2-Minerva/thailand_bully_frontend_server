@@ -72,17 +72,17 @@ const SentimentAccountList = ({
                   <Typography variant='subtitle1'>{keyword.engagements} Engagements/posts</Typography>
                 </Grid>
                 <Grid item sm={2} xs={2} mt={5}>
-                  {keyword?.source_name == 'Facebook' ? (
+                  {keyword?.source_name?.toLowerCase() == 'facebook' ? (
                     <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
-                  ) : keyword?.source_name == 'Twitter' ? (
+                  ) : keyword?.source_name?.toLowerCase() == 'twitter' ? (
                     <img alt={'logo'} width={34} height={34} src={`/images/logos/twitter.png`} />
-                  ) : keyword?.source_name == 'Youtube' ? (
+                  ) : keyword?.source_name?.toLowerCase() == 'youtube' ? (
                     <img width={34} height={34} alt={'logo'} src={`/images/logos/youtube-text.png`} />
-                  ) : keyword?.source_name == 'Instagram' ? (
+                  ) : keyword?.source_name?.toLowerCase() == 'instagram' ? (
                     <img width={34} alt={'logo'} height={34} src={`/images/logos/instagram.png`} />
-                  ) : keyword?.source_name == 'Pantip' ? (
+                  ) : keyword?.source_name?.toLowerCase() == 'pantip' ? (
                     <img width={34} alt={'logo'} height={34} src={`/images/logos/pantip.png`} />
-                  ) : keyword?.source_name == 'Google' ? (
+                  ) : keyword?.source_name?.toLowerCase() == 'google' ? (
                     <img width={34} alt={'logo'} height={34} src={`/images/logos/google.png`} />
                   ) : (
                     <span style={{ textTransform: 'uppercase' }}>{keyword?.source_name}</span>

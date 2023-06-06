@@ -467,15 +467,26 @@ export const GetMessageDetailVoiceDashboard = (paramData: any) => {
 }
 
 export const GetMessageDetailChannelDashboard = (paramData: any) => {
+  const responseData = []
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-    url: `/dashboard-channel/level-three/`,
+    // url: `/dashboard-channel/level-three/`,
+    url: `/level-three-table/`,
     method: 'GET',
     params: paramData
   })
 
-  return {
-    resultMessageDetail: response?.data?.message || null,
+  const res = response?.data?.message
+  if (res) {
+    for (let i = 0; i < res?.length; i++) {
+      responseData.push({
+        ...res[i],
+        id: i + 1
+      })
+    }
+  }
 
+  return {
+    resultMessageDetail: response?.data?.message ? responseData : null,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
@@ -484,14 +495,25 @@ export const GetMessageDetailChannelDashboard = (paramData: any) => {
 
 export const GetMessageDetailEngagementDashboard = (paramData: any) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-    url: `/dashboard-engagement/level-three/`,
+    // url: `/dashboard-engagement/level-three/`,
+    url: `/level-three-table/`,
     method: 'GET',
     params: paramData
   })
 
-  return {
-    resultMessageDetail: response?.data?.message || null,
+  const responseData = []
+  const res = response?.data?.message
+  if (res) {
+    for (let i = 0; i < res?.length; i++) {
+      responseData.push({
+        ...res[i],
+        id: i + 1
+      })
+    }
+  }
 
+  return {
+    resultMessageDetail: response?.data?.message ? responseData : null,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
@@ -500,14 +522,25 @@ export const GetMessageDetailEngagementDashboard = (paramData: any) => {
 
 export const GetMessageDetailSentimentDashboard = (paramData: any) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-    url: `/dashboard-sentiment/level-three/`,
+    // url: `/dashboard-sentiment/level-three/`,
+    url: `/level-three-table/`,
     method: 'GET',
     params: paramData
   })
 
-  return {
-    resultMessageDetail: response?.data?.message || null,
+  const responseData = []
+  const res = response?.data?.message
+  if (res) {
+    for (let i = 0; i < res?.length; i++) {
+      responseData.push({
+        ...res[i],
+        id: i + 1
+      })
+    }
+  }
 
+  return {
+    resultMessageDetail: response?.data?.message ? responseData : null,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
@@ -516,13 +549,25 @@ export const GetMessageDetailSentimentDashboard = (paramData: any) => {
 
 export const GetMessageDetailBullyDashboard = (paramData: any) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
-    url: `/dashboard-bully/level-three/`,
+    // url: `/dashboard-bully/level-three/`,
+    url: `/level-three-table/`,
     method: 'GET',
     params: paramData
   })
 
+  const responseData = []
+  const res = response?.data?.message
+  if (res) {
+    for (let i = 0; i < res?.length; i++) {
+      responseData.push({
+        ...res[i],
+        id: i + 1
+      })
+    }
+  }
+
   return {
-    resultMessageDetail: response?.data?.message || null,
+    resultMessageDetail: response?.data?.message ? responseData : null,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
