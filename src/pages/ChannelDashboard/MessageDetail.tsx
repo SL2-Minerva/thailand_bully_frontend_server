@@ -110,7 +110,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       field: 'message_detail',
       headerName: 'Message Detail',
       flex: 1,
-      align: 'center',
+      align: 'left',
       headerAlign: 'center',
       sortable: false,
       minWidth: 300,

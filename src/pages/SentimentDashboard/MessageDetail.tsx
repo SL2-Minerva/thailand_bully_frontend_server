@@ -1,6 +1,6 @@
 import { forwardRef, ReactElement, Ref, useEffect, useState } from 'react'
 import Fade, { FadeProps } from '@mui/material/Fade'
-import { Box, Card, Dialog, DialogContent, IconButton, LinearProgress, Pagination, TableCell, Typography } from '@mui/material'
+import { Box, Card, Dialog, DialogContent, IconButton, LinearProgress, Pagination, Typography } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
 import DialogNetworkGraph from '../dashboard/DialogNetworkGraph'
 import { GetMessageDetailSentimentDashboard } from 'src/services/api/dashboards/overall/overallDashboardApi'
@@ -89,13 +89,13 @@ const MessageDetail = (props: DialogInfoProps) => {
       field: 'message_detail',
       headerName: 'Message Detail',
       flex: 1,
-      align: 'center',
+      align: 'left',
       headerAlign: 'center',
       sortable: false,
       minWidth: 300,
       renderCell: params => (
-        <TableCell
-          sx={{
+        <span
+          style={{
             overflow: 'hidden',
             display: '-webkit-box',
             WebkitBoxOrient: 'vertical',
@@ -104,7 +104,7 @@ const MessageDetail = (props: DialogInfoProps) => {
           }}
         >
           {params.row.message_detail}
-        </TableCell>
+        </span>
       )
     },
     {

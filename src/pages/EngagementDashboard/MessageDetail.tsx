@@ -93,7 +93,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       headerName: 'Message Detail',
       sortable: false,
       flex: 1,
-      align: 'center',
+      align: 'left',
       headerAlign: 'center',
       minWidth: 300,
       renderCell: params => (
