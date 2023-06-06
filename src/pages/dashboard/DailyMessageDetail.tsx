@@ -46,7 +46,8 @@ export const StyledDataGrid = withStyles({
       },
 
       '& div div div div >.MuiDataGrid-cell': {
-        borderBottom: 'none'
+        borderBottom: 'none',
+        minHeight: '60px !important',
       }
     }
   }
