@@ -51,7 +51,7 @@ export const getChartData = (data: any, keywordColor: any) => {
         data: data[i].data || [],
         backgroundColor: color || GraphicColors[i],
         borderColor: color || GraphicColors[i],
-        borderWidth: 2,
+        borderWidth: 4,
         fill: false
       })
     }

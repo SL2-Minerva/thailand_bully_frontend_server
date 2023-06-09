@@ -18,21 +18,36 @@ import Translations from 'src/layouts/components/Translations'
 const TotalMessageLists = ({
   resultWordClouds,
   loadingWordClouds,
-  total
+  total,
+  topKeyword
 }: {
   params: any
   chartId: string
   resultWordClouds: any
   loadingWordClouds: boolean
   total: number
+  topKeyword: string
 }) => {
+  const selectedKeyword =
+    topKeyword === 'top10'
+      ? 'Top 10'
+      : topKeyword === 'top20'
+      ? 'Top 20'
+      : topKeyword === 'top50'
+      ? 'Top 50'
+      : topKeyword === 'top100'
+      ? 'Top 100'
+      : 'All'
+
   return (
     <Paper style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 470, minHeight: 470 }}>
       {loadingWordClouds && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
-          title={<Translations text='Top 10 Match: Popular Words' />}
           titleTypographyProps={{ variant: 'h6' }}
+          title={ selectedKeyword +  " Match: Popular Words"}
+
+          // title={<Translations text='Top 10 Match: Popular Words' />}
         />
         <StyledTooltip
           arrow
