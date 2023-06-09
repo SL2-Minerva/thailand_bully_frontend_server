@@ -335,6 +335,93 @@ export const GetDetailMessage = (
   }
 }
 
+export const GetDetailMessageOverall = (
+  campaignId?: string,
+  platformId?: string,
+  start_date?: any,
+  end_date?: any,
+  period?: any,
+  previousDate?: any,
+  previousEndDate?: any,
+  keywordId?: any,
+  page?: number,
+  limit?: number,
+  reportNo?: string,
+  pageName?: string,
+  label?: string,
+  ylabel?: string,
+  field?: string,
+  sort?: string
+) => {
+  let params: any = {}
+  const todayDate = new Date()
+
+  if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
+    params = {
+      campaign_id: campaignId || '',
+      source: platformId || '',
+      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
+      period: period,
+      keyword_id: keywordId || '',
+      start_date_period: previousDate ? moment(previousDate).format('YYYY-MM-DD') : '',
+      end_date_period: previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '',
+      page: page,
+      limit: limit,
+      report_number: reportNo,
+      page_name: pageName?.toString(),
+      label: label?.toString(),
+      field: field,
+      sort: sort
+    }
+  } else {
+    params = {
+      campaign_id: campaignId || '',
+      source: platformId || '',
+      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : '',
+      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : '',
+      period: period,
+      keyword_id: keywordId || '',
+      page: page,
+      limit: limit,
+      report_number: reportNo,
+      page_name: pageName?.toString(),
+      label: label?.toString(),
+      field: field,
+      sort: sort
+    }
+  }
+
+  if (ylabel) {
+    params.ylabel = encodeURI(ylabel)
+  }
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    // url: `/dashboard-overall/level-three/`,
+
+    url: `/level-three-table/`,
+    method: 'GET',
+    params: params
+  })
+
+  const responseData = []
+  const res = response?.data?.message
+  if (res) {
+    for (let i = 0; i < res?.length; i++) {
+      responseData.push({
+        ...res[i],
+        id: i + 1
+      })
+    }
+  }
+
+  return {
+    resultMessageDetail: response?.data?.message ? responseData : null,
+    totalMessage: response?.data?.total || 0,
+    loadingMessageDetail: loading,
+    errorMessageDetail: error
+  }
+}
+
 export const GetNetworkGraph = (
   campaignId?: string,
   platformId?: string,
