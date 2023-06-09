@@ -141,6 +141,7 @@ const WordCloudGraphs = (data: Props) => {
             resultReportPermission={resultReportPermission}
             params={params}
             setWord={setWord}
+            topKeyword = {topKeyword}
           />
         </>
       ) : (

@@ -8,10 +8,11 @@ interface Props {
     resultReportPermission : any
     params : any
     setWord: any
+    topKeyword: string
 }
 
 const WordClouds = (props: Props) => {
-    const {apiParams, params, resultReportPermission, setWord} = props
+    const {apiParams, params, resultReportPermission, setWord, topKeyword} = props
   const { loadingWordClouds, resultWordClouds, total } = GetWordClouds(apiParams)
 
   return (
@@ -35,6 +36,7 @@ const WordClouds = (props: Props) => {
                 resultWordClouds={resultWordClouds}
                 loadingWordClouds={loadingWordClouds}
                 total={total}
+                topKeyword={topKeyword}
               />
             </Grid>
           </Grid>
