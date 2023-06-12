@@ -152,7 +152,7 @@ const SentimentScore = (props: LineProps) => {
   }
 
   useEffect(() => {
-    if (resultBy) {
+    if (resultBy || resultByPrevious) {
       const currentSentimentScore = resultBy
       const previousSentimentScore = resultByPrevious
       if (currentSentimentScore) {
