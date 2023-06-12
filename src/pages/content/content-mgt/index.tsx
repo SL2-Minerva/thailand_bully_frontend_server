@@ -32,14 +32,14 @@ import { ContentList } from 'src/types/content/ContentType'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { useRouter } from 'next/router'
+import moment from 'moment'
 
 const ContentManagement = () => {
   const router = useRouter()
   const [contentName, setContentName] = useState<string>('')
   const [content, setContent] = useState<string>('')
   const [status, setStatus] = useState<string>('')
-  const [date, setDate] = useState<Date | null>(new Date())
-  const [endDate, setEndDate] = useState<Date | null>(new Date())
+  const [date, setDate] = useState<Date | null>(null)
   const [action, setAction] = useState<string>('create')
   const [showCreate, setShowCreate] = useState<boolean>(false)
   const [showEdit, setShowEdit] = useState<boolean>(false)
@@ -49,7 +49,15 @@ const ContentManagement = () => {
   const [page, setPage] = useState(0)
   const [pageCount, setPageCount] = useState<number>(0)
 
-  const { resultContents, total, errorCampaiganList } = ContentLists(reload, content, page)
+  const params = {
+    date: date ? moment(date)?.format('YYYY-MM-DD') : '',
+    status: status,
+    title: contentName,
+    content_id: content, 
+    page: page, 
+    limit: 10
+  }
+  const { resultContents, total, errorCampaiganList } = ContentLists(params, reload)
 
   const handleStatusChange = useCallback((e: SelectChangeEvent) => {
     setStatus(e.target.value)
@@ -142,7 +150,7 @@ const ContentManagement = () => {
                 <FormControl fullWidth>
                   <TextField
                     id='contentName'
-                    label='Content Name'
+                    label='Content Topic'
                     value={contentName}
                     onChange={e => {
                       setContentName(e.target.value)
@@ -175,21 +183,9 @@ const ContentManagement = () => {
                 <FormControl fullWidth>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker
-                      label='Start Date'
+                      label='Date'
                       value={date}
                       onChange={newValue => setDate(newValue)}
-                      renderInput={params => <TextField {...params} />}
-                    />
-                  </LocalizationProvider>
-                </FormControl>
-              </Grid>
-              <Grid item sm={4} xs={12}>
-                <FormControl fullWidth>
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DatePicker
-                      label='End Date'
-                      value={endDate}
-                      onChange={newValue => setEndDate(newValue)}
                       renderInput={params => <TextField {...params} />}
                     />
                   </LocalizationProvider>
