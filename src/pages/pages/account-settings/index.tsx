@@ -29,7 +29,7 @@ import TabSecurity from 'src/views/pages/account-settings/TabSecurity'
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
 
-const Tab = styled(MuiTab)<TabProps>(({ theme }) => ({
+export const Tab = styled(MuiTab)<TabProps>(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     minWidth: 100
   },
@@ -38,7 +38,7 @@ const Tab = styled(MuiTab)<TabProps>(({ theme }) => ({
   }
 }))
 
-const TabName = styled('span')(({ theme }) => ({
+export const TabName = styled('span')(({ theme }) => ({
   lineHeight: 1.71,
   marginLeft: theme.spacing(2.5),
   [theme.breakpoints.down('md')]: {

@@ -1,8 +1,13 @@
+import { useEffect } from 'react'
 import { Grid, Card, CardContent, Typography, CardHeader } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import { ContentLists } from 'src/services/api/content/ContentAPI'
+import { ContentOneLists, ContentThreeLists, ContentTwoLists } from 'src/services/api/content/ContentAPI'
+
+// import TabPanel from '@mui/lab/TabPanel'
+// import TabContext from '@mui/lab/TabContext'
+// import TabList from '@mui/lab/TabList'
+// import { Tab, TabName } from 'src/pages/pages/account-settings'
 
 const Img = styled('img')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
@@ -17,60 +22,99 @@ const Img = styled('img')(({ theme }) => ({
 }))
 
 const ContentPage = () => {
-  const { resultContents, errorCampaiganList } = ContentLists()
+  const { resultContentOne, errorContentOne } = ContentOneLists()
+  const { resultContentTwo, errorContentTwo } = ContentTwoLists()
+  const { resultContentThree, errorContentThree } = ContentThreeLists()
   const router = useRouter()
 
+  // const [value, setValue] = useState<string>('1')
+
+  // const handleChange = (event: any, newValue: string) => {
+  //   setValue(newValue)
+  // }
+
   useEffect(() => {
-    if (errorCampaiganList) {
+    if (errorContentOne || errorContentThree || errorContentTwo) {
       window.localStorage.removeItem('userData')
       window.localStorage.clear()
       localStorage.clear()
       router.push('/login')
       window.location.reload()
     }
-  }, [errorCampaiganList])
-
-  console.log('result content list : ', resultContents)
+  }, [errorContentOne, errorContentTwo, errorContentThree])
 
   return (
     <Grid container spacing={6}>
-      <Grid item xs={12} sm={12}>
-        <Card>
-          <CardHeader title='Content 1' />
-        </Card>
-      </Grid>
-      {(resultContents || [])?.map((contents: any, index: any) => {
+      {/* <Grid item xs={12}>
+        <TabContext value={value}>
+          <TabList
+            onChange={handleChange}
+            aria-label='contents tabs'
+            sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}` }}
+          >
+            <Tab
+              value='1'
+              label={
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <TabName>Content 1</TabName>
+                </Box>
+              }
+            />
+            <Tab
+              value='2'
+              label={
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <TabName>Content 2</TabName>
+                </Box>
+              }
+            />
+
+            <Tab
+              value='3'
+              label={
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <TabName>Content 3</TabName>
+                </Box>
+              }
+            />
+          </TabList>
+
+          <TabPanel sx={{ p: 0 }} value='1'>test</TabPanel>
+          <TabPanel sx={{ p: 0 }} value='2'>
+            content 2
+          </TabPanel>
+          <TabPanel sx={{ p: 0 }} value='2'>
+            content 3
+          </TabPanel>
+        </TabContext>
+      </Grid> */}
+
+      {(resultContentOne || [])?.map((contents: any, index: any) => {
         return (
           <Grid item md={6} xs={12} key={index} mt={-5}>
-            {contents.content_id == '1' ? (
-              <Card>
-                <h2 style={{ marginLeft: '2rem', marginBottom: '-2.6rem' }}>
-                  <div dangerouslySetInnerHTML={{ __html: contents.title }} />
-                </h2>
-                <CardContent>
-                  <Grid>
-                    {contents?.picture ? (
-                      <span style={{ display: 'flex', justifyContent: 'center' }}>
-                        {/* <Img width={300} alt='Image' src={"http://202.44.231.31/storage/" + contents.picture} /> */}
+            <Card>
+              <h2 style={{ marginLeft: '2rem', marginBottom: '-2.6rem' }}>
+                <div dangerouslySetInnerHTML={{ __html: contents.title }} />
+              </h2>
+              <CardContent>
+                <Grid>
+                  {contents?.picture ? (
+                    <span style={{ display: 'flex', justifyContent: 'center' }}>
+                      <Img width={300} alt='Image' src={'https://cornea-analysis.com/storage/' + contents.picture} />
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                  <Typography variant='h5' ml='1rem'>
+                    <div dangerouslySetInnerHTML={{ __html: contents.content_text }} />
+                  </Typography>
+                </Grid>
 
-                        <Img width={300} alt='Image' src={'https://cornea-analysis.com/storage/' + contents.picture} />
-                      </span>
-                    ) : (
-                      <></>
-                    )}
-                    <Typography variant='h5' ml='1rem'>
-                      <div dangerouslySetInnerHTML={{ __html: contents.content_text }} />
-                    </Typography>
-                  </Grid>
-
-                  <Grid container spacing={2} mt={2} ml={3}>
-                    Date : {contents.date}
-                  </Grid>
-                </CardContent>
-              </Card>
-            ) : (
-              <></>
-            )}
+                <Grid container spacing={2} mt={2} ml={3}>
+                  Date : {contents.date}
+                </Grid>
+              </CardContent>
+            </Card>
           </Grid>
         )
       })}
@@ -81,37 +125,32 @@ const ContentPage = () => {
         </Card>
       </Grid>
 
-      {(resultContents || []).map((contents: any, index: any) => {
+      {(resultContentTwo || []).map((contents: any, index: any) => {
         return (
           <Grid item md={6} xs={12} key={index} mt={-5}>
-            {contents.content_id == '2' ? (
-              <Card>
-                <h2 style={{ marginLeft: '2rem', marginBottom: '-2.6rem' }}>
-                  <div dangerouslySetInnerHTML={{ __html: contents.title }} />
-                </h2>
-                <CardContent>
-                  <Grid>
-                    {contents?.picture ? (
-                      <span style={{ display: 'flex', justifyContent: 'center' }}>
-                        {/* <Img width={300} alt='Image' src={"http://202.44.231.31/storage/" + contents.picture} /> */}
-                        <Img width={300} alt='Image' src={'https://cornea-analysis.com/storage/' + contents.picture} />
-                      </span>
-                    ) : (
-                      <></>
-                    )}
-                    <Typography variant='h5' ml='1rem'>
-                      <div dangerouslySetInnerHTML={{ __html: contents.content_text }} />
-                    </Typography>
-                  </Grid>
+            <Card>
+              <h2 style={{ marginLeft: '2rem', marginBottom: '-2.6rem' }}>
+                <div dangerouslySetInnerHTML={{ __html: contents.title }} />
+              </h2>
+              <CardContent>
+                <Grid>
+                  {contents?.picture ? (
+                    <span style={{ display: 'flex', justifyContent: 'center' }}>
+                      <Img width={300} alt='Image' src={'https://cornea-analysis.com/storage/' + contents.picture} />
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                  <Typography variant='h5' ml='1rem'>
+                    <div dangerouslySetInnerHTML={{ __html: contents.content_text }} />
+                  </Typography>
+                </Grid>
 
-                  <Grid container spacing={2} mt={2} ml={3}>
-                    Date : {contents.date}
-                  </Grid>
-                </CardContent>
-              </Card>
-            ) : (
-              <> </>
-            )}
+                <Grid container spacing={2} mt={2} ml={3}>
+                  Date : {contents.date}
+                </Grid>
+              </CardContent>
+            </Card>
           </Grid>
         )
       })}
@@ -122,7 +161,7 @@ const ContentPage = () => {
         </Card>
       </Grid>
 
-      {(resultContents || []).map((contents: any, index: any) => {
+      {(resultContentThree || []).map((contents: any, index: any) => {
         return (
           <Grid item md={6} xs={12} key={index}>
             {contents.content_id == '3' ? (
@@ -134,7 +173,6 @@ const ContentPage = () => {
                   <Grid>
                     {contents?.picture ? (
                       <span style={{ display: 'flex', justifyContent: 'center' }}>
-                        {/* <Img width={300} alt='Image' src={"http://202.44.231.31/storage/" + contents.picture} /> */}
                         <Img width={300} alt='Image' src={'https://cornea-analysis.com/storage/' + contents.picture} />
                       </span>
                     ) : (

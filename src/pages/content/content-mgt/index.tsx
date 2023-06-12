@@ -245,7 +245,7 @@ const ContentManagement = () => {
                           }
                         }}
                       >
-                        <TableCell>{contentList.id}</TableCell>
+                        <TableCell>{index + 1 + page * 10}</TableCell>
                         <TableCell>
                           <div dangerouslySetInnerHTML={{ __html: contentList.title }} />
                         </TableCell>
