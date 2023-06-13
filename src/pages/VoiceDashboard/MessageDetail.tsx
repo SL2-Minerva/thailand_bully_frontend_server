@@ -17,7 +17,7 @@ import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
 import { OpenInNew, DotsVertical, ArrowUp, ArrowDown } from 'mdi-material-ui'
-import { StyledTableCell, StyledTableRow } from '../dashboard/DailyMessageDetail'
+import { initialSort, StyledTableCell, StyledTableRow } from '../dashboard/DailyMessageDetail'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
@@ -71,10 +71,12 @@ const MessageDetail = (props: DialogInfoProps) => {
 
   const [fieldName, setFieldName] = useState<string>('')
   const [sortSelect, setSortSelect] = useState('')
+  const [sortColumns, setSortColumn] = useState<any>(initialSort)
 
   const handleButtonSort = (field: string, sortName: string) => {
     setFieldName(field)
     setSortSelect(sortName)
+    setSortColumn({ ...initialSort, [field]: sortName })
   }
 
   let paramData: any = {}
@@ -162,7 +164,7 @@ const MessageDetail = (props: DialogInfoProps) => {
     if (!loadingMessageDetail && resultMessageDetail) {
       setData(resultMessageDetail)
     }
-  }, [loadingMessageDetail, resultMessageDetail])
+  }, [loadingMessageDetail])
 
   // const columns: GridColDef[] = [
   //   {
@@ -353,315 +355,238 @@ const MessageDetail = (props: DialogInfoProps) => {
                 <TableRow>
                   <StyledTableCell align='center'>No.</StyledTableCell>
                   <StyledTableCell align='center'>Message Detail</StyledTableCell>
-                  <StyledTableCell align='center'>
+                  <StyledTableCell
+                    align='center'
+                    onClick={() => {
+                      const type =
+                        sortColumns.message_type === '' ? 'asc' : sortColumns.message_type === 'asc' ? 'desc' : ''
+                      handleButtonSort('message_type', type)
+                    }}
+                  >
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                       <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
-                        {sortSelect === 'desc' ? (
+                        {sortColumns.message_type === 'desc' ? (
                           <Tooltip title='Descending'>
-                            <ArrowDown
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('message_type', '')
-                              }}
-                            />
+                            <ArrowDown style={{ fontSize: '20px' }} />
                           </Tooltip>
-                        ) : sortSelect === 'asc' ? (
+                        ) : sortColumns.message_type === 'asc' ? (
                           <Tooltip title='Ascending'>
-                            <ArrowUp
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('message_type', 'desc')
-                              }}
-                            />
+                            <ArrowUp style={{ fontSize: '20px' }} />
                           </Tooltip>
                         ) : (
                           <Tooltip title='Unsort'>
-                            <DotsVertical
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('message_type', 'asc')
-                              }}
-                            />
+                            <DotsVertical style={{ fontSize: '20px' }} />
                           </Tooltip>
                         )}
                       </span>
                       Message Type
                     </span>
                   </StyledTableCell>
-                  <StyledTableCell align='center'>
+                  <StyledTableCell
+                    align='center'
+                    onClick={() => {
+                      const type = sortColumns.author === '' ? 'asc' : sortColumns.author === 'asc' ? 'desc' : ''
+                      handleButtonSort('author', type)
+                    }}
+                  >
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                       <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
-                        {sortSelect === 'desc' ? (
+                        {sortColumns.author === 'desc' ? (
                           <Tooltip title='Descending'>
-                            <ArrowDown
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('author', '')
-                              }}
-                            />
+                            <ArrowDown style={{ fontSize: '20px' }} />
                           </Tooltip>
-                        ) : sortSelect === 'asc' ? (
+                        ) : sortColumns.author === 'asc' ? (
                           <Tooltip title='Ascending'>
-                            <ArrowUp
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('author', 'desc')
-                              }}
-                            />
+                            <ArrowUp style={{ fontSize: '20px' }} />
                           </Tooltip>
                         ) : (
                           <Tooltip title='unsort'>
-                            <DotsVertical
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('author', 'asc')
-                              }}
-                            />
+                            <DotsVertical style={{ fontSize: '20px' }} />
                           </Tooltip>
                         )}
                       </span>
                       <span style={{ textAlign: 'center' }}>Account Name</span>
                     </span>
                   </StyledTableCell>
-                  <StyledTableCell align='center'>
+                  <StyledTableCell
+                    align='center'
+                    onClick={() => {
+                      const type = sortColumns.date === '' ? 'asc' : sortColumns.date === 'asc' ? 'desc' : ''
+                      handleButtonSort('date', type)
+                    }}
+                  >
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                       <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
-                        {sortSelect === 'desc' ? (
+                        {sortColumns.date === 'desc' ? (
                           <Tooltip title='Descending'>
-                            <ArrowDown
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('date', '')
-                              }}
-                            />
+                            <ArrowDown style={{ fontSize: '20px' }} />
                           </Tooltip>
-                        ) : sortSelect === 'asc' ? (
+                        ) : sortColumns.date === 'asc' ? (
                           <Tooltip title='Ascending'>
-                            <ArrowUp
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('date', 'desc')
-                              }}
-                            />
+                            <ArrowUp style={{ fontSize: '20px' }} />
                           </Tooltip>
                         ) : (
                           <Tooltip title='unsort'>
-                            <DotsVertical
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('date', 'asc')
-                              }}
-                            />
+                            <DotsVertical style={{ fontSize: '20px' }} />
                           </Tooltip>
                         )}
                       </span>
                       Post Time
                     </span>
                   </StyledTableCell>
-                  <StyledTableCell align='center'>
+                  <StyledTableCell
+                    align='center'
+                    onClick={() => {
+                      const type = sortColumns.device === '' ? 'asc' : sortColumns.device === 'asc' ? 'desc' : ''
+                      handleButtonSort('device', type)
+                    }}
+                  >
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                       <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
-                        {sortSelect === 'desc' ? (
+                        {sortColumns.device === 'desc' ? (
                           <Tooltip title='Descending'>
-                            <ArrowDown
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('device', '')
-                              }}
-                            />
+                            <ArrowDown style={{ fontSize: '20px' }} />
                           </Tooltip>
-                        ) : sortSelect === 'asc' ? (
+                        ) : sortColumns.device === 'asc' ? (
                           <Tooltip title='Ascending'>
-                            <ArrowUp
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('device', 'desc')
-                              }}
-                            />
+                            <ArrowUp style={{ fontSize: '20px' }} />
                           </Tooltip>
                         ) : (
                           <Tooltip title='unsort'>
-                            <DotsVertical
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('device', 'asc')
-                              }}
-                            />
+                            <DotsVertical style={{ fontSize: '20px' }} />
                           </Tooltip>
                         )}
                       </span>
                       Device
                     </span>
                   </StyledTableCell>
-                  <StyledTableCell align='center'>
+                  <StyledTableCell
+                    align='center'
+                    onClick={() => {
+                      const type = sortColumns.source === '' ? 'asc' : sortColumns.source === 'asc' ? 'desc' : ''
+                      handleButtonSort('source', type)
+                    }}
+                  >
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                       <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
-                        {sortSelect === 'desc' ? (
+                        {sortColumns.source === 'desc' ? (
                           <Tooltip title='Descending'>
-                            <ArrowDown
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('source', '')
-                              }}
-                            />
+                            <ArrowDown style={{ fontSize: '20px' }} />
                           </Tooltip>
-                        ) : sortSelect === 'asc' ? (
+                        ) : sortColumns.source === 'asc' ? (
                           <Tooltip title='Ascending'>
-                            <ArrowUp
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('source', 'desc')
-                              }}
-                            />
+                            <ArrowUp style={{ fontSize: '20px' }} />
                           </Tooltip>
                         ) : (
                           <Tooltip title='unsort'>
-                            <DotsVertical
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('source', 'asc')
-                              }}
-                            />
+                            <DotsVertical style={{ fontSize: '20px' }} />
                           </Tooltip>
                         )}
                       </span>
                       Channel
                     </span>
                   </StyledTableCell>
-                  <StyledTableCell align='center'>
+                  <StyledTableCell
+                    align='center'
+                    onClick={() => {
+                      const type =
+                        sortColumns.engagement === '' ? 'asc' : sortColumns.engagement === 'asc' ? 'desc' : ''
+                      handleButtonSort('engagement', type)
+                    }}
+                  >
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                       <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
-                        {sortSelect === 'desc' ? (
+                        {sortColumns.engagement === 'desc' ? (
                           <Tooltip title='Descending'>
-                            <ArrowDown
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('engagement', '')
-                              }}
-                            />
+                            <ArrowDown style={{ fontSize: '20px' }} />
                           </Tooltip>
-                        ) : sortSelect === 'asc' ? (
+                        ) : sortColumns.engagement === 'asc' ? (
                           <Tooltip title='Ascending'>
-                            <ArrowUp
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('engagement', 'desc')
-                              }}
-                            />
+                            <ArrowUp style={{ fontSize: '20px' }} />
                           </Tooltip>
                         ) : (
                           <Tooltip title='unsort'>
-                            <DotsVertical
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('engagement', 'asc')
-                              }}
-                            />
+                            <DotsVertical style={{ fontSize: '20px' }} />
                           </Tooltip>
                         )}
                       </span>
                       Engagement
                     </span>
                   </StyledTableCell>
-                  <StyledTableCell align='center'>
+                  <StyledTableCell
+                    align='center'
+                    onClick={() => {
+                      const type = sortColumns.sentiment === '' ? 'asc' : sortColumns.sentiment === 'asc' ? 'desc' : ''
+                      handleButtonSort('sentiment', type)
+                    }}
+                  >
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                       <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
-                        {sortSelect === 'desc' ? (
+                        {sortColumns.sentiment === 'desc' ? (
                           <Tooltip title='Descending'>
-                            <ArrowDown
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('sentiment', '')
-                              }}
-                            />
+                            <ArrowDown style={{ fontSize: '20px' }} />
                           </Tooltip>
-                        ) : sortSelect === 'asc' ? (
+                        ) : sortColumns.sentiment === 'asc' ? (
                           <Tooltip title='Ascending'>
-                            <ArrowUp
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('sentiment', 'desc')
-                              }}
-                            />
+                            <ArrowUp style={{ fontSize: '20px' }} />
                           </Tooltip>
                         ) : (
                           <Tooltip title='unsort'>
-                            <DotsVertical
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('sentiment', 'asc')
-                              }}
-                            />
+                            <DotsVertical style={{ fontSize: '20px' }} />
                           </Tooltip>
                         )}
                       </span>
                       Sentiment
                     </span>
                   </StyledTableCell>
-                  <StyledTableCell align='center'>
+                  <StyledTableCell
+                    align='center'
+                    onClick={() => {
+                      const type =
+                        sortColumns.bully_level === '' ? 'asc' : sortColumns.bully_level === 'asc' ? 'desc' : ''
+                      handleButtonSort('bully_level', type)
+                    }}
+                  >
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                       <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
-                        {sortSelect === 'desc' ? (
+                        {sortColumns.bully_level === 'desc' ? (
                           <Tooltip title='Descending'>
-                            <ArrowDown
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('bully_level', '')
-                              }}
-                            />
+                            <ArrowDown style={{ fontSize: '20px' }} />
                           </Tooltip>
-                        ) : sortSelect === 'asc' ? (
+                        ) : sortColumns.bully_level === 'asc' ? (
                           <Tooltip title='Ascending'>
-                            <ArrowUp
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('bully_level', 'desc')
-                              }}
-                            />
+                            <ArrowUp style={{ fontSize: '20px' }} />
                           </Tooltip>
                         ) : (
                           <Tooltip title='unsort'>
-                            <DotsVertical
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('bully_level', 'asc')
-                              }}
-                            />
+                            <DotsVertical style={{ fontSize: '20px' }} />
                           </Tooltip>
                         )}
                       </span>
                       Bully Level
                     </span>
                   </StyledTableCell>
-                  <StyledTableCell align='center'>
+                  <StyledTableCell
+                    align='center'
+                    onClick={() => {
+                      const type =
+                        sortColumns.bully_type === '' ? 'asc' : sortColumns.bully_type === 'asc' ? 'desc' : ''
+                      handleButtonSort('bully_type', type)
+                    }}
+                  >
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                       <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
-                        {sortSelect === 'desc' ? (
+                        {sortColumns.bully_type === 'desc' ? (
                           <Tooltip title='Descending'>
-                            <ArrowDown
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('bully_type', '')
-                              }}
-                            />
+                            <ArrowDown style={{ fontSize: '20px' }} />
                           </Tooltip>
-                        ) : sortSelect === 'asc' ? (
+                        ) : sortColumns.bully_type === 'asc' ? (
                           <Tooltip title='Ascending'>
-                            <ArrowUp
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('bully_type', 'desc')
-                              }}
-                            />
+                            <ArrowUp style={{ fontSize: '20px' }} />
                           </Tooltip>
                         ) : (
                           <Tooltip title='unsort'>
-                            <DotsVertical
-                              style={{ fontSize: '20px' }}
-                              onClick={() => {
-                                handleButtonSort('bully_type', 'asc')
-                              }}
-                            />
+                            <DotsVertical style={{ fontSize: '20px' }} />
                           </Tooltip>
                         )}
                       </span>
