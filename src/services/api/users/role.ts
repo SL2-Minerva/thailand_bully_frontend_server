@@ -163,41 +163,46 @@ export const UserPermission = (reload?: boolean) => {
   // const report = showAllMenu;
   // resultReportPermission : showAllMenu,
 
-  let showSNA = false;
-  let showCorpus = false;
-  let showActivityLog = false;
-  let showSNAByBullyLevel = false;
-  let showSNAByBullyType = false;
-  let showSNABySentiment = false;
+  let showSNA = false
+  let showCorpus = false
+  let showActivityLog = false
+  let showSNAByBullyLevel = false
+  let showSNAByBullyType = false
+  let showSNABySentiment = false
+  let showContentManagement = false
 
   if (
     res?.data?.permission?.sna_by_bully_level?.authorized_view ||
     res?.data?.permission?.sna_by_bully_type?.authorized_view ||
     res?.data?.permission?.sna_by_senitment?.authorized_view
   ) {
-    showSNA = true;
+    showSNA = true
 
-    if(res?.data?.permission?.sna_by_bully_level?.authorized_view ) {
-      showSNAByBullyLevel = true;
+    if (res?.data?.permission?.sna_by_bully_level?.authorized_view) {
+      showSNAByBullyLevel = true
     }
 
-    if(res?.data?.permission?.sna_by_bully_type?.authorized_view ) {
-      showSNAByBullyType = true;
+    if (res?.data?.permission?.sna_by_bully_type?.authorized_view) {
+      showSNAByBullyType = true
     }
 
-    if(res?.data?.permission?.sna_by_sentiment?.authorized_view ) {
-      showSNABySentiment = true;
+    if (res?.data?.permission?.sna_by_sentiment?.authorized_view) {
+      showSNABySentiment = true
     }
   }
 
   if (res?.data?.permission?.corpus?.authorized_view) {
-    showCorpus = true; 
+    showCorpus = true
+  }
+
+  if (res?.data?.permission?.content_mgt?.authorized_view) {
+    showContentManagement = true
   }
 
   if (res?.data?.permission?.activity_log?.authorized_view) {
-    showActivityLog = true;
+    showActivityLog = true
   }
-    const report = res?.data?.authorized_report
+  const report = res?.data?.authorized_report
 
   let showOverallDashboard = false
   let showVoiceDashboard = false
@@ -220,7 +225,7 @@ export const UserPermission = (reload?: boolean) => {
   return {
     resultPermission: res?.data?.permission || null,
     resultReportPermission: res?.data?.authorized_report || [],
-    resultUserInfo : res?.data?.info || null,
+    resultUserInfo: res?.data?.info || null,
     resultIsAdmin: res?.data?.is_admin || false,
     showOverallDashboard: showOverallDashboard,
     showVoiceDashboard: showVoiceDashboard,
@@ -229,12 +234,13 @@ export const UserPermission = (reload?: boolean) => {
     showSentimentDashboard: showSentimentDashboard,
     showBullyDashboard: showBullyDashboard,
     showWordCloud: showWordCloud,
-    showSNA : showSNA,
-    showSNAByBullyLevel : showSNAByBullyLevel,
-    showSNAByBullyType : showSNAByBullyType,
-    showSNABySentiment : showSNABySentiment,
+    showSNA: showSNA,
+    showSNAByBullyLevel: showSNAByBullyLevel,
+    showSNAByBullyType: showSNAByBullyType,
+    showSNABySentiment: showSNABySentiment,
+    showContentManagement: showContentManagement,
     showActivityLog: showActivityLog,
-    showCorpus : showCorpus,
+    showCorpus: showCorpus,
     loadingUserPermission: loading,
     errorUserPermission: error
   }

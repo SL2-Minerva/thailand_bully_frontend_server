@@ -54,10 +54,7 @@ const SentimentWordCloud = (props: Props) => {
   return (
     <>
       <Grid item xs={12} md={6}>
-        <Paper
-          style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 500, minHeight: 500, overflow: 'auto' }}
-          
-        >
+        <Paper style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 500, minHeight: 500, overflow: 'auto' }}>
           {loadingWordCloudsSentiment && <LinearProgress style={{ width: '100%' }} />}
           <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <CardHeader
@@ -91,7 +88,7 @@ const SentimentWordCloud = (props: Props) => {
                   chooseSentiment('positive')
                 }}
               >
-                Positive
+                <span style={{ color: sentiment === 'positive' ? 'white' : '#626376'}}>Positive</span>
               </Button>
               <Button
                 variant='contained'
@@ -101,7 +98,7 @@ const SentimentWordCloud = (props: Props) => {
                   chooseSentiment('negative')
                 }}
               >
-                Negative
+                <span style={{ color: sentiment === 'negative' ? 'white' : '#626376' }}>Negative</span>
               </Button>
             </Grid>
           </Grid>

@@ -42,29 +42,31 @@ const ContentPage = () => {
 
       {(resultContentOne || [])?.map((contents: any, index: any) => {
         return (
-          <Grid item md={6} xs={12} key={index}>
+          <Grid item xs={12} key={index}>
             <Card>
               <h2 style={{ marginLeft: '2rem', marginBottom: '-2.6rem' }}>
                 <div dangerouslySetInnerHTML={{ __html: contents.title }} />
               </h2>
               <CardContent>
-                <Grid>
-                  {contents?.picture ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '200px' }}>
-                      <Img width={200} alt='Image' src={'https://cornea-analysis.com/storage/' + contents.picture} />
-                    </Box>
-                  ) : (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '200px' }}>
-                      <Img width={200} alt='Image' src={'/images/NoImage.png'} />
-                    </Box>
-                  )}
-                  <Typography variant='h5' ml='1rem'>
-                    <div dangerouslySetInnerHTML={{ __html: contents.content_text }} />
-                  </Typography>
-                </Grid>
+                <Grid container>
+                  <Grid item md={4} xs={12}>
+                    {contents?.picture ? (
+                      <Box sx={{ display: 'flex', justifyContent: 'center', height: '200px' }}>
+                        <Img width={200} alt='Image' src={'https://cornea-analysis.com/storage/' + contents.picture} />
+                      </Box>
+                    ) : (
+                      <Box sx={{ display: 'flex', justifyContent: 'center', height: '200px' }}>
+                        <Img width={200} alt='Image' src={'/images/NoImage.png'} />
+                      </Box>
+                    )}
+                  </Grid>
 
-                <Grid container spacing={2} mt={2} ml={3}>
-                  Date : {contents.date}
+                  <Grid item xs={12} md={8} spacing={2} mt={5}>
+                    <Typography variant='h5'>
+                      <div dangerouslySetInnerHTML={{ __html: contents.content_text }} />
+                    </Typography>
+                    Date : {contents.date}
+                  </Grid>
                 </Grid>
               </CardContent>
             </Card>
@@ -80,29 +82,31 @@ const ContentPage = () => {
 
       {(resultContentTwo || []).map((contents: any, index: any) => {
         return (
-          <Grid item md={6} xs={12} key={index}>
+          <Grid item xs={12} key={index}>
             <Card>
               <h2 style={{ marginLeft: '2rem', marginBottom: '-2.6rem' }}>
                 <div dangerouslySetInnerHTML={{ __html: contents.title }} />
               </h2>
               <CardContent>
-                <Grid>
-                  {contents?.picture ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '200px' }}>
-                      <Img width={200} alt='Image' src={'https://cornea-analysis.com/storage/' + contents.picture} />
-                    </Box>
-                  ) : (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '200px' }}>
-                      <Img width={200} alt='Image' src={'/images/NoImage.png'} />
-                    </Box>
-                  )}
-                  <Typography variant='h5' ml='1rem'>
-                    <div dangerouslySetInnerHTML={{ __html: contents.content_text }} />
-                  </Typography>
-                </Grid>
+                <Grid container>
+                  <Grid item md={4} xs={12}>
+                    {contents?.picture ? (
+                      <Box sx={{ display: 'flex', justifyContent: 'center', height: '200px' }}>
+                        <Img width={200} alt='Image' src={'https://cornea-analysis.com/storage/' + contents.picture} />
+                      </Box>
+                    ) : (
+                      <Box sx={{ display: 'flex', justifyContent: 'center', height: '200px' }}>
+                        <Img width={200} alt='Image' src={'/images/NoImage.png'} />
+                      </Box>
+                    )}
+                  </Grid>
 
-                <Grid container spacing={2} mt={2} ml={3}>
-                  Date : {contents.date}
+                  <Grid item xs={12} md={8} spacing={2} mt={5}>
+                    <Typography variant='h5'>
+                      <div dangerouslySetInnerHTML={{ __html: contents.content_text }} />
+                    </Typography>
+                    Date : {contents.date}
+                  </Grid>
                 </Grid>
               </CardContent>
             </Card>
@@ -118,29 +122,31 @@ const ContentPage = () => {
 
       {(resultContentThree || []).map((contents: any, index: any) => {
         return (
-          <Grid item md={6} xs={12} key={index}>
+          <Grid item xs={12} key={index}>
             <Card>
               <h2 style={{ marginLeft: '2rem', marginBottom: '-2.6rem' }}>
                 <div dangerouslySetInnerHTML={{ __html: contents.title }} />
               </h2>
               <CardContent>
-                <Grid>
-                  {contents?.picture ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '200px' }}>
-                      <Img width={200} alt='Image' src={'https://cornea-analysis.com/storage/' + contents.picture} />
-                    </Box>
-                  ) : (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '200px' }}>
-                      <Img width={200} alt='Image' src={'/images/NoImage.png'} />
-                    </Box>
-                  )}
-                  <Typography variant='h5' ml='1rem'>
-                    <div dangerouslySetInnerHTML={{ __html: contents.content_text }} />
-                  </Typography>
-                </Grid>
+                <Grid container>
+                  <Grid item md={4} xs={12}>
+                    {contents?.picture ? (
+                      <Box sx={{ display: 'flex', justifyContent: 'center', height: '200px' }}>
+                        <Img width={200} alt='Image' src={'https://cornea-analysis.com/storage/' + contents.picture} />
+                      </Box>
+                    ) : (
+                      <Box sx={{ display: 'flex', justifyContent: 'center', height: '200px' }}>
+                        <Img width={200} alt='Image' src={'/images/NoImage.png'} />
+                      </Box>
+                    )}
+                  </Grid>
 
-                <Grid container spacing={2} mt={2} ml={3}>
-                  Date : {contents.date}
+                  <Grid item xs={12} md={8} spacing={2} mt={5}>
+                    <Typography variant='h5'>
+                      <div dangerouslySetInnerHTML={{ __html: contents.content_text }} />
+                    </Typography>
+                    Date : {contents.date}
+                  </Grid>
                 </Grid>
               </CardContent>
             </Card>

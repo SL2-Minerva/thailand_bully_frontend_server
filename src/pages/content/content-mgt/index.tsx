@@ -33,6 +33,7 @@ import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { useRouter } from 'next/router'
 import moment from 'moment'
+import { UserPermission } from 'src/services/api/users/role'
 
 const ContentManagement = () => {
   const router = useRouter()
@@ -48,13 +49,14 @@ const ContentManagement = () => {
   const [updateStatus, setUpdateStatus] = useState<boolean>(false)
   const [page, setPage] = useState(0)
   const [pageCount, setPageCount] = useState<number>(0)
+  const { resultPermission, errorUserPermission } = UserPermission()
 
   const params = {
     date: date ? moment(date)?.format('YYYY-MM-DD') : '',
     status: status,
     title: contentName,
-    content_id: content, 
-    page: page, 
+    content_id: content,
+    page: page,
     limit: 10
   }
   const { resultContents, total, errorCampaiganList } = ContentLists(params, reload)
@@ -109,14 +111,14 @@ const ContentManagement = () => {
   }, [showEdit, showCreate, updateStatus])
 
   useEffect(() => {
-    if (errorCampaiganList) {
+    if (errorCampaiganList || errorUserPermission) {
       window.localStorage.removeItem('userData')
       window.localStorage.removeItem(authConfig.storageTokenKeyName)
       localStorage.clear()
       router.push('/login')
       window.location.reload()
     }
-  }, [errorCampaiganList])
+  }, [errorCampaiganList, errorUserPermission])
 
   return (
     <Grid container spacing={6}>
@@ -213,15 +215,20 @@ const ContentManagement = () => {
         <Card>
           <CardContent>
             <TableContainer component={Paper}>
-              <Box
-                sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
-              >
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-                  <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                    Add
-                  </Button>
+              {resultPermission?.content_mgt?.authorized_create ? (
+                <Box
+                  sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
+                >
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                    <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
+                      Add
+                    </Button>
+                  </Box>
                 </Box>
-              </Box>
+              ) : (
+                ''
+              )}
+
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
@@ -231,7 +238,11 @@ const ContentManagement = () => {
                     <TableCell>Picture</TableCell>
                     <TableCell align='center'>Status</TableCell>
                     <TableCell>Date</TableCell>
-                    <TableCell align='center'>Action</TableCell>
+                    {resultPermission?.content_mgt?.authorized_edit ? (
+                      <TableCell align='center'>Action</TableCell>
+                    ) : (
+                      ''
+                    )}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -253,23 +264,41 @@ const ContentManagement = () => {
                           <div dangerouslySetInnerHTML={{ __html: contentList.content_text || '-' }} />
                         </TableCell>
                         <TableCell>{contentList.picture || '-'}</TableCell>
-                        <TableCell align='center'>
-                          <Switch
-                            key={index}
-                            checked={contentList.status === 1 ? true : contentList.status ? true : false}
-                            onChange={e => handleChange(index, contentList.id, e)}
-                          />
-                        </TableCell>
-                        <TableCell>{contentList.date}</TableCell>
-                        <TableCell align='center'>
-                          <a href='#' style={{ color: 'grey' }}>
-                            <PencilOutline
-                              onClick={() => {
-                                handleEdit(index)
-                              }}
+
+                        {resultPermission?.content_mgt?.authorized_edit ? (
+                          <>
+                            <TableCell align='center'>
+                              <Switch
+                                key={index}
+                                checked={contentList.status === 1 ? true : contentList.status ? true : false}
+                                onChange={e => handleChange(index, contentList.id, e)}
+                              />
+                            </TableCell>
+                          </>
+                        ) : (
+                          <TableCell align='center'>
+                            <Switch
+                              key={index}
+                              checked={contentList.status === 1 ? true : contentList.status ? true : false}
                             />
-                          </a>
-                        </TableCell>
+                          </TableCell>
+                        )}
+                        <TableCell>{contentList.date}</TableCell>
+                        {resultPermission?.content_mgt?.authorized_edit ? (
+                          <>
+                            <TableCell align='center'>
+                              <a href='#' style={{ color: 'grey' }}>
+                                <PencilOutline
+                                  onClick={() => {
+                                    handleEdit(index)
+                                  }}
+                                />
+                              </a>
+                            </TableCell>
+                          </>
+                        ) : (
+                          ''
+                        )}
                       </TableRow>
                     ))}
                 </TableBody>

@@ -28,7 +28,8 @@ const navigation = (): VerticalNavItemsType => {
     showSNAByBullyLevel,
     showSNAByBullyType,
     showSNABySentiment,
-    resultIsAdmin
+    resultIsAdmin,
+    showContentManagement
   } = UserPermission()
 
   const userMgt = {
@@ -106,6 +107,13 @@ const navigation = (): VerticalNavItemsType => {
     path: '/SNA/SNAByBullyType'
   }
 
+  const ContentMgt = [
+    {
+      title: 'Content',
+      path: '/content/homepage'
+    }
+  ]
+
   const userPermissionList: any[] = []
   const organizedList: any[] = []
   if (resultIsAdmin || resultPermission?.user?.authorized_view) {
@@ -140,6 +148,13 @@ const navigation = (): VerticalNavItemsType => {
 
   if (showSNAByBullyType || resultIsAdmin) {
     snaList.push(SNAByBullyType)
+  }
+
+  if (resultIsAdmin || showContentManagement) {
+    ContentMgt.push({
+      title : 'Content-MGT',
+      path : '/content/content-mgt'
+    })
   }
 
   const sna = {
@@ -211,15 +226,7 @@ const navigation = (): VerticalNavItemsType => {
   const ContentPermission = {
     title: 'Content',
     icon: TableOfContents,
-    children: [{
-      title : 'Content', 
-      path: '/content/homepage'
-
-    }, {
-      title : 'Content-MGT',
-      path : '/content/content-mgt'
-    }
-  ]  
+    children: ContentMgt
   }
 
   const campaignMenu = []
