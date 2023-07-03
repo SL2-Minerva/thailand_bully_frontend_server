@@ -72,13 +72,13 @@ const WordCloudGraphs = (data: Props) => {
               variant='contained'
               color={topKeyword === 'top10' ? 'warning' : 'inherit'}
               size='medium'
-              sx={{ marginRight: '20px' }}
+              sx={{ marginRight: '20px', color: 'balck' }}
               onClick={() => {
                 handleTopKeywords('top10')
               }}
             >
               {' '}
-              Top 10
+              <span style={{color: topKeyword === 'top10' ? 'white' : '#626376'}}>Top 10</span>
             </Button>
             <Button
               variant='contained'
@@ -90,7 +90,7 @@ const WordCloudGraphs = (data: Props) => {
               }}
             >
               {' '}
-              Top 20
+              <span style={{color: topKeyword === 'top20' ? 'white' : '#626376'}}>Top 20</span>
             </Button>
             <Button
               variant='contained'
@@ -102,7 +102,7 @@ const WordCloudGraphs = (data: Props) => {
               }}
             >
               {' '}
-              Top 50
+              <span style={{color: topKeyword === 'top50' ? 'white' : '#626376'}}>Top 50</span>
             </Button>
             <Button
               variant='contained'
@@ -114,7 +114,7 @@ const WordCloudGraphs = (data: Props) => {
               }}
             >
               {' '}
-              Top 100
+              <span style={{color: topKeyword === 'top100' ? 'white' : '#626376'}}>Top 100</span>
             </Button>
             <Button
               variant='contained'
@@ -126,7 +126,7 @@ const WordCloudGraphs = (data: Props) => {
               }}
             >
               {' '}
-              ALL{' '}
+              <span style={{color: topKeyword === 'all' ? 'white' : '#626376'}}>ALL</span>{' '}
             </Button>
           </Grid>
         </Grid>
@@ -141,7 +141,7 @@ const WordCloudGraphs = (data: Props) => {
             resultReportPermission={resultReportPermission}
             params={params}
             setWord={setWord}
-            topKeyword = {topKeyword}
+            topKeyword={topKeyword}
           />
         </>
       ) : (
@@ -151,7 +151,7 @@ const WordCloudGraphs = (data: Props) => {
       {resultReportPermission?.includes('15') ? (
         <Grid container spacing={3} pt={3}>
           <Grid id='chart15' item xs={12}>
-            <WordCloudChannel params={params} chartId='Chart 15'/>
+            <WordCloudChannel params={params} chartId='Chart 15' />
           </Grid>
         </Grid>
       ) : (

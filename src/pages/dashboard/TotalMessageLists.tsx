@@ -45,7 +45,7 @@ const TotalMessageLists = ({
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           titleTypographyProps={{ variant: 'h6' }}
-          title={ selectedKeyword +  " Match: Popular Words"}
+          title={selectedKeyword + ' Match: Popular Words'}
 
           // title={<Translations text='Top 10 Match: Popular Words' />}
         />
@@ -75,20 +75,20 @@ const TotalMessageLists = ({
             <TableHead sx={{ backgroundColor: 'lightgrey !important' }}>
               <TableRow>
                 <TableCell variant='head' align='center'>
-                  {' '}
-                  No.{' '}
+                  <span style={{ color: '#626376' }}>No.</span>
                 </TableCell>
                 <TableCell variant='head' align='center'>
-                  {' '}
-                  <Translations text='Popular Word' />{' '}
+                  <span style={{ color: '#626376' }}>
+                    <Translations text='Popular Word' />
+                  </span>
                 </TableCell>
                 <TableCell variant='head' align='center'>
-                  {' '}
-                  <Translations text='Amount' />{' '}
+                  <span style={{ color: '#626376' }}>
+                    <Translations text='Amount' />
+                  </span>
                 </TableCell>
                 <TableCell variant='head' align='center'>
-                  {' '}
-                  %{' '}
+                  <span style={{ color: '#626376' }}>%</span>
                 </TableCell>
               </TableRow>
             </TableHead>

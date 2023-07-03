@@ -162,6 +162,13 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
       authorized_delete: false,
       authorized_view: false,
       authorized_export: false
+    },
+    content_mgt: {
+      authorized_create: false,
+      authorized_edit: false,
+      authorized_delete: false,
+      authorized_view: false,
+      authorized_export: false
     }
   })
 
@@ -278,6 +285,16 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
             authorized_export: false
           }
         }
+
+        if (!permissions?.content_mgt) {
+          permissions.content_mgt = {
+            authorized_create: false,
+            authorized_edit: false,
+            authorized_delete: false,
+            authorized_view: false,
+            authorized_export: false
+          }
+        }
       } else {
         setPermission({
           user: {
@@ -365,6 +382,13 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
             authorized_export: false
           },
           corpus: {
+            authorized_create: false,
+            authorized_edit: false,
+            authorized_delete: false,
+            authorized_view: false,
+            authorized_export: false
+          },
+          content_mgt: {
             authorized_create: false,
             authorized_edit: false,
             authorized_delete: false,
@@ -465,6 +489,13 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
           authorized_delete: false,
           authorized_view: false,
           authorized_export: false
+        },
+        content_mgt: {
+          authorized_create: false,
+          authorized_edit: false,
+          authorized_delete: false,
+          authorized_view: false,
+          authorized_export: false
         }
       })
     }
@@ -537,7 +568,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
       ...permissionNew,
       [row.toLowerCase()]: { ...permissionNew[row.toLowerCase()], [`authorized_${key}`]: e.target.checked }
     }
-    setPermission(permissionNew) 
+    setPermission(permissionNew)
   }
 
   const onClose = () => {
