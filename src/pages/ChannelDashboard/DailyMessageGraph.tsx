@@ -11,7 +11,7 @@ import { useEffect, useRef, useState, MouseEvent } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { InteractionItem } from 'chart.js'
 import moment from 'moment'
-import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography, useTheme } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import { ChannelColorCode } from 'src/utils/const'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
@@ -100,7 +100,7 @@ const DailyMessageGraph = (props: Props) => {
   const {
     type,
     params,
-    highlight,
+    
     resultDailyChannel,
     loadingDailyChannel,
     apiParams,
@@ -120,6 +120,11 @@ const DailyMessageGraph = (props: Props) => {
   const [chooseChart, setChooseChart] = useState<string>('bar')
 
   const rowOptionsOpen = Boolean(anchorEl)
+  const theme = useTheme()
+
+  const labelColor = theme.palette.text.primary
+  const borderColor = theme.palette.action.focus
+  const gridLineColor = theme.palette.action.focus
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -194,7 +199,11 @@ const DailyMessageGraph = (props: Props) => {
     maintainAspectRatio: false,
     scales: {
       x: {
-        ticks: { color: 'grey' },
+        ticks: { color: labelColor },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        },
         stacked: true
       },
       y: {
@@ -202,7 +211,7 @@ const DailyMessageGraph = (props: Props) => {
         scaleLabel: { display: true },
         ticks: {
           stepSize: 100,
-          color: 'grey'
+          color: labelColor
         },
         stacked: true
       }
@@ -214,7 +223,7 @@ const DailyMessageGraph = (props: Props) => {
         labels: {
           padding: 25,
           boxWidth: 10,
-          color: 'grey',
+          color: labelColor,
           usePointStyle: true
         }
       }
@@ -227,14 +236,14 @@ const DailyMessageGraph = (props: Props) => {
     maintainAspectRatio: false,
     scales: {
       x: {
-        ticks: { color: 'grey' }
+        ticks: { color: labelColor }
       },
       y: {
         min: 0,
         scaleLabel: { display: true },
         ticks: {
           stepSize: 100,
-          color: 'grey'
+          color: labelColor
         }
       }
     },
@@ -245,7 +254,7 @@ const DailyMessageGraph = (props: Props) => {
         labels: {
           padding: 25,
           boxWidth: 10,
-          color: 'grey',
+          color: labelColor,
           usePointStyle: true
         }
       }
@@ -357,12 +366,12 @@ const DailyMessageGraph = (props: Props) => {
           {type === 'message' ? (
             <CardHeader
               title={<Translations text='Daily Messages by Date' />}
-              titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+              titleTypographyProps={{ variant: 'h6' }}
             />
           ) : type === 'channel' ? (
             <CardHeader
               title={<Translations text='Daily Messages by Date' />}
-              titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+              titleTypographyProps={{ variant: 'h6' }}
             />
           ) : (
             ''
@@ -380,7 +389,7 @@ const DailyMessageGraph = (props: Props) => {
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

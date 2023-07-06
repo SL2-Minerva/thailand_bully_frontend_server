@@ -49,7 +49,7 @@ const ContentManagement = () => {
   const [updateStatus, setUpdateStatus] = useState<boolean>(false)
   const [page, setPage] = useState(0)
   const [pageCount, setPageCount] = useState<number>(0)
-  const { resultPermission, errorUserPermission } = UserPermission()
+  const { resultPermission, errorUserPermission, resultIsAdmin } = UserPermission()
 
   const params = {
     date: date ? moment(date)?.format('YYYY-MM-DD') : '',
@@ -215,7 +215,7 @@ const ContentManagement = () => {
         <Card>
           <CardContent>
             <TableContainer component={Paper}>
-              {resultPermission?.content_mgt?.authorized_create ? (
+              {resultPermission?.content_mgt?.authorized_create || resultIsAdmin ? (
                 <Box
                   sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
                 >
@@ -238,7 +238,7 @@ const ContentManagement = () => {
                     <TableCell>Picture</TableCell>
                     <TableCell align='center'>Status</TableCell>
                     <TableCell>Date</TableCell>
-                    {resultPermission?.content_mgt?.authorized_edit ? (
+                    {resultPermission?.content_mgt?.authorized_edit || resultIsAdmin ? (
                       <TableCell align='center'>Action</TableCell>
                     ) : (
                       ''
@@ -265,7 +265,7 @@ const ContentManagement = () => {
                         </TableCell>
                         <TableCell>{contentList.picture || '-'}</TableCell>
 
-                        {resultPermission?.content_mgt?.authorized_edit ? (
+                        {resultPermission?.content_mgt?.authorized_edit || resultIsAdmin ? (
                           <>
                             <TableCell align='center'>
                               <Switch
@@ -284,7 +284,7 @@ const ContentManagement = () => {
                           </TableCell>
                         )}
                         <TableCell>{contentList.date}</TableCell>
-                        {resultPermission?.content_mgt?.authorized_edit ? (
+                        {resultPermission?.content_mgt?.authorized_edit || resultIsAdmin ? (
                           <>
                             <TableCell align='center'>
                               <a href='#' style={{ color: 'grey' }}>

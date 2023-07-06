@@ -12,7 +12,7 @@ import { Information, ApproximatelyEqual } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
 
 const SenitmentScore = ({
-  highlight,
+  
   resultSenitmentScore,
   loadingSentimentScore
 }: {
@@ -30,7 +30,7 @@ const SenitmentScore = ({
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Sentiment Score' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          titleTypographyProps={{ variant: 'h6' }}
         />
         <StyledTooltip
           arrow
@@ -45,7 +45,7 @@ const SenitmentScore = ({
             </span>
           }
         >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
 

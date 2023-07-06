@@ -12,7 +12,7 @@ const SummaryByAccount = ({
   resultSummaryByAccount,
   total,
   loadingSummaryByAccount,
-  highlight,
+
   topAccount,
   setTopAccount
 }: {
@@ -81,12 +81,12 @@ const SummaryByAccount = ({
   ]
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
       {loadingSummaryByAccount && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Summary Sentiment Score by Account' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          titleTypographyProps={{ variant: 'h6' }}
         />
         <StyledTooltip
           arrow
@@ -101,7 +101,7 @@ const SummaryByAccount = ({
             </span>
           }
         >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
       <CardContent>
@@ -117,8 +117,7 @@ const SummaryByAccount = ({
                 handleTopAccounts('top10')
               }}
             >
-              {' '}
-              Top 10
+              <span style={{ color: topAccount === 'top10' ? 'white' : '#626376' }}>Top 10</span>
             </Button>
             <Button
               variant='contained'
@@ -129,8 +128,7 @@ const SummaryByAccount = ({
                 handleTopAccounts('top20')
               }}
             >
-              {' '}
-              Top 20
+              <span style={{ color: topAccount === 'top20' ? 'white' : '#626376' }}>Top 20</span>
             </Button>
             <Button
               variant='contained'
@@ -141,8 +139,7 @@ const SummaryByAccount = ({
                 handleTopAccounts('top50')
               }}
             >
-              {' '}
-              Top 50
+              <span style={{ color: topAccount === 'top50' ? 'white' : '#626376' }}>Top 50</span>
             </Button>
             <Button
               variant='contained'
@@ -153,8 +150,7 @@ const SummaryByAccount = ({
                 handleTopAccounts('top100')
               }}
             >
-              {' '}
-              Top 100
+              <span style={{ color: topAccount === 'top100' ? 'white' : '#626376' }}>Top 100</span>
             </Button>
             <Button
               variant='contained'
@@ -165,8 +161,7 @@ const SummaryByAccount = ({
                 handleTopAccounts('all')
               }}
             >
-              {' '}
-              ALL{' '}
+              <span style={{ color: topAccount === 'all' ? 'white' : '#626376' }}>ALL</span>{' '}
             </Button>
           </Grid>
         </Grid>

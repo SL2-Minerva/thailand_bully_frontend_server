@@ -12,6 +12,7 @@ import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('byBullyLevel')
@@ -24,7 +25,7 @@ const onCapture = () => {
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend)
 
 const KeywordComparisonByBullyLevel = ({
-  highlight,
+  
   resultKeywordComparisonByBullyLevel,
   loadingKeywordComparisonByBullyLevel,
   keywordsColor
@@ -47,6 +48,31 @@ const KeywordComparisonByBullyLevel = ({
   }
   const handleRowOptionsClose = () => {
     setAnchorEl(null)
+  }
+
+  const {settings} = useSettings();
+  const options = {
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: settings.mode === 'light' ? 'grey' : 'white'
+        }
+      }
+    },
+    scales: {
+      r: {
+        angleLines: {
+          color: settings.mode === 'light' ? '#eaeaea' : 'white'
+        },
+        grid: {
+          color: settings.mode === 'light' ? '#eaeaea' : 'white'
+        }, 
+        pointLabels: {
+          color: settings.mode === 'light' ? 'grey' : 'white'
+        }
+      }
+    }
   }
 
   useEffect(() => {
@@ -74,7 +100,7 @@ const KeywordComparisonByBullyLevel = ({
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text='Percentage of Keyword Comparison by Bully Level' />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
           />
           <StyledTooltip
             arrow
@@ -89,7 +115,7 @@ const KeywordComparisonByBullyLevel = ({
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -137,7 +163,7 @@ const KeywordComparisonByBullyLevel = ({
             <Translations text='no data' />
           </div>
         ) : (
-          <Radar data={charData} height={100} />
+          <Radar data={charData} height={100} options={options}/>
         )}
       </CardContent>
     </Paper>

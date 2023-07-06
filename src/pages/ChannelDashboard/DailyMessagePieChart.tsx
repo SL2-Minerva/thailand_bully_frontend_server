@@ -18,6 +18,7 @@ import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
 import { ActiveChannel } from 'src/services/api/source/SourceApi'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('percentageGraph')
@@ -41,7 +42,7 @@ Chart.register(DoughnutLabel)
 const DailyMessagePieChart = (props: Props) => {
   const {
     type,
-    highlight,
+
     resultPercentageChannelCurrent,
     resultPercentageChannelPrevious,
     loadingPercentageChannel,
@@ -76,6 +77,7 @@ const DailyMessagePieChart = (props: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const rowOptionsOpen = Boolean(anchorEl)
+  const { settings } = useSettings()
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -159,7 +161,7 @@ const DailyMessagePieChart = (props: Props) => {
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode === 'light' ? '#434343' : 'white'
           }
         ]
       }
@@ -189,7 +191,7 @@ const DailyMessagePieChart = (props: Props) => {
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode === 'light' ? '#434343' : 'white'
           }
         ]
       }
@@ -272,7 +274,7 @@ const DailyMessagePieChart = (props: Props) => {
   }
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 561 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 561 }}>
       {loadingPercentageChannel && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -280,16 +282,16 @@ const DailyMessagePieChart = (props: Props) => {
           {type === 'message' ? (
             <CardHeader
               title={<Translations text='Percentage of Channel' />}
-              titleTypographyProps={{ varient: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+              titleTypographyProps={{ varient: 'h6' }}
               subheader='Period over Period Comparison'
-              subheaderTypographyProps={{ varient: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+              subheaderTypographyProps={{ varient: 'h6' }}
             />
           ) : (
             <CardHeader
               title={<Translations text='Percentage of Channel' />}
-              titleTypographyProps={{ varient: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+              titleTypographyProps={{ varient: 'h6' }}
               subheader='Period over Period Comparison'
-              subheaderTypographyProps={{ varient: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+              subheaderTypographyProps={{ varient: 'h6' }}
             />
           )}
           <StyledTooltip
@@ -305,7 +307,7 @@ const DailyMessagePieChart = (props: Props) => {
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -340,7 +342,7 @@ const DailyMessagePieChart = (props: Props) => {
         </span>
       </div>
 
-      <CardContent id="percentageGraph">
+      <CardContent id='percentageGraph'>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>

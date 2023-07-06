@@ -16,6 +16,7 @@ import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('dayTimeByBullyType')
@@ -45,7 +46,7 @@ const DayTimeBullyType = (props: Props) => {
   const [yIndexTime, setYIndexTime] = useState()
   const [xIndexTime, setXIndexTime] = useState()
   const Days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
-
+  const {settings} = useSettings();
   const [ylabels, setYlabels] = useState<any>([])
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -75,8 +76,20 @@ const DayTimeBullyType = (props: Props) => {
     },
     colors: ['#548235'],
     xaxis: {
-      categories: TimeAxis
-    }
+      categories: TimeAxis,
+      labels: {
+        style: {
+          colors: settings.mode === 'light' ? '#4c4e64de' : 'white'
+        }
+      } 
+    },
+    yaxis : {
+      labels: {
+        style: {
+          colors: settings.mode === 'light' ? '#4c4e64de' : 'white'
+        }
+      } 
+    },
   }
 
   const options_type: ApexOptions = {
@@ -95,7 +108,19 @@ const DayTimeBullyType = (props: Props) => {
       enabled: false
     },
     xaxis: {
-      categories: Days
+      categories: Days,
+      labels: {
+        style: {
+          colors: settings.mode === 'light' ? '#4c4e64de' : 'white'
+        }
+      } 
+    },
+    yaxis : {
+      labels: {
+        style: {
+          colors: settings.mode === 'light' ? '#4c4e64de' : 'white'
+        }
+      } 
     },
     colors: ['#548235']
   }

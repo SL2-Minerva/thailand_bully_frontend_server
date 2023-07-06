@@ -12,7 +12,7 @@ interface Props {
 }
 
 const SentimentByCharts = (props: Props) => {
-  const { resultReportPermission, apiParams, highlight, params } = props
+  const { resultReportPermission, apiParams, highlight,  params } = props
 
   const theme = useTheme()
 

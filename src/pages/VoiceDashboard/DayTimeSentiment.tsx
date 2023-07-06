@@ -16,6 +16,7 @@ import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('dayTimeSentiment')
@@ -35,7 +36,7 @@ interface Props {
 }
 
 const DayTimeSentiment = (props: Props) => {
-  const { params, highlight, resultDayBySentiment, resultTimeBySentiment, loadingBySentiment } = props
+  const { params, resultDayBySentiment, resultTimeBySentiment, loadingBySentiment } = props
 
   const [seriesHour, setSeriesHour] = useState([{ name: '', data: [] }])
   const [seriesDays, setSeriesDays] = useState([{ name: '', data: [] }])
@@ -46,7 +47,7 @@ const DayTimeSentiment = (props: Props) => {
   const [xIndexTime, setXIndexTime] = useState()
   const Days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-
+  const { settings } = useSettings()
   const rowOptionsOpen = Boolean(anchorEl)
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
@@ -72,7 +73,19 @@ const DayTimeSentiment = (props: Props) => {
       enabled: false
     },
     xaxis: {
-      categories: TimeAxis
+      categories: TimeAxis,
+      labels: {
+        style: {
+          colors: settings.mode === 'light' ? '#4c4e64de' : 'white'
+        }
+      }
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: settings.mode === 'light' ? '#4c4e64de' : 'white'
+        }
+      }
     },
     colors: ['#548235']
   }
@@ -93,7 +106,19 @@ const DayTimeSentiment = (props: Props) => {
       enabled: false
     },
     xaxis: {
-      categories: Days
+      categories: Days,
+      labels: {
+        style: {
+          colors: settings.mode === 'light' ? '#4c4e64de' : 'white'
+        }
+      } 
+    },
+    yaxis : {
+      labels: {
+        style: {
+          colors: settings.mode === 'light' ? '#4c4e64de' : 'white'
+        }
+      } 
     },
     colors: ['#548235']
   }
@@ -152,19 +177,19 @@ const DayTimeSentiment = (props: Props) => {
   const reportNo = '2.2.017'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
       {loadingBySentiment && <LinearProgress style={{ width: '100%' }} />}
-     
+
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text='Day & Time by Sentiment' />}
-          titleTypographyProps={{ variant: 'h4', color: highlight ? 'green' : '#4c4e64de' }}
-        />
-        <StyledTooltip
-          arrow
-          title={
-            <span>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text='Day & Time by Sentiment' />}
+            titleTypographyProps={{ variant: 'h4' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
                 <Typography variant='h6' sx={{ color: 'white' }}>
                   <Translations text='voiceChart15Title' />
                 </Typography>
@@ -172,11 +197,11 @@ const DayTimeSentiment = (props: Props) => {
                   <Translations text='voiceChart15Description' />
                 </Typography>
               </span>
-          }
-        >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
-        </StyledTooltip>
-      </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
+          </StyledTooltip>
+        </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <IconButton size='large' onClick={handleRowOptionsClick} sx={{ m: 2 }}>
             <DotsVertical />
@@ -208,7 +233,7 @@ const DayTimeSentiment = (props: Props) => {
           </Menu>
         </span>
       </div>
-      <CardContent id="dayTimeSentiment">
+      <CardContent id='dayTimeSentiment'>
         <Grid container spacing={3}>
           <Grid item xs={4}>
             {!resultDayBySentiment ? (

@@ -590,56 +590,51 @@ const EngagementGraphs = (data: Props) => {
                     handleTopKeywords('top10')
                   }}
                 >
-                  {' '}
-                  Top 10
+                  <span style={{ color: topKeyword === 'top10' ? 'white' : '#626376' }}>Top 10</span>
                 </Button>
                 <Button
                   variant='contained'
                   color={topKeyword === 'top20' ? 'warning' : 'inherit'}
                   size='medium'
-                  sx={{ marginRight: '20px' }}
+                  sx={{ marginRight: '20px', color: 'black' }}
                   onClick={() => {
                     handleTopKeywords('top20')
                   }}
                 >
-                  {' '}
-                  Top 20
+                  <span style={{ color: topKeyword === 'top20' ? 'white' : '#626376' }}>Top 20</span>
                 </Button>
                 <Button
                   variant='contained'
                   color={topKeyword === 'top50' ? 'warning' : 'inherit'}
                   size='medium'
-                  sx={{ marginRight: '20px' }}
+                  sx={{ marginRight: '20px', color: 'black' }}
                   onClick={() => {
                     handleTopKeywords('top50')
                   }}
                 >
-                  {' '}
-                  Top 50
+                  <span style={{ color: topKeyword === 'top50' ? 'white' : '#626376' }}>Top 50</span>
                 </Button>
                 <Button
                   variant='contained'
                   color={topKeyword === 'top100' ? 'warning' : 'inherit'}
                   size='medium'
-                  sx={{ marginRight: '20px' }}
+                  sx={{ marginRight: '20px', color: 'black' }}
                   onClick={() => {
                     handleTopKeywords('top100')
                   }}
                 >
-                  {' '}
-                  Top 100
+                  <span style={{ color: topKeyword === 'top100' ? 'white' : '#626376' }}>Top 100</span>
                 </Button>
                 <Button
                   variant='contained'
                   color={topKeyword === 'all' ? 'warning' : 'inherit'}
                   size='medium'
-                  sx={{ marginRight: '20px' }}
+                  sx={{ marginRight: '20px', color: 'black' }}
                   onClick={() => {
                     handleTopKeywords('all')
                   }}
                 >
-                  {' '}
-                  ALL{' '}
+                  <span style={{ color: topKeyword === 'all' ? 'white' : '#626376' }}>ALL</span>{' '}
                 </Button>
               </Grid>
             </Grid>

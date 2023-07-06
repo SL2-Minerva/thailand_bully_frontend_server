@@ -513,8 +513,7 @@ const BullyCharts = (data: Props) => {
                     handleBullyType('level')
                   }}
                 >
-                  {' '}
-                  Bully Level
+                  <span style={{ color: bullyType === 'level' ? 'white' : '#626376' }}>Bully Level</span> 
                 </Button>
                 <Button
                   variant='contained'
@@ -525,8 +524,7 @@ const BullyCharts = (data: Props) => {
                     handleBullyType('type')
                   }}
                 >
-                  {' '}
-                  Bully Type{' '}
+                  <span style={{ color: bullyType === 'all' ? 'white' : '#626376' }}>Bully Type</span>
                 </Button>
               </Grid>
             </Grid>

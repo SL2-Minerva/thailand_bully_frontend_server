@@ -15,6 +15,7 @@ import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import { GetKeyWords } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const cellStyle = {
   width: 250,
@@ -22,12 +23,14 @@ const cellStyle = {
   whiteSpace: 'normal',
   wordWrap: 'break-word',
   borderStyle: 'border-box',
-  backgroundColor: 'lightgrey !important'
+  backgroundColor: 'lightslategrey !important',
+  color: 'white'
 }
 
 const KeywordTable = ({ apiParams }: { apiParams: any; chartId: string }) => {
 
   const { resultKeywords, loadingFilterData } = GetKeyWords(apiParams)
+  const { settings } = useSettings()
 
   // const reportNo = '1.1.008'
 
@@ -58,7 +61,7 @@ const KeywordTable = ({ apiParams }: { apiParams: any; chartId: string }) => {
           <Table size='small' stickyHeader={true}>
             <TableHead sx={{ backgroundColor: 'lightgrey !important' }}>
               <TableRow>
-                <TableCell variant='head' style={{ backgroundColor: 'white' }}>
+                <TableCell variant='head' style={{ backgroundColor: settings.mode === 'light' ? 'white' : '#30334e' }}>
                   {' '}
                 </TableCell>
                 <TableCell variant='head' align='center'> Message </TableCell>

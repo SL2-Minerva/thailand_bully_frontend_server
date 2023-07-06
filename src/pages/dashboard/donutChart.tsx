@@ -17,6 +17,7 @@ import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
 import CustomeLabels from '../VoiceDashboard/CustomLabel'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 Chart.register(DoughnutLabel)
 
@@ -59,6 +60,7 @@ const DonutChart = (props: MessageData) => {
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const { settings } = useSettings()
 
   const rowOptionsOpen = Boolean(anchorEl)
 
@@ -71,7 +73,7 @@ const DonutChart = (props: MessageData) => {
   const handleRowOptionsClose = () => {
     setAnchorEl(null)
   }
-
+  
   const options = {
     responsive: true,
     backgroundColor: false,
@@ -95,7 +97,7 @@ const DonutChart = (props: MessageData) => {
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode === 'light' ? '#434343' : 'white'
           }
         ]
       }
@@ -125,7 +127,7 @@ const DonutChart = (props: MessageData) => {
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode === 'light' ? '#434343' : 'white'
           }
         ]
       }

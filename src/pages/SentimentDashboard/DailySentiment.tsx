@@ -100,7 +100,7 @@ const DailySenitment = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    highlight,
+    
     resultFilterData,
     loadingFilterData,
     apiParams,
@@ -398,7 +398,7 @@ const DailySenitment = (props: LineProps) => {
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text='Daily Sentiment Type by Date' />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
           />
           <StyledTooltip
             arrow
@@ -413,7 +413,7 @@ const DailySenitment = (props: LineProps) => {
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

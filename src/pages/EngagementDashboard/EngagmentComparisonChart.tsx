@@ -63,7 +63,7 @@ const ChartDataEngagement = (data: any, type: string) => {
 }
 
 const EngagmentComparisonChart = ({
-  highlight,
+  
   resultComparison,
   loadingComparison
 }: {
@@ -155,7 +155,7 @@ const EngagmentComparisonChart = ({
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text='Engagement Type Proportion' />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
           />
           <StyledTooltip
             arrow
@@ -172,7 +172,7 @@ const EngagmentComparisonChart = ({
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

@@ -16,6 +16,7 @@ import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('dayTimeBullyLevel')
@@ -46,7 +47,7 @@ const DayTimeBullyLevel = (props: Props) => {
   const [xIndexTime, setXIndexTime] = useState()
   const [ylabels, setYlabels] = useState<any>([])
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-
+  const {settings} = useSettings();
   const rowOptionsOpen = Boolean(anchorEl)
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
@@ -55,6 +56,7 @@ const DayTimeBullyLevel = (props: Props) => {
   const handleRowOptionsClose = () => {
     setAnchorEl(null)
   }
+
 
   const Days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
 
@@ -74,7 +76,19 @@ const DayTimeBullyLevel = (props: Props) => {
       enabled: false
     },
     xaxis: {
-      categories: TimeAxis
+      categories: TimeAxis,
+      labels: {
+        style: {
+          colors: settings.mode === 'light' ? '#4c4e64de' : 'white'
+        }
+      } 
+    },
+    yaxis : {
+      labels: {
+        style: {
+          colors: settings.mode === 'light' ? '#4c4e64de' : 'white'
+        }
+      } 
     },
     colors: ['#548235']
   }
@@ -92,7 +106,19 @@ const DayTimeBullyLevel = (props: Props) => {
       }
     },
     xaxis: {
-      categories: Days
+      categories: Days,
+      labels: {
+        style: {
+          colors: settings.mode === 'light' ? '#4c4e64de' : 'white'
+        }
+      } 
+    },
+    yaxis : {
+      labels: {
+        style: {
+          colors: settings.mode === 'light' ? '#4c4e64de' : 'white'
+        }
+      } 
     },
     dataLabels: {
       enabled: false

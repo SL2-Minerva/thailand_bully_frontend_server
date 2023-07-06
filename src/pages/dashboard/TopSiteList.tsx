@@ -14,6 +14,7 @@ import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 // import { useState } from 'react'
 // import DailyMessageDetail from './DailyMessageDetail'
@@ -41,6 +42,7 @@ export const tableCellStyle = {
 const TopSiteList = ({ resultTopKeywords, loadingTopKeywords }: Props) => {
   
   // const reportNo = '1.2.012'
+  const { settings } = useSettings()
 
   return (
     <Paper sx={{ maxHeight: 360, minHeight: 360, border: `3px solid #fff`, borderRadius: 1 }} >
@@ -68,7 +70,7 @@ const TopSiteList = ({ resultTopKeywords, loadingTopKeywords }: Props) => {
           <Table stickyHeader={true} size='small'>
             <TableHead sx={{ backgroundColor: 'lightgrey !important' }}>
               <TableRow>
-                <TableCell variant='head' sx={{ backgroundColor: 'white !important' }}>
+                <TableCell variant='head' sx={{ backgroundColor: settings.mode === 'light' ? 'white' : '#30334e' }}>
                   {' '}
                 </TableCell>
                 <TableCell variant='head'  align='center'> No. of Messages </TableCell>

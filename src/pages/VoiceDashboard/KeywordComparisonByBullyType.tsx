@@ -15,6 +15,7 @@ import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('byBullyType')
@@ -61,7 +62,6 @@ export const getChartData = (data: any, keywordColor: any) => {
 }
 
 const KeywordComparisonByBullyType = ({
-  highlight,
   resultKeywordComparisonByBullyType,
   loadingKeywordComparisonByBullyType,
   keywordsColor
@@ -102,16 +102,41 @@ const KeywordComparisonByBullyType = ({
   }, [resultKeywordComparisonByBullyType, keywordsColor])
 
   // const reportNo = '2.2.028'
+  const {settings} = useSettings();
+
+  const options = {
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: settings.mode === 'light' ? 'grey' : 'white'
+        }
+      }
+    },
+    scales: {
+      r: {
+        angleLines: {
+          color: settings.mode === 'light' ? '#eaeaea' : 'white'
+        },
+        grid: {
+          color: settings.mode === 'light' ? '#eaeaea' : 'white'
+        }, 
+        pointLabels: {
+          color: settings.mode === 'light' ? 'grey' : 'white'
+        }
+      }
+    }
+  }
 
   return (
-    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
       {loadingKeywordComparisonByBullyType && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text='Percentage of Keyword Comparison by Bully Type' />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
           />
           <StyledTooltip
             arrow
@@ -126,7 +151,7 @@ const KeywordComparisonByBullyType = ({
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -174,7 +199,7 @@ const KeywordComparisonByBullyType = ({
             <Translations text='no data' />
           </div>
         ) : (
-          <Radar data={charData} height={100} />
+          <Radar data={charData} height={100} options={options}/>
         )}
       </CardContent>
     </Paper>

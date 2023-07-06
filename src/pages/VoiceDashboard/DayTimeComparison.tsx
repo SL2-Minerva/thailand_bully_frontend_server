@@ -16,6 +16,7 @@ import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('dayTimeComparison')
@@ -27,7 +28,7 @@ const onCapture = () => {
 }
 const DayTimeComparison = ({
   params,
-  highlight,
+  
   resultDayTimeComparison,
   loadingDayTimeComparison
 }: {
@@ -43,7 +44,7 @@ const DayTimeComparison = ({
   const [xIndex, setXIndex] = useState()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-
+  const {settings} = useSettings();
   const rowOptionsOpen = Boolean(anchorEl)
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
@@ -70,7 +71,19 @@ const DayTimeComparison = ({
     },
     colors: ['#548235'],
     xaxis: {
-      categories: TimeAxis
+      categories: TimeAxis,
+      labels: {
+        style: {
+          colors: settings.mode === 'light' ? '#4c4e64de' : 'white'
+        }
+      } 
+    },
+    yaxis : {
+      labels: {
+        style: {
+          colors: settings.mode === 'light' ? '#4c4e64de' : 'white'
+        }
+      } 
     },
     title: {
       text: ''
@@ -111,7 +124,7 @@ const DayTimeComparison = ({
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text='Day & Time' />}
-            titleTypographyProps={{ variant: 'h4', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h4' }}
           />
           <StyledTooltip
             arrow
@@ -126,7 +139,7 @@ const DayTimeComparison = ({
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

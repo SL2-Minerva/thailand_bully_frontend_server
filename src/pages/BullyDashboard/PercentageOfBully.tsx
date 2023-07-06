@@ -20,6 +20,7 @@ import CustomeLabels from '../VoiceDashboard/CustomLabel'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('percentageBullyLevel')
@@ -43,7 +44,7 @@ interface MessageData {
 
 const PercentageOfBully = (props: MessageData) => {
   const { t } = useTranslation()
-  const { type, highlight, resultBullyLevelPercentage, loadingBullyLevelPercentage } = props
+  const { type,  resultBullyLevelPercentage, loadingBullyLevelPercentage } = props
   const colors = BullyLevelColors
 
   const initValue = {
@@ -76,6 +77,8 @@ const PercentageOfBully = (props: MessageData) => {
     setAnchorEl(null)
   }
 
+  const {settings} = useSettings()
+
   // const theme = useTheme()
   // const labelColor = theme.palette.text.primary
 
@@ -102,7 +105,7 @@ const PercentageOfBully = (props: MessageData) => {
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode === 'light' ? '#434343' : 'white'
           }
         ]
       }
@@ -132,7 +135,7 @@ const PercentageOfBully = (props: MessageData) => {
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode === 'light' ? '#434343' : 'white'
           }
         ]
       }
@@ -248,9 +251,9 @@ const PercentageOfBully = (props: MessageData) => {
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text={title} />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
             subheader='Period over Period Comparison'
-            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+            subheaderTypographyProps={{ variant: 'caption' }}
           />
           <StyledTooltip
             arrow
@@ -265,7 +268,7 @@ const PercentageOfBully = (props: MessageData) => {
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

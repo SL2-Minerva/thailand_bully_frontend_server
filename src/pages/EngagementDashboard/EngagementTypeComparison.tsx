@@ -12,7 +12,7 @@ import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
 
 const EngagementTypeComparison = ({
-  highlight,
+  
   resultEngagementComparison,
   loadingEngagementComparison
 }: {
@@ -30,7 +30,7 @@ const EngagementTypeComparison = ({
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Engagement Type Comparison' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          titleTypographyProps={{ variant: 'h6' }}
           subheader='Period over Period'
         />
         <StyledTooltip
@@ -48,7 +48,7 @@ const EngagementTypeComparison = ({
             </span>
           }
         >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
 

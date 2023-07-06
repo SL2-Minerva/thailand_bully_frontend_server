@@ -94,7 +94,7 @@ const SummaryByKeywords = ({
   resultSummaryByKeywords,
   total,
   loadingSummaryByKeywords,
-  highlight,
+
   topKeyword,
   setTopKeyword
 }: {
@@ -150,12 +150,12 @@ const SummaryByKeywords = ({
   ]
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
       {loadingSummaryByKeywords && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Sentiment Type by Keyword' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          titleTypographyProps={{ variant: 'h6' }}
         />
         <StyledTooltip
           arrow
@@ -170,7 +170,7 @@ const SummaryByKeywords = ({
             </span>
           }
         >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
       <CardContent>
@@ -186,8 +186,7 @@ const SummaryByKeywords = ({
                 handleTopKeyword('top10')
               }}
             >
-              {' '}
-              Top 10
+              <span style={{ color: topKeyword === 'top10' ? 'white' : '#626376' }}>Top 10</span>
             </Button>
             <Button
               variant='contained'
@@ -198,8 +197,7 @@ const SummaryByKeywords = ({
                 handleTopKeyword('top20')
               }}
             >
-              {' '}
-              Top 20
+              <span style={{ color: topKeyword === 'top20' ? 'white' : '#626376' }}>Top 20</span>
             </Button>
             <Button
               variant='contained'
@@ -210,8 +208,7 @@ const SummaryByKeywords = ({
                 handleTopKeyword('top50')
               }}
             >
-              {' '}
-              Top 50
+              <span style={{ color: topKeyword === 'top50' ? 'white' : '#626376' }}>Top 50</span>
             </Button>
             <Button
               variant='contained'
@@ -222,8 +219,7 @@ const SummaryByKeywords = ({
                 handleTopKeyword('top100')
               }}
             >
-              {' '}
-              Top 100
+              <span style={{ color: topKeyword === 'top100' ? 'white' : '#626376' }}>Top 100</span>
             </Button>
             <Button
               variant='contained'
@@ -234,8 +230,7 @@ const SummaryByKeywords = ({
                 handleTopKeyword('all')
               }}
             >
-              {' '}
-              ALL{' '}
+              <span style={{ color: topKeyword === 'all' ? 'white' : '#626376' }}>ALL</span>
             </Button>
           </Grid>
         </Grid>

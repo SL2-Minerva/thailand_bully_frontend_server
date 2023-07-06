@@ -14,8 +14,7 @@ import { useEffect, useState } from 'react'
 import Translations from 'src/layouts/components/Translations'
 
 const SentimentComparisonTable = ({
-  apiParams,
-  highlight
+  apiParams
 }: {
   chartId: string
   highlight: boolean
@@ -45,7 +44,7 @@ const SentimentComparisonTable = ({
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Sentiment Type Comparison: Period over Period' />}
-          titleTypographyProps={{ variant: 'body2', color: highlight ? 'green' : '#4c4e64de' }}
+          titleTypographyProps={{ variant: 'body2' }}
           subheader='Period over Period'
         />
         <StyledTooltip
@@ -61,7 +60,7 @@ const SentimentComparisonTable = ({
             </span>
           }
         >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
 

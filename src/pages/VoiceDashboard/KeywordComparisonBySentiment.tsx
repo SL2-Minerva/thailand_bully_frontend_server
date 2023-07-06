@@ -13,6 +13,7 @@ import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('bySentiment')
@@ -25,7 +26,6 @@ const onCapture = () => {
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend)
 
 const KeywordComparisonBySentiment = ({
-  highlight,
   resultKeywordComparisonBySentiment,
   loadingKeywordComparisonBySentiment,
   keywordsColor
@@ -42,6 +42,7 @@ const KeywordComparisonBySentiment = ({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const rowOptionsOpen = Boolean(anchorEl)
+  const { settings } = useSettings()
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -66,17 +67,41 @@ const KeywordComparisonBySentiment = ({
     }
   }, [resultKeywordComparisonBySentiment, keywordsColor])
 
+  const options = {
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: settings.mode === 'light' ? 'grey' : 'white'
+        }
+      }
+    },
+    scales: {
+      r: {
+        angleLines: {
+          color: settings.mode === 'light' ? '#eaeaea' : 'white'
+        },
+        grid: {
+          color: settings.mode === 'light' ? '#eaeaea' : 'white'
+        }, 
+        pointLabels: {
+          color: settings.mode === 'light' ? 'grey' : 'white'
+        }
+      }
+    }
+  }
+
   // const reportNo = '2.2.026'
 
   return (
-    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
       {loadingKeywordComparisonBySentiment && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text='Percentage of Keyword Comparison by Sentiment' />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
           />
           <StyledTooltip
             arrow
@@ -91,7 +116,7 @@ const KeywordComparisonBySentiment = ({
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -139,7 +164,7 @@ const KeywordComparisonBySentiment = ({
             <Translations text='no data' />
           </div>
         ) : (
-          <Radar data={charData} height={100} />
+          <Radar data={charData} height={100} options={options} />
         )}
       </CardContent>
     </Paper>

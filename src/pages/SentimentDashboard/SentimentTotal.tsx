@@ -42,7 +42,7 @@ const SentimentTotal = (props: Props) => {
               <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                   title={<Translations text='Total Messages by Sentiment Type' />}
-                  titleTypographyProps={{ variant: 'h6', color: highlight === 'chart10' ? 'green' : '#4c4e64de' }}
+                  titleTypographyProps={{ variant: 'h6'}}
                 />
                 <StyledTooltip
                   arrow
@@ -60,8 +60,7 @@ const SentimentTotal = (props: Props) => {
                   <Information
                     style={{
                       marginTop: '22px',
-                      fontSize: '29px',
-                      color: highlight === 'chart10' ? 'green' : '#4c4e64de'
+                      fontSize: '29px'
                     }}
                   />
                 </StyledTooltip>
