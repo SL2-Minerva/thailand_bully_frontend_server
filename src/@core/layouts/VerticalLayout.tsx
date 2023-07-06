@@ -24,6 +24,8 @@ import ScrollToTop from 'src/@core/components/scroll-to-top'
 
 // ** Styled Component
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
+import LineFloatButton from '../components/line-float-button'
+import { UserPermission } from 'src/services/api/users/role'
 
 const VerticalLayoutWrapper = styled('div')({
   height: '100%',
@@ -67,6 +69,8 @@ const VerticalLayout = (props: LayoutProps) => {
   // ** Toggle Functions
   const toggleNavVisibility = () => setNavVisible(!navVisible)
 
+  const { resultShowCustomerService } = UserPermission()
+
   return (
     <>
       <VerticalLayoutWrapper className='layout-wrapper'>
@@ -102,6 +106,14 @@ const VerticalLayout = (props: LayoutProps) => {
             }}
           >
             {children}
+
+            {resultShowCustomerService && (
+              <LineFloatButton>
+                <a href='https://lin.ee/fYgmStr' target='_blank' rel='noreferrer'>
+                  <img height='60' src='/images/logos/icon-line.png' alt='LINE' />
+                </a>
+              </LineFloatButton>
+            )}
           </ContentWrapper>
 
           {/* Footer Component */}

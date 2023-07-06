@@ -227,6 +227,7 @@ export const UserPermission = (reload?: boolean) => {
     resultReportPermission: res?.data?.authorized_report || [],
     resultUserInfo: res?.data?.info || null,
     resultIsAdmin: res?.data?.is_admin || false,
+    resultShowCustomerService : res?.data?.organization_group?.customer_service || false,
     showOverallDashboard: showOverallDashboard,
     showVoiceDashboard: showVoiceDashboard,
     showChannelDashboard: showChannelDashboard,
