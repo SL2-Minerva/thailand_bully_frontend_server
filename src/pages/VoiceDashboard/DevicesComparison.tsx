@@ -17,6 +17,7 @@ import CustomeLabels from './CustomLabel'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('deviceComparison')
@@ -28,7 +29,7 @@ const onCapture = () => {
 }
 Chart.register(DoughnutLabel)
 const DevicesComparison = ({
-  highlight,
+  
   resultDevicesComparison,
   loadingDevicesComparison
 }: {
@@ -51,7 +52,7 @@ const DevicesComparison = ({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const rowOptionsOpen = Boolean(anchorEl)
-
+  const {settings} = useSettings();
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
@@ -77,7 +78,7 @@ const DevicesComparison = ({
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode ==='light' ? '#434343' : 'white'
           }
         ]
       }
@@ -122,7 +123,7 @@ const DevicesComparison = ({
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode ==='light' ? '#434343' : 'white'
           }
         ]
       }
@@ -162,9 +163,9 @@ const DevicesComparison = ({
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Device: Period over Period Comparison' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          titleTypographyProps={{ variant: 'h6' }}
           subheader='Period over Period Comparison'
-          subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          subheaderTypographyProps={{ variant: 'h6' }}
         />
         <StyledTooltip
           arrow
@@ -179,7 +180,7 @@ const DevicesComparison = ({
               </span>
           }
         >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

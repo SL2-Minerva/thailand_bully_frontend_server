@@ -13,7 +13,7 @@ import { Information } from 'mdi-material-ui'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import { useEffect, useRef, useState, MouseEvent } from 'react'
 import { InteractionItem } from 'chart.js'
-import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography, useTheme } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import MessageDetail from './MessageDetail'
 import moment from 'moment'
@@ -60,7 +60,7 @@ const chartLabel = (data: any) => {
 
 const InfluencerGraph = ({
   params,
-  highlight,
+  
   resultNumbersOfAccounts,
   loadingNumbersOfAccounts,
   keywordsColor,
@@ -91,6 +91,12 @@ const InfluencerGraph = ({
     campaign_id: null,
     organization_id: null
   })
+
+  const theme = useTheme();
+
+  const labelColor = theme.palette.text.primary
+  const borderColor = theme.palette.action.focus
+  const gridLineColor = theme.palette.action.focus
 
   const chartRef = useRef()
   const getKeywordId = (dataset: InteractionItem[]) => {
@@ -138,16 +144,28 @@ const InfluencerGraph = ({
     maintainAspectRatio: false,
     scales: {
       x: {
-        ticks: { color: 'grey' },
+        ticks: { color: labelColor },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        },
         stacked: true
       },
       y: {
         min: 0,
+
+        // max: 5000,
+
         scaleLabel: { display: true },
         ticks: {
           stepSize: 100,
-          color: '#4c4e64de'
+          color: labelColor
         },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        },
+
         stacked: true
       }
     },
@@ -158,7 +176,7 @@ const InfluencerGraph = ({
         labels: {
           padding: 25,
           boxWidth: 10,
-          color: '#4c4e64de',
+          color: labelColor,
           usePointStyle: true
         }
       }
@@ -171,16 +189,25 @@ const InfluencerGraph = ({
     maintainAspectRatio: false,
     scales: {
       x: {
-        ticks: { color: '#4c4e64de' },
-        stacked: true
+        ticks: { color: labelColor },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        }
       },
       y: {
         min: 0,
         scaleLabel: { display: true },
         ticks: {
           stepSize: 100,
-          color: '#4c4e64de'
+          color: labelColor
+        },
+        grid: {
+          borderColor,
+          color: gridLineColor
         }
+
+        // stacked: true
       }
     },
     plugins: {
@@ -190,7 +217,7 @@ const InfluencerGraph = ({
         labels: {
           padding: 25,
           boxWidth: 10,
-          color: '#4c4e64de',
+          color: labelColor,
           usePointStyle: true
         }
       }
@@ -305,7 +332,7 @@ const InfluencerGraph = ({
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text='Number of Accounts' />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
           />
           <StyledTooltip
             arrow
@@ -320,7 +347,7 @@ const InfluencerGraph = ({
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

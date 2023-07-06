@@ -26,6 +26,7 @@ import { API_PATH } from 'src/utils/const'
 import authConfig from 'src/configs/auth'
 import toast from 'react-hot-toast'
 import { GetDailyMessages } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
+import { useTheme } from '@mui/material/styles'
 
 interface Props {
   type: string
@@ -98,7 +99,13 @@ const onCapture = () => {
 }
 
 const DailyMessageGraph = (props: Props) => {
-  const { type, params, highlight, keywordsColor, setIsLoading, apiParams, quickViewData, setQuickViewData } = props
+  const { type, params, keywordsColor, setIsLoading, apiParams, quickViewData, setQuickViewData } = props
+  const theme = useTheme()
+
+  const labelColor = theme.palette.text.primary
+  const borderColor = theme.palette.action.focus
+  const gridLineColor = theme.palette.action.focus
+
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
   const [showDetail, setShowDetail] = useState<boolean>(false)
@@ -168,7 +175,11 @@ const DailyMessageGraph = (props: Props) => {
     maintainAspectRatio: false,
     scales: {
       x: {
-        ticks: { color: '#4c4e64de' },
+        ticks: { color: labelColor },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        },
         stacked: true
       },
       y: {
@@ -179,8 +190,13 @@ const DailyMessageGraph = (props: Props) => {
         scaleLabel: { display: true },
         ticks: {
           stepSize: 100,
-          color: '#4c4e64de'
+          color: labelColor
         },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        },
+
         stacked: true
       }
     },
@@ -191,7 +207,7 @@ const DailyMessageGraph = (props: Props) => {
         labels: {
           padding: 25,
           boxWidth: 10,
-          color: '#4c4e64de',
+          color: labelColor,
           usePointStyle: true
         }
       }
@@ -204,16 +220,25 @@ const DailyMessageGraph = (props: Props) => {
     maintainAspectRatio: false,
     scales: {
       x: {
-        ticks: { color: '#4c4e64de' },
-        stacked: true
+        ticks: { color: labelColor },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        }
       },
       y: {
         min: 0,
         scaleLabel: { display: true },
         ticks: {
           stepSize: 100,
-          color: '#4c4e64de'
+          color: labelColor
+        },
+        grid: {
+          borderColor,
+          color: gridLineColor
         }
+
+        // stacked: true
       }
     },
     plugins: {
@@ -223,7 +248,7 @@ const DailyMessageGraph = (props: Props) => {
         labels: {
           padding: 25,
           boxWidth: 10,
-          color: '#4c4e64de',
+          color: labelColor,
           usePointStyle: true
         }
       }
@@ -395,20 +420,17 @@ const DailyMessageGraph = (props: Props) => {
   }, [params, apiParams])
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }}>
       {loadingDailyMessage && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           {type === 'message' ? (
             <CardHeader
               title={<Translations text='Daily Messages by Date' />}
-              titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+              titleTypographyProps={{ variant: 'h6' }}
             />
           ) : type === 'channel' ? (
-            <CardHeader
-              title='Daily Channel By Date'
-              titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-            />
+            <CardHeader title='Daily Channel By Date' titleTypographyProps={{ variant: 'h6' }} />
           ) : (
             ''
           )}
@@ -425,7 +447,7 @@ const DailyMessageGraph = (props: Props) => {
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

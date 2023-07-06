@@ -25,7 +25,7 @@ const onCapture = () => {
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend)
 
 const KeywordComparisonByChannel = ({
-  highlight,
+  
   resultKeywordComparisonByChannel,
   loadingKeywordComparisonByChannel,
   keywordColors
@@ -75,7 +75,7 @@ const KeywordComparisonByChannel = ({
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text='Percentage of Keyword Comparison by Channel' />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
           />
           <StyledTooltip
             arrow
@@ -90,7 +90,7 @@ const KeywordComparisonByChannel = ({
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

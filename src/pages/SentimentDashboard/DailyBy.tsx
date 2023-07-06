@@ -22,7 +22,7 @@ const DailyBy = (props: Props) => {
     apiParams,
     resultReportPermission,
     params,
-    highlight,
+    
     isLoading,
     setIsLoading,
     quickViewData,

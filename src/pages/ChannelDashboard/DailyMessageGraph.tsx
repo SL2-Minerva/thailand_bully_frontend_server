@@ -100,7 +100,7 @@ const DailyMessageGraph = (props: Props) => {
   const {
     type,
     params,
-    highlight,
+    
     resultDailyChannel,
     loadingDailyChannel,
     apiParams,
@@ -357,12 +357,12 @@ const DailyMessageGraph = (props: Props) => {
           {type === 'message' ? (
             <CardHeader
               title={<Translations text='Daily Messages by Date' />}
-              titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+              titleTypographyProps={{ variant: 'h6' }}
             />
           ) : type === 'channel' ? (
             <CardHeader
               title={<Translations text='Daily Messages by Date' />}
-              titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+              titleTypographyProps={{ variant: 'h6' }}
             />
           ) : (
             ''
@@ -380,7 +380,7 @@ const DailyMessageGraph = (props: Props) => {
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

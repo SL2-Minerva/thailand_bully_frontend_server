@@ -32,7 +32,7 @@ const ChannelByBullyType = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    highlight,
+    
     resultBy,
     loading,
     setIsLoading,
@@ -231,7 +231,7 @@ const ChannelByBullyType = (props: LineProps) => {
           <CardHeader
             title={<Translations text='Daily Messages By Bully Type' />}
             titleTypographyProps={{ variant: 'h6' }}
-            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+            subheaderTypographyProps={{ variant: 'caption' }}
           />
           <StyledTooltip
             arrow
@@ -246,7 +246,7 @@ const ChannelByBullyType = (props: LineProps) => {
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

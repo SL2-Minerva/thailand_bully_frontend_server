@@ -18,6 +18,7 @@ import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
 import CustomeLabels from './CustomLabel'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('percentageVoice')
@@ -58,7 +59,7 @@ export const getColors = (data: any) => {
 }
 
 const DailyMessagePieChart = (props: Props) => {
-  const { highlight, keywordsColor, apiParams } = props
+  const { keywordsColor, apiParams } = props
 
   const { resultPercentageMessage, loadingPercentageMessage } = GetPercentageMessage(apiParams)
 
@@ -80,6 +81,7 @@ const DailyMessagePieChart = (props: Props) => {
   const [previousTotal, setPreviousTotal] = useState<number>()
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
+  const {settings} = useSettings();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -167,7 +169,7 @@ const DailyMessagePieChart = (props: Props) => {
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode === 'light' ? '#434343' : 'white'
           }
         ]
       }
@@ -197,7 +199,7 @@ const DailyMessagePieChart = (props: Props) => {
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode === 'light' ? '#434343' : 'white'
           }
         ]
       }
@@ -247,9 +249,9 @@ const DailyMessagePieChart = (props: Props) => {
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text='Percentage of Messages' />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
             subheader='Period over Period Comparison'
-            subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            subheaderTypographyProps={{ variant: 'h6' }}
           />
           <StyledTooltip
             arrow
@@ -264,7 +266,7 @@ const DailyMessagePieChart = (props: Props) => {
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

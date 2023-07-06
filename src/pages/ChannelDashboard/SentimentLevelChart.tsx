@@ -79,7 +79,7 @@ const ChartDataPositive = (data: any, type: string) => {
 }
 
 const SentimentLevelChart = ({
-  highlight,
+  
   resultSentimentLevel,
   loading
 }: {
@@ -186,7 +186,7 @@ const SentimentLevelChart = ({
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title='Sentiment Level'
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          titleTypographyProps={{ variant: 'h6' }}
         />
         {/* <StyledTooltip arrow title={chartId}>
               <Information style={{marginTop: '22px', fontSize: '29px',color: highlight ? 'green' : '#4c4e64de'}} />

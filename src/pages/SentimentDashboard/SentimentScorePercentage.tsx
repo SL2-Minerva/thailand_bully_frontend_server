@@ -49,7 +49,7 @@ const ChartDataSentiment = (data: any, type: string) => {
 }
 
 const SentimentScorePercentage = ({
-  highlight,
+  
   resultSentimentScorePercentage,
   loadingSentimentScore
 }: {
@@ -124,7 +124,7 @@ const SentimentScorePercentage = ({
   return (
     <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 520 }} >
       {loadingSentimentScore && <LinearProgress style={{ width: '100%' }} />}
-      <CardHeader title='' titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }} />
+      <CardHeader title='' titleTypographyProps={{ variant: 'h6' }} />
       <CardContent>
         {resultSentimentScorePercentage?.length === 0 ? (
           <div

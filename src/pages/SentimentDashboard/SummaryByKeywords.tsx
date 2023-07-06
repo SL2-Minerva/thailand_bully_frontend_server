@@ -94,7 +94,7 @@ const SummaryByKeywords = ({
   resultSummaryByKeywords,
   total,
   loadingSummaryByKeywords,
-  highlight,
+  
   topKeyword,
   setTopKeyword
 }: {
@@ -155,7 +155,7 @@ const SummaryByKeywords = ({
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Sentiment Type by Keyword' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          titleTypographyProps={{ variant: 'h6' }}
         />
         <StyledTooltip
           arrow
@@ -170,7 +170,7 @@ const SummaryByKeywords = ({
             </span>
           }
         >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
       <CardContent>

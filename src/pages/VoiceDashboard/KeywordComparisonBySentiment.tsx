@@ -8,7 +8,7 @@ import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler,
 
 import { Radar } from 'react-chartjs-2'
 import { getChartData, initValue } from './KeywordComparisonByBullyType'
-import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography, useTheme } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
@@ -25,7 +25,7 @@ const onCapture = () => {
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend)
 
 const KeywordComparisonBySentiment = ({
-  highlight,
+  
   resultKeywordComparisonBySentiment,
   loadingKeywordComparisonBySentiment,
   keywordsColor
@@ -42,6 +42,9 @@ const KeywordComparisonBySentiment = ({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const rowOptionsOpen = Boolean(anchorEl)
+  const theme = useTheme()
+  const borderColor = theme.palette.action.focus
+  const gridLineColor = theme.palette.action.focus
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -66,6 +69,11 @@ const KeywordComparisonBySentiment = ({
     }
   }, [resultKeywordComparisonBySentiment, keywordsColor])
 
+  const options = {
+    borderColor: borderColor, 
+    gridLineColor: gridLineColor
+  }
+
   // const reportNo = '2.2.026'
 
   return (
@@ -76,7 +84,7 @@ const KeywordComparisonBySentiment = ({
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text='Percentage of Keyword Comparison by Sentiment' />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
           />
           <StyledTooltip
             arrow
@@ -91,7 +99,7 @@ const KeywordComparisonBySentiment = ({
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -139,7 +147,7 @@ const KeywordComparisonBySentiment = ({
             <Translations text='no data' />
           </div>
         ) : (
-          <Radar data={charData} height={100} />
+          <Radar data={charData} height={100} options={{borderColor: borderColor}} />
         )}
       </CardContent>
     </Paper>

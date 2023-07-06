@@ -25,7 +25,7 @@ interface InfluencerComparisonProps {
 
 const TotalEngagement = (props: InfluencerComparisonProps) => {
   // ** Props
-  const { totalEngagement, highlight, loading } = props
+  const { totalEngagement,  loading } = props
 
   return (
     <>
@@ -54,7 +54,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                   }
                 >
                   <Information
-                    style={{ margin: '2px 0px 0px 5px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }}
+                    style={{ margin: '2px 0px 0px 5px', fontSize: '29px' }}
                   />
                 </StyledTooltip>
               </span>

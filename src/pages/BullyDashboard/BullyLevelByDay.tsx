@@ -34,7 +34,7 @@ const BullyLevelByDay = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    highlight,
+    
     resultBy,
     loading,
     apiParams,
@@ -254,8 +254,8 @@ const BullyLevelByDay = (props: LineProps) => {
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text='Bully Level: Daily Messages by Day' />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
+            subheaderTypographyProps={{ variant: 'caption' }}
           />
           <StyledTooltip
             arrow
@@ -270,7 +270,7 @@ const BullyLevelByDay = (props: LineProps) => {
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

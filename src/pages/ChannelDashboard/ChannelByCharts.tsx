@@ -22,7 +22,7 @@ interface Props {
 }
 
 const ChannelByCharts = (props: Props) => {
-  const { apiParams, resultReportPermission, params, highlight, setIsLoading, quickViewData, setQuickViewData } = props
+  const { apiParams, resultReportPermission, params,  setIsLoading, quickViewData, setQuickViewData } = props
   const theme = useTheme()
 
   const whiteColor = '#fff'

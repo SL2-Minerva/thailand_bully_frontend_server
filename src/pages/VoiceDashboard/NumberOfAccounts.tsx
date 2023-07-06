@@ -15,7 +15,7 @@ interface Props {
 }
 
 const NumberOfAccounts = (props: Props) => {
-  const { apiParams, params, keywordGraphColors, setIsLoading, highlight, resultReportPermission } = props
+  const { apiParams, highlight, params, keywordGraphColors, setIsLoading,  resultReportPermission } = props
   const { resultNumbersOfAccounts, resultTotalAccounts, resultTotalMessages, loadingNumbersOfAccountsComparison } =
     GetNumbersOfAccountComparison(apiParams)
 

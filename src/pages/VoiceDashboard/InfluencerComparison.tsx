@@ -39,7 +39,7 @@ interface InfluencerComparisonProps {
 
 const InfluencerComparison = (props: InfluencerComparisonProps) => {
   // ** Props
-  const { color, icon, trend, trendNumber, totalText, totalValue, chartId, highlight, reportNo, loading } = props
+  const { color, icon, trend, trendNumber, totalText, totalValue, chartId,  reportNo, loading } = props
 
   const TrendIcon = trend === 'plus' ? ChevronUp : ChevronDown
 
@@ -83,7 +83,7 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
 
         <Divider sx={{ mt: 2, mb: 7.5 }} />
 
-        <span style={{ display: 'flex', justifyContent: 'flex-start', color: highlight ? 'green' : '#4c4e64de' }}>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <Translations text={title} />
           <StyledTooltip
             arrow

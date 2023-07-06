@@ -15,7 +15,7 @@ interface Props {
 }
 
 const ComparisonCharts = (props: Props) => {
-  const { apiParams, resultReportPermission, highlight, params } = props
+  const { apiParams, resultReportPermission,  params } = props
 
   const theme = useTheme()
 

@@ -40,7 +40,7 @@ interface MessageData {
 }
 
 const PercentageOfEngangementType = (props: MessageData) => {
-  const { type, highlight, resultEngagementType, loadingEngagementType, keywordsColor } = props
+  const { type,  resultEngagementType, loadingEngagementType, keywordsColor } = props
   const colors = keywordsColor
   
   // const reportNo = '4.1.011'
@@ -228,9 +228,9 @@ const PercentageOfEngangementType = (props: MessageData) => {
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text={title} />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
             subheader='Period over Period Comparison'
-            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+            subheaderTypographyProps={{ variant: 'caption' }}
           />
           <StyledTooltip
             arrow
@@ -245,7 +245,7 @@ const PercentageOfEngangementType = (props: MessageData) => {
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

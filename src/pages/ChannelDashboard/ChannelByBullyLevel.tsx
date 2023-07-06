@@ -51,7 +51,7 @@ export const chartDatasets = (data: any, keywordsColor: any) => {
 
 const ChannelByBullyLevel = (props: LineProps) => {
   const { t } = useTranslation()
-  const { labelColor, borderColor, gridLineColor, chartId, params, highlight,keywordsColor } = props
+  const { labelColor, borderColor, gridLineColor, chartId, params, keywordsColor } = props
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const [label, setLabel] = useState<string[]>([])
@@ -227,11 +227,11 @@ const ChannelByBullyLevel = (props: LineProps) => {
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Daily Messages By Bully Level' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+          titleTypographyProps={{ variant: 'h6' }}
+          subheaderTypographyProps={{ variant: 'caption' }}
         />
         <StyledTooltip arrow title={chartTitle || ''}>
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
 

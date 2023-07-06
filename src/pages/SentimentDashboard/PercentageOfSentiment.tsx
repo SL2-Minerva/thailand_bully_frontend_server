@@ -41,7 +41,7 @@ interface MessageData {
 }
 
 const PercentageOfSentiments = (props: MessageData) => {
-  const { highlight, resultFilterData, loadingFilterData } = props
+  const {  resultFilterData, loadingFilterData } = props
   const colors = SentimentColors
   const { t } = useTranslation()
   const initValue = {
@@ -247,9 +247,9 @@ const PercentageOfSentiments = (props: MessageData) => {
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text='Percentage of Sentiment Type' />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
             subheader='Period over Period Comparison'
-            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+            subheaderTypographyProps={{ variant: 'caption' }}
           />
           <StyledTooltip
             arrow
@@ -264,7 +264,7 @@ const PercentageOfSentiments = (props: MessageData) => {
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

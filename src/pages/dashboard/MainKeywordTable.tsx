@@ -7,6 +7,7 @@ import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
 import { tableCellStyle } from './TopSiteList'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 interface Props {
   params: any
@@ -18,6 +19,7 @@ interface Props {
 const MainKeyWordTable = ({ params, resultTopKeywords, loadingTopKeywords }: Props) => {
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [keywordId, setKeywordId] = useState<number>()
+  const { settings } = useSettings()
 
   const reportNo = '1.2.009'
 
@@ -48,7 +50,7 @@ const MainKeyWordTable = ({ params, resultTopKeywords, loadingTopKeywords }: Pro
           <Table stickyHeader={true} size='small'>
             <TableHead sx={{ backgroundColor: 'lightgrey !important' }}>
               <TableRow>
-                <TableCell variant='head' sx={{ backgroundColor: 'white !important' }}>
+                <TableCell variant='head' sx={{ backgroundColor: settings.mode === 'light' ? 'white' : '#30334e' }}>
                   {' '}
                 </TableCell>
                 <TableCell variant='head'  align='center'> No. of Messages </TableCell>

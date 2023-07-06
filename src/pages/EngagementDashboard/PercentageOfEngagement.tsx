@@ -41,7 +41,7 @@ interface MessageData {
 }
 
 const PercentageOfEngangement = (props: MessageData) => {
-  const { type, highlight, resultFilterData, loadingFilterData, keywordsColor } = props
+  const { type,  resultFilterData, loadingFilterData, keywordsColor } = props
   const colors = keywordsColor ?? EngagementTransChartColor
   const initValue = {
     labels: [],
@@ -255,9 +255,9 @@ const PercentageOfEngangement = (props: MessageData) => {
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text={title} />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
             subheader='Period over Period Comparison'
-            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+            subheaderTypographyProps={{ variant: 'caption' }}
           />
           <StyledTooltip
             arrow
@@ -272,7 +272,7 @@ const PercentageOfEngangement = (props: MessageData) => {
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

@@ -49,7 +49,6 @@ const MessageByAll = ({
       resultMessagesByAll: resultMessagesByAll,
       loadingMessagesByAll: loadingMessagesByAll
     })
-
   }, [resultMessagesByAll, loadingMessagesByAll])
 
   return (

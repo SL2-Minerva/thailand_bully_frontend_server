@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
 
 const MessagesByAccount = (props: LineProps) => {
   const { t } = useTranslation()
-  const { white, labelColor, borderColor, gridLineColor, chartId, params, highlight, keywordsColor } = props
+  const { white, labelColor, borderColor, gridLineColor, chartId, params,  keywordsColor } = props
 
   const [label, setLabel] = useState<string[]>([])
   const [dataset, setDataset] = useState<StackChartDataset[]>([])
@@ -219,11 +219,11 @@ const MessagesByAccount = (props: LineProps) => {
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title='Daily Messages By Accounts'
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-          subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+          titleTypographyProps={{ variant: 'h6' }}
+          subheaderTypographyProps={{ variant: 'caption' }}
         />
         <StyledTooltip arrow title={chartTitle || ''}>
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
 

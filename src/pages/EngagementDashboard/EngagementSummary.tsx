@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 import { GetEngagementSummary } from 'src/services/api/dashboards/engagement/EngagementApi'
 
 const EngagementSummary = ({
-  highlight,
+  
   page,
   setPage,
   pageCount,
@@ -83,7 +83,7 @@ const EngagementSummary = ({
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Summary Engagement By Account' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          titleTypographyProps={{ variant: 'h6' }}
         />
         <StyledTooltip
           arrow
@@ -100,7 +100,7 @@ const EngagementSummary = ({
             </span>
           }
         >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
       <CardContent>

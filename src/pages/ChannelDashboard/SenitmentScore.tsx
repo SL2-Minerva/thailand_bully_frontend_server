@@ -23,7 +23,7 @@ const onCapture = () => {
 }
 
 const SentimentScore = (props: LineProps) => {
-  const { labelColor, borderColor, gridLineColor, params, highlight, resultBy, resultByPrevious, loading } =
+  const { labelColor, borderColor, gridLineColor, params,  resultBy, resultByPrevious, loading } =
     props
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
@@ -187,8 +187,8 @@ const SentimentScore = (props: LineProps) => {
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text='Total Messages By Channel' />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
-            subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
+            subheaderTypographyProps={{ variant: 'caption' }}
           />
           <StyledTooltip
             arrow
@@ -205,7 +205,7 @@ const SentimentScore = (props: LineProps) => {
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

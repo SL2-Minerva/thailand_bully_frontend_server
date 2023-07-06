@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import { GraphicColors } from 'src/utils/const'
 
@@ -35,7 +35,7 @@ customeLabel) => {
               }}
               mr={0.3}
             ></Box>
-            <Box style={{ color: '#5A5A68', fontSize: '12px' }}><Translations text={label}/></Box>
+            <Box><Typography sx={{ fontSize: '12px' }}><Translations text={label}/></Typography></Box>
           </Grid>
         )
       })}

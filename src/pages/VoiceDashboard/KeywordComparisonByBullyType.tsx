@@ -61,7 +61,7 @@ export const getChartData = (data: any, keywordColor: any) => {
 }
 
 const KeywordComparisonByBullyType = ({
-  highlight,
+  
   resultKeywordComparisonByBullyType,
   loadingKeywordComparisonByBullyType,
   keywordsColor
@@ -111,7 +111,7 @@ const KeywordComparisonByBullyType = ({
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text='Percentage of Keyword Comparison by Bully Type' />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
           />
           <StyledTooltip
             arrow
@@ -126,7 +126,7 @@ const KeywordComparisonByBullyType = ({
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

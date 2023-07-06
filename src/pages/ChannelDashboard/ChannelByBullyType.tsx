@@ -14,7 +14,7 @@ import Translations from 'src/layouts/components/Translations'
 
 const ChannelByBullyType = (props: LineProps) => {
   const { t } = useTranslation()
-  const { labelColor, borderColor, gridLineColor, chartId, params, highlight, keywordsColor } = props
+  const { labelColor, borderColor, gridLineColor, chartId, params,  keywordsColor } = props
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
 
   const [label, setLabel] = useState<string[]>([])
@@ -191,10 +191,10 @@ const ChannelByBullyType = (props: LineProps) => {
         <CardHeader
           title={<Translations text='Daily Messages By Bully Type' />}
           titleTypographyProps={{ variant: 'h6' }}
-          subheaderTypographyProps={{ variant: 'caption', color: highlight ? 'green' : '#4c4e64de' }}
+          subheaderTypographyProps={{ variant: 'caption' }}
         />
         <StyledTooltip arrow title={chartTitle || ''}>
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
 

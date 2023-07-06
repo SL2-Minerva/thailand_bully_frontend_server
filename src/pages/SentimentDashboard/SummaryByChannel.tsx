@@ -12,7 +12,7 @@ const SummaryByChannel = ({
   resultSummaryByChannel,
   total,
   loadingSummaryByChannel,
-  highlight,
+  
   topChannel,
   setTopChannel
 }: {
@@ -85,7 +85,7 @@ const SummaryByChannel = ({
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
           title={<Translations text='Summary Sentiment Score by Channel' />}
-          titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+          titleTypographyProps={{ variant: 'h6' }}
         />
         <StyledTooltip
           arrow
@@ -100,7 +100,7 @@ const SummaryByChannel = ({
             </span>
           }
         >
-          <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
         </StyledTooltip>
       </span>
       <CardContent>

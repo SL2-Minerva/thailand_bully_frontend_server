@@ -41,7 +41,7 @@ Chart.register(DoughnutLabel)
 const DailyMessagePieChart = (props: Props) => {
   const {
     type,
-    highlight,
+    
     resultPercentageChannelCurrent,
     resultPercentageChannelPrevious,
     loadingPercentageChannel,
@@ -280,16 +280,16 @@ const DailyMessagePieChart = (props: Props) => {
           {type === 'message' ? (
             <CardHeader
               title={<Translations text='Percentage of Channel' />}
-              titleTypographyProps={{ varient: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+              titleTypographyProps={{ varient: 'h6' }}
               subheader='Period over Period Comparison'
-              subheaderTypographyProps={{ varient: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+              subheaderTypographyProps={{ varient: 'h6' }}
             />
           ) : (
             <CardHeader
               title={<Translations text='Percentage of Channel' />}
-              titleTypographyProps={{ varient: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+              titleTypographyProps={{ varient: 'h6' }}
               subheader='Period over Period Comparison'
-              subheaderTypographyProps={{ varient: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+              subheaderTypographyProps={{ varient: 'h6' }}
             />
           )}
           <StyledTooltip
@@ -305,7 +305,7 @@ const DailyMessagePieChart = (props: Props) => {
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>

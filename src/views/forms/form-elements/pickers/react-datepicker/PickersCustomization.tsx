@@ -18,7 +18,7 @@ import CustomInput from './PickersCustomInput'
 const PickersCustomization = () => {
   // ** States
   const [dateFormat, setDateFormat] = useState<DateType>(new Date())
-  const [dateHighlight, setDateHighlight] = useState<DateType>(new Date())
+  const [date setDateHighlight] = useState<DateType>(new Date())
 
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap' }} className='demo-space-x'>

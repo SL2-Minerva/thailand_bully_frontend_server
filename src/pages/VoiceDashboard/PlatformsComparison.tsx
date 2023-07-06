@@ -17,6 +17,7 @@ import CustomeLabels from './CustomLabel'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('platformComparison')
@@ -28,7 +29,6 @@ const onCapture = () => {
 }
 Chart.register(DoughnutLabel)
 const PlatformsComparison = ({
-  highlight,
   resultPlatformComparison,
   loadingPlatformComparison
 }: {
@@ -47,7 +47,7 @@ const PlatformsComparison = ({
   const [currentData, setCurrentData] = useState(initValue)
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-
+  const { settings } = useSettings()
   const rowOptionsOpen = Boolean(anchorEl)
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
@@ -75,7 +75,7 @@ const PlatformsComparison = ({
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode ==='light' ? '#434343' : 'white'
           }
         ]
       }
@@ -120,7 +120,7 @@ const PlatformsComparison = ({
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode ==='light' ? '#434343' : 'white'
           }
         ]
       }
@@ -163,17 +163,16 @@ const PlatformsComparison = ({
   // const reportNo = '2.2.022'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1,minHeight: 550 }} >
-
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }}>
       {loadingPlatformComparison && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
             title={<Translations text='Channel/Platform: Period over Period Comparison' />}
-            titleTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            titleTypographyProps={{ variant: 'h6' }}
             subheader='Period over Period Comparison'
-            subheaderTypographyProps={{ variant: 'h6', color: highlight ? 'green' : '#4c4e64de' }}
+            subheaderTypographyProps={{ variant: 'h6' }}
           />
           <StyledTooltip
             arrow
@@ -188,7 +187,7 @@ const PlatformsComparison = ({
               </span>
             }
           >
-            <Information style={{ marginTop: '22px', fontSize: '29px', color: highlight ? 'green' : '#4c4e64de' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -223,7 +222,7 @@ const PlatformsComparison = ({
         </span>
       </div>
 
-      <CardContent id="platformComparison">
+      <CardContent id='platformComparison'>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
