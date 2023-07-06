@@ -19,6 +19,7 @@ import CustomeLabels from '../VoiceDashboard/CustomLabel'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('percentageBullyType')
@@ -78,6 +79,8 @@ const PercentageOfBullyType = (props: MessageData) => {
     setAnchorEl(null)
   }
 
+  const {settings} = useSettings();
+
   const options = {
     responsive: true,
     backgroundColor: false,
@@ -101,7 +104,7 @@ const PercentageOfBullyType = (props: MessageData) => {
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode === 'light' ? '#434343' : 'white'
           }
         ]
       }
@@ -131,7 +134,7 @@ const PercentageOfBullyType = (props: MessageData) => {
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode === 'light' ? '#434343' : 'white'
           }
         ]
       }

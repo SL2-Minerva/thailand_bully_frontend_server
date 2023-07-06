@@ -18,6 +18,7 @@ import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
 import CustomeLabels from '../VoiceDashboard/CustomLabel'
 import { getColors, getLabelColor } from '../VoiceDashboard/DailyMessagesPieChart'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('percentageTrans')
@@ -63,6 +64,7 @@ const PercentageOfEngangement = (props: MessageData) => {
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const {settings} = useSettings();
 
   const rowOptionsOpen = Boolean(anchorEl)
 
@@ -95,7 +97,7 @@ const PercentageOfEngangement = (props: MessageData) => {
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode === 'light' ? '#434343' : 'white'
           }
         ]
       }
@@ -125,7 +127,7 @@ const PercentageOfEngangement = (props: MessageData) => {
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode === 'light' ? '#434343' : 'white'
           }
         ]
       }

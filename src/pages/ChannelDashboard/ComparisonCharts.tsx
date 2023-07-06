@@ -15,7 +15,7 @@ interface Props {
 }
 
 const ComparisonCharts = (props: Props) => {
-  const { apiParams, resultReportPermission,  params } = props
+  const { apiParams, resultReportPermission, highlight,  params } = props
 
   const theme = useTheme()
 
@@ -47,7 +47,7 @@ const ComparisonCharts = (props: Props) => {
               <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <CardHeader
                   title={<Translations text='Channel Comparison: Period over Period' />}
-                  titleTypographyProps={{ variant: 'h6', color: highlight === 'chart10' ? 'green' : '#4c4e64de' }}
+                  titleTypographyProps={{ variant: 'h6'}}
                 />
                 <StyledTooltip
                   arrow
@@ -67,8 +67,7 @@ const ComparisonCharts = (props: Props) => {
                   <Information
                     style={{
                       marginTop: '22px',
-                      fontSize: '29px',
-                      color: highlight === 'chart10' ? 'green' : '#4c4e64de'
+                      fontSize: '29px'
                     }}
                   />
                 </StyledTooltip>

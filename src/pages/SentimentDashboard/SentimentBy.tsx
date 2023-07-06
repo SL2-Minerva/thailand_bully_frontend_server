@@ -23,7 +23,7 @@ interface Props {
 }
 
 const SentimentBy = (props: Props) => {
-  const { theme, apiParams, resultReportPermission, params,  setIsLoading, quickViewData, setQuickViewData } =
+  const { theme, apiParams, resultReportPermission, params, highlight, setIsLoading, quickViewData, setQuickViewData } =
     props
 
   const whiteColor = '#fff'

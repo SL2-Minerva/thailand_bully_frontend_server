@@ -56,6 +56,11 @@ export const GraphicColors = [
 export const ChannelColors = [
   '#ed7d31',
   '#3b5998',
+  '#e31010',
+  '#d62976',
+  '#F4B400',
+  '#642c8c',
+  '#3b5998',
   '#00aced',
   '#e31010',
   '#d62976',

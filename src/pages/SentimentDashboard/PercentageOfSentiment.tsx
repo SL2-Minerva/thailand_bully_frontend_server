@@ -20,6 +20,7 @@ import CustomeLabels from '../VoiceDashboard/CustomLabel'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('percentageSentiment')
@@ -41,7 +42,7 @@ interface MessageData {
 }
 
 const PercentageOfSentiments = (props: MessageData) => {
-  const {  resultFilterData, loadingFilterData } = props
+  const { resultFilterData, loadingFilterData } = props
   const colors = SentimentColors
   const { t } = useTranslation()
   const initValue = {
@@ -74,6 +75,8 @@ const PercentageOfSentiments = (props: MessageData) => {
     setAnchorEl(null)
   }
 
+  const { settings } = useSettings();
+
   // const theme = useTheme()
   // const labelColor = theme.palette.text.primary
 
@@ -100,7 +103,7 @@ const PercentageOfSentiments = (props: MessageData) => {
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode === 'light' ? '#434343' : 'white'
           }
         ]
       }
@@ -130,7 +133,7 @@ const PercentageOfSentiments = (props: MessageData) => {
               family: 'Arial, Helvetica, sans-serif',
               weight: 'bold'
             },
-            color: '#434343'
+            color: settings.mode === 'light' ? '#434343' : 'white'
           }
         ]
       }
@@ -240,7 +243,7 @@ const PercentageOfSentiments = (props: MessageData) => {
   }, [resultFilterData, t])
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }}>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>

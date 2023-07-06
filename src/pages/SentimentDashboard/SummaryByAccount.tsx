@@ -12,7 +12,7 @@ const SummaryByAccount = ({
   resultSummaryByAccount,
   total,
   loadingSummaryByAccount,
-  
+
   topAccount,
   setTopAccount
 }: {
@@ -81,7 +81,7 @@ const SummaryByAccount = ({
   ]
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
       {loadingSummaryByAccount && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -117,8 +117,7 @@ const SummaryByAccount = ({
                 handleTopAccounts('top10')
               }}
             >
-              {' '}
-              Top 10
+              <span style={{ color: topAccount === 'top10' ? 'white' : '#626376' }}>Top 10</span>
             </Button>
             <Button
               variant='contained'
@@ -129,8 +128,7 @@ const SummaryByAccount = ({
                 handleTopAccounts('top20')
               }}
             >
-              {' '}
-              Top 20
+              <span style={{ color: topAccount === 'top20' ? 'white' : '#626376' }}>Top 20</span>
             </Button>
             <Button
               variant='contained'
@@ -141,8 +139,7 @@ const SummaryByAccount = ({
                 handleTopAccounts('top50')
               }}
             >
-              {' '}
-              Top 50
+              <span style={{ color: topAccount === 'top50' ? 'white' : '#626376' }}>Top 50</span>
             </Button>
             <Button
               variant='contained'
@@ -153,8 +150,7 @@ const SummaryByAccount = ({
                 handleTopAccounts('top100')
               }}
             >
-              {' '}
-              Top 100
+              <span style={{ color: topAccount === 'top100' ? 'white' : '#626376' }}>Top 100</span>
             </Button>
             <Button
               variant='contained'
@@ -165,8 +161,7 @@ const SummaryByAccount = ({
                 handleTopAccounts('all')
               }}
             >
-              {' '}
-              ALL{' '}
+              <span style={{ color: topAccount === 'all' ? 'white' : '#626376' }}>ALL</span>{' '}
             </Button>
           </Grid>
         </Grid>

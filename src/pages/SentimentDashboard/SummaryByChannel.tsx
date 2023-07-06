@@ -12,7 +12,7 @@ const SummaryByChannel = ({
   resultSummaryByChannel,
   total,
   loadingSummaryByChannel,
-  
+
   topChannel,
   setTopChannel
 }: {
@@ -80,7 +80,7 @@ const SummaryByChannel = ({
   ]
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
       {loadingSummaryByChannel && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
@@ -116,8 +116,7 @@ const SummaryByChannel = ({
                 handleTopChannels('top10')
               }}
             >
-              {' '}
-              Top 10
+              <span style={{ color: topChannel === 'top10' ? 'white' : '#626376' }}>Top 10</span>
             </Button>
             <Button
               variant='contained'
@@ -128,8 +127,7 @@ const SummaryByChannel = ({
                 handleTopChannels('top20')
               }}
             >
-              {' '}
-              Top 20
+              <span style={{ color: topChannel === 'top20' ? 'white' : '#626376' }}>Top 20</span>
             </Button>
             <Button
               variant='contained'
@@ -140,8 +138,7 @@ const SummaryByChannel = ({
                 handleTopChannels('top50')
               }}
             >
-              {' '}
-              Top 50
+              <span style={{ color: topChannel === 'top50' ? 'white' : '#626376' }}>Top 50</span>
             </Button>
             <Button
               variant='contained'
@@ -152,8 +149,7 @@ const SummaryByChannel = ({
                 handleTopChannels('top100')
               }}
             >
-              {' '}
-              Top 100
+              <span style={{ color: topChannel === 'top100' ? 'white' : '#626376' }}>Top 100</span>
             </Button>
             <Button
               variant='contained'
@@ -164,8 +160,7 @@ const SummaryByChannel = ({
                 handleTopChannels('all')
               }}
             >
-              {' '}
-              ALL{' '}
+              <span style={{ color: topChannel === 'top10' ? 'white' : '#626376' }}>ALL</span>
             </Button>
           </Grid>
         </Grid>

@@ -25,7 +25,7 @@ interface InfluencerComparisonProps {
 
 const TotalEngagement = (props: InfluencerComparisonProps) => {
   // ** Props
-  const { totalEngagement,  loading } = props
+  const { totalEngagement, highlight, loading } = props
 
   return (
     <>

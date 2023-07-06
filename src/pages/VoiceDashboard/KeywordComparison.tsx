@@ -13,6 +13,7 @@ import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('keywordComparison')
@@ -25,7 +26,6 @@ const onCapture = () => {
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend)
 
 const KeywordComparisonByChannel = ({
-  
   resultKeywordComparisonByChannel,
   loadingKeywordComparisonByChannel,
   keywordColors
@@ -66,9 +66,33 @@ const KeywordComparisonByChannel = ({
   }, [resultKeywordComparisonByChannel, keywordColors])
 
   // const reportNo = '2.2.025'
+  const { settings } = useSettings()
+  const options = {
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: settings.mode === 'light' ? 'grey' : 'white'
+        }
+      }
+    },
+    scales: {
+      r: {
+        angleLines: {
+          color: settings.mode === 'light' ? '#eaeaea' : 'white'
+        },
+        grid: {
+          color: settings.mode === 'light' ? '#eaeaea' : 'white'
+        },
+        pointLabels: {
+          color: settings.mode === 'light' ? 'grey' : 'white'
+        }
+      }
+    }
+  }
 
   return (
-    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
       {loadingKeywordComparisonByChannel && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -138,7 +162,7 @@ const KeywordComparisonByChannel = ({
             <Translations text='no data' />
           </div>
         ) : (
-          <Radar data={charData} height={100} />
+          <Radar data={charData} height={100} options={options} />
         )}
       </CardContent>
     </Paper>

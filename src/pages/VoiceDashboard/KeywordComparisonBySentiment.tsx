@@ -8,11 +8,12 @@ import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler,
 
 import { Radar } from 'react-chartjs-2'
 import { getChartData, initValue } from './KeywordComparisonByBullyType'
-import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography, useTheme } from '@mui/material'
+import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('bySentiment')
@@ -25,7 +26,6 @@ const onCapture = () => {
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend)
 
 const KeywordComparisonBySentiment = ({
-  
   resultKeywordComparisonBySentiment,
   loadingKeywordComparisonBySentiment,
   keywordsColor
@@ -42,9 +42,7 @@ const KeywordComparisonBySentiment = ({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const rowOptionsOpen = Boolean(anchorEl)
-  const theme = useTheme()
-  const borderColor = theme.palette.action.focus
-  const gridLineColor = theme.palette.action.focus
+  const { settings } = useSettings()
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -70,14 +68,33 @@ const KeywordComparisonBySentiment = ({
   }, [resultKeywordComparisonBySentiment, keywordsColor])
 
   const options = {
-    borderColor: borderColor, 
-    gridLineColor: gridLineColor
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: settings.mode === 'light' ? 'grey' : 'white'
+        }
+      }
+    },
+    scales: {
+      r: {
+        angleLines: {
+          color: settings.mode === 'light' ? '#eaeaea' : 'white'
+        },
+        grid: {
+          color: settings.mode === 'light' ? '#eaeaea' : 'white'
+        }, 
+        pointLabels: {
+          color: settings.mode === 'light' ? 'grey' : 'white'
+        }
+      }
+    }
   }
 
   // const reportNo = '2.2.026'
 
   return (
-    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
       {loadingKeywordComparisonBySentiment && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -147,7 +164,7 @@ const KeywordComparisonBySentiment = ({
             <Translations text='no data' />
           </div>
         ) : (
-          <Radar data={charData} height={100} options={{borderColor: borderColor}} />
+          <Radar data={charData} height={100} options={options} />
         )}
       </CardContent>
     </Paper>

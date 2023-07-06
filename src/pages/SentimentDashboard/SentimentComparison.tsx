@@ -14,8 +14,7 @@ import { useEffect, useState } from 'react'
 import Translations from 'src/layouts/components/Translations'
 
 const SentimentComparisonTable = ({
-  apiParams,
-  highlight
+  apiParams
 }: {
   chartId: string
   highlight: boolean
