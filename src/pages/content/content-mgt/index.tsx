@@ -111,6 +111,10 @@ const ContentManagement = () => {
   }, [showEdit, showCreate, updateStatus])
 
   useEffect(() => {
+    setPage(0)
+  }, [date, status, contentName, content])
+
+  useEffect(() => {
     if (errorCampaiganList || errorUserPermission) {
       window.localStorage.removeItem('userData')
       window.localStorage.removeItem(authConfig.storageTokenKeyName)
@@ -129,7 +133,7 @@ const ContentManagement = () => {
             <Grid container spacing={6}>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='plan-select'>Content #ID </InputLabel>
+                  <InputLabel id='plan-select'>Contents</InputLabel>
                   <Select
                     fullWidth
                     value={content}
@@ -142,9 +146,9 @@ const ContentManagement = () => {
                     <MenuItem value=''>
                       <span>ALL</span>
                     </MenuItem>
-                    <MenuItem value='1'>Content 1</MenuItem>
-                    <MenuItem value='2'>Content 2</MenuItem>
-                    <MenuItem value='3'>Content 3</MenuItem>
+                    <MenuItem value='1'>News</MenuItem>
+                    <MenuItem value='2'>Announcement</MenuItem>
+                    <MenuItem value='3'>Content</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>

@@ -82,6 +82,26 @@ export const ContentThreeLists = () => {
   }
 }
 
+export const GetContentLists = () => {
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/organization-content/show`,
+    method: 'GET',
+    params: {
+      // content_id: 3,
+      page: 0, 
+      limit : 1000, 
+      status: 1
+    }
+  })
+
+  return {
+    resultContentList: response?.data?.data || [],
+    total: response?.data?.total || 0,
+    loadingResultContentList: loading,
+    errorResultContentList: error
+  }
+}
+
 export const CreateContent = () => {
   const [{ data: res, loading, error }, fetch] = CallAPI<{
     code: 0 | 1
