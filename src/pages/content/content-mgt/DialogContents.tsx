@@ -1,4 +1,4 @@
-import { Ref, useState, forwardRef, ReactElement,SyntheticEvent, useEffect, useCallback  } from 'react'
+import { Ref, useState, forwardRef, ReactElement, SyntheticEvent, useEffect, useCallback } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -23,7 +23,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DatePicker from '@mui/lab/DatePicker'
 
 // ** Styles
-import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.snow.css'
 
 // ** Third Party Imports
 import { useDropzone } from 'react-dropzone'
@@ -35,7 +35,7 @@ import { ContentList } from 'src/types/content/ContentType'
 import { CreateContent, UpdateContent } from 'src/services/api/content/ContentAPI'
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false, loading: () => <p>Loading ...</p> });
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <p>Loading ...</p> })
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -81,35 +81,34 @@ interface DialogInfoProps {
 
 const quillModules = {
   toolbar: [
-
-      // [{ 'font': [] }],
-      [{ 'size': ['small', false, 'large', 'huge'] }],
-      ['bold', 'italic', 'underline'],
-      [{'list': 'ordered'}, {'list': 'bullet'}],
-      [{ 'align': [] }],
-      [{ 'color': [] }, { 'background': [] }],
-      ['clean']
-    ]
-};
+    // [{ 'font': [] }],
+    [{ size: ['small', false, 'large', 'huge'] }],
+    ['bold', 'italic', 'underline'],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    [{ align: [] }],
+    [{ color: [] }, { background: [] }],
+    ['clean']
+  ]
+}
 
 const DialogContents = (props: DialogInfoProps) => {
   const { show, setShow, action, current } = props
 
   const [date, setDate] = useState<Date | null>(new Date())
   const [description, setDescription] = useState('')
-  const [topic, setTopic] = useState('');
-  const [imagePath, setImagePath] = useState(''); 
-  const [ contentId, setContentId ] = useState('')
-  const [ status, setStatus ] = useState<number>(0);
-  const [ id, setId ] = useState<number | null>(null);
-  const [ showErrorMessage, setShowErrorMessage ] = useState<boolean>(false);
-  const [ errorMessage, setErrorMessage ] = useState<any>('')
+  const [topic, setTopic] = useState('')
+  const [imagePath, setImagePath] = useState('')
+  const [contentId, setContentId] = useState('')
+  const [status, setStatus] = useState<number>(0)
+  const [id, setId] = useState<number | null>(null)
+  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState<any>('')
 
   // ** State
   const [files, setFiles] = useState<File[]>([])
 
-  const { fileUpload } = CreateContent();
-  const { updateContentData } = UpdateContent();
+  const { fileUpload } = CreateContent()
+  const { updateContentData } = UpdateContent()
 
   // ** Hook
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
@@ -137,92 +136,90 @@ const DialogContents = (props: DialogInfoProps) => {
   }, [])
 
   const img = files.map((file: FileProp) => (
-    <div key={file.name} style={{ display: 'flex', justifyContent:'center' }}>
+    <div key={file.name} style={{ display: 'flex', justifyContent: 'center' }}>
       <img key={file.name} alt={file.name} style={{ width: 400, height: 300 }} src={URL.createObjectURL(file as any)} />
-      <IconButton onClick={() => handleRemoveFile(file)} size="small">
-          <Close fontSize='large'/>
+      <IconButton onClick={() => handleRemoveFile(file)} size='small'>
+        <Close fontSize='large' />
       </IconButton>
     </div>
   ))
-  
+
   function closeDialogBox() {
     setShow(false)
     setFiles([])
-    setDescription('');
+    setDescription('')
     acceptedFiles.length = 0
   }
 
   const submitData = () => {
-
     const inputData = {
       title: topic,
-      content_text : description,
+      content_text: description,
       date: date,
-      content_id : contentId ? contentId : "",
+      content_id: contentId ? contentId : '',
       status: status,
-      id : id
+      id: id
     }
 
     if (id) {
-      updateContentData({file: files[0]}, inputData)
-      .then(() => {
-        setShow(false)
-        setFiles([])
-        setDescription('');
-        acceptedFiles.length = 0
-        setShowErrorMessage(false)
-      })
-      .catch((ex) => {
-          setErrorMessage("something went wrong!");
-          console.log("user import error!", ex);
-          setShowErrorMessage(true);
-      });
-    } else {
-      fileUpload({file: files[0]}, inputData)
+      updateContentData({ file: files[0] }, inputData)
         .then(() => {
           setShow(false)
-          setFiles([]);
-          setDescription('');
+          setFiles([])
+          setDescription('')
           acceptedFiles.length = 0
           setShowErrorMessage(false)
         })
-        .catch((ex) => {
-            setErrorMessage("something went wrong!");
-            console.log("user import error!", ex);
-            setShowErrorMessage(true);
-        });
+        .catch(ex => {
+          setErrorMessage('something went wrong!')
+          console.log('user import error!', ex)
+          setShowErrorMessage(true)
+        })
+    } else {
+      fileUpload({ file: files[0] }, inputData)
+        .then(() => {
+          setShow(false)
+          setFiles([])
+          setDescription('')
+          acceptedFiles.length = 0
+          setShowErrorMessage(false)
+        })
+        .catch(ex => {
+          setErrorMessage('something went wrong!')
+          console.log('user import error!', ex)
+          setShowErrorMessage(true)
+        })
     }
-    
   }
 
   const handleChangeStatus = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('status', event.target.checked);
-    setStatus(event.target.checked ?  1 : 0);
-  };
+    console.log('status', event.target.checked)
+    setStatus(event.target.checked ? 1 : 0)
+  }
 
   useEffect(() => {
     if (action === 'edit') {
       if (current) {
         setDescription(current.content_text)
         setDate(current.date ? new Date(current.date) : new Date())
-        setTopic(current.title);
-        setImagePath(current.picture);
-        setContentId(current.content_id);
-        setStatus(current.status);
-        setShowErrorMessage(false);
-        setId(current.id);
-      }  
-    } else { 
-      setDescription('');
-      setTopic('');
-      setDate(new Date());
-      setImagePath('');
-      setContentId('');
-      setStatus(0);
+        setTopic(current.title)
+        setImagePath(current.picture)
+        setContentId(current.content_id)
+        setStatus(current.status)
+        setShowErrorMessage(false)
+        setId(current.id)
+      }
+    } else {
+      setDescription('')
+      setTopic('')
+      setDate(new Date())
+      setImagePath('')
+      setContentId('')
+      setStatus(0)
       setShowErrorMessage(false)
-      setId(null);
+      setId(null)
     }
-  },[current, action])
+  }, [current, action])
 
   return (
     <Card>
@@ -245,35 +242,38 @@ const DialogContents = (props: DialogInfoProps) => {
           </Box>
           <div id={`content-master`}>
             <Grid container spacing={6}>
-            <Grid item sm={12} xs={12}>
-              <FormControl fullWidth>
-                  <InputLabel id='plan-select'>Content #ID </InputLabel>
+              <Grid item sm={12} xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id='plan-select'>Contents</InputLabel>
                   <Select
-                  fullWidth
-                  value={contentId}
-                  id='select-content'
-                  label='Select content'
-                  labelId='content-select'
-                  onChange={handleContent}
-                  inputProps={{ placeholder: 'Select content' }}
+                    fullWidth
+                    value={contentId}
+                    id='select-content'
+                    label='Select content'
+                    labelId='content-select'
+                    onChange={handleContent}
+                    inputProps={{ placeholder: 'Select content' }}
                   >
-                      <MenuItem value="1">
-                          Content 1
-                      </MenuItem>
-                      <MenuItem value="2">
-                          Content 2
-                      </MenuItem>
-                      <MenuItem value="3">
-                          Content 3
-                      </MenuItem>
+                    <MenuItem value='1'>News</MenuItem>
+                    <MenuItem value='2'>Announcement</MenuItem>
+                    <MenuItem value='3'>Content</MenuItem>
                   </Select>
-              </FormControl>
-            </Grid>
-            <Grid item sm={12} xs={12}>
-                <InputLabel style={{ marginBottom: '10px' }}> Topic <b style={{ color: 'red' }}>*</b></InputLabel>
-                <ReactQuill theme="snow" value={topic} onChange={(e) => {setTopic(e)}}
-                  modules = {quillModules}/>
-            </Grid>
+                </FormControl>
+              </Grid>
+              <Grid item sm={12} xs={12}>
+                <InputLabel style={{ marginBottom: '10px' }}>
+                  {' '}
+                  Topic <b style={{ color: 'red' }}>*</b>
+                </InputLabel>
+                <ReactQuill
+                  theme='snow'
+                  value={topic}
+                  onChange={e => {
+                    setTopic(e)
+                  }}
+                  modules={quillModules}
+                />
+              </Grid>
 
               {/* <Grid item sm={12} xs={12}>
                 <InputLabel style={{ marginBottom: '10px' }}> Content Name <b style={{ color: 'red' }}>*</b> </InputLabel>
@@ -282,31 +282,40 @@ const DialogContents = (props: DialogInfoProps) => {
                   />
               </Grid> */}
 
-              <Grid item sm={12} xs={12} >
+              <Grid item sm={12} xs={12}>
                 <InputLabel style={{ marginBottom: '10px' }}> Content Details </InputLabel>
-                <ReactQuill theme="snow" value={description} onChange={(e) => {setDescription(e)}}
-                    modules = {quillModules}
-                  />
+                <ReactQuill
+                  theme='snow'
+                  value={description}
+                  onChange={e => {
+                    setDescription(e)
+                  }}
+                  modules={quillModules}
+                />
               </Grid>
 
-              <Grid item sm={12} xs={12} mt={5} style={{ border: '1px solid #4c4e6430', borderRadius: '1rem', marginLeft: '1.2rem' }}>
+              <Grid
+                item
+                sm={12}
+                xs={12}
+                mt={5}
+                style={{ border: '1px solid #4c4e6430', borderRadius: '1rem', marginLeft: '1.2rem' }}
+              >
                 <Box {...getRootProps({ className: 'dropzone' })} sx={acceptedFiles.length ? { height: 320 } : {}}>
-                    <input {...getInputProps()} />
-                    {files.length ? (
-                      img
-                    ) : (
+                  <input {...getInputProps()} />
+                  {files.length ? (
+                    img
+                  ) : (
                     <Box sx={{ display: 'flex', flexDirection: ['column', 'column', 'row'], alignItems: 'center' }}>
-                      {
-                        imagePath ?
-                        
-                        <Img width={200} alt="image" src={"https://cornea-analysis.com/storage/" +imagePath} />
-                        
-                        // <Img width={200} alt="image" src={"http://202.44.231.31/storage/" +imagePath} />
-                        :
+                      {imagePath ? (
+                        <Img width={200} alt='image' src={'https://cornea-analysis.com/storage/' + imagePath} />
+                      ) : (
                         <Img width={200} alt='Upload img' src='/images/misc/upload.png' />
-                      }
-                      
-                      <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: ['center', 'center', 'inherit'] }}>
+                      )}
+
+                      <Box
+                        sx={{ display: 'flex', flexDirection: 'column', textAlign: ['center', 'center', 'inherit'] }}
+                      >
                         <HeadingTypography variant='h5'>Drop image file here or click to upload.</HeadingTypography>
                         <Typography color='textSecondary'>
                           Drop image file here or click{' '}
@@ -325,13 +334,11 @@ const DialogContents = (props: DialogInfoProps) => {
               <Grid item sm={6} xs={12} mt={3}>
                 <FormControl>
                   <FormControlLabel
-                    control={<Switch checked={status == 1 ? true: false} onChange={handleChangeStatus} />}
+                    control={<Switch checked={status == 1 ? true : false} onChange={handleChangeStatus} />}
                     label='Content Status : '
                     labelPlacement='start'
                   />
                 </FormControl>
-
-              
               </Grid>
 
               <Grid item sm={6} xs={12}>
@@ -350,17 +357,17 @@ const DialogContents = (props: DialogInfoProps) => {
           </div>
 
           <div>
-            {
-              showErrorMessage ? 
-              <Typography variant='body1' sx={{mt: 5, mb: 3, lineHeight: '2rem', display: 'flex', justifyContent: 'center', color: 'red' }}>
-                  {errorMessage}
+            {showErrorMessage ? (
+              <Typography
+                variant='body1'
+                sx={{ mt: 5, mb: 3, lineHeight: '2rem', display: 'flex', justifyContent: 'center', color: 'red' }}
+              >
+                {errorMessage}
               </Typography>
-              :
+            ) : (
               <></>
-            }
-          
+            )}
           </div>
-
         </DialogContent>
         <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
           <Button variant='contained' sx={{ mr: 2 }} onClick={submitData}>
