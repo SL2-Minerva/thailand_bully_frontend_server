@@ -88,8 +88,7 @@ const PeriodComparisonChannelChart = (props: LineProps) => {
     type,
     chartTitle,
     resultSenitmentComparisonByChannel,
-    loadingSenitmentComparisonByChannel,
-    highlight
+    loadingSenitmentComparisonByChannel
   } = props
 
   const [label, setLabel] = useState<string[]>([])

@@ -89,8 +89,7 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
     chartTitle,
     colorType,
     resultPeriodComparisonBySenitment,
-    loadingPeriodComparisonBySenitment,
-    highlight
+    loadingPeriodComparisonBySenitment
   } = props
 
   const [label, setLabel] = useState<string[]>([])
