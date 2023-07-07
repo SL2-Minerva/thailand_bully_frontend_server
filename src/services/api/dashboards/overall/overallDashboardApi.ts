@@ -351,7 +351,8 @@ export const GetDetailMessageOverall = (
   label?: string,
   ylabel?: string,
   field?: string,
-  sort?: string
+  sort?: string,
+  reload?: boolean
 ) => {
   let params: any = {}
   const todayDate = new Date()
@@ -400,22 +401,14 @@ export const GetDetailMessageOverall = (
 
     url: `/level-three-table/`,
     method: 'GET',
-    params: params
+    params: params,
+    data: {
+      reload: reload
+    }
   })
 
-  const responseData = []
-  const res = response?.data?.message
-  if (res) {
-    for (let i = 0; i < res?.length; i++) {
-      responseData.push({
-        ...res[i],
-        id: i + 1
-      })
-    }
-  }
-
   return {
-    resultMessageDetail: response?.data?.message ? responseData : null,
+    resultMessageDetail: response?.data?.message ?? null,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
@@ -527,134 +520,95 @@ export const GetMessageDetailOverall = (paramData: any) => {
   }
 }
 
-export const GetMessageDetailVoiceDashboard = (paramData: any) => {
+export const GetMessageDetailVoiceDashboard = (paramData: any, reload: boolean) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     // url: `/dashboard-voice/level-three/`,
     url: `/level-three-table/`,
     method: 'GET',
-    params: paramData
-  })
-  const responseData = []
-  const res = response?.data?.message
-  if (res) {
-    for (let i = 0; i < res?.length; i++) {
-      responseData.push({
-        ...res[i],
-        id: i + 1
-      })
+    params: paramData,
+    data: {
+      reload: reload
     }
-  }
+  })
 
   return {
-    resultMessageDetail: response?.data?.message ? responseData : null,
+    resultMessageDetail: response?.data?.message ?? null,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
   }
 }
 
-export const GetMessageDetailChannelDashboard = (paramData: any) => {
-  const responseData = []
+export const GetMessageDetailChannelDashboard = (paramData: any, reload: boolean) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     // url: `/dashboard-channel/level-three/`,
     url: `/level-three-table/`,
     method: 'GET',
-    params: paramData
+    params: paramData,
+    data: {
+      reload: reload
+    }
   })
 
-  const res = response?.data?.message
-  if (res) {
-    for (let i = 0; i < res?.length; i++) {
-      responseData.push({
-        ...res[i],
-        id: i + 1
-      })
-    }
-  }
-
   return {
-    resultMessageDetail: response?.data?.message ? responseData : null,
+    resultMessageDetail: response?.data?.message ?? null,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
   }
 }
 
-export const GetMessageDetailEngagementDashboard = (paramData: any) => {
+export const GetMessageDetailEngagementDashboard = (paramData: any, reload: boolean) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     // url: `/dashboard-engagement/level-three/`,
     url: `/level-three-table/`,
     method: 'GET',
-    params: paramData
+    params: paramData,
+    data : {
+      reload: reload
+    }
   })
 
-  const responseData = []
-  const res = response?.data?.message
-  if (res) {
-    for (let i = 0; i < res?.length; i++) {
-      responseData.push({
-        ...res[i],
-        id: i + 1
-      })
-    }
-  }
-
   return {
-    resultMessageDetail: response?.data?.message ? responseData : null,
+    resultMessageDetail: response?.data?.message ?? null,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
   }
 }
 
-export const GetMessageDetailSentimentDashboard = (paramData: any) => {
+export const GetMessageDetailSentimentDashboard = (paramData: any, reload:boolean) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     // url: `/dashboard-sentiment/level-three/`,
     url: `/level-three-table/`,
     method: 'GET',
-    params: paramData
+    params: paramData,
+    data: {
+      reload: reload
+    }
   })
 
-  const responseData = []
-  const res = response?.data?.message
-  if (res) {
-    for (let i = 0; i < res?.length; i++) {
-      responseData.push({
-        ...res[i],
-        id: i + 1
-      })
-    }
-  }
-
   return {
-    resultMessageDetail: response?.data?.message ? responseData : null,
+    resultMessageDetail: response?.data?.message ?? null,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
   }
 }
 
-export const GetMessageDetailBullyDashboard = (paramData: any) => {
+export const GetMessageDetailBullyDashboard = (paramData: any, reload: boolean) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     // url: `/dashboard-bully/level-three/`,
     url: `/level-three-table/`,
     method: 'GET',
-    params: paramData
+    params: paramData,
+    data: {
+      reload: reload
+    }
   })
 
-  const responseData = []
-  const res = response?.data?.message
-  if (res) {
-    for (let i = 0; i < res?.length; i++) {
-      responseData.push({
-        ...res[i],
-        id: i + 1
-      })
-    }
-  }
-
   return {
-    resultMessageDetail: response?.data?.message ? responseData : null,
+    resultMessageDetail: response?.data?.message ?? null,
     totalMessage: response?.data?.total || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
@@ -686,5 +640,47 @@ export const GetKeyWordsList = (campaignId: any) => {
     keywordsColor: keywordsColor?.length > 0 ? keywordsColor : null,
     loadingKeywordList: loading,
     errorKeywordList: error
+  }
+}
+
+
+export const DeleteMessage = () => {
+  const [{ data, loading, error }, store] = CallAPI<{
+    code: 0 | 1
+    message: string
+    data: any
+  }>(
+    {
+      url: `/delete/message`,
+      method: 'POST'
+    },
+    { manual: true }
+  )
+
+  return {
+    resultDeleteMessage: data?.data,
+    laodingDeleteMessage: loading,
+    errorDeleteMessage: error,
+    deleteMessages: (messageId: any) => {
+      const inputData = {
+        id: messageId
+      }
+
+      return new Promise((resolve, reject) => {
+        store({
+          data: inputData
+        })
+          .then(({ data: { data, code, message } }) => {
+            if (code === 0) {
+              reject(message)
+            } else {
+              resolve(data)
+            }
+          })
+          .catch(ex => {
+            reject(ex.toString())
+          })
+      })
+    }
   }
 }
