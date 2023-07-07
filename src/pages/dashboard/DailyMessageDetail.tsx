@@ -13,7 +13,7 @@ import {
   Typography
 } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
-import { OpenInNew, DotsVertical, ArrowUp, ArrowDown } from 'mdi-material-ui'
+import { OpenInNew, DotsVertical, ArrowUp, ArrowDown, TrashCanOutline } from 'mdi-material-ui'
 import { GetDetailMessageOverall } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from './DialogNetworkGraphByFilter'
@@ -28,6 +28,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
+import DeleteConfirmDialog from './DeleteConfirmDialog'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -115,8 +116,10 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
   const [data, setData] = useState<any>([])
   const [fieldName, setFieldName] = useState<string>('')
   const [sortSelect, setSortSelect] = useState('')
-
+  const [showConfirm, setShowConfirm] = useState<boolean>(false)
   const [sortColumns, setSortColumn] = useState<any>(initialSort)
+  const [deleteMsgId, setDeleteMsgId] = useState<string>('')
+  const [reload, setReload] = useState<boolean>(false)
 
   const platformId = params?.platformId || ''
 
@@ -136,7 +139,8 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
     params?.label,
     params?.ylabel,
     fieldName,
-    sortSelect
+    sortSelect,
+    reload
   )
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -449,6 +453,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                     </span>
                   </StyledTableCell>
                   <StyledTableCell align='center'>Link</StyledTableCell>
+                  <StyledTableCell align='center'>Action</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -456,21 +461,32 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                   <StyledTableRow
                     key={index}
                     hover={true}
-                    onClick={() => {
-                      if (messageDetail.parent) {
-                        setMessageId(messageDetail.message_id)
-                        setShowDialog(true)
-                      }
-                    }}
                     sx={{
                       cursor: messageDetail.parent ? 'pointer' : '',
                       backgroundColor: messageDetail.parent ? '#00ff0038' : '#fff'
                     }}
                   >
-                    <StyledTableCell>
+                    <StyledTableCell
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
                       <b>{index + 1 + page * 10}</b>
                     </StyledTableCell>
-                    <StyledTableCell component='th' scope='row' width={300}>
+                    <StyledTableCell
+                      component='th'
+                      scope='row'
+                      width={200}
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
                       <span
                         style={{
                           overflow: 'hidden',
@@ -482,14 +498,50 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                         {messageDetail.message_detail}
                       </span>
                     </StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.message_type || '-'}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.account_name}</StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
+                      {messageDetail.message_type || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
+                      {messageDetail.account_name}
+                    </StyledTableCell>
 
-                    <StyledTableCell align='center'>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
                       {moment(messageDetail.post_date)?.format('DD.MM.YYYY') + ', ' + messageDetail.post_time}
                     </StyledTableCell>
 
-                    <StyledTableCell align='center'>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
                       {messageDetail.device === 'android' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/android.png`} />
                       ) : messageDetail.device === 'webapp' ? (
@@ -500,7 +552,15 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                         '-'
                       )}
                     </StyledTableCell>
-                    <StyledTableCell align='center'>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
                       {messageDetail?.channel === 'facebook' ? (
                         <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
                       ) : messageDetail?.channel === 'twitter' ? (
@@ -517,10 +577,50 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                         <span style={{ textTransform: 'uppercase' }}>{messageDetail?.channel}</span>
                       )}
                     </StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.engagement || '-'}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.sentiment || '-'}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.bully_level}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
+                      {messageDetail.engagement || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
+                      {messageDetail.sentiment || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
+                      {messageDetail.bully_level}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
+                      {messageDetail.bully_type}
+                    </StyledTableCell>
 
                     <StyledTableCell align='center'>
                       {messageDetail.link_message ? (
@@ -538,43 +638,23 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                         ''
                       )}
                     </StyledTableCell>
+                    <StyledTableCell align='center'>
+                      <a
+                        onClick={() => {
+                          setDeleteMsgId(messageDetail.id)
+                          setShowConfirm(true)
+                        }}
+                        target='_self'
+                        rel='noopener noreferrer'
+                      >
+                        <TrashCanOutline style={{ color: 'grey' }} />
+                      </a>
+                    </StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
-
-          {/* {resultMessageDetail ? (
-            <StyledDataGrid
-              autoHeight
-              rows={data}
-              columns={columns}
-              pageSize={10}
-              rowsPerPageOptions={[10]}
-              getRowId={row => row.id}
-              hideFooterPagination={true}
-              disableColumnMenu={true}
-              sx={{
-                '.highlight': {
-                  cursor: 'pointer',
-                  bgcolor: '#00ff0038'
-                }
-              }}
-              getRowClassName={params => {
-                return params.row.parent ? 'highlight' : ''
-              }}
-              onRowClick={params => {
-                if (params.row.parent) {
-                  setMessageId(params.row.message_id)
-                  setShowDialog(true)
-                }
-              }}
-            />
-          ) : (
-            <Typography variant='body1' sx={{ textAlign: 'center' }}>
-              There is no data
-            </Typography>
-          )} */}
 
           <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
             <Pagination
@@ -600,6 +680,18 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
           setMessageId={setMessageId}
           reportNo={reportNo}
           title={titleNetwork}
+        />
+      ) : (
+        ''
+      )}
+
+      {showConfirm ? (
+        <DeleteConfirmDialog
+          showDialog={showConfirm}
+          setShowDialog={setShowConfirm}
+          id={deleteMsgId}
+          reload={reload}
+          setReload={setReload}
         />
       ) : (
         ''
