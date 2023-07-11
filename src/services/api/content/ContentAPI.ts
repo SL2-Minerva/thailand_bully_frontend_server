@@ -216,3 +216,34 @@ export const UpdateContent = () => {
     }
   }
 }
+
+export const ContentDelete = () => {
+  const [{ data: res, loading, error }, fire] = CallAPI<{
+    code: 0 | 1;
+    message: string;
+    data: any;
+  }>(
+    {
+      url: `/organization-content/delete`,
+      method: "POST",
+    },
+    {
+      manual: true,
+    }
+  );
+
+  return {
+    resultContentDelete: res?.data,
+    loadingContentDelete: loading,
+    errorContentDelete: error,
+    removeContent: (id: any) => {
+      return fire({
+        url: `/organization-content/delete`,
+        method: "POST",
+        data: {
+          id: id
+        },
+      });
+    },
+  };
+};
