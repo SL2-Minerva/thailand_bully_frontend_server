@@ -245,7 +245,7 @@ const ContentManagement = () => {
                     <TableCell>ID</TableCell>
                     <TableCell>Topic</TableCell>
                     <TableCell>Content</TableCell>
-                    <TableCell>Picture</TableCell>
+                    <TableCell align='center'>Picture</TableCell>
                     <TableCell align='center'>Status</TableCell>
                     <TableCell>Date</TableCell>
                     {resultPermission?.content_mgt?.authorized_edit || resultIsAdmin ? (
@@ -267,7 +267,7 @@ const ContentManagement = () => {
                         <TableCell>
                           <ReactQuill value={contentList.content_text || '-'} readOnly={true} theme='bubble' style={{maxWidth: '330px'}} /> 
                         </TableCell>
-                        <TableCell>
+                        <TableCell align='center'>
                           {contentList.picture ? (
                             <Box sx={{ height: '200px', marginLeft: '1rem' }}>
                               <img
