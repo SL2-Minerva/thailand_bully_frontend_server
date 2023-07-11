@@ -82,12 +82,12 @@ export const ContentThreeLists = () => {
   }
 }
 
-export const GetContentLists = () => {
+export const GetContentLists = (id: number | string) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/organization-content/show`,
     method: 'GET',
     params: {
-      // content_id: 3,
+      content_id: id,
       page: 0, 
       limit : 1000, 
       status: 1

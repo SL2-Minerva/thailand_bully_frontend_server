@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Grid, Typography, Box } from '@mui/material'
 import { useRouter } from 'next/router'
-import { ContentHomepageList } from 'src/services/api/content/ContentAPI'
+import { GetContentLists } from 'src/services/api/content/ContentAPI'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Contents from './Contents'
@@ -42,21 +42,21 @@ function a11yProps(index: number) {
 const ContentPage = () => {
   const router = useRouter()
   const [value, setValue] = useState(0)
-  const { resultContents, errorContents } = ContentHomepageList(value + 1)
+  const { resultContentList, errorResultContentList } = GetContentLists(value + 1)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
   }
 
   useEffect(() => {
-    if (errorContents) {
+    if (errorResultContentList) {
       window.localStorage.removeItem('userData')
       window.localStorage.clear()
       localStorage.clear()
       router.push('/login')
       window.location.reload()
     }
-  }, [errorContents])
+  }, [errorResultContentList])
 
   return (
     <Grid container spacing={3}>
@@ -69,8 +69,8 @@ const ContentPage = () => {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          {resultContents?.length > 0 ? (
-            <Contents resultContentList={resultContents} />
+          {resultContentList?.length > 0 ? (
+            <Contents resultContentList={resultContentList} />
           ) : (
             <Typography sx={{ display: 'flex', justifyContent: 'center', color: 'grey' }} variant='h6' mt={5}>
               There is no data.
@@ -78,8 +78,8 @@ const ContentPage = () => {
           )}
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          {resultContents?.length > 0 ? (
-            <Contents resultContentList={resultContents} />
+          {resultContentList?.length > 0 ? (
+            <Contents resultContentList={resultContentList} />
           ) : (
             <Typography sx={{ display: 'flex', justifyContent: 'center', color: 'grey' }} variant='h6' mt={5}>
               There is no data.
@@ -87,8 +87,8 @@ const ContentPage = () => {
           )}
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
-          {resultContents?.length > 0 ? (
-            <Contents resultContentList={resultContents} />
+          {resultContentList?.length > 0 ? (
+            <Contents resultContentList={resultContentList} />
           ) : (
             <Typography sx={{ display: 'flex', justifyContent: 'center', color: 'grey' }} variant='h6' mt={5}>
               There is no data.
