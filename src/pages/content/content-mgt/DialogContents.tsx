@@ -137,7 +137,7 @@ const DialogContents = (props: DialogInfoProps) => {
 
   const img = files.map((file: FileProp) => (
     <div key={file.name} style={{ display: 'flex', justifyContent: 'center' }}>
-      <img key={file.name} alt={file.name} style={{ width: 400, height: 300 }} src={URL.createObjectURL(file as any)} />
+      <img key={file.name} alt={file.name} style={{ width: 246, height: 246 }} src={URL.createObjectURL(file as any)} />
       <IconButton onClick={() => handleRemoveFile(file)} size='small'>
         <Close fontSize='large' />
       </IconButton>
@@ -349,6 +349,7 @@ const DialogContents = (props: DialogInfoProps) => {
                       value={date}
                       onChange={newValue => setDate(newValue)}
                       renderInput={params => <TextField {...params} />}
+                      inputFormat='dd-MM-yyyy'
                     />
                   </LocalizationProvider>
                 </FormControl>

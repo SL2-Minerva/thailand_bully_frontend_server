@@ -25,15 +25,20 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import Switch from '@mui/material/Switch'
-import { ContentLists } from 'src/services/api/content/ContentAPI'
+import { ContentDelete, ContentLists } from 'src/services/api/content/ContentAPI'
 import DialogContents from './DialogContents'
-import { PencilOutline } from 'mdi-material-ui'
+import { PencilOutline, TrashCanOutline } from 'mdi-material-ui'
 import { ContentList } from 'src/types/content/ContentType'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { useRouter } from 'next/router'
 import moment from 'moment'
 import { UserPermission } from 'src/services/api/users/role'
+import Swal from 'sweetalert2'
+import 'react-quill/dist/quill.bubble.css'
+import dynamic from 'next/dynamic'
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <p>Loading ...</p> })
 
 const ContentManagement = () => {
   const router = useRouter()
@@ -50,6 +55,7 @@ const ContentManagement = () => {
   const [page, setPage] = useState(0)
   const [pageCount, setPageCount] = useState<number>(0)
   const { resultPermission, errorUserPermission, resultIsAdmin } = UserPermission()
+  const { removeContent } = ContentDelete()
 
   const params = {
     date: date ? moment(date)?.format('YYYY-MM-DD') : '',
@@ -252,22 +258,28 @@ const ContentManagement = () => {
                 <TableBody>
                   {resultContents &&
                     resultContents.map((contentList: ContentList, index: number) => (
-                      <TableRow
-                        key={index}
-                        sx={{
-                          '&:last-of-type td, &:last-of-type th': {
-                            border: 0
-                          }
-                        }}
-                      >
+                      <TableRow key={index}>
                         <TableCell>{index + 1 + page * 10}</TableCell>
                         <TableCell>
-                          <div dangerouslySetInnerHTML={{ __html: contentList.title }} />
+                          {/* <div dangerouslySetInnerHTML={{ __html:  }} /> */}
+                          <ReactQuill value={contentList.title || '-'} readOnly={true} theme='bubble' style={{maxWidth: '300px'}} /> 
                         </TableCell>
                         <TableCell>
-                          <div dangerouslySetInnerHTML={{ __html: contentList.content_text || '-' }} />
+                          <ReactQuill value={contentList.content_text || '-'} readOnly={true} theme='bubble' style={{maxWidth: '330px'}} /> 
                         </TableCell>
-                        <TableCell>{contentList.picture || '-'}</TableCell>
+                        <TableCell>
+                          {contentList.picture ? (
+                            <Box sx={{ height: '200px', marginLeft: '1rem' }}>
+                              <img
+                                style={{ width: 150, height: 150 }}
+                                alt='Image'
+                                src={'https://cornea-analysis.com/storage/' + contentList.picture}
+                              />
+                            </Box>
+                          ) : (
+                            '-'
+                          )}
+                        </TableCell>
 
                         {resultPermission?.content_mgt?.authorized_edit || resultIsAdmin ? (
                           <>
@@ -287,14 +299,56 @@ const ContentManagement = () => {
                             />
                           </TableCell>
                         )}
-                        <TableCell>{contentList.date}</TableCell>
+                        <TableCell sx={{ minWidth: 130 }}>{contentList.date}</TableCell>
                         {resultPermission?.content_mgt?.authorized_edit || resultIsAdmin ? (
                           <>
-                            <TableCell align='center'>
+                            <TableCell align='center' sx={{ minWidth: 120 }}>
                               <a href='#' style={{ color: 'grey' }}>
                                 <PencilOutline
                                   onClick={() => {
                                     handleEdit(index)
+                                  }}
+                                />
+                              </a>
+                              <a href='#' style={{ color: 'grey', marginLeft: '5px' }}>
+                                <TrashCanOutline
+                                  onClick={() => {
+                                    Swal.fire({
+                                      title: 'Are you sure?',
+                                      text: "You won't be able to revert this!",
+                                      icon: 'warning',
+                                      showCancelButton: true,
+                                      confirmButtonColor: '#3085d6',
+                                      cancelButtonColor: '#d33',
+                                      confirmButtonText: 'Yes, delete it!'
+                                    })
+                                      .then(result => {
+                                        if (result.isConfirmed) {
+                                          removeContent(contentList.id)
+                                            .then(result => {
+                                              if (result) {
+                                                setReload(!reload)
+                                                Swal.fire('Deleted!', 'Your content has been deleted.', 'success')
+                                              } else {
+                                                Swal.fire('Somenthing went wrong!', 'Please try again.', 'error')
+                                              }
+                                            })
+                                            .catch(ex => {
+                                              if (ex) {
+                                                Swal.fire(
+                                                  'Somenthing went wrong!',
+                                                  ex?.message ? ex?.message : 'Please try again.',
+                                                  'error'
+                                                )
+                                              }
+                                            })
+                                        }
+                                      })
+                                      .catch(ex => {
+                                        if (ex) {
+                                          Swal.fire('Somenthing went wrong!', 'Please try again.', 'error')
+                                        }
+                                      })
                                   }}
                                 />
                               </a>
