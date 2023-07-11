@@ -1,80 +1,101 @@
-import { useEffect } from 'react'
-import { Grid, Card, CardContent, Typography, Box } from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { useEffect, useState } from 'react'
+import { Grid, Typography, Box } from '@mui/material'
 import { useRouter } from 'next/router'
-import { GetContentLists } from 'src/services/api/content/ContentAPI'
-import 'react-quill/dist/quill.bubble.css'
-import dynamic from 'next/dynamic'
+import { ContentHomepageList } from 'src/services/api/content/ContentAPI'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
+import Contents from './Contents'
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <p>Loading ...</p> })
+interface TabPanelProps {
+  children?: React.ReactNode
+  index: number
+  value: number
+}
 
-const Img = styled('img')(({ theme }) => ({
-  [theme.breakpoints.up('md')]: {
-    marginRight: theme.spacing(10)
-  },
-  [theme.breakpoints.down('md')]: {
-    marginBottom: theme.spacing(4)
-  },
-  [theme.breakpoints.down('sm')]: {
-    width: 250
+function CustomTabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props
+
+  return (
+    <div
+      role='tabpanel'
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  )
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`
   }
-}))
+}
 
 const ContentPage = () => {
-  const { resultContentList, errorResultContentList } = GetContentLists()
   const router = useRouter()
+  const [value, setValue] = useState(0)
+  const { resultContents, errorContents } = ContentHomepageList(value + 1)
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue)
+  }
 
   useEffect(() => {
-    if (errorResultContentList) {
+    if (errorContents) {
       window.localStorage.removeItem('userData')
       window.localStorage.clear()
       localStorage.clear()
       router.push('/login')
       window.location.reload()
     }
-  }, [errorResultContentList])
+  }, [errorContents])
 
   return (
     <Grid container spacing={3}>
-      {(resultContentList || []).map((contents: any, index: any) => {
-        return (
-          <Grid item xs={12} key={index}>
-            <Card>
-              <h2 style={{ marginLeft: '2rem', marginBottom: '-2rem' }}>
-                <div dangerouslySetInnerHTML={{ __html: contents.title }} />
-                
-              </h2>
-              {/* <ReactQuill value={contents.content_text} readOnly={true} theme='bubble' /> */}
-              <CardContent>
-                <Grid container>
-                  <Grid item md={4} xs={12} mb={2}>
-                    {contents?.picture ? (
-                      <Box sx={{ height: '250px', marginLeft: '1rem' }}>
-                        <Img
-                          style={{ width: 246, height: 246 }}
-                          alt='Image'
-                          src={'https://cornea-analysis.com/storage/' + contents.picture}
-                        />
-                      </Box>
-                    ) : (
-                      <Box sx={{ height: '250px', marginLeft: '1rem' }}>
-                        <Img style={{ width: 246, height: 246 }} alt='Image' src={'/images/NoImage.png'} />
-                      </Box>
-                    )}
-                  </Grid>
-
-                  <Grid item xs={12} md={8} spacing={2} mt={5}>
-                    <Typography>
-                      <ReactQuill value={contents.content_text} readOnly={true} theme='bubble' />
-                    </Typography>
-                    <Typography ml={4}>Date : {contents.date}</Typography>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
-          </Grid>
-        )
-      })}
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={value} onChange={handleChange} aria-label='contents tabs'>
+            <Tab label='News' {...a11yProps(0)} />
+            <Tab label='Announcements' {...a11yProps(1)} />
+            <Tab label='Contents' {...a11yProps(2)} />
+          </Tabs>
+        </Box>
+        <CustomTabPanel value={value} index={0}>
+          {resultContents?.length > 0 ? (
+            <Contents resultContentList={resultContents} />
+          ) : (
+            <Typography sx={{ display: 'flex', justifyContent: 'center', color: 'grey' }} variant='h6' mt={5}>
+              There is no data.
+            </Typography>
+          )}
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          {resultContents?.length > 0 ? (
+            <Contents resultContentList={resultContents} />
+          ) : (
+            <Typography sx={{ display: 'flex', justifyContent: 'center', color: 'grey' }} variant='h6' mt={5}>
+              There is no data.
+            </Typography>
+          )}
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={2}>
+          {resultContents?.length > 0 ? (
+            <Contents resultContentList={resultContents} />
+          ) : (
+            <Typography sx={{ display: 'flex', justifyContent: 'center', color: 'grey' }} variant='h6' mt={5}>
+              There is no data.
+            </Typography>
+          )}
+        </CustomTabPanel>
+      </Box>
     </Grid>
   )
 }
