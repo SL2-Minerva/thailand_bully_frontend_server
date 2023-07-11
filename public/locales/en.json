@@ -400,5 +400,6 @@
   "wordCloudChart5Title" : "Word Cloud by Sentiment Type",
   "wordCloudChart5Description" : "a group of word/texts related to the keyword, display information by sentiment type",
   "wordCloudChart6Title" : "Word Cloud by Account",
-  "wordCloudChart6Description" : "a group of word/texts related to the keyword, display information by user account (post owner)"
+  "wordCloudChart6Description" : "a group of word/texts related to the keyword, display information by user account (post owner)",
+  "imageSizeText" : "Image size 246 x 246"
 }
