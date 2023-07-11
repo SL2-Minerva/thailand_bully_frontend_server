@@ -24,12 +24,12 @@ export const ContentLists = (params?: any, reload?: boolean) => {
   }
 }
 
-export const ContentOneLists = () => {
+export const ContentHomepageList = (contentId: any) => {
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/organization-content`,
     method: 'GET',
     params: {
-      content_id: 1,
+      content_id: contentId,
       page: 0, 
       limit : 1000, 
       status: 1
@@ -37,10 +37,10 @@ export const ContentOneLists = () => {
   })
 
   return {
-    resultContentOne: response?.data?.data || [],
+    resultContents: response?.data?.data || [],
     total: response?.data?.total || 0,
-    loadingContentOne: loading,
-    errorContentOne: error
+    loadingContents: loading,
+    errorContents: error
   }
 }
 export const ContentTwoLists = () => {
