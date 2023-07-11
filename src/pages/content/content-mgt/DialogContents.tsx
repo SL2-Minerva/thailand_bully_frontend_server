@@ -34,6 +34,7 @@ import dynamic from 'next/dynamic'
 import { ContentList } from 'src/types/content/ContentType'
 import { CreateContent, UpdateContent } from 'src/services/api/content/ContentAPI'
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import Translations from 'src/layouts/components/Translations'
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <p>Loading ...</p> })
 
@@ -299,7 +300,8 @@ const DialogContents = (props: DialogInfoProps) => {
                 sm={12}
                 xs={12}
                 mt={5}
-                style={{ border: '1px solid #4c4e6430', borderRadius: '1rem', marginLeft: '1.2rem' }}
+                pb={3}
+                style={{ border: '1px solid #4c4e6430', borderRadius: '1rem', marginLeft: '1.2rem'}}
               >
                 <Box {...getRootProps({ className: 'dropzone' })} sx={acceptedFiles.length ? { height: 320 } : {}}>
                   <input {...getInputProps()} />
@@ -325,6 +327,8 @@ const DialogContents = (props: DialogInfoProps) => {
                           thorough your machine
                         </Typography>
                         <Typography color='textSecondary'>Allowed *.jpeg, *.jpg, *.png, *.gif</Typography>
+                        <Typography color='textSecondary'><Translations text='imageSizeText'/></Typography>
+
                       </Box>
                     </Box>
                   )}
