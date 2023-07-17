@@ -32,20 +32,28 @@ function CustomTabPanel(props: TabPanelProps) {
   )
 }
 
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`
-  }
-}
-
 const ContentPage = () => {
   const router = useRouter()
   const [value, setValue] = useState(0)
-  const { resultContentList, errorResultContentList } = GetContentLists(value + 1)
+  const [contentId, setContentId] = useState(2)
+  const { resultContentList, errorResultContentList } = GetContentLists(contentId)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    if (newValue === 0) {
+      setContentId(2)
+    } else if (newValue === 1) {
+      setContentId(1)
+    } else if (newValue === 2) {
+      setContentId(3)
+    }
     setValue(newValue)
+  }
+
+  function a11yProps(index: number) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`
+    }
   }
 
   useEffect(() => {
@@ -63,9 +71,9 @@ const ContentPage = () => {
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label='contents tabs'>
-            <Tab label='News' {...a11yProps(0)} />
-            <Tab label='Announcements' {...a11yProps(1)} />
-            <Tab label='Contents' {...a11yProps(2)} />
+            <Tab label='Announcements' {...a11yProps(0)} />
+            <Tab label='News' {...a11yProps(1)} />
+            <Tab label='FAQ' {...a11yProps(2)} />
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>

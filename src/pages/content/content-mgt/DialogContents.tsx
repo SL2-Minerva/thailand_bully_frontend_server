@@ -257,7 +257,7 @@ const DialogContents = (props: DialogInfoProps) => {
                   >
                     <MenuItem value='1'>News</MenuItem>
                     <MenuItem value='2'>Announcement</MenuItem>
-                    <MenuItem value='3'>Content</MenuItem>
+                    <MenuItem value='3'>FAQ</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
