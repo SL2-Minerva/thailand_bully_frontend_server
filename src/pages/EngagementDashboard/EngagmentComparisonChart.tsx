@@ -14,6 +14,7 @@ import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
 import { MouseEvent, useState } from 'react'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('engagementProption')
@@ -80,7 +81,7 @@ const EngagmentComparisonChart = ({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const rowOptionsOpen = Boolean(anchorEl)
-
+  const {settings} = useSettings();
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
@@ -133,7 +134,8 @@ const EngagmentComparisonChart = ({
         formatter: function (val) {
           return val + ''
         }
-      }
+      }, 
+      theme: settings.mode === 'dark' ? 'dark' : 'light'
     },
     fill: {
       opacity: 1,

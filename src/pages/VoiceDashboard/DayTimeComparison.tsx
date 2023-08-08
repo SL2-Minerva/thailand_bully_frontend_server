@@ -66,6 +66,9 @@ const DayTimeComparison = ({
         }
       }
     },
+    tooltip: {
+      theme : settings.mode === 'light' ? 'light' : 'dark'
+    },
     dataLabels: {
       enabled: false
     },

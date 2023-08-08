@@ -7,6 +7,7 @@ import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import { useSettings } from 'src/@core/hooks/useSettings'
 import Translations from 'src/layouts/components/Translations'
 
 const Labels = (data: any) => {
@@ -14,7 +15,7 @@ const Labels = (data: any) => {
     return []
   }
   const labels: any[] = []
-  labels.push(data?.keyword_name || "")
+  labels.push(data?.keyword_name || '')
 
   return labels
 }
@@ -36,12 +37,11 @@ const ChartDataPositive = (data: any, type: string) => {
 }
 
 const SentimentEachGraph = ({ resultSentimentLevel }: { resultSentimentLevel: any }) => {
-  
   const chartLabels = Labels(resultSentimentLevel)
   const positiveData = ChartDataPositive(resultSentimentLevel, 'positive')
   const neutralData = ChartDataPositive(resultSentimentLevel, 'neutral')
   const negativeData = ChartDataPositive(resultSentimentLevel, 'negative')
-
+  const { settings } = useSettings()
   const series = [
     {
       name: 'Negative',
@@ -98,7 +98,8 @@ const SentimentEachGraph = ({ resultSentimentLevel }: { resultSentimentLevel: an
         formatter: function (val) {
           return val + '%'
         }
-      }
+      },
+      theme: settings.mode === 'dark' ? 'dark' : 'light'
     },
     fill: {
       opacity: 1,
@@ -115,18 +116,18 @@ const SentimentEachGraph = ({ resultSentimentLevel }: { resultSentimentLevel: an
         <>
           <ReactApexcharts type='bar' series={series} options={options} height={75} />
         </>
-        ) : (
-          <div
-            style={{
-              padding: '130px 0',
-              textAlign: 'center',
-              verticalAlign: 'middle',
-              color: '#80808059'
-            }}
-          >
-            <Translations text='no data' />
-          </div>
-        )}
+      ) : (
+        <div
+          style={{
+            padding: '130px 0',
+            textAlign: 'center',
+            verticalAlign: 'middle',
+            color: '#80808059'
+          }}
+        >
+          <Translations text='no data' />
+        </div>
+      )}
     </>
   )
 }

@@ -72,6 +72,9 @@ const DayTimeBullyLevel = (props: Props) => {
         }
       }
     },
+    tooltip: {
+      theme : settings.mode === 'light' ? 'light' : 'dark'
+    },
     dataLabels: {
       enabled: false
     },
@@ -119,6 +122,9 @@ const DayTimeBullyLevel = (props: Props) => {
           colors: settings.mode === 'light' ? '#4c4e64de' : 'white'
         }
       } 
+    },
+    tooltip: {
+      theme : settings.mode === 'light' ? 'light' : 'dark'
     },
     dataLabels: {
       enabled: false

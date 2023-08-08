@@ -3,6 +3,7 @@ import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import { useSettings } from 'src/@core/hooks/useSettings'
 import Translations from 'src/layouts/components/Translations'
 
 export const Labels = (data: any) => {
@@ -35,6 +36,7 @@ const NumberOfEachMessage = ({
   //   const chartLabels = Labels(resultShareOfVoiceChart)
 
   const chartSeriesData = ChartData(resultShareOfVoiceChart)
+  const {settings} = useSettings();
 
   const series = [
     {
@@ -48,6 +50,9 @@ const NumberOfEachMessage = ({
       type: 'bar',
       stacked: true,
       toolbar: { show: false }
+    },
+    tooltip: {
+      theme: settings.mode === 'dark' ? 'dark' : 'light'
     },
     dataLabels: { enabled: false },
     plotOptions: {
