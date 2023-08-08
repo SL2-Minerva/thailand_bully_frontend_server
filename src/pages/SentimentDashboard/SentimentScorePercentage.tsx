@@ -9,6 +9,7 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { SentimentAllColors } from 'src/utils/const'
 import { LinearProgress, Paper } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const Labels = (data: any) => {
   if (!data) {
@@ -49,7 +50,6 @@ const ChartDataSentiment = (data: any, type: string) => {
 }
 
 const SentimentScorePercentage = ({
-  
   resultSentimentScorePercentage,
   loadingSentimentScore
 }: {
@@ -62,6 +62,7 @@ const SentimentScorePercentage = ({
   const negativeData = ChartDataSentiment(resultSentimentScorePercentage, 'negative')
   const neutralData = ChartDataSentiment(resultSentimentScorePercentage, 'neutral')
   const positiveData = ChartDataSentiment(resultSentimentScorePercentage, 'positive')
+  const { settings } = useSettings()
 
   const series = [
     {
@@ -108,7 +109,8 @@ const SentimentScorePercentage = ({
         formatter: function (val) {
           return val + '%'
         }
-      }
+      },
+      theme: settings.mode === 'dark' ? 'dark' : 'light'
     },
     fill: {
       opacity: 1,
@@ -122,7 +124,7 @@ const SentimentScorePercentage = ({
   }
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 520 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 520 }}>
       {loadingSentimentScore && <LinearProgress style={{ width: '100%' }} />}
       <CardHeader title='' titleTypographyProps={{ variant: 'h6' }} />
       <CardContent>

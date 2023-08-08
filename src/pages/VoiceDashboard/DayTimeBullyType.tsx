@@ -71,6 +71,9 @@ const DayTimeBullyType = (props: Props) => {
         }
       }
     },
+    tooltip: {
+      theme : settings.mode === 'light' ? 'light' : 'dark'
+    },
     dataLabels: {
       enabled: false
     },
@@ -103,6 +106,9 @@ const DayTimeBullyType = (props: Props) => {
           setXIndex(config.dataPointIndex)
         }
       }
+    },
+    tooltip: {
+      theme : settings.mode === 'light' ? 'light' : 'dark'
     },
     dataLabels: {
       enabled: false
@@ -175,7 +181,6 @@ const DayTimeBullyType = (props: Props) => {
     }
 
     if (xIndexTime === 0 || xIndexTime) {
-      console.log('x ', xIndexTime)
       params.label = TimeAxis[xIndexTime]
     }
 

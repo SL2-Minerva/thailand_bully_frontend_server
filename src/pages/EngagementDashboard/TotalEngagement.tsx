@@ -16,6 +16,7 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { LinearProgress, Paper } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 interface InfluencerComparisonProps {
   totalEngagement?: any
@@ -26,17 +27,23 @@ interface InfluencerComparisonProps {
 const TotalEngagement = (props: InfluencerComparisonProps) => {
   // ** Props
   const { totalEngagement, highlight, loading } = props
-
+  const {settings} = useSettings();
+  
   return (
     <>
-      <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
+      <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
         {loading && <LinearProgress style={{ width: '100%' }} />}
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={6} md={3}>
               <span style={{ display: 'flex', justifyContent: 'left' }}>
                 <Typography
-                  sx={{ color: highlight ? 'green' : '#4c4e64de', fontSize: '1.3vw', fontWeight: 'bold', mt: 1 }}
+                  sx={{
+                    color: highlight ? 'green' : settings.mode === 'dark' ? 'white' : '#4c4e64de',
+                    fontSize: '1.3vw',
+                    fontWeight: 'bold',
+                    mt: 1
+                  }}
                 >
                   <Translations text='Total Engagement' />
                 </Typography>
@@ -53,9 +60,7 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                     </span>
                   }
                 >
-                  <Information
-                    style={{ margin: '2px 0px 0px 5px', fontSize: '29px' }}
-                  />
+                  <Information style={{ margin: '2px 0px 0px 5px', fontSize: '29px' }} />
                 </StyledTooltip>
               </span>
               <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>

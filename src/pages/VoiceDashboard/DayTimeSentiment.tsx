@@ -69,6 +69,9 @@ const DayTimeSentiment = (props: Props) => {
         }
       }
     },
+    tooltip: {
+      theme : settings.mode === 'light' ? 'light' : 'dark'
+    },
     dataLabels: {
       enabled: false
     },
@@ -101,6 +104,9 @@ const DayTimeSentiment = (props: Props) => {
           setXIndex(config.dataPointIndex)
         }
       }
+    },
+    tooltip: {
+      theme : settings.mode === 'light' ? 'light' : 'dark'
     },
     dataLabels: {
       enabled: false
