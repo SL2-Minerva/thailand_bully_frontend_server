@@ -34,19 +34,19 @@ const Contents = (props: Props) => {
                 <div dangerouslySetInnerHTML={{ __html: contents.title }} />
               </h2>
               <CardContent>
-                <Grid container>
+                <Grid container minHeight={450}>
                   <Grid item md={4} xs={12} mb={2}>
                     {contents?.picture ? (
                       <Box sx={{ height: '250px', marginLeft: '1rem' }}>
                         <Img
-                          style={{ width: 246, height: 246 }}
+                          style={{ width: 400, height: 400 }}
                           alt='Image'
                           src={'https://cornea-analysis.com/storage/' + contents.picture}
                         />
                       </Box>
                     ) : (
                       <Box sx={{ height: '250px', marginLeft: '1rem' }}>
-                        <Img style={{ width: 246, height: 246 }} alt='Image' src={'/images/NoImage.png'} />
+                        <Img style={{ width: 400, height: 400 }} alt='Image' src={'/images/NoImage.png'} />
                       </Box>
                     )}
                   </Grid>
