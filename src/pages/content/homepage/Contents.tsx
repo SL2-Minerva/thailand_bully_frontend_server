@@ -35,7 +35,7 @@ const Contents = (props: Props) => {
               </h2>
               <CardContent>
                 <Grid container minHeight={450}>
-                  <Grid item md={4} xs={12} mb={2}>
+                  <Grid item md={5.5} xs={12} mb={2}>
                     {contents?.picture ? (
                       <Box sx={{ height: '250px', marginLeft: '1rem' }}>
                         <Img
@@ -51,7 +51,7 @@ const Contents = (props: Props) => {
                     )}
                   </Grid>
 
-                  <Grid item xs={12} md={8} spacing={2} mt={5}>
+                  <Grid item xs={12} md={6} spacing={2} mt={5}>
                     <Typography>
                       <ReactQuill value={contents.content_text} readOnly={true} theme='bubble' />
                     </Typography>
