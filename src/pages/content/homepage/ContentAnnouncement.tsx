@@ -9,7 +9,7 @@ interface Props {
 }
 
 const ContentAnnouncement = (props: Props) => {
-  const { resultContentList } = props
+  const { resultContentList } = props;
 
   return (
     <Grid container spacing={3}>
@@ -25,21 +25,26 @@ const ContentAnnouncement = (props: Props) => {
                 // backgroundSize: 'cover',
               }}
             >
-              <h2 style={{ marginLeft: '2rem', marginBottom: '-2rem' }}>
-                <div dangerouslySetInnerHTML={{ __html: contents.title }} />
-              </h2>
               <CardContent>
-                <Grid container minHeight={1100}>
-                  <Grid item xs={12} md={8} spacing={2} mt={5}>
-                    <Typography
-                      sx={{
-                        lineHeight: '200px',
-                        textAlign: 'center'
-                      }}
-                    >
+                <Grid
+                  container
+                  minHeight={800}
+                  style={{
+                    display: 'flex',
+                    width: '70%',
+                    paddingLeft: '100px'
+                  }}
+                >
+                  <Grid item xs={12} md={8} spacing={2} mt={40}>
+                    <h1>
+                      <ReactQuill value={contents.title} readOnly={true} theme='bubble' />
+                    </h1>
+                    <Grid>
                       <ReactQuill value={contents.content_text} readOnly={true} theme='bubble' />
+                    </Grid>
+                    <Typography>
+                      <ReactQuill value={'Date:' + contents.date} readOnly={true} theme='bubble' />
                     </Typography>
-                    <Typography ml={4}>Date : {contents.date}</Typography>
                   </Grid>
                 </Grid>
               </CardContent>

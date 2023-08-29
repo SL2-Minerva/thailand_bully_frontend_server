@@ -5,6 +5,7 @@ import { GetContentLists } from 'src/services/api/content/ContentAPI'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Contents from './Contents'
+import ContentAnnouncement from './ContentAnnouncement'
 
 // import ContentAnnouncement from './ContentAnnouncement'
 
@@ -81,8 +82,9 @@ const ContentPage = () => {
         <CustomTabPanel value={value} index={0}>
           {resultContentList?.length > 0 ? (
 
-            // <ContentAnnouncement resultContentList={resultContentList} />
-            <Contents resultContentList={resultContentList} />
+            <ContentAnnouncement resultContentList={resultContentList} />
+            
+            // <Contents resultContentList={resultContentList} />
           ) : (
             <Typography sx={{ display: 'flex', justifyContent: 'center', color: 'grey' }} variant='h6' mt={5}>
               There is no data.

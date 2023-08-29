@@ -36,6 +36,8 @@ import { CreateContent, UpdateContent } from 'src/services/api/content/ContentAP
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 
+// import { Quill } from 'react-quill';
+
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <p>Loading ...</p> })
 
 const Transition = forwardRef(function Transition(
