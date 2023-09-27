@@ -6,6 +6,7 @@ import Finance from 'mdi-material-ui/Finance'
 
 // import { NewspaperVariantMultiple } from 'mdi-material-ui'
 import VectorArrangeBelow from 'mdi-material-ui/VectorArrangeBelow'
+import { Security } from 'mdi-material-ui'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -152,14 +153,20 @@ const navigation = (): VerticalNavItemsType => {
 
   if (resultIsAdmin || showContentManagement) {
     ContentMgt.push({
-      title : 'Content-MGT',
-      path : '/content/content-mgt'
+      title: 'Content-MGT',
+      path: '/content/content-mgt'
     })
   }
 
   const sna = {
     title: 'SNA',
     children: snaList
+  }
+
+  const notice = {
+    title: 'Privacy Notice',
+    icon: Security,
+    path: '/privacy'
   }
 
   const reportDashboardList: any[] = []
@@ -305,6 +312,8 @@ const navigation = (): VerticalNavItemsType => {
   if ((resultIsAdmin || showCorpus) && LinkOut) {
     sideMenuBar.push(LinkOut)
   }
+
+  sideMenuBar.push(notice)
 
   return sideMenuBar
 }
