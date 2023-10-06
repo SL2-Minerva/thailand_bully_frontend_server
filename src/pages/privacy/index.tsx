@@ -318,8 +318,17 @@ const PrivacyNotice = () => {
           <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
             <CardHeader title='Privacy Notice' sx={{ textAlign: 'center' }} />
             <CardContent>
+              <Typography variant='body1' sx={{ textAlign: 'center', pl: 4, pr: 4 }}>
+                <b>
+                  <i>
+                    "We know you care how information about you is collected. We appreciate your trust and be committed
+                    to carefully and sensibly handle your personal data and put you in control while giving you the very
+                    best personalized experience and customer services"
+                  </i>
+                </b>
+              </Typography>
               <Typography variant='body1' mt={5}>
-                <b>Minerva Consultant Co., Ltd. (collectively, referred to as “Minerva”, “we”, “our” or “us”)</b>
+                <b>Minerva Consultant Co., Ltd. (collectively, referred to as “Minerva”, “we”, “our” or “us”) </b>
                 recognizes the importance of the protection of personal data for you of our products and services. We
                 know you care how information about you is collected. The information you share with us allows us to
                 provide the products and services you need and want appropriately tailored for you, only from Minerva
@@ -347,111 +356,94 @@ const PrivacyNotice = () => {
               <Typography variant='body1' mt={5}>
                 <b>Privacy Policy</b>
               </Typography>
-              <li style={{ marginLeft: '10px', marginTop: '5px' }}>
+              <Typography variant='body1' mt={2}>
                 {' '}
                 <b>What information do we collect?</b>{' '}
-              </li>
-
+              </Typography>
               <Typography variant='body1' mt={1}>
                 We may collect information from you when you access or register our website, web app, or mobile apps
                 (referring to the products of <b>Minerva Consultant Co., Ltd.,</b>) or any interactions in any form or
                 by any means with us. Some examples are:
               </Typography>
-
               <li style={{ marginLeft: '25px', marginTop: '5px' }}>
                 <b>Personal details, </b>
-                such as title, full name, gender, age, occupation, qualifications, job title, position, business type,
-                company name, nationality, country of residence, date of birth, marital status, information on
-                government-issued cards (e.g., national identification number, information on the national
-                identification, passport number, tax identification number, driver's license details or similar
-                identifiers), signature, voice, voice record, photograph, work place, education;
+                such as title, full name, occupation, position, business type, company or organization name.
               </li>
               <li style={{ marginLeft: '25px', marginTop: '5px' }}>
                 <b>Contact details,</b>
-                such as postal address, delivery details, billing address, residential address, workplace address,
+                ssuch as postal address, delivery details, billing address, residential address, workplace address,
                 address shown in the national identification card, telephone number, fax number, email address, your
                 contact person's contact details (e.g., telephone number, contact data on any correspondence (e.g.
-                written communication with you), and any other contact details you provided to us;
+                written communication with you), and any other contact details you provided to us.
               </li>
               <li style={{ marginLeft: '25px', marginTop: '5px' }}>
                 <b>Membership details, </b>
-                such as account details, member card number, reward points, member ID, member type, customer type,
-                member join/registration date and month, membership period, bank account and payment details, service
-                and product applications; • Financial details, such as debit/credit card or bank information,
-                credit/debit card number, credit card type, account details, bank account details, prompt pay number
-                payment details and records and any other financial details;
-              </li>
-              <li style={{ marginLeft: '25px', marginTop: '5px' }}>
-                <b>Transaction details, </b>
-                such as details about payment to and from you, payment date and/or time, payment amount, details about
-                refund, refund amount, points, date and location of purchase, purchase/order number, appointment date
-                for service, acknowledgement of receipt, recipient email’s signature, warranty details, complaints and
-                claims, booking details, rental details, transaction, transaction history, location, transaction status,
-                past sales transaction, status, transaction status, purchasing behaviour, and any other details of
-                products and services you have purchased, including but not limited to any information incurring from
-                using of products or services provided on our platform, etc.;
-              </li>
-              <li style={{ marginLeft: '25px', marginTop: '5px' }}>
-                <b>Behaviour details, </b>
-                such as information about your purchasing behavior and data supplied through the use of our products and
-                services; 
+                such as account details, customer type, member join/registration date and month, membership period.
               </li>
               <li style={{ marginLeft: '25px', marginTop: '5px' }}>
                 <b>Profile details, </b>
-                such as your username and password, profile details and picture, purchases, historical orders, past
-                orders, purchase history, items bought, item quantity, orders or product recalls made by you, orders via
-                website, Cash On Delivery details, order ID, financial records, PIN, your interests, preferences;
+                such as your username and password.
               </li>
               <li style={{ marginLeft: '25px', marginTop: '5px' }}>
                 <b>Usage details,  </b>
-                such as information on how you browse or use our websites, platform, application products and services,
-                products in customer's cart;
-              </li>
-              <li style={{ marginLeft: '10px', marginTop: '25px' }}>
-                <b>How do we use your information?</b>
+                such as information on how you browse or use our websites, web application products and services,
+                including details about complaints and claims.
               </li>
 
+              <Typography variant='body1' mt={5}>
+                <b>How long we keep your information?</b>
+              </Typography>
+              <Typography variant='body1' mt={1}>
+                We retain information for as long as necessary to provide the application and for the other purposes set
+                out in this Privacy Policy. We also retain information when necessary to comply with contractual and
+                legal obligations, when we have a legitimate business interest to do so (such as improving and
+                developing the application, enhancing its safety, security and stability), and for the exercise or
+                defence of legal claims.
+              </Typography>
+              <Typography variant='body1' mt={5}>
+                <b>Where we store your information?</b>
+              </Typography>
+              <Typography variant='body1' mt={1}>
+                Your information is be stored on servers located in the country
+              </Typography>
+              <Typography variant='body1' mt={5}>
+                <b>How do we use your information?</b>
+              </Typography>
               <Typography variant='body1' mt={1}>
                 Any of the information we collect from you may be used in one of the following ways, but not limited to:
               </Typography>
-              <li style={{ marginLeft: '10px', marginTop: '5px' }}>
-                Provide reliable and convenient delivery services and features;
-              </li>
-              <li style={{ marginLeft: '10px', marginTop: '5px' }}>
-                Help maintain the safety, security, and integrity of our services and users;
-              </li>
-              <li style={{ marginLeft: '10px', marginTop: '5px' }}>Provide customer support;</li>
-              <li style={{ marginLeft: '10px', marginTop: '5px' }}>Enable communications between users;</li>
-              <li style={{ marginLeft: '10px', marginTop: '5px' }}>
-                Send marketing and non-marketing communications to users (further details below);
-              </li>
-              <li style={{ marginLeft: '10px', marginTop: '5px' }}>Conduct research and development;</li>
-              <li style={{ marginLeft: '10px', marginTop: '5px' }}>In connection with legal proceedings;</li>
 
-              <li style={{ marginLeft: '10px', marginTop: '25px' }}>
-                <b>Send marketing and non-marketing communications to users</b>
+              <li style={{ marginLeft: '10px', marginTop: '5px' }}>
+                Help maintain the safety, security, and integrity of our services and users.
               </li>
+              <li style={{ marginLeft: '10px', marginTop: '5px' }}>Provide customer support.</li>
+              <li style={{ marginLeft: '10px', marginTop: '5px' }}>Enable communications between users.</li>
 
+              <li style={{ marginLeft: '10px', marginTop: '5px' }}>
+                Conduct research and development to make improvements to our services and ensure our services are
+                working as intended, such as tracking outages or troubleshooting issues that you report to us.
+              </li>
+              <li style={{ marginLeft: '10px', marginTop: '5px' }}>In connection with legal proceedings.</li>
+              <Typography variant='body1' mt={2} sx={{ fontWeight: 'bold' }}>
+                Send marketing and non-marketing communications to users (further details below).
+              </Typography>
               <Typography variant='body1' mt={1}>
                 From time to time, we may use the data we collect to market our services to our users. This includes
                 sending users communications about Cornea services, features, promotions, sweepstakes, studies, surveys,
                 news, updates, and events. We may communicate such marketing to you by post, telephone call, short
                 message service, online messaging service, push notification and email.
               </Typography>
-
               <Typography variant='body1' mt={1}>
                 We may also send communications to our users about products and services offered by Minerva partners.
                 Although we may send users communications about Minerva partners’ products and services, we do not sell
                 users’ personal data to, or share it with, such partners or others for purposes of their own direct
                 marketing or advertising, except with users’ consent.
               </Typography>
-
               <Typography variant='body1' mt={1}>
                 We may use the data we collect to personalize the marketing communications (including advertisements)
                 that we send, including based on user location, past use of Minerva’s services, and user preferences and
                 settings.
               </Typography>
-
               <Typography variant='body1' mt={1}>
                 We may also use Personal Data to analyse our customers’ preferences and market trends and derive
                 insights, which we may use to tailor the types of products and offers that we present to you. This may
@@ -461,11 +453,10 @@ const PrivacyNotice = () => {
                 establish market trends. We also use advertising services and products provided by third party service
                 providers (such as marketing agencies and social media platforms) for marketing and promotional
                 purposes, which may involve us sharing Personal Data that we hold about you with them. We may use the
-                data we collect to generate and provide users with receipts; inform them of changes to our terms,
-                services, or policies; or send other communications that aren’t for the purpose of marketing the
+                data we collect to generate and provide users with receipts. inform them of changes to our terms,
+                services, or policies. or send other communications that aren’t for the purpose of marketing the
                 services or products of Minerva or its partners.
               </Typography>
-
               <Typography variant='body1' mt={1}>
                 You have the right to ask us not to process your Personal Data for direct marketing purposes. You can
                 exercise your right to prevent such processing by indicating that you do not consent to direct marketing
@@ -473,30 +464,25 @@ const PrivacyNotice = () => {
                 we have collected and used your Personal data for direct marketing purposes by following the opt out
                 instructions contained in the relevant communications.
               </Typography>
-
               <Typography variant='body1' mt={1}>
                 Please note that if you choose to unsubscribe or opt out of marketing communication, you will still
                 continue to receive administrative emails, account summaries and updates to our services.
               </Typography>
-
-              <li style={{ marginLeft: '10px', marginTop: '25px' }}>
+              <Typography variant='body1' mt={4}>
                 <b>How do we protect your information?</b>
-              </li>
-
+              </Typography>
               <Typography variant='body1' mt={1}>
                 The Company recognizes the importance of maintaining the security of your Personal Data. Therefore, the
                 Company endeavours to protect your information by establishing security measures for your Personal Data
                 appropriately and in accordance with the confidentiality safeguard of Personal Data, to prevent loss,
-                unauthorized or unlawful access, destruction, use, alteration, rectification or disclosure; provided,
+                unauthorized or unlawful access, destruction, use, alteration, rectification or disclosure. provided,
                 however, that the Company will ensure that the method of collecting, storing and processing of your
                 Personal Data, including physical safety measures follow the information technology security policies
                 and guidelines of the Company.
               </Typography>
-
-              <li style={{ marginLeft: '10px', marginTop: '25px' }}>
+              <Typography variant='body1' mt={4}>
                 <b>Do we disclose any information to outside parties?</b>
-              </li>
-
+              </Typography>
               <Typography variant='body1' mt={1}>
                 We do not sell, trade, or otherwise transfer to outside parties your personally identifiable
                 information. This does not include trusted third parties who assist us in operating our website,
@@ -506,11 +492,9 @@ const PrivacyNotice = () => {
                 non-personally identifiable visitor information may be provided to other parties for marketing,
                 advertising, or other uses.
               </Typography>
-
-              <li style={{ marginLeft: '10px', marginTop: '25px' }}>
+              <Typography variant='body1' mt={4}>
                 <b>Third party links</b>
-              </li>
-
+              </Typography>
               <Typography variant='body1' mt={1}>
                 Occasionally, at our discretion, we may include or offer third party products or services on our
                 website, web app, or mobile apps. These third party sites have separate and independent privacy
@@ -518,31 +502,24 @@ const PrivacyNotice = () => {
                 linked sites. Nonetheless, we seek to protect the integrity of our site and welcome any feedback about
                 these sites.
               </Typography>
-
-              <li style={{ marginLeft: '10px', marginTop: '25px' }}>
+              <Typography variant='body1' mt={4}>
                 <b>Terms & Conditions</b>
-              </li>
-
+              </Typography>
               <Typography variant='body1' mt={1}>
                 Please also visit our Terms & Conditions section establishing the use, disclaimers, and limitations of
                 liability governing the use of our website, web app, or mobile apps.
               </Typography>
-
-              <li style={{ marginLeft: '10px', marginTop: '25px' }}>
+              {/* <li style={{ marginLeft: '10px', marginTop: '25px' }}>
                 <b>Information Security Measures</b>
               </li>
-
               <Typography variant='body1' mt={1}>
                 We emphasize the security of your personal information. Therefore, measures are in place to maintain
                 technical and administrative security. To ensure that your personal information will not be accessed,
                 corrected, changed, deleted, or destroyed by unauthorized persons.
-              </Typography>
-
-              <Typography variant='body1' mt={1}></Typography>
-
-              <li style={{ marginLeft: '10px', marginTop: '25px' }}>
+              </Typography> */}
+              <Typography variant='body1' mt={4}>
                 <b>Changes to our Privacy Policy</b>
-              </li>
+              </Typography>
 
               <Typography variant='body1' mt={1}>
                 We will amend this Privacy Policy from time to time and the updated versions will be posted on our
@@ -550,28 +527,23 @@ const PrivacyNotice = () => {
                 of the use of any Minerva service without notifying us on any issues, will mean that you are in
                 agreement with our latest Privacy Policy.
               </Typography>
-
-              <li style={{ marginLeft: '10px', marginTop: '25px' }}>
+              <Typography variant='body1' mt={4}>
                 <b>Your rights as a data subject</b>
-              </li>
-
+              </Typography>
               <Typography variant='body1' mt={1}>
                 Subject to applicable laws and exceptions thereof, you may have the following rights to:
               </Typography>
-
               <li style={{ marginLeft: '25px', marginTop: '5px' }}>
                 <b>Access: </b>
                 You may have the right to access or request a copy of the Personal Data we are collecting, using or
                 disclosing about you. For your own privacy and security, we may require you to prove your identity
                 before providing the requested information to you.
               </li>
-
               <li style={{ marginLeft: '25px', marginTop: '5px' }}>
                 <b>Rectification: </b>
                 You may have the right to have incomplete, inaccurate, misleading, or or not up-to-date Personal Data
                 that we collect, use or disclose about you rectified.
               </li>
-
               <li style={{ marginLeft: '25px', marginTop: '5px' }}>
                 <b>Data Portability:</b>
                 You may have the right to obtain Personal Data we hold about you, in a structured, electronic format,
@@ -579,41 +551,34 @@ const PrivacyNotice = () => {
                 have provided to us, and (b) in the case where we are collecting, using or disclosing such data on the
                 basis of your consent or to perform a contract with you.
               </li>
-
               <li style={{ marginLeft: '25px', marginTop: '5px' }}>
                 <b>Objection: </b>
                 You may have the right to object to certain collection, use or disclosure of your Personal Data such as
                 objecting to direct marketing.
               </li>
-
               <li style={{ marginLeft: '25px', marginTop: '5px' }}>
                 <b>Restriction: </b>
                 You may have the right to restrict the use of your Personal Data in certain circumstances.
               </li>
-
               <li style={{ marginLeft: '25px', marginTop: '5px' }}>
                 <b>Withdraw Consent: </b>
                 For the purposes you have consented to our collecting, using or disclosing of your Personal Data, you
                 have the right to withdraw your consent at any time.
               </li>
-
               <li style={{ marginLeft: '25px', marginTop: '5px' }}>
                 <b>Deletion: </b>
                 You may have the right to request that we delete or de-identity Personal Data that we collect, use or
                 disclose about you, except we are not obligated to do so if we need to retain such data in order to
                 comply with a legal obligation or to establish, exercise, or defend legal claims.
               </li>
-
               <li style={{ marginLeft: '25px', marginTop: '5px' }}>
                 <b>Lodge a complaint: </b>
                 You may have the right to lodge a complaint to the competent authority where you believe our collection,
                 use or disclosure of your Personal Data is unlawful or noncompliant with applicable data protection law.
               </li>
-
-              <li style={{ marginLeft: '10px', marginTop: '25px' }}>
+              <Typography variant='body1' mt={4}>
                 <b>Our Contact Details</b>
-              </li>
-
+              </Typography>
               <Typography variant='body1' mt={1}>
                 If you wish to contact us to exercise the rights relating to your Personal Data or if you have any
                 queries about your Personal Data under this Privacy Policy, please contact us or our Data Protection
