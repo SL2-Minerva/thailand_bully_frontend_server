@@ -32,8 +32,7 @@ const AccountList = ({
   // const chartTitle = chartId + ', Report Level 2(' + reportNo + ')'
 
   return (
-    <Paper
-      style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 493, minHeight: 499, overflow: 'auto' }}>
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 493, minHeight: 499, overflow: 'auto' }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader title={<Translations text={cardHeader} />} titleTypographyProps={{ variant: 'h6' }} />
@@ -80,7 +79,7 @@ const AccountList = ({
                   {keyword?.source_name == 'facebook' ? (
                     <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
                   ) : keyword?.source_name == 'twitter' ? (
-                    <img alt={'logo'} width={34} height={34} src={`/images/logos/twitter.png`} />
+                    <img alt={'logo'} width={34} height={34} src={`/images/logos/x-black.jpg`} />
                   ) : keyword?.source_name == 'youtube' ? (
                     <img width={34} height={34} alt={'logo'} src={`/images/logos/youtube-text.png`} />
                   ) : keyword?.source_name == 'instagram' ? (
@@ -89,6 +88,8 @@ const AccountList = ({
                     <img width={34} alt={'logo'} height={34} src={`/images/logos/pantip.png`} />
                   ) : keyword?.source_name == 'google' ? (
                     <img width={34} alt={'logo'} height={34} src={`/images/logos/google.png`} />
+                  ) : keyword?.source_name == 'tiktok' ? (
+                    <img width={34} alt={'logo'} height={34} src={`/images/logos/tiktok.png`} />
                   ) : (
                     <span style={{ textTransform: 'uppercase' }}>{keyword?.source_name}</span>
                   )}

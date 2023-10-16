@@ -75,7 +75,7 @@ const SentimentAccountList = ({
                   {keyword?.source_name?.toLowerCase() == 'facebook' ? (
                     <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
                   ) : keyword?.source_name?.toLowerCase() == 'twitter' ? (
-                    <img alt={'logo'} width={34} height={34} src={`/images/logos/twitter.png`} />
+                    <img alt={'logo'} width={34} height={34} src={`/images/logos/x-black.jpg`} />
                   ) : keyword?.source_name?.toLowerCase() == 'youtube' ? (
                     <img width={34} height={34} alt={'logo'} src={`/images/logos/youtube-text.png`} />
                   ) : keyword?.source_name?.toLowerCase() == 'instagram' ? (
@@ -84,6 +84,8 @@ const SentimentAccountList = ({
                     <img width={34} alt={'logo'} height={34} src={`/images/logos/pantip.png`} />
                   ) : keyword?.source_name?.toLowerCase() == 'google' ? (
                     <img width={34} alt={'logo'} height={34} src={`/images/logos/google.png`} />
+                  ) : keyword?.source_name?.toLowerCase() == 'tiktok' ? (
+                    <img width={34} alt={'logo'} height={34} src={`/images/logos/tiktok.png`} />
                   ) : (
                     <span style={{ textTransform: 'uppercase' }}>{keyword?.source_name}</span>
                   )}

@@ -525,7 +525,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                       {messageDetail?.channel === 'facebook' ? (
                         <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
                       ) : messageDetail?.channel === 'twitter' ? (
-                        <img alt={'logo'} width={25} height={25} src={`/images/logos/twitter.png`} />
+                        <img alt={'logo'} width={25} height={25} src={`/images/logos/x-black.jpg`} />
                       ) : messageDetail?.channel === 'youtube' ? (
                         <img width={28} height={28} alt={'logo'} src={`/images/logos/youtube-text.png`} />
                       ) : messageDetail?.channel === 'instagram' ? (
@@ -534,6 +534,8 @@ const MessageDetail = (props: DialogInfoProps) => {
                         <img width={28} alt={'logo'} height={28} src={`/images/logos/pantip.png`} />
                       ) : messageDetail?.channel === 'google' ? (
                         <img width={25} alt={'logo'} height={25} src={`/images/logos/google.png`} />
+                      ) : messageDetail?.channel === 'tiktok' ? (
+                        <img width={34} alt={'logo'} height={25} src={`/images/logos/tiktok.png`} />
                       ) : (
                         <span style={{ textTransform: 'uppercase' }}>{messageDetail?.channel}</span>
                       )}

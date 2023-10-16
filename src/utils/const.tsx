@@ -376,7 +376,7 @@ export const BullyLevelSummaryColors = [
 ]
 
 export const FacebookIcon = '/images/logos/facebook-round.png'
-export const TwitterIcon = '/images/logos/twitter.png'
+export const TwitterIcon = '/images/logos/x-black.jpg'
 export const YoutubeIcon = '/images/logos/youtube-text.png'
 export const InstagramIcon = '/images/logos/instagram.png'
 export const PantipIcon = '/images/logos/pantip.png'
