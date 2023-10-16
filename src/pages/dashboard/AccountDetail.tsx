@@ -150,7 +150,7 @@ const AccountDetail = (props: DialogInfoProps) => {
                       {row?.channel == 'facebook' ? (
                         <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
                       ) : row?.channel == 'twitter' ? (
-                        <img alt={'logo'} width={34} height={34} src={`/images/logos/twitter.png`} />
+                        <img alt={'logo'} width={34} height={34} src={`/images/logos/x-black.jpg`} />
                       ) : row?.channel == 'youtube' ? (
                         <img width={34} height={34} alt={'logo'} src={`/images/logos/youtube-text.png`} />
                       ) : row?.channel == 'instagram' ? (
@@ -159,6 +159,8 @@ const AccountDetail = (props: DialogInfoProps) => {
                         <img width={34} alt={'logo'} height={34} src={`/images/logos/pantip.png`} />
                       ) : row?.channel == 'google' ? (
                         <img width={34} alt={'logo'} height={34} src={`/images/logos/google.png`} />
+                      ) :row?.channel == 'tiktok' ? (
+                        <img width={34} alt={'logo'} height={34} src={`/images/logos/tiktok.png`} />
                       ) : (
                         <span style={{ textTransform: 'uppercase' }}>{row?.channel}</span>
                       )}

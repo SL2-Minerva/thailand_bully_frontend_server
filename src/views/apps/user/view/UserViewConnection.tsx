@@ -128,7 +128,7 @@ const UserViewConnection = () => {
 
           <Box sx={{ display: 'flex', mb: 6, alignItems: 'center', justifyContent: 'space-between' }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Img width='35' height='35' alt='Twitter' src='/images/logos/twitter.png' />
+              <Img width='35' height='35' alt='Twitter' src='/images/logos/x-black.jpg' />
               <Box sx={{ ml: 4 }}>
                 <Typography sx={{ fontWeight: 600 }}>Twitter</Typography>
                 <Typography variant='body2'>@Theme_Selection</Typography>
