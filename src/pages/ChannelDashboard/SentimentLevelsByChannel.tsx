@@ -26,7 +26,8 @@ import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
 import NumberOfEachMessage from '../dashboard/NumberOfEachMessage'
-import { ChannelColors } from 'src/utils/const'
+
+// import { ChannelColors } from 'src/utils/const'
 
 const onCapture = () => {
   const pictureId = document.getElementById('shareOfVoices')
@@ -51,6 +52,7 @@ const SentimentLevelsByChannel = ({
   // const reportNo = '3.2.015'
 
   const [tableData, setTableData] = useState<any[]>([])
+  const [colors, setColors] = useState<any[]>([]);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -66,6 +68,7 @@ const SentimentLevelsByChannel = ({
   useEffect(() => {
     if (resultBy && resultSentimentLevel) {
       const data: any = []
+      const sourceColors : any = [];
 
       for (let i = 0; i < resultBy?.length; i++) {
         if (i < resultSentimentLevel.length) {
@@ -85,8 +88,9 @@ const SentimentLevelsByChannel = ({
             Positive: 0
           })
         }
+        sourceColors.push(resultBy[i]?.source_color);
       }
-
+      setColors(sourceColors);
       setTableData(data)
     }
   }, [resultSentimentLevel, resultBy])
@@ -174,7 +178,7 @@ const SentimentLevelsByChannel = ({
                         </TableCell>
                         <TableCell sx={{ minWidth: 100, maxWidth: 300, paddingLeft: '0px', paddingRight: '90px' }}>
                           <NumberOfEachMessage
-                            keywordsColor={ChannelColors[index]}
+                            keywordsColor={colors[index]}
                             resultShareOfVoiceChart={shareVoice}
                           />
                         </TableCell>
