@@ -32,7 +32,7 @@ const MessagesByAccount = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    
+
     result,
     loading,
     keywordsColor,
@@ -250,7 +250,7 @@ const MessagesByAccount = (props: LineProps) => {
   const reportNo = '2.2.006'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -366,6 +366,10 @@ const MessagesByAccount = (props: LineProps) => {
             reportNo={reportNo}
             title='Daily Messages: Message Transactions'
             networkTitle='Daily Messages: Social Network Analysis'
+            setIsLoading={setIsLoading}
+            apiParams={apiParams}
+            fileName='Daily Messages by Account(Voice).xlsx'
+            apiPath='/export/export-voice'
           />
         ) : (
           ''

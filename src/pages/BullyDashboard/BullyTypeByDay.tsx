@@ -365,6 +365,10 @@ const BullyTypeByDay = (props: LineProps) => {
             paramsId={paramsId}
             setParamsId={setParamsId}
             reportNo={reportNo}
+            setIsLoading={setIsLoading}
+            apiParams={apiParams}
+            fileName='Bully Type: Daily Messages by Day.xlsx'
+            apiPath='/export/export-bully'
           />
         ) : (
           ''

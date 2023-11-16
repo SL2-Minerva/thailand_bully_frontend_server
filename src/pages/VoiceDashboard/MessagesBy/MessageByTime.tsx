@@ -249,7 +249,7 @@ const MessagesByTime = (props: LineProps) => {
   const reportNo = '2.2.004'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -366,6 +366,10 @@ const MessagesByTime = (props: LineProps) => {
             reportNo={reportNo}
             title='Daily Messages: Message Transactions'
             networkTitle='Daily Messages: Social Network Analysis'
+            setIsLoading={setIsLoading}
+            apiParams={apiParams}
+            fileName='Daily Messages by Time(Voice).xlsx'
+            apiPath='/export/export-voice'
           />
         ) : (
           ''

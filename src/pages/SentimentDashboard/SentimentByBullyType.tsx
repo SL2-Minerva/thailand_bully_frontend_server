@@ -33,7 +33,7 @@ const SentimentByBullyType = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    
+
     resultBy,
     loading,
     apiParams,
@@ -247,7 +247,7 @@ const SentimentByBullyType = (props: LineProps) => {
   const reportNo = '5.2.009'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -361,6 +361,10 @@ const SentimentByBullyType = (props: LineProps) => {
             paramsId={paramsId}
             setParamsId={setParamsId}
             reportNo={reportNo}
+            setIsLoading={setIsLoading}
+            apiParams={apiParams}
+            fileName='Daily Sentiment Type by Bully Type(Sentiment).xlsx'
+            apiPath='/export/export-sentiment'
           />
         ) : (
           ''

@@ -3,6 +3,7 @@ import React, { forwardRef, ReactElement, Ref, useEffect, useState } from 'react
 import Fade, { FadeProps } from '@mui/material/Fade'
 import {
   Box,
+  Button,
   Card,
   Dialog,
   DialogContent,
@@ -13,7 +14,7 @@ import {
   Typography
 } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
-import { OpenInNew, DotsVertical, ArrowUp, ArrowDown, TrashCanOutline } from 'mdi-material-ui'
+import { OpenInNew, DotsVertical, ArrowUp, ArrowDown, TrashCanOutline, MicrosoftExcel } from 'mdi-material-ui'
 import { GetDetailMessageOverall } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from './DialogNetworkGraphByFilter'
@@ -49,6 +50,7 @@ interface DialogInfoProps {
   reportNo?: any
   title?: any
   networkTitle?: any
+  excelExport?: () => void
 }
 
 export const StyledDataGrid = withStyles({
@@ -108,7 +110,7 @@ export const StyledTableRow = styled(TableRow)(() => ({
 }))
 
 const DailyMessageDetail = (props: DialogInfoProps) => {
-  const { show, setShow, current, params, keywordId, setKeywordId, reportNo, title, networkTitle } = props
+  const { show, setShow, current, params, keywordId, setKeywordId, reportNo, title, networkTitle, excelExport } = props
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [page, setPage] = useState(0)
   const [messageId, setMessageId] = useState<number | string>()
@@ -202,9 +204,28 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
             <Close />
           </IconButton>
           {loadingMessageDetail && <LinearProgress style={{ width: '100%' }} />}
-          <Box sx={{ mb: 8, textAlign: 'center' }}>
-            <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
+          <Box sx={{ mb: 8 }}>
+            <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem', textAlign: 'center' }}>
               <Translations text={cardTitle} />
+              {excelExport ? (
+                <Button
+                  size='small'
+                  variant='outlined'
+                  color='secondary'
+                  onClick={() => {
+                    if (excelExport) {
+                      excelExport()
+                      onCloseDialog()
+                    }
+                  }}
+                  sx={{ marginLeft: '20px' }}
+                >
+                  <MicrosoftExcel fontSize='medium' sx={{ mr: 2 }} />
+                  Excel
+                </Button>
+              ) : (
+                ''
+              )}
             </Typography>
           </Box>
 

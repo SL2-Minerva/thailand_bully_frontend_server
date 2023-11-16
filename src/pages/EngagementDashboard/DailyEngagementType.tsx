@@ -78,7 +78,7 @@ const chartLabel = (data: any) => {
     for (let i = 0; i < labels?.length; i++) {
       labelValue.push(new Date(labels[i]?.date_m))
     }
-    labelValue.sort((date1, date2) => date1 - date2);
+    labelValue.sort((date1, date2) => date1 - date2)
 
     for (let i = 0; i < labelValue?.length; i++) {
       labelValue[i] = moment(labelValue[i]).format('DD/MM/YYYY')
@@ -105,7 +105,7 @@ const DailyEngagementType = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    
+
     resultBy,
     loading,
     keywordsColor,
@@ -361,7 +361,7 @@ const DailyEngagementType = (props: LineProps) => {
 
   const reportNo = '4.2.012'
 
-   // const excelExport = () => {
+  // const excelExport = () => {
   //   setIsLoading(true)
   //   const instance = axios.create({ baseURL: API_PATH })
   //   const method = 'GET'
@@ -393,7 +393,7 @@ const DailyEngagementType = (props: LineProps) => {
   // }
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -509,6 +509,10 @@ const DailyEngagementType = (props: LineProps) => {
             paramsId={paramsId}
             setParamsId={setParamsId}
             reportNo={reportNo}
+            setIsLoading={setIsLoading}
+            apiParams={apiParams}
+            fileName='Daily Engagement Type by Date.xlsx'
+            apiPath='/export/export-engagement'
           />
         ) : (
           ''

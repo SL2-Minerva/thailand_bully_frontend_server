@@ -32,7 +32,7 @@ const BullyTypeByChannel = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    
+
     resultBy,
     loading,
     apiParams,
@@ -249,7 +249,7 @@ const BullyTypeByChannel = (props: LineProps) => {
   const reportNo = '6.2.017'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -363,6 +363,10 @@ const BullyTypeByChannel = (props: LineProps) => {
             paramsId={paramsId}
             setParamsId={setParamsId}
             reportNo={reportNo}
+            setIsLoading={setIsLoading}
+            apiParams={apiParams}
+            fileName='Bully Type: Daily Messages by Channel.xlsx'
+            apiPath='/export/export-bully'
           />
         ) : (
           ''

@@ -32,7 +32,7 @@ const EngagementTypeByDay = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    
+
     resultBy,
     loading,
     keywordsColor,
@@ -251,7 +251,7 @@ const EngagementTypeByDay = (props: LineProps) => {
   const reportNo = '4.2.013'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -366,6 +366,10 @@ const EngagementTypeByDay = (props: LineProps) => {
             paramsId={paramsId}
             setParamsId={setParamsId}
             reportNo={reportNo}
+            setIsLoading={setIsLoading}
+            apiParams={apiParams}
+            fileName='Daily Engagement Type by Day.xlsx'
+            apiPath='/export/export-engagement'
           />
         ) : (
           ''

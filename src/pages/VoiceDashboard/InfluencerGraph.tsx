@@ -60,7 +60,7 @@ const chartLabel = (data: any) => {
 
 const InfluencerGraph = ({
   params,
-  
+
   resultNumbersOfAccounts,
   loadingNumbersOfAccounts,
   keywordsColor,
@@ -92,7 +92,7 @@ const InfluencerGraph = ({
     organization_id: null
   })
 
-  const theme = useTheme();
+  const theme = useTheme()
 
   const labelColor = theme.palette.text.primary
   const borderColor = theme.palette.action.focus
@@ -325,15 +325,12 @@ const InfluencerGraph = ({
   }
 
   return (
-    <Paper sx={{ height: 514, border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ height: 514, border: `3px solid #fff`, borderRadius: 1 }}>
       {loadingNumbersOfAccounts && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <CardHeader
-            title={<Translations text='Number of Accounts' />}
-            titleTypographyProps={{ variant: 'h6' }}
-          />
+          <CardHeader title={<Translations text='Number of Accounts' />} titleTypographyProps={{ variant: 'h6' }} />
           <StyledTooltip
             arrow
             title={
@@ -441,6 +438,10 @@ const InfluencerGraph = ({
           reportNo={reportNo}
           keywordId={keywordId}
           setKeywordId={setKeywordId}
+          setIsLoading={setIsLoading}
+          apiParams={apiParams}
+          fileName='Number of Accounts(Voice).xlsx'
+          apiPath='/export/export-voice'
         />
       ) : (
         ''

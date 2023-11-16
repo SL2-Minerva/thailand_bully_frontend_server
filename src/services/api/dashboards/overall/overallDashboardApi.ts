@@ -58,6 +58,23 @@ export const FilterByCampaignId = (apiParams?: any) => {
     errorFilterData: error
   }
 }
+
+export const EngagementTransactionReport = (apiParams?: any) => {
+  const params = apiParams
+
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-overall/engagement-trnsaction`,
+    method: 'GET',
+    params: params
+  })
+
+  return {
+    resultEngagementTransaction: res?.data || null,
+    loadingEngagementTransaction: loading,
+    errorEngagementTransaction: error
+  }
+}
+
 export const TotalKeyStats = (apiParams: any) => {
   const params = apiParams
 
