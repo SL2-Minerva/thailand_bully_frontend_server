@@ -425,6 +425,10 @@ const MessagesByDays = (props: LineProps) => {
             reportNo={reportNo}
             title='Daily Messages: Message Transactions'
             networkTitle='Daily Messages: Social Network Analysis'
+            fileName='Daily Messages by Day(Voice).xlsx'
+            apiParams={apiParams}
+            setIsLoading={setIsLoading}
+            apiPath = '/export/export-voice'
           />
         ) : (
           ''

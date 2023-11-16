@@ -33,7 +33,7 @@ const ChannelByAccount = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    
+
     resultBy,
     loading,
     setIsLoading,
@@ -270,7 +270,7 @@ const ChannelByAccount = (props: LineProps) => {
   const reportNo = '3.2.006'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -385,6 +385,10 @@ const ChannelByAccount = (props: LineProps) => {
             setParamsId={setParamsId}
             reportNo={reportNo}
             type='channel'
+            setIsLoading={setIsLoading}
+            apiParams={apiParams}
+            fileName='Daily Messages by Account(channel).xlsx'
+            apiPath='/export/export-channel'
           />
         ) : (
           ''

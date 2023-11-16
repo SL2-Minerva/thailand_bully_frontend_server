@@ -36,6 +36,7 @@ import authConfig from '../../../configs/auth'
 import { API_PATH } from 'src/utils/const'
 import { useTranslation } from 'react-i18next'
 import { FormHelperText, FormLabel, Radio, RadioGroup } from '@mui/material'
+import SourceList from 'src/services/api/source/SourceApi'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -52,9 +53,9 @@ interface DialogInfoProps {
   table: any
   keywordLimit: number
   resultIsAdmin: any
-  frequencyDefault: number,
+  frequencyDefault: number
   reload: boolean
-  setReload : any
+  setReload: any
 }
 
 const RepeaterWrapper = styled(CardContent)<CardContentProps>(({ theme }) => ({
@@ -68,6 +69,7 @@ const RepeaterWrapper = styled(CardContent)<CardContentProps>(({ theme }) => ({
 const DialogCampaign = (props: DialogInfoProps) => {
   const { show, setShow, action, current, keywordLimit, resultIsAdmin, frequencyDefault, reload, setReload } = props
   const { t } = useTranslation()
+  const { result_source_list } = SourceList()
 
   const [domain, setDomain] = useState<string>('')
   const [originalFrequency, setOriginalFrequency] = useState<number>(0)
@@ -88,7 +90,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
   const [checkKeywordExclude, setCheckKeywordExclude] = useState<boolean>(false)
   const [keywordCount, setKeywordCount] = useState<number>(1)
   const [remainingKeywordCount, setRemainingKeywordCount] = useState<number>(keywordLimit)
-
+  const [sourceList, setSourceList] = useState<any>([])
   const [removeKeywords, setRemoveKeywords] = useState<any>([])
 
   const initailAndColor = GenerateRandomColor()
@@ -259,12 +261,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
       status: status ? 1 : 0,
       description: description,
       frequency: frequency,
-      privacy_campaign : selectedValue,
+      privacy_campaign: selectedValue,
       start_at: format(date ? date : new Date(), 'yyyy-MM-dd'),
       end_at: format(endDate ? endDate : new Date(), 'yyyy-MM-dd'),
       keywords: keywords,
       id: current.id ?? undefined,
-      delete_keyword: []
+      delete_keyword: [],
+      platform: sourceList
 
       // msg_transaction: msgTransaction
     }
@@ -300,7 +303,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
           console.log(data, status)
 
           closeDialogBox()
-          setReload(!reload);
+          setReload(!reload)
         })
         .catch((ex: any) => {
           console.log(ex)
@@ -319,6 +322,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
         setFrequency(current.frequency)
         setOriginalFrequency(frequencyDefault)
         setSelectedValue(current.privacy_campaign)
+        setSourceList(current.platform ?? []);
 
         // setMsgTransaction(current.msg_transaction)
 
@@ -356,6 +360,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
       setCampaignName('')
       setDescription('')
       setDomain('')
+      setSourceList([]);
       setFrequency(frequencyDefault)
       setOriginalFrequency(frequencyDefault)
       setKeywords([
@@ -390,6 +395,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value)
+  }
+
+  const handleChangeSource = (event: SelectChangeEvent) => {
+    const {
+      target: { value }
+    } = event
+    setSourceList(typeof value === 'string' ? value.split(',') : value)
   }
 
   return (
@@ -451,6 +463,30 @@ const DialogCampaign = (props: DialogInfoProps) => {
                         {domain.name}
                       </MenuItem>
                     ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item sm={12} xs={12}>
+                {/* <Typography sx={{ mb: 2, fontWeight: 500 }}>Social Visualization</Typography> */}
+                <FormControl fullWidth>
+                  <InputLabel id='demo-multiple-name-label'>Platform</InputLabel>
+                  <Select
+                    displayEmpty
+                    value={sourceList}
+                    multiple
+                    label='platform'
+                    onChange={handleChangeSource}
+                    name='platform'
+                    id='demo-multiple-name'
+                    labelId='demo-multiple-name-label'
+                  >
+                    {result_source_list &&
+                      result_source_list.map((sns_platform: any) => (
+                        <MenuItem key={sns_platform.id} value={sns_platform.name}>
+                          {sns_platform.name}
+                        </MenuItem>
+                      ))}
                   </Select>
                 </FormControl>
               </Grid>

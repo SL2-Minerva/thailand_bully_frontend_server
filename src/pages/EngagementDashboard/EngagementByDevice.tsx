@@ -362,6 +362,10 @@ const EngagementByDevice = (props: LineProps) => {
             paramsId={paramsId}
             setParamsId={setParamsId}
             reportNo={reportNo}
+            setIsLoading={setIsLoading}
+            apiParams={apiParams}
+            fileName='Daily Engagement Trans by Device.xlsx'
+            apiPath='/export/export-engagement'
           />
         ) : (
           ''

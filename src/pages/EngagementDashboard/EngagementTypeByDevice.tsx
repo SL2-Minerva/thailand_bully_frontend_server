@@ -30,7 +30,7 @@ const EngagementTypeByDevice = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    
+
     resultBy,
     loading,
     keywordsColor,
@@ -242,19 +242,19 @@ const EngagementTypeByDevice = (props: LineProps) => {
   const reportNo = '4.2.015'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text='Daily Engagement Type By Device' />}
-          titleTypographyProps={{ variant: 'h6' }}
-          subheaderTypographyProps={{ variant: 'caption' }}
-        />
-        <StyledTooltip
-          arrow
-          title={
-            <span>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text='Daily Engagement Type By Device' />}
+            titleTypographyProps={{ variant: 'h6' }}
+            subheaderTypographyProps={{ variant: 'caption' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
+              <span>
                 <Typography variant='h6' sx={{ color: 'white' }}>
                   <Translations text='engagementChart13Title' />
                 </Typography>
@@ -262,13 +262,13 @@ const EngagementTypeByDevice = (props: LineProps) => {
                   <Translations text='engagementChart13Description' />
                 </Typography>
               </span>
-          }
-        >
-          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
-        </StyledTooltip>
-      </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
+          </StyledTooltip>
+        </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <IconButton
+          <IconButton
             size='large'
             onClick={() => {
               handleChooseChart('bar')
@@ -326,7 +326,7 @@ const EngagementTypeByDevice = (props: LineProps) => {
         </span>
       </div>
 
-      <CardContent id="typeByDevice">
+      <CardContent id='typeByDevice'>
         {showNoDataText ? (
           <div
             style={{
@@ -356,6 +356,10 @@ const EngagementTypeByDevice = (props: LineProps) => {
             paramsId={paramsId}
             setParamsId={setParamsId}
             reportNo={reportNo}
+            setIsLoading={setIsLoading}
+            apiParams={apiParams}
+            fileName='Daily Engagement Type by Device.xlsx'
+            apiPath='/export/export-engagement'
           />
         ) : (
           ''

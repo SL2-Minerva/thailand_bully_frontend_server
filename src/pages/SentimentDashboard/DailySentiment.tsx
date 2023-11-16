@@ -71,9 +71,9 @@ export const chartLabel = (data: any) => {
   if (labels && labels?.length > 0) {
     const filterArray = [...new Set(labels)]
     for (let i = 0; i < filterArray?.length; i++) {
-      labelValue.push(new Date(filterArray[i]));
+      labelValue.push(new Date(filterArray[i]))
     }
-    labelValue.sort((date1, date2) => date1 - date2);
+    labelValue.sort((date1, date2) => date1 - date2)
 
     for (let i = 0; i < labelValue?.length; i++) {
       labelValue[i] = moment(labelValue[i]).format('DD/MM/YYYY')
@@ -100,7 +100,7 @@ const DailySenitment = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    
+
     resultFilterData,
     loadingFilterData,
     apiParams,
@@ -392,7 +392,7 @@ const DailySenitment = (props: LineProps) => {
   // }
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }}>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -506,6 +506,10 @@ const DailySenitment = (props: LineProps) => {
             paramsId={paramsId}
             setParamsId={setParamsId}
             reportNo={reportNo}
+            setIsLoading={setIsLoading}
+            apiParams={apiParams}
+            fileName='Daily Sentiment Type by Date(Sentiment).xlsx'
+            apiPath='/export/export-sentiment'
           />
         ) : (
           ''

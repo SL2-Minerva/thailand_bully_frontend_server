@@ -24,6 +24,8 @@ const OverallCharts = (props: Props) => {
   const gridLineColor = theme.palette.action.focus
 
   const { resultFilterData, loadingFilterData } = FilterByCampaignId(apiParams)
+  
+  // const { resultEngagementTransaction, loadingEngagementTransaction } = EngagementTransactionReport(apiParams);
 
   return (
     <>
@@ -61,6 +63,18 @@ const OverallCharts = (props: Props) => {
       ) : (
         ''
       )}
+      {/* {resultReportPermission?.includes('1') ? (
+        <Grid id='chart1' item xs={12} md={4}>
+          <DonutChart
+            keywordsColor={keywordGraphColors}
+            params={params}
+            resultFilterData={resultEngagementTransaction}
+            loadingFilterData={loadingEngagementTransaction}
+          />
+        </Grid>
+      ) : (
+        ''
+      )} */}
     </>
   )
 }

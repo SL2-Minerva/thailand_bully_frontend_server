@@ -84,9 +84,9 @@ export const chartLabel = (data: any) => {
   if (labels && labels?.length > 0) {
     const filterArray = [...new Set(labels)]
     for (let i = 0; i < filterArray?.length; i++) {
-      labelValue.push(new Date(filterArray[i]));
+      labelValue.push(new Date(filterArray[i]))
     }
-    labelValue.sort((date1, date2) => date1 - date2);
+    labelValue.sort((date1, date2) => date1 - date2)
 
     for (let i = 0; i < labelValue?.length; i++) {
       labelValue[i] = moment(labelValue[i])?.format('DD/MM/YYYY')
@@ -100,7 +100,7 @@ const DailyMessageGraph = (props: Props) => {
   const {
     type,
     params,
-    
+
     resultDailyChannel,
     loadingDailyChannel,
     apiParams,
@@ -359,7 +359,7 @@ const DailyMessageGraph = (props: Props) => {
   }, [resultDailyChannel])
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 561, maxHeight: 561 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 561, maxHeight: 561 }}>
       {loadingDailyChannel && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -444,8 +444,8 @@ const DailyMessageGraph = (props: Props) => {
               apiParams={apiParams}
               reportNo={reportNo}
               setAnchorEl={setAnchorEl}
-              fileName = 'Daily Messagess By Date(Channel).xlsx'
-              apiPath = '/export/export-channel'
+              fileName='Daily Messagess By Date(Channel).xlsx'
+              apiPath='/export/export-channel'
             />
           </Menu>
         </span>
@@ -485,6 +485,10 @@ const DailyMessageGraph = (props: Props) => {
           setParamsId={setParamsId}
           reportNo={reportNo}
           type='channel'
+          setIsLoading={setIsLoading}
+          apiParams={apiParams}
+          fileName='Daily Messagess By Date(Channel).xlsx'
+          apiPath='/export/export-channel'
         />
       ) : (
         ''

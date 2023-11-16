@@ -15,16 +15,18 @@ import {
   TableContainer,
   TableHead,
   Typography,
-  Tooltip
+  Tooltip,
+  Button
 } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
 import { GetMessageDetailEngagementDashboard } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
-import { ArrowDown, ArrowUp, DotsVertical, OpenInNew, TrashCanOutline } from 'mdi-material-ui'
+import { ArrowDown, ArrowUp, DotsVertical, MicrosoftExcel, OpenInNew, TrashCanOutline } from 'mdi-material-ui'
 import { initialSort, StyledTableCell, StyledTableRow } from '../dashboard/DailyMessageDetail'
 import DeleteConfirmDialog from '../dashboard/DeleteConfirmDialog'
+import ExportExcelL3 from '../VoiceDashboard/ExportExcelL3'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -45,10 +47,30 @@ interface DialogInfoProps {
   reportNo?: string
   title?: string
   networkTitle?: string
+  excelExport?: () => void
+  apiParams?: any
+  setIsLoading?: any
+  fileName?: any
+  apiPath?: string
 }
 
 const MessageDetail = (props: DialogInfoProps) => {
-  const { show, setShow, current, params, paramsId, setParamsId, reportNo, title, networkTitle } = props
+  const {
+    show,
+    setShow,
+    current,
+    params,
+    paramsId,
+    setParamsId,
+    reportNo,
+    title,
+    networkTitle,
+    excelExport,
+    apiParams,
+    setIsLoading,
+    fileName,
+    apiPath
+  } = props
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [page, setPage] = useState(0)
   const [messageId, setMessageId] = useState<number | string>()
@@ -73,7 +95,7 @@ const MessageDetail = (props: DialogInfoProps) => {
   if (params?.period === 'customrange' && params?.previousDate !== todayDate && params?.previousEndDate !== todayDate) {
     paramData = {
       campaign_id: params?.campaign || '',
-      source: paramsId?.sourceId || '',
+      source: paramsId?.sourceId || params?.platformId || '',
       start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
       end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
       period: params?.period,
@@ -93,7 +115,7 @@ const MessageDetail = (props: DialogInfoProps) => {
   } else {
     paramData = {
       campaign_id: params?.campaign || '',
-      source: paramsId?.sourceId || '',
+      source: paramsId?.sourceId || params?.platformId || '',
       start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
       end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
       period: params?.period,
@@ -169,6 +191,35 @@ const MessageDetail = (props: DialogInfoProps) => {
           <Box sx={{ mb: 8, textAlign: 'center' }}>
             <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
               <Translations text={title || 'Daily Messages: Message Transactions'} />
+              {excelExport ? (
+                <Button
+                  size='small'
+                  variant='outlined'
+                  color='secondary'
+                  onClick={() => {
+                    if (excelExport) {
+                      excelExport()
+                      onCloseDialog()
+                    }
+                  }}
+                  sx={{ marginLeft: '20px' }}
+                >
+                  <MicrosoftExcel fontSize='medium' sx={{ mr: 2 }} />
+                  Excel
+                </Button>
+              ) : fileName ? (
+                <ExportExcelL3
+                  setIsLoading={setIsLoading}
+                  params={params}
+                  apiParams={apiParams}
+                  reportNo={reportNo || ''}
+                  fileName={fileName}
+                  onCloseDialog={onCloseDialog}
+                  apiPath={apiPath ?? ''}
+                />
+              ) : (
+                ''
+              )}
             </Typography>
           </Box>
 
@@ -430,20 +481,27 @@ const MessageDetail = (props: DialogInfoProps) => {
                       backgroundColor: messageDetail.parent ? '#00ff0038' : '#fff'
                     }}
                   >
-                    <StyledTableCell onClick={() => {
-                      if (messageDetail.parent) {
-                        setMessageId(messageDetail.message_id)
-                        setShowDialog(true)
-                      }
-                    }}>
+                    <StyledTableCell
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
                       <b>{index + 1 + page * 10}</b>
                     </StyledTableCell>
-                    <StyledTableCell component='th' scope='row' width={200} onClick={() => {
-                      if (messageDetail.parent) {
-                        setMessageId(messageDetail.message_id)
-                        setShowDialog(true)
-                      }
-                    }}> 
+                    <StyledTableCell
+                      component='th'
+                      scope='row'
+                      width={200}
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
                       <span
                         style={{
                           overflow: 'hidden',
@@ -455,34 +513,51 @@ const MessageDetail = (props: DialogInfoProps) => {
                         {messageDetail.message_detail}
                       </span>
                     </StyledTableCell>
-                    <StyledTableCell align='center' onClick={() => {
-                      if (messageDetail.parent) {
-                        setMessageId(messageDetail.message_id)
-                        setShowDialog(true)
-                      }
-                    }} >{messageDetail.message_type || '-'}</StyledTableCell>
-                    <StyledTableCell align='center' onClick={() => {
-                      if (messageDetail.parent) {
-                        setMessageId(messageDetail.message_id)
-                        setShowDialog(true)
-                      }
-                    }}> {messageDetail.account_name}</StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
+                      {messageDetail.message_type || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
+                      {' '}
+                      {messageDetail.account_name}
+                    </StyledTableCell>
 
-                    <StyledTableCell align='center' onClick={() => {
-                      if (messageDetail.parent) {
-                        setMessageId(messageDetail.message_id)
-                        setShowDialog(true)
-                      }
-                    }}>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
                       {moment(messageDetail.post_date)?.format('DD.MM.YYYY') + ', ' + messageDetail.post_time}
                     </StyledTableCell>
 
-                    <StyledTableCell align='center' onClick={() => {
-                      if (messageDetail.parent) {
-                        setMessageId(messageDetail.message_id)
-                        setShowDialog(true)
-                      }
-                    }}>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
                       {messageDetail.device === 'android' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/android.png`} />
                       ) : messageDetail.device === 'webapp' ? (
@@ -493,12 +568,15 @@ const MessageDetail = (props: DialogInfoProps) => {
                         '-'
                       )}
                     </StyledTableCell>
-                    <StyledTableCell align='center' onClick={() => {
-                      if (messageDetail.parent) {
-                        setMessageId(messageDetail.message_id)
-                        setShowDialog(true)
-                      }
-                    }}>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
                       {messageDetail?.channel === 'facebook' ? (
                         <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
                       ) : messageDetail?.channel === 'twitter' ? (
@@ -517,30 +595,50 @@ const MessageDetail = (props: DialogInfoProps) => {
                         <span style={{ textTransform: 'uppercase' }}>{messageDetail?.channel}</span>
                       )}
                     </StyledTableCell>
-                    <StyledTableCell align='center' onClick={() => {
-                      if (messageDetail.parent) {
-                        setMessageId(messageDetail.message_id)
-                        setShowDialog(true)
-                      }
-                    }}>{messageDetail.engagement || '-'}</StyledTableCell>
-                    <StyledTableCell align='center' onClick={() => {
-                      if (messageDetail.parent) {
-                        setMessageId(messageDetail.message_id)
-                        setShowDialog(true)
-                      }
-                    }} >{messageDetail.sentiment || '-'}</StyledTableCell>
-                    <StyledTableCell align='center'onClick={() => {
-                      if (messageDetail.parent) {
-                        setMessageId(messageDetail.message_id)
-                        setShowDialog(true)
-                      }
-                    }} >{messageDetail.bully_level}</StyledTableCell>
-                    <StyledTableCell align='center' onClick={() => {
-                      if (messageDetail.parent) {
-                        setMessageId(messageDetail.message_id)
-                        setShowDialog(true)
-                      }
-                    }}>{messageDetail.bully_type}</StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
+                      {messageDetail.engagement || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
+                      {messageDetail.sentiment || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
+                      {messageDetail.bully_level}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align='center'
+                      onClick={() => {
+                        if (messageDetail.parent) {
+                          setMessageId(messageDetail.message_id)
+                          setShowDialog(true)
+                        }
+                      }}
+                    >
+                      {messageDetail.bully_type}
+                    </StyledTableCell>
 
                     <StyledTableCell align='center'>
                       {messageDetail.link_message ? (
@@ -568,7 +666,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                         target='_self'
                         rel='noopener noreferrer'
                       >
-                        <TrashCanOutline style={{color: 'grey'}}/>
+                        <TrashCanOutline style={{ color: 'grey' }} />
                       </a>
                     </StyledTableCell>
                   </StyledTableRow>

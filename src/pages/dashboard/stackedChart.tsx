@@ -490,6 +490,7 @@ const StackedChart = (props: LineProps) => {
             reportNo={reportNo}
             title='Daily Messages: Message Transactions'
             networkTitle='Daily Messages: Social Network Analysis'
+            excelExport={excelExport}
           />
         ) : (
           ''

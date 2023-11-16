@@ -2,6 +2,7 @@ import { forwardRef, ReactElement, Ref, useEffect, useState } from 'react'
 import Fade, { FadeProps } from '@mui/material/Fade'
 import {
   Box,
+  Button,
   Card,
   Dialog,
   DialogContent,
@@ -16,7 +17,7 @@ import { GetMessageDetailChannelDashboard } from 'src/services/api/dashboards/ov
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
-import { ArrowDown, ArrowUp, DotsVertical, OpenInNew, TrashCanOutline } from 'mdi-material-ui'
+import { ArrowDown, ArrowUp, DotsVertical, MicrosoftExcel, OpenInNew, TrashCanOutline } from 'mdi-material-ui'
 import { initialSort, StyledTableCell, StyledTableRow } from '../dashboard/DailyMessageDetail'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -25,6 +26,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import DeleteConfirmDialog from '../dashboard/DeleteConfirmDialog'
+import ExportExcelL3 from '../VoiceDashboard/ExportExcelL3'
 
 // import { GridColDef } from '@mui/x-data-grid'
 // import { StyledDataGrid } from '../dashboard/DailyMessageDetail'
@@ -51,6 +53,11 @@ interface DialogInfoProps {
   keywordId?: number
   setKeywordId?: any
   type?: string
+  excelExport?: () => void
+  apiParams?: any
+  setIsLoading?: any
+  fileName?: any
+  apiPath?: string
 }
 
 const MessageDetailChannel = (props: DialogInfoProps) => {
@@ -65,7 +72,12 @@ const MessageDetailChannel = (props: DialogInfoProps) => {
     title,
     networkTitle,
     keywordId,
-    setKeywordId
+    setKeywordId,
+    excelExport,
+    apiParams,
+    setIsLoading,
+    fileName,
+    apiPath
   } = props
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [page, setPage] = useState(0)
@@ -90,7 +102,7 @@ const MessageDetailChannel = (props: DialogInfoProps) => {
   if (params?.period === 'customrange' && params?.previousDate !== todayDate && params?.previousEndDate !== todayDate) {
     paramData = {
       campaign_id: params?.campaign || '',
-      source: paramsId?.sourceId || '',
+      source: paramsId?.sourceId || params?.platformId || '',
       start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
       end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
       period: params?.period,
@@ -110,7 +122,7 @@ const MessageDetailChannel = (props: DialogInfoProps) => {
   } else {
     paramData = {
       campaign_id: params?.campaign || '',
-      source: paramsId?.sourceId || '',
+      source: paramsId?.sourceId || params?.platformId || '',
       start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
       end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
       period: params?.period,
@@ -193,6 +205,35 @@ const MessageDetailChannel = (props: DialogInfoProps) => {
           <Box sx={{ mb: 8, textAlign: 'center' }}>
             <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
               <Translations text={title || 'Daily Messages: Message Transactions'} />
+              {excelExport ? (
+                <Button
+                  size='small'
+                  variant='outlined'
+                  color='secondary'
+                  onClick={() => {
+                    if (excelExport) {
+                      excelExport()
+                      onCloseDialog()
+                    }
+                  }}
+                  sx={{ marginLeft: '20px' }}
+                >
+                  <MicrosoftExcel fontSize='medium' sx={{ mr: 2 }} />
+                  Excel
+                </Button>
+              ) : fileName ? (
+                <ExportExcelL3
+                  setIsLoading={setIsLoading}
+                  params={params}
+                  apiParams={apiParams}
+                  reportNo={reportNo || ''}
+                  fileName={fileName}
+                  onCloseDialog={onCloseDialog}
+                  apiPath={apiPath ?? ''}
+                />
+              ) : (
+                ''
+              )}
             </Typography>
           </Box>
 

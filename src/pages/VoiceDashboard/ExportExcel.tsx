@@ -77,7 +77,7 @@ const ExportExcel = (props: Props) => {
         ) {
           paramData = {
             campaign_id: params?.campaign || '',
-            source: apiParams?.source || '',
+            source: apiParams?.source || params?.platformId || '',
             start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
             end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
             period: params?.period,
@@ -89,7 +89,7 @@ const ExportExcel = (props: Props) => {
         } else {
           paramData = {
             campaign_id: params?.campaign || '',
-            source: apiParams?.source || '',
+            source: apiParams?.source || params?.platformId || '',
             start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
             end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
             period: params?.period,

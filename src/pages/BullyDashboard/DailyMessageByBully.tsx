@@ -102,7 +102,7 @@ const DailyMessgeByBully = (props: LineProps) => {
     gridLineColor,
     params,
     type,
-    
+
     resultFilterData,
     loadingFilterData,
     apiParams,
@@ -368,7 +368,7 @@ const DailyMessgeByBully = (props: LineProps) => {
   const reportNo = '6.2.002'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }}>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -484,6 +484,10 @@ const DailyMessgeByBully = (props: LineProps) => {
             paramsId={paramsId}
             setParamsId={setParamsId}
             reportNo={reportNo}
+            setIsLoading={setIsLoading}
+            apiParams={apiParams}
+            fileName='Bully Level: Daily Messages by Date.xlsx'
+            apiPath='/export/export-bully'
           />
         ) : (
           ''

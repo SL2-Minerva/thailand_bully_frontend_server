@@ -73,7 +73,7 @@ const chartLabel = (data: any) => {
     for (let i = 0; i < labels?.length; i++) {
       labelValue.push(new Date(labels[i]?.date_m))
     }
-    labelValue.sort((date1, date2) => date1 - date2);
+    labelValue.sort((date1, date2) => date1 - date2)
 
     for (let i = 0; i < labelValue?.length; i++) {
       labelValue[i] = moment(labelValue[i]).format('DD/MM/YYYY')
@@ -102,7 +102,7 @@ const DailyMessgesByBullyType = (props: LineProps) => {
     gridLineColor,
     params,
     type,
-    
+
     resultBullyTypeFilterData,
     loadingBullyTypeFilterData,
     apiParams,
@@ -348,7 +348,7 @@ const DailyMessgesByBullyType = (props: LineProps) => {
 
         if (labels?.length > 0) {
           const dataSets = chartDatasets(bully_levelData, labels)
-          
+
           // dataSets?.sort((a, b) => {
           //   const fa = a.label?.toLowerCase(),
           //     fb = b.label?.toLowerCase()
@@ -385,7 +385,7 @@ const DailyMessgesByBullyType = (props: LineProps) => {
 
   const title = type === 'level' ? 'Bully Level: Daily Message by Date' : 'Bully Type: Daily Message by Date'
 
-   // const excelExport = () => {
+  // const excelExport = () => {
   //   setIsLoading(true)
   //   const instance = axios.create({ baseURL: API_PATH })
   //   const method = 'GET'
@@ -417,7 +417,7 @@ const DailyMessgesByBullyType = (props: LineProps) => {
   // }
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }}>
       {loadingBullyTypeFilterData && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -532,6 +532,10 @@ const DailyMessgesByBullyType = (props: LineProps) => {
             paramsId={paramsId}
             setParamsId={setParamsId}
             reportNo={reportNo}
+            setIsLoading={setIsLoading}
+            apiParams={apiParams}
+            fileName='Bully Type: Daily Messages by Date.xlsx'
+            apiPath='/export/export-bully'
           />
         ) : (
           ''

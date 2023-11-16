@@ -32,7 +32,7 @@ const MessagesByBullyType = (props: LineProps) => {
     borderColor,
     gridLineColor,
     params,
-    
+
     result,
     loading,
     keywordsColor,
@@ -249,7 +249,7 @@ const MessagesByBullyType = (props: LineProps) => {
   const reportNo = '2.2.010'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
       {loading && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -367,6 +367,10 @@ const MessagesByBullyType = (props: LineProps) => {
             reportNo={reportNo}
             title='Daily Messages: Message Transactions'
             networkTitle='Daily Messages: Social Network Analysis'
+            setIsLoading={setIsLoading}
+            apiParams={apiParams}
+            fileName='Daily Messages by Bully Type(Voice).xlsx'
+            apiPath='/export/export-voice'
           />
         ) : (
           ''
