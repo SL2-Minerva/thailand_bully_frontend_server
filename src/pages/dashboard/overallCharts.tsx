@@ -1,7 +1,12 @@
 import { Grid } from '@mui/material'
 import DonutChart from './donutChart'
 import StackedChart from './stackedChart'
-import { FilterByCampaignId } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import {
+  EngagementTransactionReport,
+  FilterByCampaignId
+} from 'src/services/api/dashboards/overall/overallDashboardApi'
+import EngagementDonutChart from './EngagementDonutChart'
+import DailyEngagementTrans from './DailyEngagementTrans'
 
 interface Props {
   theme: any
@@ -24,8 +29,8 @@ const OverallCharts = (props: Props) => {
   const gridLineColor = theme.palette.action.focus
 
   const { resultFilterData, loadingFilterData } = FilterByCampaignId(apiParams)
-  
-  // const { resultEngagementTransaction, loadingEngagementTransaction } = EngagementTransactionReport(apiParams);
+
+  const { resultEngagementTransaction, loadingEngagementTransaction } = EngagementTransactionReport(apiParams)
 
   return (
     <>
@@ -63,18 +68,44 @@ const OverallCharts = (props: Props) => {
       ) : (
         ''
       )}
-      {/* {resultReportPermission?.includes('1') ? (
-        <Grid id='chart1' item xs={12} md={4}>
-          <DonutChart
-            keywordsColor={keywordGraphColors}
-            params={params}
-            resultFilterData={resultEngagementTransaction}
-            loadingFilterData={loadingEngagementTransaction}
-          />
-        </Grid>
+
+      {resultReportPermission?.includes('1') ? (
+        <>
+          <Grid id='chart1' item xs={12} md={4}>
+            <EngagementDonutChart
+              resultFilterData={resultEngagementTransaction}
+              loadingFilterData={loadingEngagementTransaction}
+              params={params}
+              type='transaction'
+              keywordsColor={keywordGraphColors}
+            />
+          </Grid>
+
+          <Grid id='chart2' item xs={12} md={8}>
+            <DailyEngagementTrans
+              white={whiteColor}
+              labelColor={labelColor}
+              success={lineChartYellow}
+              borderColor={borderColor}
+              primary={lineChartPrimary}
+              warning={lineChartWarning}
+              gridLineColor={gridLineColor}
+              params={params}
+              type='transaction'
+              chartId='Chart 2'
+              highlight={false}
+              resultFilterData={resultEngagementTransaction}
+              loadingFilterData={loadingEngagementTransaction}
+              keywordsColor={keywordGraphColors}
+              apiParams={apiParams}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
+          </Grid>
+        </>
       ) : (
         ''
-      )} */}
+      )}
     </>
   )
 }
