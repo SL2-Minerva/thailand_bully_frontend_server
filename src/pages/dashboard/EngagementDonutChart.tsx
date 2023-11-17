@@ -7,45 +7,47 @@ import { Box, Grid, IconButton, LinearProgress, Menu, MenuItem, Paper, Typograph
 
 import { Doughnut } from 'react-chartjs-2'
 import { MouseEvent, useEffect, useState } from 'react'
+import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import { StyledTooltip } from './overall'
 import Translations from 'src/layouts/components/Translations'
 import { Chart } from 'chart.js'
 import * as DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne'
-import { GraphicColors } from 'src/utils/const'
+import { EngagementTransChartColor } from 'src/utils/const'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
 import CustomeLabels from '../VoiceDashboard/CustomLabel'
+import { getColors, getLabelColor } from '../VoiceDashboard/DailyMessagesPieChart'
 import { useSettings } from 'src/@core/hooks/useSettings'
+
+const onCapture = () => {
+  const pictureId = document.getElementById('percentageTrans')
+  if (pictureId) {
+    htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
+      saveAs(dataUrl, 'Percentage of Engagement Trans.png')
+    })
+  }
+}
 
 Chart.register(DoughnutLabel)
 
 interface MessageData {
+  type: string
   params: any
   resultFilterData: any
   loadingFilterData: boolean
   keywordsColor: any
 }
 
-const onCapture = () => {
-  const pictureId = document.getElementById('percentagePies')
-  if (pictureId) {
-    htmlToImage.toPng(pictureId, { backgroundColor: '#fff' }).then(function (dataUrl) {
-      saveAs(dataUrl, 'Percentage of Engagement Transaction (overall).png')
-    })
-  }
-}
-
 const EngagementDonutChart = (props: MessageData) => {
-  const { resultFilterData, loadingFilterData, keywordsColor } = props
-
+  const { type,  resultFilterData, loadingFilterData, keywordsColor } = props
+  const colors = keywordsColor ?? EngagementTransChartColor
   const initValue = {
     labels: [],
     datasets: [
       {
         data: [],
-        backgroundColor: keywordsColor,
+        backgroundColor: colors,
         hoverOffset: 4
       }
     ]
@@ -60,12 +62,9 @@ const EngagementDonutChart = (props: MessageData) => {
   const [showNoDataText, setShowNoDataText] = useState<boolean>(false)
   const [showNoDataTextPrevious, setShowNoDataTextPrevious] = useState<boolean>(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const { settings } = useSettings()
+  const {settings} = useSettings();
 
   const rowOptionsOpen = Boolean(anchorEl)
-
-  // const theme = useTheme()
-  // const labelColor = theme.palette.text.primary
 
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -73,19 +72,18 @@ const EngagementDonutChart = (props: MessageData) => {
   const handleRowOptionsClose = () => {
     setAnchorEl(null)
   }
-  
   const options = {
     responsive: true,
     backgroundColor: false,
     maintainAspectRatio: false,
     plugins: {
+      legend: {
+        display: false
+      },
       tooltip: {
         callbacks: {
           label: (context: any) => context?.label + ': ' + context?.formattedValue + '%'
         }
-      },
-      legend: {
-        display: false
       },
       doughnutlabel: {
         paddingPercentage: 5,
@@ -141,7 +139,7 @@ const EngagementDonutChart = (props: MessageData) => {
         datasets: [
           {
             data: [],
-            backgroundColor: GraphicColors,
+            backgroundColor: EngagementTransChartColor,
             hoverOffset: 4
           }
         ]
@@ -152,18 +150,15 @@ const EngagementDonutChart = (props: MessageData) => {
     const labels: string[] = []
     const percentage: number[] = []
     const colors = []
-    for (let i = 0; i < data?.length; i++) {
-      labels.push(data[i].keyword_name)
 
-      for (let j = 0; j < keywordColor?.length; j++) {
-        if (keywordColor[j]?.keywordName === data[i].keyword_name) {
-          colors.push(keywordColor[j]?.color)
-        }
-      }
+    for (let i = 0; i < data?.length; i++) {
+      // labels.push(data[i].keyword_name);
 
       const percentageValue = data[i]?.value
       for (let j = 0; j < percentageValue?.length; j++) {
         percentage.push(data[i].value[j]?.percentage)
+        labels.push(data[i].value[j]?.name)
+
         if (type === 'current') {
           setCurrentPeriod(data[i].value[j]?.date)
         } else {
@@ -171,6 +166,21 @@ const EngagementDonutChart = (props: MessageData) => {
         }
       }
     }
+    for (let i = 0; i < labels?.length; i++) {
+      for (let j = 0; j < keywordColor?.length; j++) {
+        if (keywordColor[j]?.keywordName === labels[i]) {
+          colors.push(keywordColor[j]?.color)
+
+          // if(keywordColor[j]?.color !== '#')
+          // {
+          //   colors.push(keywordColor[j]?.color )
+          // } else {
+          //   colors.push(EngagementTransChartColor[i])
+          // }
+        }
+      }
+    }
+
     const returnData = {
       labels: labels,
       datasets: [
@@ -185,25 +195,9 @@ const EngagementDonutChart = (props: MessageData) => {
     return returnData
   }
 
-  const getLabelColor = (data: any) => {
-    const labels: any = []
+  const title = type === 'transaction' ? 'Percentage of Engagement Trans' : 'Percentage of Engagement Type'
 
-    for (let i = 0; i < data?.length; i++) {
-      labels.push(data[i].keywordName)
-    }
-
-    return labels
-  }
-
-  const getColors = (data: any) => {
-    const channelColor: any = []
-
-    for (let i = 0; i < data?.length; i++) {
-      channelColor.push(data[i]?.color)
-    }
-
-    return channelColor
-  }
+  // const reportNo = '4.1.001'
 
   useEffect(() => {
     if (resultFilterData) {
@@ -215,40 +209,52 @@ const EngagementDonutChart = (props: MessageData) => {
         setCurrentData(currentDataset)
 
         if (currentMessageData?.length > 0) {
-          setCurrentTotal(currentMessageData[0]?.total)
+          setCurrentTotal(currentMessageData[0]?.value[0]?.total)
+          setShowNoDataText(false)
+        } else {
+          setCurrentTotal(0)
+          setShowNoDataText(true)
         }
-        setShowNoDataText(false)
       } else {
-        setShowNoDataText(true)
         setCurrentData(initValue)
         setCurrentTotal(0)
-        if (previousMessageData) {
-          setShowNoDataText(false)
-        }
+        setShowNoDataText(true)
       }
 
       if (previousMessageData) {
         const previousDataset = chartDataset(previousMessageData, 'previous', keywordsColor)
         setPreviousData(previousDataset)
+
         if (previousMessageData?.length > 0) {
-          setPreviousTotal(previousMessageData[0]?.total)
+          setPreviousTotal(previousMessageData[0]?.value[0]?.total)
+          setShowNoDataTextPrevious(false)
+        } else {
+          setPreviousTotal(0)
+          setShowNoDataTextPrevious(true)
         }
-        setShowNoDataTextPrevious(false)
       } else {
-        setShowNoDataTextPrevious(true)
         setPreviousData(initValue)
         setPreviousTotal(0)
+        setShowNoDataTextPrevious(true)
       }
+    } else {
+      setCurrentData(initValue)
+      setPreviousData(initValue)
+      setPreviousTotal(0)
+      setCurrentTotal(0)
+      setShowNoDataText(true)
+      setShowNoDataTextPrevious(true)
     }
   }, [resultFilterData, keywordsColor])
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 620 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }} >
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
+
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <CardHeader
-            title={<Translations text='Percentage of Engagement Transaction' />}
+            title={<Translations text={title} />}
             titleTypographyProps={{ variant: 'h6' }}
             subheader='Period over Period Comparison'
             subheaderTypographyProps={{ variant: 'caption' }}
@@ -258,15 +264,15 @@ const EngagementDonutChart = (props: MessageData) => {
             title={
               <span>
                 <Typography variant='h6' sx={{ color: 'white' }}>
-                  <Translations text='overallChart1Title' />
+                  <Translations text='engagementChart1Title' />
                 </Typography>
                 <Typography variant='body2' sx={{ color: 'white' }}>
-                  <Translations text='overallChart1Description' />
+                  <Translations text='engagementChart1Description' />
                 </Typography>
               </span>
             }
           >
-            <Information fontSize='large' style={{ marginTop: '23px' }} />
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -301,8 +307,8 @@ const EngagementDonutChart = (props: MessageData) => {
         </span>
       </div>
 
-      <CardContent id='percentagePies'>
-        <Grid container spacing={2}>
+      <CardContent id='percentageTrans'>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
             <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
               <CustomeLabels
@@ -328,7 +334,7 @@ const EngagementDonutChart = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={currentData} options={options as any} height={300} />
+              <Doughnut data={currentData} options={options as any} height={250} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>
@@ -345,7 +351,7 @@ const EngagementDonutChart = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={previousData} options={optionsPrevious as any} height={300} />
+              <Doughnut data={previousData} options={optionsPrevious as any} height={250} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>
