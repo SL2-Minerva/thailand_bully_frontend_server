@@ -88,6 +88,11 @@ const navigation = (): VerticalNavItemsType => {
     path: '/BullyDashboard'
   }
 
+  const monitoringDashboard = {
+    title: 'Monitoring Dashboard',
+    path: '/MonitoringDashboard'
+  }
+
   const wordCloudDashboard = {
     title: 'Word Clouds',
     path: '/WordCloud'
@@ -192,6 +197,10 @@ const navigation = (): VerticalNavItemsType => {
 
   if (showWordCloud) {
     reportDashboardList.push(wordCloudDashboard)
+  }
+
+  if (showOverallDashboard) {
+    reportDashboardList.push(monitoringDashboard)
   }
 
   if (showSNA || resultIsAdmin) {
