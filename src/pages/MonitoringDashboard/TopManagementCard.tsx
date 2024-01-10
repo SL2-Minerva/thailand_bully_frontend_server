@@ -2,9 +2,20 @@ import * as React from 'react'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import { Box, LinearProgress } from '@mui/material'
+import { Avatar, Box, Grid, LinearProgress } from '@mui/material'
+import {
+  FacebookIcon,
+  InstagramIcon,
+  PantipIcon,
+  TwitterIcon,
+  YoutubeIcon,
+  gitHubIcon,
+  googleIcon
+} from 'src/utils/const'
+import { CommentOutline, LinkVariant, ShareVariantOutline, ThumbUpOutline } from 'mdi-material-ui'
+
+// import Button from '@mui/material/Button'
 
 // import dynamic from 'next/dynamic'
 
@@ -26,17 +37,52 @@ interface CardInfo {
 
 const TopManagementCard = (props: CardInfo) => {
   const { resultTopEngagement, loadingTopEngagement } = props
+  const imgPath = gitHubIcon
+
+  const sourceIcon =
+    resultTopEngagement.source_name === 'facebook'
+      ? FacebookIcon
+      : resultTopEngagement.source_name === 'twitter'
+      ? TwitterIcon
+      : resultTopEngagement.source_name === 'instagram'
+      ? InstagramIcon
+      : resultTopEngagement.source_name === 'youtube'
+      ? YoutubeIcon
+      : resultTopEngagement.source_name === 'pantip'
+      ? PantipIcon
+      : resultTopEngagement.source_name === 'google'
+      ? googleIcon
+      : FacebookIcon
 
   return (
-    <Card sx={{ height: '335px' }}>
+    <Card sx={{ minHeight: '335px' }}>
       {loadingTopEngagement && <LinearProgress style={{ width: '100%' }} />}
       {/* <CardMedia sx={{ height: 140 }} image={'images/NoImage.png'} title='No Image' /> */}
 
       <CardContent>
-        <Typography gutterBottom variant='h5' component='div'>
-          {resultTopEngagement.account_name}
-        </Typography>
-        <Typography variant='body2' color='text.secondary'>
+        <Grid container spacing={1}>
+          <Grid item xs={2.5}>
+            <Avatar sx={{ width: 50, height: 50 }}>
+              <img src={imgPath} width={50} height={50} alt='' />
+            </Avatar>
+          </Grid>
+
+          <Grid item xs={8.5}>
+            <div style={{ display: 'flex' }}>
+              <Avatar sx={{ width: 35, height: 35 }}>
+                <img src={sourceIcon} width={35} height={35} alt='' />
+              </Avatar>
+              <Typography gutterBottom variant='body1' component='div' ml={2}>
+                {resultTopEngagement.account_name}
+                <Typography gutterBottom variant='caption' component='div'>
+                  {resultTopEngagement.post_date + ', ' + resultTopEngagement.post_time}
+                </Typography>
+              </Typography>
+            </div>
+          </Grid>
+        </Grid>
+
+        <Typography variant='body2' color='text.secondary' mt={4}>
           <span
             style={{
               overflow: 'hidden',
@@ -50,19 +96,48 @@ const TopManagementCard = (props: CardInfo) => {
           </span>
         </Typography>
 
-        <Box sx={{ maxWidth: '400px' }}>
-          {/* <ReactTinyLink
-            cardSize='small'
-            showGraphic={true}
-            maxLine={2}
-            minLine={1}
-            url={resultTopEngagement.link_message || ''}
-          /> */}
+        <Box sx={{ maxWidth: '400px', display: 'flex', justifyContent: 'center', mt: 3 }}>
+          <img src={'/images/NoImage.png'} width={150} height={150} alt='' />
         </Box>
+
+        <Grid container spacing={2}>
+          <Grid item md={6} xs={12} sx={{ display: 'flex' }}>
+            <ThumbUpOutline fontSize='small' sx={{ m: 2 }} />
+            <CommentOutline fontSize='small' sx={{ m: 2 }} />
+            <ShareVariantOutline fontSize='small' sx={{ m: 2 }} />
+          </Grid>
+          <Grid item md={6} xs={12} sx={{ display: 'flex', justifyContent: 'end', pr: 3 }}>
+            Link:{' '}
+            <a href={resultTopEngagement.link_message} target='_blank' rel='noreferrer'>
+              <LinkVariant fontSize='small' sx={{ color: 'blue' }} />
+            </a>
+          </Grid>
+        </Grid>
+
+        <Grid container spacing={2} mt={2}>
+          <Grid item xs={12}>
+            <Typography variant='body1'>
+              {' '}
+              <b>Sentiment: </b> {resultTopEngagement.sentiment}{' '}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant='body1'>
+              {' '}
+              <b>Bully Level: </b> {resultTopEngagement.bully_level}{' '}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant='body1'>
+              {' '}
+              <b>Bully Type: </b> {resultTopEngagement.bully_type}{' '}
+            </Typography>
+          </Grid>
+        </Grid>
       </CardContent>
       <CardActions>
-        <Button size='small'>Share</Button>
-        <Button size='small'>Learn More</Button>
+        {/* <Button size='small'>Share</Button>
+        <Button size='small'>Learn More</Button> */}
       </CardActions>
     </Card>
   )
