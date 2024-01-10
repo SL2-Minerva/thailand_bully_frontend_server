@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react'
-import { Backdrop, Button, CircularProgress, Grid, useTheme } from '@mui/material'
+import { Backdrop, Button, CardHeader, CircularProgress, Grid, Paper, Typography, useTheme } from '@mui/material'
 import {
   GetDailyMonitoring,
-
-  // GetTopEngagementMonitoring
+  GetTopEngagementMonitoring
 } from 'src/services/api/dashboards/monitoring/MonitoringDashboard'
 import DailyPercentage from './DailyPercentage'
 import DailyMessagesChart from './DailyMessagesChart'
 
-// import TopEngagement from './TopEngagement'
+import TopEngagement from './TopEngagement'
 
 import EngagementMonitoring from './EngagementMonitoring'
+import Translations from 'src/layouts/components/Translations'
+import { StyledTooltip } from '../dashboard/overall'
+import { Information } from 'mdi-material-ui'
 
 interface Props {
   params: any
@@ -39,9 +41,7 @@ const MonitoringCharts = (data: Props) => {
   const borderColor = theme.palette.action.focus
   const gridLineColor = theme.palette.action.focus
 
-  
-
-  // const { resultTopEngagement, loadingTopEngagement } = GetTopEngagementMonitoring(apiParams)
+  const { resultTopEngagement, loadingTopEngagement } = GetTopEngagementMonitoring(apiParams)
   const { resultDailyMonitoring, loadingDailyMonitoring } = GetDailyMonitoring(apiParams)
 
   //   const quickViewData = {
@@ -134,7 +134,38 @@ const MonitoringCharts = (data: Props) => {
           />
         </Grid>
 
-        {/* <Grid id='chart3' item xs={12} md={12} mt={2}>
+        <Grid item xs={12}>
+            <Paper id='chart10' sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
+              <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <CardHeader
+                  title={<Translations text='Top 5 Engagement of Post Monitoring' />}
+                  titleTypographyProps={{ variant: 'h6'}}
+                />
+                <StyledTooltip
+                  arrow
+                  title={
+                    <span>
+                      <Typography variant='h6' sx={{ color: 'white' }}>
+                        <Translations text='Top 5 Engagement' />
+                      </Typography>
+                      <Typography variant='body2' sx={{ color: 'white' }}>
+                        {/* <Translations text='sentimentChart10Description' /> */}
+                      </Typography>
+                    </span>
+                  }
+                >
+                  <Information
+                    style={{
+                      marginTop: '22px',
+                      fontSize: '29px'
+                    }}
+                  />
+                </StyledTooltip>
+              </span>
+            </Paper>
+          </Grid>
+
+        <Grid id='chart3' item xs={12} md={12} mt={1}>
           <TopEngagement
             params={apiParams}
             highlight={highlight === 'chart3' ? true : false}
@@ -142,87 +173,87 @@ const MonitoringCharts = (data: Props) => {
             resultTopEngagement={resultTopEngagement}
             loadingTopEngagement={loadingTopEngagement}
           />
-        </Grid> */}
+        </Grid>
 
-        <>
-            <Grid container spacing={3} mt={2}>
-              <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end', overflowX: 'auto' }}>
-                <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
-                <Button
-                  variant='contained'
-                  color={topKeyword === 'top10' ? 'warning' : 'inherit'}
-                  size='medium'
-                  sx={{ marginRight: '20px' }}
-                  onClick={() => {
-                    handleTopKeywords('top10')
-                  }}
-                >
-                  <span style={{ color: topKeyword === 'top10' ? 'white' : '#626376' }}>Top 10</span>
-                </Button>
-                <Button
-                  variant='contained'
-                  color={topKeyword === 'top20' ? 'warning' : 'inherit'}
-                  size='medium'
-                  sx={{ marginRight: '20px', color: 'black' }}
-                  onClick={() => {
-                    handleTopKeywords('top20')
-                  }}
-                >
-                  <span style={{ color: topKeyword === 'top20' ? 'white' : '#626376' }}>Top 20</span>
-                </Button>
-                <Button
-                  variant='contained'
-                  color={topKeyword === 'top50' ? 'warning' : 'inherit'}
-                  size='medium'
-                  sx={{ marginRight: '20px', color: 'black' }}
-                  onClick={() => {
-                    handleTopKeywords('top50')
-                  }}
-                >
-                  <span style={{ color: topKeyword === 'top50' ? 'white' : '#626376' }}>Top 50</span>
-                </Button>
-                <Button
-                  variant='contained'
-                  color={topKeyword === 'top100' ? 'warning' : 'inherit'}
-                  size='medium'
-                  sx={{ marginRight: '20px', color: 'black' }}
-                  onClick={() => {
-                    handleTopKeywords('top100')
-                  }}
-                >
-                  <span style={{ color: topKeyword === 'top100' ? 'white' : '#626376' }}>Top 100</span>
-                </Button>
-                <Button
-                  variant='contained'
-                  color={topKeyword === 'all' ? 'warning' : 'inherit'}
-                  size='medium'
-                  sx={{ marginRight: '20px', color: 'black' }}
-                  onClick={() => {
-                    handleTopKeywords('all')
-                  }}
-                >
-                  <span style={{ color: topKeyword === 'all' ? 'white' : '#626376' }}>ALL</span>{' '}
-                </Button>
-              </Grid>
+        <Grid container spacing={2} mt={1}>
+          <Grid container spacing={3} mt={2}>
+            <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end', overflowX: 'auto' }}>
+              <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
+              <Button
+                variant='contained'
+                color={topKeyword === 'top10' ? 'warning' : 'inherit'}
+                size='medium'
+                sx={{ marginRight: '20px' }}
+                onClick={() => {
+                  handleTopKeywords('top10')
+                }}
+              >
+                <span style={{ color: topKeyword === 'top10' ? 'white' : '#626376' }}>Top 10</span>
+              </Button>
+              <Button
+                variant='contained'
+                color={topKeyword === 'top20' ? 'warning' : 'inherit'}
+                size='medium'
+                sx={{ marginRight: '20px', color: 'black' }}
+                onClick={() => {
+                  handleTopKeywords('top20')
+                }}
+              >
+                <span style={{ color: topKeyword === 'top20' ? 'white' : '#626376' }}>Top 20</span>
+              </Button>
+              <Button
+                variant='contained'
+                color={topKeyword === 'top50' ? 'warning' : 'inherit'}
+                size='medium'
+                sx={{ marginRight: '20px', color: 'black' }}
+                onClick={() => {
+                  handleTopKeywords('top50')
+                }}
+              >
+                <span style={{ color: topKeyword === 'top50' ? 'white' : '#626376' }}>Top 50</span>
+              </Button>
+              <Button
+                variant='contained'
+                color={topKeyword === 'top100' ? 'warning' : 'inherit'}
+                size='medium'
+                sx={{ marginRight: '20px', color: 'black' }}
+                onClick={() => {
+                  handleTopKeywords('top100')
+                }}
+              >
+                <span style={{ color: topKeyword === 'top100' ? 'white' : '#626376' }}>Top 100</span>
+              </Button>
+              <Button
+                variant='contained'
+                color={topKeyword === 'all' ? 'warning' : 'inherit'}
+                size='medium'
+                sx={{ marginRight: '20px', color: 'black' }}
+                onClick={() => {
+                  handleTopKeywords('all')
+                }}
+              >
+                <span style={{ color: topKeyword === 'all' ? 'white' : '#626376' }}>ALL</span>{' '}
+              </Button>
             </Grid>
-            <Grid item xs={12} id='chart4'>
-              {apiParams ? (
-                <EngagementMonitoring
-                  topKeyword={topKeyword}
-                  params={params}
-                  chartId='Chart 4'
-                  highlight={highlight === 'chart4' ? true : false}
-                  page={page}
-                  setPage={setPage}
-                  pageCount={pageCount}
-                  setPageCount={setPageCount}
-                  apiParams={apiParams}
-                />
-              ) : (
-                ''
-              )}
-            </Grid>
-          </>
+          </Grid>
+          <Grid item xs={12} id='chart4'>
+            {apiParams ? (
+              <EngagementMonitoring
+                topKeyword={topKeyword}
+                params={params}
+                chartId='Chart 4'
+                highlight={highlight === 'chart4' ? true : false}
+                page={page}
+                setPage={setPage}
+                pageCount={pageCount}
+                setPageCount={setPageCount}
+                apiParams={apiParams}
+              />
+            ) : (
+              ''
+            )}
+          </Grid>
+        </Grid>
 
         {/* <QuickView setHighlight={setHighlight} setShowQuickView={setShowQuickView} />
         <QuickViewModal

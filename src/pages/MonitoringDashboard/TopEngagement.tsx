@@ -55,9 +55,7 @@ const TopEngagement = (props: MessageData) => {
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        height: '400px',
         width: '100%',
-        marginTop: '40px'
       }}
     >
       <IconButton onClick={handlePrevPage} sx={{ margin: 5 }} disabled={currentPage === 0}>
