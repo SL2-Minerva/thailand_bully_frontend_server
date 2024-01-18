@@ -78,7 +78,6 @@ const EngagementMonitoring = ({
     // if (resultSummary?.total > 0) {
     //   setPageCount(Math.ceil(resultSummary?.total / 10))
     // }
-    console.log('result Summary', resultSummary)
     if (resultSummary?.length > 0) {
       setPageCount(Math.ceil(resultSummary?.length / 10))
     }
