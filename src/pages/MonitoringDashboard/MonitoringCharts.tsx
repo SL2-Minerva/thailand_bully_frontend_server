@@ -135,44 +135,44 @@ const MonitoringCharts = (data: Props) => {
         </Grid>
 
         <Grid item xs={12}>
-            <Paper id='chart10' sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
-              <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                <CardHeader
-                  title={<Translations text='Top 5 Engagement of Post Monitoring' />}
-                  titleTypographyProps={{ variant: 'h6'}}
+          <Paper id='chart10' sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
+            <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+              <CardHeader
+                title={<Translations text='Top 5 Engagement of Post Monitoring' />}
+                titleTypographyProps={{ variant: 'h6' }}
+              />
+              <StyledTooltip
+                arrow
+                title={
+                  <span>
+                    <Typography variant='h6' sx={{ color: 'white' }}>
+                      <Translations text='Top 5 Engagement' />
+                    </Typography>
+                    <Typography variant='body2' sx={{ color: 'white' }}>
+                      {/* <Translations text='sentimentChart10Description' /> */}
+                    </Typography>
+                  </span>
+                }
+              >
+                <Information
+                  style={{
+                    marginTop: '22px',
+                    fontSize: '29px'
+                  }}
                 />
-                <StyledTooltip
-                  arrow
-                  title={
-                    <span>
-                      <Typography variant='h6' sx={{ color: 'white' }}>
-                        <Translations text='Top 5 Engagement' />
-                      </Typography>
-                      <Typography variant='body2' sx={{ color: 'white' }}>
-                        {/* <Translations text='sentimentChart10Description' /> */}
-                      </Typography>
-                    </span>
-                  }
-                >
-                  <Information
-                    style={{
-                      marginTop: '22px',
-                      fontSize: '29px'
-                    }}
-                  />
-                </StyledTooltip>
-              </span>
-            </Paper>
-          </Grid>
+              </StyledTooltip>
+            </span>
 
-        <Grid id='chart3' item xs={12} md={12} mt={1}>
-          <TopEngagement
-            params={apiParams}
-            highlight={highlight === 'chart3' ? true : false}
-            chartId='chart 3'
-            resultTopEngagement={resultTopEngagement}
-            loadingTopEngagement={loadingTopEngagement}
-          />
+            <Grid id='chart3' item xs={12} md={12} mt={1} mb={7}>
+              <TopEngagement
+                params={apiParams}
+                highlight={highlight === 'chart3' ? true : false}
+                chartId='chart 3'
+                resultTopEngagement={resultTopEngagement}
+                loadingTopEngagement={loadingTopEngagement}
+              />
+            </Grid>
+          </Paper>
         </Grid>
 
         <Grid container spacing={2} mt={1}>
