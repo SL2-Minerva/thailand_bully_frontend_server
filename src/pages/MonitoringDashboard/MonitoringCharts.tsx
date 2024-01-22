@@ -1,8 +1,20 @@
 import { useEffect, useState } from 'react'
-import { Backdrop, Button, CardHeader, CircularProgress, Grid, Paper, Typography, useTheme } from '@mui/material'
+import {
+  Backdrop,
+  Button,
+  CardHeader,
+  CircularProgress,
+  Grid,
+  LinearProgress,
+  Paper,
+  Typography,
+  useTheme
+} from '@mui/material'
 import {
   GetDailyMonitoring,
-  GetTopEngagementMonitoring
+  GetInfluencersSocialMedia,
+  GetTopEngagementMonitoring,
+  GetTopFiveInfluencers
 } from 'src/services/api/dashboards/monitoring/MonitoringDashboard'
 import DailyPercentage from './DailyPercentage'
 import DailyMessagesChart from './DailyMessagesChart'
@@ -13,6 +25,8 @@ import EngagementMonitoring from './EngagementMonitoring'
 import Translations from 'src/layouts/components/Translations'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
+import TopFiveInfluencer from './TopFiveInfluencers'
+import InfluencerSocialMedia from './InfluencerSocialMedia'
 
 interface Props {
   params: any
@@ -25,6 +39,8 @@ const MonitoringCharts = (data: Props) => {
   const [apiParams, setApiParams] = useState<any>()
   const [isLoading, setIsLoading] = useState(false)
   const [topKeyword, setTopKeyword] = useState<string>('all')
+  const [topKeywordInfluencer, setTopKeywordInfluencer] = useState<string>('all')
+
   const [page, setPage] = useState(1)
   const [pageCount, setPageCount] = useState<number>(1)
 
@@ -43,6 +59,11 @@ const MonitoringCharts = (data: Props) => {
 
   const { resultTopEngagement, loadingTopEngagement } = GetTopEngagementMonitoring(apiParams)
   const { resultDailyMonitoring, loadingDailyMonitoring } = GetDailyMonitoring(apiParams)
+  const { resultTopFiveInfluencers, loadingTopFiveInfluencers } = GetTopFiveInfluencers(apiParams)
+  const { resultInfluencers, loadingInfluencers, total } = GetInfluencersSocialMedia(apiParams, topKeywordInfluencer)
+
+  const [pageInfluencer, setPageInfluencer] = useState(0)
+  const [pageCountInfluencer, setPageCountInfluencer] = useState<number>(0)
 
   //   const quickViewData = {
   //     resultFilterData: resultFilterData,
@@ -67,6 +88,20 @@ const MonitoringCharts = (data: Props) => {
   const handleTopKeywords = (data: string) => {
     setTopKeyword(data)
   }
+
+  const handleKeywords = (data: string) => {
+    setTopKeywordInfluencer(data)
+  }
+
+  const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPageInfluencer(value - 1)
+  }
+
+  useEffect(() => {
+    if (total > 0) {
+      setPageCountInfluencer(Math.ceil(total / 10))
+    }
+  }, [total])
 
   useEffect(() => {
     if (params?.period !== 'customrange') {
@@ -175,84 +210,203 @@ const MonitoringCharts = (data: Props) => {
           </Paper>
         </Grid>
 
-        <Grid container spacing={2} mt={1}>
-          <Grid container spacing={3} mt={2}>
-            <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end', overflowX: 'auto' }}>
-              <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
-              <Button
-                variant='contained'
-                color={topKeyword === 'top10' ? 'warning' : 'inherit'}
-                size='medium'
-                sx={{ marginRight: '20px' }}
-                onClick={() => {
-                  handleTopKeywords('top10')
-                }}
-              >
-                <span style={{ color: topKeyword === 'top10' ? 'white' : '#626376' }}>Top 10</span>
-              </Button>
-              <Button
-                variant='contained'
-                color={topKeyword === 'top20' ? 'warning' : 'inherit'}
-                size='medium'
-                sx={{ marginRight: '20px', color: 'black' }}
-                onClick={() => {
-                  handleTopKeywords('top20')
-                }}
-              >
-                <span style={{ color: topKeyword === 'top20' ? 'white' : '#626376' }}>Top 20</span>
-              </Button>
-              <Button
-                variant='contained'
-                color={topKeyword === 'top50' ? 'warning' : 'inherit'}
-                size='medium'
-                sx={{ marginRight: '20px', color: 'black' }}
-                onClick={() => {
-                  handleTopKeywords('top50')
-                }}
-              >
-                <span style={{ color: topKeyword === 'top50' ? 'white' : '#626376' }}>Top 50</span>
-              </Button>
-              <Button
-                variant='contained'
-                color={topKeyword === 'top100' ? 'warning' : 'inherit'}
-                size='medium'
-                sx={{ marginRight: '20px', color: 'black' }}
-                onClick={() => {
-                  handleTopKeywords('top100')
-                }}
-              >
-                <span style={{ color: topKeyword === 'top100' ? 'white' : '#626376' }}>Top 100</span>
-              </Button>
-              <Button
-                variant='contained'
-                color={topKeyword === 'all' ? 'warning' : 'inherit'}
-                size='medium'
-                sx={{ marginRight: '20px', color: 'black' }}
-                onClick={() => {
-                  handleTopKeywords('all')
-                }}
-              >
-                <span style={{ color: topKeyword === 'all' ? 'white' : '#626376' }}>ALL</span>{' '}
-              </Button>
-            </Grid>
+        {/* <Grid container spacing={2} mt={1}> */}
+        <Grid container spacing={3} mt={2}>
+          <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end', overflowX: 'auto' }}>
+            <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
+            <Button
+              variant='contained'
+              color={topKeyword === 'top10' ? 'warning' : 'inherit'}
+              size='medium'
+              sx={{ marginRight: '20px' }}
+              onClick={() => {
+                handleTopKeywords('top10')
+              }}
+            >
+              <span style={{ color: topKeyword === 'top10' ? 'white' : '#626376' }}>Top 10</span>
+            </Button>
+            <Button
+              variant='contained'
+              color={topKeyword === 'top20' ? 'warning' : 'inherit'}
+              size='medium'
+              sx={{ marginRight: '20px', color: 'black' }}
+              onClick={() => {
+                handleTopKeywords('top20')
+              }}
+            >
+              <span style={{ color: topKeyword === 'top20' ? 'white' : '#626376' }}>Top 20</span>
+            </Button>
+            <Button
+              variant='contained'
+              color={topKeyword === 'top50' ? 'warning' : 'inherit'}
+              size='medium'
+              sx={{ marginRight: '20px', color: 'black' }}
+              onClick={() => {
+                handleTopKeywords('top50')
+              }}
+            >
+              <span style={{ color: topKeyword === 'top50' ? 'white' : '#626376' }}>Top 50</span>
+            </Button>
+            <Button
+              variant='contained'
+              color={topKeyword === 'top100' ? 'warning' : 'inherit'}
+              size='medium'
+              sx={{ marginRight: '20px', color: 'black' }}
+              onClick={() => {
+                handleTopKeywords('top100')
+              }}
+            >
+              <span style={{ color: topKeyword === 'top100' ? 'white' : '#626376' }}>Top 100</span>
+            </Button>
+            <Button
+              variant='contained'
+              color={topKeyword === 'all' ? 'warning' : 'inherit'}
+              size='medium'
+              sx={{ marginRight: '20px', color: 'black' }}
+              onClick={() => {
+                handleTopKeywords('all')
+              }}
+            >
+              <span style={{ color: topKeyword === 'all' ? 'white' : '#626376' }}>ALL</span>{' '}
+            </Button>
           </Grid>
-          <Grid item xs={12} id='chart4'>
-            {apiParams ? (
-              <EngagementMonitoring
-                topKeyword={topKeyword}
-                params={params}
-                chartId='Chart 4'
-                highlight={highlight === 'chart4' ? true : false}
-                page={page}
-                setPage={setPage}
-                pageCount={pageCount}
-                setPageCount={setPageCount}
-                apiParams={apiParams}
+        </Grid>
+        <Grid item xs={12} id='chart4'>
+          {apiParams ? (
+            <EngagementMonitoring
+              topKeyword={topKeyword}
+              params={params}
+              chartId='Chart 4'
+              highlight={highlight === 'chart4' ? true : false}
+              page={page}
+              setPage={setPage}
+              pageCount={pageCount}
+              setPageCount={setPageCount}
+              apiParams={apiParams}
+            />
+          ) : (
+            ''
+          )}
+        </Grid>
+        {/* </Grid> */}
+
+        <Grid item xs={12}>
+          <Paper id='chart10' sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
+            {loadingTopFiveInfluencers && <LinearProgress style={{ width: '100%' }} />}
+            <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+              <CardHeader
+                title={<Translations text='Top 5 Infulencer by Social Media' />}
+                titleTypographyProps={{ variant: 'h6' }}
+              />
+              <StyledTooltip
+                arrow
+                title={
+                  <span>
+                    <Typography variant='h6' sx={{ color: 'white' }}>
+                      <Translations text='Top 5 Influencer by Social Media' />
+                    </Typography>
+                    <Typography variant='body2' sx={{ color: 'white' }}>
+                      {/* <Translations text='sentimentChart10Description' /> */}
+                    </Typography>
+                  </span>
+                }
+              >
+                <Information
+                  style={{
+                    marginTop: '22px',
+                    fontSize: '29px'
+                  }}
+                />
+              </StyledTooltip>
+            </span>
+          </Paper>
+          <Grid id='chart5' item xs={12} md={12} mt={3} mb={7}>
+            {resultTopFiveInfluencers ? (
+              <TopFiveInfluencer
+                params={apiParams}
+                highlight={highlight === 'chart5' ? true : false}
+                chartId='chart 5'
+                resultTopFiveInfluencer={resultTopFiveInfluencers}
+                loadingTopFiveInfluencer={loadingTopFiveInfluencers}
               />
             ) : (
               ''
             )}
           </Grid>
+        </Grid>
+
+        <Grid container spacing={3} mt={2}>
+          <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end', overflowX: 'auto' }}>
+            <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
+            <Button
+              variant='contained'
+              color={topKeywordInfluencer === 'top10' ? 'warning' : 'inherit'}
+              size='medium'
+              sx={{ marginRight: '20px' }}
+              onClick={() => {
+                handleKeywords('top10')
+              }}
+            >
+              <span style={{ color: topKeywordInfluencer === 'top10' ? 'white' : '#626376' }}>Top 10</span>
+            </Button>
+            <Button
+              variant='contained'
+              color={topKeywordInfluencer === 'top20' ? 'warning' : 'inherit'}
+              size='medium'
+              sx={{ marginRight: '20px', color: 'black' }}
+              onClick={() => {
+                handleKeywords('top20')
+              }}
+            >
+              <span style={{ color: topKeywordInfluencer === 'top20' ? 'white' : '#626376' }}>Top 20</span>
+            </Button>
+            <Button
+              variant='contained'
+              color={topKeywordInfluencer === 'top50' ? 'warning' : 'inherit'}
+              size='medium'
+              sx={{ marginRight: '20px', color: 'black' }}
+              onClick={() => {
+                handleKeywords('top50')
+              }}
+            >
+              <span style={{ color: topKeywordInfluencer === 'top50' ? 'white' : '#626376' }}>Top 50</span>
+            </Button>
+            <Button
+              variant='contained'
+              color={topKeywordInfluencer === 'top100' ? 'warning' : 'inherit'}
+              size='medium'
+              sx={{ marginRight: '20px', color: 'black' }}
+              onClick={() => {
+                handleKeywords('top100')
+              }}
+            >
+              <span style={{ color: topKeywordInfluencer === 'top100' ? 'white' : '#626376' }}>Top 100</span>
+            </Button>
+            <Button
+              variant='contained'
+              color={topKeywordInfluencer === 'all' ? 'warning' : 'inherit'}
+              size='medium'
+              sx={{ marginRight: '20px', color: 'black' }}
+              onClick={() => {
+                handleKeywords('all')
+              }}
+            >
+              <span style={{ color: topKeywordInfluencer === 'all' ? 'white' : '#626376' }}>ALL</span>{' '}
+            </Button>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Paper sx={{ mb: 3 }}>
+            <InfluencerSocialMedia
+              resultInfluencer={resultInfluencers}
+              loading={loadingInfluencers}
+              pageCountInfluencer={pageCountInfluencer}
+              pageInfluencer={pageInfluencer}
+              handleChangePagination={handleChangePagination}
+              total={total}
+            />
+          </Paper>
         </Grid>
 
         {/* <QuickView setHighlight={setHighlight} setShowQuickView={setShowQuickView} />

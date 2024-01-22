@@ -5,8 +5,9 @@ import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import Translations from 'src/layouts/components/Translations'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { GetEngagementPostMonitoring } from 'src/services/api/dashboards/monitoring/MonitoringDashboard'
+import DetailPostEgagement from './DetailPostEngagement'
 
 // import { Box, LinearProgress, Pagination, Typography, Paper } from '@mui/material'
 
@@ -40,7 +41,7 @@ const EngagementMonitoring = ({
       headerAlign: 'center'
     },
     {
-      field: 'message_detail',
+      field: 'full_message',
       headerName: 'Message Detail',
       flex: 1,
       headerAlign: 'center'
@@ -48,7 +49,7 @@ const EngagementMonitoring = ({
       //   valueGetter: (params: GridValueGetterParams) => `${params.row.total?.toLocaleString('en-US')}`
     },
     { field: 'post_time', headerName: 'Post Time', flex: 1, headerAlign: 'center' },
-    { field: 'engagement', headerName: 'Engagement', flex: 1, headerAlign: 'center' },
+    { field: 'total_engagement', headerName: 'Total Engagement', flex: 1, headerAlign: 'center' },
     { field: 'sentiment', headerName: 'Sentiment', flex: 1, headerAlign: 'center' },
 
     {
@@ -69,15 +70,26 @@ const EngagementMonitoring = ({
   ]
 
   const { resultSummary, loadingSummary } = GetEngagementPostMonitoring(apiParams, topKeyword, page)
+  const [showDetail, setShowDetail] = useState<boolean>(false)
+  const [messageId, setMessageId] = useState<string>('')
 
   //   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
   //     setPage(value)
   //   }
 
+  const handleRowClick = (
+    params: any // GridRowParams
+    // event: any, // MuiEvent<React.MouseEvent<HTMLElement>>
+    // details: any // GridCallbackDetails
+  ) => {
+    const message_id = params?.row?.id
+    if (message_id) {
+      setShowDetail(true)
+      setMessageId(message_id)
+    }
+  }
+
   useEffect(() => {
-    // if (resultSummary?.total > 0) {
-    //   setPageCount(Math.ceil(resultSummary?.total / 10))
-    // }
     if (resultSummary?.length > 0) {
       setPageCount(Math.ceil(resultSummary?.length / 10))
     }
@@ -127,6 +139,7 @@ const EngagementMonitoring = ({
                   justifyContent: 'center'
                 }
               }}
+              onRowClick={handleRowClick}
             />
           </>
         ) : (
@@ -157,6 +170,12 @@ const EngagementMonitoring = ({
           )}
         </Box> */}
       </CardContent>
+
+      {showDetail && messageId ? (
+        <DetailPostEgagement show={showDetail} setShow={setShowDetail} messageId={messageId} params={apiParams} />
+      ) : (
+        ''
+      )}
     </Paper>
   )
 }
