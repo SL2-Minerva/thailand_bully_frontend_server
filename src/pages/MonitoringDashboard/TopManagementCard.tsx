@@ -33,26 +33,51 @@ import { CommentOutline, LinkVariant, ShareVariantOutline, ThumbUpOutline } from
 interface CardInfo {
   resultTopEngagement: any
   loadingTopEngagement: boolean
+  result_source_list?: any
 }
 
 const TopManagementCard = (props: CardInfo) => {
-  const { resultTopEngagement, loadingTopEngagement } = props
+  const { resultTopEngagement, loadingTopEngagement, result_source_list } = props
   const imgPath = gitHubIcon
 
+  const [sourceName, setSourceName] = React.useState('')
+  const [showFullMessage, setShowFullMessage] = React.useState(false)
+
   const sourceIcon =
-    resultTopEngagement.source_name === 'facebook'
+    resultTopEngagement?.source_name || sourceName === 'facebook'
       ? FacebookIcon
-      : resultTopEngagement.source_name === 'twitter'
+      : resultTopEngagement.source_name || sourceName === 'twitter'
       ? TwitterIcon
-      : resultTopEngagement.source_name === 'instagram'
+      : resultTopEngagement.source_name || sourceName === 'instagram'
       ? InstagramIcon
-      : resultTopEngagement.source_name === 'youtube'
+      : resultTopEngagement.source_name || sourceName === 'youtube'
       ? YoutubeIcon
-      : resultTopEngagement.source_name === 'pantip'
+      : resultTopEngagement.source_name || sourceName === 'pantip'
       ? PantipIcon
-      : resultTopEngagement.source_name === 'google'
+      : resultTopEngagement.source_name || sourceName === 'google'
       ? googleIcon
-      : FacebookIcon
+      : '/images/NoImage.png'
+
+  const getSourceName = (sourceId: number) => {
+    if (result_source_list) {
+      for (let i = 0; i < result_source_list?.length; i++) {
+        if (result_source_list[i].id === sourceId) {
+          return result_source_list[i]?.name
+        }
+      }
+
+      return ''
+    }
+  }
+
+  React.useEffect(() => {
+    if (resultTopEngagement?.source_id) {
+      const source_name = getSourceName(resultTopEngagement?.source_id)
+      setShowFullMessage(true)
+
+      setSourceName(source_name)
+    }
+  }, [resultTopEngagement?.source_id])
 
   return (
     <Card sx={{ minHeight: '335px' }}>
@@ -83,17 +108,21 @@ const TopManagementCard = (props: CardInfo) => {
         </Grid>
 
         <Typography variant='body2' color='text.secondary' mt={4}>
-          <span
-            style={{
-              overflow: 'hidden',
-              display: '-webkit-box',
-              WebkitBoxOrient: 'vertical',
-              WebkitLineClamp: 3,
-              maxWidth: '400px'
-            }}
-          >
-            {resultTopEngagement.message_detail}
-          </span>
+          {showFullMessage ? (
+            <>{resultTopEngagement.message_detail}</>
+          ) : (
+            <span
+              style={{
+                overflow: 'hidden',
+                display: '-webkit-box',
+                WebkitBoxOrient: 'vertical',
+                WebkitLineClamp: 3,
+                maxWidth: '400px'
+              }}
+            >
+              {resultTopEngagement.message_detail}
+            </span>
+          )}
         </Typography>
 
         <Box sx={{ maxWidth: '400px', display: 'flex', justifyContent: 'center', mt: 3 }}>

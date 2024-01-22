@@ -33,9 +33,7 @@ const getParams = (data: any) => {
   return params
 }
 
-export const GetDailyMonitoring = (
-    params : any
-) => {
+export const GetDailyMonitoring = (params: any) => {
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-monitoring/daily-by`,
     method: 'GET',
@@ -49,9 +47,7 @@ export const GetDailyMonitoring = (
   }
 }
 
-export const GetTopEngagementMonitoring = (
-    params : any
-) => {
+export const GetTopEngagementMonitoring = (params: any) => {
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-monitoring/top-engagement`,
     method: 'GET',
@@ -87,3 +83,59 @@ export const GetEngagementPostMonitoring = (params: any, select?: any, page?: nu
   }
 }
 
+export const EngagementDetails = (messageId: string) => {
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-monitoring/post-detail`,
+    method: 'GET',
+    params: {
+      message_id: messageId
+
+      // message_id : '1743293708840407247',
+      // message_id: 'qu1kh08-3gI',
+      // ...params,
+    }
+  })
+
+  return {
+    resultEngagementDetail: res?.data || null,
+    loadingEngagementDetail: loading,
+    errorEngagementDetail: error
+  }
+}
+
+export const GetTopFiveInfluencers = (params: any) => {
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-monitoring/influencers/top`,
+    method: 'GET',
+    params: getParams(params)
+  })
+
+  return {
+    resultTopFiveInfluencers: res || null,
+    loadingTopFiveInfluencers: loading,
+    errorTopFiveInfluencers: error
+  }
+}
+
+export const GetInfluencersSocialMedia = (params: any, select?: string, page?: number) => {
+  if (params && select) {
+    params.select = select
+  }
+
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-monitoring/influencers`,
+    method: 'GET',
+    params: {
+      ...params,
+      page: page,
+      limit: 10
+    }
+  })
+
+  return {
+    resultInfluencers: res?.data || null,
+    loadingInfluencers: loading,
+    total: res?.data?.length || 0,
+    errorInfluencers: error
+  }
+}

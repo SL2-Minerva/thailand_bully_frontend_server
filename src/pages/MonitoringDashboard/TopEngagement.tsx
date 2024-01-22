@@ -5,6 +5,7 @@ import Slide from '@mui/material/Slide'
 import Stack from '@mui/material/Stack'
 import { ChevronLeft, ChevronRight } from 'mdi-material-ui'
 import TopManagementCard from './TopManagementCard'
+import DetailPostEgagement from './DetailPostEngagement'
 
 interface MessageData {
   params: any
@@ -21,15 +22,27 @@ const TopEngagement = (props: MessageData) => {
   const [cards, setCards] = useState<React.ReactElement[]>([])
   const [currentPage, setCurrentPage] = useState(0)
   const [slideDirection, setSlideDirection] = useState<'right' | 'left' | undefined>('left')
+  const [showDetail, setShowDetail] = useState<boolean>(false)
+  const [messageId, setMessageId] = useState<string>('')
 
   const cardsPerPage = 3
 
+  const handleClick = (message_id: string) => {
+    console.log('message Id', message_id);
+    if (message_id) {
+      setShowDetail(true)
+      setMessageId(message_id)
+    }
+  }
+
   const duplicateCards: React.ReactElement[] = Array.from({ length: resultTopEngagement?.length || 0 }, (_, i) => (
-    <TopManagementCard
-      key={i}
-      loadingTopEngagement={loadingTopEngagement}
-      resultTopEngagement={resultTopEngagement[i]}
-    />
+    <span key={i} onClick={() => handleClick(resultTopEngagement[i]?.id)}>
+      <TopManagementCard
+        key={i}
+        loadingTopEngagement={loadingTopEngagement}
+        resultTopEngagement={resultTopEngagement[i]}
+      />
+    </span>
   ))
 
   const handleNextPage = () => {
@@ -55,7 +68,7 @@ const TopEngagement = (props: MessageData) => {
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        width: '100%',
+        width: '100%'
       }}
     >
       <IconButton onClick={handlePrevPage} sx={{ margin: 5 }} disabled={currentPage === 0}>
@@ -108,6 +121,12 @@ const TopEngagement = (props: MessageData) => {
       >
         <ChevronRight />
       </IconButton>
+
+      {showDetail && messageId ? (
+        <DetailPostEgagement show={showDetail} setShow={setShowDetail} messageId={messageId} />
+      ) : (
+        ''
+      )}
     </Box>
   )
 }
