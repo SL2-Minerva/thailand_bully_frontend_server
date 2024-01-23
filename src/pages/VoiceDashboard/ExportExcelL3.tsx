@@ -18,10 +18,11 @@ interface Props {
   fileName: string
   apiPath: string
   onCloseDialog: any
+  select?: string
 }
 
 const ExportExcelL3 = (props: Props) => {
-  const { params, setIsLoading, apiParams, reportNo, fileName, apiPath, onCloseDialog } = props
+  const { params, setIsLoading, apiParams, reportNo, fileName, apiPath, onCloseDialog, select } = props
 
   const [paramsData, setParamsData] = useState<any>()
 
@@ -61,7 +62,9 @@ const ExportExcelL3 = (props: Props) => {
     if (params) {
       let paramData: any = {}
       const todayDate = new Date()
-
+      if (params && select) {
+        params.select = select
+      }
       if (
         params?.period === 'customrange' &&
         params?.previousDate !== todayDate &&
@@ -92,6 +95,9 @@ const ExportExcelL3 = (props: Props) => {
           // classification_id: paramsId?.classification_id || '',
           // organization_id: paramsId?.organization_id || ''
         }
+      }
+      if (params.select) {
+        paramData.select = params.select
       }
       setParamsData(paramData)
     }

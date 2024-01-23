@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Avatar, Grid, Paper, Typography } from '@mui/material'
 
 interface MessageData {
@@ -10,6 +10,7 @@ interface MessageData {
 }
 import { FacebookIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon, googleIcon } from 'src/utils/const'
 import SentimentLevelGraph from './SentimentLevelGraph'
+import InfluencerDetail from './InfluencerDetail'
 
 export const getSourceIcon = (sourceName: string) => {
   const sourceIcon =
@@ -31,7 +32,15 @@ export const getSourceIcon = (sourceName: string) => {
 }
 
 const TopFiveInfluencer = (props: MessageData) => {
-  const { resultTopFiveInfluencer } = props
+  const { resultTopFiveInfluencer, params } = props
+
+  const [accountName, setAccountName] = useState<string>('')
+  const [showDetail, setShowDetail] = useState<boolean>(false)
+
+  const handleOnClick = (name: string) => {
+    setAccountName(name)
+    setShowDetail(true)
+  }
 
   return (
     <Grid container spacing={2} pl={3}>
@@ -40,7 +49,11 @@ const TopFiveInfluencer = (props: MessageData) => {
           <>
             {index < 5 ? (
               <Grid xs={6} md={2.4} key={index} p={2}>
-                <Paper>
+                <Paper
+                  onClick={() => {
+                    handleOnClick(influencer.account_name)
+                  }}
+                >
                   <Grid display='flex' justifyContent='center'>
                     <Avatar sx={{ width: 80, height: 80 }}>
                       <img src={influencer?.cover_image || '/images/NoImage.png'} width={80} height={80} alt='' />
@@ -91,6 +104,21 @@ const TopFiveInfluencer = (props: MessageData) => {
           </>
         )
       })}
+
+      {showDetail && accountName ? (
+        <InfluencerDetail
+          show={showDetail}
+          setShow={setShowDetail}
+          params={params}
+          keywordId={accountName}
+          setKeywordId={setAccountName}
+          reportNo={''}
+          title='Post Detail by Influencer'
+          networkTitle=''
+        />
+      ) : (
+        ''
+      )}
     </Grid>
   )
 }

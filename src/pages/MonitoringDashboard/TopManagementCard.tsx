@@ -41,7 +41,8 @@ const TopManagementCard = (props: CardInfo) => {
   const imgPath = gitHubIcon
 
   const [sourceName, setSourceName] = React.useState('')
-  const [showFullMessage, setShowFullMessage] = React.useState(false)
+
+  // const [showFullMessage, setShowFullMessage] = React.useState(false)
 
   const sourceIcon =
     resultTopEngagement?.source_name || sourceName === 'facebook'
@@ -73,7 +74,8 @@ const TopManagementCard = (props: CardInfo) => {
   React.useEffect(() => {
     if (resultTopEngagement?.source_id) {
       const source_name = getSourceName(resultTopEngagement?.source_id)
-      setShowFullMessage(true)
+      
+      // setShowFullMessage(true)
 
       setSourceName(source_name)
     }
@@ -108,9 +110,7 @@ const TopManagementCard = (props: CardInfo) => {
         </Grid>
 
         <Typography variant='body2' color='text.secondary' mt={4}>
-          {showFullMessage ? (
-            <>{resultTopEngagement.message_detail}</>
-          ) : (
+          <Box sx={{ minHeight: '70px', maxHeight: '70px' }}>
             <span
               style={{
                 overflow: 'hidden',
@@ -122,7 +122,7 @@ const TopManagementCard = (props: CardInfo) => {
             >
               {resultTopEngagement.message_detail}
             </span>
-          )}
+          </Box>
         </Typography>
 
         <Box sx={{ maxWidth: '400px', display: 'flex', justifyContent: 'center', mt: 3 }}>

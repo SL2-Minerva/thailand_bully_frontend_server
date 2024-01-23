@@ -1,16 +1,7 @@
 import React, { forwardRef, ReactElement, Ref } from 'react'
 
 import Fade, { FadeProps } from '@mui/material/Fade'
-import {
-  Box,
-  Card,
-  Dialog,
-  DialogContent,
-  Grid,
-  IconButton,
-  LinearProgress,
-  Typography
-} from '@mui/material'
+import { Box, Card, Dialog, DialogContent, Grid, IconButton, LinearProgress, Typography } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
 import Translations from 'src/layouts/components/Translations'
 import { DataGrid } from '@mui/x-data-grid'
@@ -149,8 +140,8 @@ const DetailPostEgagement = (props: DialogInfoProps) => {
             </Typography>
           </Box>
 
-          <Grid container spacing={2} sx={{maxHeight: 600, overflow: 'auto'}}>
-            <Grid item xs={12} md={4} mt={2}>
+          <Grid container spacing={2} sx={{ maxHeight: 650, overflow: 'auto' }}>
+            <Grid item xs={12} md={4} mt={2} mb={4}>
               {resultEngagementDetail ? (
                 <TopManagementCard
                   key={messageId}
@@ -162,10 +153,27 @@ const DetailPostEgagement = (props: DialogInfoProps) => {
                 ''
               )}
             </Grid>
-            <Grid item xs={8} sx={{maxHeight: 600, overflow: 'auto'}}>
+            <Grid item xs={8} sx={{ maxHeight: 650, overflow: 'auto' }}>
               {(resultEngagementDetail?.comments || []).map((comment: any, index: number) => (
-                <CommentDetail key={index} loadingTopEngagement={loadingEngagementDetail} comment={comment}/>
+                <CommentDetail key={index} loadingTopEngagement={loadingEngagementDetail} comment={comment} />
               ))}
+
+              {resultEngagementDetail?.comments?.length === 0 ? (
+                <Typography
+                  variant='h6'
+                  sx={{
+                    color: 'rgba(76, 78, 100, 0.42)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    padding: '180px 0'
+                  }}
+                >
+                  {' '}
+                  There is no comments
+                </Typography>
+              ) : (
+                ''
+              )}
             </Grid>
           </Grid>
         </DialogContent>

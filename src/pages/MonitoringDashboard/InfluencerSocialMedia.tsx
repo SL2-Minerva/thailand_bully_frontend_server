@@ -4,6 +4,7 @@ import CardContent from '@mui/material/CardContent'
 import {
   Avatar,
   Box,
+  Button,
   Grid,
   LinearProgress,
   Pagination,
@@ -20,16 +21,24 @@ import { Information } from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
 import { getSourceIcon } from './TopFiveInfluencers'
 import SentimentLevelGraph from './SentimentLevelGraph'
+import ExportExcel from '../VoiceDashboard/ExportExcel'
+import InfluencerDetail from './InfluencerDetail'
+import { useState } from 'react'
 
 // import { ChannelColors } from 'src/utils/const'
 
 const InfluencerSocialMedia = ({
   resultInfluencer,
   loading,
-  total, 
-  pageCountInfluencer, 
-  pageInfluencer, 
-  handleChangePagination
+  total,
+  pageCountInfluencer,
+  pageInfluencer,
+  handleChangePagination,
+  setIsLoading,
+  select,
+  params,
+  apiParams,
+  setAnchorEl
 }: {
   resultInfluencer: any
   loading: boolean
@@ -37,7 +46,22 @@ const InfluencerSocialMedia = ({
   pageCountInfluencer: number
   pageInfluencer: number
   handleChangePagination: any
+  setIsLoading: any
+  params: any
+  apiParams: any
+  select: string
+  setAnchorEl: any
 }) => {
+  const [accountName, setAccountName] = useState<string>('')
+  const [showDetail, setShowDetail] = useState<boolean>(false)
+
+  const handleOnClick = (name: string) => {
+    setAccountName(name)
+    setShowDetail(true)
+  }
+
+  console.log('params', params);
+
   return (
     <>
       {loading && <LinearProgress style={{ width: '100%' }} />}
@@ -66,6 +90,19 @@ const InfluencerSocialMedia = ({
             <Information style={{ marginTop: '22px', fontSize: '29px' }} />
           </StyledTooltip>
         </span>
+
+        <Button variant='contained' color='warning' sx={{ m: 2 }} size='small'>
+          <ExportExcel
+            setIsLoading={setIsLoading}
+            params={params}
+            apiParams={apiParams}
+            reportNo={''}
+            setAnchorEl={setAnchorEl}
+            select={select}
+            fileName='Infulencer by Social Media.xlsx'
+            apiPath='/dashboard-monitoring/engagements/export'
+          />
+        </Button>
       </div>
       <CardContent id='shareOfVoices'>
         <Grid container spacing={3}>
@@ -94,7 +131,12 @@ const InfluencerSocialMedia = ({
                 <TableBody>
                   {(resultInfluencer || []).map((influencer: any, index: number) => {
                     return (
-                      <TableRow key={index}>
+                      <TableRow
+                        key={index}
+                        onClick={() => {
+                          handleOnClick(influencer.account_name)
+                        }}
+                      >
                         <TableCell sx={{ textAlign: 'center' }}>{index + 1}</TableCell>
                         <TableCell sx={{ textAlign: 'center' }}>{influencer?.account_name}</TableCell>
                         <TableCell sx={{ textAlign: 'center' }}>
@@ -115,7 +157,7 @@ const InfluencerSocialMedia = ({
                 </TableBody>
               </Table>
             </TableContainer>
-            <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center'}}>
+            <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
               {total > 0 ? (
                 <Pagination
                   count={pageCountInfluencer}
@@ -130,8 +172,22 @@ const InfluencerSocialMedia = ({
             </Box>
           </Grid>
         </Grid>
-
       </CardContent>
+
+      {showDetail && accountName ? (
+        <InfluencerDetail
+          show={showDetail}
+          setShow={setShowDetail}
+          params={params}
+          keywordId={accountName}
+          setKeywordId={setAccountName}
+          reportNo={''}
+          title='Post Detail by Influencer'
+          networkTitle=''
+        />
+      ) : (
+        ''
+      )}
     </>
   )
 }
