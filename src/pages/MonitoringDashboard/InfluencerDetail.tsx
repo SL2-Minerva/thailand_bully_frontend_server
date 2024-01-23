@@ -118,15 +118,15 @@ const InfluencerDetail = (props: DialogInfoProps) => {
   const [sortColumns, setSortColumn] = useState<any>(initialSort)
 
   const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetInfluencerByAuthor({
-    campaign_id: params?.campaign_id,
-    source: params?.source,
-    start_date: params?.start_date,
-    end_date: params?.end_date,
+    campaign_id: params?.campaign_id || params?.campaign,
+    source: params?.source || params.platformId,
+    start_date: params?.start_date || params?.date,
+    end_date: params?.end_date || params?.endDate,
     period: params?.period,
     filter_keywords: params?.filter_keywords,
     page: params?.page,
     limit: params?.limit,
-    author: keywordId,
+    author: keywordId?.toString(),
     fieldName: fieldName,
     sortSelect: sortSelect
   })

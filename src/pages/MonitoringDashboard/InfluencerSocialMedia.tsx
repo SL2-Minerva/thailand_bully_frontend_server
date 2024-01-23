@@ -22,6 +22,8 @@ import Translations from 'src/layouts/components/Translations'
 import { getSourceIcon } from './TopFiveInfluencers'
 import SentimentLevelGraph from './SentimentLevelGraph'
 import ExportExcel from '../VoiceDashboard/ExportExcel'
+import InfluencerDetail from './InfluencerDetail'
+import { useState } from 'react'
 
 // import { ChannelColors } from 'src/utils/const'
 
@@ -50,7 +52,15 @@ const InfluencerSocialMedia = ({
   select: string
   setAnchorEl: any
 }) => {
-  
+  const [accountName, setAccountName] = useState<string>('')
+  const [showDetail, setShowDetail] = useState<boolean>(false)
+
+  const handleOnClick = (name: string) => {
+    setAccountName(name)
+    setShowDetail(true)
+  }
+
+  console.log('params', params);
 
   return (
     <>
@@ -81,7 +91,7 @@ const InfluencerSocialMedia = ({
           </StyledTooltip>
         </span>
 
-        <Button variant='contained' color='warning' sx={{m:2}} size='small'>
+        <Button variant='contained' color='warning' sx={{ m: 2 }} size='small'>
           <ExportExcel
             setIsLoading={setIsLoading}
             params={params}
@@ -121,7 +131,12 @@ const InfluencerSocialMedia = ({
                 <TableBody>
                   {(resultInfluencer || []).map((influencer: any, index: number) => {
                     return (
-                      <TableRow key={index}>
+                      <TableRow
+                        key={index}
+                        onClick={() => {
+                          handleOnClick(influencer.account_name)
+                        }}
+                      >
                         <TableCell sx={{ textAlign: 'center' }}>{index + 1}</TableCell>
                         <TableCell sx={{ textAlign: 'center' }}>{influencer?.account_name}</TableCell>
                         <TableCell sx={{ textAlign: 'center' }}>
@@ -158,6 +173,21 @@ const InfluencerSocialMedia = ({
           </Grid>
         </Grid>
       </CardContent>
+
+      {showDetail && accountName ? (
+        <InfluencerDetail
+          show={showDetail}
+          setShow={setShowDetail}
+          params={params}
+          keywordId={accountName}
+          setKeywordId={setAccountName}
+          reportNo={''}
+          title='Post Detail by Influencer'
+          networkTitle=''
+        />
+      ) : (
+        ''
+      )}
     </>
   )
 }
