@@ -2,7 +2,7 @@ import * as React from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import { Avatar, Grid, LinearProgress } from '@mui/material'
+import { Avatar, Box, Grid, LinearProgress } from '@mui/material'
 import { gitHubIcon } from 'src/utils/const'
 import { CommentOutline, ShareVariantOutline, ThumbUpOutline } from 'mdi-material-ui'
 
@@ -29,9 +29,22 @@ const CommentDetail = (props: CardInfo) => {
 
           <Grid item xs={8.5}>
             <div style={{ display: 'flex' }}>
-              <Typography gutterBottom variant='body1' component='div' ml={2}>
-                {comment.account_name} - {comment.message_detail}
-              </Typography>
+              <Box sx={{ minHeight: '70px', maxHeight: '70px' }}>
+                <span
+                  style={{
+                    overflow: 'hidden',
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 3,
+                    
+                    // maxWidth: '400px'
+                  }}
+                >
+                  <Typography gutterBottom variant='body1' component='div' ml={2}>
+                    {comment.account_name} - {comment.message_detail}
+                  </Typography>
+                </span>
+              </Box>
             </div>
           </Grid>
         </Grid>
@@ -52,11 +65,13 @@ const CommentDetail = (props: CardInfo) => {
             <>
               <Typography variant='body1' sx={{ mr: 2 }}>
                 {' '}
-                <b>Sentiment: </b> {comment.sentiment}{', '}
+                <b>Sentiment: </b> {comment.sentiment}
+                {', '}
               </Typography>
               <Typography variant='body1' sx={{ mr: 2 }}>
                 {' '}
-                <b>Bully Level: </b> {comment.bully_level}{', '}
+                <b>Bully Level: </b> {comment.bully_level}
+                {', '}
               </Typography>
               <Typography variant='body1'>
                 {' '}

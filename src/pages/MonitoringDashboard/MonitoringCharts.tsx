@@ -38,11 +38,14 @@ const MonitoringCharts = (data: Props) => {
   const theme = useTheme()
   const [apiParams, setApiParams] = useState<any>()
   const [isLoading, setIsLoading] = useState(false)
-  const [topKeyword, setTopKeyword] = useState<string>('all')
-  const [topKeywordInfluencer, setTopKeywordInfluencer] = useState<string>('all')
+  const [topKeyword, setTopKeyword] = useState<string>('top10')
+  const [topKeywordInfluencer, setTopKeywordInfluencer] = useState<string>('top10')
 
   const [page, setPage] = useState(1)
   const [pageCount, setPageCount] = useState<number>(1)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  console.log(anchorEl);
 
   //   const [showQuickView, setShowQuickView] = useState<boolean>(false)
 
@@ -283,6 +286,9 @@ const MonitoringCharts = (data: Props) => {
               pageCount={pageCount}
               setPageCount={setPageCount}
               apiParams={apiParams}
+              setIsLoading={setIsLoading}
+              setAnchorEl={setAnchorEl}
+              select={topKeyword}
             />
           ) : (
             ''
@@ -405,6 +411,11 @@ const MonitoringCharts = (data: Props) => {
               pageInfluencer={pageInfluencer}
               handleChangePagination={handleChangePagination}
               total={total}
+              params={params}
+              apiParams={apiParams}
+              setIsLoading={setIsLoading}
+              select={topKeywordInfluencer}
+              setAnchorEl={setAnchorEl}
             />
           </Paper>
         </Grid>

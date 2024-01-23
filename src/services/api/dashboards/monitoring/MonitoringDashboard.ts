@@ -139,3 +139,58 @@ export const GetInfluencersSocialMedia = (params: any, select?: string, page?: n
     errorInfluencers: error
   }
 }
+
+interface DetailProps {
+  campaign_id: string
+  source: string
+  start_date: any
+  end_date: any
+  period: any
+  filter_keywords: string
+  page: number
+  limit: number
+  author: string
+  fieldName: string
+  sortSelect: string
+}
+
+export const GetInfluencerByAuthor = ({
+  campaign_id,
+  source,
+  start_date,
+  end_date,
+  period,
+  filter_keywords,
+  page,
+  limit,
+  author,
+  fieldName,
+  sortSelect
+}: DetailProps) => {
+  const params = {
+    campaign_id: campaign_id,
+    source: source,
+    start_date: start_date,
+    end_date: end_date,
+    period: period,
+    filter_keywords: filter_keywords,
+    page: page,
+    limit: limit,
+    author: author,
+    fieldName: fieldName,
+    sortSelect: sortSelect
+  }
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+    url: `/dashboard-monitoring/influencers/author`,
+    method: 'GET',
+    params: params
+  })
+
+
+  return {
+    resultMessageDetail: response?.data || null,
+    totalMessage: response?.data?.total || 0,
+    loadingMessageDetail: loading,
+    errorMessageDetail: error
+  }
+}

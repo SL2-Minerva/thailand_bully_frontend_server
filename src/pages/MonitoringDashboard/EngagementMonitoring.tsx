@@ -1,4 +1,4 @@
-import { LinearProgress, Typography, Paper } from '@mui/material'
+import { LinearProgress, Typography, Paper, Button } from '@mui/material'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
@@ -8,6 +8,7 @@ import Translations from 'src/layouts/components/Translations'
 import { useEffect, useState } from 'react'
 import { GetEngagementPostMonitoring } from 'src/services/api/dashboards/monitoring/MonitoringDashboard'
 import DetailPostEgagement from './DetailPostEngagement'
+import ExportExcel from '../VoiceDashboard/ExportExcel'
 
 // import { Box, LinearProgress, Pagination, Typography, Paper } from '@mui/material'
 
@@ -15,10 +16,12 @@ const EngagementMonitoring = ({
   page,
   setPageCount,
   apiParams,
-  topKeyword
-}: //   params
-// setPage,
-//   pageCount,
+  topKeyword,
+  params, 
+  select, 
+  setAnchorEl,
+  setIsLoading
+}:
 {
   topKeyword: string
   params: any
@@ -28,7 +31,10 @@ const EngagementMonitoring = ({
   setPage: any
   pageCount: number
   setPageCount: any
-  apiParams: any
+  apiParams: any,
+  setAnchorEl: any, 
+  select: any,
+  setIsLoading: any
 }) => {
   // const reportNo = '4.2.025'
 
@@ -98,29 +104,45 @@ const EngagementMonitoring = ({
   return (
     <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
       {loadingSummary && <LinearProgress style={{ width: '100%' }} />}
-      <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader
-          title={<Translations text='Summary Engagement of Post Monitoring' />}
-          titleTypographyProps={{ variant: 'h6' }}
-        />
-        <StyledTooltip
-          arrow
-          title={
-            <span>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <CardHeader
+            title={<Translations text='Summary Engagement of Post Monitoring' />}
+            titleTypographyProps={{ variant: 'h6' }}
+          />
+          <StyledTooltip
+            arrow
+            title={
               <span>
-                <Typography variant='h6' sx={{ color: 'white' }}>
-                  <Translations text='Engagement of Post Monitoring' />
-                </Typography>
-                <Typography variant='body2' sx={{ color: 'white' }}>
-                  <Translations text='Engagement of Post Monitoring' />
-                </Typography>
+                <span>
+                  <Typography variant='h6' sx={{ color: 'white' }}>
+                    <Translations text='Engagement of Post Monitoring' />
+                  </Typography>
+                  <Typography variant='body2' sx={{ color: 'white' }}>
+                    <Translations text='Engagement of Post Monitoring' />
+                  </Typography>
+                </span>
               </span>
-            </span>
-          }
-        >
-          <Information style={{ marginTop: '22px', fontSize: '29px' }} />
-        </StyledTooltip>
-      </span>
+            }
+          >
+            <Information style={{ marginTop: '22px', fontSize: '29px' }} />
+          </StyledTooltip>
+        </span>
+
+        <Button variant='contained' color='warning' sx={{ m: 2 }} size='small'>
+          <ExportExcel
+            setIsLoading={setIsLoading}
+            params={params}
+            apiParams={apiParams}
+            reportNo={''}
+            setAnchorEl={setAnchorEl}
+            select={select}
+            fileName='Summary Engagement of Post Monitoring.xlsx'
+            apiPath='/dashboard-monitoring/engagements/export'
+          />
+        </Button>
+      </div>
+
       <CardContent>
         {resultSummary?.length > 0 ? (
           <>
