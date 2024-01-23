@@ -122,7 +122,7 @@ export const GetInfluencersSocialMedia = (params: any, select?: string, page?: n
     params.select = select
   }
 
-  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any, meta?: any }>({
     url: `/dashboard-monitoring/influencers`,
     method: 'GET',
     params: {
@@ -135,7 +135,7 @@ export const GetInfluencersSocialMedia = (params: any, select?: string, page?: n
   return {
     resultInfluencers: res?.data || null,
     loadingInfluencers: loading,
-    total: res?.data?.length || 0,
+    total: res?.meta?.total_rows || 0,
     errorInfluencers: error
   }
 }
@@ -180,16 +180,15 @@ export const GetInfluencerByAuthor = ({
     fieldName: fieldName,
     sortSelect: sortSelect
   }
-  const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
+  const [{ data: response, loading, error }] = CallAPI<{ data?: any; meta?: any }>({
     url: `/dashboard-monitoring/influencers/author`,
     method: 'GET',
     params: params
   })
 
-
   return {
     resultMessageDetail: response?.data || null,
-    totalMessage: response?.data?.total || 0,
+    totalMessage: response?.meta?.total_rows || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
   }
