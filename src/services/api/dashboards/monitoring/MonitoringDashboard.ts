@@ -135,7 +135,7 @@ export const GetInfluencersSocialMedia = (params: any, select?: string, page?: n
   return {
     resultInfluencers: res?.data || null,
     loadingInfluencers: loading,
-    total: res?.meta?.total_rows || 0,
+    total: res?.meta?.total_page || 0,
     errorInfluencers: error
   }
 }
@@ -191,7 +191,7 @@ export const GetInfluencerByAuthor = ({
 
   return {
     resultMessageDetail: response?.data || null,
-    totalMessage: response?.meta?.total_rows || 0,
+    totalMessage: response?.meta?.total_page || 0,
     loadingMessageDetail: loading,
     errorMessageDetail: error
   }
