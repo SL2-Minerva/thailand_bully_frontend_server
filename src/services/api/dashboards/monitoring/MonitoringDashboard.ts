@@ -152,6 +152,7 @@ interface DetailProps {
   author: string
   fieldName: string
   sortSelect: string
+  page_name?: string
 }
 
 export const GetInfluencerByAuthor = ({
@@ -165,7 +166,8 @@ export const GetInfluencerByAuthor = ({
   limit,
   author,
   fieldName,
-  sortSelect
+  sortSelect,
+  page_name
 }: DetailProps) => {
   const params = {
     campaign_id: campaign_id,
@@ -178,7 +180,8 @@ export const GetInfluencerByAuthor = ({
     limit: limit,
     author: author,
     fieldName: fieldName,
-    sortSelect: sortSelect
+    sortSelect: sortSelect,
+    page_name: page_name
   }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any; meta?: any }>({
     url: `/dashboard-monitoring/influencers/author`,

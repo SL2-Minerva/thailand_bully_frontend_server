@@ -124,11 +124,12 @@ const InfluencerDetail = (props: DialogInfoProps) => {
     end_date: params?.end_date || params?.endDate,
     period: params?.period,
     filter_keywords: params?.filter_keywords,
-    page: params?.page,
-    limit: params?.limit,
+    page: page,
+    limit: 10,
     author: keywordId?.toString(),
     fieldName: fieldName,
-    sortSelect: sortSelect
+    sortSelect: sortSelect,
+    page_name: params?.page
   })
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
