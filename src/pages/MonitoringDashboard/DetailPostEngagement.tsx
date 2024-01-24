@@ -140,8 +140,8 @@ const DetailPostEgagement = (props: DialogInfoProps) => {
             </Typography>
           </Box>
 
-          <Grid container spacing={2} sx={{ maxHeight: 650, overflow: 'auto' }}>
-            <Grid item xs={12} md={4} mt={2} mb={4}>
+          <Grid container spacing={5} sx={{ maxHeight: 650, overflow: 'auto' }}>
+            <Grid item xs={12} md={4} mt={5} mb={4}>
               {resultEngagementDetail ? (
                 <TopManagementCard
                   key={messageId}

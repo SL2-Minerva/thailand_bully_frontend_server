@@ -16,7 +16,7 @@ const CommentDetail = (props: CardInfo) => {
   const imgPath = gitHubIcon
 
   return (
-    <Card sx={{ mt: 2 }}>
+    <Card sx={{ mt: 5 }}>
       {loadingTopEngagement && <LinearProgress style={{ width: '100%' }} />}
 
       <CardContent>
@@ -30,27 +30,30 @@ const CommentDetail = (props: CardInfo) => {
           <Grid item xs={8.5}>
             <div style={{ display: 'flex' }}>
               <Box sx={{ minHeight: '70px', maxHeight: '70px' }}>
-                <span
-                  style={{
-                    overflow: 'hidden',
-                    display: '-webkit-box',
-                    WebkitBoxOrient: 'vertical',
-                    WebkitLineClamp: 3,
-                    
-                    // maxWidth: '400px'
-                  }}
-                >
-                  <Typography gutterBottom variant='body1' component='div' ml={2}>
-                    {comment.account_name} - {comment.message_detail}
-                  </Typography>
-                </span>
+                <Typography gutterBottom variant='body1' component='div' ml={2}>
+                  {comment.account_name}
+                </Typography>
+                <Typography gutterBottom variant='body1' component='div' ml={2}>
+                  <span
+                    style={{
+                      overflow: 'hidden',
+                      display: '-webkit-box',
+                      WebkitBoxOrient: 'vertical',
+                      WebkitLineClamp: 3
+
+                      // maxWidth: '400px'
+                    }}
+                  >
+                    {comment.message_detail}
+                  </span>
+                </Typography>
               </Box>
             </div>
           </Grid>
         </Grid>
 
         <Grid container spacing={2} mt={2}>
-          <Grid item md={6} xs={12} sx={{ display: 'flex' }}>
+          <Grid item md={4} xs={12} sx={{ display: 'flex' }}>
             <ThumbUpOutline fontSize='small' sx={{ m: 2 }} />
             <CommentOutline fontSize='small' sx={{ m: 2 }} />
             <ShareVariantOutline fontSize='small' sx={{ m: 2 }} />
@@ -61,21 +64,19 @@ const CommentDetail = (props: CardInfo) => {
               </a>
             </span> */}
           </Grid>
-          <Grid item md={6} xs={12} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <Grid item md={8} xs={12} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
             <>
-              <Typography variant='body1' sx={{ mr: 2 }}>
+              <Typography variant='body1' sx={{ pr: '20px'}}>
                 {' '}
-                <b>Sentiment: </b> {comment.sentiment}
-                {', '}
+                <b>Sentiment: </b> <br/> {comment.sentiment}
               </Typography>
-              <Typography variant='body1' sx={{ mr: 2 }}>
+              <Typography variant='body1' sx={{ pr: '20px'}}>
                 {' '}
-                <b>Bully Level: </b> {comment.bully_level}
-                {', '}
+                <b>Bully Level: </b> <br/> {comment.bully_level}
               </Typography>
-              <Typography variant='body1'>
+              <Typography variant='body1' sx={{ pr: '20px'}}>
                 {' '}
-                <b>Bully Type: </b> {comment.bully_type}{' '}
+                <b>Bully Type: </b> <br/> {comment.bully_type}{' '}
               </Typography>
             </>
           </Grid>

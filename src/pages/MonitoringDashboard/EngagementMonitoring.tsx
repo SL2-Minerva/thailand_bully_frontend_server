@@ -1,4 +1,4 @@
-import { LinearProgress, Typography, Paper, Button } from '@mui/material'
+import { LinearProgress, Typography, Paper, Button, Box, Pagination } from '@mui/material'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
@@ -13,16 +13,13 @@ import ExportExcel from '../VoiceDashboard/ExportExcel'
 // import { Box, LinearProgress, Pagination, Typography, Paper } from '@mui/material'
 
 const EngagementMonitoring = ({
-  page,
-  setPageCount,
   apiParams,
   topKeyword,
-  params, 
-  select, 
+  params,
+  select,
   setAnchorEl,
   setIsLoading
-}:
-{
+}: {
   topKeyword: string
   params: any
   chartId: string
@@ -31,9 +28,9 @@ const EngagementMonitoring = ({
   setPage: any
   pageCount: number
   setPageCount: any
-  apiParams: any,
-  setAnchorEl: any, 
-  select: any,
+  apiParams: any
+  setAnchorEl: any
+  select: any
   setIsLoading: any
 }) => {
   // const reportNo = '4.2.025'
@@ -74,14 +71,12 @@ const EngagementMonitoring = ({
       valueGetter: (params: GridValueGetterParams) => `${params.row.bully_type}`
     }
   ]
+  const [pageCount, setPageCount] = useState<number>(0)
+  const [page, setPage] = useState(1)
 
-  const { resultSummary, loadingSummary } = GetEngagementPostMonitoring(apiParams, topKeyword, page)
+  const { resultSummary, loadingSummary, total } = GetEngagementPostMonitoring(apiParams, topKeyword, page)
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [messageId, setMessageId] = useState<string>('')
-
-  //   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-  //     setPage(value)
-  //   }
 
   const handleRowClick = (
     params: any // GridRowParams
@@ -94,12 +89,20 @@ const EngagementMonitoring = ({
       setMessageId(message_id)
     }
   }
+  const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value)
+  }
 
   useEffect(() => {
-    if (resultSummary?.length > 0) {
-      setPageCount(Math.ceil(resultSummary?.length / 10))
+    if (total > 0) {
+      const count = Math.ceil(total / 10)
+      setPageCount(count)
     }
-  }, [resultSummary])
+  }, [total])
+
+  useEffect(() => {
+    setPage(1)
+  }, [topKeyword])
 
   return (
     <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
@@ -152,7 +155,7 @@ const EngagementMonitoring = ({
               columns={columns}
               pageSize={10}
               rowsPerPageOptions={[10]}
-              hideFooterPagination={false}
+              hideFooterPagination={true}
               getRowId={row => row.message_id}
               sx={{
                 '& .MuiDataGrid-cell': {
@@ -163,34 +166,40 @@ const EngagementMonitoring = ({
               }}
               onRowClick={handleRowClick}
             />
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Pagination
+                count={pageCount}
+                page={page}
+                onChange={handleChangePagination}
+                variant='outlined'
+                color='primary'
+              />
+            </Box>
           </>
         ) : (
-          <div
-            style={{
-              height: 300,
-              padding: '170px 0',
-              textAlign: 'center',
-              verticalAlign: 'middle',
-              color: '#80808059'
-            }}
-          >
-            <Translations text='no data' />
-          </div>
+          <>
+            <div
+              style={{
+                height: 300,
+                padding: '170px 0',
+                textAlign: 'center',
+                verticalAlign: 'middle',
+                color: '#80808059'
+              }}
+            >
+              <Translations text='no data' />
+            </div>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Pagination
+                count={pageCount}
+                page={page}
+                onChange={handleChangePagination}
+                variant='outlined'
+                color='primary'
+              />
+            </Box>
+          </>
         )}
-
-        {/* <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          {resultSummary?.length > 0 ? (
-            <Pagination
-              count={pageCount}
-              page={page}
-              onChange={handleChangePagination}
-              variant='outlined'
-              color='primary'
-            />
-          ) : (
-            ''
-          )}
-        </Box> */}
       </CardContent>
 
       {showDetail && messageId ? (

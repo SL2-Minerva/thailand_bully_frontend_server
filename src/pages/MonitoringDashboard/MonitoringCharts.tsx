@@ -44,8 +44,10 @@ const MonitoringCharts = (data: Props) => {
   const [page, setPage] = useState(1)
   const [pageCount, setPageCount] = useState<number>(1)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [pageInfluencer, setPageInfluencer] = useState(1)
+  const [pageCountInfluencer, setPageCountInfluencer] = useState<number>(0)
 
-  console.log(anchorEl);
+  console.log(anchorEl)
 
   //   const [showQuickView, setShowQuickView] = useState<boolean>(false)
 
@@ -63,10 +65,11 @@ const MonitoringCharts = (data: Props) => {
   const { resultTopEngagement, loadingTopEngagement } = GetTopEngagementMonitoring(apiParams)
   const { resultDailyMonitoring, loadingDailyMonitoring } = GetDailyMonitoring(apiParams)
   const { resultTopFiveInfluencers, loadingTopFiveInfluencers } = GetTopFiveInfluencers(apiParams)
-  const { resultInfluencers, loadingInfluencers, total } = GetInfluencersSocialMedia(apiParams, topKeywordInfluencer)
-
-  const [pageInfluencer, setPageInfluencer] = useState(0)
-  const [pageCountInfluencer, setPageCountInfluencer] = useState<number>(0)
+  const { resultInfluencers, loadingInfluencers, total } = GetInfluencersSocialMedia(
+    apiParams,
+    topKeywordInfluencer,
+    pageInfluencer
+  )
 
   //   const quickViewData = {
   //     resultFilterData: resultFilterData,
@@ -97,7 +100,7 @@ const MonitoringCharts = (data: Props) => {
   }
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPageInfluencer(value - 1)
+    setPageInfluencer(value)
   }
 
   useEffect(() => {
@@ -105,6 +108,10 @@ const MonitoringCharts = (data: Props) => {
       setPageCountInfluencer(Math.ceil(total / 10))
     }
   }, [total])
+
+  useEffect(() => {
+    setPageInfluencer(1)
+  }, [topKeywordInfluencer])
 
   useEffect(() => {
     if (params?.period !== 'customrange') {
@@ -325,20 +332,21 @@ const MonitoringCharts = (data: Props) => {
                 />
               </StyledTooltip>
             </span>
+
+            <Grid id='chart5' item xs={12} md={12} mt={3} mb={7}>
+              {resultTopFiveInfluencers ? (
+                <TopFiveInfluencer
+                  params={apiParams}
+                  highlight={highlight === 'chart5' ? true : false}
+                  chartId='chart 5'
+                  resultTopFiveInfluencer={resultTopFiveInfluencers}
+                  loadingTopFiveInfluencer={loadingTopFiveInfluencers}
+                />
+              ) : (
+                ''
+              )}
+            </Grid>
           </Paper>
-          <Grid id='chart5' item xs={12} md={12} mt={3} mb={7}>
-            {resultTopFiveInfluencers ? (
-              <TopFiveInfluencer
-                params={apiParams}
-                highlight={highlight === 'chart5' ? true : false}
-                chartId='chart 5'
-                resultTopFiveInfluencer={resultTopFiveInfluencers}
-                loadingTopFiveInfluencer={loadingTopFiveInfluencers}
-              />
-            ) : (
-              ''
-            )}
-          </Grid>
         </Grid>
 
         <Grid container spacing={3} mt={2}>

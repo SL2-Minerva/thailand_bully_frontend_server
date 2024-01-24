@@ -75,7 +75,7 @@ const TopFiveInfluencer = (props: MessageData) => {
                   <Grid container spacing={2} mt={2} mb={2}>
                     <Grid item xs={12} md={5}>
                       <Typography variant='caption' sx={{ pl: 2, fontWeight: 600 }}>
-                        Total Post : {influencer.total_post}
+                        Total Post: <span style={{paddingLeft: '10px'}}> {influencer.total_post}</span>
                       </Typography>
                     </Grid>
                     <Grid item xs={12} md={7}>
@@ -113,7 +113,7 @@ const TopFiveInfluencer = (props: MessageData) => {
           keywordId={accountName}
           setKeywordId={setAccountName}
           reportNo={''}
-          title='Post Detail by Influencer'
+          title='Post by Influencer'
           networkTitle=''
         />
       ) : (

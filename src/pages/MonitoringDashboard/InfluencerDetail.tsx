@@ -28,6 +28,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { GetInfluencerByAuthor } from 'src/services/api/dashboards/monitoring/MonitoringDashboard'
+import DetailPostEgagement from './DetailPostEngagement'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -110,12 +111,13 @@ export const StyledTableRow = styled(TableRow)(() => ({
 const InfluencerDetail = (props: DialogInfoProps) => {
   const { show, setShow, params, keywordId, setKeywordId, title, excelExport } = props
   const [page, setPage] = useState(0)
-  const [messageId, setMessageId] = useState<number | string>()
+  const [messageId, setMessageId] = useState<string>()
   const [pageCount, setPageCount] = useState<number>(0)
   const [data, setData] = useState<any>([])
   const [fieldName, setFieldName] = useState<string>('')
   const [sortSelect, setSortSelect] = useState('')
   const [sortColumns, setSortColumn] = useState<any>(initialSort)
+  const [showDetail, setShowDetail] = useState<boolean>(false);
 
   const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetInfluencerByAuthor({
     campaign_id: params?.campaign_id || params?.campaign,
@@ -154,7 +156,6 @@ const InfluencerDetail = (props: DialogInfoProps) => {
   }, [totalMessage])
 
   useEffect(() => {
-    console.log('resultmessage detail', resultMessageDetail)
     if (loadingMessageDetail) {
       setData([])
     }
@@ -474,13 +475,11 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                       cursor: messageDetail.parent ? 'pointer' : '',
                       backgroundColor: messageDetail.parent ? '#00ff0038' : '#fff'
                     }}
+                    onClick={() => {
+                      setMessageId(messageDetail.message_id)
+                    }}
                   >
                     <StyledTableCell
-                      onClick={() => {
-                        if (messageDetail.parent) {
-                          setMessageId(messageDetail.account_name)
-                        }
-                      }}
                     >
                       <b>{index + 1 + page * 10}</b>
                     </StyledTableCell>
@@ -488,11 +487,6 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                       component='th'
                       scope='row'
                       width={200}
-                      onClick={() => {
-                        if (messageDetail.parent) {
-                          setMessageId(messageDetail.message_id)
-                        }
-                      }}
                     >
                       <span
                         style={{
@@ -507,43 +501,23 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                     </StyledTableCell>
                     <StyledTableCell
                       align='center'
-                      onClick={() => {
-                        if (messageDetail.parent) {
-                          setMessageId(messageDetail.message_id)
-                        }
-                      }}
                     >
                       {messageDetail.message_type || '-'}
                     </StyledTableCell>
                     <StyledTableCell
                       align='center'
-                      onClick={() => {
-                        if (messageDetail.parent) {
-                          setMessageId(messageDetail.message_id)
-                        }
-                      }}
                     >
                       {messageDetail.account_name}
                     </StyledTableCell>
 
                     <StyledTableCell
                       align='center'
-                      onClick={() => {
-                        if (messageDetail.parent) {
-                          setMessageId(messageDetail.message_id)
-                        }
-                      }}
                     >
                       {moment(messageDetail.post_date)?.format('DD.MM.YYYY') + ', ' + messageDetail.post_time}
                     </StyledTableCell>
 
                     <StyledTableCell
                       align='center'
-                      onClick={() => {
-                        if (messageDetail.parent) {
-                          setMessageId(messageDetail.message_id)
-                        }
-                      }}
                     >
                       {messageDetail.device === 'android' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/android.png`} />
@@ -557,11 +531,6 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                     </StyledTableCell>
                     <StyledTableCell
                       align='center'
-                      onClick={() => {
-                        if (messageDetail.parent) {
-                          setMessageId(messageDetail.message_id)
-                        }
-                      }}
                     >
                       {messageDetail?.source_name === 'facebook' ? (
                         <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
@@ -583,41 +552,21 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                     </StyledTableCell>
                     <StyledTableCell
                       align='center'
-                      onClick={() => {
-                        if (messageDetail.parent) {
-                          setMessageId(messageDetail.message_id)
-                        }
-                      }}
                     >
                       {messageDetail.total_engagement || '-'}
                     </StyledTableCell>
                     <StyledTableCell
                       align='center'
-                      onClick={() => {
-                        if (messageDetail.parent) {
-                          setMessageId(messageDetail.message_id)
-                        }
-                      }}
                     >
                       {messageDetail.sentiment || '-'}
                     </StyledTableCell>
                     <StyledTableCell
                       align='center'
-                      onClick={() => {
-                        if (messageDetail.parent) {
-                          setMessageId(messageDetail.message_id)
-                        }
-                      }}
                     >
                       {messageDetail.bully_level}
                     </StyledTableCell>
                     <StyledTableCell
                       align='center'
-                      onClick={() => {
-                        if (messageDetail.parent) {
-                          setMessageId(messageDetail.message_id)
-                        }
-                      }}
                     >
                       {messageDetail.bully_type}
                     </StyledTableCell>
@@ -649,9 +598,26 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                       >
                         <TrashCanOutline style={{ color: 'grey' }} />
                       </a>
-                    </StyledTableCell> */}
+                      </StyledTableCell> */}
                   </StyledTableRow>
                 ))}
+
+                {!data || data?.length === 0 ? (
+                  <TableCell colSpan={12}>
+                    <Typography
+                      variant='h6'
+                      sx={{
+                        color: 'rgba(76, 78, 100, 0.42)',
+                        display: 'flex',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      <Translations text='no post data' />
+                    </Typography>
+                  </TableCell>
+                ) : (
+                  ''
+                )}
               </TableBody>
             </Table>
           </TableContainer>
@@ -667,6 +633,11 @@ const InfluencerDetail = (props: DialogInfoProps) => {
           </Box>
         </DialogContent>
       </Dialog>
+      {showDetail && messageId ? (
+        <DetailPostEgagement show={showDetail} setShow={setShowDetail} messageId={messageId} params={params} />
+      ) : (
+        ''
+      )}
     </Card>
   )
 }
