@@ -402,5 +402,7 @@
   "wordCloudChart6Title" : "Word Cloud by Account",
   "wordCloudChart6Description" : "a group of word/texts related to the keyword, display information by user account (post owner)",
   "imageSizeText" : "Image size 246 x 246", 
-  "Privacy Notice" : "Privacy Notice"
+  "Privacy Notice" : "Privacy Notice",
+  "no post data" : "No post data"
+
 }

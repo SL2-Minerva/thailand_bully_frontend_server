@@ -161,7 +161,7 @@ const InfluencerSocialMedia = ({
               {total > 0 ? (
                 <Pagination
                   count={pageCountInfluencer}
-                  page={pageInfluencer + 1}
+                  page={pageInfluencer}
                   onChange={handleChangePagination}
                   variant='outlined'
                   color='primary'
@@ -182,7 +182,7 @@ const InfluencerSocialMedia = ({
           keywordId={accountName}
           setKeywordId={setAccountName}
           reportNo={''}
-          title='Post Detail by Influencer'
+          title='Post by Influencer'
           networkTitle=''
         />
       ) : (

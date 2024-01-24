@@ -66,7 +66,7 @@ export const GetEngagementPostMonitoring = (params: any, select?: any, page?: nu
     params.select = select
   }
 
-  const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any, meta?: any }>({
     url: `/dashboard-monitoring/engagement-post`,
     method: 'GET',
     params: {
@@ -79,7 +79,8 @@ export const GetEngagementPostMonitoring = (params: any, select?: any, page?: nu
   return {
     resultSummary: res?.data || null,
     loadingSummary: loading,
-    errorSummary: error
+    errorSummary: error,
+    total : res?.meta?.total_rows || 0
   }
 }
 
