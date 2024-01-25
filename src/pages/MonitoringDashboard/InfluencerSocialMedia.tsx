@@ -60,8 +60,6 @@ const InfluencerSocialMedia = ({
     setShowDetail(true)
   }
 
-  console.log('params', params);
-
   return (
     <>
       {loading && <LinearProgress style={{ width: '100%' }} />}
@@ -144,7 +142,9 @@ const InfluencerSocialMedia = ({
                             <img src={getSourceIcon(influencer?.source_name)} width={35} height={35} alt='' />
                           </Avatar>
                         </TableCell>
-                        <TableCell sx={{ textAlign: 'center' }}>{influencer?.total_post}</TableCell>
+                        <TableCell sx={{ textAlign: 'center' }}>
+                          {influencer?.total_post}
+                        </TableCell>
 
                         <TableCell sx={{ textAlign: 'center' }}>{influencer?.total_engagement}</TableCell>
                         <TableCell sx={{ maxWidth: 300 }}>

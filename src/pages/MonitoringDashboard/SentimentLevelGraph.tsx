@@ -3,6 +3,7 @@
 // import CardContent from '@mui/material/CardContent'
 
 // ** Third Party Imports
+import { Box } from '@mui/material'
 import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
@@ -128,21 +129,21 @@ const SentimentLevelGraph = ({ resultSentimentLevel }: { resultSentimentLevel: a
         <>
           {positiveData[0] === 0 && negativeData[0] === 0 && neutralData[0] === 0 ? (
             <div
-          style={{
-            padding: '33px 40px',
-            textAlign: 'center',
-            verticalAlign: 'middle',
-            color: '#80808059',
-            
-            // fontSize: '13px'
-          }}
-        >
-          <Translations text='no data' />
-        </div>
+              style={{
+                padding: '33px 40px',
+                textAlign: 'center',
+                verticalAlign: 'middle',
+                color: '#80808059'
+
+                // fontSize: '13px'
+              }}
+            >
+              <Translations text='no data' />
+            </div>
           ) : (
-          <ReactApexcharts type='bar' series={series} options={options} height={75} />
-            
-            
+            <Box sx={{ maxHeight: 65, mt: '-20px' }}>
+              <ReactApexcharts type='bar' series={series} options={options} height={70} />
+            </Box>
           )}
 
           {/* <ReactApexcharts type='bar' series={series} options={options} height={75} /> */}
@@ -150,7 +151,7 @@ const SentimentLevelGraph = ({ resultSentimentLevel }: { resultSentimentLevel: a
       ) : (
         <div
           style={{
-            padding: '130px 0',
+            padding: '33px 40px',
             textAlign: 'center',
             verticalAlign: 'middle',
             color: '#80808059'
