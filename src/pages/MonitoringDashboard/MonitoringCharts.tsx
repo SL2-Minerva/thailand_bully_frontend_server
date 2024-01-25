@@ -333,7 +333,7 @@ const MonitoringCharts = (data: Props) => {
               </StyledTooltip>
             </span>
 
-            <Grid id='chart5' item xs={12} md={12} mt={3} mb={7}>
+            <Grid id='chart5' item xs={12} md={12} mt={3} mb={2}>
               {resultTopFiveInfluencers ? (
                 <TopFiveInfluencer
                   params={apiParams}
@@ -349,7 +349,7 @@ const MonitoringCharts = (data: Props) => {
           </Paper>
         </Grid>
 
-        <Grid container spacing={3} mt={2}>
+        <Grid container spacing={3} mt={0.5}>
           <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end', overflowX: 'auto' }}>
             <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
             <Button

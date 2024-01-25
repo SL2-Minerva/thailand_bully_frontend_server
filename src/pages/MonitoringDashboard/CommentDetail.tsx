@@ -16,7 +16,7 @@ const CommentDetail = (props: CardInfo) => {
   const imgPath = gitHubIcon
 
   return (
-    <Card sx={{ mt: 5 }}>
+    <Card sx={{ mt: 5, mr: 5 }}>
       {loadingTopEngagement && <LinearProgress style={{ width: '100%' }} />}
 
       <CardContent>
@@ -30,7 +30,7 @@ const CommentDetail = (props: CardInfo) => {
           <Grid item xs={8.5}>
             <div style={{ display: 'flex' }}>
               <Box sx={{ minHeight: '70px', maxHeight: '70px' }}>
-                <Typography gutterBottom variant='body1' component='div' ml={2}>
+                <Typography gutterBottom variant='body1' component='div' ml={2} sx={{ fontWeight: 600 }}>
                   {comment.account_name}
                 </Typography>
                 <Typography gutterBottom variant='body1' component='div' ml={2}>
@@ -66,17 +66,17 @@ const CommentDetail = (props: CardInfo) => {
           </Grid>
           <Grid item md={8} xs={12} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
             <>
-              <Typography variant='body1' sx={{ pr: '20px'}}>
+              <Typography variant='body1' sx={{ pr: '20px' }}>
                 {' '}
-                <b>Sentiment: </b> <br/> {comment.sentiment}
+                <b>Sentiment: </b> <br /> {comment.sentiment}
               </Typography>
-              <Typography variant='body1' sx={{ pr: '20px'}}>
+              <Typography variant='body1' sx={{ pr: '20px' }}>
                 {' '}
-                <b>Bully Level: </b> <br/> {comment.bully_level}
+                <b>Bully Level: </b> <br /> {comment.bully_level}
               </Typography>
-              <Typography variant='body1' sx={{ pr: '20px'}}>
+              <Typography variant='body1' sx={{ pr: '20px' }}>
                 {' '}
-                <b>Bully Type: </b> <br/> {comment.bully_type}{' '}
+                <b>Bully Type: </b> <br /> {comment.bully_type}{' '}
               </Typography>
             </>
           </Grid>
