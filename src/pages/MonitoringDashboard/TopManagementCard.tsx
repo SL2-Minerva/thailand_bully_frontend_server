@@ -74,7 +74,7 @@ const TopManagementCard = (props: CardInfo) => {
   React.useEffect(() => {
     if (resultTopEngagement?.source_id) {
       const source_name = getSourceName(resultTopEngagement?.source_id)
-      
+
       // setShowFullMessage(true)
 
       setSourceName(source_name)
@@ -99,12 +99,14 @@ const TopManagementCard = (props: CardInfo) => {
               <Avatar sx={{ width: 35, height: 35 }}>
                 <img src={sourceIcon} width={35} height={35} alt='' />
               </Avatar>
-              <Typography gutterBottom variant='body1' component='div' ml={2}>
-                <b>{resultTopEngagement.account_name}</b>
-                <Typography gutterBottom variant='caption' component='div'>
-                  {resultTopEngagement.post_date + ', ' + resultTopEngagement.post_time}
+              <Box maxHeight={30}>
+                <Typography gutterBottom variant='body1' component='div' ml={2}>
+                  <b>{resultTopEngagement.account_name}</b>
+                  <Typography gutterBottom variant='caption' component='div'>
+                    {resultTopEngagement.post_date + ', ' + resultTopEngagement.post_time}
+                  </Typography>
                 </Typography>
-              </Typography>
+              </Box>
             </div>
           </Grid>
         </Grid>
