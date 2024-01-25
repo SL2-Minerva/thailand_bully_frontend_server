@@ -100,7 +100,7 @@ const TopManagementCard = (props: CardInfo) => {
                 <img src={sourceIcon} width={35} height={35} alt='' />
               </Avatar>
               <Typography gutterBottom variant='body1' component='div' ml={2}>
-                {resultTopEngagement.account_name}
+                <b>{resultTopEngagement.account_name}</b>
                 <Typography gutterBottom variant='caption' component='div'>
                   {resultTopEngagement.post_date + ', ' + resultTopEngagement.post_time}
                 </Typography>

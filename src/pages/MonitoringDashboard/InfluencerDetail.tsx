@@ -110,7 +110,7 @@ export const StyledTableRow = styled(TableRow)(() => ({
 
 const InfluencerDetail = (props: DialogInfoProps) => {
   const { show, setShow, params, keywordId, setKeywordId, title, excelExport } = props
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1)
   const [messageId, setMessageId] = useState<string>()
   const [pageCount, setPageCount] = useState<number>(0)
   const [data, setData] = useState<any>([])
@@ -135,7 +135,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
   })
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value - 1)
+    setPage(value)
   }
 
   const onCloseDialog = () => {
@@ -476,7 +476,8 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                       backgroundColor: messageDetail.parent ? '#00ff0038' : '#fff'
                     }}
                     onClick={() => {
-                      setMessageId(messageDetail.message_id)
+                      setMessageId(messageDetail.message_id);
+                      setShowDetail(true);
                     }}
                   >
                     <StyledTableCell
@@ -625,7 +626,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
           <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
             <Pagination
               count={pageCount}
-              page={page + 1}
+              page={page}
               onChange={handleChangePagination}
               variant='outlined'
               color='primary'
