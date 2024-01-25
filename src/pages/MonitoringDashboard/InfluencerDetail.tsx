@@ -482,7 +482,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                   >
                     <StyledTableCell
                     >
-                      <b>{index + 1 + page * 10}</b>
+                      <b>{index + 1 + (page - 1) * 10}</b>
                     </StyledTableCell>
                     <StyledTableCell
                       component='th'
