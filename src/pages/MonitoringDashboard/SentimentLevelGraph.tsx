@@ -25,15 +25,24 @@ const ChartDataPositive = (data: any, type: string) => {
     return []
   }
   const value: any[] = []
+
+  // if (type === 'positive') {
+  //   const percentage = (data?.positive / data?.total_post) * 100
+  //   value.push(percentage?.toFixed(2))
+  // } else if (type === 'negative') {
+  //   const percentage = (data?.negative / data?.total_post) * 100
+  //   value.push(percentage?.toFixed(2))
+  // } else if (type === 'neutral') {
+  //   const percentage = (data?.neutral / data?.total_post) * 100
+  //   value.push(percentage?.toFixed(2))
+  // }
+
   if (type === 'positive') {
-    const percentage = (data?.positive / data?.total_post) * 100
-    value.push(percentage?.toFixed(2))
+    value.push(data?.positive)
   } else if (type === 'negative') {
-    const percentage = (data?.negative / data?.total_post) * 100
-    value.push(percentage?.toFixed(2))
+    value.push(data?.negative)
   } else if (type === 'neutral') {
-    const percentage = (data?.neutral / data?.total_post) * 100
-    value.push(percentage?.toFixed(2))
+    value.push(data?.neutral)
   }
 
   return value
@@ -117,7 +126,26 @@ const SentimentLevelGraph = ({ resultSentimentLevel }: { resultSentimentLevel: a
     <>
       {resultSentimentLevel ? (
         <>
+          {positiveData[0] === 0 && negativeData[0] === 0 && neutralData[0] === 0 ? (
+            <div
+          style={{
+            padding: '33px 40px',
+            textAlign: 'center',
+            verticalAlign: 'middle',
+            color: '#80808059',
+            
+            // fontSize: '13px'
+          }}
+        >
+          <Translations text='no data' />
+        </div>
+          ) : (
           <ReactApexcharts type='bar' series={series} options={options} height={75} />
+            
+            
+          )}
+
+          {/* <ReactApexcharts type='bar' series={series} options={options} height={75} /> */}
         </>
       ) : (
         <div
