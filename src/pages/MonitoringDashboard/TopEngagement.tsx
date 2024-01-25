@@ -28,7 +28,7 @@ const TopEngagement = (props: MessageData) => {
   const cardsPerPage = 3
 
   const handleClick = (message_id: string) => {
-    console.log('message Id', message_id);
+    console.log('message Id', message_id)
     if (message_id) {
       setShowDetail(true)
       setMessageId(message_id)
@@ -36,13 +36,13 @@ const TopEngagement = (props: MessageData) => {
   }
 
   const duplicateCards: React.ReactElement[] = Array.from({ length: resultTopEngagement?.length || 0 }, (_, i) => (
-    <span key={i} onClick={() => handleClick(resultTopEngagement[i]?.id)}>
+    <Grid pl={2} xs={4} key={i} onClick={() => handleClick(resultTopEngagement[i]?.id)}>
       <TopManagementCard
         key={i}
         loadingTopEngagement={loadingTopEngagement}
         resultTopEngagement={resultTopEngagement[i]}
       />
-    </span>
+    </Grid>
   ))
 
   const handleNextPage = () => {
@@ -58,7 +58,7 @@ const TopEngagement = (props: MessageData) => {
   useEffect(() => {
     setCards(duplicateCards)
   }, [resultTopEngagement])
-  const containerWidth = cardsPerPage * 400
+  const containerWidth = cardsPerPage * 500
 
   return (
     <Box
@@ -100,11 +100,13 @@ const TopEngagement = (props: MessageData) => {
                   spacing={2}
                   direction='row'
                   alignContent='center'
-                  justifyContent='center'
+                  justifyContent='start'
                   sx={{ width: '100%', height: '100%' }}
                 >
                   {/* this slices the cards array to only display the amount you have previously determined per page*/}
-                  {cards.slice(index * cardsPerPage, index * cardsPerPage + cardsPerPage)}
+                  <Grid container spacing={2}>
+                    {cards.slice(index * cardsPerPage, index * cardsPerPage + cardsPerPage)}
+                  </Grid>
                 </Stack>
               </Slide>
               {/* </Box> */}
