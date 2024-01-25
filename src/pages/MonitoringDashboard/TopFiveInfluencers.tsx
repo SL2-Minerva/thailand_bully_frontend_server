@@ -53,6 +53,7 @@ const TopFiveInfluencer = (props: MessageData) => {
                   onClick={() => {
                     handleOnClick(influencer.account_name)
                   }}
+                  sx={{ p: 2 }}
                 >
                   <Grid display='flex' justifyContent='center'>
                     <Avatar sx={{ width: 80, height: 80 }}>
@@ -66,34 +67,29 @@ const TopFiveInfluencer = (props: MessageData) => {
                     </Typography>
                   </Grid>
 
-                  <Grid display='flex' justifyContent='center'>
+                  <Grid display='flex' justifyContent='center' mt={2}>
                     <Avatar sx={{ width: 35, height: 35 }}>
                       <img src={getSourceIcon(influencer?.source_name)} width={35} height={35} alt='' />
                     </Avatar>
                   </Grid>
 
-                  <Grid container spacing={2} mt={2} mb={2}>
-                    <Grid item xs={12} md={5}>
-                      <Typography variant='caption' sx={{ pl: 2, fontWeight: 600 }}>
-                        Total Post: <span style={{paddingLeft: '10px'}}> {influencer.total_post}</span>
+                  <Grid container maxHeight={45} minHeight={45} mt={3}>
+                    <Grid item xs={12} md={4.5}>
+                      <Typography sx={{ fontSize: '11px', pl: 2, fontWeight: 600 }}>
+                        Total Post: <br/><span style={{ fontSize: '12px', paddingLeft: 2, fontWeight: 600 }}> {influencer.total_post}</span>
                       </Typography>
                     </Grid>
-                    <Grid item xs={12} md={7}>
-                      <Typography variant='caption' sx={{ fontWeight: 600 }}>
-                        Total Engagement : {influencer.total_engagement}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-
-                  <Grid container spacing={2} mt={2}>
-                    <Grid item xs={12} md={5}>
-                      <Typography variant='caption' sx={{ pl: 2, fontWeight: 600 }}>
-                        Sentiment:
+                    <Grid item xs={12} md={7.5}>
+                      <Typography sx={{ fontSize: '11px', fontWeight: 600 }}>
+                        Total Engagement:<br/> <span style={{ fontSize: '12px', paddingLeft: 2, fontWeight: 600 }}>  {influencer.total_engagement} </span>
                       </Typography>
                     </Grid>
                   </Grid>
 
                   <Grid container spacing={2}>
+                    <Grid item xs={12} md={5} mt={1}>
+                      <Typography sx={{ fontSize: '11px', pl: 2, fontWeight: 600 }}>Sentiment:</Typography>
+                    </Grid>
                     <SentimentLevelGraph resultSentimentLevel={influencer} />
                   </Grid>
                 </Paper>
