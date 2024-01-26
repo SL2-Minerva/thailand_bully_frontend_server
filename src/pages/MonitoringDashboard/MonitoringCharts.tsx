@@ -25,8 +25,8 @@ import EngagementMonitoring from './EngagementMonitoring'
 import Translations from 'src/layouts/components/Translations'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import TopFiveInfluencer from './TopFiveInfluencers'
 import InfluencerSocialMedia from './InfluencerSocialMedia'
+import TopInfluencer from './TopInfluencer'
 
 interface Props {
   params: any
@@ -333,7 +333,7 @@ const MonitoringCharts = (data: Props) => {
               </StyledTooltip>
             </span>
 
-            <Grid id='chart5' item xs={12} md={12} mt={3} mb={2}>
+            {/* <Grid id='chart5' item xs={12} md={12} mt={3} mb={2}>
               {resultTopFiveInfluencers ? (
                 <TopFiveInfluencer
                   params={apiParams}
@@ -341,6 +341,18 @@ const MonitoringCharts = (data: Props) => {
                   chartId='chart 5'
                   resultTopFiveInfluencer={resultTopFiveInfluencers}
                   loadingTopFiveInfluencer={loadingTopFiveInfluencers}
+                />
+              ) : (
+                ''
+              )}
+            </Grid> */}
+
+            <Grid id='chart5' item xs={12} md={12} mt={3} mb={6}>
+              {resultTopFiveInfluencers ? (
+                <TopInfluencer
+                  resultTopInfluencer={resultTopFiveInfluencers?.data}
+                  loadingTopInfluencer={loadingTopFiveInfluencers}
+                  params={params}
                 />
               ) : (
                 ''
