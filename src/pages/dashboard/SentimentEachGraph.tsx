@@ -3,6 +3,7 @@
 // import CardContent from '@mui/material/CardContent'
 
 // ** Third Party Imports
+import { Box } from '@mui/material'
 import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
@@ -113,9 +114,9 @@ const SentimentEachGraph = ({ resultSentimentLevel }: { resultSentimentLevel: an
   return (
     <>
       {resultSentimentLevel ? (
-        <>
+        <Box sx={{ maxHeight: 65, mt: '-20px' }}>
           <ReactApexcharts type='bar' series={series} options={options} height={75} />
-        </>
+        </Box>
       ) : (
         <div
           style={{

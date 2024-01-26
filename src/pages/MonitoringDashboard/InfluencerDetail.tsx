@@ -476,7 +476,8 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                       backgroundColor: messageDetail.parent ? '#00ff0038' : '#fff'
                     }}
                     onClick={() => {
-                      setMessageId(messageDetail.message_id);
+                      // setMessageId(messageDetail.message_id);
+                      setMessageId(messageDetail.id)
                       setShowDetail(true);
                     }}
                   >

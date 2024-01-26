@@ -53,7 +53,7 @@ const TopFiveInfluencer = (props: MessageData) => {
                   onClick={() => {
                     handleOnClick(influencer.account_name)
                   }}
-                  sx={{ p: 2 }}
+                  sx={{ p: 6 }}
                 >
                   <Grid display='flex' justifyContent='center'>
                     <Avatar sx={{ width: 80, height: 80 }}>

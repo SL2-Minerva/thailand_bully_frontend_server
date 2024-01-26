@@ -1,4 +1,5 @@
 // ** Third Party Imports
+import { Box } from '@mui/material'
 import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
@@ -85,9 +86,9 @@ const NumberOfEachMessage = ({
   return (
     <>
       {resultShareOfVoiceChart ? (
-        <>
+        <Box sx={{ maxHeight: 65, mt: '-20px' }}>
           <ReactApexcharts type='bar' series={series} options={options} height={70} />
-        </>
+        </Box>
       ) : (
         <div
           style={{
