@@ -26,14 +26,14 @@ const RoleManagement = () => {
   const [current, setCurrent] = useState<any>({})
   const [action, setAction] = useState<string>('create')
   const [reload, setReload] = useState<boolean>(false)
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1)
   const [pageCount, setPageCount] = useState<number>(0)
 
   const { resultPermission, errorUserPermission, resultIsAdmin } = UserPermission()
   const { resultRoleList, total } = role_list(showDialog, page)
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value - 1)
+    setPage(value)
   }
 
   useEffect(() => {
@@ -167,7 +167,7 @@ const RoleManagement = () => {
               {total > 0 ? (
                 <Pagination
                   count={pageCount}
-                  page={page + 1}
+                  page={page}
                   onChange={handleChangePagination}
                   variant='outlined'
                   color='primary'

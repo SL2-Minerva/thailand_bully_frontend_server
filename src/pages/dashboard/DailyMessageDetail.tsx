@@ -112,7 +112,7 @@ export const StyledTableRow = styled(TableRow)(() => ({
 const DailyMessageDetail = (props: DialogInfoProps) => {
   const { show, setShow, current, params, keywordId, setKeywordId, reportNo, title, networkTitle, excelExport } = props
   const [showDialog, setShowDialog] = useState<boolean>(false)
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1)
   const [messageId, setMessageId] = useState<number | string>()
   const [pageCount, setPageCount] = useState<number>(0)
   const [data, setData] = useState<any>([])
@@ -146,12 +146,12 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
   )
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value - 1)
+    setPage(value)
   }
 
   const onCloseDialog = () => {
     setShow(false)
-    setPage(0)
+    setPage(1)
     setPageCount(0)
     if (keywordId) {
       setKeywordId('')
@@ -495,7 +495,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                         }
                       }}
                     >
-                      <b>{index + 1 + page * 10}</b>
+                      <b>{index + 1 + (page - 1) * 10}</b>
                     </StyledTableCell>
                     <StyledTableCell
                       component='th'
@@ -682,7 +682,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
           <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
             <Pagination
               count={pageCount}
-              page={page + 1}
+              page={page}
               onChange={handleChangePagination}
               variant='outlined'
               color='primary'

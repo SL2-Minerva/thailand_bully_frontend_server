@@ -25,12 +25,12 @@ const ActivityLog = () => {
 
   const [keyword, setKeyword] = useState('')
   const [statusCode, setStatusCode] = useState('')
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1)
   const [pageCount, setPageCount] = useState<number>(0)
   const { resultActivityLog, errorActivityLog, total } = GetActivityLog(keyword, statusCode, page)
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value - 1)
+    setPage(value)
   }
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const ActivityLog = () => {
 
   const handleStatusCode = useCallback((e: SelectChangeEvent) => {
     setStatusCode(e.target.value)
-    setPage(0)
+    setPage(1)
   }, [])
 
   function renderStatusCode(params: any) {
@@ -205,7 +205,7 @@ const ActivityLog = () => {
               {total > 0 ? (
                 <Pagination
                   count={pageCount}
-                  page={page + 1}
+                  page={page}
                   onChange={handleChangePagination}
                   variant='outlined'
                   color='primary'
