@@ -16,6 +16,7 @@ const getParams = (data: any) => {
       start_date: data?.start_date ? moment(data?.start_date).format('YYYY-MM-DD') : '',
       end_date: data?.end_date ? moment(data?.end_date).format('YYYY-MM-DD') : '',
       period: data?.period,
+      source: data?.source,
       start_date_period: previousDate,
       end_date_period: previousEndDate,
       fillter_keywords: data?.fillter_keywords
@@ -26,6 +27,7 @@ const getParams = (data: any) => {
       start_date: data?.start_date ? moment(data?.start_date).format('YYYY-MM-DD') : '',
       end_date: data?.end_date ? moment(data?.end_date).format('YYYY-MM-DD') : '',
       period: data?.period,
+      source: data?.source,
       fillter_keywords: data?.fillter_keywords
     }
   }
