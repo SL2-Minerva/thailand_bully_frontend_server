@@ -72,7 +72,7 @@ const MessageDetail = (props: DialogInfoProps) => {
     apiPath
   } = props
   const [showDialog, setShowDialog] = useState<boolean>(false)
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1)
   const [messageId, setMessageId] = useState<number | string>()
   const [pageCount, setPageCount] = useState<number>(0)
   const [data, setData] = useState<any>([])
@@ -142,12 +142,12 @@ const MessageDetail = (props: DialogInfoProps) => {
   )
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value - 1)
+    setPage(value)
   }
 
   const onCloseDialog = () => {
     setShow(false)
-    setPage(0)
+    setPage(1)
     setPageCount(0)
     setParamsId({
       keywordId: null,
@@ -489,7 +489,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                         }
                       }}
                     >
-                      <b>{index + 1 + page * 10}</b>
+                      <b>{index + 1 + (page - 1) * 10}</b>
                     </StyledTableCell>
                     <StyledTableCell
                       component='th'
@@ -677,7 +677,7 @@ const MessageDetail = (props: DialogInfoProps) => {
           <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
             <Pagination
               count={pageCount}
-              page={page + 1}
+              page={page}
               onChange={handleChangePagination}
               variant='outlined'
               color='primary'
