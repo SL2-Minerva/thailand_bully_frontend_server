@@ -41,6 +41,7 @@ const TopManagementCard = (props: CardInfo) => {
   const imgPath = gitHubIcon
 
   const [sourceName, setSourceName] = React.useState('')
+  const [showMore, setShowMore] = React.useState(false)
 
   // const [showFullMessage, setShowFullMessage] = React.useState(false)
 
@@ -112,18 +113,43 @@ const TopManagementCard = (props: CardInfo) => {
         </Grid>
 
         <Typography variant='body2' color='text.secondary' mt={4}>
-          <Box sx={{ minHeight: '70px', maxHeight: '70px' }}>
-            <span
-              style={{
-                overflow: 'hidden',
-                display: '-webkit-box',
-                WebkitBoxOrient: 'vertical',
-                WebkitLineClamp: 2,
-                maxWidth: '400px'
-              }}
-            >
-              {resultTopEngagement.message_detail}
-            </span>
+          <Box sx={{ minHeight: '70px' }}>
+            {showMore ? (
+              <>
+                {resultTopEngagement.message_detail}
+                <a style={{cursor: 'pointer'}} onClick={(event: any) => {
+                    setShowMore(!showMore)
+                    event.stopPropagation()
+                  }}
+                  rel='noopener noreferrer'>
+                  <Typography variant='caption'sx={{pl: 2}}>...Show less</Typography>
+                </a>
+              </>
+            ) : (
+              <Stack>
+                <span
+                  style={{
+                    overflow: 'hidden',
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 2,
+                    maxWidth: '400px'
+                  }}
+                >
+                  {resultTopEngagement.message_detail}
+                </span>
+                <a
+                  onClick={(event: any) => {
+                    setShowMore(!showMore)
+                    event.stopPropagation()
+                  }}
+                  rel='noopener noreferrer'
+                  style={{cursor: 'pointer'}}
+                >
+                  <Typography variant='caption' sx={{pl: 2}}>... Show More</Typography>
+                </a>
+              </Stack>
+            )}
           </Box>
         </Typography>
 
@@ -134,15 +160,18 @@ const TopManagementCard = (props: CardInfo) => {
         <Grid container spacing={2}>
           <Grid item md={10} xs={12} sx={{ display: 'flex' }}>
             <Stack direction='row' spacing={2}>
-              <ThumbUpOutline fontSize='medium' sx={{paddingRight: '3px'}}/> { ' : ' + resultTopEngagement.number_of_reactions}
+              <ThumbUpOutline fontSize='medium' sx={{ paddingRight: '3px' }} />{' '}
+              {' : ' + resultTopEngagement.number_of_reactions}
             </Stack>
 
-            <Stack direction='row' spacing={2} sx={{marginLeft: '12px'}}>
-              <CommentOutline fontSize='medium' sx={{paddingRight: '3px'}}/> { ' : ' + resultTopEngagement.number_of_comments}
+            <Stack direction='row' spacing={2} sx={{ marginLeft: '12px' }}>
+              <CommentOutline fontSize='medium' sx={{ paddingRight: '3px' }} />{' '}
+              {' : ' + resultTopEngagement.number_of_comments}
             </Stack>
 
-            <Stack direction='row' spacing={2} sx={{marginLeft: '12px'}}>
-              <ShareVariantOutline fontSize='medium' sx={{paddingRight: '3px'}}/> { ' : ' + resultTopEngagement.number_of_shares}
+            <Stack direction='row' spacing={2} sx={{ marginLeft: '12px' }}>
+              <ShareVariantOutline fontSize='medium' sx={{ paddingRight: '3px' }} />{' '}
+              {' : ' + resultTopEngagement.number_of_shares}
             </Stack>
           </Grid>
           <Grid item md={2} xs={12} sx={{ display: 'flex', justifyContent: 'end', pr: 3 }}>
