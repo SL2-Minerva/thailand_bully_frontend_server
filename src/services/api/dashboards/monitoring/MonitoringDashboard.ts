@@ -182,7 +182,7 @@ export const GetInfluencerByAuthor = ({
     page: page,
     limit: limit,
     author: author,
-    fieldName: fieldName,
+    field: fieldName,
     sortSelect: sortSelect,
     page_name: page_name
   }
