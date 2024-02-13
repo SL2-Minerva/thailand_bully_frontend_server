@@ -227,17 +227,17 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                   <StyledTableCell
                     align='center'
                     onClick={() => {
-                      const type = sortColumns.author === '' ? 'asc' : sortColumns.author === 'asc' ? 'desc' : ''
+                      const type = sortColumns.account_name === '' ? 'asc' : sortColumns.account_name === 'asc' ? 'desc' : ''
                       handleButtonSort('account_name', type)
                     }}
                   >
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                       <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
-                        {sortColumns.author === 'desc' ? (
+                        {sortColumns.account_name === 'desc' ? (
                           <Tooltip title='Descending'>
                             <ArrowDown style={{ fontSize: '20px' }} />
                           </Tooltip>
-                        ) : sortColumns.author === 'asc' ? (
+                        ) : sortColumns.account_name === 'asc' ? (
                           <Tooltip title='Ascending'>
                             <ArrowUp style={{ fontSize: '20px' }} />
                           </Tooltip>
@@ -282,17 +282,17 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                   <StyledTableCell
                     align='center'
                     onClick={() => {
-                      const type = sortColumns.date === '' ? 'asc' : sortColumns.date === 'asc' ? 'desc' : ''
+                      const type = sortColumns.post_time === '' ? 'asc' : sortColumns.post_time === 'asc' ? 'desc' : ''
                       handleButtonSort('post_time', type)
                     }}
                   >
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                       <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
-                        {sortColumns.date === 'desc' ? (
+                        {sortColumns.post_time === 'desc' ? (
                           <Tooltip title='Descending'>
                             <ArrowDown style={{ fontSize: '20px' }} />
                           </Tooltip>
-                        ) : sortColumns.date === 'asc' ? (
+                        ) : sortColumns.post_time === 'asc' ? (
                           <Tooltip title='Ascending'>
                             <ArrowUp style={{ fontSize: '20px' }} />
                           </Tooltip>
