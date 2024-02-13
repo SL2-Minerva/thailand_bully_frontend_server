@@ -308,7 +308,7 @@ const MonitoringCharts = (data: Props) => {
             {loadingTopFiveInfluencers && <LinearProgress style={{ width: '100%' }} />}
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
               <CardHeader
-                title={<Translations text='Top 5 Infulencer by Social Media' />}
+                title={<Translations text='Top 6 Infulencer by Social Media' />}
                 titleTypographyProps={{ variant: 'h6' }}
               />
               <StyledTooltip

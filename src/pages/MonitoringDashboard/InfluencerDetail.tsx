@@ -76,13 +76,14 @@ export const StyledDataGrid = withStyles({
 export const initialSort = {
   message_type: '',
   author: '',
-  date: '',
+  post_time: '',
   device: '',
   source: '',
   engagement: '',
   sentiment: '',
   bully_level: '',
-  bully_type: ''
+  bully_type: '',
+  account_name: '',
 }
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -227,7 +228,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                     align='center'
                     onClick={() => {
                       const type = sortColumns.author === '' ? 'asc' : sortColumns.author === 'asc' ? 'desc' : ''
-                      handleButtonSort('author', type)
+                      handleButtonSort('account_name', type)
                     }}
                   >
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
@@ -282,7 +283,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                     align='center'
                     onClick={() => {
                       const type = sortColumns.date === '' ? 'asc' : sortColumns.date === 'asc' ? 'desc' : ''
-                      handleButtonSort('date', type)
+                      handleButtonSort('post_time', type)
                     }}
                   >
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
