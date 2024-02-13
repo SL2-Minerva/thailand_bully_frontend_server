@@ -117,7 +117,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
   const [fieldName, setFieldName] = useState<string>('')
   const [sortSelect, setSortSelect] = useState('')
   const [sortColumns, setSortColumn] = useState<any>(initialSort)
-  const [showDetail, setShowDetail] = useState<boolean>(false);
+  const [showDetail, setShowDetail] = useState<boolean>(false)
 
   const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetInfluencerByAuthor({
     campaign_id: params?.campaign_id || params?.campaign,
@@ -223,6 +223,32 @@ const InfluencerDetail = (props: DialogInfoProps) => {
               <TableHead>
                 <TableRow>
                   <StyledTableCell align='center'>No.</StyledTableCell>
+                  <StyledTableCell
+                    align='center'
+                    onClick={() => {
+                      const type = sortColumns.author === '' ? 'asc' : sortColumns.author === 'asc' ? 'desc' : ''
+                      handleButtonSort('author', type)
+                    }}
+                  >
+                    <span style={{ display: 'flex', justifyContent: 'center' }}>
+                      <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
+                        {sortColumns.author === 'desc' ? (
+                          <Tooltip title='Descending'>
+                            <ArrowDown style={{ fontSize: '20px' }} />
+                          </Tooltip>
+                        ) : sortColumns.author === 'asc' ? (
+                          <Tooltip title='Ascending'>
+                            <ArrowUp style={{ fontSize: '20px' }} />
+                          </Tooltip>
+                        ) : (
+                          <Tooltip title='unsort'>
+                            <DotsVertical style={{ fontSize: '20px' }} />
+                          </Tooltip>
+                        )}
+                      </span>
+                      <span style={{ textAlign: 'center' }}>Account Name</span>
+                    </span>
+                  </StyledTableCell>
                   <StyledTableCell align='center'>Message Detail</StyledTableCell>
                   <StyledTableCell
                     align='center'
@@ -251,32 +277,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                       Message Type
                     </span>
                   </StyledTableCell>
-                  <StyledTableCell
-                    align='center'
-                    onClick={() => {
-                      const type = sortColumns.author === '' ? 'asc' : sortColumns.author === 'asc' ? 'desc' : ''
-                      handleButtonSort('author', type)
-                    }}
-                  >
-                    <span style={{ display: 'flex', justifyContent: 'center' }}>
-                      <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
-                        {sortColumns.author === 'desc' ? (
-                          <Tooltip title='Descending'>
-                            <ArrowDown style={{ fontSize: '20px' }} />
-                          </Tooltip>
-                        ) : sortColumns.author === 'asc' ? (
-                          <Tooltip title='Ascending'>
-                            <ArrowUp style={{ fontSize: '20px' }} />
-                          </Tooltip>
-                        ) : (
-                          <Tooltip title='unsort'>
-                            <DotsVertical style={{ fontSize: '20px' }} />
-                          </Tooltip>
-                        )}
-                      </span>
-                      <span style={{ textAlign: 'center' }}>Account Name</span>
-                    </span>
-                  </StyledTableCell>
+
                   <StyledTableCell
                     align='center'
                     onClick={() => {
@@ -478,18 +479,14 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                     onClick={() => {
                       // setMessageId(messageDetail.message_id);
                       setMessageId(messageDetail.id)
-                      setShowDetail(true);
+                      setShowDetail(true)
                     }}
                   >
-                    <StyledTableCell
-                    >
+                    <StyledTableCell>
                       <b>{index + 1 + (page - 1) * 10}</b>
                     </StyledTableCell>
-                    <StyledTableCell
-                      component='th'
-                      scope='row'
-                      width={200}
-                    >
+                    <StyledTableCell align='center'>{messageDetail.account_name}</StyledTableCell>
+                    <StyledTableCell component='th' scope='row' width={200}>
                       <span
                         style={{
                           overflow: 'hidden',
@@ -501,26 +498,13 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                         {messageDetail.message_detail}
                       </span>
                     </StyledTableCell>
-                    <StyledTableCell
-                      align='center'
-                    >
-                      {messageDetail.message_type || '-'}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      align='center'
-                    >
-                      {messageDetail.account_name}
-                    </StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.message_type || '-'}</StyledTableCell>
 
-                    <StyledTableCell
-                      align='center'
-                    >
+                    <StyledTableCell align='center'>
                       {moment(messageDetail.post_date)?.format('DD.MM.YYYY') + ', ' + messageDetail.post_time}
                     </StyledTableCell>
 
-                    <StyledTableCell
-                      align='center'
-                    >
+                    <StyledTableCell align='center'>
                       {messageDetail.device === 'android' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/android.png`} />
                       ) : messageDetail.device === 'webapp' || messageDetail.device === 'website' ? (
@@ -531,9 +515,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                         '-'
                       )}
                     </StyledTableCell>
-                    <StyledTableCell
-                      align='center'
-                    >
+                    <StyledTableCell align='center'>
                       {messageDetail?.source_name === 'facebook' ? (
                         <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
                       ) : messageDetail?.source_name === 'twitter' ? (
@@ -552,26 +534,10 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                         <span style={{ textTransform: 'uppercase' }}>{messageDetail?.channel}</span>
                       )}
                     </StyledTableCell>
-                    <StyledTableCell
-                      align='center'
-                    >
-                      {messageDetail.total_engagement || '-'}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      align='center'
-                    >
-                      {messageDetail.sentiment || '-'}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      align='center'
-                    >
-                      {messageDetail.bully_level}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      align='center'
-                    >
-                      {messageDetail.bully_type}
-                    </StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.total_engagement || '-'}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.sentiment || '-'}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.bully_level}</StyledTableCell>
+                    <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
 
                     <StyledTableCell align='center'>
                       {messageDetail.link_message ? (

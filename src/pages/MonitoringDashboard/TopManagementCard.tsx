@@ -3,7 +3,7 @@ import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import { Avatar, Box, Grid, LinearProgress } from '@mui/material'
+import { Avatar, Box, Grid, LinearProgress, Stack } from '@mui/material'
 import {
   FacebookIcon,
   InstagramIcon,
@@ -132,12 +132,20 @@ const TopManagementCard = (props: CardInfo) => {
         </Box>
 
         <Grid container spacing={2}>
-          <Grid item md={6} xs={12} sx={{ display: 'flex' }}>
-            <ThumbUpOutline fontSize='small' sx={{ m: 2 }} />
-            <CommentOutline fontSize='small' sx={{ m: 2 }} />
-            <ShareVariantOutline fontSize='small' sx={{ m: 2 }} />
+          <Grid item md={10} xs={12} sx={{ display: 'flex' }}>
+            <Stack direction='row' spacing={2}>
+              <ThumbUpOutline fontSize='medium' sx={{paddingRight: '3px'}}/> { ' : ' + resultTopEngagement.number_of_reactions}
+            </Stack>
+
+            <Stack direction='row' spacing={2} sx={{marginLeft: '12px'}}>
+              <CommentOutline fontSize='medium' sx={{paddingRight: '3px'}}/> { ' : ' + resultTopEngagement.number_of_comments}
+            </Stack>
+
+            <Stack direction='row' spacing={2} sx={{marginLeft: '12px'}}>
+              <ShareVariantOutline fontSize='medium' sx={{paddingRight: '3px'}}/> { ' : ' + resultTopEngagement.number_of_shares}
+            </Stack>
           </Grid>
-          <Grid item md={6} xs={12} sx={{ display: 'flex', justifyContent: 'end', pr: 3 }}>
+          <Grid item md={2} xs={12} sx={{ display: 'flex', justifyContent: 'end', pr: 3 }}>
             Link:{' '}
             <a href={resultTopEngagement.link_message} target='_blank' rel='noreferrer'>
               <LinkVariant fontSize='small' sx={{ color: 'blue' }} />

@@ -183,7 +183,7 @@ const MonitoringCharts = (data: Props) => {
           <Paper id='chart10' sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
             <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
               <CardHeader
-                title={<Translations text='Top 5 Engagement of Post Monitoring' />}
+                title={<Translations text='Top 6 Engagement of Post Monitoring' />}
                 titleTypographyProps={{ variant: 'h6' }}
               />
               <StyledTooltip
