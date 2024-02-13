@@ -109,7 +109,7 @@ const InfluencerSocialMedia = ({
               <Table size='small' sx={{ overflow: 'auto' }}>
                 <TableHead>
                   <TableRow>
-                    <TableCell sx={{ textAlign: 'center', backgroundColor: '#dadadade', color: 'black' }}></TableCell>
+                    <TableCell sx={{ textAlign: 'center', backgroundColor: '#dadadade', color: 'black' }}>No.</TableCell>
                     <TableCell sx={{ textAlign: 'center', backgroundColor: '#dadadade', color: 'black' }}>
                       {' '}
                       Account Name{' '}

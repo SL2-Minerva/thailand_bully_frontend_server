@@ -2,7 +2,7 @@ import * as React from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import { Avatar, Box, Grid, LinearProgress } from '@mui/material'
+import { Avatar, Box, Grid, LinearProgress, Stack } from '@mui/material'
 import { gitHubIcon } from 'src/utils/const'
 import { CommentOutline, ShareVariantOutline, ThumbUpOutline } from 'mdi-material-ui'
 
@@ -54,9 +54,17 @@ const CommentDetail = (props: CardInfo) => {
 
         <Grid container spacing={2} mt={2}>
           <Grid item md={4} xs={12} sx={{ display: 'flex' }}>
-            <ThumbUpOutline fontSize='small' sx={{ m: 2 }} />
-            <CommentOutline fontSize='small' sx={{ m: 2 }} />
-            <ShareVariantOutline fontSize='small' sx={{ m: 2 }} />
+            <Stack direction='row' spacing={2}>
+              <ThumbUpOutline fontSize='medium' sx={{ paddingRight: '3px' }} /> {' : ' + comment.number_of_reactions}
+            </Stack>
+
+            <Stack direction='row' spacing={2} sx={{ marginLeft: '12px' }}>
+              <CommentOutline fontSize='medium' sx={{ paddingRight: '3px' }} /> {' : ' + comment.number_of_comments}
+            </Stack>
+
+            <Stack direction='row' spacing={2} sx={{ marginLeft: '12px' }}>
+              <ShareVariantOutline fontSize='medium' sx={{ paddingRight: '3px' }} /> {' : ' + comment.number_of_shares}
+            </Stack>
             {/* <span style={{marginTop: 3, marginLeft: 4}}>
               Link:{' '}
               <a href={comment.link_message} target='_blank' rel='noreferrer'>
