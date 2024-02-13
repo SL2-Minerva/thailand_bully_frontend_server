@@ -2,7 +2,7 @@ import { LinearProgress, Typography, Paper, Button, Box, Pagination } from '@mui
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
-import { Information } from 'mdi-material-ui'
+import { Information, LinkVariant } from 'mdi-material-ui'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import Translations from 'src/layouts/components/Translations'
 import { useEffect, useState } from 'react'
@@ -37,6 +37,13 @@ const EngagementMonitoring = ({
 
   const columns: GridColDef[] = [
     {
+      field: 'keyword_name',
+      headerName: 'keyword',
+      flex: 1,
+      sortable: false,
+      headerAlign: 'center'
+    },
+    {
       field: 'account_name',
       headerName: 'Account Name',
       flex: 1,
@@ -51,8 +58,21 @@ const EngagementMonitoring = ({
 
       //   valueGetter: (params: GridValueGetterParams) => `${params.row.total?.toLocaleString('en-US')}`
     },
-    { field: 'post_time', headerName: 'Post Time', flex: 1, headerAlign: 'center' },
-    { field: 'total_engagement', headerName: 'Total Engagement', flex: 1, headerAlign: 'center' },
+    {
+      field: 'post_date',
+      headerName: 'Post Time',
+      flex: 1,
+      headerAlign: 'center',
+      valueGetter: (params: GridValueGetterParams) => `${params.row.post_date + ', ' + params.row.post_time}`
+    },
+    {
+      field: 'source_name',
+      headerName: 'Channel',
+      flex: 1,
+      headerAlign: 'center',
+      renderCell: renderSourceName
+    },
+    { field: 'total_engagement', headerName: 'Engagement', flex: 1, headerAlign: 'center' },
     { field: 'sentiment', headerName: 'Sentiment', flex: 1, headerAlign: 'center' },
 
     {
@@ -69,8 +89,55 @@ const EngagementMonitoring = ({
       flex: 1,
       headerAlign: 'center',
       valueGetter: (params: GridValueGetterParams) => `${params.row.bully_type}`
+    },
+    {
+      field: 'link_message',
+      headerName: 'Link',
+      flex: 1,
+      headerAlign: 'center',
+      renderCell: openLink
     }
   ]
+
+  function renderSourceName(params: any) {
+    return (
+      <>
+        {params.value === 'facebook' ? (
+          <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
+        ) : params.value === 'twitter' ? (
+          <img alt={'logo'} width={25} height={25} src={`/images/logos/x-black.jpg`} />
+        ) : params.value === 'youtube' ? (
+          <img width={28} height={28} alt={'logo'} src={`/images/logos/youtube-text.png`} />
+        ) : params.value === 'instagram' ? (
+          <img width={28} alt={'logo'} height={28} src={`/images/logos/instagram.png`} />
+        ) : params.value === 'pantip' ? (
+          <img width={28} alt={'logo'} height={28} src={`/images/logos/pantip.png`} />
+        ) : params.value === 'google' ? (
+          <img width={25} alt={'logo'} height={25} src={`/images/logos/google.png`} />
+        ) : params.value == 'tiktok' ? (
+          <img width={34} alt={'logo'} height={34} src={`/images/logos/tiktok.png`} />
+        ) : (
+          <span style={{ textTransform: 'uppercase' }}>{params.value}</span>
+        )}
+      </>
+    )
+  }
+
+  function openLink(params: any) {
+    return (
+      <a
+        href={params.value}
+        onClick={event => {
+          event.stopPropagation()
+        }}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        <LinkVariant fontSize='small' sx={{ color: 'blue' }} />
+      </a>
+    )
+  }
+
   const [pageCount, setPageCount] = useState<number>(0)
   const [page, setPage] = useState(1)
 

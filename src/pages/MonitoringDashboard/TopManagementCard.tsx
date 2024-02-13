@@ -118,7 +118,7 @@ const TopManagementCard = (props: CardInfo) => {
                 overflow: 'hidden',
                 display: '-webkit-box',
                 WebkitBoxOrient: 'vertical',
-                WebkitLineClamp: 3,
+                WebkitLineClamp: 2,
                 maxWidth: '400px'
               }}
             >
