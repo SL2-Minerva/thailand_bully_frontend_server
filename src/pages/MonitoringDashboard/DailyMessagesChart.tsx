@@ -363,7 +363,7 @@ const DailyMessagesChart = (props: LineProps) => {
       .then(response => {
         const url = window.URL.createObjectURL(new Blob([response.data]))
         setIsLoading(false)
-        saveAs(url, 'Overall Daily Messages.xlsx')
+        saveAs(url, 'Monitoring.xlsx')
         toast.success('Successfully Downloaded!')
       })
       .catch(() => {
