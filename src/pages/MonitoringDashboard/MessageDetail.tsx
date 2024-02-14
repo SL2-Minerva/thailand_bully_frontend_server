@@ -199,8 +199,12 @@ const MessageDetail = (props: DialogInfoProps) => {
     let exportParams: any = {}
     const todayDate = new Date()
 
-    if (params?.period === 'customrange' && params?.previousDate !== todayDate && params?.previousEndDate !== todayDate) {
-        exportParams = {
+    if (
+      params?.period === 'customrange' &&
+      params?.previousDate !== todayDate &&
+      params?.previousEndDate !== todayDate
+    ) {
+      exportParams = {
         campaign_id: params?.campaign || '',
         source: platformId || '',
         start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
@@ -218,7 +222,7 @@ const MessageDetail = (props: DialogInfoProps) => {
         sort: sortSelect
       }
     } else {
-        exportParams = {
+      exportParams = {
         campaign_id: params?.campaign || '',
         source: platformId || '',
         start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
@@ -246,8 +250,23 @@ const MessageDetail = (props: DialogInfoProps) => {
       .request<any>(options)
       .then(response => {
         const url = window.URL.createObjectURL(new Blob([response.data]))
+        console.log('response', response)
         setIsLoading(false)
-        saveAs(url, 'Overall Daily Messages.xlsx')
+        const currentdate = new Date()
+        const datetime =
+          currentdate.getDate() +
+          '/' +
+          (currentdate.getMonth() + 1) +
+          '/' +
+          currentdate.getFullYear() +
+          ' @ ' +
+          currentdate.getHours() +
+          ':' +
+          currentdate.getMinutes() +
+          ':' +
+          currentdate.getSeconds();
+          console.log('datime', datetime)
+        saveAs(url, 'Monitoring '+ datetime + '.xlsx')
         toast.success('Successfully Downloaded!')
       })
       .catch(() => {
