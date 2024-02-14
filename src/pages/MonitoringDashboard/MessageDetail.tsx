@@ -250,7 +250,6 @@ const MessageDetail = (props: DialogInfoProps) => {
       .request<any>(options)
       .then(response => {
         const url = window.URL.createObjectURL(new Blob([response.data]))
-        console.log('response', response)
         setIsLoading(false)
         const currentdate = new Date()
         const datetime =
@@ -265,7 +264,6 @@ const MessageDetail = (props: DialogInfoProps) => {
           currentdate.getMinutes() +
           ':' +
           currentdate.getSeconds();
-          console.log('datime', datetime)
         saveAs(url, 'Monitoring '+ datetime + '.xlsx')
         toast.success('Successfully Downloaded!')
       })
