@@ -25,11 +25,12 @@ import axios, { AxiosRequestConfig } from 'axios'
 import authConfig from 'src/configs/auth'
 import { API_PATH } from 'src/utils/const'
 import toast from 'react-hot-toast'
-import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 import { StyledTooltip } from '../dashboard/overall'
+import MessageDetail from './MessageDetail'
 
 // import CloseCircleOutline from 'mdi-material-ui/CloseCircleOutline';
 // import { Bar, getDatasetAtEvent,  } from 'react-chartjs-2'
+// import DailyMessageDetail from '../dashboard/DailyMessageDetail'
 
 interface LineProps {
   white: string
@@ -480,7 +481,7 @@ const DailyMessagesChart = (props: LineProps) => {
           </>
         )}
         {keywordId && params?.campaign ? (
-          <DailyMessageDetail
+          <MessageDetail
             show={showDetail}
             setShow={setShowDetail}
             params={params}
@@ -489,7 +490,7 @@ const DailyMessagesChart = (props: LineProps) => {
             reportNo={reportNo}
             title='Daily Messages: Message Transactions'
             networkTitle='Daily Messages: Social Network Analysis'
-            excelExport={excelExport}
+            setIsLoading={setIsLoading}
           />
         ) : (
           ''
