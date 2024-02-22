@@ -187,7 +187,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
           sx={{
             pb: 6,
             pt: { xs: 3, sm: 6 },
-            position: 'relative'
+            position: 'relative',
           }}
         >
           <IconButton size='small' onClick={onCloseDialog} sx={{ position: 'absolute', right: '1rem', top: '1rem' }}>
@@ -475,7 +475,8 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                     hover={true}
                     sx={{
                       cursor: messageDetail.parent ? 'pointer' : '',
-                      backgroundColor: messageDetail.parent ? '#00ff0038' : '#fff'
+                      backgroundColor: messageDetail.parent ? '#00ff0038' : '#fff',
+                      color: 'grey'
                     }}
                     onClick={() => {
                       // setMessageId(messageDetail.message_id);
@@ -483,11 +484,11 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                       setShowDetail(true)
                     }}
                   >
-                    <StyledTableCell>
+                    <StyledTableCell sx={{color: 'grey'}}>
                       <b>{index + 1 + (page - 1) * 10}</b>
                     </StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.account_name}</StyledTableCell>
-                    <StyledTableCell component='th' scope='row' width={200}>
+                    <StyledTableCell align='center' sx={{color: 'grey'}}>{messageDetail.account_name}</StyledTableCell>
+                    <StyledTableCell component='th' scope='row' width={200} sx={{color: 'grey'}}>
                       <span
                         style={{
                           overflow: 'hidden',
@@ -499,13 +500,13 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                         {messageDetail.message_detail}
                       </span>
                     </StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.message_type || '-'}</StyledTableCell>
+                    <StyledTableCell align='center' sx={{color: 'grey'}}>{messageDetail.message_type || '-'}</StyledTableCell>
 
-                    <StyledTableCell align='center'>
+                    <StyledTableCell align='center' sx={{color: 'grey'}}>
                       {moment(messageDetail.post_date)?.format('DD.MM.YYYY') + ', ' + messageDetail.post_time}
                     </StyledTableCell>
 
-                    <StyledTableCell align='center'>
+                    <StyledTableCell align='center' sx={{color: 'grey'}}>
                       {messageDetail.device === 'android' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/android.png`} />
                       ) : messageDetail.device === 'webapp' || messageDetail.device === 'website' ? (
@@ -516,7 +517,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                         '-'
                       )}
                     </StyledTableCell>
-                    <StyledTableCell align='center'>
+                    <StyledTableCell align='center' sx={{color: 'grey'}}>
                       {messageDetail?.source_name === 'facebook' ? (
                         <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
                       ) : messageDetail?.source_name === 'twitter' ? (
@@ -535,12 +536,12 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                         <span style={{ textTransform: 'uppercase' }}>{messageDetail?.channel}</span>
                       )}
                     </StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.total_engagement || '-'}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.sentiment || '-'}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.bully_level}</StyledTableCell>
-                    <StyledTableCell align='center'>{messageDetail.bully_type}</StyledTableCell>
+                    <StyledTableCell align='center' sx={{color: 'grey'}}>{messageDetail.total_engagement || '-'}</StyledTableCell>
+                    <StyledTableCell align='center' sx={{color: 'grey'}}>{messageDetail.sentiment || '-'}</StyledTableCell>
+                    <StyledTableCell align='center' sx={{color: 'grey'}}>{messageDetail.bully_level}</StyledTableCell>
+                    <StyledTableCell align='center' sx={{color: 'grey'}}>{messageDetail.bully_type}</StyledTableCell>
 
-                    <StyledTableCell align='center'>
+                    <StyledTableCell align='center' sx={{color: 'grey'}}>
                       {messageDetail.link_message ? (
                         <a
                           href={messageDetail.link_message}
@@ -572,7 +573,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                 ))}
 
                 {!data || data?.length === 0 ? (
-                  <TableCell colSpan={12}>
+                  <TableCell colSpan={12} sx={{color: 'grey'}}>
                     <Typography
                       variant='h6'
                       sx={{
