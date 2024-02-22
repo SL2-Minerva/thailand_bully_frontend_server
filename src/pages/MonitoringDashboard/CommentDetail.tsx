@@ -14,6 +14,7 @@ interface CardInfo {
 const CommentDetail = (props: CardInfo) => {
   const { comment, loadingTopEngagement } = props
   const imgPath = gitHubIcon
+  const [showMore, setShowMore] = React.useState(false)
 
   return (
     <Card sx={{ mt: 5, mr: 5 }}>
@@ -29,23 +30,55 @@ const CommentDetail = (props: CardInfo) => {
 
           <Grid item xs={8.5}>
             <div style={{ display: 'flex' }}>
-              <Box sx={{ minHeight: '70px', maxHeight: '70px' }}>
+              <Box sx={{ minHeight: '70px' }}>
                 <Typography gutterBottom variant='body1' component='div' ml={2} sx={{ fontWeight: 600 }}>
                   {comment.account_name}
                 </Typography>
                 <Typography gutterBottom variant='body1' component='div' ml={2}>
-                  <span
-                    style={{
-                      overflow: 'hidden',
-                      display: '-webkit-box',
-                      WebkitBoxOrient: 'vertical',
-                      WebkitLineClamp: 3
+                  {showMore ? (
+                    <span>
+                      {comment.message_detail}
+                      <a
+                        style={{ cursor: 'pointer' }}
+                        onClick={(event: any) => {
+                          setShowMore(!showMore)
+                          event.stopPropagation()
+                        }}
+                        rel='noopener noreferrer'
+                      >
+                        <Typography variant='caption' sx={{ pl: 2 }}>
+                          ...Show less
+                        </Typography>
+                      </a>
+                    </span>
+                  ) : (
+                    <Stack>
+                      <span
+                        style={{
+                          overflow: 'hidden',
+                          display: '-webkit-box',
+                          WebkitBoxOrient: 'vertical',
+                          WebkitLineClamp: 2
 
-                      // maxWidth: '400px'
-                    }}
-                  >
-                    {comment.message_detail}
-                  </span>
+                          // maxWidth: '400px'
+                        }}
+                      >
+                        {comment.message_detail}
+                      </span>
+                      <a
+                        onClick={(event: any) => {
+                          setShowMore(!showMore)
+                          event.stopPropagation()
+                        }}
+                        rel='noopener noreferrer'
+                        style={{ cursor: 'pointer' }}
+                      >
+                        <Typography variant='caption' sx={{ pl: 2 }}>
+                          ... Show More
+                        </Typography>
+                      </a>
+                    </Stack>
+                  )}
                 </Typography>
               </Box>
             </div>
