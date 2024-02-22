@@ -20,7 +20,10 @@ const ContentAnnouncement = (props: Props) => {
               sx={{
                 backgroundImage: `url(${'https://cornea-analysis.com/storage/' + contents.picture})`,
                 backgroundPosition: 'center',
-                backgroundSize: '100% 100%'
+                backgroundSize: 'contain',
+                backgroundPositionX: 'center', 
+                backgroundPositionY: 'center',
+                backgroundRepeat: 'no-repeat'
 
                 // backgroundSize: 'cover',
               }}

@@ -133,8 +133,8 @@ const MessageDetail = (props: DialogInfoProps) => {
   const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetDetailMessageOverall(
     params?.campaign,
     platformId,
-    params?.date,
-    params?.endDate,
+    params?.label,
+    params?.label,
     params?.period,
     params?.previousDate,
     params?.previousEndDate,
@@ -207,8 +207,8 @@ const MessageDetail = (props: DialogInfoProps) => {
       exportParams = {
         campaign_id: params?.campaign || '',
         source: platformId || '',
-        start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
-        end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
+        start_date: params?.label ? moment(params?.label).format('YYYY-MM-DD') : '',
+        end_date: params?.label ? moment(params?.label).format('YYYY-MM-DD') : '',
         period: params?.period,
         keyword_id: keywordId || '',
         start_date_period: params?.previousDate ? moment(params?.previousDate).format('YYYY-MM-DD') : '',
@@ -218,13 +218,16 @@ const MessageDetail = (props: DialogInfoProps) => {
         label: params?.label?.toString(),
         field: fieldName,
         sort: sortSelect
+
+        // start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
+        // end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
       }
     } else {
       exportParams = {
         campaign_id: params?.campaign || '',
         source: platformId || '',
-        start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
-        end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
+        start_date: params?.label ? moment(params?.label).format('YYYY-MM-DD') : '',
+        end_date: params?.label ? moment(params?.label).format('YYYY-MM-DD') : '',
         period: params?.period,
         keyword_id: keywordId || '',
         report_number: reportNo,

@@ -84,6 +84,7 @@ export const initialSort = {
   bully_level: '',
   bully_type: '',
   account_name: '',
+  keyword_name: ''
 }
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -224,6 +225,32 @@ const InfluencerDetail = (props: DialogInfoProps) => {
               <TableHead>
                 <TableRow>
                   <StyledTableCell align='center'>No.</StyledTableCell>
+                  <StyledTableCell
+                    align='center'
+                    onClick={() => {
+                      const type = sortColumns.keyword_name === '' ? 'asc' : sortColumns.keyword_name === 'asc' ? 'desc' : ''
+                      handleButtonSort('keyword_name', type)
+                    }}
+                  >
+                    <span style={{ display: 'flex', justifyContent: 'center' }}>
+                      <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
+                        {sortColumns.keyword_name === 'desc' ? (
+                          <Tooltip title='Descending'>
+                            <ArrowDown style={{ fontSize: '20px' }} />
+                          </Tooltip>
+                        ) : sortColumns.keyword_name === 'asc' ? (
+                          <Tooltip title='Ascending'>
+                            <ArrowUp style={{ fontSize: '20px' }} />
+                          </Tooltip>
+                        ) : (
+                          <Tooltip title='unsort'>
+                            <DotsVertical style={{ fontSize: '20px' }} />
+                          </Tooltip>
+                        )}
+                      </span>
+                      <span style={{ textAlign: 'center' }}>Keyword</span>
+                    </span>
+                  </StyledTableCell>
                   <StyledTableCell
                     align='center'
                     onClick={() => {
@@ -487,6 +514,8 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                     <StyledTableCell sx={{color: 'grey'}}>
                       <b>{index + 1 + (page - 1) * 10}</b>
                     </StyledTableCell>
+                    <StyledTableCell align='center' sx={{color: 'grey'}}>{messageDetail.keyword_name}</StyledTableCell>
+
                     <StyledTableCell align='center' sx={{color: 'grey'}}>{messageDetail.account_name}</StyledTableCell>
                     <StyledTableCell component='th' scope='row' width={200} sx={{color: 'grey'}}>
                       <span
