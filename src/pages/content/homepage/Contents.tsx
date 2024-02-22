@@ -37,15 +37,15 @@ const Contents = (props: Props) => {
                 <Grid container minHeight={450}>
                   <Grid item md={5.5} xs={12} mb={2}>
                     {contents?.picture ? (
-                      <Box sx={{ height: '250px', marginLeft: '1rem' }}>
+                      <Box sx={{ minHeight: '250px', marginLeft: '1rem' }}>
                         <Img
-                          style={{ width: 400, height: 400 }}
+                          style={{ width: "100%", height: 'auto' }}
                           alt='Image'
                           src={'https://cornea-analysis.com/storage/' + contents.picture}
                         />
                       </Box>
                     ) : (
-                      <Box sx={{ height: '250px', marginLeft: '1rem' }}>
+                      <Box sx={{ minHeight: '250px', marginLeft: '1rem' }}>
                         <Img style={{ width: 400, height: 400 }} alt='Image' src={'/images/NoImage.png'} />
                       </Box>
                     )}
