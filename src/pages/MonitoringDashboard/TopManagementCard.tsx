@@ -34,10 +34,11 @@ interface CardInfo {
   resultTopEngagement: any
   loadingTopEngagement: boolean
   result_source_list?: any
+  showFullMsg?: boolean
 }
 
 const TopManagementCard = (props: CardInfo) => {
-  const { resultTopEngagement, loadingTopEngagement, result_source_list } = props
+  const { resultTopEngagement, loadingTopEngagement, result_source_list, showFullMsg } = props
   const imgPath = gitHubIcon
 
   const [sourceName, setSourceName] = React.useState('')
@@ -46,17 +47,17 @@ const TopManagementCard = (props: CardInfo) => {
   // const [showFullMessage, setShowFullMessage] = React.useState(false)
 
   const sourceIcon =
-    resultTopEngagement?.source_name || sourceName === 'facebook'
+    resultTopEngagement?.source_name === 'facebook' || sourceName === 'facebook'
       ? FacebookIcon
-      : resultTopEngagement.source_name || sourceName === 'twitter'
+      : resultTopEngagement.source_name === 'twitter' || sourceName === 'twitter'
       ? TwitterIcon
-      : resultTopEngagement.source_name || sourceName === 'instagram'
+      : resultTopEngagement.source_name === 'instagram' || sourceName === 'instagram'
       ? InstagramIcon
-      : resultTopEngagement.source_name || sourceName === 'youtube'
+      : resultTopEngagement.source_name === 'youtube' || sourceName === 'youtube'
       ? YoutubeIcon
-      : resultTopEngagement.source_name || sourceName === 'pantip'
+      : resultTopEngagement.source_name === 'pantip' || sourceName === 'pantip'
       ? PantipIcon
-      : resultTopEngagement.source_name || sourceName === 'google'
+      : resultTopEngagement.source_name === 'google' || sourceName === 'google'
       ? googleIcon
       : '/images/NoImage.png'
 
@@ -81,6 +82,12 @@ const TopManagementCard = (props: CardInfo) => {
       setSourceName(source_name)
     }
   }, [resultTopEngagement?.source_id])
+
+  React.useEffect(() => {
+    if (resultTopEngagement?.source_name) {
+      setSourceName(resultTopEngagement?.source_name)
+    }
+  }, [resultTopEngagement?.source_name])
 
   return (
     <Card sx={{ minHeight: '335px' }}>
@@ -114,41 +121,65 @@ const TopManagementCard = (props: CardInfo) => {
 
         <Typography variant='body2' color='text.secondary' mt={4}>
           <Box sx={{ minHeight: '70px' }}>
-            {showMore ? (
-              <>
-                {resultTopEngagement.message_detail}
-                <a style={{cursor: 'pointer'}} onClick={(event: any) => {
-                    setShowMore(!showMore)
-                    event.stopPropagation()
-                  }}
-                  rel='noopener noreferrer'>
-                  <Typography variant='caption'sx={{pl: 2}}>...Show less</Typography>
-                </a>
-              </>
-            ) : (
+            {showFullMsg ? (
               <Stack>
                 <span
                   style={{
                     overflow: 'hidden',
                     display: '-webkit-box',
                     WebkitBoxOrient: 'vertical',
-                    WebkitLineClamp: 2,
                     maxWidth: '400px'
                   }}
                 >
                   {resultTopEngagement.message_detail}
                 </span>
-                <a
-                  onClick={(event: any) => {
-                    setShowMore(!showMore)
-                    event.stopPropagation()
-                  }}
-                  rel='noopener noreferrer'
-                  style={{cursor: 'pointer'}}
-                >
-                  <Typography variant='caption' sx={{pl: 2}}>... Show More</Typography>
-                </a>
               </Stack>
+            ) : (
+              <>
+                {showMore ? (
+                  <>
+                    {resultTopEngagement.message_detail}
+                    <a
+                      style={{ cursor: 'pointer' }}
+                      onClick={(event: any) => {
+                        setShowMore(!showMore)
+                        event.stopPropagation()
+                      }}
+                      rel='noopener noreferrer'
+                    >
+                      <Typography variant='caption' sx={{ pl: 2 }}>
+                        ...Show less
+                      </Typography>
+                    </a>
+                  </>
+                ) : (
+                  <Stack>
+                    <span
+                      style={{
+                        overflow: 'hidden',
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        WebkitLineClamp: 2,
+                        maxWidth: '400px'
+                      }}
+                    >
+                      {resultTopEngagement.message_detail}
+                    </span>
+                    <a
+                      onClick={(event: any) => {
+                        setShowMore(!showMore)
+                        event.stopPropagation()
+                      }}
+                      rel='noopener noreferrer'
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <Typography variant='caption' sx={{ pl: 2 }}>
+                        ... Show More
+                      </Typography>
+                    </a>
+                  </Stack>
+                )}
+              </>
             )}
           </Box>
         </Typography>
