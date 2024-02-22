@@ -244,7 +244,7 @@ const PercentageOfBully = (props: MessageData) => {
   // const reportNo = '6.1.001'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }} >
       {loadingBullyLevelPercentage && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -334,7 +334,7 @@ const PercentageOfBully = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={currentData} options={options as any} height={200} />
+              <Doughnut data={currentData} options={options as any} height={300} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>
@@ -351,7 +351,7 @@ const PercentageOfBully = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={previousData} options={optionsPrevious as any} height={200} />
+              <Doughnut data={previousData} options={optionsPrevious as any} height={300} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>

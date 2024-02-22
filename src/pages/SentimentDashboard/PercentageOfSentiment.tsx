@@ -243,7 +243,7 @@ const PercentageOfSentiments = (props: MessageData) => {
   }, [resultFilterData, t])
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }}>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }}>
       {loadingFilterData && <LinearProgress style={{ width: '100%' }} />}
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -334,7 +334,7 @@ const PercentageOfSentiments = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={currentData} options={options as any} height={200} />
+              <Doughnut data={currentData} options={options as any} height={300} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>
@@ -351,7 +351,7 @@ const PercentageOfSentiments = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={previousData} options={optionsPrevious as any} height={200} />
+              <Doughnut data={previousData} options={optionsPrevious as any} height={300} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>

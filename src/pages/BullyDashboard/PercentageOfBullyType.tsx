@@ -278,7 +278,7 @@ const PercentageOfBullyType = (props: MessageData) => {
   // const reportNo = '6.1.011'
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550 }} >
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600 }} >
       {loadingBullyTypePercentage && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
@@ -363,7 +363,7 @@ const PercentageOfBullyType = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={currentData} options={options as any} height={200} />
+              <Doughnut data={currentData} options={options as any} height={300} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>
@@ -380,7 +380,7 @@ const PercentageOfBullyType = (props: MessageData) => {
                 <Translations text='no data' />
               </div>
             ) : (
-              <Doughnut data={previousData} options={optionsPrevious as any} height={200} />
+              <Doughnut data={previousData} options={optionsPrevious as any} height={300} />
             )}
           </Grid>
           <Grid item xs={12} md={6}>
