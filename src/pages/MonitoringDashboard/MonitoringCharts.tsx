@@ -191,7 +191,7 @@ const MonitoringCharts = (data: Props) => {
                 title={
                   <span>
                     <Typography variant='h6' sx={{ color: 'white' }}>
-                      <Translations text='Top 5 Engagement' />
+                      <Translations text='Top 6 Engagement' />
                     </Typography>
                     <Typography variant='body2' sx={{ color: 'white' }}>
                       {/* <Translations text='sentimentChart10Description' /> */}
@@ -316,7 +316,7 @@ const MonitoringCharts = (data: Props) => {
                 title={
                   <span>
                     <Typography variant='h6' sx={{ color: 'white' }}>
-                      <Translations text='Top 5 Influencer by Social Media' />
+                      <Translations text='Top 6 Influencer by Social Media' />
                     </Typography>
                     <Typography variant='body2' sx={{ color: 'white' }}>
                       {/* <Translations text='sentimentChart10Description' /> */}

@@ -37,6 +37,14 @@ const EngagementMonitoring = ({
 
   const columns: GridColDef[] = [
     {
+      field: 'id',
+      headerName: 'No.',
+      filterable: false,
+      type: 'number',
+      headerAlign: 'center',
+      renderCell: params => params.api.getAllRowIds().indexOf(params.id) + 1 + (page - 1) * 10
+    },
+    {
       field: 'keyword_name',
       headerName: 'keyword',
       flex: 1,
