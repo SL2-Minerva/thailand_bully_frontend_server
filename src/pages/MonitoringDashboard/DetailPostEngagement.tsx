@@ -148,6 +148,7 @@ const DetailPostEgagement = (props: DialogInfoProps) => {
                   loadingTopEngagement={loadingEngagementDetail}
                   resultTopEngagement={resultEngagementDetail}
                   result_source_list={result_source_list}
+                  showFullMsg={true}
                 />
               ) : (
                 ''

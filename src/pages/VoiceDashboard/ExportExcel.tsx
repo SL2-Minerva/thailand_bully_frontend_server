@@ -103,7 +103,7 @@ const ExportExcel = (props: Props) => {
       }
       setParamsData(paramData)
     }
-  }, [params, apiParams])
+  }, [params, apiParams, select])
 
   return (
     <MenuItem
