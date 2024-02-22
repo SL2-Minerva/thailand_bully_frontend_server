@@ -417,7 +417,7 @@ const DailyMessgesByBullyType = (props: LineProps) => {
   // }
 
   return (
-    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 550, maxHeight: 550 }}>
+    <Paper sx={{ border: `3px solid #fff`, borderRadius: 1, minHeight: 600, maxHeight: 600 }}>
       {loadingBullyTypeFilterData && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
