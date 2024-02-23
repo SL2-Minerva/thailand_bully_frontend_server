@@ -335,19 +335,20 @@ const DailyMessageGraph = (props: Props) => {
 
       if (labels?.length > 0) {
         const dataSets = chartDatasets(resultDailyChannel, labels)
-        dataSets?.sort((a, b) => {
-          const fa = a.label?.toLowerCase(),
-            fb = b.label?.toLowerCase()
+        
+        // dataSets?.sort((a, b) => {
+        //   const fa = a.label?.toLowerCase(),
+        //     fb = b.label?.toLowerCase()
 
-          if (fa < fb) {
-            return -1
-          }
-          if (fa > fb) {
-            return 1
-          }
+        //   if (fa < fb) {
+        //     return -1
+        //   }
+        //   if (fa > fb) {
+        //     return 1
+        //   }
 
-          return 0
-        })
+        //   return 0
+        // })
         setDataset(dataSets)
       }
       setShowNoDataText(false)
