@@ -12,7 +12,8 @@ import MessageDetailChannel from '../MessageDetailChannel'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
-import { lineOptions } from 'src/utils/const'
+
+// import { lineOptions } from 'src/utils/const'
 import ExportExcel from 'src/pages/VoiceDashboard/ExportExcel'
 
 const onCapture = () => {
@@ -166,6 +167,46 @@ const ChannelByDevice = (props: LineProps) => {
     }
   }
 
+  const lineOptions = {
+    responsive: true,
+    backgroundColor: false,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        ticks: { color: labelColor },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        },
+        stacked: true
+      },
+      y: {
+        min: 0,
+        scaleLabel: { display: true },
+        ticks: {
+          stepSize: 100,
+          color: labelColor
+        },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        align: 'end',
+        position: 'top',
+        labels: {
+          padding: 25,
+          boxWidth: 10,
+          color: labelColor,
+          usePointStyle: true
+        }
+      }
+    }
+  }
+
   const chartDatasets = (data: any) => {
     if (!data) return []
     let totalAmount: number[] = []
@@ -229,19 +270,20 @@ const ChannelByDevice = (props: LineProps) => {
         setLabel(labels)
 
         const dataSets = chartDatasets(dailyMessageData)
-        dataSets?.sort((a, b) => {
-          const fa = a.label?.toLowerCase(),
-            fb = b.label?.toLowerCase()
 
-          if (fa < fb) {
-            return -1
-          }
-          if (fa > fb) {
-            return 1
-          }
+        // dataSets?.sort((a, b) => {
+        //   const fa = a.label?.toLowerCase(),
+        //     fb = b.label?.toLowerCase()
 
-          return 0
-        })
+        //   if (fa < fb) {
+        //     return -1
+        //   }
+        //   if (fa > fb) {
+        //     return 1
+        //   }
+
+        //   return 0
+        // })
         setDataset(dataSets)
       }
       if (!dailyMessageData?.value) {

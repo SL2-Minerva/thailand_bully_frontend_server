@@ -250,14 +250,23 @@ const DailyEngagementTrans = (props: LineProps) => {
     maintainAspectRatio: false,
     scales: {
       x: {
-        ticks: { color: 'grey' }
+        ticks: { color: labelColor },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        },
+        stacked: true
       },
       y: {
         min: 0,
         scaleLabel: { display: true },
         ticks: {
           stepSize: 100,
-          color: 'grey'
+          color: labelColor
+        },
+        grid: {
+          borderColor,
+          color: gridLineColor
         }
       }
     },
@@ -268,7 +277,7 @@ const DailyEngagementTrans = (props: LineProps) => {
         labels: {
           padding: 25,
           boxWidth: 10,
-          color: 'grey',
+          color: labelColor,
           usePointStyle: true
         }
       }

@@ -187,7 +187,11 @@ const MessagesByDays = (props: LineProps) => {
     maintainAspectRatio: false,
     scales: {
       x: {
-        ticks: { color: '#4c4e64de' },
+        ticks: { color: labelColor },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        },
         stacked: true
       },
       y: {
@@ -195,7 +199,11 @@ const MessagesByDays = (props: LineProps) => {
         scaleLabel: { display: true },
         ticks: {
           stepSize: 100,
-          color: '#4c4e64de'
+          color: labelColor
+        },
+        grid: {
+          borderColor,
+          color: gridLineColor
         }
       }
     },
@@ -206,7 +214,7 @@ const MessagesByDays = (props: LineProps) => {
         labels: {
           padding: 25,
           boxWidth: 10,
-          color: '#4c4e64de',
+          color: labelColor,
           usePointStyle: true
         }
       }
