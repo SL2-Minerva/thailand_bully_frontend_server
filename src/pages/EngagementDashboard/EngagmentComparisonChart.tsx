@@ -64,7 +64,6 @@ const ChartDataEngagement = (data: any, type: string) => {
 }
 
 const EngagmentComparisonChart = ({
-  
   resultComparison,
   loadingComparison
 }: {
@@ -81,7 +80,7 @@ const EngagmentComparisonChart = ({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const rowOptionsOpen = Boolean(anchorEl)
-  const {settings} = useSettings();
+  const { settings } = useSettings()
   const handleRowOptionsClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
@@ -127,14 +126,26 @@ const EngagmentComparisonChart = ({
     },
     colors: ['#c46627', '#ed7d31', '#f4b9a4'],
     xaxis: {
-      categories: chartLabels
+      categories: chartLabels,
+      labels: {
+        style: {
+          colors: settings.mode === 'dark' ? '#fff' : 'dark'
+        }
+      }
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: settings.mode === 'dark' ? '#fff' : 'dark'
+        }
+      }
     },
     tooltip: {
       y: {
         formatter: function (val) {
           return val + ''
         }
-      }, 
+      },
       theme: settings.mode === 'dark' ? 'dark' : 'light'
     },
     fill: {
@@ -144,14 +155,17 @@ const EngagmentComparisonChart = ({
     legend: {
       position: 'top',
       horizontalAlign: 'left',
-      offsetX: 40
+      offsetX: 40,
+      labels: {
+        colors: settings.mode === 'dark' ? '#fff' : 'dark'
+      }
     }
   }
 
   // const reportNo = '4.2.024'
 
   return (
-    <Paper style={{ border: `3px solid #fff`, borderRadius: 7, minHeight: 560 }} >
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7, minHeight: 560 }}>
       {loadingComparison && <LinearProgress style={{ width: '100%' }} />}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>

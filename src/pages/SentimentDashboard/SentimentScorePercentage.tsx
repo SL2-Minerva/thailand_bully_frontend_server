@@ -102,7 +102,19 @@ const SentimentScorePercentage = ({
     },
     colors: SentimentAllColors,
     xaxis: {
-      categories: chartLabels
+      categories: chartLabels,
+      labels: {
+        style: {
+          colors: settings.mode === 'dark' ? '#fff' : 'dark'
+        }
+      }
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: settings.mode === 'dark' ? '#fff' : 'dark'
+        }
+      }
     },
     tooltip: {
       y: {
@@ -119,7 +131,10 @@ const SentimentScorePercentage = ({
     legend: {
       position: 'top',
       horizontalAlign: 'left',
-      offsetX: 40
+      offsetX: 40,
+      labels: {
+        colors: settings.mode === 'dark' ? '#fff' : 'dark'
+      }
     }
   }
 

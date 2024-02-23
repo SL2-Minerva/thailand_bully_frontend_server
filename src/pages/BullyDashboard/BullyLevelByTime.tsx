@@ -14,7 +14,8 @@ import { GetSortData } from 'src/services/api/dashboards/sentiment/sentimentDash
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
-import { lineOptions } from 'src/utils/const'
+
+// import { lineOptions } from 'src/utils/const'
 import ExportExcel from '../VoiceDashboard/ExportExcel'
 
 const onCapture = () => {
@@ -155,6 +156,46 @@ const BullyLevelByTime = (props: LineProps) => {
         }
 
         // stacked: true
+      }
+    },
+    plugins: {
+      legend: {
+        align: 'end',
+        position: 'top',
+        labels: {
+          padding: 25,
+          boxWidth: 10,
+          color: labelColor,
+          usePointStyle: true
+        }
+      }
+    }
+  }
+
+  const lineOptions = {
+    responsive: true,
+    backgroundColor: false,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        ticks: { color: labelColor },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        },
+        stacked: true
+      },
+      y: {
+        min: 0,
+        scaleLabel: { display: true },
+        ticks: {
+          stepSize: 100,
+          color: labelColor
+        },
+        grid: {
+          borderColor,
+          color: gridLineColor
+        }
       }
     },
     plugins: {

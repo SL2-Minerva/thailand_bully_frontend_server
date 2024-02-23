@@ -3,6 +3,7 @@ import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import { useSettings } from 'src/@core/hooks/useSettings'
 import Translations from 'src/layouts/components/Translations'
 
 export const Labels = (data: any) => {
@@ -37,6 +38,7 @@ const ShareOfChannelGraph = ({
   //   const chartLabels = Labels(resultShareOfVoiceChart)
 
   const chartSeriesData = ChartData(resultShareOfVoiceChart)
+  const { settings } = useSettings();
 
   const series = [
     {
@@ -76,7 +78,15 @@ const ShareOfChannelGraph = ({
     },
     legend: {
       show: false
-    }
+    },
+    tooltip: {
+      y: {
+        formatter: function (val) {
+          return val + '%'
+        }
+      },
+      theme: settings.mode === 'dark' ? 'dark' : 'light'
+    },
   }
 
   return (
