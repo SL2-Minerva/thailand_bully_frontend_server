@@ -376,9 +376,6 @@ export const GetDetailMessageOverall = (
   const startDate = moment(start_date, "DD/MM/YYYY");
   const endDate = moment(end_date, "DD/MM/YYYY");
 
-  console.log('start date', startDate, start_date);
-  console.log('moment', moment(start_date, "YYYY-MM-DD"));
-
   if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
     params = {
       campaign_id: campaignId || '',
@@ -483,7 +480,7 @@ export const GetNetworkGraph = (
   }
 
   if (platformId) {
-    params.source_id = platformId
+    params.source = platformId
   }
 
   if (fillter_keywords) {
