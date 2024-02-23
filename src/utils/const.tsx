@@ -328,15 +328,15 @@ export const BullyTypeSummaryColors = [
 export const BullyTypeColorCode = [
   {
     name: 'NoBully',
-    color: '#f0f0f0'
+    color: '#F0F0F0'
   },
   {
     name: 'Gossip',
-    color: '#efd4dc'
+    color: '#EFD4DC'
   },
   {
     name: 'Exclusion',
-    color: '#ea638c'
+    color: '#EA638C'
   },
   {
     name: 'Harassment',
@@ -348,7 +348,7 @@ export const BullyTypeColorCode = [
   },
   {
     name: 'Violence',
-    color: '#F10707'
+    color: '#34213E'
   }
 ]
 
