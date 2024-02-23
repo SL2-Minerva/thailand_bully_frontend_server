@@ -199,6 +199,9 @@ const MessageDetail = (props: DialogInfoProps) => {
     let exportParams: any = {}
     const todayDate = new Date()
 
+    const startDate = moment(params?.label, 'DD/MM/YYYY')
+    const endDate = moment(params?.label, 'DD/MM/YYYY')
+
     if (
       params?.period === 'customrange' &&
       params?.previousDate !== todayDate &&
@@ -207,8 +210,8 @@ const MessageDetail = (props: DialogInfoProps) => {
       exportParams = {
         campaign_id: params?.campaign || '',
         source: platformId || '',
-        start_date: params?.label ? moment(params?.label).format('YYYY-MM-DD') : '',
-        end_date: params?.label ? moment(params?.label).format('YYYY-MM-DD') : '',
+        start_date: params?.label ? moment(startDate).format('YYYY-MM-DD') : '',
+        end_date: params?.label ? moment(endDate).format('YYYY-MM-DD') : '',
         period: params?.period,
         keyword_id: keywordId || '',
         start_date_period: params?.previousDate ? moment(params?.previousDate).format('YYYY-MM-DD') : '',
@@ -226,8 +229,8 @@ const MessageDetail = (props: DialogInfoProps) => {
       exportParams = {
         campaign_id: params?.campaign || '',
         source: platformId || '',
-        start_date: params?.label ? moment(params?.label).format('YYYY-MM-DD') : '',
-        end_date: params?.label ? moment(params?.label).format('YYYY-MM-DD') : '',
+        start_date: params?.label ? moment(startDate).format('YYYY-MM-DD') : '',
+        end_date: params?.label ? moment(endDate).format('YYYY-MM-DD') : '',
         period: params?.period,
         keyword_id: keywordId || '',
         report_number: reportNo,
@@ -262,8 +265,8 @@ const MessageDetail = (props: DialogInfoProps) => {
           ':' +
           currentdate.getMinutes() +
           ':' +
-          currentdate.getSeconds();
-        saveAs(url, 'Monitoring '+ datetime + '.xlsx')
+          currentdate.getSeconds()
+        saveAs(url, 'Monitoring ' + datetime + '.xlsx')
         toast.success('Successfully Downloaded!')
       })
       .catch(() => {
