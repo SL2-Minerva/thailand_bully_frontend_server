@@ -248,6 +248,7 @@ const ChannelByBullyType = (props: LineProps) => {
 
         //   return 0
         // })
+        
         setDataset(dataSets)
       }
       if (!dailyMessageData?.value) {
