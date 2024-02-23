@@ -18,6 +18,7 @@ import Close from 'mdi-material-ui/Close'
 import { ArrowLeftDropCircle, ArrowRightDropCircle } from 'mdi-material-ui'
 import { Toggler } from '../VoiceDashboard/QuickView'
 import { TogglerOpen } from '../EngagementDashboard/QuickView'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 // import Translations from 'src/layouts/components/Translations'
 
@@ -43,6 +44,10 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
   // ** State
   const [open, setOpen] = useState<boolean>(false)
   const [highlightText, setHightlightText] = useState<string>('')
+  const { settings } = useSettings()
+
+  const color = settings.mode === 'dark' ? 'dark' : 'light'
+  const greenColor = settings.mode === 'dark' ? '#afffaf' : '#2fd12f'
 
   const onClose = (chartId?: string) => {
     if (chartId) {
@@ -101,7 +106,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
 
           {/* <Link to="chart1" spy={true} smooth={true}>
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart1")}}>
-                    <Typography sx={{ color : highlightText === 'chart1' ? 'green' : '#4c4e64de'  }}>Chart 1 : Percentage of  Level</Typography>
+                    <Typography sx={{ color : highlightText === 'chart1' ? greenColor : color  }}>Chart 1 : Percentage of  Level</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} /> */}
@@ -112,7 +117,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
               onClose('chart2')
             }}
           >
-            <Typography sx={{ color: highlightText === 'chart2' ? 'green' : '#4c4e64de' }}>
+            <Typography sx={{ color: highlightText === 'chart2' ? greenColor : color }}>
                Level : By Date
             </Typography>
           </Box>
@@ -124,7 +129,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
               onClose('chart3')
             }}
           >
-            <Typography sx={{ color: highlightText === 'chart3' ? 'green' : '#4c4e64de' }}>
+            <Typography sx={{ color: highlightText === 'chart3' ? greenColor : color }}>
                Level : By Day
             </Typography>
           </Box>
@@ -136,7 +141,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
               onClose('chart4')
             }}
           >
-            <Typography sx={{ color: highlightText === 'chart4' ? 'green' : '#4c4e64de' }}>
+            <Typography sx={{ color: highlightText === 'chart4' ? greenColor : color }}>
                Level : By Time
             </Typography>
           </Box>
@@ -148,7 +153,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
               onClose('chart5')
             }}
           >
-            <Typography sx={{ color: highlightText === 'chart5' ? 'green' : '#4c4e64de' }}>
+            <Typography sx={{ color: highlightText === 'chart5' ? greenColor : color }}>
                Level : By Device
             </Typography>
           </Box>
@@ -160,7 +165,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
               onClose('chart6')
             }}
           >
-            <Typography sx={{ color: highlightText === 'chart6' ? 'green' : '#4c4e64de' }}>
+            <Typography sx={{ color: highlightText === 'chart6' ? greenColor : color }}>
                Level : By Account
             </Typography>
           </Box>
@@ -171,7 +176,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
               onClose('chart7')
             }}
           >
-            <Typography sx={{ color: highlightText === 'chart7' ? 'green' : '#4c4e64de' }}>
+            <Typography sx={{ color: highlightText === 'chart7' ? greenColor : color }}>
                Level : By Channel
             </Typography>
           </Box>
@@ -182,7 +187,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
               onClose('chart8')
             }}
           >
-            <Typography sx={{ color: highlightText === 'chart8' ? 'green' : '#4c4e64de' }}>
+            <Typography sx={{ color: highlightText === 'chart8' ? greenColor : color }}>
                Level : By Sentiment
             </Typography>
           </Box>
@@ -190,7 +195,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
 
           {/* <Link to="chart9" spy={true} smooth={true}>
                 <Box sx={{ mb: 4, mt: 4 }} onClick={() => {onClose("chart9")}}>
-                    <Typography sx={{ color : highlightText === 'chart9' ? 'green' : '#4c4e64de'  }}>Chart 9 : Percentage of  Type</Typography>
+                    <Typography sx={{ color : highlightText === 'chart9' ? greenColor : color  }}>Chart 9 : Percentage of  Type</Typography>
                 </Box>
               </Link>
               <Divider sx={{ m: 0 }} /> */}
@@ -201,7 +206,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
               onClose('chart10')
             }}
           >
-            <Typography sx={{ color: highlightText === 'chart10' ? 'green' : '#4c4e64de' }}>
+            <Typography sx={{ color: highlightText === 'chart10' ? greenColor : color }}>
                Type : By Date
             </Typography>
           </Box>
@@ -213,7 +218,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
               onClose('chart11')
             }}
           >
-            <Typography sx={{ color: highlightText === 'chart11' ? 'green' : '#4c4e64de' }}>
+            <Typography sx={{ color: highlightText === 'chart11' ? greenColor : color }}>
                Type : By Day
             </Typography>
           </Box>
@@ -225,7 +230,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
               onClose('chart12')
             }}
           >
-            <Typography sx={{ color: highlightText === 'chart12' ? 'green' : '#4c4e64de' }}>
+            <Typography sx={{ color: highlightText === 'chart12' ? greenColor : color }}>
                Type : By Time
             </Typography>
           </Box>
@@ -237,7 +242,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
               onClose('chart13')
             }}
           >
-            <Typography sx={{ color: highlightText === 'chart13' ? 'green' : '#4c4e64de' }}>
+            <Typography sx={{ color: highlightText === 'chart13' ? greenColor : color }}>
                Type : By Device{' '}
             </Typography>
           </Box>
@@ -249,7 +254,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
               onClose('chart14')
             }}
           >
-            <Typography sx={{ color: highlightText === 'chart14' ? 'green' : '#4c4e64de' }}>
+            <Typography sx={{ color: highlightText === 'chart14' ? greenColor : color }}>
                Type : By Account
             </Typography>
           </Box>
@@ -261,7 +266,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
               onClose('chart15')
             }}
           >
-            <Typography sx={{ color: highlightText === 'chart15' ? 'green' : '#4c4e64de' }}>
+            <Typography sx={{ color: highlightText === 'chart15' ? greenColor : color }}>
                Type : By Channel
             </Typography>
           </Box>
@@ -273,7 +278,7 @@ const QuickView = ({ setHighlight, setShowQuickView }: { setHighlight?: any; set
               onClose('chart16')
             }}
           >
-            <Typography sx={{ color: highlightText === 'chart16' ? 'green' : '#4c4e64de' }}>
+            <Typography sx={{ color: highlightText === 'chart16' ? greenColor : color }}>
                Type : By Sentiment
             </Typography>
           </Box>

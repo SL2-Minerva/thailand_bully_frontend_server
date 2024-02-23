@@ -15,6 +15,7 @@ import Translations from 'src/layouts/components/Translations'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { DotsVertical, Download } from 'mdi-material-ui'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const onCapture = () => {
   const pictureId = document.getElementById('channelVsDevice')
@@ -35,6 +36,8 @@ const ChannelVsDevice = ({
   resultDeviceVsChannel: any
   loadingDeviceVsChannel: boolean
 }) => {
+  const { settings } = useSettings()
+ 
   const [seriesData, setSeriesData] = useState([])
   const [labels, setLabels] = useState([])
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -61,6 +64,9 @@ const ChannelVsDevice = ({
 
     // labels: ["Anriod", "Web", "iPhone"],
     colors: GraphicColors,
+    tooltip: {
+      theme: settings.mode === 'dark' ? 'dark' : 'light'
+    },
     plotOptions: {
       bar: {
         columnWidth: '45%',
