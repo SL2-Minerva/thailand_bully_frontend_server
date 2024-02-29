@@ -97,7 +97,7 @@ const InfluencerSocialMedia = ({
             reportNo={''}
             setAnchorEl={setAnchorEl}
             select={select}
-            fileName='Infulencer by Social Media.xlsx'
+            fileName='Influencer by Social Media.xlsx'
             apiPath='/dashboard-monitoring/engagements/export'
           />
         </Button>

@@ -92,12 +92,18 @@ const MessageDetail = (props: DialogInfoProps) => {
   let paramData: any = {}
   paramData.Llabel = ''
   const todayDate = new Date()
+  const startDate = moment(params?.label, 'DD/MM/YYYY')
+  const endDate = moment(params?.label, 'DD/MM/YYYY')
+
   if (params?.period === 'customrange' && params?.previousDate !== todayDate && params?.previousEndDate !== todayDate) {
     paramData = {
       campaign_id: params?.campaign || '',
       source: paramsId?.sourceId || params?.platformId || '',
-      start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
-      end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
+
+      // start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
+      // end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
+      start_date: startDate ? moment(startDate).format('YYYY-MM-DD') : '',
+      end_date: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
       period: params?.period,
       keyword_id: paramsId?.keywordId || '',
       organization_id: paramsId?.organization_id || '',
@@ -116,8 +122,11 @@ const MessageDetail = (props: DialogInfoProps) => {
     paramData = {
       campaign_id: params?.campaign || '',
       source: paramsId?.sourceId || params?.platformId || '',
-      start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
-      end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
+
+      // start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
+      // end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
+      start_date: startDate ? moment(startDate).format('YYYY-MM-DD') : '',
+      end_date: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
       period: params?.period,
       keyword_id: paramsId?.keywordId || '',
       classification_id: paramsId?.classification_id || '',

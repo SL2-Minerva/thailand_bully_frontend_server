@@ -128,8 +128,11 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
   const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetDetailMessageOverall(
     params?.campaign,
     platformId,
-    params?.date,
-    params?.endDate,
+    
+    // params?.date,
+    // params?.endDate,
+    params?.label,
+    params?.label,
     params?.period,
     params?.previousDate,
     params?.previousEndDate,
