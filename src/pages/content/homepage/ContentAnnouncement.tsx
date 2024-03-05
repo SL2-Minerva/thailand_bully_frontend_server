@@ -9,7 +9,7 @@ interface Props {
 }
 
 const ContentAnnouncement = (props: Props) => {
-  const { resultContentList } = props;
+  const { resultContentList } = props
 
   return (
     <Grid container spacing={3}>
@@ -21,7 +21,7 @@ const ContentAnnouncement = (props: Props) => {
                 backgroundImage: `url(${'https://cornea-analysis.com/storage/' + contents.picture})`,
                 backgroundPosition: 'center',
                 backgroundSize: 'contain',
-                backgroundPositionX: 'center', 
+                backgroundPositionX: 'center',
                 backgroundPositionY: 'center',
                 backgroundRepeat: 'no-repeat'
 
@@ -43,10 +43,14 @@ const ContentAnnouncement = (props: Props) => {
                       <ReactQuill value={contents.title} readOnly={true} theme='bubble' />
                     </h1>
                     <Grid>
-                      <ReactQuill value={contents.content_text} readOnly={true} theme='bubble' />
+                      {/* <ReactQuill value={contents.content_text} readOnly={true} theme='bubble' /> */}
+                      <div dangerouslySetInnerHTML={{ __html: contents.content_text || '-' }} />
+
                     </Grid>
                     <Typography>
-                      <ReactQuill value={'Date:' + contents.date} readOnly={true} theme='bubble' />
+                      {/* <ReactQuill value={'Date:' + contents.date} readOnly={true} theme='bubble' /> */}
+                      <div dangerouslySetInnerHTML={{ __html: 'Date:' + contents.date || '-' }} />
+
                     </Typography>
                   </Grid>
                 </Grid>

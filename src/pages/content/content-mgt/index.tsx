@@ -36,9 +36,10 @@ import moment from 'moment'
 import { UserPermission } from 'src/services/api/users/role'
 import Swal from 'sweetalert2'
 import 'react-quill/dist/quill.bubble.css'
-import dynamic from 'next/dynamic'
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <p>Loading ...</p> })
+// import dynamic from 'next/dynamic'
+
+// const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <p>Loading ...</p> })
 
 const ContentManagement = () => {
   const router = useRouter()
@@ -261,11 +262,33 @@ const ContentManagement = () => {
                       <TableRow key={index}>
                         <TableCell>{index + 1 + page * 10}</TableCell>
                         <TableCell>
-                          {/* <div dangerouslySetInnerHTML={{ __html:  }} /> */}
-                          <ReactQuill value={contentList.title || '-'} readOnly={true} theme='bubble' style={{maxWidth: '300px'}} /> 
+                          <div dangerouslySetInnerHTML={{ __html: contentList.title || '-' }} />
+                          {/* <ReactQuill value={contentList.title || '-'} readOnly={true} theme='bubble' style={{maxWidth: '300px'}} />  */}
                         </TableCell>
                         <TableCell>
-                          <ReactQuill value={contentList.content_text || '-'} readOnly={true} theme='bubble' style={{maxWidth: '330px'}} /> 
+                          <span
+                            style={{
+                              overflow: 'hidden',
+                              display: '-webkit-box',
+                              WebkitBoxOrient: 'vertical',
+                              WebkitLineClamp: 6,
+                              maxWidth: '330px'
+                            }}
+                          >
+                            <div dangerouslySetInnerHTML={{ __html: contentList.content_text || '-' }} />
+                            {/* <ReactQuill
+                              value={contentList.content_text || '-'}
+                              readOnly={true}
+                              theme='bubble'
+                              style={{
+                                maxWidth: '330px',
+                                overflow: 'hidden',
+                                display: '-webkit-box',
+                                WebkitBoxOrient: 'vertical',
+                                WebkitLineClamp: 6
+                              }}
+                            /> */}
+                          </span>
                         </TableCell>
                         <TableCell align='center'>
                           {contentList.picture ? (
