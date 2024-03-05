@@ -1,9 +1,10 @@
 import { Box, Card, CardContent, Grid, Typography } from '@mui/material'
 import 'react-quill/dist/quill.bubble.css'
-import dynamic from 'next/dynamic'
 import { styled } from '@mui/material/styles'
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <p>Loading ...</p> })
+// import dynamic from 'next/dynamic'
+
+// const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <p>Loading ...</p> })
 
 interface Props {
   resultContentList: any
@@ -51,9 +52,11 @@ const Contents = (props: Props) => {
                     )}
                   </Grid>
 
-                  <Grid item xs={12} md={6} spacing={2} mt={5}>
+                  <Grid item xs={12} md={6} spacing={2} mt={5} ml={3}>
                     <Typography>
-                      <ReactQuill value={contents.content_text} readOnly={true} theme='bubble' />
+                      {/* <ReactQuill value={contents.content_text} readOnly={true} theme='bubble' /> */}
+                      <div dangerouslySetInnerHTML={{ __html: contents.content_text || '-' }} />
+                      
                     </Typography>
                     <Typography ml={4}>Date : {contents.date}</Typography>
                   </Grid>

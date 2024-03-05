@@ -1,4 +1,4 @@
-import { Ref, useState, forwardRef, ReactElement, SyntheticEvent, useEffect, useCallback } from 'react'
+import React, { Ref, useState, forwardRef, ReactElement, SyntheticEvent, useEffect, useCallback, useRef } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -21,6 +21,7 @@ import { styled } from '@mui/material/styles'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DatePicker from '@mui/lab/DatePicker'
+import { Editor } from '@tinymce/tinymce-react'
 
 // ** Styles
 import 'react-quill/dist/quill.snow.css'
@@ -30,15 +31,15 @@ import { useDropzone } from 'react-dropzone'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
-import dynamic from 'next/dynamic'
 import { ContentList } from 'src/types/content/ContentType'
 import { CreateContent, UpdateContent } from 'src/services/api/content/ContentAPI'
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 
 // import { Quill } from 'react-quill';
+// import dynamic from 'next/dynamic'
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <p>Loading ...</p> })
+// const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <p>Loading ...</p> })
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -82,20 +83,22 @@ interface DialogInfoProps {
   table?: any
 }
 
-const quillModules = {
-  toolbar: [
-    // [{ 'font': [] }],
-    [{ size: ['small', false, 'large', 'huge'] }],
-    ['bold', 'italic', 'underline'],
-    [{ list: 'ordered' }, { list: 'bullet' }],
-    [{ align: [] }],
-    [{ color: [] }, { background: [] }],
-    ['clean']
-  ]
-}
+// const quillModules = {
+//   toolbar: [
+//     // [{ 'font': [] }],
+//     [{ size: ['small', false, 'large', 'huge'] }],
+//     ['bold', 'italic', 'underline'],
+//     [{ list: 'ordered' }, { list: 'bullet' }],
+//     [{ align: [] }],
+//     [{ color: [] }, { background: [] }],
+//     ['clean']
+//   ]
+// }
 
 const DialogContents = (props: DialogInfoProps) => {
   const { show, setShow, action, current } = props
+
+  const editorRef: any = useRef(null)
 
   const [date, setDate] = useState<Date | null>(new Date())
   const [description, setDescription] = useState('')
@@ -268,14 +271,34 @@ const DialogContents = (props: DialogInfoProps) => {
                   {' '}
                   Topic <b style={{ color: 'red' }}>*</b>
                 </InputLabel>
-                <ReactQuill
+                {/* <ReactQuill
                   theme='snow'
                   value={topic}
                   onChange={e => {
                     setTopic(e)
                   }}
                   modules={quillModules}
+                /> */}
+
+                <Editor
+                  apiKey='r3xjktnzb6gaa31wr6tupvyxqzoqwzy77eyn0f251jg8pwvw'
+                  onInit={(evt: any, editor: any) => (editorRef.current = editor)}
+                  value={topic}
+                  onEditorChange={(newValue, editor) => {
+                    setTopic(newValue)
+                    console.log('editor', editor.getContent({ format: 'text' }))
+                  }}
+                  init={{
+                    plugins:
+                      'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags autocorrect typography inlinecss',
+                    toolbar:
+                      'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+
+                    height: 160,
+                    menubar: false
+                  }}
                 />
+
               </Grid>
 
               {/* <Grid item sm={12} xs={12}>
@@ -287,13 +310,32 @@ const DialogContents = (props: DialogInfoProps) => {
 
               <Grid item sm={12} xs={12}>
                 <InputLabel style={{ marginBottom: '10px' }}> Content Details </InputLabel>
-                <ReactQuill
+                {/* <ReactQuill
                   theme='snow'
                   value={description}
                   onChange={e => {
                     setDescription(e)
                   }}
                   modules={quillModules}
+                /> */}
+
+                <Editor
+                  apiKey='r3xjktnzb6gaa31wr6tupvyxqzoqwzy77eyn0f251jg8pwvw'
+                  onInit={(evt: any, editor: any) => (editorRef.current = editor)}
+                  value={description}
+                  onEditorChange={(newValue, editor) => {
+                    setDescription(newValue)
+                    console.log('editor', editor.getContent({ format: 'text' }))
+                  }}
+                  init={{
+                    plugins:
+                      'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags autocorrect typography inlinecss',
+                    toolbar:
+                      'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+
+                    height: 500,
+                    menubar: false
+                  }}
                 />
               </Grid>
 
@@ -303,7 +345,7 @@ const DialogContents = (props: DialogInfoProps) => {
                 xs={12}
                 mt={5}
                 pb={3}
-                style={{ border: '1px solid #4c4e6430', borderRadius: '1rem', marginLeft: '1.2rem'}}
+                style={{ border: '1px solid #4c4e6430', borderRadius: '1rem', marginLeft: '1.2rem' }}
               >
                 <Box {...getRootProps({ className: 'dropzone' })} sx={acceptedFiles.length ? { height: 320 } : {}}>
                   <input {...getInputProps()} />
@@ -329,8 +371,9 @@ const DialogContents = (props: DialogInfoProps) => {
                           thorough your machine
                         </Typography>
                         <Typography color='textSecondary'>Allowed *.jpeg, *.jpg, *.png, *.gif</Typography>
-                        <Typography color='textSecondary'><Translations text='imageSizeText'/></Typography>
-
+                        <Typography color='textSecondary'>
+                          <Translations text='imageSizeText' />
+                        </Typography>
                       </Box>
                     </Box>
                   )}
