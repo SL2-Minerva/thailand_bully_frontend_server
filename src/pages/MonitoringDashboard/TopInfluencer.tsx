@@ -19,22 +19,42 @@ const TopInfluencer = (props: MessageData) => {
   const [slideDirection, setSlideDirection] = useState<'right' | 'left' | undefined>('left')
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [accountName, setAccountName] = useState<string>('')
+  const [sentimentType, setSentimentType] = useState<string>('')
+  const [clickGraph, setClickGraph] = useState(false)
 
   const cardsPerPage = 3
 
   const handleOnClick = (name: string) => {
     setAccountName(name)
     setShowDetail(true)
+    if (!clickGraph) {
+      
+    }
+    setSentimentType('')
   }
 
-  
+  const handleOnClickGraph = (name: string) => {
+    setAccountName(name)
+    setShowDetail(true)
+  }
 
   const duplicateCards: React.ReactElement[] = Array.from({ length: resultTopInfluencer?.length || 0 }, (_, i) => (
-    <Grid pl={4} xs={4} key={i} onClick={() => handleOnClick(resultTopInfluencer[i]?.account_name)}>
+    <Grid
+      pl={4}
+      xs={4}
+      key={i}
+      onClick={() => {
+        setClickGraph(false);
+        handleOnClick(resultTopInfluencer[i]?.account_name)
+      }}
+    >
       <TopFiveInfluencerCard
         key={i}
         loading={loadingTopInfluencer}
         influencer={resultTopInfluencer[i]}
+        setSentimentType={setSentimentType}
+        setClickGraph={setClickGraph}
+        handleOnClick ={ handleOnClickGraph }
       />
     </Grid>
   ))
@@ -129,6 +149,7 @@ const TopInfluencer = (props: MessageData) => {
           reportNo={''}
           title='Post by Influencer'
           networkTitle=''
+          sentimentType={sentimentType}
         />
       ) : (
         ''

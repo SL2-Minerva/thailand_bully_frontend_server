@@ -50,6 +50,7 @@ interface DialogInfoProps {
   title?: any
   networkTitle?: any
   excelExport?: () => void
+  sentimentType?: string
 }
 
 export const StyledDataGrid = withStyles({
@@ -111,7 +112,7 @@ export const StyledTableRow = styled(TableRow)(() => ({
 }))
 
 const InfluencerDetail = (props: DialogInfoProps) => {
-  const { show, setShow, params, keywordId, setKeywordId, title, excelExport } = props
+  const { show, setShow, params, keywordId, setKeywordId, title, excelExport, sentimentType } = props
   const [page, setPage] = useState(1)
   const [messageId, setMessageId] = useState<string>()
   const [pageCount, setPageCount] = useState<number>(0)
@@ -133,7 +134,8 @@ const InfluencerDetail = (props: DialogInfoProps) => {
     author: keywordId?.toString(),
     fieldName: fieldName,
     sortSelect: sortSelect,
-    page_name: params?.page
+    page_name: params?.page, 
+    sentiment_type: sentimentType
   })
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -188,7 +190,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
           sx={{
             pb: 6,
             pt: { xs: 3, sm: 6 },
-            position: 'relative',
+            position: 'relative'
           }}
         >
           <IconButton size='small' onClick={onCloseDialog} sx={{ position: 'absolute', right: '1rem', top: '1rem' }}>
@@ -228,7 +230,8 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                   <StyledTableCell
                     align='center'
                     onClick={() => {
-                      const type = sortColumns.keyword_name === '' ? 'asc' : sortColumns.keyword_name === 'asc' ? 'desc' : ''
+                      const type =
+                        sortColumns.keyword_name === '' ? 'asc' : sortColumns.keyword_name === 'asc' ? 'desc' : ''
                       handleButtonSort('keyword_name', type)
                     }}
                   >
@@ -254,7 +257,8 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                   <StyledTableCell
                     align='center'
                     onClick={() => {
-                      const type = sortColumns.account_name === '' ? 'asc' : sortColumns.account_name === 'asc' ? 'desc' : ''
+                      const type =
+                        sortColumns.account_name === '' ? 'asc' : sortColumns.account_name === 'asc' ? 'desc' : ''
                       handleButtonSort('account_name', type)
                     }}
                   >
@@ -511,13 +515,17 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                       setShowDetail(true)
                     }}
                   >
-                    <StyledTableCell sx={{color: 'grey'}}>
+                    <StyledTableCell sx={{ color: 'grey' }}>
                       <b>{index + 1 + (page - 1) * 10}</b>
                     </StyledTableCell>
-                    <StyledTableCell align='center' sx={{color: 'grey'}}>{messageDetail.keyword_name}</StyledTableCell>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                      {messageDetail.keyword_name}
+                    </StyledTableCell>
 
-                    <StyledTableCell align='center' sx={{color: 'grey'}}>{messageDetail.account_name}</StyledTableCell>
-                    <StyledTableCell component='th' scope='row' width={200} sx={{color: 'grey'}}>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                      {messageDetail.account_name}
+                    </StyledTableCell>
+                    <StyledTableCell component='th' scope='row' width={200} sx={{ color: 'grey' }}>
                       <span
                         style={{
                           overflow: 'hidden',
@@ -529,13 +537,15 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                         {messageDetail.message_detail}
                       </span>
                     </StyledTableCell>
-                    <StyledTableCell align='center' sx={{color: 'grey'}}>{messageDetail.message_type || '-'}</StyledTableCell>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                      {messageDetail.message_type || '-'}
+                    </StyledTableCell>
 
-                    <StyledTableCell align='center' sx={{color: 'grey'}}>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
                       {moment(messageDetail.post_date)?.format('DD.MM.YYYY') + ', ' + messageDetail.post_time}
                     </StyledTableCell>
 
-                    <StyledTableCell align='center' sx={{color: 'grey'}}>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
                       {messageDetail.device === 'android' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/android.png`} />
                       ) : messageDetail.device === 'webapp' || messageDetail.device === 'website' ? (
@@ -546,7 +556,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                         '-'
                       )}
                     </StyledTableCell>
-                    <StyledTableCell align='center' sx={{color: 'grey'}}>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
                       {messageDetail?.source_name === 'facebook' ? (
                         <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
                       ) : messageDetail?.source_name === 'twitter' ? (
@@ -565,12 +575,20 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                         <span style={{ textTransform: 'uppercase' }}>{messageDetail?.channel}</span>
                       )}
                     </StyledTableCell>
-                    <StyledTableCell align='center' sx={{color: 'grey'}}>{messageDetail.total_engagement || '-'}</StyledTableCell>
-                    <StyledTableCell align='center' sx={{color: 'grey'}}>{messageDetail.sentiment || '-'}</StyledTableCell>
-                    <StyledTableCell align='center' sx={{color: 'grey'}}>{messageDetail.bully_level}</StyledTableCell>
-                    <StyledTableCell align='center' sx={{color: 'grey'}}>{messageDetail.bully_type}</StyledTableCell>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                      {messageDetail.total_engagement || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                      {messageDetail.sentiment || '-'}
+                    </StyledTableCell>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                      {messageDetail.bully_level}
+                    </StyledTableCell>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                      {messageDetail.bully_type}
+                    </StyledTableCell>
 
-                    <StyledTableCell align='center' sx={{color: 'grey'}}>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
                       {messageDetail.link_message ? (
                         <a
                           href={messageDetail.link_message}
@@ -602,7 +620,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                 ))}
 
                 {!data || data?.length === 0 ? (
-                  <TableCell colSpan={12} sx={{color: 'grey'}}>
+                  <TableCell colSpan={12} sx={{ color: 'grey' }}>
                     <Typography
                       variant='h6'
                       sx={{
