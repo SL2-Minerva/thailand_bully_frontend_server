@@ -54,8 +54,18 @@ const InfluencerSocialMedia = ({
 }) => {
   const [accountName, setAccountName] = useState<string>('')
   const [showDetail, setShowDetail] = useState<boolean>(false)
+  const [sentimentType, setSentimentType] = useState<string>('')
+  const [clickGraph, setClickGraph] = useState(false)
 
   const handleOnClick = (name: string) => {
+    setAccountName(name)
+    setShowDetail(true)
+    if (!clickGraph) {
+    }
+    setSentimentType('')
+  }
+
+  const handleOnClickGraph = (name: string) => {
     setAccountName(name)
     setShowDetail(true)
   }
@@ -109,7 +119,9 @@ const InfluencerSocialMedia = ({
               <Table size='small' sx={{ overflow: 'auto' }}>
                 <TableHead>
                   <TableRow>
-                    <TableCell sx={{ textAlign: 'center', backgroundColor: '#dadadade', color: 'black' }}>No.</TableCell>
+                    <TableCell sx={{ textAlign: 'center', backgroundColor: '#dadadade', color: 'black' }}>
+                      No.
+                    </TableCell>
                     <TableCell sx={{ textAlign: 'center', backgroundColor: '#dadadade', color: 'black' }}>
                       {' '}
                       Account Name{' '}
@@ -132,6 +144,7 @@ const InfluencerSocialMedia = ({
                       <TableRow
                         key={index}
                         onClick={() => {
+                          setClickGraph(false)
                           handleOnClick(influencer.account_name)
                         }}
                       >
@@ -142,14 +155,23 @@ const InfluencerSocialMedia = ({
                             <img src={getSourceIcon(influencer?.source_name)} width={35} height={35} alt='' />
                           </Avatar>
                         </TableCell>
-                        <TableCell sx={{ textAlign: 'center' }}>
-                          {influencer?.total_post}
-                        </TableCell>
+                        <TableCell sx={{ textAlign: 'center' }}>{influencer?.total_post}</TableCell>
 
                         <TableCell sx={{ textAlign: 'center' }}>{influencer?.total_engagement}</TableCell>
-                        <TableCell sx={{ maxWidth: 300 }}>
+                        <TableCell
+                          sx={{ maxWidth: 300 }}
+                          onClick={event => {
+                            event.stopPropagation()
+                            setClickGraph(true)
+                            handleOnClickGraph(influencer?.account_name)
+                          }}
+                        >
                           {' '}
-                          <SentimentLevelGraph resultSentimentLevel={influencer} />{' '}
+                          <SentimentLevelGraph
+                            resultSentimentLevel={influencer}
+                            setSentimentType={setSentimentType}
+                            setClickGraph={setClickGraph}
+                          />{' '}
                         </TableCell>
                       </TableRow>
                     )
@@ -184,6 +206,7 @@ const InfluencerSocialMedia = ({
           reportNo={''}
           title='Post by Influencer'
           networkTitle=''
+          sentimentType={sentimentType}
         />
       ) : (
         ''

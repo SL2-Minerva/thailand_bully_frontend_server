@@ -68,7 +68,7 @@ export const GetEngagementPostMonitoring = (params: any, select?: any, page?: nu
     params.select = select
   }
 
-  const [{ data: res, loading, error }] = CallAPI<{ data?: any, meta?: any }>({
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any; meta?: any }>({
     url: `/dashboard-monitoring/engagement-post`,
     method: 'GET',
     params: {
@@ -82,7 +82,7 @@ export const GetEngagementPostMonitoring = (params: any, select?: any, page?: nu
     resultSummary: res?.data || null,
     loadingSummary: loading,
     errorSummary: error,
-    total : res?.meta?.total_rows || 0
+    total: res?.meta?.total_rows || 0
   }
 }
 
@@ -125,7 +125,7 @@ export const GetInfluencersSocialMedia = (params: any, select?: string, page?: n
     params.select = select
   }
 
-  const [{ data: res, loading, error }] = CallAPI<{ data?: any, meta?: any }>({
+  const [{ data: res, loading, error }] = CallAPI<{ data?: any; meta?: any }>({
     url: `/dashboard-monitoring/influencers`,
     method: 'GET',
     params: {
@@ -156,6 +156,7 @@ interface DetailProps {
   fieldName: string
   sortSelect: string
   page_name?: string
+  sentiment_type?: string
 }
 
 export const GetInfluencerByAuthor = ({
@@ -170,7 +171,8 @@ export const GetInfluencerByAuthor = ({
   author,
   fieldName,
   sortSelect,
-  page_name
+  page_name,
+  sentiment_type
 }: DetailProps) => {
   const params = {
     campaign_id: campaign_id,
@@ -184,7 +186,8 @@ export const GetInfluencerByAuthor = ({
     author: author,
     field: fieldName,
     sortSelect: sortSelect,
-    page_name: page_name
+    page_name: page_name,
+    sentiment_type: sentiment_type ? sentiment_type?.toLowerCase() : ''
   }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any; meta?: any }>({
     url: `/dashboard-monitoring/influencers/author`,

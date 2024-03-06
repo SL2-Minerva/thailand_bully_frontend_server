@@ -8,10 +8,13 @@ import { getSourceIcon } from './TopFiveInfluencers'
 interface CardInfo {
   influencer: any
   loading: boolean
+  setSentimentType: any
+  setClickGraph: any
+  handleOnClick: any
 }
 
 const TopFiveInfluencerCard = (props: CardInfo) => {
-  const { influencer } = props
+  const { influencer, setSentimentType, setClickGraph, handleOnClick } = props
 
   return (
     <Card sx={{ p: 3 }}>
@@ -52,14 +55,29 @@ const TopFiveInfluencerCard = (props: CardInfo) => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={1}></Grid>
         <Grid item xs={12} md={5}>
-          <Typography variant='caption' sx={{ pl: 2, fontWeight: 600 }}>Sentiment:</Typography>
+          <Typography variant='caption' sx={{ pl: 2, fontWeight: 600 }}>
+            Sentiment:
+          </Typography>
         </Grid>
         <Grid item xs={12} md={6}></Grid>
-        <Grid item xs={12} md={11} ml={3} mt={2}>
-        <SentimentLevelGraph resultSentimentLevel={influencer} />
-
+        <Grid
+          item
+          xs={12}
+          md={11}
+          ml={3}
+          mt={2}
+          onClick={event => {
+            event.stopPropagation();
+            setClickGraph(true);
+            handleOnClick(influencer?.account_name)
+          }}
+        >
+          <SentimentLevelGraph
+            resultSentimentLevel={influencer}
+            setSentimentType={setSentimentType}
+            setClickGraph={setClickGraph}
+          />
         </Grid>
-
       </Grid>
     </Card>
   )

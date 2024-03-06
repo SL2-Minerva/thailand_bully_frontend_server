@@ -49,7 +49,7 @@ const ChartDataPositive = (data: any, type: string) => {
   return value
 }
 
-const SentimentLevelGraph = ({ resultSentimentLevel }: { resultSentimentLevel: any }) => {
+const SentimentLevelGraph = ({ resultSentimentLevel, setSentimentType, setClickGraph }: { resultSentimentLevel: any, setSentimentType?: any, setClickGraph?: any }) => {
   const chartLabels = Labels(resultSentimentLevel)
   const positiveData = ChartDataPositive(resultSentimentLevel, 'positive')
   const neutralData = ChartDataPositive(resultSentimentLevel, 'neutral')
@@ -75,7 +75,22 @@ const SentimentLevelGraph = ({ resultSentimentLevel }: { resultSentimentLevel: a
       type: 'bar',
       stacked: true,
       stackType: '100%',
-      toolbar: { show: false }
+      toolbar: { show: false },
+      events: {
+        click(event, chartContext, config) {
+          // console.log(config.config?.series[config.seriesIndex])
+          //   console.log(config.config?.series[config.seriesIndex]?.name)
+          //   console.log(config.config?.series[config.seriesIndex]?.data[config.dataPointIndex])
+          if (setSentimentType) {
+            setSentimentType(config.config?.series[config.seriesIndex]?.name);
+            console.log(config.config?.series[config.seriesIndex]?.name)
+          }
+          if(setClickGraph) {
+            setClickGraph(true);
+          }
+        }
+  
+      }
     },
     dataLabels: { enabled: false },
     plotOptions: {
