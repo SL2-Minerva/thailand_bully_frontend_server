@@ -42,6 +42,7 @@ const EngagementMonitoring = ({
       filterable: false,
       type: 'number',
       headerAlign: 'center',
+      maxWidth: 60,
       renderCell: params => params.api.getAllRowIds().indexOf(params.id) + 1 + (page - 1) * 10
     },
     {
@@ -56,6 +57,7 @@ const EngagementMonitoring = ({
       headerName: 'Account Name',
       flex: 1,
       sortable: false,
+      minWidth: 200,
       headerAlign: 'center'
     },
     {
@@ -71,6 +73,7 @@ const EngagementMonitoring = ({
       headerName: 'Post Time',
       flex: 1,
       headerAlign: 'center',
+      minWidth: 250,
       valueGetter: (params: GridValueGetterParams) => `${params.row.post_date + ', ' + params.row.post_time}`
     },
     {
@@ -102,6 +105,7 @@ const EngagementMonitoring = ({
       field: 'link_message',
       headerName: 'Link',
       flex: 1,
+      maxWidth: 60,
       headerAlign: 'center',
       renderCell: openLink
     }
