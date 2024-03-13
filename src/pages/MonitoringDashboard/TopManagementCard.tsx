@@ -10,7 +10,8 @@ import {
   PantipIcon,
   TwitterIcon,
   YoutubeIcon,
-  gitHubIcon,
+  
+  // gitHubIcon,
   googleIcon
 } from 'src/utils/const'
 import { CommentOutline, LinkVariant, ShareVariantOutline, ThumbUpOutline } from 'mdi-material-ui'
@@ -39,7 +40,8 @@ interface CardInfo {
 
 const TopManagementCard = (props: CardInfo) => {
   const { resultTopEngagement, loadingTopEngagement, result_source_list, showFullMsg } = props
-  const imgPath = gitHubIcon
+
+  // const imgPath = gitHubIcon
 
   const [sourceName, setSourceName] = React.useState('')
   const [showMore, setShowMore] = React.useState(false)
@@ -113,7 +115,7 @@ const TopManagementCard = (props: CardInfo) => {
         <Grid container spacing={1}>
           <Grid item xs={2.5}>
             <Avatar sx={{ width: 50, height: 50 }}>
-              <img src={imgPath} width={50} height={50} alt='' />
+              {/* <img src={imgPath} width={50} height={50} alt='' /> */}
             </Avatar>
           </Grid>
 
@@ -199,8 +201,8 @@ const TopManagementCard = (props: CardInfo) => {
           </Box>
         </Typography>
 
-        <Box sx={{ maxWidth: '400px', display: 'flex', justifyContent: 'center', mt: 3 }}>
-          <img src={'/images/NoImage.png'} width={150} height={150} alt='' />
+        <Box sx={{ maxWidth: '400px', display: 'flex', justifyContent: 'center', mt: 3, mb: 4 }}>
+          <img src={resultTopEngagement.cover_image ?? '/images/NoImage.png'} width={150} height={150} alt='' />
         </Box>
 
         <Grid container spacing={2}>
