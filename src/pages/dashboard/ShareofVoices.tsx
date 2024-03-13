@@ -19,7 +19,7 @@ import { Table, TableRow, TableHead } from '@mui/material'
 import { StyledTooltip } from './overall'
 import { Information } from 'mdi-material-ui'
 import { GetShareOfVoice, GetSentimentLevel } from 'src/services/api/dashboards/overall/overallDashboardApi'
-import { FacebookIcon, googleIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const'
+import { FacebookIcon, googleIcon, InstagramIcon, PantipIcon, tiktokIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const'
 import Translations from 'src/layouts/components/Translations'
 import { MouseEvent, useEffect, useState } from 'react'
 import NumberOfEachMessage from './NumberOfEachMessage'
@@ -141,6 +141,8 @@ const ShareOfVoices = ({ apiParams, keywordsColor }: { apiParams: any; chartId: 
               ? PantipIcon
               : title === 'google'
               ? googleIcon
+              : title === 'tiktok'
+              ? tiktokIcon
               : ''
 
           return (

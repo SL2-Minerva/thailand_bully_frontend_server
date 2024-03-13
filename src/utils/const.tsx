@@ -382,6 +382,7 @@ export const InstagramIcon = '/images/logos/instagram.png'
 export const PantipIcon = '/images/logos/pantip.png'
 export const gitHubIcon = '/images/logos/github.png'
 export const googleIcon = '/images/logos/google.png'
+export const tiktokIcon = '/images/logos/tiktok.png'
 
 export const ReportOptions = [
   {

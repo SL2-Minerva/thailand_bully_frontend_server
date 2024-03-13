@@ -16,6 +16,61 @@ const CommentDetail = (props: CardInfo) => {
   const imgPath = gitHubIcon
   const [showMore, setShowMore] = React.useState(false)
 
+  // function countLines() {
+  //   // const text = comment.message_detail
+  //   // console.log('paragraphs', text)
+  //   // if (text) {
+  //   //   const lines = text.split(/\r|\r\n|\n/)
+  //   //   const count = lines.length
+  //   //   console.log(count)
+
+  //   //   return count
+  //   // }
+
+  //   const el = document.getElementById('content')
+  //   console.log('paragraphs', el)
+  //   console.log('el.style', el?.style)
+  //   if (el) {
+  //     const divHeight = el?.offsetHeight
+  //     const lineHeight = parseInt(el.style.lineHeight)
+  //     console.log('divHeight', divHeight)
+  //     console.log('lineHeight:', lineHeight)
+  //     const lines = divHeight / lineHeight;
+  //     console.log('lines', lines);
+  //   }
+  // }
+
+  // React.useEffect(() => {
+  //   countLines()
+  // }, [])
+
+  function check() {
+    const el = document.getElementById('content')
+
+    if (el) {
+      const curOverf = el.style.overflow
+
+      // console.log('el.style.overflow', el.style.overflow)
+      if (!curOverf || curOverf === 'visible') el.style.overflow = 'hidden'
+
+      const isOverflowing = el.clientWidth < el.scrollWidth || el.clientHeight < el.scrollHeight
+      if (0 > el.clientWidth - el.scrollWidth) {
+        // console.log('Overflow true')
+      } else {
+        // console.log('overflow false') 
+      }
+      el.style.overflow = curOverf
+      
+      // console.log('isoverflowwing', isOverflowing)
+
+      return isOverflowing
+    }
+  }
+
+  React.useEffect(() => {
+    check()
+  }, [])
+
   return (
     <Card sx={{ mt: 5, mr: 5 }}>
       {loadingTopEngagement && <LinearProgress style={{ width: '100%' }} />}
@@ -36,24 +91,27 @@ const CommentDetail = (props: CardInfo) => {
                 </Typography>
                 <Typography gutterBottom variant='body1' component='div' ml={2}>
                   {showMore ? (
-                    <span>
-                      {comment.message_detail}
-                      <a
-                        style={{ cursor: 'pointer' }}
-                        onClick={(event: any) => {
-                          setShowMore(!showMore)
-                          event.stopPropagation()
-                        }}
-                        rel='noopener noreferrer'
-                      >
-                        <Typography variant='caption' sx={{ pl: 2 }}>
-                          ...Show less
-                        </Typography>
-                      </a>
-                    </span>
+                    <>
+                      <span>
+                        {comment.message_detail}
+                        <a
+                          style={{ cursor: 'pointer' }}
+                          onClick={(event: any) => {
+                            setShowMore(!showMore)
+                            event.stopPropagation()
+                          }}
+                          rel='noopener noreferrer'
+                        >
+                          <Typography variant='caption' sx={{ pl: 2 }}>
+                            ...Show less
+                          </Typography>
+                        </a>
+                      </span>
+                    </>
                   ) : (
                     <Stack>
                       <span
+                        id='content'
                         style={{
                           overflow: 'hidden',
                           display: '-webkit-box',

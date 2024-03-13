@@ -89,6 +89,21 @@ const TopManagementCard = (props: CardInfo) => {
     }
   }, [resultTopEngagement?.source_name])
 
+  // function countLines() {
+  //   const el = document.getElementById('content')
+  //   console.log('paragraphs', el);
+  //   if (el) {
+  //     const divHeight = el?.offsetHeight
+  //     const lineHeight = parseInt(el.style.lineHeight)
+  //     const lines = divHeight / lineHeight
+  //     console.log('Lines: ' + lines)
+  //   }
+  // }
+
+  // React.useEffect(() => {
+  //   countLines()
+  // }, [])
+
   return (
     <Card sx={{ minHeight: '335px' }}>
       {loadingTopEngagement && <LinearProgress style={{ width: '100%' }} />}
@@ -131,7 +146,7 @@ const TopManagementCard = (props: CardInfo) => {
                     maxWidth: '400px'
                   }}
                 >
-                  {resultTopEngagement.message_detail}
+                  <span>{resultTopEngagement.message_detail}</span>
                 </span>
               </Stack>
             ) : (
