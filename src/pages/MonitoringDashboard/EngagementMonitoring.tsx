@@ -50,6 +50,7 @@ const EngagementMonitoring = ({
       headerName: 'keyword',
       flex: 1,
       sortable: false,
+      minWidth: 100,
       headerAlign: 'center'
     },
     {
@@ -57,13 +58,14 @@ const EngagementMonitoring = ({
       headerName: 'Account Name',
       flex: 1,
       sortable: false,
-      minWidth: 200,
+      minWidth: 150,
       headerAlign: 'center'
     },
     {
       field: 'full_message',
       headerName: 'Message Detail',
       flex: 1,
+      minWidth: 150,
       headerAlign: 'center'
 
       //   valueGetter: (params: GridValueGetterParams) => `${params.row.total?.toLocaleString('en-US')}`
@@ -73,7 +75,7 @@ const EngagementMonitoring = ({
       headerName: 'Post Time',
       flex: 1,
       headerAlign: 'center',
-      minWidth: 250,
+      minWidth: 200,
       valueGetter: (params: GridValueGetterParams) => `${params.row.post_date + ', ' + params.row.post_time}`
     },
     {
@@ -83,13 +85,14 @@ const EngagementMonitoring = ({
       headerAlign: 'center',
       renderCell: renderSourceName
     },
-    { field: 'total_engagement', headerName: 'Engagement', flex: 1, headerAlign: 'center' },
-    { field: 'sentiment', headerName: 'Sentiment', flex: 1, headerAlign: 'center' },
+    { field: 'total_engagement', headerName: 'Engagement',minWidth: 100, flex: 1, headerAlign: 'center' },
+    { field: 'sentiment', headerName: 'Sentiment',minWidth: 100, flex: 1, headerAlign: 'center' },
 
     {
       field: 'bully_level',
       headerName: 'Bully Level',
       flex: 1,
+      minWidth: 100,
       headerAlign: 'center',
       valueGetter: (params: GridValueGetterParams) => `${params.row.bully_level}`
     },
@@ -98,6 +101,7 @@ const EngagementMonitoring = ({
       field: 'bully_type',
       headerName: 'Bully Type',
       flex: 1,
+      minWidth: 100,
       headerAlign: 'center',
       valueGetter: (params: GridValueGetterParams) => `${params.row.bully_type}`
     },

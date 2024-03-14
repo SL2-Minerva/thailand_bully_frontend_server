@@ -47,7 +47,7 @@ const Contents = (props: Props) => {
                       </Box>
                     ) : (
                       <Box sx={{ minHeight: '250px', marginLeft: '1rem' }}>
-                        <Img style={{ width: 400, height: 400 }} alt='Image' src={'/images/NoImage.png'} />
+                        <Img style={{ width: 400, height: 400 }} alt='Image' src={'/images/default_image.png'} />
                       </Box>
                     )}
                   </Grid>
