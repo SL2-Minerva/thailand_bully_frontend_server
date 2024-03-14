@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import { GetEngagementPostMonitoring } from 'src/services/api/dashboards/monitoring/MonitoringDashboard'
 import DetailPostEgagement from './DetailPostEngagement'
 import ExportExcel from '../VoiceDashboard/ExportExcel'
+import moment from 'moment'
 
 // import { Box, LinearProgress, Pagination, Typography, Paper } from '@mui/material'
 
@@ -76,7 +77,7 @@ const EngagementMonitoring = ({
       flex: 1,
       headerAlign: 'center',
       minWidth: 200,
-      valueGetter: (params: GridValueGetterParams) => `${params.row.post_date + ', ' + params.row.post_time}`
+      valueGetter: (params: GridValueGetterParams) => `${params.row.post_time + ', ' + moment(params.row.post_date, 'YYYY/MM/DD').format('DD/MM/YYYY')}`
     },
     {
       field: 'source_name',
