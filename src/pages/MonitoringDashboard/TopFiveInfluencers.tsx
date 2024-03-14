@@ -26,7 +26,7 @@ export const getSourceIcon = (sourceName: string) => {
       ? PantipIcon
       : sourceName === 'google'
       ? googleIcon
-      : '/images/NoImage.png'
+      : '/images/default_image.png'
 
   return sourceIcon
 }
@@ -57,7 +57,7 @@ const TopFiveInfluencer = (props: MessageData) => {
                 >
                   <Grid display='flex' justifyContent='center'>
                     <Avatar sx={{ width: 80, height: 80 }}>
-                      <img src={influencer?.cover_image || '/images/NoImage.png'} width={80} height={80} alt='' />
+                      <img src={influencer?.cover_image || '/images/default_image.png'} width={80} height={80} alt='' />
                     </Avatar>
                   </Grid>
                   <Grid display='flex' justifyContent='center'>

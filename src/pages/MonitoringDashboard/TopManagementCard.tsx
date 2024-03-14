@@ -10,7 +10,7 @@ import {
   PantipIcon,
   TwitterIcon,
   YoutubeIcon,
-  
+
   // gitHubIcon,
   googleIcon
 } from 'src/utils/const'
@@ -61,7 +61,7 @@ const TopManagementCard = (props: CardInfo) => {
       ? PantipIcon
       : resultTopEngagement.source_name === 'google' || sourceName === 'google'
       ? googleIcon
-      : '/images/NoImage.png'
+      : '/images/default_image.png'
 
   const getSourceName = (sourceId: number) => {
     if (result_source_list) {
@@ -109,14 +109,12 @@ const TopManagementCard = (props: CardInfo) => {
   return (
     <Card sx={{ minHeight: '335px' }}>
       {loadingTopEngagement && <LinearProgress style={{ width: '100%' }} />}
-      {/* <CardMedia sx={{ height: 140 }} image={'images/NoImage.png'} title='No Image' /> */}
+      {/* <CardMedia sx={{ height: 140 }} image={'images/default_image.png'} title='No Image' /> */}
 
       <CardContent>
         <Grid container spacing={1}>
           <Grid item xs={2.5}>
-            <Avatar sx={{ width: 50, height: 50 }}>
-              {/* <img src={imgPath} width={50} height={50} alt='' /> */}
-            </Avatar>
+            <Avatar sx={{ width: 50, height: 50 }}>{/* <img src={imgPath} width={50} height={50} alt='' /> */}</Avatar>
           </Grid>
 
           <Grid item xs={8.5}>
@@ -202,7 +200,16 @@ const TopManagementCard = (props: CardInfo) => {
         </Typography>
 
         <Box sx={{ maxWidth: '400px', display: 'flex', justifyContent: 'center', mt: 3, mb: 4 }}>
-          <img src={resultTopEngagement.cover_image ?? '/images/NoImage.png'} width={150} height={150} alt='' />
+          <img
+            src={resultTopEngagement.cover_image ?? '/images/default_image.png'}
+            width={150}
+            height={150}
+            alt=''
+            onError={(event: any) => {
+              event.target.src = '/images/default_image.png'
+              event.onerror = null
+            }}
+          />
         </Box>
 
         <Grid container spacing={2}>
