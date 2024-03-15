@@ -24,6 +24,7 @@ const navigation = (): VerticalNavItemsType => {
     showSentimentDashboard,
     showWordCloud,
     showSNA,
+    showMonitoringDashboard,
     showCorpus,
     showActivityLog,
     showSNAByBullyLevel,
@@ -199,11 +200,9 @@ const navigation = (): VerticalNavItemsType => {
     reportDashboardList.push(wordCloudDashboard)
   }
 
-  // if (resultIsAdmin) {
-  //   reportDashboardList.push(monitoringDashboard)
-  // }
-
-  reportDashboardList.push(monitoringDashboard)
+  if (showMonitoringDashboard) {
+    reportDashboardList.push(monitoringDashboard)
+  }
 
   if (showSNA || resultIsAdmin) {
     reportDashboardList.push(sna)
