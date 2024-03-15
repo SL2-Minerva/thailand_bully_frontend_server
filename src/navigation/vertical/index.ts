@@ -199,9 +199,11 @@ const navigation = (): VerticalNavItemsType => {
     reportDashboardList.push(wordCloudDashboard)
   }
 
-  if (resultIsAdmin) {
-    reportDashboardList.push(monitoringDashboard)
-  }
+  // if (resultIsAdmin) {
+  //   reportDashboardList.push(monitoringDashboard)
+  // }
+
+  reportDashboardList.push(monitoringDashboard)
 
   if (showSNA || resultIsAdmin) {
     reportDashboardList.push(sna)
