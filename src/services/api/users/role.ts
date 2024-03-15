@@ -153,6 +153,16 @@ export const UserPermission = (reload?: boolean) => {
     '108',
     '109'
   ]
+
+  const monitoringDashboard =  [
+    '110',
+    '111',
+    '112',
+    '113',
+    '114',
+    '115',
+    '116'
+  ]
   const wordCloudDashboard = ['14', '15', '16', '17', '18', '19']
 
   // const showAllMenu : any[] = [];
@@ -211,6 +221,7 @@ export const UserPermission = (reload?: boolean) => {
   let showSentimentDashboard = false
   let showBullyDashboard = false
   let showWordCloud = false
+  let showMonitoringDashboard = false
 
   if (report && report?.length > 0) {
     showOverallDashboard = report.some((value: any) => overallDashboard.includes(value))
@@ -220,6 +231,7 @@ export const UserPermission = (reload?: boolean) => {
     showSentimentDashboard = report.some((value: any) => sentimentDashboard.includes(value))
     showBullyDashboard = report.some((value: any) => bullyDashboard.includes(value))
     showWordCloud = report.some((value: any) => wordCloudDashboard.includes(value))
+    showMonitoringDashboard = report.some((value: any) => monitoringDashboard.includes(value))
   }
 
   return {
@@ -240,6 +252,7 @@ export const UserPermission = (reload?: boolean) => {
     showSNAByBullyType: showSNAByBullyType,
     showSNABySentiment: showSNABySentiment,
     showContentManagement: showContentManagement,
+    showMonitoringDashboard: showMonitoringDashboard,
     showActivityLog: showActivityLog,
     showCorpus: showCorpus,
     loadingUserPermission: loading,
