@@ -15,7 +15,7 @@ import Grid from '@mui/material/Grid'
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import { Avatar, Chip, LinearProgress, Paper } from '@mui/material'
-import { FacebookIcon, googleIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const'
+import { FacebookIcon, googleIcon, InstagramIcon, PantipIcon, tiktokIcon, TwitterIcon, YoutubeIcon } from 'src/utils/const'
 
 interface InfluencerComparisonProps {
   icon?: ReactNode
@@ -45,6 +45,8 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
       ? PantipIcon
       : totalText === 'Google'
       ? googleIcon
+      : totalText === 'Tiktok'
+      ? tiktokIcon
       : FacebookIcon
 
   const percentageValue = trendNumber ? trendNumber + '%' : ''
