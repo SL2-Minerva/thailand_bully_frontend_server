@@ -35,6 +35,7 @@ const ComparisonCharts = (props: Props) => {
     resultPantipComparison,
     resultYoutubeComparison,
     resultGoogleComparison,
+    resultTiktokComparison,
     loadingEngagementBy
   } = GetEngagementBy(apiParams)
 
@@ -76,7 +77,7 @@ const ComparisonCharts = (props: Props) => {
           </Grid>
 
           <Grid container spacing={3} pl={3} pt={3}>
-            <Grid item xs={6} md={2}>
+            <Grid item xs={6} md={1.7}>
               {resultFacebookComparison ? (
                 <ChannelComparison
                   color='#3b5998'
@@ -90,7 +91,7 @@ const ComparisonCharts = (props: Props) => {
                 ''
               )}
             </Grid>
-            <Grid item xs={6} md={2}>
+            <Grid item xs={6} md={1.7}>
               {resultTwitterComparison ? (
                 <ChannelComparison
                   color='#00aced'
@@ -104,7 +105,7 @@ const ComparisonCharts = (props: Props) => {
                 ''
               )}
             </Grid>
-            <Grid item xs={6} md={2}>
+            <Grid item xs={6} md={1.7}>
               {resultYoutubeComparison ? (
                 <ChannelComparison
                   color='#e31010'
@@ -118,7 +119,7 @@ const ComparisonCharts = (props: Props) => {
                 ''
               )}
             </Grid>
-            <Grid item xs={6} md={2}>
+            <Grid item xs={6} md={1.7}>
               {resultInstagramComparison ? (
                 <ChannelComparison
                   color='#d62976'
@@ -132,7 +133,7 @@ const ComparisonCharts = (props: Props) => {
                 ''
               )}
             </Grid>
-            <Grid item xs={6} md={2}>
+            <Grid item xs={6} md={1.7}>
               {resultGoogleComparison ? (
                 <ChannelComparison
                   color='#F4B400'
@@ -146,7 +147,7 @@ const ComparisonCharts = (props: Props) => {
                 ''
               )}
             </Grid>
-            <Grid item xs={6} md={2}>
+            <Grid item xs={6} md={1.7}>
               {resultPantipComparison ? (
                 <ChannelComparison
                   color='#642c8c'
@@ -154,6 +155,20 @@ const ComparisonCharts = (props: Props) => {
                   trend={resultPantipComparison?.type}
                   totalText='Pantip'
                   totalValue={resultPantipComparison?.comparison_value}
+                  loading={loadingEngagementBy}
+                />
+              ) : (
+                ''
+              )}
+            </Grid>
+            <Grid item xs={6} md={1.7}>
+              {resultTiktokComparison ? (
+                <ChannelComparison
+                  color='#000000'
+                  trendNumber={resultTiktokComparison?.percentage}
+                  trend={resultTiktokComparison?.type}
+                  totalText='Tiktok'
+                  totalValue={resultTiktokComparison?.comparison_value}
                   loading={loadingEngagementBy}
                 />
               ) : (

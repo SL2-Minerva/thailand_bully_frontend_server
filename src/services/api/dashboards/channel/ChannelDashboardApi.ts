@@ -372,6 +372,7 @@ export const GetEngagementBy = (
     resultYoutubeComparison: response?.data?.period_over_period?.youtube || null,
     resultPantipComparison: response?.data?.period_over_period?.pantip || null,
     resultGoogleComparison: response?.data?.period_over_period?.google || null,
+    resultTiktokComparison: response?.data?.period_over_period?.tiktok || null,
     loadingEngagementBy: loading,
     errorEngagementBy: error
   }
