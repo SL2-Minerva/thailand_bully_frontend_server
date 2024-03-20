@@ -155,7 +155,6 @@ export const UserPermission = (reload?: boolean) => {
   ]
 
   const monitoringDashboard =  [
-    '110',
     '111',
     '112',
     '113',
@@ -233,6 +232,8 @@ export const UserPermission = (reload?: boolean) => {
     showWordCloud = report.some((value: any) => wordCloudDashboard.includes(value))
     showMonitoringDashboard = report.some((value: any) => monitoringDashboard.includes(value))
   }
+
+  console.log('showmonitoringdashboard', showMonitoringDashboard);
 
   return {
     resultPermission: res?.data?.permission || null,
