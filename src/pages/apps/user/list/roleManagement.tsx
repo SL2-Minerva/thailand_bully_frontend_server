@@ -82,7 +82,7 @@ const RoleManagement = () => {
   const [tableData, setTableData] = useState(resultRoleList)
 
   return (
-    <Grid container>
+    <Grid container sx={{overflow: 'auto', minHeight: '100vh'}}>
       <Grid item xs={12}>
         <Card>
           <CardHeader title='Role Management' sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }} />

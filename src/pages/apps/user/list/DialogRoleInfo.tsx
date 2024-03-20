@@ -172,11 +172,18 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
     }
   })
 
+  console.log('current', current);
+
   if (current?.authorized_report && current?.authorized_report?.length > 0) {
     const reports = current?.authorized_report
     const reportTitleIds: any[] = []
     for (let i = 0; i < reports?.length; i++) {
-      const reportId = parseInt(reports[i]) - 1
+      let reportId = 0;
+      if (reports[i] === '111') {
+        reportId = parseInt(reports[i]) - 2
+      } else {
+        reportId = parseInt(reports[i]) - 1
+      }
       reportTitleIds.push(reportId)
     }
 
@@ -577,7 +584,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
   }
 
   return (
-    <Card>
+    <Card sx={{overflow: 'auto'}}>
       <Dialog
         fullWidth
         open={show}
@@ -713,7 +720,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                 </Table>
               </TableContainer>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} overflow={'auto'}>
               <Autocomplete
                 disableCloseOnSelect
                 multiple
@@ -727,6 +734,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                   setReportIds(newValue)
                 }}
                 defaultValue={defaultValue}
+                sx={{overflow: 'auto'}}
               />
             </Grid>
 
