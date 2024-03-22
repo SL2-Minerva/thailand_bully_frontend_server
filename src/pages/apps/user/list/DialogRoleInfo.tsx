@@ -172,13 +172,13 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
     }
   })
 
-  console.log('current', current);
+  console.log('current', current)
 
   if (current?.authorized_report && current?.authorized_report?.length > 0) {
     const reports = current?.authorized_report
     const reportTitleIds: any[] = []
     for (let i = 0; i < reports?.length; i++) {
-      let reportId = 0;
+      let reportId = 0
       if (reports[i] === '111') {
         reportId = parseInt(reports[i]) - 2
       } else {
@@ -583,8 +583,15 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
     setReportIds([])
   }
 
+  // const StyledPopper = styled(Popper)({
+  //   [`& .${autocompleteClasses.listbox}`]: {
+  //     boxSizing: 'border-box',
+  //     maxHeight: '200px'
+  //   }
+  // })
+
   return (
-    <Card sx={{overflow: 'auto'}}>
+    <Card sx={{ overflow: 'auto' }}>
       <Dialog
         fullWidth
         open={show}
@@ -593,6 +600,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
         onClose={onClose}
         TransitionComponent={Transition}
         onBackdropClick={onClose}
+        sx={{  mb: '100px' }}
       >
         <DialogContent sx={{ pb: 6, px: { xs: 8, sm: 15 }, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
           <IconButton size='small' onClick={onClose} sx={{ position: 'absolute', right: '1rem', top: '1rem' }}>
@@ -603,7 +611,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
               {action === 'edit' ? 'Edit Role ' : 'Create New Role'}
             </Typography>
           </Box>
-          <Grid container spacing={6}>
+          <Grid container spacing={6} sx={{ maxHeight: 600 }}>
             <Grid item sm={6} xs={12}>
               <TextField
                 fullWidth
@@ -720,7 +728,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                 </Table>
               </TableContainer>
             </Grid>
-            <Grid item xs={12} overflow={'auto'}>
+            <Grid item xs={12}>
               <Autocomplete
                 disableCloseOnSelect
                 multiple
@@ -731,10 +739,21 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                 options={resultReportChartList}
                 value={reportIds}
                 onChange={(event: any, newValue: any) => {
+                  console.log('newValue', newValue)
                   setReportIds(newValue)
                 }}
                 defaultValue={defaultValue}
-                sx={{overflow: 'auto'}}
+                sx={{ overflow: 'auto' }}
+                componentsProps={{
+                  paper: {
+                    sx: {
+                      maxHeight: 200
+                    }
+                  }
+                }}
+
+                
+                // PopperComponent={PopperMy}
               />
             </Grid>
 
