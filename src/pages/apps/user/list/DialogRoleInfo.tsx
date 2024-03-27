@@ -179,11 +179,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
     const reportTitleIds: any[] = []
     for (let i = 0; i < reports?.length; i++) {
       let reportId = 0
-      if (reports[i] === '111') {
-        reportId = parseInt(reports[i]) - 2
-      } else {
-        reportId = parseInt(reports[i]) - 1
-      }
+      reportId = parseInt(reports[i]) - 1
       reportTitleIds.push(reportId)
     }
 
