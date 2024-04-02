@@ -19,8 +19,10 @@ import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
-import MessageDetailChannel from './MessageDetailChannel'
+
+// import MessageDetailChannel from './MessageDetailChannel'
 import ExportExcel from '../VoiceDashboard/ExportExcel'
+import DailyMessageChannel from './DailyMessageChannel'
 
 interface Props {
   type: string
@@ -478,7 +480,7 @@ const DailyMessageGraph = (props: Props) => {
         )}
       </CardContent>
       {showDetail ? (
-        <MessageDetailChannel
+        <DailyMessageChannel
           show={showDetail}
           setShow={setShowDetail}
           params={params}

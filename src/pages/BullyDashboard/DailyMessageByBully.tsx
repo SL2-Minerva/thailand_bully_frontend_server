@@ -12,7 +12,8 @@ import { InteractionItem } from 'chart.js'
 import { BullyLevelColors } from 'src/utils/const'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import MessageDetail from '../ChannelDashboard/MessageDetail'
+
+// import MessageDetail from '../ChannelDashboard/MessageDetail'
 import { IconButton, LinearProgress, Menu, MenuItem, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import Translations from 'src/layouts/components/Translations'
@@ -23,6 +24,7 @@ import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import ExportExcel from '../VoiceDashboard/ExportExcel'
+import DailyMessageChannel from '../ChannelDashboard/DailyMessageChannel'
 
 // excel export
 // import axios, { AxiosRequestConfig } from 'axios'
@@ -486,7 +488,7 @@ const DailyMessgeByBully = (props: LineProps) => {
           </>
         )}
         {showDetail ? (
-          <MessageDetail
+          <DailyMessageChannel
             show={showDetail}
             setShow={setShowDetail}
             params={params}

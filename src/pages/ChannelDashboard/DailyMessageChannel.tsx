@@ -2,31 +2,34 @@ import { forwardRef, ReactElement, Ref, useEffect, useState } from 'react'
 import Fade, { FadeProps } from '@mui/material/Fade'
 import {
   Box,
+  Button,
   Card,
   Dialog,
   DialogContent,
   IconButton,
   LinearProgress,
   Pagination,
-  TableRow,
-  Paper,
-  Table,
-  TableBody,
-  TableContainer,
-  TableHead,
-  Typography,
   Tooltip,
-  Button
+  Typography
 } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
-import { GetMessageDetailEngagementDashboard } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import { GetMessageDetailChannelDashboard } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
 import { ArrowDown, ArrowUp, DotsVertical, MicrosoftExcel, OpenInNew, TrashCanOutline } from 'mdi-material-ui'
 import { initialSort, StyledTableCell, StyledTableRow } from '../dashboard/DailyMessageDetail'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Paper from '@mui/material/Paper'
 import DeleteConfirmDialog from '../dashboard/DeleteConfirmDialog'
 import ExportExcelL3 from '../VoiceDashboard/ExportExcelL3'
+
+// import { GridColDef } from '@mui/x-data-grid'
+// import { StyledDataGrid } from '../dashboard/DailyMessageDetail'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -47,6 +50,9 @@ interface DialogInfoProps {
   reportNo?: string
   title?: string
   networkTitle?: string
+  keywordId?: number
+  setKeywordId?: any
+  type?: string
   excelExport?: () => void
   apiParams?: any
   setIsLoading?: any
@@ -54,7 +60,7 @@ interface DialogInfoProps {
   apiPath?: string
 }
 
-const MessageDetail = (props: DialogInfoProps) => {
+const DailyMessageChannel = (props: DialogInfoProps) => {
   const {
     show,
     setShow,
@@ -65,6 +71,8 @@ const MessageDetail = (props: DialogInfoProps) => {
     reportNo,
     title,
     networkTitle,
+    keywordId,
+    setKeywordId,
     excelExport,
     apiParams,
     setIsLoading,
@@ -90,23 +98,18 @@ const MessageDetail = (props: DialogInfoProps) => {
   }
 
   let paramData: any = {}
-  paramData.Llabel = ''
   const todayDate = new Date()
-  
-  // const startDate = moment(params?.label, 'DD/MM/YYYY')
-  // const endDate = moment(params?.label, 'DD/MM/YYYY')
-
   if (params?.period === 'customrange' && params?.previousDate !== todayDate && params?.previousEndDate !== todayDate) {
+    const startDate = moment(params?.label, 'DD/MM/YYYY')
+    const endDate = moment(params?.label, 'DD/MM/YYYY')
+
     paramData = {
       campaign_id: params?.campaign || '',
       source: paramsId?.sourceId || params?.platformId || '',
-      start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
-      end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
-
-      // start_date: startDate ? moment(startDate).format('YYYY-MM-DD') : '',
-      // end_date: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
+      start_date: params?.label ? startDate.format('YYYY-MM-DD') : '',
+      end_date: params?.label ? endDate.format('YYYY-MM-DD') : '',
       period: params?.period,
-      keyword_id: paramsId?.keywordId || '',
+      keyword_id: paramsId?.keywordId || keywordId || '',
       organization_id: paramsId?.organization_id || '',
       classification_id: paramsId?.classification_id || '',
       start_date_period: params?.previousDate ? moment(params?.previousDate).format('YYYY-MM-DD') : '',
@@ -120,16 +123,16 @@ const MessageDetail = (props: DialogInfoProps) => {
       sort: sortSelect
     }
   } else {
+    const startDate = moment(params?.label, 'DD/MM/YYYY')
+    const endDate = moment(params?.label, 'DD/MM/YYYY')
+
     paramData = {
       campaign_id: params?.campaign || '',
       source: paramsId?.sourceId || params?.platformId || '',
-      start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
-      end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
-
-      // start_date: startDate ? moment(startDate).format('YYYY-MM-DD') : '',
-      // end_date: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
+      start_date: params?.label ? startDate.format('YYYY-MM-DD') : '',
+      end_date: params?.label ? endDate.format('YYYY-MM-DD') : '',
       period: params?.period,
-      keyword_id: paramsId?.keywordId || '',
+      keyword_id: paramsId?.keywordId || keywordId || '',
       classification_id: paramsId?.classification_id || '',
       organization_id: paramsId?.organization_id || '',
       page: page,
@@ -143,10 +146,14 @@ const MessageDetail = (props: DialogInfoProps) => {
   }
 
   if (params?.Llabel) {
-    paramData.Llabel = params.Llabel
+    paramData.Llabel = params?.Llabel
   }
 
-  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetailEngagementDashboard(
+  if (params.select_period) {
+    paramData.select_period = params?.select_period
+  }
+
+  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetailChannelDashboard(
     paramData,
     reload
   )
@@ -165,6 +172,9 @@ const MessageDetail = (props: DialogInfoProps) => {
       campaign_id: null,
       organization_id: null
     })
+    if (keywordId) {
+      setKeywordId('')
+    }
   }
 
   useEffect(() => {
@@ -289,7 +299,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                           </Tooltip>
                         )}
                       </span>
-                      <span style={{ textAlign: 'center' }}>Account Name</span>
+                      <span style={{ textAlign: 'center' }}>Source Name</span>
                     </span>
                   </StyledTableCell>
                   <StyledTableCell
@@ -543,7 +553,6 @@ const MessageDetail = (props: DialogInfoProps) => {
                         }
                       }}
                     >
-                      {' '}
                       {messageDetail.account_name}
                     </StyledTableCell>
 
@@ -600,7 +609,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                       ) : messageDetail?.channel === 'google' ? (
                         <img width={25} alt={'logo'} height={25} src={`/images/logos/google.png`} />
                       ) : messageDetail?.channel === 'tiktok' ? (
-                        <img width={25} alt={'logo'} height={25} src={`/images/logos/tiktok.png`} />
+                        <img width={34} alt={'logo'} height={25} src={`/images/logos/tiktok.png`} />
                       ) : (
                         <span style={{ textTransform: 'uppercase' }}>{messageDetail?.channel}</span>
                       )}
@@ -692,9 +701,13 @@ const MessageDetail = (props: DialogInfoProps) => {
               variant='outlined'
               color='primary'
             />
+            {/* <Button disabled={disableLoadMore} variant="contained" color="primary" onClick={(e) => {handleChangePagination(e, page)}}>
+                Load More
+              </Button> */}
           </Box>
         </DialogContent>
       </Dialog>
+
       {messageId && params?.campaign ? (
         <DialogNetworkGraphByFitler
           showDialog={showDialog}
@@ -711,6 +724,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       ) : (
         ''
       )}
+
       {showConfirm ? (
         <DeleteConfirmDialog
           showDialog={showConfirm}
@@ -726,4 +740,4 @@ const MessageDetail = (props: DialogInfoProps) => {
   )
 }
 
-export default MessageDetail
+export default DailyMessageChannel

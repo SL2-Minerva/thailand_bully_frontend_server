@@ -18,7 +18,9 @@ import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import ExportExcel from '../VoiceDashboard/ExportExcel'
-import MessageDetail from '../EngagementDashboard/MessageDetail'
+
+// import MessageDetail from '../EngagementDashboard/MessageDetail'
+import MessageDetailsDaily from '../EngagementDashboard/MessageDetailsDaily'
 
 // excel export
 // import axios, { AxiosRequestConfig } from 'axios'
@@ -480,7 +482,7 @@ const DailyEngagementTrans = (props: LineProps) => {
         )}
 
         {showDetail ? (
-          <MessageDetail
+          <MessageDetailsDaily
             show={showDetail}
             setShow={setShowDetail}
             params={params}

@@ -10,7 +10,8 @@ import moment from 'moment'
 import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
-import MessageDetail from './MessageDetail'
+
+// import MessageDetail from './MessageDetail'
 import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
@@ -19,6 +20,7 @@ import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import ExportExcel from '../VoiceDashboard/ExportExcel'
+import MessageDetailsDaily from './MessageDetailsDaily'
 
 // excel export
 // import axios, { AxiosRequestConfig } from 'axios'
@@ -511,7 +513,7 @@ const DailyEngagementType = (props: LineProps) => {
           </>
         )}
         {showDetail ? (
-          <MessageDetail
+          <MessageDetailsDaily
             show={showDetail}
             setShow={setShowDetail}
             params={params}
