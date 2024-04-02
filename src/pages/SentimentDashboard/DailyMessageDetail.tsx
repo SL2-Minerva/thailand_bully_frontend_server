@@ -2,31 +2,34 @@ import { forwardRef, ReactElement, Ref, useEffect, useState } from 'react'
 import Fade, { FadeProps } from '@mui/material/Fade'
 import {
   Box,
+  Button,
   Card,
   Dialog,
   DialogContent,
   IconButton,
   LinearProgress,
   Pagination,
-  TableRow,
-  Paper,
-  Table,
-  TableBody,
-  TableContainer,
-  TableHead,
-  Typography,
   Tooltip,
-  Button
+  Typography
 } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
-import { GetMessageDetailEngagementDashboard } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import DialogNetworkGraph from '../dashboard/DialogNetworkGraph'
+import { GetMessageDetailSentimentDashboard } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
-import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
 import { ArrowDown, ArrowUp, DotsVertical, MicrosoftExcel, OpenInNew, TrashCanOutline } from 'mdi-material-ui'
 import { initialSort, StyledTableCell, StyledTableRow } from '../dashboard/DailyMessageDetail'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Paper from '@mui/material/Paper'
 import DeleteConfirmDialog from '../dashboard/DeleteConfirmDialog'
 import ExportExcelL3 from '../VoiceDashboard/ExportExcelL3'
+
+// import { GridColDef } from '@mui/x-data-grid'
+// import { StyledDataGrid } from '../dashboard/DailyMessageDetail'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -54,7 +57,7 @@ interface DialogInfoProps {
   apiPath?: string
 }
 
-const MessageDetail = (props: DialogInfoProps) => {
+const DailyMessageDetail = (props: DialogInfoProps) => {
   const {
     show,
     setShow,
@@ -90,21 +93,20 @@ const MessageDetail = (props: DialogInfoProps) => {
   }
 
   let paramData: any = {}
-  paramData.Llabel = ''
   const todayDate = new Date()
-  
-  // const startDate = moment(params?.label, 'DD/MM/YYYY')
-  // const endDate = moment(params?.label, 'DD/MM/YYYY')
+  const startDate = moment(params?.label, 'DD/MM/YYYY')
+  const endDate = moment(params?.label, 'DD/MM/YYYY')
 
+  paramData.Llabel = ''
   if (params?.period === 'customrange' && params?.previousDate !== todayDate && params?.previousEndDate !== todayDate) {
     paramData = {
       campaign_id: params?.campaign || '',
       source: paramsId?.sourceId || params?.platformId || '',
-      start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
-      end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
+      start_date: startDate ? moment(startDate).format('YYYY-MM-DD') : '',
+      end_date: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
 
-      // start_date: startDate ? moment(startDate).format('YYYY-MM-DD') : '',
-      // end_date: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
+    //   start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
+    //   end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
       period: params?.period,
       keyword_id: paramsId?.keywordId || '',
       organization_id: paramsId?.organization_id || '',
@@ -123,11 +125,11 @@ const MessageDetail = (props: DialogInfoProps) => {
     paramData = {
       campaign_id: params?.campaign || '',
       source: paramsId?.sourceId || params?.platformId || '',
-      start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
-      end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
-
-      // start_date: startDate ? moment(startDate).format('YYYY-MM-DD') : '',
-      // end_date: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
+      start_date: startDate ? moment(startDate).format('YYYY-MM-DD') : '',
+      end_date: endDate ? moment(endDate).format('YYYY-MM-DD') : '',
+      
+    //   start_date: params?.date ? moment(params?.date).format('YYYY-MM-DD') : '',
+    //   end_date: params?.endDate ? moment(params?.endDate).format('YYYY-MM-DD') : '',
       period: params?.period,
       keyword_id: paramsId?.keywordId || '',
       classification_id: paramsId?.classification_id || '',
@@ -143,10 +145,9 @@ const MessageDetail = (props: DialogInfoProps) => {
   }
 
   if (params?.Llabel) {
-    paramData.Llabel = params.Llabel
+    paramData.Llabel = params?.Llabel
   }
-
-  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetailEngagementDashboard(
+  const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetMessageDetailSentimentDashboard(
     paramData,
     reload
   )
@@ -486,6 +487,12 @@ const MessageDetail = (props: DialogInfoProps) => {
                   <StyledTableRow
                     key={index}
                     hover={true}
+                    onClick={() => {
+                      if (messageDetail.parent) {
+                        setMessageId(messageDetail.message_id)
+                        setShowDialog(true)
+                      }
+                    }}
                     sx={{
                       cursor: messageDetail.parent ? 'pointer' : '',
                       backgroundColor: messageDetail.parent ? '#00ff0038' : '#fff'
@@ -543,7 +550,6 @@ const MessageDetail = (props: DialogInfoProps) => {
                         }
                       }}
                     >
-                      {' '}
                       {messageDetail.account_name}
                     </StyledTableCell>
 
@@ -684,6 +690,7 @@ const MessageDetail = (props: DialogInfoProps) => {
               </TableBody>
             </Table>
           </TableContainer>
+
           <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
             <Pagination
               count={pageCount}
@@ -692,11 +699,15 @@ const MessageDetail = (props: DialogInfoProps) => {
               variant='outlined'
               color='primary'
             />
+            {/* <Button disabled={disableLoadMore} variant="contained" color="primary" onClick={(e) => {handleChangePagination(e, page)}}>
+                Load More
+              </Button> */}
           </Box>
         </DialogContent>
       </Dialog>
+
       {messageId && params?.campaign ? (
-        <DialogNetworkGraphByFitler
+        <DialogNetworkGraph
           showDialog={showDialog}
           setShowDialog={setShowDialog}
           currentData={current}
@@ -711,6 +722,7 @@ const MessageDetail = (props: DialogInfoProps) => {
       ) : (
         ''
       )}
+
       {showConfirm ? (
         <DeleteConfirmDialog
           showDialog={showConfirm}
@@ -726,4 +738,4 @@ const MessageDetail = (props: DialogInfoProps) => {
   )
 }
 
-export default MessageDetail
+export default DailyMessageDetail

@@ -13,7 +13,8 @@ import { InteractionItem } from 'chart.js'
 import moment from 'moment'
 import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
-import MessageDetail from './MessageDetail'
+
+// import MessageDetail from './MessageDetail'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
 import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 
@@ -27,6 +28,7 @@ import authConfig from 'src/configs/auth'
 import toast from 'react-hot-toast'
 import { GetDailyMessages } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 import { useTheme } from '@mui/material/styles'
+import DailyMessageDetails from './DailyMessageDetails'
 
 interface Props {
   type: string
@@ -534,7 +536,7 @@ const DailyMessageGraph = (props: Props) => {
         )}
       </CardContent>
       {showDetail ? (
-        <MessageDetail
+        <DailyMessageDetails
           show={showDetail}
           setShow={setShowDetail}
           params={params}

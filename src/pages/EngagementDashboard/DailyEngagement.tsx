@@ -7,7 +7,6 @@ import { Bar, Line, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2
 import { useEffect, useRef, useState, MouseEvent } from 'react'
 import { StackChartDataset } from 'src/types/dashboard/overallDashboard'
 import moment from 'moment'
-import MessageDetail from './MessageDetail'
 import { InteractionItem } from 'chart.js'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
@@ -19,6 +18,7 @@ import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import ExportExcel from '../VoiceDashboard/ExportExcel'
+import MessageDetailsDaily from './MessageDetailsDaily'
 
 // excel export
 // import axios, { AxiosRequestConfig } from 'axios'
@@ -479,7 +479,7 @@ const DailyEngagement = (props: LineProps) => {
         )}
 
         {showDetail ? (
-          <MessageDetail
+          <MessageDetailsDaily
             show={showDetail}
             setShow={setShowDetail}
             params={params}

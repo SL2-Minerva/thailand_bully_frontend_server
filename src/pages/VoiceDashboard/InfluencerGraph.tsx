@@ -15,7 +15,8 @@ import { useEffect, useRef, useState, MouseEvent } from 'react'
 import { InteractionItem } from 'chart.js'
 import { IconButton, LinearProgress, Menu, MenuItem, Paper, Typography, useTheme } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
-import MessageDetail from './MessageDetail'
+
+// import MessageDetail from './MessageDetail'
 import moment from 'moment'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
 import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
@@ -23,6 +24,7 @@ import { Download, ChartBarStacked, ChartLine } from 'mdi-material-ui'
 import * as htmlToImage from 'html-to-image'
 import { saveAs } from 'file-saver'
 import ExportExcel from './ExportExcel'
+import DailyMessageDetails from './DailyMessageDetails'
 
 const chartLabel = (data: any) => {
   if (!data) return []
@@ -429,7 +431,7 @@ const InfluencerGraph = ({
         )}
       </CardContent>
       {showDetail ? (
-        <MessageDetail
+        <DailyMessageDetails
           show={showDetail}
           setShow={setShowDetail}
           params={params}

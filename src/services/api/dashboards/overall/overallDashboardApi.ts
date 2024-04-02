@@ -376,9 +376,6 @@ export const GetDetailMessageOverall = (
   const startDate = moment(start_date, "DD/MM/YYYY");
   const endDate = moment(end_date, "DD/MM/YYYY");
 
-  console.log('start date', startDate);
-  console.log('end date', endDate);
-
   if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
     params = {
       campaign_id: campaignId || '',
