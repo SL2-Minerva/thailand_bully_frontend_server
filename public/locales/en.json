@@ -529,5 +529,13 @@
   "METHOD" : "METHOD",
   "ENDPOINT" : "ENDPOINT",
   "REQUESTED BY" : "REQUESTED BY",
-  "TIMESTAMP" : "TIMESTAMP"
+  "TIMESTAMP" : "TIMESTAMP",
+  "Content Management" : "Content Management",
+  "Content-MGT" : "Content-MGT",
+  "Content Information" : "Content",
+  "Content Topic" : "Content Topic",
+  "Topic" : "Topic",
+  "PICTURE" : "PICTURE",
+  "Content Details" : "Content Details",
+  "Content Status" : "Content Status : "
 }

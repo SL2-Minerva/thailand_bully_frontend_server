@@ -36,6 +36,7 @@ import moment from 'moment'
 import { UserPermission } from 'src/services/api/users/role'
 import Swal from 'sweetalert2'
 import 'react-quill/dist/quill.bubble.css'
+import Translations from 'src/layouts/components/Translations'
 
 // import dynamic from 'next/dynamic'
 
@@ -135,12 +136,17 @@ const ContentManagement = () => {
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Card>
-          <CardHeader title='Content Management' sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }} />
+          <CardHeader
+            title={<Translations text='Content Management' />}
+            sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }}
+          />
           <CardContent>
             <Grid container spacing={6}>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='plan-select'>Contents</InputLabel>
+                  <InputLabel id='plan-select'>
+                    <Translations text='Content' />
+                  </InputLabel>
                   <Select
                     fullWidth
                     value={content}
@@ -163,7 +169,7 @@ const ContentManagement = () => {
                 <FormControl fullWidth>
                   <TextField
                     id='contentName'
-                    label='Content Topic'
+                    label={<Translations text='Content Topic' />}
                     value={contentName}
                     onChange={e => {
                       setContentName(e.target.value)
@@ -173,19 +179,27 @@ const ContentManagement = () => {
               </Grid>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='status-select'>Select Status</InputLabel>
+                  <InputLabel id='status-select'>
+                    <Translations text='Select Status' />
+                  </InputLabel>
                   <Select
                     fullWidth
                     value={status}
                     id='select-status'
-                    label='Select Status'
+                    label={<Translations text='Select Status' />}
                     labelId='status-select'
                     onChange={handleStatusChange}
                     inputProps={{ placeholder: 'Select Status' }}
                   >
-                    <MenuItem value=''>Select Status</MenuItem>
-                    <MenuItem value='1'>Active</MenuItem>
-                    <MenuItem value='0'>Inactive</MenuItem>
+                    <MenuItem value=''>
+                      <Translations text='Select Status' />
+                    </MenuItem>
+                    <MenuItem value='1'>
+                      <Translations text='Active' />
+                    </MenuItem>
+                    <MenuItem value='0'>
+                      <Translations text='Inactive' />
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -196,7 +210,7 @@ const ContentManagement = () => {
                 <FormControl fullWidth>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker
-                      label='Date'
+                      label={<Translations text='DATE' />}
                       value={date}
                       onChange={newValue => setDate(newValue)}
                       renderInput={params => <TextField {...params} />}
@@ -213,7 +227,7 @@ const ContentManagement = () => {
                     }}
                     variant='contained'
                   >
-                    search
+                    <Translations text='SEARCH' />
                   </Button>
                 </Box>
               </Grid>
@@ -232,7 +246,7 @@ const ContentManagement = () => {
                 >
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
                     <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                      Add
+                      <Translations text='ADD' />
                     </Button>
                   </Box>
                 </Box>
@@ -243,14 +257,14 @@ const ContentManagement = () => {
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
-                    <TableCell>ID</TableCell>
-                    <TableCell>Topic</TableCell>
-                    <TableCell>Content</TableCell>
-                    <TableCell align='center'>Picture</TableCell>
-                    <TableCell align='center'>Status</TableCell>
-                    <TableCell>Date</TableCell>
+                    <TableCell><Translations text='ID' /></TableCell>
+                    <TableCell><Translations text='Topic'/></TableCell>
+                    <TableCell><Translations text='Content Information' /></TableCell>
+                    <TableCell align='center'><Translations text='PICTURE' /></TableCell>
+                    <TableCell align='center'><Translations text='Status' /></TableCell>
+                    <TableCell><Translations text='DATE' /></TableCell>
                     {resultPermission?.content_mgt?.authorized_edit || resultIsAdmin ? (
-                      <TableCell align='center'>Action</TableCell>
+                      <TableCell align='center'><Translations text='Action' /></TableCell>
                     ) : (
                       ''
                     )}

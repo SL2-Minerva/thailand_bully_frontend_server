@@ -529,5 +529,13 @@
   "METHOD" : "วิธีการ",
   "ENDPOINT" : "จุดสิ้นสุด",
   "REQUESTED BY" : "ร้องขอโดย",
-  "TIMESTAMP" : "การบันทึกเวลา"
+  "TIMESTAMP" : "การบันทึกเวลา",
+  "Content Management" : "การจัดการสาระข่าวสาร",
+  "Content-MGT" : "การจัดการสาระข่าวสาร",
+  "Content Information" : "สาระข่าวสาร",
+  "Content Topic" : "เรื่องสาระข่าวสาร",
+  "Topic" : "เรื่อง",
+  "PICTURE" : "รูปภาพ",
+  "Content Details" : "รายละเอียดสาระข่าวสาร",
+  "Content Status" : "สถานะสาระข่าวสาร : "
 }
