@@ -20,6 +20,7 @@ import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { UserPermission } from 'src/services/api/users/role'
 import { useRouter } from 'next/router'
+import Translations from 'src/layouts/components/Translations'
 
 const SourceManagement = () => {
   const [showEdit, setShowEdit] = useState<boolean>(false)
@@ -94,7 +95,7 @@ const SourceManagement = () => {
     <Grid container spacing={6}>
       <Grid item md={12} xs={12}>
         <Card>
-          <CardHeader title='Source Management' />
+          <CardHeader title={<Translations text='Source Management' />} />
           <CardContent>
             <TableContainer component={Paper}>
               {resultPermission?.campaign?.authorized_create ? (
@@ -103,7 +104,7 @@ const SourceManagement = () => {
                 >
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
                     <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                      Add
+                      <Translations text='ADD' />
                     </Button>
                   </Box>
                 </Box>
@@ -114,10 +115,10 @@ const SourceManagement = () => {
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Source</TableCell>
-                    <TableCell align='center'>Description</TableCell>
-                    <TableCell align='center'>Status</TableCell>
-                    {resultPermission?.campaign?.authorized_edit ? <TableCell align='center'>Action</TableCell> : ''}
+                    <TableCell><Translations text='Source' /></TableCell>
+                    <TableCell align='center'><Translations text='Description' /></TableCell>
+                    <TableCell align='center'><Translations text='Status' /></TableCell>
+                    {resultPermission?.campaign?.authorized_edit ? <TableCell align='center'><Translations text='Action' /></TableCell> : ''}
                   </TableRow>
                 </TableHead>
                 <TableBody>

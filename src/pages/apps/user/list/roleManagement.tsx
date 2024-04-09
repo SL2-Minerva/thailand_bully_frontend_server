@@ -19,6 +19,7 @@ import { role_list, UserPermission } from '../../../../services/api/users/role'
 import axios from 'axios'
 import authConfig from '../../../../configs/auth'
 import { useRouter } from 'next/router'
+import Translations from 'src/layouts/components/Translations'
 
 const RoleManagement = () => {
   const router = useRouter()
@@ -82,10 +83,13 @@ const RoleManagement = () => {
   const [tableData, setTableData] = useState(resultRoleList)
 
   return (
-    <Grid container sx={{overflow: 'auto', minHeight: '100vh'}}>
+    <Grid container sx={{ overflow: 'auto', minHeight: '100vh' }}>
       <Grid item xs={12}>
         <Card>
-          <CardHeader title='Role Management' sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }} />
+          <CardHeader
+            title={<Translations text='Role Management' />}
+            sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }}
+          />
           <CardContent>
             <TableContainer component={Paper}>
               {resultIsAdmin || resultPermission?.user_role?.authorized_create ? (
@@ -102,7 +106,7 @@ const RoleManagement = () => {
                       }}
                       variant='contained'
                     >
-                      Add Role
+                      <Translations text='ADD ROLE' />
                     </Button>
                   </Box>
                 </Box>
@@ -113,10 +117,14 @@ const RoleManagement = () => {
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Role Name</TableCell>
-                    <TableCell align='center'>Description</TableCell>
-                    <TableCell align='center'>Status</TableCell>
-                    {resultIsAdmin || resultPermission?.user_role?.authorized_edit ? <TableCell align='center'>Action</TableCell> : ''}
+                    <TableCell><Translations text='Role Name' /></TableCell>
+                    <TableCell align='center'><Translations text='Description' /></TableCell>
+                    <TableCell align='center'><Translations text='Status' /> </TableCell>
+                    {resultIsAdmin || resultPermission?.user_role?.authorized_edit ? (
+                      <TableCell align='center'><Translations text='Action' /></TableCell>
+                    ) : (
+                      ''
+                    )}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -144,7 +152,7 @@ const RoleManagement = () => {
                               />
                             </TableCell>
                             <TableCell align='center'>
-                              <a href='#' style={{color: 'grey'}}>
+                              <a href='#' style={{ color: 'grey' }}>
                                 <PencilOutline
                                   onClick={() => {
                                     handleEdit(index)

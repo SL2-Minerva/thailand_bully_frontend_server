@@ -31,6 +31,8 @@ import authConfig from '../../../configs/auth'
 import { UserPermission } from 'src/services/api/users/role'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2'
+import Translations from 'src/layouts/components/Translations'
+import { useTranslation } from 'react-i18next'
 
 const CampaignManagement = () => {
   // const [campaignName, setCampaignName] = useState<string>('')
@@ -156,11 +158,13 @@ const CampaignManagement = () => {
     setTableData(resultCampaiganList)
   }, [resultCampaiganList])
 
+  const { t } = useTranslation()
+
   return (
     <Grid container spacing={6}>
       <Grid item md={12} xs={12}>
         <Card>
-          <CardHeader title='Campaign Management' />
+          <CardHeader title={<Translations text='Campaign Management' />} />
           <CardContent>
             <Grid container spacing={6}>
               <Grid item sm={4} xs={12}>
@@ -168,22 +172,22 @@ const CampaignManagement = () => {
                   <TextField
                     id='campaign'
                     onChange={e => setCampaignName(e.target.value)}
-                    label='Campaign Name'
+                    label={<Translations text='Campaign Name' />}
                     value={campaignName}
                   />
                 </FormControl>
               </Grid>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='plan-select'>Select Organization</InputLabel>
+                  <InputLabel id='plan-select'><Translations text='Select Organization Group' /></InputLabel>
                   <Select
                     fullWidth
                     value={organization}
                     id='select-organization'
-                    label='Select Organization'
+                    label={<Translations text='Select Organization Group' />}
                     labelId='organization-select'
                     onChange={handleOrganization}
-                    inputProps={{ placeholder: 'Select Organization' }}
+                    inputProps={{ placeholder: t('Select Organization Group') }}
                   >
                     <MenuItem value=''>All</MenuItem>
                     {list &&
@@ -199,19 +203,25 @@ const CampaignManagement = () => {
               </Grid>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='status-select'>Select Status</InputLabel>
+                  <InputLabel id='status-select'>
+                    <Translations text='Select Status' />
+                  </InputLabel>
                   <Select
                     fullWidth
                     value={status}
                     id='select-status'
-                    label='Select Status'
+                    label={<Translations text='Select Status' />}
                     labelId='status-select'
                     onChange={handleStatusChange}
-                    inputProps={{ placeholder: 'Select Status' }}
+                    inputProps={{ placeholder: t('Select Status') }}
                   >
                     <MenuItem value=''>All</MenuItem>
-                    <MenuItem value='1'>Active</MenuItem>
-                    <MenuItem value='0'>Inactive</MenuItem>
+                    <MenuItem value='1'>
+                      <Translations text='Active' />
+                    </MenuItem>
+                    <MenuItem value='0'>
+                      <Translations text='Inactive' />
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -222,7 +232,7 @@ const CampaignManagement = () => {
                 <FormControl fullWidth>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker
-                      label='Start Date'
+                      label={<Translations text='Start Date' />}
                       value={date}
                       onChange={newValue => setDate(newValue)}
                       renderInput={params => <TextField {...params} />}
@@ -234,7 +244,7 @@ const CampaignManagement = () => {
                 <FormControl fullWidth>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker
-                      label='End Date'
+                      label={<Translations text='End Date' />}
                       value={endDate}
                       onChange={newValue => setEndDate(newValue)}
                       renderInput={params => <TextField {...params} />}
@@ -251,7 +261,7 @@ const CampaignManagement = () => {
                     }}
                     variant='contained'
                   >
-                    search
+                    <Translations text='SEARCH' />
                   </Button>
                   <Button
                     sx={{ mb: 2, ml: 3 }}
@@ -260,7 +270,7 @@ const CampaignManagement = () => {
                     }}
                     variant='contained'
                   >
-                    Clear
+                    <Translations text='CLEAR' />
                   </Button>
                 </Box>
               </Grid>
@@ -279,7 +289,7 @@ const CampaignManagement = () => {
                   {resultUserInfo?.campaign_per_organize === null || resultUserInfo?.campaign_per_user === null ? (
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
                       <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                        Add
+                        <Translations text='ADD' />
                       </Button>
                     </Box>
                   ) : (
@@ -287,7 +297,7 @@ const CampaignManagement = () => {
                       {resultUserInfo?.campaign_per_organize > 0 && resultUserInfo?.campaign_per_user > 0 ? (
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
                           <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                            Add
+                            <Translations text='ADD' />
                           </Button>
                         </Box>
                       ) : (
@@ -303,13 +313,13 @@ const CampaignManagement = () => {
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Campaign Name</TableCell>
-                    <TableCell align='center'>Keyword</TableCell>
-                    <TableCell align='center'>Domain</TableCell>
-                    <TableCell align='center'>Organization</TableCell>
-                    <TableCell align='center'>Status</TableCell>
-                    <TableCell align='center'>Created By</TableCell>
-                    {resultPermission?.campaign?.authorized_edit ? <TableCell align='center'>Action</TableCell> : <></>}
+                    <TableCell><Translations text='Campaign Name' /></TableCell>
+                    <TableCell align='center'><Translations text='Keyword' /></TableCell>
+                    <TableCell align='center'><Translations text='Domains'/></TableCell>
+                    <TableCell align='center'><Translations text='ORGANIZATION' /></TableCell>
+                    <TableCell align='center'><Translations text='Status' /></TableCell>
+                    <TableCell align='center'><Translations text='Created By' /></TableCell>
+                    {resultPermission?.campaign?.authorized_edit ? <TableCell align='center'><Translations text='Action' /></TableCell> : <></>}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -389,7 +399,11 @@ const CampaignManagement = () => {
                                             })
                                             .catch(ex => {
                                               if (ex) {
-                                                Swal.fire('Somenthing went wrong!', ex?.message ? ex?.message : 'Please try again.', 'error')
+                                                Swal.fire(
+                                                  'Somenthing went wrong!',
+                                                  ex?.message ? ex?.message : 'Please try again.',
+                                                  'error'
+                                                )
                                               }
                                             })
                                         }

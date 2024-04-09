@@ -11,6 +11,7 @@ import authConfig from 'src/configs/auth'
 import KeywordFilters from '../dashboard/KeywordFilters'
 import VoiceDashboardGraphs from './VoiceDashboardGraphs'
 import moment from 'moment'
+import Translations from 'src/layouts/components/Translations'
 
 // import { DateType } from 'src/types/forms/reactDatepickerTypes'
 
@@ -120,7 +121,7 @@ const VoiceDashboard = () => {
   return (
     <Grid container spacing={3}>
       <Filter
-        tilte='Voice Dashboard'
+        tilte={<Translations text='Voice Dashboard' />}
         date={date}
         setDate={setDate}
         endDate={endDate}

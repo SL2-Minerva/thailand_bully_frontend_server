@@ -55,6 +55,8 @@ import { API_PATH } from 'src/utils/const'
 import { UserPermission } from 'src/services/api/users/role'
 import moment from 'moment'
 import { useRouter } from 'next/router'
+import Translations from 'src/layouts/components/Translations'
+import { useTranslation } from 'react-i18next'
 
 // interface UserRoleType {
 //   [key: string]: ReactElement
@@ -194,7 +196,7 @@ const RowOptions = ({
                 }}
               >
                 <PencilOutline fontSize='small' sx={{ mr: 2 }} />
-                Edit
+                <Translations text='Edit' />
               </MenuItem>
             ) : (
               <></>
@@ -203,7 +205,7 @@ const RowOptions = ({
             {resultPermission?.user?.authorized_delete ? (
               <MenuItem onClick={handleDelete}>
                 <DeleteOutline fontSize='small' sx={{ mr: 2 }} />
-                Delete
+                <Translations text='Delete' />
               </MenuItem>
             ) : (
               <></>
@@ -318,11 +320,14 @@ const UserList = () => {
     handleList()
   }, [addUserOpen, show, refreshDelete])
 
-  const columns : GridColDef[] = [
+  const { t } = useTranslation()
+
+
+  const columns: GridColDef[] = [
     {
       field: 'id',
-      headerName: 'ID',
-      renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
+      headerName: t('ID'),
+      renderCell: index => index.api.getRowIndex(index.row.id) + 1,
       align: 'center',
       headerAlign: 'center'
     },
@@ -330,7 +335,7 @@ const UserList = () => {
       flex: 0.2,
       minWidth: 230,
       field: 'name',
-      headerName: 'User',
+      headerName: t('USER'),
       renderCell: ({ row }: CellType) => {
         const { name } = row
 
@@ -356,7 +361,7 @@ const UserList = () => {
       flex: 0.2,
       minWidth: 250,
       field: 'email',
-      headerName: 'Email',
+      headerName: t('EMAIL'),
       renderCell: ({ row }: CellType) => {
         return (
           <Typography noWrap variant='body2'>
@@ -371,14 +376,14 @@ const UserList = () => {
       flex: 0.15,
       field: 'organization_name',
       minWidth: 150,
-      headerName: 'Organization',
+      headerName: t('ORGANIZATION'),
       align: 'center',
       headerAlign: 'center'
     },
     {
       flex: 0.15,
       minWidth: 120,
-      headerName: 'Organization Group',
+      headerName: t('ORGANIZATION GROUP'),
       field: 'organization_group_name',
       align: 'center',
       headerAlign: 'center'
@@ -386,7 +391,7 @@ const UserList = () => {
     {
       flex: 0.15,
       minWidth: 120,
-      headerName: 'Organization Type',
+      headerName: t('ORGANIZATION TYPE'),
       field: 'organization_type_name',
       align: 'center',
       headerAlign: 'center'
@@ -395,14 +400,14 @@ const UserList = () => {
       flex: 0.1,
       minWidth: 110,
       field: 'status',
-      headerName: 'Status',
+      headerName: t('STATUS'),
       renderCell: ({ row }: CellType) => {
         return (
           <CustomChip
             skin='light'
             size='small'
-            label={row.status == '1' ? 'active' : row.status == '2' ? 'pending': 'inactive'}
-            color={userStatusObj[row.status == '1' ? 'active' : row.status == '2' ? 'pending': 'inactive']}
+            label={row.status == '1' ? 'active' : row.status == '2' ? 'pending' : 'inactive'}
+            color={userStatusObj[row.status == '1' ? 'active' : row.status == '2' ? 'pending' : 'inactive']}
             sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
           />
         )
@@ -415,7 +420,7 @@ const UserList = () => {
       minWidth: 90,
       sortable: false,
       field: 'actions',
-      headerName: 'Actions',
+      headerName: t('ACTIONS'),
       renderCell: ({ row }: CellType) => {
         return (
           <RowOptions
@@ -446,7 +451,10 @@ const UserList = () => {
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Card>
-            <CardHeader title='User Management' sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }} />
+            <CardHeader
+              title={<Translations text='User Management' />}
+              sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }}
+            />
             <CardContent>
               <Grid container spacing={6}>
                 <Grid item sm={4} xs={12}>
@@ -454,7 +462,7 @@ const UserList = () => {
                     <TextField
                       autoComplete='off'
                       id='userName'
-                      label='User Name'
+                      label={<Translations text='User Name' />}
                       value={userName}
                       onChange={e => setUserName(e.target.value)}
                     />
@@ -462,12 +470,14 @@ const UserList = () => {
                 </Grid>
                 <Grid item sm={4} xs={12}>
                   <FormControl fullWidth>
-                    <InputLabel id='plan-select'>Select Organization</InputLabel>
+                    <InputLabel id='plan-select'>
+                      <Translations text='Select Organization' />{' '}
+                    </InputLabel>
                     <Select
                       fullWidth
                       value={organization}
                       id='select-organization'
-                      label='Select Organization'
+                      label={<Translations text='Select Organization' />}
                       labelId='organization-select'
                       onChange={handleOrganization}
                       inputProps={{ placeholder: 'Select Organization' }}
@@ -486,12 +496,14 @@ const UserList = () => {
                 </Grid>
                 <Grid item sm={4} xs={12}>
                   <FormControl fullWidth>
-                    <InputLabel id='status-select'>Select Status</InputLabel>
+                    <InputLabel id='status-select'>
+                      <Translations text='Select Status' />
+                    </InputLabel>
                     <Select
                       fullWidth
                       value={status}
                       id='select-status'
-                      label='Select Status'
+                      label={<Translations text='Select Status' />}
                       labelId='status-select'
                       onChange={handleStatusChange}
                       inputProps={{ placeholder: 'Select Status' }}
@@ -510,7 +522,7 @@ const UserList = () => {
                   <FormControl fullWidth>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DatePicker
-                        label='Start Date'
+                        label={<Translations text='Start Date' />}
                         value={date}
                         onChange={newValue => setDate(newValue)}
                         renderInput={params => <TextField {...params} />}
@@ -522,7 +534,7 @@ const UserList = () => {
                   <FormControl fullWidth>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DatePicker
-                        label='End Date'
+                        label={<Translations text='End Date' />}
                         value={endDate}
                         onChange={newValue => setEndDate(newValue)}
                         renderInput={params => <TextField {...params} />}
@@ -539,7 +551,7 @@ const UserList = () => {
                       }}
                       variant='contained'
                     >
-                      search
+                      <Translations text='SEARCH' />
                     </Button>
                     <Button
                       sx={{ mb: 2, ml: 3 }}
@@ -548,7 +560,7 @@ const UserList = () => {
                       }}
                       variant='contained'
                     >
-                      Clear
+                      <Translations text='CLEAR' />
                     </Button>
                   </Box>
                 </Grid>

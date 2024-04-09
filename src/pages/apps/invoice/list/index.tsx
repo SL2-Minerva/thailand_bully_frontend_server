@@ -64,6 +64,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 // ** Styled Components
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
+import Translations from 'src/layouts/components/Translations'
 
 interface InvoiceStatusObj {
   [key: string]: {
@@ -365,7 +366,7 @@ const InvoiceList = () => {
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Card>
-          <CardHeader title='Filters' />
+          <CardHeader title={<Translations text='Filter' />} />
           <CardContent>
             <Grid container spacing={6}>
               <Grid item xs={12} sm={6}>

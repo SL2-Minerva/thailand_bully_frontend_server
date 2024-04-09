@@ -1,5 +1,5 @@
 // ** React Imports
-import { Ref, forwardRef, ReactElement, useEffect, useState, SyntheticEvent } from 'react'
+import { Ref, forwardRef, ReactElement, useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -27,7 +27,8 @@ import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { useDropzone } from 'react-dropzone'
 import { HeadingTypography, Img } from 'src/pages/content/content-mgt/DialogContents'
-import Link from '@mui/material/Link'
+import Translations from 'src/layouts/components/Translations'
+import { useTranslation } from 'react-i18next'
 
 // import { Color, ColorPicker } from 'material-ui-color'
 
@@ -83,9 +84,9 @@ const DialogSource = (props: DialogInfoProps) => {
     }
   })
 
-  const handleLinkClick = (event: SyntheticEvent) => {
-    event.preventDefault()
-  }
+  // const handleLinkClick = (event: SyntheticEvent) => {
+  //   event.preventDefault()
+  // }
 
   // function handleChangeColor(event: any) {
   //   const hexColor = '#' + event.hex
@@ -192,6 +193,7 @@ const DialogSource = (props: DialogInfoProps) => {
 
     // setSelectedColor('')
   }
+  const { t } = useTranslation()
 
   return (
     <Card>
@@ -227,7 +229,7 @@ const DialogSource = (props: DialogInfoProps) => {
                     <TextField
                       autoFocus
                       value={value}
-                      label='Source Name'
+                      label={<Translations text='Source' />}
                       onChange={onChange}
                       fullWidth
                       error={errors?.name ? true : false}
@@ -250,9 +252,9 @@ const DialogSource = (props: DialogInfoProps) => {
                       autoFocus
                       value={value}
                       onBlur={onBlur}
-                      label='Description'
+                      label={<Translations text='Description' />}
                       onChange={onChange}
-                      placeholder='Description'
+                      placeholder={t('Description')}
                       error={errors?.description ? true : false}
                     />
                   )}
@@ -283,15 +285,12 @@ const DialogSource = (props: DialogInfoProps) => {
                     )}
 
                     <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: ['center', 'center', 'inherit'] }}>
-                      <HeadingTypography variant='h5'>Drop image file here or click to upload.</HeadingTypography>
-                      <Typography color='textSecondary'>
-                        Drop image file here or click{' '}
-                        <Link href='/' onClick={handleLinkClick}>
-                          browse
-                        </Link>{' '}
-                        thorough your machine
+                      <HeadingTypography variant='h5'>
+                        <Translations text='DropImageHeader' />
+                      </HeadingTypography>
+                      <Typography color='textSecondary' sx={{ mb: 4 }}>
+                        <Translations text='DropImage' />
                       </Typography>
-                      <Typography color='textSecondary'>Allowed *.jpeg, *.jpg, *.png, *.gif</Typography>
                     </Box>
                   </Box>
                 )}
@@ -307,7 +306,7 @@ const DialogSource = (props: DialogInfoProps) => {
                     <FormControlLabel
                       name={'status'}
                       control={<Switch checked={value} onChange={onChange} />}
-                      label='Status : '
+                      label={<Translations text='Status' />}
                       labelPlacement='start'
                     />
                   )}
@@ -329,10 +328,10 @@ const DialogSource = (props: DialogInfoProps) => {
         </DialogContent>
         <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
           <Button variant='contained' sx={{ mr: 2 }} onClick={handleSubmit(onSubmit)}>
-            Submit
+            <Translations text='SUBMIT' />
           </Button>
           <Button variant='outlined' color='secondary' onClick={onClose}>
-            Discard
+            <Translations text='DISCARD' />
           </Button>
         </DialogActions>
       </Dialog>

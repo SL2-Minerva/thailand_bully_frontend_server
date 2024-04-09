@@ -21,6 +21,7 @@ import CardContent from '@mui/material/CardContent'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
+import Translations from 'src/layouts/components/Translations'
 
 // const ImgStyled = styled('img')(({ theme }) => ({
 //   width: 120,
@@ -118,7 +119,7 @@ const TabAccount = () => {
             <TextField
               fullWidth
               aria-readonly
-              label='User Name'
+              label={<Translations text='User Name' />}
               placeholder='johnDoe'
               value={localStorage.getItem('userName')}
             />
@@ -128,7 +129,7 @@ const TabAccount = () => {
               fullWidth
               aria-readonly
               type='email'
-              label='Email'
+              label={<Translations text='Email' />}
               placeholder='johnDoe@example.com'
               value={localStorage.getItem('email')}
             />
@@ -138,18 +139,28 @@ const TabAccount = () => {
             <TextField
               fullWidth
               aria-readonly
-              label='Role'
+              label={<Translations text='Role' />}
               placeholder='role'
               value={localStorage.getItem('isAdmin') == '1' ? 'Admin' : 'User'}
             />
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Oragnization' placeholder='ABC Pvt. Ltd.'  value={localStorage.getItem('organizationName')} />
+            <TextField
+              fullWidth
+              label={<Translations text='Oragnization' />}
+              placeholder='ABC Pvt. Ltd.'
+              value={localStorage.getItem('organizationName')}
+            />
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Oragnization Group' placeholder='orgnization group name ' value={localStorage.getItem('organizationGrpName')} />
+            <TextField
+              fullWidth
+              label={<Translations text='Oragnization Group' />}
+              placeholder='orgnization group name '
+              value={localStorage.getItem('organizationGrpName')}
+            />
           </Grid>
 
           {openAlert ? (

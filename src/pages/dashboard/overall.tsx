@@ -323,7 +323,7 @@ const OverallDashboard = () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }}>
-            <CardHeader title='Overall Dashboard' />
+            <CardHeader title={<Translations text='Overall Dashboard' />} />
             <CardContent>
               <Grid container spacing={6}>
                 <Grid item sm={3} xs={12}>

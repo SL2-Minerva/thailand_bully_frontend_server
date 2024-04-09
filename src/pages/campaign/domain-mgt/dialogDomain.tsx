@@ -24,6 +24,8 @@ import * as yup from 'yup'
 import FormHelperText from '@mui/material/FormHelperText'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
+import Translations from 'src/layouts/components/Translations'
+import { useTranslation } from 'react-i18next'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -99,6 +101,8 @@ const DialogDomain = (props: DialogInfoProps) => {
     }
   }
 
+  const {t} = useTranslation();
+
   return (
     <Card>
       <Dialog
@@ -120,7 +124,7 @@ const DialogDomain = (props: DialogInfoProps) => {
           </IconButton>
           <Box sx={{ mb: 8, textAlign: 'center' }}>
             <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-              {action === 'edit' ? 'Edit Domain Information ' : 'Create Domain Information'}
+              {action === 'edit' ? <Translations text='Edit Domain Information' /> : <Translations text='Create Domain Information' />}
             </Typography>
           </Box>
           <Grid container spacing={6}>
@@ -133,7 +137,7 @@ const DialogDomain = (props: DialogInfoProps) => {
                     <TextField
                       autoFocus
                       value={value}
-                      label='Domain Name'
+                      label={<Translations text='Domain Name' />}
                       onChange={onChange}
                       fullWidth
                       error={errors?.name ? true : false}
@@ -155,9 +159,9 @@ const DialogDomain = (props: DialogInfoProps) => {
                     autoFocus
                     value={value}
                     onBlur={onBlur}
-                    label='Description'
+                    label= {<Translations text='Description' />}
                     onChange={onChange}
-                    placeholder='Description'
+                    placeholder={t('Description')}
                     error={errors?.description ? true : false}
                   />
                 )}
@@ -176,7 +180,7 @@ const DialogDomain = (props: DialogInfoProps) => {
                     <FormControlLabel
                       name={'status'}
                       control={<Switch checked={value} onChange={onChange} />}
-                      label='Status : '
+                      label={<Translations text='Status' />}
                       labelPlacement='start'
                     />
                   )}
@@ -187,10 +191,10 @@ const DialogDomain = (props: DialogInfoProps) => {
         </DialogContent>
         <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
           <Button variant='contained' sx={{ mr: 2 }} onClick={handleSubmit(onSubmit)}>
-            Submit
+            <Translations text='SUBMIT' />
           </Button>
           <Button variant='outlined' color='secondary' onClick={() => setShow(false)}>
-            Discard
+            <Translations text='DISCARD' />
           </Button>
         </DialogActions>
       </Dialog>

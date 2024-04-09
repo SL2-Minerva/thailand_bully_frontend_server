@@ -19,6 +19,7 @@ import { useRouter } from 'next/router'
 import Translations from 'src/layouts/components/Translations'
 import moment from 'moment'
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid'
+import { useTranslation } from 'react-i18next'
 
 const ActivityLog = () => {
   const router = useRouter()
@@ -28,6 +29,7 @@ const ActivityLog = () => {
   const [page, setPage] = useState(1)
   const [pageCount, setPageCount] = useState<number>(0)
   const { resultActivityLog, errorActivityLog, total } = GetActivityLog(keyword, statusCode, page)
+  const {t} = useTranslation();
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value)
@@ -78,46 +80,46 @@ const ActivityLog = () => {
     },
     {
       field: 'feature',
-      headerName: 'Feature',
+      headerName: t('FEATURE'),
       flex: 1,
       sortable: false
     },
     {
       field: 'method',
-      headerName: 'Method',
+      headerName: t('METHOD'),
       flex: 1,
       renderCell: renderMethod,
       sortable: false
     },
     {
       field: 'end_point',
-      headerName: 'Endpoint',
+      headerName: t('ENDPOINT'),
       flex: 1,
       sortable: false
     },
     {
       field: 'status',
-      headerName: 'Status',
+      headerName: t('STATUS'),
       flex: 1,
       renderCell: renderStatusText,
       sortable: false
     },
     {
       field: 'status_code',
-      headerName: 'Status Code',
+      headerName: t('Status Code'),
       flex: 1,
       renderCell: renderStatusCode,
       sortable: false
     },
     {
       field: 'request_by_name',
-      headerName: 'Requested By',
+      headerName: t('REQUESTED BY'),
       flex: 1,
       sortable: false
     },
     {
       field: 'created_at',
-      headerName: 'Timestamp',
+      headerName: t('TIMESTAMP'),
       flex: 1,
       valueGetter: (params: GridValueGetterParams) => `${moment(params.row.created_at).format('DD-MM-YYYY HH:mm')}`,
       sortable: false
@@ -134,7 +136,7 @@ const ActivityLog = () => {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Card>
-          <CardHeader title='Filter' />
+          <CardHeader title={<Translations text='Filter' />} />
           <CardContent>
             <Grid container spacing={6}>
               <Grid item sm={4} xs={12}>
@@ -142,12 +144,12 @@ const ActivityLog = () => {
                   <TextField
                     fullWidth
                     value={keyword}
-                    label='Search'
+                    label={<Translations text='SEARCH'/>}
                     onChange={e => {
                       setKeyword(e.target.value)
                       setPage(0)
                     }}
-                    placeholder='Search'
+                    placeholder={t('SEARCH')}
                     autoComplete='off'
                   />
                 </FormControl>
@@ -185,7 +187,7 @@ const ActivityLog = () => {
 
       <Grid item xs={12}>
         <Card>
-          <CardHeader title='Activity Log' />
+          <CardHeader title={<Translations text='Activity Log'/>} />
           <CardContent>
             {resultActivityLog ? (
               <DataGrid

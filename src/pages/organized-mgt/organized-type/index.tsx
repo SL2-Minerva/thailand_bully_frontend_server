@@ -20,6 +20,7 @@ import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { useRouter } from 'next/router'
 import { UserPermission } from 'src/services/api/users/role'
+import Translations from 'src/layouts/components/Translations'
 
 const OrganizationType = () => {
   const [showEdit, setShowEdit] = useState<boolean>(false)
@@ -96,7 +97,7 @@ const OrganizationType = () => {
     <Grid container spacing={6}>
       <Grid item md={12} xs={12}>
         <Card>
-          <CardHeader title='Organization Type Management' />
+          <CardHeader title={<Translations text='Organization Type Management' />} />
           <CardContent>
             <CardContent>
               <TableContainer component={Paper}>
@@ -113,7 +114,7 @@ const OrganizationType = () => {
                   >
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
                       <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                        Add
+                        <Translations text='ADD'></Translations>
                       </Button>
                     </Box>
                   </Box>
@@ -124,11 +125,11 @@ const OrganizationType = () => {
                 <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Organizaton Type</TableCell>
-                      <TableCell align='center'>Description</TableCell>
-                      <TableCell align='center'>Status</TableCell>
+                      <TableCell><Translations text='Organizaton Type' /></TableCell>
+                      <TableCell align='center'><Translations text='Description' /></TableCell>
+                      <TableCell align='center'><Translations text='Status' /></TableCell>
                       {resultIsAdmin || resultPermission?.organized_type_mgt?.authorized_edit ? (
-                        <TableCell align='center'>Action</TableCell>
+                        <TableCell align='center'><Translations text='Action' /></TableCell>
                       ) : (
                         ''
                       )}

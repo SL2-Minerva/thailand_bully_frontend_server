@@ -37,6 +37,7 @@ import { API_PATH } from 'src/utils/const'
 import { useTranslation } from 'react-i18next'
 import { FormHelperText, FormLabel, Radio, RadioGroup } from '@mui/material'
 import SourceList from 'src/services/api/source/SourceApi'
+import Translations from 'src/layouts/components/Translations'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -322,7 +323,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
         setFrequency(current.frequency)
         setOriginalFrequency(frequencyDefault)
         setSelectedValue(current.privacy_campaign)
-        setSourceList(current.platform ?? []);
+        setSourceList(current.platform ?? [])
 
         // setMsgTransaction(current.msg_transaction)
 
@@ -360,7 +361,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
       setCampaignName('')
       setDescription('')
       setDomain('')
-      setSourceList([]);
+      setSourceList([])
       setFrequency(frequencyDefault)
       setOriginalFrequency(frequencyDefault)
       setKeywords([
@@ -429,7 +430,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
               <Grid item sm={12} xs={12}>
                 <TextField
                   fullWidth
-                  label='Campaign Name'
+                  label={<Translations text='Campaign Name' />}
                   value={campaignName}
                   onChange={handleCampaignName}
                   placeholder=''
@@ -440,7 +441,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                   fullWidth
                   multiline
                   rows={3}
-                  label='Description'
+                  label={<Translations text='Description' />}
                   value={description}
                   onChange={handleDescription}
                   id='textarea-outlined-controlled'
@@ -448,15 +449,15 @@ const DialogCampaign = (props: DialogInfoProps) => {
               </Grid>
               <Grid item sm={12} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='plan-select'>Select Domain</InputLabel>
+                  <InputLabel id='plan-select'><Translations text='Select Domain' /></InputLabel>
                   <Select
                     fullWidth
                     value={domain}
                     id='select-domain'
-                    label='Select Domain'
+                    label={<Translations text='Select Domain' />}
                     labelId='domain-select'
                     onChange={handleDomain}
-                    inputProps={{ placeholder: 'Select Domain' }}
+                    inputProps={{ placeholder: t('Select Domain') }}
                   >
                     {(result_domain_list || []).map((domain: any, index: number) => (
                       <MenuItem key={index} value={domain?.id?.toString()}>
@@ -470,12 +471,12 @@ const DialogCampaign = (props: DialogInfoProps) => {
               <Grid item sm={12} xs={12}>
                 {/* <Typography sx={{ mb: 2, fontWeight: 500 }}>Social Visualization</Typography> */}
                 <FormControl fullWidth>
-                  <InputLabel id='demo-multiple-name-label'>Platform</InputLabel>
+                  <InputLabel id='demo-multiple-name-label'><Translations text='Platform' /></InputLabel>
                   <Select
                     displayEmpty
                     value={sourceList}
                     multiple
-                    label='platform'
+                    label={<Translations text='Platform' />}
                     onChange={handleChangeSource}
                     name='platform'
                     id='demo-multiple-name'
@@ -496,7 +497,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                   <TextField
                     fullWidth
                     type='number'
-                    label='Frequency'
+                    label={<Translations text='Frequency' />}
                     value={frequency}
                     onChange={handleFrequency}
                     placeholder={t('frequencyPlaceHolder')}
@@ -520,12 +521,12 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
               <Grid item sm={12} xs={12}>
                 <FormControl sx={{ mt: 3, ml: 5 }}>
-                  <FormLabel id='demo-row-radio-buttons-group-label'>Campaign Privacy</FormLabel>
+                  <FormLabel id='demo-row-radio-buttons-group-label'><Translations text='Campaign Privacy' /></FormLabel>
                   <RadioGroup row aria-labelledby='demo-row-radio-buttons-group-label' name='row-radio-buttons-group'>
                     <FormControlLabel
                       value='private'
                       control={<Radio value='private' checked={selectedValue === 'private'} onChange={handleChange} />}
-                      label='Private'
+                      label={<Translations text='Private' />}
                     />
                     <FormControlLabel
                       value='share_organize'
@@ -536,7 +537,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                           onChange={handleChange}
                         />
                       }
-                      label='Share to Organize'
+                      label={<Translations text='Share to Organize' />}
                     />
                     {resultIsAdmin ? (
                       <FormControlLabel
@@ -544,7 +545,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                         control={
                           <Radio value='share_all' checked={selectedValue === 'share_all'} onChange={handleChange} />
                         }
-                        label='Share to All'
+                        label={<Translations text='Share to All' />}
                       />
                     ) : (
                       ''
@@ -601,7 +602,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
                         <p style={{ marginTop: '20px', color: 'red' }}>
                           {' '}
-                          Remaining Keyword Limit : {remainingKeywordCount}{' '}
+                          <Translations text='Remaining Keyword Limit' /> : {remainingKeywordCount}{' '}
                         </p>
                       </>
                     )}
@@ -631,7 +632,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                 <FormControl fullWidth>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker
-                      label='Start Date'
+                      label={<Translations text='Start Date' />}
                       value={date}
                       onChange={newValue => setDate(newValue)}
                       renderInput={params => <TextField {...params} />}
@@ -643,7 +644,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                 <FormControl fullWidth>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker
-                      label='End Date'
+                      label={<Translations text='End Date' />}
                       value={endDate}
                       onChange={newValue => setEndDate(newValue)}
                       renderInput={params => <TextField {...params} />}
@@ -663,7 +664,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                         }}
                       />
                     }
-                    label='Campaign Status : '
+                    label={<Translations text='Campaign Status' />}
                     labelPlacement='start'
                   />
                 </FormControl>
@@ -697,10 +698,10 @@ const DialogCampaign = (props: DialogInfoProps) => {
               }
             }}
           >
-            Submit
+            <Translations text='SUBMIT' />
           </Button>
           <Button variant='outlined' color='secondary' onClick={closeDialogBox}>
-            Discard
+            <Translations text='DISCARD' />
           </Button>
         </DialogActions>
       </Dialog>

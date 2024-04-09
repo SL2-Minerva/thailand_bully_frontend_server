@@ -12,6 +12,7 @@ import authConfig from 'src/configs/auth'
 import KeywordFilters from '../dashboard/KeywordFilters'
 import EngagementGraphs from './EngagamentGraphs'
 import moment from 'moment'
+import Translations from 'src/layouts/components/Translations'
 
 const EngagementDashboard = () => {
   const router = useRouter()
@@ -116,7 +117,7 @@ const EngagementDashboard = () => {
     <>
       <Grid container spacing={3}>
         <Filter
-          tilte='Engagement Dashboard'
+          tilte={<Translations text='Engagement Dashboard' />}
           date={date}
           setDate={setDate}
           endDate={endDate}

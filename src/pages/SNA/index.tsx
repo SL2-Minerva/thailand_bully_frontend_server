@@ -268,7 +268,7 @@ const SNA = () => {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
-          <CardHeader title='Filter' />
+          <CardHeader title={<Translations text='Filter' />} />
           <CardContent>
             <Grid container spacing={6}>
               <Grid item sm={3} xs={12}>

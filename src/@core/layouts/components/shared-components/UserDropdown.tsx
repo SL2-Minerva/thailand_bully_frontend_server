@@ -36,6 +36,7 @@ import { Box, Divider, Typography } from '@mui/material'
 import { CogOutline } from 'mdi-material-ui'
 import { createStyles, makeStyles } from '@mui/styles'
 import { createTheme } from '@mui/material'
+import Translations from 'src/layouts/components/Translations'
 
 const defaultTheme = createTheme()
 
@@ -224,12 +225,12 @@ const UserDropdown = (props: Props) => {
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClosed('/pages/account-settings')}>
           <Box sx={styles}>
             <CogOutline sx={{ mr: 2 }} />
-            Change Password
+            <Translations text='Change Password' />
           </Box>
         </MenuItem>
         <MenuItem sx={{ py: 2 }} onClick={handleLogout}>
           <LogoutVariant sx={{ mr: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
-          Logout
+          <Translations text='Logout' />
         </MenuItem>
 
         {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClosed('/apps/user/view/12')}>

@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import KeywordFilters from '../dashboard/KeywordFilters'
 import ChannelDashboardGraphs from './ChannelDashboardGraph'
 import moment from 'moment'
+import Translations from 'src/layouts/components/Translations'
 
 const ChannelDashboard = () => {
   const router = useRouter()
@@ -79,7 +80,7 @@ const ChannelDashboard = () => {
   return (
     <Grid container spacing={3}>
       <Filter
-        tilte='Channel Dashboard'
+        tilte={<Translations text='Channel Dashboard'/>}
         date={date}
         setDate={setDate}
         endDate={endDate}

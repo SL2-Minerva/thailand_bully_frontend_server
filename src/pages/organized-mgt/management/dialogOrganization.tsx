@@ -32,6 +32,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
 import moment from 'moment'
+import Translations from 'src/layouts/components/Translations'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -146,7 +147,11 @@ const DialogOrganization = (props: DialogInfoProps) => {
             </IconButton>
             <Box sx={{ mb: 8, textAlign: 'center' }}>
               <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-                {action === 'edit' ? 'Edit Organization' : 'Create Organization'}
+                {action === 'edit' ? (
+                  <Translations text='Edit Organization' />
+                ) : (
+                  <Translations text='Create Organization' />
+                )}
               </Typography>
             </Box>
             <Grid container spacing={6}>
@@ -160,7 +165,7 @@ const DialogOrganization = (props: DialogInfoProps) => {
                         fullWidth
                         value={value}
                         onBlur={onBlur}
-                        label='Organization'
+                        label={<Translations text='Organization' />}
                         onChange={onChange}
                         placeholder='Organization'
                         error={errors?.name ? true : false}
@@ -181,7 +186,7 @@ const DialogOrganization = (props: DialogInfoProps) => {
                         multiline
                         rows={3}
                         value={value}
-                        label='Description'
+                        label={<Translations text='Description' />}
                         onChange={onChange}
                         placeholder='description'
                         error={errors?.description ? true : false}
@@ -196,7 +201,9 @@ const DialogOrganization = (props: DialogInfoProps) => {
 
               <Grid item sm={6} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='plan-select'>Organization Group</InputLabel>
+                  <InputLabel id='plan-select'>
+                    <Translations text='Organization Group' />
+                  </InputLabel>
                   <Controller
                     name='organization_group_id'
                     control={control}
@@ -204,7 +211,7 @@ const DialogOrganization = (props: DialogInfoProps) => {
                       <Select
                         displayEmpty
                         value={value}
-                        label='Organization Group'
+                        label={<Translations text='Organization Group' />}
                         onChange={onChange}
                         id='demo-multiple-name'
                         labelId='demo-multiple-name-label'
@@ -226,7 +233,9 @@ const DialogOrganization = (props: DialogInfoProps) => {
 
               <Grid item sm={6} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='plan-select'>Organization Type</InputLabel>
+                  <InputLabel id='plan-select'>
+                    <Translations text='Organization Type' />
+                  </InputLabel>
                   <Controller
                     name='organization_type_id'
                     control={control}
@@ -234,7 +243,7 @@ const DialogOrganization = (props: DialogInfoProps) => {
                       <Select
                         displayEmpty
                         value={value}
-                        label='Organization Type'
+                        label={<Translations text='Organization Type' />}
                         onChange={onChange}
                         id='demo-multiple-name'
                         labelId='demo-multiple-name-label'
@@ -264,9 +273,9 @@ const DialogOrganization = (props: DialogInfoProps) => {
                         <TextField
                           value={value}
                           InputProps={{
-                            readOnly: true,
+                            readOnly: true
                           }}
-                          label='Number of Message Transaction'
+                          label={<Translations text='Number of Message Transaction' />}
                           type='number'
                           fullWidth
                           onChange={onChange}
@@ -286,7 +295,7 @@ const DialogOrganization = (props: DialogInfoProps) => {
                       render={({ field: { value, onChange } }) => (
                         <TextField
                           value={value}
-                          label='Number of Transaction Remaining'
+                          label={<Translations text='Number of Transaction Remaining' />}
                           type='number'
                           fullWidth
                           onChange={onChange}
@@ -308,7 +317,7 @@ const DialogOrganization = (props: DialogInfoProps) => {
                         <DatePicker
                           views={['year', 'month', 'day']}
                           inputFormat='yyyy-MM-dd'
-                          label='Transaction Start At'
+                          label={<Translations text='Transaction Start At' />}
                           value={date}
                           onChange={newValue => {
                             setDate(newValue)
@@ -333,9 +342,9 @@ const DialogOrganization = (props: DialogInfoProps) => {
                       <FormControlLabel
                         name={'status'}
                         control={<Switch checked={value} onChange={onChange} />}
-                        label='Status : '
+                        label={<Translations text='Status' />}
                         labelPlacement='start'
-                        sx={{mt: 2}}
+                        sx={{ mt: 2 }}
                       />
                     )}
                   />
@@ -345,10 +354,10 @@ const DialogOrganization = (props: DialogInfoProps) => {
           </DialogContent>
           <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
             <Button variant='contained' sx={{ mr: 2 }} onClick={handleSubmit(onSubmit)}>
-              Submit
+              <Translations text='SUBMIT' />
             </Button>
             <Button variant='outlined' color='secondary' onClick={() => setShow(false)}>
-              Discard
+              <Translations text='DISCARD' />
             </Button>
           </DialogActions>
         </form>
