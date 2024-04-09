@@ -20,6 +20,7 @@ import { OrganzationGroupServiceList } from 'src/services/api/organization/Organ
 import authConfig from '../../../configs/auth'
 import { useRouter } from 'next/router'
 import { UserPermission } from 'src/services/api/users/role'
+import Translations from 'src/layouts/components/Translations'
 
 const OrganizationGroup = () => {
   const router = useRouter()
@@ -98,7 +99,7 @@ const OrganizationGroup = () => {
     <Grid container spacing={6}>
       <Grid item md={12} xs={12}>
         <Card>
-          <CardHeader title='Organization Group Management' />
+          <CardHeader title={<Translations text='Organization Group Management' />} />
           <CardContent>
             <TableContainer component={Paper}>
               {resultIsAdmin || resultPermission?.organized_group_mgt?.authorized_create ? (
@@ -107,7 +108,7 @@ const OrganizationGroup = () => {
                 >
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
                     <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                      Add
+                      <Translations text='ADD' />
                     </Button>
                   </Box>
                 </Box>
@@ -118,11 +119,25 @@ const OrganizationGroup = () => {
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
-                    <TableCell>ID</TableCell>
-                    <TableCell align='center'>Orangization Group</TableCell>
-                    <TableCell align='center'>Description</TableCell>
-                    <TableCell align='center'>Status</TableCell>
-                    {resultIsAdmin || resultPermission?.organized_group_mgt?.authorized_edit ? <TableCell align='center'>Action</TableCell> : ''}
+                    <TableCell>
+                      <Translations text='ID' />
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Translations text='Organization Group' />
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Translations text='Description' />
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Translations text='Status' />
+                    </TableCell>
+                    {resultIsAdmin || resultPermission?.organized_group_mgt?.authorized_edit ? (
+                      <TableCell align='center'>
+                        <Translations text='Action' />
+                      </TableCell>
+                    ) : (
+                      ''
+                    )}
                   </TableRow>
                 </TableHead>
                 <TableBody>

@@ -6,6 +6,7 @@ import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Contents from './Contents'
 import ContentAnnouncement from './ContentAnnouncement'
+import Translations from 'src/layouts/components/Translations'
 
 // import ContentAnnouncement from './ContentAnnouncement'
 
@@ -74,9 +75,9 @@ const ContentPage = () => {
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label='contents tabs'>
-            <Tab label='Announcements' {...a11yProps(0)} />
-            <Tab label='News' {...a11yProps(1)} />
-            <Tab label='FAQ' {...a11yProps(2)} />
+            <Tab label={<Translations text='Announcement' />} {...a11yProps(0)} />
+            <Tab label={<Translations text='News' />} {...a11yProps(1)} />
+            <Tab label={<Translations text='FAQ' />} {...a11yProps(2)} />
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>

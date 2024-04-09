@@ -9,13 +9,14 @@ import { useRouter } from 'next/router'
 import KeywordFilters from '../dashboard/KeywordFilters'
 import SentimentGraph from './SentimentGraphs'
 import moment from 'moment'
+import Translations from 'src/layouts/components/Translations'
 
 const SentimentDashboard = () => {
   const router = useRouter()
 
   const [date, setDate] = useState<DateType>(new Date(localStorage.getItem('startDate') || calculateDate(6)))
   const [endDate, setEndDate] = useState<DateType>(new Date(localStorage.getItem('endDate') || new Date()))
-  const [status, setStatus] = useState(localStorage.getItem('status') || '1');
+  const [status, setStatus] = useState(localStorage.getItem('status') || '1')
 
   const [previousDate, setPreviousDate] = useState<DateType>(
     new Date(localStorage.getItem('previousStartDate') || new Date())
@@ -29,7 +30,7 @@ const SentimentDashboard = () => {
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [loadingKeyword, setLoadingKeyword] = useState<boolean>(true)
-  const [platformId, setPlatformId] = useState<string>('all') 
+  const [platformId, setPlatformId] = useState<string>('all')
 
   const { resultReportPermission, errorUserPermission } = UserPermission()
 
@@ -79,7 +80,7 @@ const SentimentDashboard = () => {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Filter
-          tilte='Sentiment Dashboard'
+          tilte={<Translations text='Sentiment Dashboard' />}
           date={date}
           setDate={setDate}
           endDate={endDate}
@@ -94,10 +95,10 @@ const SentimentDashboard = () => {
           setDateSelect={setDateSelect}
           campaign={campaign}
           setCampaign={setCampaign}
-          setPlatformId = {setPlatformId}
-          platformId = {platformId}
+          setPlatformId={setPlatformId}
+          platformId={platformId}
           status={status}
-          setStatus = {setStatus}
+          setStatus={setStatus}
         />
       </Grid>
 

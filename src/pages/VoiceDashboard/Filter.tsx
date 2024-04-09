@@ -38,7 +38,7 @@ interface Props {
   setDateSelect: any
   campaign: string
   setCampaign: any
-  tilte: string
+  tilte: any
   platformId: string
   setPlatformId: any
   status: string

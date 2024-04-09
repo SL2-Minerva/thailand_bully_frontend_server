@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField'
 
 // ** Icons Imports
 import ExportVariant from 'mdi-material-ui/ExportVariant'
+import Translations from 'src/layouts/components/Translations'
 
 interface TableHeaderProps {
   value: string
@@ -19,12 +20,11 @@ const TableHeader = (props: TableHeaderProps) => {
   return (
     <Box sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-      
-          <Button sx={{ mb: 2, mr: 2 }} href={`/apps/user/list/RegisterManagement`} variant='contained'>
-            Register MGT
-          </Button>
+        <Button sx={{ mb: 2, mr: 2 }} href={`/apps/user/list/RegisterManagement`} variant='contained'>
+          <Translations text='REGISTER MGT' />
+        </Button>
         <Button sx={{ mb: 2 }} onClick={toggle} variant='contained'>
-          Add User
+          <Translations text='ADD USER' />
         </Button>
       </Box>
     </Box>

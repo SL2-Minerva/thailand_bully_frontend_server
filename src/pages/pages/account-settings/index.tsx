@@ -17,7 +17,6 @@ import MuiTab, { TabProps } from '@mui/material/Tab'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
 import LockOpenOutline from 'mdi-material-ui/LockOpenOutline'
 
-
 // ** Demo Tabs Imports
 // import TabInfo from 'src/views/pages/account-settings/TabInfo'
 // import TabNotifications from 'src/views/pages/account-settings/TabNotifications'
@@ -28,6 +27,7 @@ import TabSecurity from 'src/views/pages/account-settings/TabSecurity'
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
+import Translations from 'src/layouts/components/Translations'
 
 export const Tab = styled(MuiTab)<TabProps>(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
@@ -67,7 +67,9 @@ const AccountSettings = () => {
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <AccountOutline sx={{ fontSize: '1.125rem' }} />
-                <TabName>User Info</TabName>
+                <TabName>
+                  <Translations text='USER INFO' />
+                </TabName>
               </Box>
             }
           />
@@ -76,7 +78,9 @@ const AccountSettings = () => {
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <LockOpenOutline sx={{ fontSize: '1.125rem' }} />
-                <TabName>Security</TabName>
+                <TabName>
+                  <Translations text='SECURITY' />
+                </TabName>
               </Box>
             }
           />

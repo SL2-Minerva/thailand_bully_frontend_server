@@ -29,6 +29,8 @@ import { UserPermission, role_list } from '../../../../services/api/users/role'
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
 import { FormControlLabel, InputAdornment, Switch } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import Translations from 'src/layouts/components/Translations'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -49,7 +51,6 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
   const { show, setShow, action, current, setCurrent } = props
 
   const { resultIsAdmin } = UserPermission()
-
 
   const [organization, setOrganization] = useState<any>(current?.organization_id ?? '')
   const [name, setName] = useState<string>(current?.name ?? '')
@@ -142,6 +143,8 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
     }
   }, [action])
 
+  const { t } = useTranslation()
+
   return (
     <Card>
       <Dialog
@@ -175,7 +178,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
           </IconButton>
           <Box sx={{ mb: 8, textAlign: 'center' }}>
             <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-              {action === 'edit' ? 'Edit User Information ' : 'Create User Information'}
+              {action === 'edit' ? <> {t('Edit User Information')} </> : <> {t('Create User Information')} </>}
             </Typography>
           </Box>
           <Grid container spacing={6}>
@@ -183,7 +186,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
               <TextField
                 fullWidth
                 value={name}
-                label='Full Name'
+                label={<Translations text='Full Name' />}
                 onChange={e => setName(e.target.value)}
                 placeholder='johnDoe'
                 autoComplete='off'
@@ -196,7 +199,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
                 <TextField
                   fullWidth
                   id='filled-password-input'
-                  label='Password'
+                  label={<Translations text='Password' />}
                   autoComplete='new-password'
                   variant='outlined'
                   onChange={e => setPassword(e.target.value)}
@@ -223,7 +226,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
             <Grid item sm={6} xs={12}>
               <TextField
                 fullWidth
-                label='Email'
+                label={<Translations text='EMAIL' />}
                 onChange={e => setEmail(e.target.value)}
                 value={email}
                 placeholder='johnDoe@email.com'
@@ -232,7 +235,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
             <Grid item sm={6} xs={12}>
               <TextField
                 fullWidth
-                label='Company'
+                label={<Translations text='Company' />}
                 onChange={e => setCompany(e.target.value)}
                 value={company}
                 placeholder=''
@@ -240,11 +243,11 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
             </Grid>
             <Grid item sm={6} xs={12}>
               <FormControl fullWidth>
-                <InputLabel id='role-select'>Role</InputLabel>
+                <InputLabel id='role-select'>{<Translations text='Role' />}</InputLabel>
                 <Select
                   fullWidth
                   labelId='role-select'
-                  label='Role'
+                  label={<Translations text='Role' />}
                   value={role_id}
                   onChange={e => setRole(e.target.value)}
                 >
@@ -261,12 +264,12 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
             </Grid>
             <Grid item sm={6} xs={12}>
               <FormControl fullWidth>
-                <InputLabel id='organization-select'>Organization</InputLabel>
+                <InputLabel id='organization-select'>{<Translations text='Oragnization' />}</InputLabel>
                 <Select
                   fullWidth
                   labelId='organization-select'
                   value={organization}
-                  label='Organization'
+                  label={<Translations text='Oragnization' />}
                   onChange={e => setOrganization(e.target.value)}
                 >
                   {list &&
@@ -282,20 +285,30 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
             </Grid>
             <Grid item sm={6} xs={12}>
               <FormControl fullWidth>
-                <InputLabel id='status-select'>Select Status</InputLabel>
+                <InputLabel id='status-select'>
+                  <Translations text='Select Status' />
+                </InputLabel>
                 <Select
                   fullWidth
                   id='select-status'
-                  label='Select Status'
+                  label={<Translations text='Select Status' />}
                   labelId='status-select'
                   value={status}
                   onChange={e => setStatus(e.target.value)}
-                  inputProps={{ placeholder: 'Select status' }}
+                  inputProps={{ placeholder: t('Select status') }}
                 >
-                  <MenuItem value=''>Select status</MenuItem>
-                  <MenuItem value='2'>Pending</MenuItem>
-                  <MenuItem value='1'>Active</MenuItem>
-                  <MenuItem value='0'>Inactive</MenuItem>
+                  <MenuItem value=''>
+                    <Translations text='Select Status' />
+                  </MenuItem>
+                  <MenuItem value='2'>
+                    <Translations text='Pending' />
+                  </MenuItem>
+                  <MenuItem value='1'>
+                    <Translations text='Active' />
+                  </MenuItem>
+                  <MenuItem value='0'>
+                    <Translations text='Inactive' />
+                  </MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -305,7 +318,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
                 <FormControl>
                   <FormControlLabel
                     control={<Switch checked={isAdmin == 1 ? true : false} onChange={handleChangeAdmin} />}
-                    label='Is Admin ? '
+                    label={<Translations text='Is Admin ?' />}
                     labelPlacement='start'
                   />
                 </FormControl>
@@ -317,7 +330,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
         </DialogContent>
         <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
           <Button variant='contained' sx={{ mr: 2 }} onClick={() => handleSummit()}>
-            Submit
+            <Translations text='SUBMIT' />
           </Button>
           <Button
             variant='outlined'
@@ -328,7 +341,7 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
               onClose()
             }}
           >
-            Discard
+            <Translations text='DISCARD' />
           </Button>
         </DialogActions>
       </Dialog>

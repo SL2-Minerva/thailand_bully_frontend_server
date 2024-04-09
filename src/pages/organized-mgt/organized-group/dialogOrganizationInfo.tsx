@@ -34,6 +34,7 @@ import authConfig from '../../../configs/auth'
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
 import { useTranslation } from 'react-i18next'
+import Translations from 'src/layouts/components/Translations'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -70,8 +71,8 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
     setValue('total_user', current?.total_user || 0)
     setValue('msg_transaction', current?.msg_transaction || 0)
     setValue('frequency', current?.frequency || '')
-    setValue ('campaign_per_organize', current?.campaign_per_organize || 0);
-    setValue('campaign_per_user', current?.campaign_per_user || 0);
+    setValue('campaign_per_organize', current?.campaign_per_organize || 0)
+    setValue('campaign_per_user', current?.campaign_per_user || 0)
     setValue('domains', current?.domains || [])
     setValue('platform', current?.platform || [])
     setValue('customer_service', current?.customer_service ? true : false)
@@ -83,8 +84,8 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
 
   const schema = yup.object().shape({
     organization_group_name: yup.string().required(),
-    campaign_per_organize : yup.number().required(),
-    campaign_per_user : yup.number().required()
+    campaign_per_organize: yup.number().required(),
+    campaign_per_user: yup.number().required()
   })
 
   const {
@@ -155,14 +156,18 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
           <DialogContent sx={{ pb: 6, px: { xs: 8, sm: 15 }, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
             <IconButton
               size='small'
-              onClick={() => onClose}
+              onClick={() => onClose()}
               sx={{ position: 'absolute', right: '1rem', top: '1rem' }}
             >
               <Close />
             </IconButton>
             <Box sx={{ mb: 8, textAlign: 'center' }}>
               <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-                {action === 'edit' ? 'Edit Organization Group ' : 'Create Organization Group'}
+                {action === 'edit' ? (
+                  <Translations text='Edit Organization Group' />
+                ) : (
+                  <Translations text='Create Organization Group' />
+                )}
               </Typography>
             </Box>
             <Grid container spacing={6}>
@@ -176,7 +181,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                         autoFocus
                         value={value}
                         onBlur={onBlur}
-                        label='Organization Group'
+                        label={<Translations text='Organization Group' />}
                         onChange={onChange}
                         placeholder='Organization Group'
                         error={errors?.organization_group_name ? true : false}
@@ -201,7 +206,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                         multiline
                         rows={3}
                         value={value}
-                        label='description'
+                        label={<Translations text='Description' />}
                         onChange={onChange}
                         placeholder='description'
                         error={errors?.organization_group_description ? true : false}
@@ -223,7 +228,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                     render={({ field: { value, onChange } }) => (
                       <TextField
                         value={value}
-                        label='Frequency'
+                        label={<Translations text='Frequency' />}
                         type='number'
                         onChange={onChange}
                         placeholder={t('frequencyPlaceHolder')}
@@ -244,7 +249,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                     render={({ field: { value, onChange } }) => (
                       <TextField
                         value={value}
-                        label='Number of Keyword'
+                        label={<Translations text='Number of Keyword' />}
                         type='number'
                         onChange={onChange}
                         placeholder='Number of Keyword'
@@ -265,7 +270,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                   render={({ field: { value, onChange } }) => (
                     <TextField
                       value={value}
-                      label='Number of Message Transaction'
+                      label={<Translations text='Number of Message Transaction' />}
                       type='number'
                       fullWidth
                       onChange={onChange}
@@ -279,9 +284,13 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                 )}
               </Grid>
               <Grid item sm={6} xs={12}>
-                <Typography sx={{ mb: 2, fontWeight: 500 }}>Domains</Typography>
+                <Typography sx={{ mb: 2, fontWeight: 500 }}>
+                  <Translations text='Domains' />
+                </Typography>
                 <FormControl fullWidth>
-                  <InputLabel id='demo-multiple-name-label'>Domain</InputLabel>
+                  <InputLabel id='demo-multiple-name-label'>
+                    <Translations text='Domains' />
+                  </InputLabel>
 
                   <Controller
                     name='domains'
@@ -291,7 +300,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                         displayEmpty
                         value={value}
                         multiple
-                        label='Domain'
+                        label={<Translations text='Domains' />}
                         onChange={onChange}
                         name='domains'
                         id='demo-multiple-name'
@@ -309,9 +318,11 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                 </FormControl>
               </Grid>
               <Grid item sm={6} xs={12}>
-                <Typography sx={{ mb: 2, fontWeight: 500 }}>Social Visualization</Typography>
+                <Typography sx={{ mb: 2, fontWeight: 500 }}>
+                  <Translations text='Social Visualization' />
+                </Typography>
                 <FormControl fullWidth>
-                  <InputLabel id='demo-multiple-name-label'>Platform</InputLabel>
+                  <InputLabel id='demo-multiple-name-label'><Translations text='Platform' /></InputLabel>
                   <Controller
                     name='platform'
                     control={control}
@@ -345,7 +356,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                   render={({ field: { value, onChange } }) => (
                     <TextField
                       value={value}
-                      label='Number of Campaign Per Organize'
+                      label={<Translations text='Number of Campaign Per Organize' />}
                       type='number'
                       fullWidth
                       onChange={onChange}
@@ -366,7 +377,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                   render={({ field: { value, onChange } }) => (
                     <TextField
                       value={value}
-                      label='Number of Campaign Per User'
+                      label={<Translations text='Number of Campaign Per User' />}
                       type='number'
                       fullWidth
                       onChange={onChange}
@@ -387,7 +398,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                   render={({ field: { value, onChange } }) => (
                     <TextField
                       value={value}
-                      label='Number of Users'
+                      label={<Translations text='Number of Users' />}
                       type='number'
                       fullWidth
                       onChange={onChange}
@@ -402,15 +413,21 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
               </Grid>
               <Grid item sm={6} xs={12}>
                 <FormControl fullWidth>
-                  <Typography>Customer Services</Typography>
+                  <Typography>
+                    <Translations text='Customer Service' />
+                  </Typography>
                   <Controller
                     name='customer_service'
                     control={control}
                     render={({ field: { value, onChange } }) => {
                       return (
                         <RadioGroup row aria-label='controlled' name='controlled' value={value} onChange={onChange}>
-                          <FormControlLabel value={true} control={<Radio />} label='Customer Service' />
-                          <FormControlLabel value={false} control={<Radio />} label='None' />
+                          <FormControlLabel
+                            value={true}
+                            control={<Radio />}
+                            label={<Translations text='Customer Service' />}
+                          />
+                          <FormControlLabel value={false} control={<Radio />} label={<Translations text='None' />} />
                         </RadioGroup>
                       )
                     }}
@@ -427,7 +444,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                       <FormControlLabel
                         name={'status'}
                         control={<Switch checked={value} onChange={onChange} />}
-                        label='Status : '
+                        label={<Translations text='Status' />}
                         labelPlacement='start'
                       />
                     )}
@@ -438,10 +455,10 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
           </DialogContent>
           <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
             <Button variant='contained' sx={{ mr: 2 }} onClick={handleSubmit(onSubmit)}>
-              Submit
+              <Translations text='SUBMIT' />
             </Button>
             <Button variant='outlined' color='secondary' onClick={() => onClose()}>
-              Discard
+              <Translations text='DISCARD' />
             </Button>
           </DialogActions>
         </form>

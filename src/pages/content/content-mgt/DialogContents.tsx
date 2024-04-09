@@ -260,9 +260,15 @@ const DialogContents = (props: DialogInfoProps) => {
                     onChange={handleContent}
                     inputProps={{ placeholder: 'Select content' }}
                   >
-                    <MenuItem value='1'>News</MenuItem>
-                    <MenuItem value='2'>Announcement</MenuItem>
-                    <MenuItem value='3'>FAQ</MenuItem>
+                    <MenuItem value='1'>
+                      <Translations text='News' />
+                    </MenuItem>
+                    <MenuItem value='2'>
+                      <Translations text='Announcement' />
+                    </MenuItem>
+                    <MenuItem value='3'>
+                      <Translations text='FAQ' />
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -298,7 +304,6 @@ const DialogContents = (props: DialogInfoProps) => {
                     menubar: false
                   }}
                 />
-
               </Grid>
 
               {/* <Grid item sm={12} xs={12}>

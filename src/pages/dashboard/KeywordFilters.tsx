@@ -2,6 +2,7 @@ import { Button, CardContent, CardHeader, Grid, LinearProgress, Paper } from '@m
 import { useEffect } from 'react'
 import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import { wordBreaks } from './overall'
+import Translations from 'src/layouts/components/Translations'
 
 interface Props {
   campaign: string
@@ -29,7 +30,7 @@ const KeywordFilters = (data: Props) => {
       <Grid item xs={12}>
         <Paper sx={{ border: `3px solid #fff`, borderRadius: 1 }} >
           {loadingKeywordList && <LinearProgress style={{ width: '100%' }} />}
-          <CardHeader title='Filter'></CardHeader>
+          <CardHeader title={<Translations text='Filter' />}></CardHeader>
           <CardContent>
             <Grid container spacing={4}>
               <Grid item xs={6} md={1}>

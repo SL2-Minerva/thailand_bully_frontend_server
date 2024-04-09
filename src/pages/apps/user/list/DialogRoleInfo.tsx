@@ -29,6 +29,7 @@ import axios from 'axios'
 import authConfig from '../../../../configs/auth'
 import { ReportListPermission } from 'src/services/api/users/role'
 import { FormHelperText } from '@mui/material'
+import Translations from 'src/layouts/components/Translations'
 
 // import { ReportOptions } from 'src/utils/const'
 
@@ -596,7 +597,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
         onClose={onClose}
         TransitionComponent={Transition}
         onBackdropClick={onClose}
-        sx={{  mb: '100px' }}
+        sx={{ mb: '100px' }}
       >
         <DialogContent sx={{ pb: 6, px: { xs: 8, sm: 15 }, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
           <IconButton size='small' onClick={onClose} sx={{ position: 'absolute', right: '1rem', top: '1rem' }}>
@@ -604,14 +605,14 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
           </IconButton>
           <Box sx={{ mb: 8, textAlign: 'center' }}>
             <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-              {action === 'edit' ? 'Edit Role ' : 'Create New Role'}
+              {action === 'edit' ? <Translations text='Edit Role' /> : <Translations text='Create New Role' />}
             </Typography>
           </Box>
           <Grid container spacing={6} sx={{ maxHeight: 600 }}>
             <Grid item sm={6} xs={12}>
               <TextField
                 fullWidth
-                label='Role Name'
+                label={<Translations text='Role Name' />}
                 placeholder='Role Name'
                 value={roleName}
                 onChange={e => {
@@ -629,7 +630,7 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
             <Grid item sm={6} xs={12}>
               <TextField
                 fullWidth
-                label='Description'
+                label={<Translations text='Description' />}
                 placeholder='description'
                 value={roleDescription}
                 onChange={e => {
@@ -748,7 +749,6 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                   }
                 }}
 
-                
                 // PopperComponent={PopperMy}
               />
             </Grid>
@@ -766,10 +766,10 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
         </DialogContent>
         <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
           <Button variant='contained' sx={{ mr: 2 }} onClick={() => handleSubmit()}>
-            Submit
+            <Translations text='SUBMIT' />
           </Button>
           <Button variant='outlined' color='secondary' onClick={onClose}>
-            Discard
+            <Translations text='DISCARD' />
           </Button>
         </DialogActions>
       </Dialog>

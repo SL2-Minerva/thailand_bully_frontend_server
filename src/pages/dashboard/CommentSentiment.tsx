@@ -89,7 +89,7 @@ const CommentSentiment = ({ apiParams }: { apiParams: any; chartId: string }) =>
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <CardHeader title='Comment Sentiment' titleTypographyProps={{ variant: 'h6' }} />
+          <CardHeader title={<Translations text='Comment Sentiment' />} titleTypographyProps={{ variant: 'h6' }} />
           <StyledTooltip
             arrow
             title={

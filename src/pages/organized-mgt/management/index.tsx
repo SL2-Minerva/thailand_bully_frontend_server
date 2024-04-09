@@ -28,6 +28,7 @@ import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { useRouter } from 'next/router'
 import { UserPermission } from 'src/services/api/users/role'
+import Translations from 'src/layouts/components/Translations'
 
 const OrganizedManagement = () => {
   const [showEdit, setShowEdit] = useState<boolean>(false)
@@ -105,7 +106,7 @@ const OrganizedManagement = () => {
       router.push('/login')
       window.location.reload()
     }
-  }, [ errorUserPermission])
+  }, [errorUserPermission])
 
   useEffect(() => {
     setReload(!reload)
@@ -150,7 +151,7 @@ const OrganizedManagement = () => {
       <Grid item xs={12}>
         <Card>
           <CardHeader
-            title='Organization Management'
+            title={<Translations text='Organization Management' />}
             sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }}
           />
           <CardContent>
@@ -163,18 +164,20 @@ const OrganizedManagement = () => {
                     onChange={e => {
                       setName(e.target.value)
                     }}
-                    label='Organization Name'
+                    label={<Translations text='Organization Name' />}
                   />
                 </FormControl>
               </Grid>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='plan-select'>Select Organization Group</InputLabel>
+                  <InputLabel id='plan-select'>
+                    <Translations text='Select Organization Group' />
+                  </InputLabel>
                   <Select
                     fullWidth
                     value={organization}
                     id='select-organization'
-                    label='Select Organization Group'
+                    label={<Translations text='Select Organization Group' />}
                     labelId='organization-select'
                     onChange={handleOrganization}
                     inputProps={{ placeholder: 'Select Organization' }}
@@ -193,12 +196,14 @@ const OrganizedManagement = () => {
               </Grid>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='plan-select'>Organization Type</InputLabel>
+                  <InputLabel id='plan-select'>
+                    <Translations text='Organization Type' />
+                  </InputLabel>
                   <Select
                     fullWidth
                     value={organizationType}
                     id='select-organizationType'
-                    label='Select OrganizationType'
+                    label={<Translations text='Organization Type' />}
                     labelId='organizationType-select'
                     onChange={handleOrganizationType}
                     inputProps={{ placeholder: 'Select Organization' }}
@@ -217,12 +222,14 @@ const OrganizedManagement = () => {
               </Grid>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='status-select'>Select Status</InputLabel>
+                  <InputLabel id='status-select'>
+                    <Translations text='Select Status' />
+                  </InputLabel>
                   <Select
                     fullWidth
                     value={status}
                     id='select-status'
-                    label='Select Status'
+                    label={<Translations text='Select Status' />}
                     labelId='status-select'
                     onChange={handleStatusChange}
                     inputProps={{ placeholder: 'Select Status' }}
@@ -244,7 +251,7 @@ const OrganizedManagement = () => {
                     }}
                     variant='contained'
                   >
-                    search
+                    <Translations text='SEARCH' />
                   </Button>
                   <Button
                     sx={{ mb: 2, ml: 3 }}
@@ -253,7 +260,7 @@ const OrganizedManagement = () => {
                     }}
                     variant='contained'
                   >
-                    Clear
+                    <Translations text='CLEAR' />
                   </Button>
                 </Box>
               </Grid>
@@ -265,13 +272,13 @@ const OrganizedManagement = () => {
       <Grid item md={12} xs={12}>
         <Card>
           <CardContent>
-            { resultIsAdmin || resultPermission?.organized_mgt?.authorized_create ? (
+            {resultIsAdmin || resultPermission?.organized_mgt?.authorized_create ? (
               <Box
                 sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'right' }}
               >
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
                   <Button sx={{ mb: 2 }} onClick={toggleCreate} variant='contained'>
-                    Add
+                    <Translations text='ADD' />
                   </Button>
                 </Box>
               </Box>
@@ -283,12 +290,28 @@ const OrganizedManagement = () => {
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Id</TableCell>
-                    <TableCell align='center'>Name</TableCell>
-                    <TableCell align='center'>Organization Group</TableCell>
-                    <TableCell align='center'>Organziation Type</TableCell>
-                    <TableCell align='center'>Status</TableCell>
-                    {resultIsAdmin || resultPermission?.organized_mgt?.authorized_edit ? <TableCell align='center'>Action</TableCell> : ''}
+                    <TableCell>
+                      <Translations text='ID' />
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Translations text='NAME' />
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Translations text='Organization Group' />
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Translations text='ORGANIZATION TYPE' />
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Translations text='Status' />
+                    </TableCell>
+                    {resultIsAdmin || resultPermission?.organized_mgt?.authorized_edit ? (
+                      <TableCell align='center'>
+                        <Translations text='Action' />
+                      </TableCell>
+                    ) : (
+                      ''
+                    )}
                   </TableRow>
                 </TableHead>
                 <TableBody>

@@ -30,6 +30,8 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import authConfig from '../../../../configs/auth'
 import { API_PATH } from 'src/utils/const'
+import Translations from 'src/layouts/components/Translations'
+import { useTranslation } from 'react-i18next'
 
 interface StatusType {
   [key: string]: ThemeColor
@@ -56,14 +58,13 @@ const RegisterManagement = () => {
   }, [])
 
   function handleChange(e: any, id: number) {
-
     if (e.target.checked) {
-      const status = 1;
+      const status = 1
 
       axios
         .post(
           `${API_PATH}/user/update/${id}`,
-          {status},
+          { status },
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
@@ -77,13 +78,13 @@ const RegisterManagement = () => {
         .catch((ex: any) => {
           console.log(ex)
         })
-    } else  {
-      const status =  2;
+    } else {
+      const status = 2
 
       axios
         .post(
           `${API_PATH}/user/update/${id}`,
-          {status},
+          { status },
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)!}`
@@ -98,9 +99,6 @@ const RegisterManagement = () => {
           console.log(ex)
         })
     }
-    
-    
-
   }
 
   //call service
@@ -118,31 +116,33 @@ const RegisterManagement = () => {
     }
   }, [errorUserlist])
 
+  const { t } = useTranslation();
+
   return (
     <Grid container>
       <Grid item xs={12}>
         <Card>
           <CardHeader
-            title='Register Management'
+            title={<Translations text='Register Management' />}
             sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }}
           />
           <CardContent>
             <Grid container spacing={6} mt={2}>
               <Grid item sm={3} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='status-select'>Select Status</InputLabel>
+                  <InputLabel id='status-select'><Translations text='Select Status'/></InputLabel>
                   <Select
                     fullWidth
                     value={status}
                     id='select-status'
-                    label='Select Status'
+                    label={<Translations text='Select Status'/>}
                     labelId='status-select'
                     onChange={handleStatusChange}
-                    inputProps={{ placeholder: 'Select Status' }}
+                    inputProps={{ placeholder: t('Select Status')}}
                   >
-                    <MenuItem value=''>Select Status</MenuItem>
-                    <MenuItem value='new'>New</MenuItem>
-                    <MenuItem value='expired'>Expired</MenuItem>
+                    <MenuItem value=''><Translations text='Select Status'/> </MenuItem>
+                    <MenuItem value='new'><Translations text='New'/> </MenuItem>
+                    <MenuItem value='expired'><Translations text='Expired'/> </MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -150,7 +150,7 @@ const RegisterManagement = () => {
                 <FormControl fullWidth>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker
-                      label='Start Date'
+                      label={<Translations text='Start Date'/>}
                       value={date}
                       onChange={newValue => setDate(newValue)}
                       renderInput={params => <TextField {...params} />}
@@ -162,7 +162,7 @@ const RegisterManagement = () => {
                 <FormControl fullWidth>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker
-                      label='End Date'
+                      label={<Translations text='End Date'/>}
                       value={endDate}
                       onChange={newValue => setEndDate(newValue)}
                       renderInput={params => <TextField {...params} />}
@@ -179,7 +179,7 @@ const RegisterManagement = () => {
                     }}
                     variant='contained'
                   >
-                    search
+                    <Translations text='SEARCH'/>
                   </Button>
                 </Box>
               </Grid>
@@ -189,21 +189,21 @@ const RegisterManagement = () => {
       </Grid>
       <Grid item xs={12} mt={3}>
         <Card>
-          <CardHeader title='Registered List' sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }} />
+          <CardHeader title={<Translations text='Registered List' />} sx={{ pb: 4, '& .MuiCardHeader-title': { letterSpacing: '.15px' } }} />
           <CardContent>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Id</TableCell>
-                    <TableCell align='center'>Name</TableCell>
-                    <TableCell align='center'>Email</TableCell>
-                    <TableCell align='center'>Phone No.</TableCell>
-                    <TableCell align='center'>Company</TableCell>
-                    <TableCell align='center'>Date</TableCell>
-                    <TableCell align='center'>Approved</TableCell>
+                    <TableCell><Translations text='ID'/></TableCell>
+                    <TableCell align='center'><Translations text='NAME'/></TableCell>
+                    <TableCell align='center'><Translations text='EMAIL'/></TableCell>
+                    <TableCell align='center'><Translations text='PHONE NO.'/></TableCell>
+                    <TableCell align='center'><Translations text='COMPANY'/></TableCell>
+                    <TableCell align='center'><Translations text='DATE'/></TableCell>
+                    <TableCell align='center'><Translations text='APPROVED'/></TableCell>
+                    <TableCell align='center'><Translations text='STATUS'/></TableCell>
                     {/*<TableCell align='center'>Expired Date</TableCell>*/}
-                    <TableCell align='center'>Status</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

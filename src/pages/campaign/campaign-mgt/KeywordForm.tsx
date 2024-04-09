@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography'
 import Plus from 'mdi-material-ui/Plus'
 import Close from 'mdi-material-ui/Close'
 import { Color, ColorPicker, createColor } from 'material-ui-color'
+import Translations from 'src/layouts/components/Translations'
 
 // interface KeywordsProps {
 //   indexNumber: number
@@ -124,13 +125,13 @@ const KeywordForm = (props: any) => {
     if (type === 'keyword_or') {
       // console.log(values, i, values[i])
       values[i].keyword_or = newTextKeyword
-     
+
       // setKeywordCount(keywordCount + 1)
     }
 
     if (type === 'keyword_and') {
       values[i].keyword_and = [...list, '']
-      
+
       // setKeywordCount(keywordCount + 1)
     }
 
@@ -144,7 +145,7 @@ const KeywordForm = (props: any) => {
   function removeTextKeyword(i: number, indexValue: number, list: any, type: any) {
     const values = [...keywords]
 
-    if(list[i] !== '' && type !== 'keyword_exclude') {
+    if (list[i] !== '' && type !== 'keyword_exclude') {
       setKeywordCount(keywordCount - 1)
     }
     const news = list.filter((item: any, index: number) => index !== i)
@@ -158,7 +159,7 @@ const KeywordForm = (props: any) => {
     if (type === 'keyword_and') {
       values[indexValue].keyword_and = news
       values[indexValue].delete_keyword_and = delete_keyword_and ? [...delete_keyword_and, removed[0]] : removed
-      
+
       // setKeywordCount(keywordCount - 1)
     }
 
@@ -197,7 +198,7 @@ const KeywordForm = (props: any) => {
 
   const removeKeywordColors = (i: number, indexValue: number, colorList: any, type: any) => {
     const values = [...keywords]
-    
+
     if (type === 'keyword_or') {
       const news = colorList.filter((item: any, index: number) => index !== i)
       values[indexValue].keyword_or_color = news
@@ -217,10 +218,9 @@ const KeywordForm = (props: any) => {
   function handleTextKeyword(i: number, e: any, list: any, current: any, type: any, indexValue: number) {
     let textKeywords
 
-    if(!e.target.value && type !=='keyword_exclude') {
-      const keywordsCounting = keywordCount - 2;
+    if (!e.target.value && type !== 'keyword_exclude') {
+      const keywordsCounting = keywordCount - 2
       setKeywordCount(keywordsCounting)
-
     }
 
     if (list.length <= 0) {
@@ -229,17 +229,17 @@ const KeywordForm = (props: any) => {
 
       // setCheckKeyword(checkInputKeywords)
 
-      console.log("events", e.target.value, e.target.value.length)
+      console.log('events', e.target.value, e.target.value.length)
       if (type === 'keyword_or') {
         setCheckKeywordOr(checkInputKeywords)
-        if(e.target.value?.length === 1) {
+        if (e.target.value?.length === 1) {
           setKeywordCount(keywordCount + 1)
         }
       }
 
       if (type === 'keyword_and') {
         setCheckKeywordAnd(checkInputKeywords)
-        if(e.target.value?.length === 1) {
+        if (e.target.value?.length === 1) {
           setKeywordCount(keywordCount + 1)
         }
       }
@@ -256,15 +256,14 @@ const KeywordForm = (props: any) => {
 
       if (type === 'keyword_or') {
         setCheckKeywordOr(checkInputKeywords)
-        if(e.target.value?.length  === 1) {
+        if (e.target.value?.length === 1) {
           setKeywordCount(keywordCount + 1)
         }
-        
       }
 
       if (type === 'keyword_and') {
         setCheckKeywordAnd(checkInputKeywords)
-        if(e.target.value?.length === 1) {
+        if (e.target.value?.length === 1) {
           setKeywordCount(keywordCount + 1)
         }
       }
@@ -319,7 +318,7 @@ const KeywordForm = (props: any) => {
     if (type === 'keyword_and') {
       values[indexValue].keyword_and_color = keywordsColor
       values[indexValue].color_and = hashColor
-      console.log("color", values, values[indexValue].color_and)
+      console.log('color', values, values[indexValue].color_and)
     }
     setKeywords(values)
   }
@@ -335,7 +334,7 @@ const KeywordForm = (props: any) => {
                 removeKeyword(value)
               }}
             />{' '}
-            Keyword
+            <Translations text='Keyword' />
           </Typography>
 
           <TextField
@@ -555,7 +554,7 @@ const InputKeyword = (props: any) => {
     if (index === 0 && colorList) {
       setKeywordColors(colorList[0] || createColor(randomHexColor))
     } else if (index && colorList) {
-      setKeywordColors(colorList && colorList[index] ? colorList[index]: createColor(GenerateRandomColor()))
+      setKeywordColors(colorList && colorList[index] ? colorList[index] : createColor(GenerateRandomColor()))
     }
 
     if (typeof colorList === 'string') {
@@ -664,19 +663,19 @@ const InputKeyword = (props: any) => {
                 </>
               )}
               <span style={{ marginTop: 5 }}>
-                    {(text && index == 0) || index > 0 ? (
-                      <ColorPicker
-                        hideTextfield={true}
-                        value={keywordColor || createColor(randomColorKeyword)}
-                        onChange={(color: Color) => {
-                          setKeywordColor(color)
-                          handlChangeKeywordColors(index, color, colorList, value, type, indexValue)
-                        }}
-                      />
-                    ) : (
-                      ''
-                    )}
-                  </span>
+                {(text && index == 0) || index > 0 ? (
+                  <ColorPicker
+                    hideTextfield={true}
+                    value={keywordColor || createColor(randomColorKeyword)}
+                    onChange={(color: Color) => {
+                      setKeywordColor(color)
+                      handlChangeKeywordColors(index, color, colorList, value, type, indexValue)
+                    }}
+                  />
+                ) : (
+                  ''
+                )}
+              </span>
             </Grid>
           ) : (
             <Grid sx={{ display: 'flex', mt: 3 }}>

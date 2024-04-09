@@ -48,7 +48,7 @@ const TopSiteList = ({ resultTopKeywords, loadingTopKeywords }: Props) => {
     <Paper sx={{ maxHeight: 360, minHeight: 360, border: `3px solid #fff`, borderRadius: 1 }} >
       {loadingTopKeywords && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader title='Top Sites' titleTypographyProps={{ variant: 'h6' }} />
+        <CardHeader title={<Translations text='Top Sites' />} titleTypographyProps={{ variant: 'h6' }} />
         <StyledTooltip
           arrow
           title={

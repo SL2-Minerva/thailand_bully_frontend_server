@@ -20,6 +20,7 @@ import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 import { Typography } from '@mui/material'
 import { ChangePassword } from 'src/services/api/users/users'
 import { useRouter } from 'next/router'
+import Translations from 'src/layouts/components/Translations'
 
 // ** Custom Components Imports
 // import CustomAvatar from 'src/@core/components/mui/avatar'
@@ -121,10 +122,13 @@ const TabSecurity = () => {
             <Grid container spacing={6}>
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel htmlFor='account-settings-current-password'>Current Password</InputLabel>
+                  <InputLabel htmlFor='account-settings-current-password'>
+                    {' '}
+                    <Translations text='Current Password' />{' '}
+                  </InputLabel>
                   <OutlinedInput
                     required
-                    label='Current Password'
+                    label={<Translations text='Current Password' />}
                     value={values.currentPassword}
                     id='account-settings-current-password'
                     type={values.showCurrentPassword ? 'text' : 'password'}
@@ -147,10 +151,12 @@ const TabSecurity = () => {
 
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel htmlFor='account-settings-new-password'>New Password</InputLabel>
+                  <InputLabel htmlFor='account-settings-new-password'>
+                    <Translations text='New Password' />
+                  </InputLabel>
                   <OutlinedInput
                     required
-                    label='New Password'
+                    label={<Translations text='New Password' />}
                     value={values.newPassword}
                     id='account-settings-new-password'
                     onChange={handleNewPasswordChange('newPassword')}
@@ -173,10 +179,12 @@ const TabSecurity = () => {
 
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel htmlFor='account-settings-confirm-new-password'>Confirm New Password</InputLabel>
+                  <InputLabel htmlFor='account-settings-confirm-new-password'>
+                    <Translations text='Confirm New Password' />
+                  </InputLabel>
                   <OutlinedInput
                     required
-                    label='Confirm New Password'
+                    label={<Translations text='Confirm New Password' />}
                     value={values.confirmNewPassword}
                     id='account-settings-confirm-new-password'
                     type={values.showConfirmNewPassword ? 'text' : 'password'}
@@ -247,11 +255,11 @@ const TabSecurity = () => {
         <Box>
           {values.confirmNewPassword && values.newPassword && values.currentPassword ? (
             <Button variant='contained' sx={{ mr: 4 }} onClick={submitChanges}>
-              Save Changes
+              <Translations text='SAVE CHANGES' />
             </Button>
           ) : (
             <Button variant='contained' sx={{ mr: 4 }} color='secondary'>
-              Save Changes
+              <Translations text='SAVE CHANGES' />
             </Button>
           )}
 
@@ -261,7 +269,7 @@ const TabSecurity = () => {
             color='secondary'
             onClick={() => setValues({ ...values, currentPassword: '', newPassword: '', confirmNewPassword: '' })}
           >
-            Reset
+            <Translations text='RESET' />
           </Button>
         </Box>
       </CardContent>
