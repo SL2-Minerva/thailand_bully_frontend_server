@@ -11,6 +11,7 @@ import MonitoringCharts from './MonitoringCharts'
 import axios from 'axios'
 import { API_PATH, GraphicColors } from 'src/utils/const'
 import authConfig from 'src/configs/auth'
+import Translations from 'src/layouts/components/Translations'
 
 const MonitoringDashboard = () => {
   const router = useRouter()
@@ -119,7 +120,7 @@ const MonitoringDashboard = () => {
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <Filter
-          tilte='Monitoring Dashboard'
+          tilte={<Translations text='Monitoring Dashboard' />}
           date={date}
           setDate={setDate}
           endDate={endDate}

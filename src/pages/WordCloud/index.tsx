@@ -324,7 +324,7 @@ const WordCloudDashboard = () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
-            <CardHeader title='Word Clouds' />
+            <CardHeader title={<Translations text='Word Clouds' />} />
             <CardContent>
               <Grid container spacing={6}>
                 <Grid item sm={3} xs={12}>

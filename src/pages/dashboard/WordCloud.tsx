@@ -50,7 +50,7 @@ const WordCloud = ({
     <Paper style={{ border: `3px solid #fff`, borderRadius: 7, maxHeight: 470, minHeight: 470, overflow: 'auto' }}>
       {loadingWordClouds && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <CardHeader title='Word Clouds' titleTypographyProps={{ variant: 'h6' }} />
+        <CardHeader title={<Translations text='Word Clouds' />} titleTypographyProps={{ variant: 'h6' }} />
         <StyledTooltip
           arrow
           title={

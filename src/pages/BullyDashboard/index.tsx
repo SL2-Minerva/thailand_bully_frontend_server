@@ -8,6 +8,7 @@ import KeywordFilters from '../dashboard/KeywordFilters'
 import { calculateDate } from '../dashboard/overall'
 import Filter from '../VoiceDashboard/Filter'
 import BullyCharts from './BullyCharts'
+import Translations from 'src/layouts/components/Translations'
 
 const BullyDashboard = () => {
   const router = useRouter()
@@ -77,7 +78,7 @@ const BullyDashboard = () => {
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <Filter
-          tilte='Bully Dashboard'
+          tilte={<Translations text='Bully Dashboard' />}
           date={date}
           setDate={setDate}
           endDate={endDate}
