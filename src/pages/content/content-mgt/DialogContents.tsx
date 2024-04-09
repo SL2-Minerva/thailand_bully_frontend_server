@@ -1,8 +1,7 @@
-import React, { Ref, useState, forwardRef, ReactElement, SyntheticEvent, useEffect, useCallback, useRef } from 'react'
+import React, { Ref, useState, forwardRef, ReactElement, useEffect, useCallback, useRef } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Link from '@mui/material/Link'
 import Typography, { TypographyProps } from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
@@ -27,6 +26,8 @@ import { Editor } from '@tinymce/tinymce-react'
 import 'react-quill/dist/quill.snow.css'
 
 // ** Third Party Imports
+// import Link from '@mui/material/Link'
+
 import { useDropzone } from 'react-dropzone'
 
 // ** Icons Imports
@@ -127,9 +128,9 @@ const DialogContents = (props: DialogInfoProps) => {
     }
   })
 
-  const handleLinkClick = (event: SyntheticEvent) => {
-    event.preventDefault()
-  }
+  // const handleLinkClick = (event: SyntheticEvent) => {
+  //   event.preventDefault()
+  // }
 
   const handleRemoveFile = (file: FileProp) => {
     const uploadedFiles = files
@@ -250,7 +251,9 @@ const DialogContents = (props: DialogInfoProps) => {
             <Grid container spacing={6}>
               <Grid item sm={12} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='plan-select'>Contents</InputLabel>
+                  <InputLabel id='plan-select'>
+                    <Translations text='Content' />
+                  </InputLabel>
                   <Select
                     fullWidth
                     value={contentId}
@@ -275,7 +278,7 @@ const DialogContents = (props: DialogInfoProps) => {
               <Grid item sm={12} xs={12}>
                 <InputLabel style={{ marginBottom: '10px' }}>
                   {' '}
-                  Topic <b style={{ color: 'red' }}>*</b>
+                  <Translations text='Topic' /> <b style={{ color: 'red' }}>*</b>
                 </InputLabel>
                 {/* <ReactQuill
                   theme='snow'
@@ -296,9 +299,9 @@ const DialogContents = (props: DialogInfoProps) => {
                   }}
                   init={{
                     plugins:
-                      'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags autocorrect typography inlinecss',
+                      'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
                     toolbar:
-                      'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                      'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
 
                     height: 160,
                     menubar: false
@@ -314,7 +317,10 @@ const DialogContents = (props: DialogInfoProps) => {
               </Grid> */}
 
               <Grid item sm={12} xs={12}>
-                <InputLabel style={{ marginBottom: '10px' }}> Content Details </InputLabel>
+                <InputLabel style={{ marginBottom: '10px' }}>
+                  {' '}
+                  <Translations text='Content Details' />{' '}
+                </InputLabel>
                 {/* <ReactQuill
                   theme='snow'
                   value={description}
@@ -334,9 +340,9 @@ const DialogContents = (props: DialogInfoProps) => {
                   }}
                   init={{
                     plugins:
-                      'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags autocorrect typography inlinecss',
+                      'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
                     toolbar:
-                      'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                      'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
 
                     height: 500,
                     menubar: false
@@ -367,15 +373,13 @@ const DialogContents = (props: DialogInfoProps) => {
                       <Box
                         sx={{ display: 'flex', flexDirection: 'column', textAlign: ['center', 'center', 'inherit'] }}
                       >
-                        <HeadingTypography variant='h5'>Drop image file here or click to upload.</HeadingTypography>
-                        <Typography color='textSecondary'>
-                          Drop image file here or click{' '}
-                          <Link href='/' onClick={handleLinkClick}>
-                            browse
-                          </Link>{' '}
-                          thorough your machine
+                        <HeadingTypography variant='h5'>
+                          <Translations text='DropImageHeader' />
+                        </HeadingTypography>
+                        <Typography color='textSecondary' sx={{ mb: 4 }}>
+                          <Translations text='DropImage' />
                         </Typography>
-                        <Typography color='textSecondary'>Allowed *.jpeg, *.jpg, *.png, *.gif</Typography>
+
                         <Typography color='textSecondary'>
                           <Translations text='imageSizeText' />
                         </Typography>
@@ -389,7 +393,7 @@ const DialogContents = (props: DialogInfoProps) => {
                 <FormControl>
                   <FormControlLabel
                     control={<Switch checked={status == 1 ? true : false} onChange={handleChangeStatus} />}
-                    label='Content Status : '
+                    label={<Translations text='Content Status' />}
                     labelPlacement='start'
                   />
                 </FormControl>
@@ -399,7 +403,7 @@ const DialogContents = (props: DialogInfoProps) => {
                 <FormControl fullWidth>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker
-                      label='Date'
+                      label={<Translations text='DATE' />}
                       value={date}
                       onChange={newValue => setDate(newValue)}
                       renderInput={params => <TextField {...params} />}
@@ -426,10 +430,10 @@ const DialogContents = (props: DialogInfoProps) => {
         </DialogContent>
         <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
           <Button variant='contained' sx={{ mr: 2 }} onClick={submitData}>
-            Submit
+            <Translations text='SUBMIT' />
           </Button>
           <Button variant='outlined' color='secondary' onClick={closeDialogBox}>
-            Discard
+            <Translations text='DISCARD' />
           </Button>
         </DialogActions>
       </Dialog>
