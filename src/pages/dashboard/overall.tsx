@@ -39,6 +39,7 @@ import authConfig from 'src/configs/auth'
 import KeywordFilters from './KeywordFilters'
 import OverallGraphs from './OverallGraphs'
 import moment from 'moment'
+import { useTranslation } from 'react-i18next'
 
 // import QuickView from "./QuickView"
 
@@ -109,7 +110,8 @@ const OverallDashboard = () => {
   //status dropdown
   const [status, setStatus] = useState(localStorage.getItem('status') || '1')
   const router = useRouter()
-
+  const { t } = useTranslation();
+  
   const { resultCampaiganList } = CampaignLists(status)
 
   const { resultReportPermission, errorUserPermission } = UserPermission()
@@ -467,7 +469,7 @@ const OverallDashboard = () => {
                         onChange={handleOnChangeDate}
                         customInput={
                           <CustomInput
-                            label='Current Period'
+                            label={t('Current Period')}
                             end={endDate as Date | number}
                             start={date as Date | number}
                           />
@@ -491,7 +493,7 @@ const OverallDashboard = () => {
                           onChange={handleOnChangePreviousDates}
                           customInput={
                             <CustomInput
-                              label='Previous Period'
+                              label={t('Previous Period')}
                               end={previousEndDate as Date | number}
                               start={previousDate as Date | number}
                             />
