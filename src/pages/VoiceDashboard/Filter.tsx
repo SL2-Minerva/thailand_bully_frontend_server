@@ -22,6 +22,7 @@ import { DateType } from 'src/types/forms/reactDatepickerTypes'
 import Translations from 'src/layouts/components/Translations'
 import moment from 'moment'
 import SourceService from 'src/services/api/source/SourceApi'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   date: DateType
@@ -70,6 +71,7 @@ const Filter = (props: Props) => {
   const { result_source_list } = SourceService()
 
   const [showPreviousDatepicker, setShowPreviousDatepicker] = useState<boolean>(false)
+  const { t } = useTranslation();
 
   const handleDateSelect = (e: any) => {
     const value = e.target?.value ? e.target?.value : e
@@ -338,7 +340,7 @@ const Filter = (props: Props) => {
                     id='date-range-picker-months'
                     onChange={handleOnChangeDate}
                     customInput={
-                      <CustomInput label='Period Range' end={endDate as Date | number} start={date as Date | number} />
+                      <CustomInput label={t('Period Range')} end={endDate as Date | number} start={date as Date | number} />
                     }
                   />
                 </DatePickerWrapper>
@@ -359,7 +361,7 @@ const Filter = (props: Props) => {
                       onChange={handleOnChangePreviousDate}
                       customInput={
                         <CustomInput
-                          label='Previous Period'
+                          label={t('Previous Period')}
                           end={previousEndDate as Date | number}
                           start={previousDate as Date | number}
                         />

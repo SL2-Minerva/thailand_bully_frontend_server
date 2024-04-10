@@ -537,5 +537,8 @@
   "Topic" : "Topic",
   "PICTURE" : "PICTURE",
   "Content Details" : "Content Details",
-  "Content Status" : "Content Status : "
+  "Content Status" : "Content Status : ",
+  "Period Range" : "Period Range",
+  "Previous Period" : "Previous Period",
+  "Current Period" : "Current Period"
 }

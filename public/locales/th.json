@@ -537,5 +537,8 @@
   "Topic" : "เรื่อง",
   "PICTURE" : "รูปภาพ",
   "Content Details" : "รายละเอียดสาระข่าวสาร",
-  "Content Status" : "สถานะสาระข่าวสาร : "
+  "Content Status" : "สถานะสาระข่าวสาร : ",
+  "Period Range" : "ช่วงระยะเวลา",
+  "Previous Period": "ช่วงก่อนหน้า",
+  "Current Period": "ช่วงระยะเวลา"
 }
