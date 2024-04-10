@@ -33,6 +33,7 @@ import Graph from 'react-graph-vis'
 import 'react-graph-vis/node_modules/vis-network/dist/dist/vis-network.css'
 import { GraphicColors } from 'src/utils/const'
 import moment from 'moment'
+import { useTranslation } from 'react-i18next'
 
 export const initialGraph = {
   nodes: [],
@@ -40,6 +41,7 @@ export const initialGraph = {
 }
 
 const SNA = () => {
+  const { t } = useTranslation();
   const [date, setDate] = useState<DateType>(new Date(localStorage.getItem('startDate') || calculateDate(6)))
   const [endDate, setEndDate] = useState<DateType>(new Date(localStorage.getItem('endDate') || new Date()))
   const [previousDate, setPreviousDate] = useState<DateType>(
@@ -438,7 +440,7 @@ const SNA = () => {
                       onChange={handleOnChangeDate}
                       customInput={
                         <CustomInput
-                          label='Current Period'
+                          label={t('Current Period')}
                           end={endDate as Date | number}
                           start={date as Date | number}
                         />
@@ -462,7 +464,7 @@ const SNA = () => {
                         onChange={handleOnChangePreviousDate}
                         customInput={
                           <CustomInput
-                            label='Previous Period'
+                            label={t('Previous Period')}
                             end={previousEndDate as Date | number}
                             start={previousDate as Date | number}
                           />

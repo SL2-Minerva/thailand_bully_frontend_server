@@ -540,5 +540,6 @@
   "Content Status" : "สถานะสาระข่าวสาร : ",
   "Period Range" : "ช่วงระยะเวลา",
   "Previous Period": "ช่วงก่อนหน้า",
-  "Current Period": "ช่วงระยะเวลา"
+  "Current Period": "ช่วงระยะเวลา",
+  "Limit" : "ขีด จำกัด"
 }

@@ -40,6 +40,7 @@ import authConfig from 'src/configs/auth'
 import KeywordFilters from '../dashboard/KeywordFilters'
 import WordCloudGraphs from './WordCloudGraphs'
 import moment from 'moment'
+import { useTranslation } from 'react-i18next'
 
 // import QuickView from "./QuickView"
 
@@ -83,6 +84,8 @@ export const wordBreaks = (data: any) => {
 }
 
 const WordCloudDashboard = () => {
+  const { t } = useTranslation()
+
   const [date, setDate] = useState<DateType>(new Date(localStorage.getItem('startDate') || calculateDate(6)))
   const [endDate, setEndDate] = useState<DateType>(new Date(localStorage.getItem('endDate') || new Date()))
   const [previousDate, setPreviousDate] = useState<DateType>(
@@ -466,7 +469,7 @@ const WordCloudDashboard = () => {
                         onChange={handleOnChangeDate}
                         customInput={
                           <CustomInput
-                            label='Current Period'
+                            label={t('Current Period')}
                             end={endDate as Date | number}
                             start={date as Date | number}
                           />
@@ -490,7 +493,7 @@ const WordCloudDashboard = () => {
                           onChange={handleOnChangePreviousDates}
                           customInput={
                             <CustomInput
-                              label='Previous Period'
+                              label={t('Previous Period')}
                               end={previousEndDate as Date | number}
                               start={previousDate as Date | number}
                             />
