@@ -422,7 +422,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
           </IconButton>
           <Box sx={{ mb: 8, textAlign: 'center' }}>
             <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-              {action === 'edit' ? 'Edit Campaign Information ' : 'Create Campaign Information'}
+              {action === 'edit' ? <Translations text='Edit Campaign Information'/> : <Translations text='Create Campaign Information'/>}
             </Typography>
           </Box>
           <div id={`campaign-master`}>

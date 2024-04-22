@@ -244,7 +244,7 @@ const DialogContents = (props: DialogInfoProps) => {
           </IconButton>
           <Box sx={{ mb: 8, textAlign: 'center' }}>
             <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-              {action === 'edit' ? 'Edit Content Information ' : 'Create Content Information'}
+              {action === 'edit' ? <Translations text='Edit Content Information'/> : <Translations text="Create Content Information"/>}
             </Typography>
           </Box>
           <div id={`content-master`}>

@@ -541,5 +541,12 @@
   "Period Range" : "Period Range",
   "Previous Period" : "Previous Period",
   "Current Period" : "Current Period",
-  "Limit" : "Limit"
+  "Limit" : "Limit",
+  "content": "Content",
+  "Create Content Information" : "Create Content Information",
+  "Edit Content Information" : "Edit Content Information",
+  "Create Campaign Information" :"Create Campaign Information",
+  "Edit Campaign Information" : "Edit Campaign Information",
+  "Create Source Information" : "Create Source Information",
+  "Edit Source Information" : "Edit Source Information"
 }

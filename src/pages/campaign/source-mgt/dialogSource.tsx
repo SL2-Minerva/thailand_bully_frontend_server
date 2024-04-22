@@ -216,7 +216,11 @@ const DialogSource = (props: DialogInfoProps) => {
           </IconButton>
           <Box sx={{ mb: 8, textAlign: 'center' }}>
             <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-              {action === 'edit' ? 'Edit Source Information ' : 'Create Source Information'}
+              {action === 'edit' ? (
+                <Translations text='Edit Source Information' />
+              ) : (
+                <Translations text='Create Source Information' />
+              )}
             </Typography>
           </Box>
           <Grid container spacing={6}>

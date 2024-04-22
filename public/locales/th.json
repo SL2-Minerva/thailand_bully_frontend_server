@@ -541,5 +541,12 @@
   "Period Range" : "ช่วงระยะเวลา",
   "Previous Period": "ช่วงก่อนหน้า",
   "Current Period": "ช่วงระยะเวลา",
-  "Limit" : "ขีด จำกัด"
+  "Limit" : "ขีด จำกัด",
+  "contents": "สาระข่าวสาร",
+  "Create Content Information" : "สร้างสาระข่าวสาร",
+  "Edit Content Information" : "แก้ไขสาระข่าวสาร",
+  "Create Campaign Information" :"สร้างแคมเปญใหม่",
+  "Edit Campaign Information" : "แก้ไขแคมเปญใหม่",
+  "Create Source Information" : "สร้างแหล่งข้อมูล",
+  "Edit Source Information" : "แก้ไขแหล่งข้อมูล"
 }
