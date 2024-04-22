@@ -145,7 +145,7 @@ const ContentManagement = () => {
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id='plan-select'>
-                    <Translations text='Content' />
+                    <Translations text='contents' />
                   </InputLabel>
                   <Select
                     fullWidth

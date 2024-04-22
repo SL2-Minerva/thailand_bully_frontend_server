@@ -26,6 +26,7 @@ import FormHelperText from '@mui/material/FormHelperText'
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import Translations from 'src/layouts/components/Translations'
+import { useTranslation } from 'react-i18next'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -51,6 +52,8 @@ interface FormData {
 
 const DialogOrganizationType = (props: DialogInfoProps) => {
   const { show, setShow, action, current } = props
+
+  const {t} = useTranslation();
 
   const schema = yup.object().shape({
     description: yup.string().required(),
@@ -167,7 +170,7 @@ const DialogOrganizationType = (props: DialogInfoProps) => {
                         onBlur={onBlur}
                         label={<Translations text='Organization Type' />}
                         onChange={onChange}
-                        placeholder='Organization Type'
+                        placeholder={t('Organization Type')}
                         error={errors?.type ? true : false}
                       />
                     )}
@@ -190,7 +193,7 @@ const DialogOrganizationType = (props: DialogInfoProps) => {
                         onBlur={onBlur}
                         label={<Translations text='Description' />}
                         onChange={onChange}
-                        placeholder='Description'
+                        placeholder={t('Description')}
                         error={errors.description ? true : false}
                       />
                     )}
