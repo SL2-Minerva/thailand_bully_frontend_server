@@ -653,11 +653,11 @@ const DialogRoleInfo = (props: DialogRoleInfoProps) => {
                 <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Menu Authorized</TableCell>
-                      <TableCell align='left'>Create</TableCell>
-                      <TableCell align='left'>Edit</TableCell>
-                      <TableCell align='left'>View</TableCell>
-                      <TableCell align='left'>Export</TableCell>
+                      <TableCell><Translations text='Menu Authorized'/></TableCell>
+                      <TableCell align='left'><Translations text='Create'/></TableCell>
+                      <TableCell align='left'><Translations text='Edit'/></TableCell>
+                      <TableCell align='left'><Translations text='View'/></TableCell>
+                      <TableCell align='left'><Translations text='Export'/></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

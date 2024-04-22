@@ -322,7 +322,6 @@ const UserList = () => {
 
   const { t } = useTranslation()
 
-
   const columns: GridColDef[] = [
     {
       field: 'id',
@@ -406,7 +405,15 @@ const UserList = () => {
           <CustomChip
             skin='light'
             size='small'
-            label={row.status == '1' ? 'active' : row.status == '2' ? 'pending' : 'inactive'}
+            label={
+              row.status == '1' ? (
+                <Translations text='Active' />
+              ) : row.status == '2' ? (
+                <Translations text='Pending' />
+              ) : (
+                <Translations text='Inactive' />
+              )
+            }
             color={userStatusObj[row.status == '1' ? 'active' : row.status == '2' ? 'pending' : 'inactive']}
             sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
           />
@@ -509,9 +516,15 @@ const UserList = () => {
                       inputProps={{ placeholder: 'Select Status' }}
                     >
                       <MenuItem value=''>All</MenuItem>
-                      <MenuItem value='1'><Translations text='Active'/></MenuItem>
-                      <MenuItem value='2'><Translations text='Pending'/></MenuItem>
-                      <MenuItem value='0'><Translations text='Inactive'/></MenuItem>
+                      <MenuItem value='1'>
+                        <Translations text='Active' />
+                      </MenuItem>
+                      <MenuItem value='2'>
+                        <Translations text='Pending' />
+                      </MenuItem>
+                      <MenuItem value='0'>
+                        <Translations text='Inactive' />
+                      </MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -524,8 +537,17 @@ const UserList = () => {
                       <DatePicker
                         label={<Translations text='Start Date' />}
                         value={date}
+                        inputFormat='dd/MM/yyyy'
                         onChange={newValue => setDate(newValue)}
-                        renderInput={params => <TextField {...params} />}
+                        renderInput={params => (
+                          <TextField
+                            {...params}
+                            inputProps={{
+                              ...params.inputProps,
+                              placeholder: t('dd/mm/yyyy')
+                            }}
+                          />
+                        )}
                       />
                     </LocalizationProvider>
                   </FormControl>
@@ -536,8 +558,17 @@ const UserList = () => {
                       <DatePicker
                         label={<Translations text='End Date' />}
                         value={endDate}
+                        inputFormat='dd/MM/yyyy'
                         onChange={newValue => setEndDate(newValue)}
-                        renderInput={params => <TextField {...params} />}
+                        renderInput={params => (
+                          <TextField
+                            {...params}
+                            inputProps={{
+                              ...params.inputProps,
+                              placeholder: t('dd/mm/yyyy')
+                            }}
+                          />
+                        )}
                       />
                     </LocalizationProvider>
                   </FormControl>

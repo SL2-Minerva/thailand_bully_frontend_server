@@ -183,7 +183,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                         onBlur={onBlur}
                         label={<Translations text='Organization Group' />}
                         onChange={onChange}
-                        placeholder='Organization Group'
+                        placeholder={t('Organization Group')}
                         error={errors?.organization_group_name ? true : false}
                       />
                     )}
@@ -208,7 +208,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                         value={value}
                         label={<Translations text='Description' />}
                         onChange={onChange}
-                        placeholder='description'
+                        placeholder={t('Description')}
                         error={errors?.organization_group_description ? true : false}
                       />
                     )}
@@ -252,7 +252,7 @@ const DialogOrganizationInfo = (props: DialogInfoProps) => {
                         label={<Translations text='Number of Keyword' />}
                         type='number'
                         onChange={onChange}
-                        placeholder='Number of Keyword'
+                        placeholder={t('Number of Keyword')}
                         error={errors?.total_keyword ? true : false}
                       />
                     )}

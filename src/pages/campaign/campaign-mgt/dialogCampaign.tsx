@@ -422,7 +422,11 @@ const DialogCampaign = (props: DialogInfoProps) => {
           </IconButton>
           <Box sx={{ mb: 8, textAlign: 'center' }}>
             <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-              {action === 'edit' ? <Translations text='Edit Campaign Information'/> : <Translations text='Create Campaign Information'/>}
+              {action === 'edit' ? (
+                <Translations text='Edit Campaign Information' />
+              ) : (
+                <Translations text='Create Campaign Information' />
+              )}
             </Typography>
           </Box>
           <div id={`campaign-master`}>
@@ -449,7 +453,9 @@ const DialogCampaign = (props: DialogInfoProps) => {
               </Grid>
               <Grid item sm={12} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='plan-select'><Translations text='Select Domain' /></InputLabel>
+                  <InputLabel id='plan-select'>
+                    <Translations text='Select Domain' />
+                  </InputLabel>
                   <Select
                     fullWidth
                     value={domain}
@@ -471,7 +477,9 @@ const DialogCampaign = (props: DialogInfoProps) => {
               <Grid item sm={12} xs={12}>
                 {/* <Typography sx={{ mb: 2, fontWeight: 500 }}>Social Visualization</Typography> */}
                 <FormControl fullWidth>
-                  <InputLabel id='demo-multiple-name-label'><Translations text='Platform' /></InputLabel>
+                  <InputLabel id='demo-multiple-name-label'>
+                    <Translations text='Platform' />
+                  </InputLabel>
                   <Select
                     displayEmpty
                     value={sourceList}
@@ -521,7 +529,9 @@ const DialogCampaign = (props: DialogInfoProps) => {
 
               <Grid item sm={12} xs={12}>
                 <FormControl sx={{ mt: 3, ml: 5 }}>
-                  <FormLabel id='demo-row-radio-buttons-group-label'><Translations text='Campaign Privacy' /></FormLabel>
+                  <FormLabel id='demo-row-radio-buttons-group-label'>
+                    <Translations text='Campaign Privacy' />
+                  </FormLabel>
                   <RadioGroup row aria-labelledby='demo-row-radio-buttons-group-label' name='row-radio-buttons-group'>
                     <FormControlLabel
                       value='private'
@@ -597,7 +607,7 @@ const DialogCampaign = (props: DialogInfoProps) => {
                           startIcon={<Plus fontSize='small' />}
                           onClick={addKeyword}
                         >
-                          Add Keyword
+                          <Translations text='Add Keyword' />
                         </Button>
 
                         <p style={{ marginTop: '20px', color: 'red' }}>
@@ -633,9 +643,18 @@ const DialogCampaign = (props: DialogInfoProps) => {
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker
                       label={<Translations text='Start Date' />}
+                      inputFormat='dd/MM/yyyy'
                       value={date}
                       onChange={newValue => setDate(newValue)}
-                      renderInput={params => <TextField {...params} />}
+                      renderInput={params => (
+                        <TextField
+                          {...params}
+                          inputProps={{
+                            ...params.inputProps,
+                            placeholder: t('dd/mm/yyyy')
+                          }}
+                        />
+                      )}
                     />
                   </LocalizationProvider>
                 </FormControl>
@@ -646,8 +665,17 @@ const DialogCampaign = (props: DialogInfoProps) => {
                     <DatePicker
                       label={<Translations text='End Date' />}
                       value={endDate}
+                      inputFormat='dd/MM/yyyy'
                       onChange={newValue => setEndDate(newValue)}
-                      renderInput={params => <TextField {...params} />}
+                      renderInput={params => (
+                        <TextField
+                          {...params}
+                          inputProps={{
+                            ...params.inputProps,
+                            placeholder: t('dd/mm/yyyy')
+                          }}
+                        />
+                      )}
                     />
                   </LocalizationProvider>
                 </FormControl>
