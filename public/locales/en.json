@@ -548,5 +548,14 @@
   "Create Campaign Information" :"Create Campaign Information",
   "Edit Campaign Information" : "Edit Campaign Information",
   "Create Source Information" : "Create Source Information",
-  "Edit Source Information" : "Edit Source Information"
+  "Edit Source Information" : "Edit Source Information",
+  "Date" : "Date",
+  "FAQs" : "FAQs",
+  "Menu Authorized" : "Menu Authorized",
+  "Create" : "Create",
+  "View" : "View",
+  "Export" : "Export",
+  "dd/mm/yyyy" : "dd/mm/yyyy",
+  "Add Keyword" : "Add Keyword",
+  "dd-mm-yyyy" : "dd-mm-yyyy"
 }

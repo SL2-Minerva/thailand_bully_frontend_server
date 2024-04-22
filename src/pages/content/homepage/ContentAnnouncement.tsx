@@ -1,6 +1,7 @@
 import { Card, CardContent, Grid, Typography } from '@mui/material'
 import 'react-quill/dist/quill.bubble.css'
 import dynamic from 'next/dynamic'
+import { useTranslation } from 'react-i18next'
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <p>Loading ...</p> })
 
@@ -10,7 +11,8 @@ interface Props {
 
 const ContentAnnouncement = (props: Props) => {
   const { resultContentList } = props
-
+  const {t} = useTranslation();
+  
   return (
     <Grid container spacing={3}>
       {(resultContentList || []).map((contents: any, index: any) => {
@@ -49,7 +51,7 @@ const ContentAnnouncement = (props: Props) => {
                     </Grid>
                     <Typography>
                       {/* <ReactQuill value={'Date:' + contents.date} readOnly={true} theme='bubble' /> */}
-                      <div dangerouslySetInnerHTML={{ __html: 'Date:' + contents.date || '-' }} />
+                      <div dangerouslySetInnerHTML={{ __html: t('Date') + ": " + contents.date || '-' }} />
 
                     </Typography>
                   </Grid>

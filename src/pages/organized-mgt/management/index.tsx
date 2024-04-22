@@ -235,9 +235,15 @@ const OrganizedManagement = () => {
                     inputProps={{ placeholder: 'Select Status' }}
                   >
                     <MenuItem value=''>All</MenuItem>
-                    <MenuItem value='2'>Pending</MenuItem>
-                    <MenuItem value='1'>Active</MenuItem>
-                    <MenuItem value='0'>Inactive</MenuItem>
+                    <MenuItem value='2'>
+                      <Translations text='Pending' />
+                    </MenuItem>
+                    <MenuItem value='1'>
+                      <Translations text='Active' />
+                    </MenuItem>
+                    <MenuItem value='0'>
+                      <Translations text='Inactive' />
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Grid>

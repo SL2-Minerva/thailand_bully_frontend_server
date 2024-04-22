@@ -7,6 +7,7 @@ import Plus from 'mdi-material-ui/Plus'
 import Close from 'mdi-material-ui/Close'
 import { Color, ColorPicker, createColor } from 'material-ui-color'
 import Translations from 'src/layouts/components/Translations'
+import { useTranslation } from 'react-i18next'
 
 // interface KeywordsProps {
 //   indexNumber: number
@@ -323,6 +324,8 @@ const KeywordForm = (props: any) => {
     setKeywords(values)
   }
 
+  const { t } = useTranslation()
+
   return (
     <>
       <Grid container sx={{ py: 4, width: '100%' }}>
@@ -342,8 +345,8 @@ const KeywordForm = (props: any) => {
             multiline
             size='small'
             sx={{ mt: 3.5 }}
-            placeholder='Enter Keyword'
-            label='Keyword'
+            placeholder={t('Keyword')}
+            label={<Translations text='Keyword' />}
             required
             value={keywords[indexNumber]?.name || ''}
             onChange={e => handleChangeLabel(indexNumber, e)}

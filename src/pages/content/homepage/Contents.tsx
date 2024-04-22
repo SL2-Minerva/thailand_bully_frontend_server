@@ -1,6 +1,7 @@
 import { Box, Card, CardContent, Grid, Typography } from '@mui/material'
 import 'react-quill/dist/quill.bubble.css'
 import { styled } from '@mui/material/styles'
+import Translations from 'src/layouts/components/Translations'
 
 // import dynamic from 'next/dynamic'
 
@@ -32,7 +33,13 @@ const Contents = (props: Props) => {
           <Grid item xs={12} key={index}>
             <Card>
               <h2 style={{ marginLeft: '2rem', marginBottom: '-2rem' }}>
-                <div dangerouslySetInnerHTML={{ __html: contents.title }} />
+                {contents.title == '<p><strong class="ql-size-huge">FAQs</strong></p>' ? (
+                  <h4>
+                    <Translations text='FAQs' />
+                  </h4>
+                ) : (
+                  <div dangerouslySetInnerHTML={{ __html: contents.title }} />
+                )}
               </h2>
               <CardContent>
                 <Grid container minHeight={450}>
@@ -40,7 +47,7 @@ const Contents = (props: Props) => {
                     {contents?.picture ? (
                       <Box sx={{ minHeight: '250px', marginLeft: '1rem' }}>
                         <Img
-                          style={{ width: "100%", height: 'auto' }}
+                          style={{ width: '100%', height: 'auto' }}
                           alt='Image'
                           src={'https://cornea-analysis.com/storage/' + contents.picture}
                         />
@@ -56,9 +63,10 @@ const Contents = (props: Props) => {
                     <Typography>
                       {/* <ReactQuill value={contents.content_text} readOnly={true} theme='bubble' /> */}
                       <div dangerouslySetInnerHTML={{ __html: contents.content_text || '-' }} />
-                      
                     </Typography>
-                    <Typography ml={4}>Date : {contents.date}</Typography>
+                    <Typography ml={4}>
+                      <Translations text='Date' /> : {contents.date}
+                    </Typography>
                   </Grid>
                 </Grid>
               </CardContent>

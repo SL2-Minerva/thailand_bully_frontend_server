@@ -37,6 +37,7 @@ import { UserPermission } from 'src/services/api/users/role'
 import Swal from 'sweetalert2'
 import 'react-quill/dist/quill.bubble.css'
 import Translations from 'src/layouts/components/Translations'
+import { useTranslation } from 'react-i18next'
 
 // import dynamic from 'next/dynamic'
 
@@ -58,7 +59,8 @@ const ContentManagement = () => {
   const [pageCount, setPageCount] = useState<number>(0)
   const { resultPermission, errorUserPermission, resultIsAdmin } = UserPermission()
   const { removeContent } = ContentDelete()
-
+  const { t } = useTranslation();
+  
   const params = {
     date: date ? moment(date)?.format('YYYY-MM-DD') : '',
     status: status,
@@ -212,8 +214,17 @@ const ContentManagement = () => {
                     <DatePicker
                       label={<Translations text='DATE' />}
                       value={date}
+                      inputFormat='dd/MM/yyyy'
                       onChange={newValue => setDate(newValue)}
-                      renderInput={params => <TextField {...params} />}
+                      renderInput={params => (
+                        <TextField
+                          {...params}
+                          inputProps={{
+                            ...params.inputProps,
+                            placeholder: t('dd/mm/yyyy')
+                          }}
+                        />
+                      )}
                     />
                   </LocalizationProvider>
                 </FormControl>
@@ -257,14 +268,28 @@ const ContentManagement = () => {
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
-                    <TableCell><Translations text='ID' /></TableCell>
-                    <TableCell><Translations text='Topic'/></TableCell>
-                    <TableCell><Translations text='Content Information' /></TableCell>
-                    <TableCell align='center'><Translations text='PICTURE' /></TableCell>
-                    <TableCell align='center'><Translations text='Status' /></TableCell>
-                    <TableCell><Translations text='DATE' /></TableCell>
+                    <TableCell>
+                      <Translations text='ID' />
+                    </TableCell>
+                    <TableCell>
+                      <Translations text='Topic' />
+                    </TableCell>
+                    <TableCell>
+                      <Translations text='Content Information' />
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Translations text='PICTURE' />
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Translations text='Status' />
+                    </TableCell>
+                    <TableCell>
+                      <Translations text='DATE' />
+                    </TableCell>
                     {resultPermission?.content_mgt?.authorized_edit || resultIsAdmin ? (
-                      <TableCell align='center'><Translations text='Action' /></TableCell>
+                      <TableCell align='center'>
+                        <Translations text='Action' />
+                      </TableCell>
                     ) : (
                       ''
                     )}

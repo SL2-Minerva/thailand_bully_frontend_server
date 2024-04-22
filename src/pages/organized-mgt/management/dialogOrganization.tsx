@@ -33,6 +33,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
+import { useTranslation } from 'react-i18next'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -55,6 +56,8 @@ interface DialogInfoProps {
 const DialogOrganization = (props: DialogInfoProps) => {
   const { show, setShow, action, current, types, groups } = props
   const [date, setDate] = useState<Date | null>(null)
+
+  const { t } = useTranslation()
 
   const schema = yup.object().shape({
     name: yup.string().required(),
@@ -167,7 +170,7 @@ const DialogOrganization = (props: DialogInfoProps) => {
                         onBlur={onBlur}
                         label={<Translations text='Organization' />}
                         onChange={onChange}
-                        placeholder='Organization'
+                        placeholder={t('Organization')}
                         error={errors?.name ? true : false}
                       />
                     )}
@@ -188,7 +191,7 @@ const DialogOrganization = (props: DialogInfoProps) => {
                         value={value}
                         label={<Translations text='Description' />}
                         onChange={onChange}
-                        placeholder='description'
+                        placeholder={t('Description')}
                         error={errors?.description ? true : false}
                       />
                     )}
@@ -279,7 +282,7 @@ const DialogOrganization = (props: DialogInfoProps) => {
                           type='number'
                           fullWidth
                           onChange={onChange}
-                          placeholder='Number of Message Transaction'
+                          placeholder={t('Number of Message Transaction')}
                           error={errors?.transaction_limit ? true : false}
                         />
                       )}
@@ -299,7 +302,7 @@ const DialogOrganization = (props: DialogInfoProps) => {
                           type='number'
                           fullWidth
                           onChange={onChange}
-                          placeholder='Number of Message Transaction'
+                          placeholder={t('Number of Message Transaction')}
                           error={errors?.transaction_reamining ? true : false}
                         />
                       )}

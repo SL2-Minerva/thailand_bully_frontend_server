@@ -179,7 +179,9 @@ const CampaignManagement = () => {
               </Grid>
               <Grid item sm={4} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='plan-select'><Translations text='Select Organization Group' /></InputLabel>
+                  <InputLabel id='plan-select'>
+                    <Translations text='Select Organization Group' />
+                  </InputLabel>
                   <Select
                     fullWidth
                     value={organization}
@@ -234,8 +236,17 @@ const CampaignManagement = () => {
                     <DatePicker
                       label={<Translations text='Start Date' />}
                       value={date}
+                      inputFormat='dd/MM/yyyy'
                       onChange={newValue => setDate(newValue)}
-                      renderInput={params => <TextField {...params} />}
+                      renderInput={params => (
+                        <TextField
+                          {...params}
+                          inputProps={{
+                            ...params.inputProps,
+                            placeholder: t('dd/mm/yyyy')
+                          }}
+                        />
+                      )}
                     />
                   </LocalizationProvider>
                 </FormControl>
@@ -246,8 +257,17 @@ const CampaignManagement = () => {
                     <DatePicker
                       label={<Translations text='End Date' />}
                       value={endDate}
+                      inputFormat='dd/MM/yyyy'
                       onChange={newValue => setEndDate(newValue)}
-                      renderInput={params => <TextField {...params} />}
+                      renderInput={params => (
+                        <TextField
+                          {...params}
+                          inputProps={{
+                            ...params.inputProps,
+                            placeholder: t('dd/mm/yyyy')
+                          }}
+                        />
+                      )}
                     />
                   </LocalizationProvider>
                 </FormControl>
@@ -313,13 +333,31 @@ const CampaignManagement = () => {
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
-                    <TableCell><Translations text='Campaign Name' /></TableCell>
-                    <TableCell align='center'><Translations text='Keyword' /></TableCell>
-                    <TableCell align='center'><Translations text='Domains'/></TableCell>
-                    <TableCell align='center'><Translations text='ORGANIZATION' /></TableCell>
-                    <TableCell align='center'><Translations text='Status' /></TableCell>
-                    <TableCell align='center'><Translations text='Created By' /></TableCell>
-                    {resultPermission?.campaign?.authorized_edit ? <TableCell align='center'><Translations text='Action' /></TableCell> : <></>}
+                    <TableCell>
+                      <Translations text='Campaign Name' />
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Translations text='Keyword' />
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Translations text='Domains' />
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Translations text='ORGANIZATION' />
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Translations text='Status' />
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Translations text='Created By' />
+                    </TableCell>
+                    {resultPermission?.campaign?.authorized_edit ? (
+                      <TableCell align='center'>
+                        <Translations text='Action' />
+                      </TableCell>
+                    ) : (
+                      <></>
+                    )}
                   </TableRow>
                 </TableHead>
                 <TableBody>

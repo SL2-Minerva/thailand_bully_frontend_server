@@ -36,6 +36,7 @@ import { ContentList } from 'src/types/content/ContentType'
 import { CreateContent, UpdateContent } from 'src/services/api/content/ContentAPI'
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import Translations from 'src/layouts/components/Translations'
+import { useTranslation } from 'react-i18next'
 
 // import { Quill } from 'react-quill';
 // import dynamic from 'next/dynamic'
@@ -98,7 +99,8 @@ interface DialogInfoProps {
 
 const DialogContents = (props: DialogInfoProps) => {
   const { show, setShow, action, current } = props
-
+  const {t} = useTranslation();
+  
   const editorRef: any = useRef(null)
 
   const [date, setDate] = useState<Date | null>(new Date())
@@ -406,7 +408,10 @@ const DialogContents = (props: DialogInfoProps) => {
                       label={<Translations text='DATE' />}
                       value={date}
                       onChange={newValue => setDate(newValue)}
-                      renderInput={params => <TextField {...params} />}
+                      renderInput={params => <TextField {...params} inputProps={{
+                        ...params.inputProps,
+                        placeholder: t('dd-mm-yyyy')
+                      }} />}
                       inputFormat='dd-MM-yyyy'
                     />
                   </LocalizationProvider>
