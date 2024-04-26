@@ -125,7 +125,7 @@ const OrganizationType = () => {
                 <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                   <TableHead>
                     <TableRow>
-                      <TableCell><Translations text='Organizaton Type' /></TableCell>
+                      <TableCell><Translations text='Organization Type' /></TableCell>
                       <TableCell align='center'><Translations text='Description' /></TableCell>
                       <TableCell align='center'><Translations text='Status' /></TableCell>
                       {resultIsAdmin || resultPermission?.organized_type_mgt?.authorized_edit ? (
