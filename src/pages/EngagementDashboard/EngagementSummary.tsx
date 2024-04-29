@@ -9,7 +9,6 @@ import { useEffect } from 'react'
 import { GetEngagementSummary } from 'src/services/api/dashboards/engagement/EngagementApi'
 
 const EngagementSummary = ({
-  
   page,
   setPage,
   pageCount,
@@ -44,16 +43,34 @@ const EngagementSummary = ({
       headerAlign: 'center',
       valueGetter: (params: GridValueGetterParams) => `${params.row.total?.toLocaleString('en-US')}`
     },
-    { field: 'share', headerName: 'Share', flex: 1, headerAlign: 'center' },
-    { field: 'comment', headerName: 'Comment', flex: 1, headerAlign: 'center' },
-    { field: 'reaction', headerName: 'Reaction', flex: 1, headerAlign: 'center' },
+    {
+      field: 'share',
+      headerName: 'Share',
+      flex: 1,
+      headerAlign: 'center',
+      valueGetter: (params: GridValueGetterParams) => `${params.row.share?.toLocaleString('en-US')}`
+    },
+    {
+      field: 'comment',
+      headerName: 'Comment',
+      flex: 1,
+      headerAlign: 'center',
+      valueGetter: (params: GridValueGetterParams) => `${params.row.comment?.toLocaleString('en-US')}`
+    },
+    {
+      field: 'reaction',
+      headerName: 'Reaction',
+      flex: 1,
+      headerAlign: 'center',
+      valueGetter: (params: GridValueGetterParams) => `${params.row.reaction?.toLocaleString('en-US')}`
+    },
 
     {
       field: 'period_over_preiod',
       headerName: 'Period over Period',
       flex: 1,
       headerAlign: 'center',
-      valueGetter: (params: GridValueGetterParams) => `${params.row.period_over_preiod}`
+      valueGetter: (params: GridValueGetterParams) => `${params.row.period_over_preiod?.toLocaleString('en-US')}`
     },
 
     {
@@ -61,7 +78,7 @@ const EngagementSummary = ({
       headerName: 'Period over Period (%)',
       flex: 1,
       headerAlign: 'center',
-      valueGetter: (params: GridValueGetterParams) => `${params.row.period_over_period_percentage}`
+      valueGetter: (params: GridValueGetterParams) => `${params.row.period_over_period_percentage?.toLocaleString('en-US')}`
     }
   ]
 
@@ -78,7 +95,7 @@ const EngagementSummary = ({
   }, [resultSummary])
 
   return (
-    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
+    <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
       {loadingSummary && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
