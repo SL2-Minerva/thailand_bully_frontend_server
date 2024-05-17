@@ -8,7 +8,7 @@ interface MessageData {
   resultTopFiveInfluencer: any
   loadingTopFiveInfluencer: boolean
 }
-import { FacebookIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon, googleIcon } from 'src/utils/const'
+import { FacebookIcon, InstagramIcon, PantipIcon, TwitterIcon, YoutubeIcon, googleIcon, tiktokIcon } from 'src/utils/const'
 import SentimentLevelGraph from './SentimentLevelGraph'
 import InfluencerDetail from './InfluencerDetail'
 
@@ -26,6 +26,8 @@ export const getSourceIcon = (sourceName: string) => {
       ? PantipIcon
       : sourceName === 'google'
       ? googleIcon
+      : sourceName === 'tiktok'
+      ? tiktokIcon
       : '/images/default_image.png'
 
   return sourceIcon

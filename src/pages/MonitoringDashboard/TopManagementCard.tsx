@@ -12,9 +12,11 @@ import {
   YoutubeIcon,
 
   // gitHubIcon,
-  googleIcon
+  googleIcon,
+  tiktokIcon
 } from 'src/utils/const'
 import { CommentOutline, LinkVariant, ShareVariantOutline, ThumbUpOutline } from 'mdi-material-ui'
+import SourceService from 'src/services/api/source/SourceApi'
 
 // import Button from '@mui/material/Button'
 
@@ -34,34 +36,21 @@ import { CommentOutline, LinkVariant, ShareVariantOutline, ThumbUpOutline } from
 interface CardInfo {
   resultTopEngagement: any
   loadingTopEngagement: boolean
-  result_source_list?: any
   showFullMsg?: boolean
 }
 
 const TopManagementCard = (props: CardInfo) => {
-  const { resultTopEngagement, loadingTopEngagement, result_source_list, showFullMsg } = props
+  const { resultTopEngagement, loadingTopEngagement, showFullMsg } = props
+  const { result_source_list } = SourceService();
 
   // const imgPath = gitHubIcon
 
   const [sourceName, setSourceName] = React.useState('')
   const [showMore, setShowMore] = React.useState(false)
 
-  // const [showFullMessage, setShowFullMessage] = React.useState(false)
+  const [sourceIcon, setSourceIcon] = React.useState('/images/default_image.png');
 
-  const sourceIcon =
-    resultTopEngagement?.source_name === 'facebook' || sourceName === 'facebook'
-      ? FacebookIcon
-      : resultTopEngagement.source_name === 'twitter' || sourceName === 'twitter'
-      ? TwitterIcon
-      : resultTopEngagement.source_name === 'instagram' || sourceName === 'instagram'
-      ? InstagramIcon
-      : resultTopEngagement.source_name === 'youtube' || sourceName === 'youtube'
-      ? YoutubeIcon
-      : resultTopEngagement.source_name === 'pantip' || sourceName === 'pantip'
-      ? PantipIcon
-      : resultTopEngagement.source_name === 'google' || sourceName === 'google'
-      ? googleIcon
-      : '/images/default_image.png'
+  // const [showFullMessage, setShowFullMessage] = React.useState(false)
 
   const getSourceName = (sourceId: number) => {
     if (result_source_list) {
@@ -76,20 +65,43 @@ const TopManagementCard = (props: CardInfo) => {
   }
 
   React.useEffect(() => {
-    if (resultTopEngagement?.source_id) {
+    if (result_source_list && resultTopEngagement?.source_id) {
       const source_name = getSourceName(resultTopEngagement?.source_id)
 
       // setShowFullMessage(true)
-
+      // console.log('source name',source_name);
       setSourceName(source_name)
     }
-  }, [resultTopEngagement?.source_id])
+  }, [resultTopEngagement?.source_id, result_source_list])
+
+  // React.useEffect(() => {
+  //   if (resultTopEngagement?.source_name) {
+  //     setSourceName(resultTopEngagement?.source_name)
+  //   }
+  // }, [resultTopEngagement?.source_name])
 
   React.useEffect(() => {
-    if (resultTopEngagement?.source_name) {
-      setSourceName(resultTopEngagement?.source_name)
+    if (resultTopEngagement?.source_name || sourceName) {
+      const icon =
+      resultTopEngagement?.source_name === 'facebook' || sourceName === 'facebook'
+        ? FacebookIcon
+        : resultTopEngagement.source_name === 'twitter' || sourceName === 'twitter'
+        ? TwitterIcon
+        : resultTopEngagement.source_name === 'instagram' || sourceName === 'instagram'
+        ? InstagramIcon
+        : resultTopEngagement.source_name === 'youtube' || sourceName === 'youtube'
+        ? YoutubeIcon
+        : resultTopEngagement.source_name === 'pantip' || sourceName === 'pantip'
+        ? PantipIcon
+        : resultTopEngagement.source_name === 'google' || sourceName === 'google'
+        ? googleIcon
+        : resultTopEngagement.source_name === 'tiktok' || sourceName === 'tiktok'
+        ? tiktokIcon
+        : '/images/default_image.png';
+
+      setSourceIcon(icon);
     }
-  }, [resultTopEngagement?.source_name])
+  }, [resultTopEngagement?.source_name, sourceName])
 
   // function countLines() {
   //   const el = document.getElementById('content')
