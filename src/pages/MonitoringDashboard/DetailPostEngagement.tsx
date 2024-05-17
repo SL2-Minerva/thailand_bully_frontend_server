@@ -11,8 +11,9 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import { EngagementDetails } from 'src/services/api/dashboards/monitoring/MonitoringDashboard'
 import TopManagementCard from './TopManagementCard'
-import SourceService from 'src/services/api/source/SourceApi'
 import CommentDetail from './CommentDetail'
+
+// import SourceService from 'src/services/api/source/SourceApi'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -88,7 +89,8 @@ const DetailPostEgagement = (props: DialogInfoProps) => {
   const { messageId, show, setShow } = props
 
   const { loadingEngagementDetail, resultEngagementDetail } = EngagementDetails(messageId)
-  const { result_source_list } = SourceService()
+
+  // const { result_source_list } = SourceService()
 
   const onCloseDialog = () => {
     setShow(false)
@@ -147,7 +149,6 @@ const DetailPostEgagement = (props: DialogInfoProps) => {
                   key={messageId}
                   loadingTopEngagement={loadingEngagementDetail}
                   resultTopEngagement={resultEngagementDetail}
-                  result_source_list={result_source_list}
                   showFullMsg={true}
                 />
               ) : (
