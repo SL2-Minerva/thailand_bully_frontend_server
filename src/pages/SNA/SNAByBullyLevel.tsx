@@ -19,7 +19,7 @@ import DatePicker from 'react-datepicker'
 import { DateType } from 'src/types/forms/reactDatepickerTypes'
 import format from 'date-fns/format'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
-import { GetKeyWordsList, GetNetworkGraph } from 'src/services/api/dashboards/overall/overallDashboardApi'
+import { GetKeyWordsList } from 'src/services/api/dashboards/overall/overallDashboardApi'
 
 // ** Third Party Styles Imports
 // import addDays from 'date-fns/addDays'
@@ -35,6 +35,7 @@ import { initialGraph } from '.'
 import { GraphicColors } from 'src/utils/const'
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
+import { GetSNA } from 'src/services/api/dashboards/sna/snaApi'
 
 const SNAByBullyLevel = () => {
   const { t } = useTranslation();
@@ -65,7 +66,24 @@ const SNAByBullyLevel = () => {
   const { errorUserPermission } = UserPermission()
   const { resultCampaiganList } = CampaignLists(status)
   const { result_source_list } = SourceService()
-  const { resultNetworkGraph, loadingNetworkGraph } = GetNetworkGraph(
+
+  // const { resultNetworkGraph, loadingNetworkGraph } = GetNetworkGraph(
+  //   campaign,
+  //   platformId,
+  //   date,
+  //   endDate,
+  //   period,
+  //   previousDate,
+  //   previousEndDate,
+  //   '',
+  //   '',
+  //   'sna',
+  //   'bullyLevel',
+  //   keyword,
+  //   limit
+  // )
+
+  const { resultSNAGraph, loadingSNAGraph } = GetSNA(
     campaign,
     platformId,
     date,
@@ -76,7 +94,7 @@ const SNAByBullyLevel = () => {
     '',
     '',
     'sna',
-    'bullyLevel',
+    'bully-level',
     keyword,
     limit
   )
@@ -234,12 +252,20 @@ const SNAByBullyLevel = () => {
   }, [resultCampaiganList])
 
   useEffect(() => {
-    if (!loadingNetworkGraph && resultNetworkGraph) {
-      setGraphData(resultNetworkGraph)
+    if (!loadingSNAGraph && resultSNAGraph) {
+      setGraphData(resultSNAGraph)
     } else {
       setGraphData(initialGraph)
     }
-  }, [loadingNetworkGraph])
+  }, [loadingSNAGraph])
+
+  // useEffect(() => {
+  //   if (!loadingNetworkGraph && resultNetworkGraph) {
+  //     setGraphData(resultNetworkGraph)
+  //   } else {
+  //     setGraphData(initialGraph)
+  //   }
+  // }, [loadingNetworkGraph])
 
   useEffect(() => {
     if (localStorage.getItem('dateSelect')) {
@@ -525,7 +551,7 @@ const SNAByBullyLevel = () => {
       </Grid>
       <Grid item xs={12} mt={1}>
         <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
-          {loadingNetworkGraph && <LinearProgress style={{ width: '100%' }} />}
+          {loadingSNAGraph && <LinearProgress style={{ width: '100%' }} />}
 
           <Box sx={{ mb: 8, textAlign: 'center' }}>
             <Typography variant='h5' sx={{ mt: 4, mb: 3, lineHeight: '2rem' }}>
@@ -535,7 +561,7 @@ const SNAByBullyLevel = () => {
 
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              {resultNetworkGraph ? (
+              {resultSNAGraph?.nodes?.length > 0 ? (
                 <>
                   <Graph
                     graph={graphData}
@@ -544,7 +570,7 @@ const SNAByBullyLevel = () => {
                       selectNode: event => {
                         const { nodes } = event
                         if (nodes.length == 1) {
-                          const nodesData = resultNetworkGraph?.nodes
+                          const nodesData = resultSNAGraph?.nodes
 
                           for (let i = 0; i < nodesData?.length; i++) {
                             if (nodes[0] === nodesData[i].id) {
