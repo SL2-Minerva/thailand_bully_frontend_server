@@ -188,8 +188,8 @@ const edgeObject = (data: any, from: string) => {
   const edge = {
     from: from,
     to: data?.id ?? '',
-    width: 10,
-    length: 100,
+    width: 5,
+    length: 300,
     color: data?.color ?? '#fff',
     link_message: data?.link ?? ''
   }

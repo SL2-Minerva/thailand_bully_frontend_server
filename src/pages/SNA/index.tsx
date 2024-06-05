@@ -42,7 +42,7 @@ export const initialGraph = {
 }
 
 const SNA = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   const [date, setDate] = useState<DateType>(new Date(localStorage.getItem('startDate') || calculateDate(6)))
   const [endDate, setEndDate] = useState<DateType>(new Date(localStorage.getItem('endDate') || new Date()))
   const [previousDate, setPreviousDate] = useState<DateType>(
@@ -63,6 +63,7 @@ const SNA = () => {
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [graphData, setGraphData] = useState<any>(initialGraph)
+  const [network, setNetwork] = useState<any>({})
 
   // const [selectedValue, setSelectedValue] = useState('bySentiment')
 
@@ -287,7 +288,7 @@ const SNA = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
+        <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
           <CardHeader title={<Translations text='Filter' />} />
           <CardContent>
             <Grid container spacing={6}>
@@ -500,7 +501,7 @@ const SNA = () => {
       </Grid>
       <Grid container spacing={2} mt={1}>
         <Grid item xs={12} ml={2}>
-          <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
+          <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
             <CardHeader title='Keyword Filter'></CardHeader>
             <CardContent>
               <Grid container spacing={2}>
@@ -560,7 +561,7 @@ const SNA = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} mt={1}>
-        <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }} >
+        <Paper style={{ border: `3px solid #fff`, borderRadius: 7 }}>
           {loadingSNAGraph && <LinearProgress style={{ width: '100%' }} />}
 
           <Box sx={{ mb: 8, textAlign: 'center' }}>
@@ -589,8 +590,12 @@ const SNA = () => {
                             }
                           }
                         }
+                      },
+                      stabilized: function () {
+                        network?.fit()
                       }
                     }}
+                    getNetwork={setNetwork}
                   />
                 </>
               ) : (

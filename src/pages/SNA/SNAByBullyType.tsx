@@ -59,6 +59,7 @@ const SNAByBullyType = () => {
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [graphData, setGraphData] = useState<any>(initialGraph)
+  const [network, setNetwork] = useState<any>({})
 
   const router = useRouter()
 
@@ -230,6 +231,7 @@ const SNAByBullyType = () => {
     height: '700px',
     autoResize: false
   }
+
 
   useEffect(() => {
     if (errorUserPermission) {
@@ -580,8 +582,13 @@ const SNAByBullyType = () => {
                           }
                         }
                       }
-                    }
+                    },
+                    stabilized: function () {
+                      network?.fit()
+                    }                  
                   }}
+                  getNetwork={setNetwork}
+
                 />
               ) : (
                 <div

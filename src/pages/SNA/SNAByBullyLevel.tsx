@@ -38,8 +38,8 @@ import { useTranslation } from 'react-i18next'
 import { GetSNA } from 'src/services/api/dashboards/sna/snaApi'
 
 const SNAByBullyLevel = () => {
-  const { t } = useTranslation();
-  
+  const { t } = useTranslation()
+
   const [date, setDate] = useState<DateType>(new Date(localStorage.getItem('startDate') || calculateDate(6)))
   const [endDate, setEndDate] = useState<DateType>(new Date(localStorage.getItem('endDate') || new Date()))
   const [previousDate, setPreviousDate] = useState<DateType>(
@@ -50,6 +50,7 @@ const SNAByBullyLevel = () => {
   )
 
   const [status, setStatus] = useState(localStorage.getItem('status') || '1')
+  const [network, setNetwork] = useState<any>({})
 
   const [campaign, setCampaign] = useState<string>('1')
   const [platformId, setPlatformId] = useState<string>('all')
@@ -579,8 +580,12 @@ const SNAByBullyLevel = () => {
                             }
                           }
                         }
+                      },
+                      stabilized: function () {
+                        network?.fit()
                       }
                     }}
+                    getNetwork={setNetwork}
                   />
                 </>
               ) : (
