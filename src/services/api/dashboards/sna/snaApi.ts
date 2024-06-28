@@ -1,5 +1,5 @@
-import moment from 'moment'
-import { CallAPI } from 'src/services/CallAPI'
+import moment from 'moment';
+import { CallAPI } from 'src/services/CallAPI';
 
 // import Words from 'src/types/dashboard/words'
 
@@ -18,13 +18,13 @@ export const GetSNA = (
   fillter_keywords?: any,
   limit?: any
 ) => {
-  let params: any = {}
+  let params: any = {};
   params = {
     campaign_id: campaignId || '',
     message_id: messageId || '',
     keyword_id: keywordId || '',
     report_number: reportNo || ''
-  }
+  };
 
   if (
     period === 'customrange' &&
@@ -33,67 +33,68 @@ export const GetSNA = (
     start_date !== end_date &&
     previousDate !== previousEndDate
   ) {
-    params.start_date = start_date ? moment(start_date).format('YYYY-MM-DD') : ''
-    params.end_date = end_date ? moment(end_date).format('YYYY-MM-DD') : ''
+    params.start_date = start_date ? moment(start_date).format('YYYY-MM-DD') : '';
+    params.end_date = end_date ? moment(end_date).format('YYYY-MM-DD') : '';
 
     // params.period = period
-    params.start_date_period = previousDate ? moment(previousDate).format('YYYY-MM-DD') : ''
-    params.end_date_period = previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : ''
-    params.keyword_id = fillter_keywords
-    params.type = type
+    params.start_date_period = previousDate ? moment(previousDate).format('YYYY-MM-DD') : '';
+    params.end_date_period = previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '';
+    params.keyword_id = fillter_keywords;
+    params.type = type;
   } else {
-    params.start_date = start_date ? moment(start_date).format('YYYY-MM-DD') : ''
-    params.end_date = end_date ? moment(end_date).format('YYYY-MM-DD') : ''
-    params.keyword_id = fillter_keywords
-    params.type = type
+    params.start_date = start_date ? moment(start_date).format('YYYY-MM-DD') : '';
+    params.end_date = end_date ? moment(end_date).format('YYYY-MM-DD') : '';
+    params.keyword_id = fillter_keywords;
+    params.type = type;
 
     // params.period = period
   }
 
   if (platformId) {
-    params.source = platformId
+    params.source = platformId;
   }
 
   if (fillter_keywords) {
-    params.keyword_id = fillter_keywords
+    params.keyword_id = fillter_keywords;
   }
 
   if (limit) {
-    params.limit = limit
+    params.limit = limit;
   }
 
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     url: `/sna`,
     method: 'GET',
     params: params
-  })
+  });
 
-  const responseData = response?.data || []
+  const responseData = response?.data || [];
 
-  let nodeData: any[] = []
-  let edgeData: any[] = []
+  let nodeData: any[] = [];
+  let edgeData: any[] = [];
+  const uniqueIds = new Set<string>();
 
   for (let i = 0; i < responseData.length; i++) {
-    const node = makeNodes(responseData[i])
-    const edge = makeEdges(responseData[i])
-    nodeData = [...nodeData, ...node]
-    edgeData = [...edgeData, ...edge]
+    const node = makeNodes(responseData[i], uniqueIds);
+    const edge = makeEdges(responseData[i]);
+    nodeData = [...nodeData, ...node];
+    edgeData = [...edgeData, ...edge];
   }
 
   const snaData = {
     edges: edgeData ?? [],
     nodes: nodeData ?? []
-  }
+  };
 
   return {
     resultSNAGraph: snaData,
     loadingSNAGraph: loading,
     errorNetworkGraph: error
-  }
-}
+  };
+};
 
-const makeNodes = (data: any) => {
-  let returnNodes: any = []
+const makeNodes = (data: any, uniqueIds: Set<string>) => {
+  let returnNodes: any = [];
 
   const parentNode = {
     id: data?.id ?? '',
@@ -105,23 +106,26 @@ const makeNodes = (data: any) => {
     link_message: data?.link ?? '',
     length: 10,
     parent_id: ''
+  };
+
+  if (!uniqueIds.has(parentNode.id)) {
+    uniqueIds.add(parentNode.id);
+    returnNodes.push(parentNode);
   }
 
-  returnNodes.push(parentNode)
-
-  const items = data?.items
+  const items = data?.items;
   if (items?.length > 0) {
     for (let i = 0; i < items?.length; i++) {
-      const node = childNodes(items[i], data?.link ?? '')
-      returnNodes = [...returnNodes, ...node]
+      const node = childNodes(items[i], data?.link ?? '', uniqueIds);
+      returnNodes = [...returnNodes, ...node];
     }
   }
 
-  return returnNodes
-}
+  return returnNodes;
+};
 
-const childNodes = (data: any, link: string) => {
-  let returnData: any = []
+const childNodes = (data: any, link: string, uniqueIds: Set<string>) => {
+  let returnData: any = [];
 
   const node = {
     id: data?.id ?? '',
@@ -133,56 +137,64 @@ const childNodes = (data: any, link: string) => {
     link_message: link ?? '',
     length: 10,
     parent_id: ''
+  };
+
+  if (!uniqueIds.has(node.id)) {
+    uniqueIds.add(node.id);
+    returnData.push(node);
   }
 
-  returnData.push(node)
-
-  const childItems = data?.items ?? []
-  const childNodesArray = []
+  const childItems = data?.items ?? [];
+  const childNodesArray = [];
 
   if (childItems?.length > 0) {
     for (let i = 0; i < childItems?.length; i++) {
-      const recurrsive = childItemObject(childItems[i], link ?? '')
-      childNodesArray.push(recurrsive)
+      const recursive = childItemObject(childItems[i], link ?? '', uniqueIds);
+      childNodesArray.push(recursive);
     }
   }
 
   if (childNodesArray?.length > 0) {
-    returnData = [...returnData, ...childNodesArray]
+    returnData = [...returnData, ...childNodesArray];
   }
 
-  return returnData
-}
+  return returnData;
+};
 
-const childItemObject = (data: any, link: string) => {
-    const node = {
-        id: data?.id ?? '',
-        label_name: data.title ?? '',
-        title: data.title ?? '',
-        color: data?.color ?? '#63A375',
-        shape: 'dot',
-        size: data?.size ?? 10,
-        link_message: link ?? '',
-        length: 10,
-        parent_id: ''
-      }
-  
-    return node
+const childItemObject = (data: any, link: string, uniqueIds: Set<string>) => {
+  const node = {
+    id: data?.id ?? '',
+    label_name: data.title ?? '',
+    title: data.title ?? '',
+    color: data?.color ?? '#63A375',
+    shape: 'dot',
+    size: data?.size ?? 10,
+    link_message: link ?? '',
+    length: 10,
+    parent_id: ''
+  };
+
+  if (!uniqueIds.has(node.id)) {
+    uniqueIds.add(node.id);
+    return node;
   }
+
+  return [];
+};
 
 const makeEdges = (data: any) => {
-  const items = data?.items
-  let mergeEdgeData: any[] = []
+  const items = data?.items;
+  let mergeEdgeData: any[] = [];
   if (items?.length > 0) {
     for (let i = 0; i < items?.length; i++) {
-      const edge = [edgeObject(items[i], data?.id)]
+      const edge = [edgeObject(items[i], data?.id)];
 
-      mergeEdgeData = [...mergeEdgeData, ...edge]
+      mergeEdgeData = [...mergeEdgeData, ...edge];
     }
   }
 
-  return mergeEdgeData
-}
+  return mergeEdgeData;
+};
 
 const edgeObject = (data: any, from: string) => {
   const edge = {
@@ -192,7 +204,7 @@ const edgeObject = (data: any, from: string) => {
     length: 300,
     color: data?.color ?? '#fff',
     link_message: data?.link ?? ''
-  }
+  };
 
-  return edge
-}
+  return edge;
+};
