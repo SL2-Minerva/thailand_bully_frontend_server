@@ -1,8 +1,6 @@
 import moment from 'moment';
 import { CallAPI } from 'src/services/CallAPI';
 
-// import Words from 'src/types/dashboard/words'
-
 export const GetSNA = (
   campaignId?: string,
   platformId?: string,
@@ -36,7 +34,6 @@ export const GetSNA = (
     params.start_date = start_date ? moment(start_date).format('YYYY-MM-DD') : '';
     params.end_date = end_date ? moment(end_date).format('YYYY-MM-DD') : '';
 
-    // params.period = period
     params.start_date_period = previousDate ? moment(previousDate).format('YYYY-MM-DD') : '';
     params.end_date_period = previousEndDate ? moment(previousEndDate).format('YYYY-MM-DD') : '';
     params.keyword_id = fillter_keywords;
@@ -46,8 +43,6 @@ export const GetSNA = (
     params.end_date = end_date ? moment(end_date).format('YYYY-MM-DD') : '';
     params.keyword_id = fillter_keywords;
     params.type = type;
-
-    // params.period = period
   }
 
   if (platformId) {
@@ -72,13 +67,14 @@ export const GetSNA = (
 
   let nodeData: any[] = [];
   let edgeData: any[] = [];
-  const uniqueIds = new Set<string>();
+  const uniqueNodeIds = new Set<string>();
+  const uniqueEdgeKeys = new Set<string>();
 
   for (let i = 0; i < responseData.length; i++) {
-    const node = makeNodes(responseData[i], uniqueIds);
-    const edge = makeEdges(responseData[i]);
-    nodeData = [...nodeData, ...node];
-    edgeData = [...edgeData, ...edge];
+    const nodes = makeNodes(responseData[i], uniqueNodeIds);
+    const edges = makeEdges(responseData[i], uniqueEdgeKeys);
+    nodeData = [...nodeData, ...nodes];
+    edgeData = [...edgeData, ...edges];
   }
 
   const snaData = {
@@ -116,8 +112,8 @@ const makeNodes = (data: any, uniqueIds: Set<string>) => {
   const items = data?.items;
   if (items?.length > 0) {
     for (let i = 0; i < items?.length; i++) {
-      const node = childNodes(items[i], data?.link ?? '', uniqueIds);
-      returnNodes = [...returnNodes, ...node];
+      const childNodesArray = childNodes(items[i], data?.link ?? '', uniqueIds);
+      returnNodes = [...returnNodes, ...childNodesArray];
     }
   }
 
@@ -145,66 +141,50 @@ const childNodes = (data: any, link: string, uniqueIds: Set<string>) => {
   }
 
   const childItems = data?.items ?? [];
-  const childNodesArray = [];
-
   if (childItems?.length > 0) {
     for (let i = 0; i < childItems?.length; i++) {
-      const recursive = childItemObject(childItems[i], link ?? '', uniqueIds);
-      childNodesArray.push(recursive);
+      const childNodeArray = childNodes(childItems[i], link ?? '', uniqueIds);
+      returnData = [...returnData, ...childNodeArray];
     }
-  }
-
-  if (childNodesArray?.length > 0) {
-    returnData = [...returnData, ...childNodesArray];
   }
 
   return returnData;
 };
 
-const childItemObject = (data: any, link: string, uniqueIds: Set<string>) => {
-  const node = {
-    id: data?.id ?? '',
-    label_name: data.title ?? '',
-    title: data.title ?? '',
-    color: data?.color ?? '#63A375',
-    shape: 'dot',
-    size: data?.size ?? 10,
-    link_message: link ?? '',
-    length: 10,
-    parent_id: ''
-  };
-
-  if (!uniqueIds.has(node.id)) {
-    uniqueIds.add(node.id);
-    return node;
-  }
-
-  return [];
-};
-
-const makeEdges = (data: any) => {
+const makeEdges = (data: any, uniqueEdgeKeys: Set<string>) => {
   const items = data?.items;
-  let mergeEdgeData: any[] = [];
+
+  const mergeEdgeData: any[] = [];
   if (items?.length > 0) {
     for (let i = 0; i < items?.length; i++) {
-      const edge = [edgeObject(items[i], data?.id)];
+      const edge = edgeObject(items[i], data?.id, uniqueEdgeKeys);
 
-      mergeEdgeData = [...mergeEdgeData, ...edge];
+      if (edge) {
+        mergeEdgeData.push(edge);
+      }
     }
   }
 
   return mergeEdgeData;
 };
 
-const edgeObject = (data: any, from: string) => {
-  const edge = {
-    from: from,
-    to: data?.id ?? '',
-    width: 5,
-    length: 300,
-    color: data?.color ?? '#fff',
-    link_message: data?.link ?? ''
-  };
+const edgeObject = (data: any, from: string, uniqueEdgeKeys: Set<string>) => {
+  const edgeKey = `${from}-${data?.id}`;
 
-  return edge;
+  if (!uniqueEdgeKeys.has(edgeKey)) {
+    uniqueEdgeKeys.add(edgeKey);
+
+    const edge = {
+      from: from,
+      to: data?.id ?? '',
+      width: 5,
+      length: 300,
+      color: data?.color ?? '#fff',
+      link_message: data?.link ?? ''
+    };
+
+    return edge;
+  }
+
+  return null;
 };
