@@ -64,17 +64,43 @@ export const GetSNA = (
   });
 
   const responseData = response?.data || [];
+  
+  // const responseData = [
+  //   {
+  //     "id": "-gzvezr6lzY",
+  //     "total_engagement": "40",
+  //     "title": "THE STANDARD WEALTH",
+  //     "color": "#EDF2F4",
+  //     "size": 70,
+  //     "link": "https://www.youtube.com/watch?v=-gzvezr6lzY",
+  //     "items": [
+  //       {
+  //         "id": "UgxUDFrkoKlrOecWo5t4AaABAg",
+  //         "total_engagement": 8,
+  //         "title": "@singdada8111",
+  //         "color": "#EDF2F4",
+  //         "size": 25,
+  //         "items": [
+  //           {
+  //             "id": "UgxUDFrkoKlrOecWo5t4AaABAg.A5V7jnkBI93A5VFNkdOaio",
+  //             "total_engagement": 0,
+  //             "title": "@susosu6070",
+  //             "color": "#EDF2F4",
+  //             "size": 10
+  //           }
+  //         ]
+  //       }
+  //     ]
+  //   }
+  // ];
 
-  let nodeData: any[] = [];
-  let edgeData: any[] = [];
+  const nodeData: any[] = [];
+  const edgeData: any[] = [];
   const uniqueNodeIds = new Set<string>();
   const uniqueEdgeKeys = new Set<string>();
 
   for (let i = 0; i < responseData.length; i++) {
-    const nodes = makeNodes(responseData[i], uniqueNodeIds);
-    const edges = makeEdges(responseData[i], uniqueEdgeKeys);
-    nodeData = [...nodeData, ...nodes];
-    edgeData = [...edgeData, ...edges];
+    processItem(responseData[i], uniqueNodeIds, uniqueEdgeKeys, nodeData, edgeData);
   }
 
   const snaData = {
@@ -89,102 +115,42 @@ export const GetSNA = (
   };
 };
 
-const makeNodes = (data: any, uniqueIds: Set<string>) => {
-  let returnNodes: any = [];
-
-  const parentNode = {
-    id: data?.id ?? '',
-    label_name: data?.title ?? '',
-    title: data?.title ?? '',
-    color: data?.color ?? '#63A375',
-    shape: 'dot',
-    size: data?.size ?? 10,
-    link_message: data?.link ?? '',
-    length: 10,
-    parent_id: ''
-  };
-
-  if (!uniqueIds.has(parentNode.id)) {
-    uniqueIds.add(parentNode.id);
-    returnNodes.push(parentNode);
-  }
-
-  const items = data?.items;
-  if (items?.length > 0) {
-    for (let i = 0; i < items?.length; i++) {
-      const childNodesArray = childNodes(items[i], data?.link ?? '', uniqueIds);
-      returnNodes = [...returnNodes, ...childNodesArray];
-    }
-  }
-
-  return returnNodes;
-};
-
-const childNodes = (data: any, link: string, uniqueIds: Set<string>) => {
-  let returnData: any = [];
-
+const processItem = (item: any, uniqueNodeIds: Set<string>, uniqueEdgeKeys: Set<string>, nodeData: any[], edgeData: any[], parentId?: string) => {
   const node = {
-    id: data?.id ?? '',
-    label_name: data.title ?? '',
-    title: data.title ?? '',
-    color: data?.color ?? '#63A375',
+    id: item?.id ?? '',
+    label_name: item?.title ?? '',
+    title: item?.title ?? '',
+    color: item?.color ?? '#63A375',
     shape: 'dot',
-    size: data?.size ?? 10,
-    link_message: link ?? '',
+    size: item?.size ?? 10,
+    link_message: item?.link ?? '',
     length: 10,
-    parent_id: ''
+    parent_id: parentId
   };
 
-  if (!uniqueIds.has(node.id)) {
-    uniqueIds.add(node.id);
-    returnData.push(node);
-  }
+  if (!uniqueNodeIds.has(node.id)) {
+    uniqueNodeIds.add(node.id);
+    nodeData.push(node);
 
-  const childItems = data?.items ?? [];
-  if (childItems?.length > 0) {
-    for (let i = 0; i < childItems?.length; i++) {
-      const childNodeArray = childNodes(childItems[i], link ?? '', uniqueIds);
-      returnData = [...returnData, ...childNodeArray];
-    }
-  }
-
-  return returnData;
-};
-
-const makeEdges = (data: any, uniqueEdgeKeys: Set<string>) => {
-  const items = data?.items;
-
-  const mergeEdgeData: any[] = [];
-  if (items?.length > 0) {
-    for (let i = 0; i < items?.length; i++) {
-      const edge = edgeObject(items[i], data?.id, uniqueEdgeKeys);
-
-      if (edge) {
-        mergeEdgeData.push(edge);
+    if (parentId) {
+      const edgeKey = `${parentId}-${node.id}`;
+      if (!uniqueEdgeKeys.has(edgeKey)) {
+        uniqueEdgeKeys.add(edgeKey);
+        edgeData.push({
+          from: parentId,
+          to: node.id,
+          width: 5,
+          length: 300,
+          color: node.color,
+          link_message: node.link_message
+        });
       }
     }
   }
 
-  return mergeEdgeData;
-};
-
-const edgeObject = (data: any, from: string, uniqueEdgeKeys: Set<string>) => {
-  const edgeKey = `${from}-${data?.id}`;
-
-  if (!uniqueEdgeKeys.has(edgeKey)) {
-    uniqueEdgeKeys.add(edgeKey);
-
-    const edge = {
-      from: from,
-      to: data?.id ?? '',
-      width: 5,
-      length: 300,
-      color: data?.color ?? '#fff',
-      link_message: data?.link ?? ''
-    };
-
-    return edge;
+  if (item.items && item.items.length > 0) {
+    for (let i = 0; i < item.items.length; i++) {
+      processItem(item.items[i], uniqueNodeIds, uniqueEdgeKeys, nodeData, edgeData, node.id);
+    }
   }
-
-  return null;
 };
