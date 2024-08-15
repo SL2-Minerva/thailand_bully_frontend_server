@@ -1,45 +1,45 @@
-import moment from 'moment'
+// import moment from 'moment'
 import { CallAPI } from 'src/services/CallAPI'
 
-const getParams = (data: any) => {
-  if (!data) return null
+// const getParams = (data: any) => {
+//   if (!data) return null
 
-  let params = {}
-  const todayDate = moment(new Date()).format('YYYY-MM-DD')
+//   let params = {}
+//   const todayDate = moment(new Date()).format('YYYY-MM-DD')
 
-  const previousDate = data?.previousDate ? moment(data?.previousDate).format('YYYY-MM-DD') : ''
-  const previousEndDate = data?.previousEndDate ? moment(data?.previousEndDate).format('YYYY-MM-DD') : ''
+//   const previousDate = data?.previousDate ? moment(data?.previousDate).format('YYYY-MM-DD') : ''
+//   const previousEndDate = data?.previousEndDate ? moment(data?.previousEndDate).format('YYYY-MM-DD') : ''
 
-  if (data?.period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
-    params = {
-      campaign_id: data?.campaign_id || '',
-      start_date: data?.start_date ? moment(data?.start_date).format('YYYY-MM-DD') : '',
-      end_date: data?.end_date ? moment(data?.end_date).format('YYYY-MM-DD') : '',
-      period: data?.period,
-      source: data?.source,
-      start_date_period: previousDate,
-      end_date_period: previousEndDate,
-      fillter_keywords: data?.fillter_keywords
-    }
-  } else {
-    params = {
-      campaign_id: data?.campaign_id || '',
-      start_date: data?.start_date ? moment(data?.start_date).format('YYYY-MM-DD') : '',
-      end_date: data?.end_date ? moment(data?.end_date).format('YYYY-MM-DD') : '',
-      period: data?.period,
-      source: data?.source,
-      fillter_keywords: data?.fillter_keywords
-    }
-  }
+//   if (data?.period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
+//     params = {
+//       campaign_id: data?.campaign_id || '',
+//       start_date: data?.start_date ? moment(data?.start_date).format('YYYY-MM-DD') : '',
+//       end_date: data?.end_date ? moment(data?.end_date).format('YYYY-MM-DD') : '',
+//       period: data?.period,
+//       source: data?.source,
+//       start_date_period: previousDate,
+//       end_date_period: previousEndDate,
+//       fillter_keywords: data?.fillter_keywords
+//     }
+//   } else {
+//     params = {
+//       campaign_id: data?.campaign_id || '',
+//       start_date: data?.start_date ? moment(data?.start_date).format('YYYY-MM-DD') : '',
+//       end_date: data?.end_date ? moment(data?.end_date).format('YYYY-MM-DD') : '',
+//       period: data?.period,
+//       source: data?.source,
+//       fillter_keywords: data?.fillter_keywords
+//     }
+//   }
 
-  return params
-}
+//   return params
+// }
 
 export const GetDailyMonitoring = (params: any) => {
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-monitoring/daily-by`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
@@ -53,7 +53,7 @@ export const GetTopEngagementMonitoring = (params: any) => {
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-monitoring/top-engagement`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
@@ -110,7 +110,7 @@ export const GetTopFiveInfluencers = (params: any) => {
   const [{ data: res, loading, error }] = CallAPI<{ data?: any }>({
     url: `/dashboard-monitoring/influencers/top`,
     method: 'GET',
-    params: getParams(params)
+    params: params
   })
 
   return {
