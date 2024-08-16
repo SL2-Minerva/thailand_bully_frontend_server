@@ -30,7 +30,7 @@ const MonitoringDashboard = () => {
   const [keyword, setKeyword] = useState<string>('all')
   const [filterKeyword, setFilterKeyword] = useState<any>([])
   const [loadingKeyword, setLoadingKeyword] = useState<boolean>(true)
-  const [platformId, setPlatformId] = useState<string>('all')
+  const [platformId, setPlatformId] = useState<string>(localStorage.getItem('platformId') || 'all')
   const [status, setStatus] = useState(localStorage.getItem('status') || '1')
   const [keywordGraphColors, setKeywordGraphColor] = useState<any>(null)
 

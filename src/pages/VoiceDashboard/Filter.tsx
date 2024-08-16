@@ -138,6 +138,7 @@ const Filter = (props: Props) => {
       localStorage.setItem('campaign', e.target.value)
     } else {
       setPlatformId(e.target.value)
+      localStorage.setItem('platformId', e.target.value)
     }
   }, [])
 

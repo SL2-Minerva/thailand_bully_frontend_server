@@ -95,7 +95,7 @@ const WordCloudDashboard = () => {
     new Date(localStorage.getItem('previousEndDate') || new Date())
   )
   const [campaign, setCampaign] = useState<string>('')
-  const [platformId, setPlatformId] = useState<string>('all')
+  const [platformId, setPlatformId] = useState<string>(localStorage.getItem('platformId') || 'all')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
 
   const [status, setStatus] = useState(localStorage.getItem('status') || '1')
@@ -158,6 +158,7 @@ const WordCloudDashboard = () => {
       localStorage.setItem('campaign', e.target.value)
     } else {
       setPlatformId(e.target.value)
+      localStorage.setItem('platformId', e.target.value);
     }
   }, [])
 

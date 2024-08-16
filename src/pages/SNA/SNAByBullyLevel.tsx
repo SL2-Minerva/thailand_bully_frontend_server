@@ -53,7 +53,7 @@ const SNAByBullyLevel = () => {
   const [network, setNetwork] = useState<any>({})
 
   const [campaign, setCampaign] = useState<string>('1')
-  const [platformId, setPlatformId] = useState<string>('all')
+  const [platformId, setPlatformId] = useState<string>(localStorage.getItem('platformId') || 'all')
   const [limit, setLimit] = useState<string>('1000')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
   const [period, setPeriod] = useState<string>('last7days')
@@ -122,6 +122,7 @@ const SNAByBullyLevel = () => {
       setLimit(e.target.value)
     } else {
       setPlatformId(e.target.value)
+      localStorage.setItem('platformId', e.target.value);
     }
   }, [])
   const handleDateSelect = useCallback((e: any) => {
