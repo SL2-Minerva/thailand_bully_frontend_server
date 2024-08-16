@@ -23,7 +23,7 @@ const VoiceDashboard = () => {
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
   const [status, setStatus] = useState(localStorage.getItem('status') || '1')
   const [campaign, setCampaign] = useState<string>('')
-  const [platformId, setPlatformId] = useState<string>('all')
+  const [platformId, setPlatformId] = useState<string>(localStorage.getItem('platformId') || 'all')
   const [previousDate, setPreviousDate] = useState<any>(
     new Date(localStorage.getItem('previousStartDate') || new Date())
   )

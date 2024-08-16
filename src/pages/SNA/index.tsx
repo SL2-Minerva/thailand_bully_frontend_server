@@ -55,7 +55,7 @@ const SNA = () => {
   const [status, setStatus] = useState(localStorage.getItem('status') || '1')
 
   const [campaign, setCampaign] = useState<string>('1')
-  const [platformId, setPlatformId] = useState<string>('all')
+  const [platformId, setPlatformId] = useState<string>(localStorage.getItem('platformId') || 'all')
   const [limit, setLimit] = useState<string>('1000')
   const [dateSelect, setDateSelect] = useState<string>(localStorage.getItem('dateSelect') || '3')
   const [period, setPeriod] = useState<string>('last7days')
@@ -127,6 +127,7 @@ const SNA = () => {
       setLimit(e.target.value)
     } else {
       setPlatformId(e.target.value)
+      localStorage.setItem('platformId', e.target.value);
     }
   }, [])
 
