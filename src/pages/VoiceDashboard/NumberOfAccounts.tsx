@@ -1,8 +1,9 @@
 import { Grid } from '@mui/material'
 import InfluencerGraph from './InfluencerGraph'
-import InfluencerComparison from './InfluencerComparison'
-import MessageText from 'mdi-material-ui/MessageText'
-import { AccountGroup } from 'mdi-material-ui'
+
+// import InfluencerComparison from './InfluencerComparison'
+// import MessageText from 'mdi-material-ui/MessageText'
+// import { AccountGroup } from 'mdi-material-ui'
 import { GetNumbersOfAccountComparison } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
 interface Props {
@@ -16,13 +17,16 @@ interface Props {
 
 const NumberOfAccounts = (props: Props) => {
   const { apiParams, highlight, params, keywordGraphColors, setIsLoading,  resultReportPermission } = props
-  const { resultNumbersOfAccounts, resultTotalAccounts, resultTotalMessages, loadingNumbersOfAccountsComparison } =
+
+  // const { resultNumbersOfAccounts, resultTotalAccounts, resultTotalMessages, loadingNumbersOfAccountsComparison } =
+  const { resultNumbersOfAccounts, loadingNumbersOfAccountsComparison } =
+
     GetNumbersOfAccountComparison(apiParams)
 
   return (
     <>
       {resultReportPermission?.includes('30') ? (
-        <Grid item xs={12} md={8} id='chart11'>
+        <Grid item xs={12} md={12} id='chart11'>
           <InfluencerGraph
             chartId='Chart 11'
             params={params}
@@ -38,7 +42,7 @@ const NumberOfAccounts = (props: Props) => {
         ''
       )}
 
-      <Grid item xs={12} md={4}>
+      {/* <Grid item xs={12} md={4}>
         {resultReportPermission?.includes('31') ? (
           <Grid item xs={12} id='chart12'>
             <InfluencerComparison
@@ -75,7 +79,7 @@ const NumberOfAccounts = (props: Props) => {
         ) : (
           ''
         )}
-      </Grid>
+      </Grid> */}
     </>
   )
 }

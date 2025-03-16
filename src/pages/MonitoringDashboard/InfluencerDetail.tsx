@@ -14,7 +14,7 @@ import {
   Typography
 } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
-import { OpenInNew, DotsVertical, ArrowUp, ArrowDown, MicrosoftExcel } from 'mdi-material-ui'
+import { OpenInNew, DotsVertical, ArrowUp, ArrowDown, MicrosoftExcel, ImageOutline} from 'mdi-material-ui'
 import Translations from 'src/layouts/components/Translations'
 import moment from 'moment'
 import { DataGrid } from '@mui/x-data-grid'
@@ -29,6 +29,7 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { GetInfluencerByAuthor } from 'src/services/api/dashboards/monitoring/MonitoringDashboard'
 import DetailPostEgagement from './DetailPostEngagement'
+import ImagePopupDialog from '../dashboard/ImagePopupDialog'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -78,7 +79,7 @@ export const initialSort = {
   message_type: '',
   author: '',
   post_time: '',
-  device: '',
+  scrapingtime: '',
   source: '',
   engagement: '',
   sentiment: '',
@@ -121,6 +122,8 @@ const InfluencerDetail = (props: DialogInfoProps) => {
   const [sortSelect, setSortSelect] = useState('')
   const [sortColumns, setSortColumn] = useState<any>(initialSort)
   const [showDetail, setShowDetail] = useState<boolean>(false)
+  const [showImagePopup, setShowImagePopup] = useState(false)
+  const [imageUrl, setImageUrl] = useState('')  
 
   const { resultMessageDetail, totalMessage, loadingMessageDetail } = GetInfluencerByAuthor({
     campaign_id: params?.campaign_id || params?.campaign,
@@ -339,17 +342,17 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                   <StyledTableCell
                     align='center'
                     onClick={() => {
-                      const type = sortColumns.device === '' ? 'asc' : sortColumns.device === 'asc' ? 'desc' : ''
-                      handleButtonSort('device', type)
+                      const type = sortColumns.scrapingtime === '' ? 'asc' : sortColumns.scrapingtime === 'asc' ? 'desc' : ''
+                      handleButtonSort('scrapingtime', type)
                     }}
                   >
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                       <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
-                        {sortColumns.device === 'desc' ? (
+                        {sortColumns.scrapingtime === 'desc' ? (
                           <Tooltip title='Descending'>
                             <ArrowDown style={{ fontSize: '20px' }} />
                           </Tooltip>
-                        ) : sortColumns.device === 'asc' ? (
+                        ) : sortColumns.scrapingtime === 'asc' ? (
                           <Tooltip title='Ascending'>
                             <ArrowUp style={{ fontSize: '20px' }} />
                           </Tooltip>
@@ -359,7 +362,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                           </Tooltip>
                         )}
                       </span>
-                      Device
+                      Scraping Time
                     </span>
                   </StyledTableCell>
                   <StyledTableCell
@@ -496,6 +499,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                     </span>
                   </StyledTableCell>
                   <StyledTableCell align='center'>Link</StyledTableCell>
+                  <StyledTableCell align='center'>Image</StyledTableCell>
                   {/* <StyledTableCell align='center'>Action</StyledTableCell> */}
                 </TableRow>
               </TableHead>
@@ -546,7 +550,8 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                     </StyledTableCell>
 
                     <StyledTableCell align='center' sx={{ color: 'grey' }}>
-                      {messageDetail.device === 'android' ? (
+                      {moment(messageDetail.scrape_date)?.format('DD.MM.YYYY') + ', ' + messageDetail.scrape_time}
+                      {/* {messageDetail.device === 'android' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/android.png`} />
                       ) : messageDetail.device === 'webapp' || messageDetail.device === 'website' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/website.png`} />
@@ -554,7 +559,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/ios.png`} />
                       ) : (
                         '-'
-                      )}
+                      )} */}
                     </StyledTableCell>
                     <StyledTableCell align='center' sx={{ color: 'grey' }}>
                       {messageDetail?.source_name === 'facebook' ? (
@@ -604,6 +609,21 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                         ''
                       )}
                     </StyledTableCell>
+
+                    <StyledTableCell align='center'>
+                      <a
+                        onClick={() => {
+                          setImageUrl(messageDetail.imageUrl) 
+                          setShowImagePopup(true) 
+                        }}
+                        target='_self'
+                        rel='noopener noreferrer'
+                        style={{ cursor: 'pointer' }}
+                      >
+                        <ImageOutline style={{ color: '#0047ff9e' }} />
+                      </a>
+                    </StyledTableCell>            
+
                     {/* <StyledTableCell align='center'>
                        <a
                         onClick={() => {
@@ -655,6 +675,12 @@ const InfluencerDetail = (props: DialogInfoProps) => {
       ) : (
         ''
       )}
+      <ImagePopupDialog
+        showDialog={showImagePopup}
+        setShowDialog={setShowImagePopup}
+        imageUrl={imageUrl}
+        title='Image'
+      />  
     </Card>
   )
 }

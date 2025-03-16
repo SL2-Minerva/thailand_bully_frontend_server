@@ -4,7 +4,8 @@ import SentimentScorePercentage from './SentimentScorePercentage'
 import { GetSenitmemntBy } from 'src/services/api/dashboards/sentiment/sentimentDashboard'
 import SentimentByDay from './SentimentByDay'
 import SentimentByTime from './SentimentByTime'
-import SentimentByDevice from './SentimentByDevice'
+
+// import SentimentByDevice from './SentimentByDevice'
 import SentimentByBullyType from './SentimentByBullyType'
 import SentimentByBullyLevel from './SentimentByBullyLevel'
 import SentimentByChannel from './SentitmentByChannel'
@@ -116,7 +117,7 @@ const SentimentBy = (props: Props) => {
       ) : (
         ''
       )}
-      {resultReportPermission?.includes('80') ? (
+      {/* {resultReportPermission?.includes('80') ? (
         <Grid item xs={12} md={12} id='chart5'>
           <SentimentByDevice
             white={whiteColor}
@@ -137,7 +138,7 @@ const SentimentBy = (props: Props) => {
         </Grid>
       ) : (
         ''
-      )}
+      )} */}
       {resultReportPermission?.includes('81') ? (
         <Grid item xs={12} md={12} id='chart6'>
           <SentimentByAccount

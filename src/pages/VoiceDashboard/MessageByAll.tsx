@@ -6,7 +6,8 @@ import MessagesByBullyLevel from './MessagesBy/MessageByBullyLevel'
 import MessagesByBullyType from './MessagesBy/MessageByBullyType'
 import MessagesByDays from './MessagesBy/MessageByDays'
 import MessagesByTime from './MessagesBy/MessageByTime'
-import MessagesByDevices from './MessagesBy/MessageByDevice'
+
+// import MessagesByDevices from './MessagesBy/MessageByDevice'
 import { useTheme } from '@mui/material/styles'
 import { GetMessagesByAll } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 import { useEffect } from 'react'
@@ -99,7 +100,7 @@ const MessageByAll = ({
       ) : (
         ''
       )}
-      {resultReportPermission?.includes('24') ? (
+      {/* {resultReportPermission?.includes('24') ? (
         <Grid item xs={12} md={12} id='chart5'>
           <MessagesByDevices
             white={whiteColor}
@@ -121,7 +122,7 @@ const MessageByAll = ({
         </Grid>
       ) : (
         ''
-      )}
+      )} */}
 
       {resultReportPermission?.includes('25') ? (
         <Grid item xs={12} md={12} id='chart6'>

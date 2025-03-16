@@ -49,9 +49,9 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
       : 'Number of Accounts: Period over Period Comparison'
 
   return (
-    <Paper sx={{ height: 250, border: `3px solid #fff`, borderRadius: 1 }} >
+    <Paper sx={{ height: '100%', border: `3px solid #fff`, borderRadius: 1 , display: 'flex', alignItems: 'center'}} >
       {loading && <LinearProgress style={{ width: '100%' }} />}
-      <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
+      <CardContent sx={{ display: 'flex', flexDirection: 'column' ,}}>
         <Box>
           <Grid container spacing={6}>
             <Grid item xs={3}>

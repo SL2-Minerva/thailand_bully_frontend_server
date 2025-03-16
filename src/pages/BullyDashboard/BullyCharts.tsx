@@ -11,13 +11,15 @@ import {
 import BullyLevelByAccount from './BullyLevelByAccount'
 import BullyLevelByChannel from './BullyLevelByChannel'
 import BullyLevelByDay from './BullyLevelByDay'
-import BullyLevelByDevice from './BullyLevelByDevice'
+
+// import BullyLevelByDevice from './BullyLevelByDevice'
 import BullyLevelBySentiment from './BullyLevelBySentiment'
 import BullyLevelByTime from './BullyLevelByTime'
 import BullyTypeByAccount from './BullyTypeByAccount'
 import BullyTypeByChannel from './BullyTypeByChannel'
 import BullyTypeByDay from './BullyTypeByDay'
-import BullyTypeByDevice from './BullyTypeByDevice'
+
+// import BullyTypeByDevice from './BullyTypeByDevice'
 import BullyTypeBySentiment from './BullyTypeBySentiment'
 import BullyTypeByTime from './BullyTypeByTime'
 import DailyMessgeByBully from './DailyMessageByBully'
@@ -232,7 +234,7 @@ const BullyCharts = (data: Props) => {
         ) : (
           ''
         )}
-        {resultReportPermission?.includes('97') ? (
+        {/* {resultReportPermission?.includes('97') ? (
           <Grid item xs={12} md={12} id='chart5'>
             <BullyLevelByDevice
               white={whiteColor}
@@ -254,7 +256,7 @@ const BullyCharts = (data: Props) => {
           </Grid>
         ) : (
           ''
-        )}
+        )} */}
         {resultReportPermission?.includes('98') ? (
           <Grid item xs={12} md={12} id='chart6'>
             <BullyLevelByAccount
@@ -408,7 +410,7 @@ const BullyCharts = (data: Props) => {
         ) : (
           ''
         )}
-        {resultReportPermission?.includes('105') ? (
+        {/* {resultReportPermission?.includes('105') ? (
           <Grid item xs={12} md={12} id='chart13'>
             <BullyTypeByDevice
               white={whiteColor}
@@ -430,7 +432,7 @@ const BullyCharts = (data: Props) => {
           </Grid>
         ) : (
           ''
-        )}
+        )} */}
         {resultReportPermission?.includes('106') ? (
           <Grid item xs={12} md={12} id='chart14'>
             <BullyTypeByAccount

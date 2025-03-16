@@ -1,8 +1,13 @@
 import { Grid } from '@mui/material'
 import PlatformsComparison from './PlatformsComparison'
-import DevicesComparison from './DevicesComparison'
-import ChannelVsDevice from './ChannelVsDevice'
+
+// import DevicesComparison from './DevicesComparison'
+// import ChannelVsDevice from './ChannelVsDevice'
 import { GetChannelDeviceAll } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
+import InfluencerComparison from './InfluencerComparison'
+import MessageText from 'mdi-material-ui/MessageText'
+import { AccountGroup } from 'mdi-material-ui'
+import { GetNumbersOfAccountComparison } from 'src/services/api/dashboards/voice/VoiceDashboardAPIs'
 
 const Comparison = ({
   params,
@@ -20,6 +25,9 @@ const Comparison = ({
     apiParams
   )
 
+  const { resultTotalAccounts, resultTotalMessages, loadingNumbersOfAccountsComparison } = 
+    GetNumbersOfAccountComparison(apiParams)
+
   return (
     <>
       {resultReportPermission?.includes('37') ? (
@@ -35,7 +43,7 @@ const Comparison = ({
       ) : (
         ''
       )}
-      {resultReportPermission?.includes('38') ? (
+      {/* {resultReportPermission?.includes('38') ? (
         <Grid item xs={12} md={4} id='chart19'>
           <DevicesComparison
             resultDevicesComparison={result?.device}
@@ -60,7 +68,43 @@ const Comparison = ({
         </Grid>
       ) : (
         ''
-      )}
+      )} */}
+        {resultReportPermission?.includes('31') ? (
+          <Grid item xs={12} md={4} id='chart12'>
+            <InfluencerComparison
+              color='primary'
+              trendNumber={resultTotalMessages?.percentage}
+              trend={resultTotalMessages?.type}
+              icon={<MessageText />}
+              totalText='Messages'
+              totalValue={resultTotalMessages?.total_message}
+              chartId='voiceChart12Title' //chart 12
+              highlight={highlight === 'chart12' ? true : false}
+              reportNo='voiceChart12Description' // 2.2.014
+              loading={loadingNumbersOfAccountsComparison}
+            />
+          </Grid>
+        ) : (
+          ''
+        )}
+        {resultReportPermission?.includes('32') ? (
+          <Grid item xs={12} md={4} id='chart13'>
+            <InfluencerComparison
+              color='primary'
+              trendNumber={resultTotalAccounts?.percentage || ''}
+              trend={resultTotalAccounts?.type}
+              icon={<AccountGroup />}
+              totalText='Accounts'
+              totalValue={resultTotalAccounts?.total_account || resultTotalAccounts?.total_message}
+              chartId='voiceChart13Title' //Chart 13
+              highlight={highlight === 'chart13' ? true : false}
+              reportNo='voiceChart13Description' //2.2.015
+              loading={loadingNumbersOfAccountsComparison}
+            />
+          </Grid>
+        ) : (
+          ''
+        )}
     </>
   )
 }

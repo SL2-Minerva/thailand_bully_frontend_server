@@ -1,7 +1,8 @@
 import { Grid } from '@mui/material'
 import ChannelByDay from './ChannelBy/ChannelByDay'
 import ChannelByTime from './ChannelBy/ChannelByTime'
-import ChannelByDevice from './ChannelBy/ChannelByDevice'
+
+// import ChannelByDevice from './ChannelBy/ChannelByDevice'
 import ChannelByAccount from './ChannelBy/ChannelByAccount'
 import ChannelBySentimentComparison from './ChannelBy/ChannelBySentimentComparison'
 import ChannelByBullyLevel from './ChannelBy/ChannelByBullyLevel'
@@ -114,7 +115,7 @@ const ChannelByCharts = (props: Props) => {
       ) : (
         ''
       )}
-      {resultReportPermission?.includes('48') ? (
+      {/* {resultReportPermission?.includes('48') ? (
         <Grid item xs={12} md={12} id='chart5'>
           <ChannelByDevice
             white={whiteColor}
@@ -136,7 +137,7 @@ const ChannelByCharts = (props: Props) => {
         </Grid>
       ) : (
         ''
-      )}
+      )} */}
       {resultReportPermission?.includes('49') ? (
         <Grid item xs={12} md={12} id='chart6'>
           <ChannelByAccount

@@ -2,7 +2,7 @@ import { LinearProgress, Typography, Paper, Button, Box, Pagination } from '@mui
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
-import { Information, LinkVariant } from 'mdi-material-ui'
+import { Information, LinkVariant, ImageOutline} from 'mdi-material-ui'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import Translations from 'src/layouts/components/Translations'
 import { useEffect, useState } from 'react'
@@ -80,6 +80,14 @@ const EngagementMonitoring = ({
       valueGetter: (params: GridValueGetterParams) => `${params.row.post_time + ', ' + moment(params.row.post_date, 'YYYY/MM/DD').format('DD/MM/YYYY')}`
     },
     {
+      field: 'scrape_time',
+      headerName: 'Scrrape Time',
+      flex: 1,
+      headerAlign: 'center',
+      minWidth: 200,
+      valueGetter: (params: GridValueGetterParams) => `${params.row.scrape_time + ', ' + moment(params.row.scrape_date, 'YYYY/MM/DD').format('DD/MM/YYYY')}`
+    },
+    {
       field: 'source_name',
       headerName: 'Channel',
       flex: 1,
@@ -113,6 +121,14 @@ const EngagementMonitoring = ({
       maxWidth: 60,
       headerAlign: 'center',
       renderCell: openLink
+    },
+    {
+      field: 'image_message',
+      headerName: 'image',
+      flex: 1,
+      maxWidth: 60,
+      headerAlign: 'center',
+      renderCell: openPopup
     }
   ]
 
@@ -151,6 +167,21 @@ const EngagementMonitoring = ({
         rel='noopener noreferrer'
       >
         <LinkVariant fontSize='small' sx={{ color: 'blue' }} />
+      </a>
+    )
+  }
+
+    function openPopup(params: any) {
+    return (
+      <a
+        href={params.value}
+        onClick={event => {
+          event.stopPropagation()
+        }}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        <ImageOutline fontSize='small' sx={{ color: 'blue' }} />
       </a>
     )
   }
@@ -290,7 +321,7 @@ const EngagementMonitoring = ({
         <DetailPostEgagement show={showDetail} setShow={setShowDetail} messageId={messageId} params={apiParams} />
       ) : (
         ''
-      )}
+      )}      
     </Paper>
   )
 }

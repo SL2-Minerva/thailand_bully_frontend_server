@@ -1,7 +1,10 @@
 // export const API_PATH = process.env.NEXT_PUBLIC_APP_ENV === 'localhost' ? 'http://127.0.0.1:8000/api' : 'http://202.44.231.31/api';
 
-export const API_PATH =
-  process.env.NEXT_PUBLIC_APP_ENV === 'localhost' ? 'https://cornea-analysis.com/api' : 'https://cornea-analysis.com/api'
+// export const API_PATH =
+//   process.env.NEXT_PUBLIC_APP_ENV === 'localhost' ? 'https://cornea-analysis.com/api' : 'https://cornea-analysis.com/api'
+
+export const API_PATH = 
+  process.env.NEXT_PUBLIC_APP_ENV === 'localhost' ? 'http://127.0.0.1:8000/api' : 'http://127.0.0.1:8000/api';
 
 export const lineOptions = {
   responsive: true,

@@ -14,7 +14,7 @@ import {
   Typography
 } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
-import { OpenInNew, DotsVertical, ArrowUp, ArrowDown, TrashCanOutline, MicrosoftExcel } from 'mdi-material-ui'
+import { OpenInNew, DotsVertical, ArrowUp, ArrowDown, TrashCanOutline, MicrosoftExcel, ImageOutline} from 'mdi-material-ui'
 import { GetDetailMessageOverall } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
 import DialogNetworkGraphByFitler from './DialogNetworkGraphByFilter'
@@ -30,6 +30,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import DeleteConfirmDialog from './DeleteConfirmDialog'
+import ImagePopupDialog from '../dashboard/ImagePopupDialog' 
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -78,7 +79,7 @@ export const initialSort = {
   message_type: '',
   author: '',
   date: '',
-  device: '',
+  scrapingtime: '',
   source: '',
   engagement: '',
   sentiment: '',
@@ -122,6 +123,8 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
   const [sortColumns, setSortColumn] = useState<any>(initialSort)
   const [deleteMsgId, setDeleteMsgId] = useState<string>('')
   const [reload, setReload] = useState<boolean>(false)
+  const [showImagePopup, setShowImagePopup] = useState(false)
+  const [imageUrl, setImageUrl] = useState('')  
 
   const platformId = params?.platformId || ''
 
@@ -320,17 +323,17 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                   <StyledTableCell
                     align='center'
                     onClick={() => {
-                      const type = sortColumns.device === '' ? 'asc' : sortColumns.device === 'asc' ? 'desc' : ''
-                      handleButtonSort('device', type)
+                      const type = sortColumns.scrapingtime === '' ? 'asc' : sortColumns.scrapingtime === 'asc' ? 'desc' : ''
+                      handleButtonSort('scrapingtime', type)
                     }}
                   >
                     <span style={{ display: 'flex', justifyContent: 'center' }}>
                       <span className='hidden-button' style={{ margin: 'auto', color: 'grey' }}>
-                        {sortColumns.device === 'desc' ? (
+                        {sortColumns.scrapingtime === 'desc' ? (
                           <Tooltip title='Descending'>
                             <ArrowDown style={{ fontSize: '20px' }} />
                           </Tooltip>
-                        ) : sortColumns.device === 'asc' ? (
+                        ) : sortColumns.scrapingtime === 'asc' ? (
                           <Tooltip title='Ascending'>
                             <ArrowUp style={{ fontSize: '20px' }} />
                           </Tooltip>
@@ -340,7 +343,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                           </Tooltip>
                         )}
                       </span>
-                      Device
+                      Scraping Time
                     </span>
                   </StyledTableCell>
                   <StyledTableCell
@@ -477,6 +480,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                     </span>
                   </StyledTableCell>
                   <StyledTableCell align='center'>Link</StyledTableCell>
+                  <StyledTableCell align='center'>Image</StyledTableCell>
                   <StyledTableCell align='center'>Action</StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -566,7 +570,8 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                         }
                       }}
                     >
-                      {messageDetail.device === 'android' ? (
+                      {moment(messageDetail.scrape_date)?.format('DD.MM.YYYY') + ', ' + messageDetail.scrape_time}
+                      {/* {messageDetail.device === 'android' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/android.png`} />
                       ) : messageDetail.device === 'webapp' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/website.png`} />
@@ -574,7 +579,7 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/ios.png`} />
                       ) : (
                         '-'
-                      )}
+                      )} */}
                     </StyledTableCell>
                     <StyledTableCell
                       align='center'
@@ -664,6 +669,21 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
                         ''
                       )}
                     </StyledTableCell>
+
+                    <StyledTableCell align='center'>
+                      <a
+                        onClick={() => {
+                          setImageUrl(messageDetail.imageUrl) 
+                          setShowImagePopup(true) 
+                        }}
+                        target='_self'
+                        rel='noopener noreferrer'
+                        style={{ cursor: 'pointer' }}
+                      >
+                        <ImageOutline style={{ color: '#0047ff9e' }} />
+                      </a>
+                    </StyledTableCell>       
+
                     <StyledTableCell align='center'>
                       <a
                         onClick={() => {
@@ -722,6 +742,12 @@ const DailyMessageDetail = (props: DialogInfoProps) => {
       ) : (
         ''
       )}
+      <ImagePopupDialog
+        showDialog={showImagePopup}
+        setShowDialog={setShowImagePopup}
+        imageUrl={imageUrl}
+        title='Image'
+      />
     </Card>
   )
 }

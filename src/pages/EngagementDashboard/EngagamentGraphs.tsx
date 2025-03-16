@@ -21,13 +21,15 @@ import QuickView from './QuickView'
 import DailyEngagementType from './DailyEngagementType'
 import EngagementByDay from './EngagementByDay'
 import EngagementByTime from './EngagementByTime'
-import EngagementByDevice from './EngagementByDevice'
+
+// import EngagementByDevice from './EngagementByDevice'
 import EngagementByAccounts from './EngagementByAccount'
 import EngagementByChannel from './EngagementByChannel'
 import PercentageOfEngangementType from './PercentageEngagementType'
 import EngagementTypeByDay from './EngagementTypeByDay'
 import EngagementTypeByTime from './EngagementTypeByTime'
-import EngagementTypeByDevice from './EngagementTypeByDevice'
+
+// import EngagementTypeByDevice from './EngagementTypeByDevice'
 import EngagementTypeByAccount from './EngagementTypeByAccount'
 import EngagementTypeByChannel from './EngagementTypeByChannel'
 import PeriodComparisonChartSentiment from './PeriodComparisonChartSentiment'
@@ -237,7 +239,7 @@ const EngagementGraphs = (data: Props) => {
         ) : (
           ''
         )}
-        {resultReportPermission?.includes('61') ? (
+        {/* {resultReportPermission?.includes('61') ? (
           <Grid item xs={12} md={12} id='chart5'>
             <EngagementByDevice
               white={whiteColor}
@@ -259,7 +261,7 @@ const EngagementGraphs = (data: Props) => {
           </Grid>
         ) : (
           ''
-        )}
+        )} */}
         {resultReportPermission?.includes('62') ? (
           <Grid item xs={12} md={12} id='chart6'>
             <EngagementByAccounts
@@ -420,7 +422,7 @@ const EngagementGraphs = (data: Props) => {
         ) : (
           ''
         )}
-        {resultReportPermission?.includes('68') ? (
+        {/* {resultReportPermission?.includes('68') ? (
           <Grid item xs={12} md={12} id='chart13'>
             <EngagementTypeByDevice
               white={whiteColor}
@@ -443,7 +445,7 @@ const EngagementGraphs = (data: Props) => {
           </Grid>
         ) : (
           ''
-        )}
+        )} */}
         {resultReportPermission?.includes('69') ? (
           <Grid item xs={12} md={12} id='chart14'>
             <EngagementTypeByAccount
