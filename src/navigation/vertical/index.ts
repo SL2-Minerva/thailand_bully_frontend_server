@@ -65,7 +65,7 @@ const navigation = (): VerticalNavItemsType => {
   }
 
   const voiceDashboard = {
-    title: 'Voice Dashboard',
+    title: 'Message Dashboard',
     path: '/VoiceDashboard'
   }
 

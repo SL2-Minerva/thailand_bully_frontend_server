@@ -55,11 +55,14 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
         <Box>
           <Grid container spacing={6}>
             <Grid item xs={3}>
-              <CustomAvatar skin='light' variant='rounded' color={color} sx={{ mt: 5 }}>
+              {/* <CustomAvatar skin='light' variant='rounded' color={color} sx={{ mt: 5 }}>
+                {icon}
+              </CustomAvatar> */}
+              <CustomAvatar skin='light' variant='rounded' color={color} sx={{ mt: 1, width: 60, height: 60 }}>
                 {icon}
               </CustomAvatar>
             </Grid>
-            <Grid item xs={5} p={4} >
+            <Grid item xs={5} p={20} >
               <Typography variant='h5' sx={{ display: 'flex', alignItems: 'center' }}>
                 {trend === 'plus' ? '+' : ''}
                 {totalValue?.toLocaleString('en-US')}
@@ -83,7 +86,7 @@ const InfluencerComparison = (props: InfluencerComparisonProps) => {
 
         <Divider sx={{ mt: 2, mb: 7.5 }} />
 
-        <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
+        <span style={{ display: 'flex', justifyContent: 'flex-start' , marginTop: '60px'}}>
           <Translations text={title} />
           <StyledTooltip
             arrow

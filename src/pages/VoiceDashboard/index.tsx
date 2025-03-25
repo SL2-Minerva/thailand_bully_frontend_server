@@ -121,7 +121,7 @@ const VoiceDashboard = () => {
   return (
     <Grid container spacing={3}>
       <Filter
-        tilte={<Translations text='Voice Dashboard' />}
+        tilte={<Translations text='Message Dashboard' />}
         date={date}
         setDate={setDate}
         endDate={endDate}
