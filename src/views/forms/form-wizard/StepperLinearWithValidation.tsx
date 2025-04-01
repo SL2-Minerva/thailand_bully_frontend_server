@@ -74,7 +74,7 @@ const defaultPersonalValues = {
 }
 const defaultSocialValues = {
   google: '',
-  twitter: '',
+  x: '',
   facebook: '',
   linkedIn: ''
 }
@@ -96,7 +96,7 @@ const personalSchema = yup.object().shape({
 })
 const socialSchema = yup.object().shape({
   google: yup.string().required(),
-  twitter: yup.string().required(),
+  x: yup.string().required(),
   facebook: yup.string().required(),
   linkedIn: yup.string().required()
 })
@@ -146,7 +146,7 @@ const StepperLinearWithValidation = () => {
   }
   const handleReset = () => {
     setActiveStep(0)
-    socialReset({ google: '', twitter: '', facebook: '', linkedIn: '' })
+    socialReset({ google: '', x: '', facebook: '', linkedIn: '' })
     accountReset({ email: '', username: '', password: '', 'confirm-password': '' })
     personalReset({ country: '', language: [], 'last-name': '', 'first-name': '' })
   }
@@ -490,21 +490,21 @@ const StepperLinearWithValidation = () => {
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <Controller
-                    name='twitter'
+                    name='x'
                     control={socialControl}
                     rules={{ required: true }}
                     render={({ field: { value, onChange } }) => (
                       <TextField
                         value={value}
-                        label='Twitter'
+                        label='X'
                         onChange={onChange}
-                        error={Boolean(socialErrors.twitter)}
+                        error={Boolean(socialErrors.x)}
                         placeholder='https://twitter.com/carterLeonard'
                         aria-describedby='stepper-linear-social-twitter'
                       />
                     )}
                   />
-                  {socialErrors.twitter && (
+                  {socialErrors.x && (
                     <FormHelperText sx={{ color: 'error.main' }} id='stepper-linear-social-twitter'>
                       This field is required
                     </FormHelperText>
@@ -644,7 +644,7 @@ const StepperLinearWithValidation = () => {
                 ) {
                   labelProps.error = true
                 } else if (
-                  (socialErrors.google || socialErrors.twitter || socialErrors.facebook || socialErrors.linkedIn) &&
+                  (socialErrors.google || socialErrors.x || socialErrors.facebook || socialErrors.linkedIn) &&
                   activeStep === 2
                 ) {
                   labelProps.error = true

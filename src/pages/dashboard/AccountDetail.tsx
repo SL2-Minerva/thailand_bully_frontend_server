@@ -149,7 +149,7 @@ const AccountDetail = (props: DialogInfoProps) => {
                     <TableCell  align='center'>
                       {row?.channel == 'facebook' ? (
                         <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
-                      ) : row?.channel == 'twitter' ? (
+                      ) : row?.channel == 'x' ? (
                         <img alt={'logo'} width={34} height={34} src={`/images/logos/x-black.jpg`} />
                       ) : row?.channel == 'youtube' ? (
                         <img width={34} height={34} alt={'logo'} src={`/images/logos/youtube-text.png`} />

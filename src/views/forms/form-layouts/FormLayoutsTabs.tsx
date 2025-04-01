@@ -224,7 +224,7 @@ const FormLayoutsTabs = () => {
             <TabPanel value='social-links'>
               <Grid container spacing={5}>
                 <Grid item xs={12} sm={6}>
-                  <TextField fullWidth label='Twitter' placeholder='https://twitter.com/carterLeonard' />
+                  <TextField fullWidth label='X' placeholder='https://twitter.com/carterLeonard' />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField fullWidth label='Facebook' placeholder='https://facebook.com/carterLeonard' />

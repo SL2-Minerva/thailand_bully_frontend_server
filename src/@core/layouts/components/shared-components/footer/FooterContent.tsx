@@ -13,7 +13,7 @@ const FooterContent = () => {
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
       <Typography sx={{ mr: 2 }}>
-        {`Copyright © 2023 by MINERVA CONSULTANT CO.,LTD. All right reserved.`}
+        {`Copyright © 2025 by MINERVA CONSULTANT CO.,LTD. All right reserved.`}
         {/* <Box component='span' sx={{ color: 'error.main' }}>
           
         </Box> */}

@@ -43,7 +43,7 @@ const TopManagementCard = (props: CardInfo) => {
   const { resultTopEngagement, loadingTopEngagement, showFullMsg } = props
   const { result_source_list } = SourceService();
 
-  // const imgPath = gitHubIcon
+  const imgPath = resultTopEngagement.profile_image;
 
   const [sourceName, setSourceName] = React.useState('')
   const [showMore, setShowMore] = React.useState(false)
@@ -85,7 +85,7 @@ const TopManagementCard = (props: CardInfo) => {
       const icon =
       resultTopEngagement?.source_name === 'facebook' || sourceName === 'facebook'
         ? FacebookIcon
-        : resultTopEngagement.source_name === 'twitter' || sourceName === 'twitter'
+        : resultTopEngagement.source_name === 'x' || sourceName === 'x'
         ? TwitterIcon
         : resultTopEngagement.source_name === 'instagram' || sourceName === 'instagram'
         ? InstagramIcon
@@ -126,7 +126,7 @@ const TopManagementCard = (props: CardInfo) => {
       <CardContent>
         <Grid container spacing={1}>
           <Grid item xs={2.5}>
-            <Avatar sx={{ width: 50, height: 50 }}>{/* <img src={imgPath} width={50} height={50} alt='' /> */}</Avatar>
+            <Avatar sx={{ width: 50, height: 50 }}><img src={imgPath} width={50} height={50} alt='' /></Avatar> 
           </Grid>
 
           <Grid item xs={8.5}>

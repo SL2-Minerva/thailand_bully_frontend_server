@@ -57,6 +57,10 @@ const ChartDataEngagement = (data: any, type: string) => {
       for (let i = 0; i < data?.length; i++) {
         value.push(data[i].reaction_r)
       }
+    } else if (type === 'views') {
+      for (let i = 0; i < data?.length; i++) {
+        value.push(data[i].views_r)
+      }
     }
   }
 
@@ -77,6 +81,7 @@ const EngagmentComparisonChart = ({
   const shareData = ChartDataEngagement(resultComparison, 'share')
   const commentData = ChartDataEngagement(resultComparison, 'comment')
   const reactionData = ChartDataEngagement(resultComparison, 'reaction')
+  const viewsData = ChartDataEngagement(resultComparison, 'views')
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const rowOptionsOpen = Boolean(anchorEl)
@@ -100,6 +105,10 @@ const EngagmentComparisonChart = ({
     {
       name: 'Reaction',
       data: reactionData
+    },
+    {
+      name: 'Views',
+      data: viewsData
     }
   ]
 
@@ -124,7 +133,7 @@ const EngagmentComparisonChart = ({
     title: {
       text: ''
     },
-    colors: ['#c46627', '#ed7d31', '#f4b9a4'],
+    colors: ['#c46627', '#ed7d31', '#f4b9a4' ,'#dc6a5b'],
     xaxis: {
       categories: chartLabels,
       labels: {
@@ -150,7 +159,7 @@ const EngagmentComparisonChart = ({
     },
     fill: {
       opacity: 1,
-      colors: ['#c46627', '#ed7d31', '#f4b9a4']
+      colors: ['#c46627', '#ed7d31', '#f4b9a4' , '#dc6a5b']
     },
     legend: {
       position: 'top',

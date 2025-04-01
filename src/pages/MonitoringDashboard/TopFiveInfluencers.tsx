@@ -16,7 +16,7 @@ export const getSourceIcon = (sourceName: string) => {
   const sourceIcon =
     sourceName === 'facebook'
       ? FacebookIcon
-      : sourceName === 'twitter'
+      : sourceName === 'x'
       ? TwitterIcon
       : sourceName === 'instagram'
       ? InstagramIcon

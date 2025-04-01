@@ -97,7 +97,7 @@ const ComparisonCharts = (props: Props) => {
                   color='#00aced'
                   trendNumber={resultTwitterComparison?.percentage}
                   trend={resultTwitterComparison?.type}
-                  totalText='Twitter'
+                  totalText='X'
                   totalValue={resultTwitterComparison?.comparison_value}
                   loading={loadingEngagementBy}
                 />

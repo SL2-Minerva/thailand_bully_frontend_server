@@ -107,7 +107,7 @@ export const ChannelColorCode = [
     color: '#010101'
   },
   {
-    name: 'twitter',
+    name: 'x',
     color: '#00aced'
   },
   {
@@ -137,6 +137,7 @@ export const EngagementTypeColors = [
   '#c46627',
   '#ed7d31',
   '#f4b9a4',
+  '#dc6a5b',
   '#4472c4',
   '#a5a5a5',
   '#ffc000',

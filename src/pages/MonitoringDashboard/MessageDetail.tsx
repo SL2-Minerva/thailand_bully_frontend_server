@@ -17,7 +17,6 @@ import Close from 'mdi-material-ui/Close'
 import { OpenInNew, DotsVertical, ArrowUp, ArrowDown, TrashCanOutline, MicrosoftExcel, ImageOutline} from 'mdi-material-ui'
 import { GetDetailMessageOverall } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import Translations from 'src/layouts/components/Translations'
-import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
 import moment from 'moment'
 import { DataGrid } from '@mui/x-data-grid'
 import { withStyles } from '@mui/styles'
@@ -36,6 +35,8 @@ import authConfig from 'src/configs/auth'
 import toast from 'react-hot-toast'
 import { saveAs } from 'file-saver'
 import ImagePopupDialog from '../dashboard/ImagePopupDialog'
+
+// import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -116,10 +117,13 @@ export const StyledTableRow = styled(TableRow)(() => ({
 }))
 
 const MessageDetail = (props: DialogInfoProps) => {
-  const { show, setShow, current, params, keywordId, setKeywordId, reportNo, title, networkTitle, setIsLoading } = props
-  const [showDialog, setShowDialog] = useState<boolean>(false)
+  const { show, setShow, params, keywordId, setKeywordId, reportNo, title, setIsLoading } = props
+
+  // const [showDialog, setShowDialog] = useState<boolean>(false)
+  // const [messageId, setMessageId] = useState<number | string>()
   const [page, setPage] = useState(1)
-  const [messageId, setMessageId] = useState<number | string>()
+  const [, setShowDialog] = useState<boolean>(false)
+  const [, setMessageId] = useState<number | string>()
   const [pageCount, setPageCount] = useState<number>(0)
   const [data, setData] = useState<any>([])
   const [fieldName, setFieldName] = useState<string>('')
@@ -183,7 +187,8 @@ const MessageDetail = (props: DialogInfoProps) => {
   }, [loadingMessageDetail])
 
   const cardTitle = title ? title : 'Daily Messages: Message Transactions'
-  const titleNetwork = networkTitle ? networkTitle : 'Daily Messages: Social Network Analysis'
+  
+  // const titleNetwork = networkTitle ? networkTitle : 'Daily Messages: Social Network Analysis'
 
   const handleButtonSort = (field: string, sortName: string) => {
     setFieldName(field)
@@ -681,7 +686,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                     >
                       {messageDetail?.channel === 'facebook' ? (
                         <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
-                      ) : messageDetail?.channel === 'twitter' ? (
+                      ) : messageDetail?.channel === 'x' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/x-black.jpg`} />
                       ) : messageDetail?.channel === 'youtube' ? (
                         <img width={28} height={28} alt={'logo'} src={`/images/logos/youtube-text.png`} />
@@ -803,7 +808,7 @@ const MessageDetail = (props: DialogInfoProps) => {
         </DialogContent>
       </Dialog>
 
-      {messageId && params?.campaign ? (
+      {/* {messageId && params?.campaign ? (
         <DialogNetworkGraphByFitler
           showDialog={showDialog}
           setShowDialog={setShowDialog}
@@ -818,7 +823,7 @@ const MessageDetail = (props: DialogInfoProps) => {
         />
       ) : (
         ''
-      )}
+      )} */}
 
       {showConfirm ? (
         <DeleteConfirmDialog

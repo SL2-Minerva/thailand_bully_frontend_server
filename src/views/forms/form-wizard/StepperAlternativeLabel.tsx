@@ -268,7 +268,7 @@ const StepperAlternativeLabel = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
-                label='Twitter'
+                label='X'
                 value={twitter}
                 onChange={e => setTwitter(e.target.value)}
                 placeholder='https://twitter.com/carterLeonard'

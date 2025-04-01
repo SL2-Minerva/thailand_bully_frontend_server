@@ -137,7 +137,7 @@ const EngagementMonitoring = ({
       <>
         {params.value === 'facebook' ? (
           <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
-        ) : params.value === 'twitter' ? (
+        ) : params.value === 'x' ? (
           <img alt={'logo'} width={25} height={25} src={`/images/logos/x-black.jpg`} />
         ) : params.value === 'youtube' ? (
           <img width={28} height={28} alt={'logo'} src={`/images/logos/youtube-text.png`} />

@@ -64,6 +64,13 @@ const EngagementSummary = ({
       headerAlign: 'center',
       valueGetter: (params: GridValueGetterParams) => `${params.row.reaction?.toLocaleString('en-US')}`
     },
+    {
+      field: 'Views',
+      headerName: 'Views',
+      flex: 1,
+      headerAlign: 'center',
+      valueGetter: (params: GridValueGetterParams) => `${params.row.views?.toLocaleString('en-US')}`
+    },
 
     {
       field: 'period_over_preiod',

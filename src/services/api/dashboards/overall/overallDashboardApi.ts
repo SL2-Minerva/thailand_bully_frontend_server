@@ -373,8 +373,18 @@ export const GetDetailMessageOverall = (
 ) => {
   let params: any = {}
   const todayDate = new Date()
-  const startDate = moment(start_date, "DD/MM/YYYY");
-  const endDate = moment(end_date, "DD/MM/YYYY");
+  
+  // const startDate = moment(start_date, "DD/MM/YYYY");
+  // const endDate = moment(end_date, "DD/MM/YYYY");
+  let startDate = moment(start_date, "YYYY-MM-DD");
+  let endDate = moment(end_date, "YYYY-MM-DD");
+  
+
+  if (reportNo !== '2.2.016' && reportNo !== '2.2.017' && reportNo !== '2.2.018' && reportNo !== '2.2.019') {
+    startDate = moment(start_date, "DD/MM/YYYY");  
+    endDate = moment(end_date, "DD/MM/YYYY");  
+  } 
+  
 
   if (period === 'customrange' && previousDate !== todayDate && previousEndDate !== todayDate) {
     params = {
@@ -391,6 +401,7 @@ export const GetDetailMessageOverall = (
       report_number: reportNo,
       page_name: pageName?.toString(),
       label: label?.toString(),
+      ylabel: ylabel?.toString(),
       field: field,
       sort: sort
     }
@@ -407,14 +418,15 @@ export const GetDetailMessageOverall = (
       report_number: reportNo,
       page_name: pageName?.toString(),
       label: label?.toString(),
+      ylabel: ylabel?.toString(),
       field: field,
       sort: sort
     }
   }
 
-  if (ylabel) {
-    params.ylabel = encodeURI(ylabel)
-  }
+  // if (ylabel) {
+  //   params.ylabel = encodeURI(ylabel)
+  // }
   const [{ data: response, loading, error }] = CallAPI<{ data?: any }>({
     // url: `/dashboard-overall/level-three/`,
 

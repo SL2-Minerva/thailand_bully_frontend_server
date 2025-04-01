@@ -35,7 +35,7 @@ const ChannelComparison = (props: InfluencerComparisonProps) => {
   const imgPath =
     totalText === 'Facebook'
       ? FacebookIcon
-      : totalText === 'Twitter'
+      : totalText === 'X'
       ? TwitterIcon
       : totalText === 'Instagram'
       ? InstagramIcon

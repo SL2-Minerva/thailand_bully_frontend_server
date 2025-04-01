@@ -564,7 +564,7 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                     <StyledTableCell align='center' sx={{ color: 'grey' }}>
                       {messageDetail?.source_name === 'facebook' ? (
                         <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
-                      ) : messageDetail?.source_name === 'twitter' ? (
+                      ) : messageDetail?.source_name === 'x' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/x-black.jpg`} />
                       ) : messageDetail?.source_name === 'youtube' ? (
                         <img width={28} height={28} alt={'logo'} src={`/images/logos/youtube-text.png`} />

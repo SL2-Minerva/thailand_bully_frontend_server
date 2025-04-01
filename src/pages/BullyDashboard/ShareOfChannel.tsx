@@ -181,7 +181,7 @@ const ShareOfChannel = ({
                                 <TableCell variant='head' key={key} align='center'>
                                   {value?.channel === 'facebook' ? (
                                     <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
-                                  ) : value?.channel === 'twitter' ? (
+                                  ) : value?.channel === 'x' ? (
                                     <img alt={'logo'} width={34} height={34} src={`/images/logos/x-black.jpg`} />
                                   ) : value?.channel === 'youtube' ? (
                                     <img width={34} height={34} alt={'logo'} src={`/images/logos/youtube-text.png`} />

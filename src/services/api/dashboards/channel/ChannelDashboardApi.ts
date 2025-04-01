@@ -368,7 +368,7 @@ export const GetEngagementBy = (
     resultEngagementRatePrevious: response?.data?.engagement_rate_previous || null,
     resultFacebookComparison: response?.data?.period_over_period?.facebook || null,
     resultInstagramComparison: response?.data?.period_over_period?.instagram || null,
-    resultTwitterComparison: response?.data?.period_over_period?.twitter || null,
+    resultTwitterComparison: response?.data?.period_over_period?.x || null,
     resultYoutubeComparison: response?.data?.period_over_period?.youtube || null,
     resultPantipComparison: response?.data?.period_over_period?.pantip || null,
     resultGoogleComparison: response?.data?.period_over_period?.google || null,
@@ -406,7 +406,7 @@ export const GetComparison = (
   return {
     resultFacebookComparison: response?.data?.facebook || null,
     resultInstagramComparison: response?.data?.instagram || null,
-    resultTwitterComparison: response?.data?.twitter || null,
+    resultTwitterComparison: response?.data?.x || null,
     resultYoutubeComparison: response?.data?.youtube || null,
     resultPantipComparison: response?.data?.pantip || null,
     loadingTotalComparison: loading,

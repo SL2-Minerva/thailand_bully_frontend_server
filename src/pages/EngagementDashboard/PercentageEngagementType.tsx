@@ -287,7 +287,7 @@ const PercentageOfEngangementType = (props: MessageData) => {
               <Box pl={{ xs: 1.3 }} pr={{ xs: 1 }} sx={{ display: 'flex', justifyContent: 'center' }}>
                 <CustomeLabels
                   data={currentData || previousData}
-                  labels={['Share', 'Comment', 'Reactions']}
+                  labels={['Share', 'Comment', 'Reactions','Views']}
                   color={keywordsColor}
                   itemsCountPerPage={50}
                   showValue={false}

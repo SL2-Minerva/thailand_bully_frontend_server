@@ -74,7 +74,7 @@ const SentimentAccountList = ({
                 <Grid item sm={2} xs={2} mt={5}>
                   {keyword?.source_name?.toLowerCase() == 'facebook' ? (
                     <img alt={'logo'} width={34} height={34} src={`/images/logos/facebook-round.png`} />
-                  ) : keyword?.source_name?.toLowerCase() == 'twitter' ? (
+                  ) : keyword?.source_name?.toLowerCase() == 'x' ? (
                     <img alt={'logo'} width={34} height={34} src={`/images/logos/x-black.jpg`} />
                   ) : keyword?.source_name?.toLowerCase() == 'youtube' ? (
                     <img width={34} height={34} alt={'logo'} src={`/images/logos/youtube-text.png`} />

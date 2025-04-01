@@ -129,7 +129,7 @@ const ShareOfVoices = ({ apiParams, keywordsColor }: { apiParams: any; chartId: 
       <>
         {(filterData || []).map((title: any, i: number) => {
           const imgPath =
-            title === 'twitter'
+            title === 'x'
               ? TwitterIcon
               : title === 'youtube'
               ? YoutubeIcon

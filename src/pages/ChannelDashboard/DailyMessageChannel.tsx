@@ -16,7 +16,6 @@ import Close from 'mdi-material-ui/Close'
 import { GetMessageDetailChannelDashboard } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
-import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
 import { ArrowDown, ArrowUp, DotsVertical, MicrosoftExcel, OpenInNew, TrashCanOutline, ImageOutline} from 'mdi-material-ui'
 import { initialSort, StyledTableCell, StyledTableRow } from '../dashboard/DailyMessageDetail'
 import Table from '@mui/material/Table'
@@ -29,6 +28,7 @@ import DeleteConfirmDialog from '../dashboard/DeleteConfirmDialog'
 import ExportExcelL3 from '../VoiceDashboard/ExportExcelL3'
 import ImagePopupDialog from '../dashboard/ImagePopupDialog'
 
+// import DialogNetworkGraphByFitler from '../dashboard/DialogNetworkGraphByFilter'
 // import { GridColDef } from '@mui/x-data-grid'
 // import { StyledDataGrid } from '../dashboard/DailyMessageDetail'
 
@@ -65,13 +65,14 @@ const DailyMessageChannel = (props: DialogInfoProps) => {
   const {
     show,
     setShow,
-    current,
     params,
     paramsId,
     setParamsId,
     reportNo,
     title,
-    networkTitle,
+    
+    // current,
+    // networkTitle,
     keywordId,
     setKeywordId,
     excelExport,
@@ -80,9 +81,12 @@ const DailyMessageChannel = (props: DialogInfoProps) => {
     fileName,
     apiPath
   } = props
-  const [showDialog, setShowDialog] = useState<boolean>(false)
+
+  // const [showDialog, setShowDialog] = useState<boolean>(false)
+  // const [messageId, setMessageId] = useState<number | string>()
   const [page, setPage] = useState(1)
-  const [messageId, setMessageId] = useState<number | string>()
+  const [, setShowDialog] = useState<boolean>(false)
+  const [, setMessageId] = useState<number | string>()
   const [pageCount, setPageCount] = useState<number>(0)
   const [data, setData] = useState<any>([])
   const [fieldName, setFieldName] = useState<string>('')
@@ -603,7 +607,7 @@ const DailyMessageChannel = (props: DialogInfoProps) => {
                     >
                       {messageDetail?.channel === 'facebook' ? (
                         <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
-                      ) : messageDetail?.channel === 'twitter' ? (
+                      ) : messageDetail?.channel === 'x' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/x-black.jpg`} />
                       ) : messageDetail?.channel === 'youtube' ? (
                         <img width={28} height={28} alt={'logo'} src={`/images/logos/youtube-text.png`} />
@@ -728,7 +732,7 @@ const DailyMessageChannel = (props: DialogInfoProps) => {
         </DialogContent>
       </Dialog>
 
-      {messageId && params?.campaign ? (
+      {/* {messageId && params?.campaign ? (
         <DialogNetworkGraphByFitler
           showDialog={showDialog}
           setShowDialog={setShowDialog}
@@ -743,7 +747,7 @@ const DailyMessageChannel = (props: DialogInfoProps) => {
         />
       ) : (
         ''
-      )}
+      )} */}
 
       {showConfirm ? (
         <DeleteConfirmDialog

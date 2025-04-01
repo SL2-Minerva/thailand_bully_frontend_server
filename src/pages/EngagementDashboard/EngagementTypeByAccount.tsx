@@ -75,7 +75,7 @@ const EngagementTypeByAccount = (props: LineProps) => {
     const keywordName = data.datasets[datasetIndex].label
     const dailyMessageData = resultBy?.value
 
-    let keywordId: number | null = null
+    const keywordId: number | null = null
     let sourceId: number | null = null
     let campaign_id: number | null = null
 
@@ -84,7 +84,8 @@ const EngagementTypeByAccount = (props: LineProps) => {
         if (keywordName === dailyMessageData[i].keyword_name) {
           sourceId = dailyMessageData[i].source_id || ''
           campaign_id = dailyMessageData[i].campaign_id || ''
-          keywordId = dailyMessageData[i].id || ''
+          
+          // keywordId = dailyMessageData[i].id || ''
         }
       }
     }

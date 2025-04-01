@@ -48,8 +48,8 @@ const data: DataType[] = [
   {
     amount: '350',
     chipText: '-18%',
-    title: 'Twitter',
-    imgAlt: 'twitter',
+    title: 'X',
+    imgAlt: 'x',
     chipColor: 'error',
     subtitle: 'Social Media',
     imgSrc: '/images/cards/social-twitter.png'

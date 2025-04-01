@@ -11,7 +11,7 @@ import Grid from '@mui/material/Grid'
 // ** Icons Imports
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
-import { Share, StickerEmoji, Message } from 'mdi-material-ui'
+import { Share, StickerEmoji, Message, Eye} from 'mdi-material-ui'
 import { StyledTooltip } from '../dashboard/overall'
 import { Information } from 'mdi-material-ui'
 import { LinearProgress, Paper } from '@mui/material'
@@ -219,6 +219,48 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                 </Box>
               </Grid>
             </Grid>
+
+            <Grid item xs={6} md={3}>
+              <span style={{ display: 'flex' }}>
+                <Eye fontSize='large' /> {/* เปลี่ยนจาก StickerEmoji เป็น Eye */}
+                <Typography sx={{ marginLeft: '20px', fontSize: '1.5vw', fontWeight: 'bold', mt: 1 }}>
+                  Views
+                </Typography>
+              </span>
+              <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography variant='h5' sx={{ mt: 1.5 }}>
+                  {totalEngagement?.views?.totalValue}
+                </Typography>
+
+                <Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 15 }}>
+                    {totalEngagement?.views?.comparison == 0 ? (
+                      <Typography variant='h6' mt={2}>
+                        {totalEngagement?.views?.comparison}%
+                      </Typography>
+                    ) : (
+                      <>
+                        <Typography variant='h6'>
+                          {totalEngagement?.views?.type === 'plus' ? (
+                            <ChevronUp fontSize='large' sx={{ color: 'success.main' }} />
+                          ) : (
+                            <ChevronDown fontSize='large' sx={{ color: 'error.main' }} />
+                          )}
+                        </Typography>
+
+                        <Typography
+                          variant='h6'
+                          sx={{ color: totalEngagement?.views?.type === 'plus' ? 'success.main' : 'error.main' }}
+                        >
+                          {totalEngagement?.views?.comparison}%
+                        </Typography>
+                      </>
+                    )}
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
+
           </Grid>
         </CardContent>
       </Paper>

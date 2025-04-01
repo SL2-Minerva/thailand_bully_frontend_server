@@ -13,7 +13,6 @@ import {
   Typography
 } from '@mui/material'
 import Close from 'mdi-material-ui/Close'
-import DialogNetworkGraph from '../dashboard/DialogNetworkGraph'
 import { GetMessageDetailBullyDashboard } from 'src/services/api/dashboards/overall/overallDashboardApi'
 import moment from 'moment'
 import Translations from 'src/layouts/components/Translations'
@@ -28,6 +27,8 @@ import Paper from '@mui/material/Paper'
 import DeleteConfirmDialog from '../dashboard/DeleteConfirmDialog'
 import ExportExcelL3 from '../VoiceDashboard/ExportExcelL3'
 import ImagePopupDialog from '../dashboard/ImagePopupDialog'
+
+// import DialogNetworkGraph from '../dashboard/DialogNetworkGraph'
 
 // import { StyledDataGrid } from '../dashboard/DailyMessageDetail'
 
@@ -61,22 +62,27 @@ const MessageDetail = (props: DialogInfoProps) => {
   const {
     show,
     setShow,
-    current,
+
     params,
     paramsId,
     setParamsId,
     reportNo,
     title,
-    networkTitle,
+
+    // current,
+    // networkTitle,
     excelExport,
     apiParams,
     setIsLoading,
     fileName,
     apiPath
   } = props
-  const [showDialog, setShowDialog] = useState<boolean>(false)
+
+  // const [showDialog, setShowDialog] = useState<boolean>(false)
+  // const [messageId, setMessageId] = useState<number | string>()
   const [page, setPage] = useState(1)
-  const [messageId, setMessageId] = useState<number | string>()
+  const [, setShowDialog] = useState<boolean>(false)
+  const [, setMessageId] = useState<number | string>()
   const [pageCount, setPageCount] = useState<number>(0)
   const [data, setData] = useState<any>([])
   const [fieldName, setFieldName] = useState<string>('')
@@ -580,7 +586,7 @@ const MessageDetail = (props: DialogInfoProps) => {
                     >
                       {messageDetail?.channel === 'facebook' ? (
                         <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
-                      ) : messageDetail?.channel === 'twitter' ? (
+                      ) : messageDetail?.channel === 'x' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/x-black.jpg`} />
                       ) : messageDetail?.channel === 'youtube' ? (
                         <img width={28} height={28} alt={'logo'} src={`/images/logos/youtube-text.png`} />
@@ -703,7 +709,7 @@ const MessageDetail = (props: DialogInfoProps) => {
         </DialogContent>
       </Dialog>
 
-      {messageId && params?.campaign ? (
+      {/* {messageId && params?.campaign ? (
         <DialogNetworkGraph
           showDialog={showDialog}
           setShowDialog={setShowDialog}
@@ -718,7 +724,7 @@ const MessageDetail = (props: DialogInfoProps) => {
         />
       ) : (
         ''
-      )}
+      )} */}
 
       {showConfirm ? (
         <DeleteConfirmDialog

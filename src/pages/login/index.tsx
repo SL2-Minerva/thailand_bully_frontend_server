@@ -246,7 +246,7 @@ const LoginPage = () => {
       >
         <Typography
           sx={{ mr: 2, color: 'white', mb: '8px' }}
-        >{`Copyright © 2023 by MINERVA CONSULTANT CO.,LTD. All right reserved.`}</Typography>
+        >{`Copyright © 2025 by MINERVA CONSULTANT CO.,LTD. All right reserved.`}</Typography>
 
         <Box sx={{ position: 'absolute', bottom: '2px', right: '4%' }}>
           <Box className='logo-login-footer' sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -271,7 +271,7 @@ const LoginPage = () => {
       >
         <Typography
           sx={{ mr: 2, color: 'white', textAlign: 'center' }}
-        >{`Copyright © 2023 by MINERVA CONSULTANT CO.,LTD. All right reserved.`}</Typography>
+        >{`Copyright © 2025 by MINERVA CONSULTANT CO.,LTD. All right reserved.`}</Typography>
 
         <Box className='logo-login-footer mobile table'>
           <img
