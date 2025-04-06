@@ -44,7 +44,16 @@ const ImagePopupDialog = ({ showDialog, setShowDialog, imageUrl, title }: ImageP
           )}
 
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <img src={imageUrl} alt='' style={{ maxWidth: '100%', maxHeight: '400px', borderRadius: '8px' }} />
+            <img
+
+              src={'https://cornea-ai.com/images/picture_post/' + imageUrl}
+              alt={title || 'Image'} 
+              style={{ 
+                maxWidth: '100%', 
+                maxHeight: '80vh', 
+                borderRadius: '8px' 
+              }} 
+            />
           </Box>
         </DialogContent>
       </Dialog>
