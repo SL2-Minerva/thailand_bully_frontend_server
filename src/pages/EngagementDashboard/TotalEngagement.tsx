@@ -35,14 +35,15 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
         {loading && <LinearProgress style={{ width: '100%' }} />}
         <CardContent>
           <Grid container spacing={2}>
-            <Grid item xs={6} md={3}>
-              <span style={{ display: 'flex', justifyContent: 'left' }}>
+            <Grid item xs={6} md={2.4}>
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' , marginTop: '4px'}}>
                 <Typography
                   sx={{
                     color: highlight ? 'green' : settings.mode === 'dark' ? 'white' : '#4c4e64de',
-                    fontSize: '1.3vw',
+                    fontSize: '1.4vw',
                     fontWeight: 'bold',
-                    mt: 1
+
+                    // mt: 1
                   }}
                 >
                   <Translations text='Total Engagement' />
@@ -63,13 +64,13 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                   <Information style={{ margin: '2px 0px 0px 5px', fontSize: '29px' }} />
                 </StyledTooltip>
               </span>
-              <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant='h5' sx={{ mt: 1.5 }}>
+              <Grid mt={8} sx={{ display: 'flex', justifyContent: 'space-between' , paddingX: '10px'}}>
+                <Typography variant='h5' sx={{ display: 'flex', justifyContent: 'center'  }}>
                   {totalEngagement?.totalEngagement?.totalValue}
                 </Typography>
 
                 <Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 15 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     {totalEngagement?.totalEngagement?.comparison == 0 ? (
                       <Typography variant='h6' mt={2}>
                         {totalEngagement?.totalEngagement?.comparison}%
@@ -78,9 +79,9 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                       <>
                         <Typography variant='h6'>
                           {totalEngagement?.totalEngagement?.type === 'plus' ? (
-                            <ChevronUp fontSize='large' sx={{ color: 'success.main' }} />
+                            <ChevronUp fontSize='medium' sx={{ color: 'success.main' }} />
                           ) : (
-                            <ChevronDown fontSize='large' sx={{ color: 'error.main' }} />
+                            <ChevronDown fontSize='medium' sx={{ color: 'error.main' }} />
                           )}
                         </Typography>
 
@@ -98,19 +99,21 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                 </Box>
               </Grid>
             </Grid>
-            <Grid item xs={6} md={3}>
-              <span style={{ display: 'flex' }}>
-                <Share fontSize='large' />
-                <Typography sx={{ marginLeft: '20px', fontSize: '1.5vw', fontWeight: 'bold', mt: 1 }}>Share</Typography>
+            <Grid item xs={6} md={2.3}>
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '4px'}}>
+                <Share fontSize='medium' />
+                <Typography variant='h6' sx={{ marginLeft: '20px' }}>
+                  Share
+                </Typography>
               </span>
 
-              <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant='h5' sx={{ mt: 1.5 }}>
+              <Grid mt={8} sx={{ display: 'flex', justifyContent: 'space-between', paddingX: '10px'}}>
+                <Typography variant='h5' sx={{ display: 'flex', justifyContent: 'center' }}>
                   {totalEngagement?.share?.totalValue}
                 </Typography>
 
                 <Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 15 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center'}}>
                     {totalEngagement?.share?.comparison == 0 ? (
                       <Typography variant='h6' mt={2}>
                         {totalEngagement?.share?.comparison}%
@@ -119,9 +122,9 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                       <>
                         <Typography variant='h6'>
                           {totalEngagement?.share?.type === 'plus' ? (
-                            <ChevronUp fontSize='large' sx={{ color: 'success.main' }} />
+                            <ChevronUp fontSize='medium' sx={{ color: 'success.main' }} />
                           ) : (
-                            <ChevronDown fontSize='large' sx={{ color: 'error.main' }} />
+                            <ChevronDown fontSize='medium' sx={{ color: 'error.main' }} />
                           )}
                         </Typography>
 
@@ -138,20 +141,20 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
               </Grid>
             </Grid>
 
-            <Grid item xs={6} md={3}>
-              <span style={{ display: 'flex' }}>
-                <Message fontSize='large' />
-                <Typography sx={{ marginLeft: '20px', fontSize: '1.5vw', fontWeight: 'bold', mt: 1 }}>
+            <Grid item xs={6} md={2.3}>
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' , marginTop: '4px'}}>
+                <Message fontSize='medium' />
+                <Typography variant='h6' sx={{ marginLeft: '20px' }}>
                   Comment
                 </Typography>
               </span>
-              <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant='h5' sx={{ mt: 1.5 }}>
+              <Grid mt={8} sx={{ display: 'flex', justifyContent: 'space-between' , paddingX: '10px'}}>
+                <Typography variant='h5' sx={{ display: 'flex', justifyContent: 'center'  }}>
                   {totalEngagement?.comment?.totalValue}
                 </Typography>
 
                 <Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 15 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     {totalEngagement?.comment?.comparison == 0 ? (
                       <Typography variant='h6' mt={2}>
                         {totalEngagement?.comment?.comparison}%
@@ -160,9 +163,9 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                       <>
                         <Typography variant='h6'>
                           {totalEngagement?.comment?.type === 'plus' ? (
-                            <ChevronUp fontSize='large' sx={{ color: 'success.main' }} />
+                            <ChevronUp fontSize='medium' sx={{ color: 'success.main' }} />
                           ) : (
-                            <ChevronDown fontSize='large' sx={{ color: 'error.main' }} />
+                            <ChevronDown fontSize='medium' sx={{ color: 'error.main' }} />
                           )}
                         </Typography>
 
@@ -179,20 +182,20 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
               </Grid>
             </Grid>
 
-            <Grid item xs={6} md={3}>
-              <span style={{ display: 'flex' }}>
-                <StickerEmoji fontSize='large' />
-                <Typography sx={{ marginLeft: '20px', fontSize: '1.5vw', fontWeight: 'bold', mt: 1 }}>
+            <Grid item xs={6} md={2.3}>
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' , marginTop: '4px'}}>
+                <StickerEmoji fontSize='medium' />
+                <Typography variant='h6' sx={{ marginLeft: '20px' }}>
                   Reaction
                 </Typography>
               </span>
-              <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant='h5' sx={{ mt: 1.5 }}>
+              <Grid mt={8} sx={{ display: 'flex', justifyContent: 'space-between' , paddingX: '10px'}}>
+                <Typography variant='h5' sx={{ display: 'flex', justifyContent: 'center'  }}>
                   {totalEngagement?.reaction?.totalValue}
                 </Typography>
 
                 <Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 15 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     {totalEngagement?.reaction?.comparison == 0 ? (
                       <Typography variant='h6' mt={2}>
                         {totalEngagement?.reaction?.comparison}%
@@ -201,9 +204,9 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                       <>
                         <Typography variant='h6'>
                           {totalEngagement?.reaction?.type === 'plus' ? (
-                            <ChevronUp fontSize='large' sx={{ color: 'success.main' }} />
+                            <ChevronUp fontSize='medium' sx={{ color: 'success.main' }} />
                           ) : (
-                            <ChevronDown fontSize='large' sx={{ color: 'error.main' }} />
+                            <ChevronDown fontSize='medium' sx={{ color: 'error.main' }} />
                           )}
                         </Typography>
 
@@ -215,25 +218,25 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                         </Typography>
                       </>
                     )}
-                  </Box>
+                  </Box> 
                 </Box>
               </Grid>
             </Grid>
 
-            <Grid item xs={6} md={3}>
-              <span style={{ display: 'flex' }}>
-                <Eye fontSize='large' /> {/* เปลี่ยนจาก StickerEmoji เป็น Eye */}
-                <Typography sx={{ marginLeft: '20px', fontSize: '1.5vw', fontWeight: 'bold', mt: 1 }}>
+            <Grid item xs={6} md={2.3}>
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' , marginTop: '4px'}}>
+                <Eye fontSize='medium' />
+                <Typography variant='h6' sx={{ marginLeft: '20px' }}>
                   Views
                 </Typography>
               </span>
-              <Grid mt={10} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant='h5' sx={{ mt: 1.5 }}>
+              <Grid mt={8} sx={{ display: 'flex', justifyContent: 'space-between' , paddingX: '10px'}}>
+                <Typography variant='h5' sx={{ display: 'flex', justifyContent: 'center'  }}>
                   {totalEngagement?.views?.totalValue}
                 </Typography>
 
                 <Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 15 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center'}}>
                     {totalEngagement?.views?.comparison == 0 ? (
                       <Typography variant='h6' mt={2}>
                         {totalEngagement?.views?.comparison}%
@@ -242,9 +245,9 @@ const TotalEngagement = (props: InfluencerComparisonProps) => {
                       <>
                         <Typography variant='h6'>
                           {totalEngagement?.views?.type === 'plus' ? (
-                            <ChevronUp fontSize='large' sx={{ color: 'success.main' }} />
+                            <ChevronUp fontSize='medium' sx={{ color: 'success.main' }} />
                           ) : (
-                            <ChevronDown fontSize='large' sx={{ color: 'error.main' }} />
+                            <ChevronDown fontSize='medium' sx={{ color: 'error.main' }} />
                           )}
                         </Typography>
 

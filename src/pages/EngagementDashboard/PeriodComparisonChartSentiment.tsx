@@ -367,6 +367,18 @@ const PeriodComparisonChartSentiment = (props: LineProps) => {
                         )
                       })}
                     </TableRow>
+                    <TableRow>
+                      <TableCell>Views</TableCell>
+                      {(
+                        resultPeriodComparisonBySenitment?.views || []
+                      )?.map((view: any, index: number) => {
+                        return (
+                          <TableCell align="center" key={index}>
+                            {view} %
+                          </TableCell>
+                        )
+                      })}
+                    </TableRow>
                   </TableHead>
                 </Table>
               </TableContainer>

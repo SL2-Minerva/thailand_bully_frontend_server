@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { Avatar, Box, Grid, LinearProgress, Stack } from '@mui/material'
 import { gitHubIcon } from 'src/utils/const'
-import { CommentOutline, ShareVariantOutline, ThumbUpOutline } from 'mdi-material-ui'
+import { CommentOutline, ShareVariantOutline, ThumbUpOutline, EyeOutline} from 'mdi-material-ui'
 
 interface CardInfo {
   comment: any
@@ -156,6 +156,11 @@ const CommentDetail = (props: CardInfo) => {
             <Stack direction='row' spacing={2} sx={{ marginLeft: '12px' }}>
               <ShareVariantOutline fontSize='medium' sx={{ paddingRight: '3px' }} /> {' : ' + comment.number_of_shares}
             </Stack>
+
+            <Stack direction='row' spacing={2} sx={{ marginLeft: '12px' }}>
+              <EyeOutline fontSize='medium' sx={{ paddingRight: '3px' }} /> {' : ' + comment.number_of_views}
+            </Stack>
+
             {/* <span style={{marginTop: 3, marginLeft: 4}}>
               Link:{' '}
               <a href={comment.link_message} target='_blank' rel='noreferrer'>

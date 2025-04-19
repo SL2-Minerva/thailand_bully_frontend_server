@@ -73,6 +73,10 @@ const EngagementTypeComparison = ({
                       <TableCell variant='head' align='center'>
                         Reaction
                       </TableCell>
+                      <TableCell variant='head' align='center'>
+                        Views
+                      </TableCell>
+
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -182,6 +186,33 @@ const EngagementTypeComparison = ({
                               </Typography>
                             </span>
                           </TableCell>
+                          <TableCell align='left'>
+                            <span style={{ display: 'flex', justifyContent: 'center' }}>
+                              {comparison.views?.value == 0 ? (
+                                ''
+                              ) : (
+                                <>
+                                  {comparison.views?.type === 'plus' ? (
+                                    <ChevronUp
+                                      fontSize='medium'
+                                      sx={{ color: 'green', marginTop: '10px', marginRight: '10px' }}
+                                    />
+                                  ) : (
+                                    <ChevronDown
+                                      fontSize='medium'
+                                      sx={{ color: 'red', marginTop: '10px', marginRight: '10px' }}
+                                    />
+                                  )}
+                                </>
+                              )}
+
+                              <Typography variant='h6'>
+                                {comparison.views?.value?.toLocaleString('en-US')}
+                                <Typography variant='body2'>{comparison.views?.percentage} %</Typography>
+                              </Typography>
+                            </span>
+                          </TableCell>
+
                         </TableRow>
                       )
                     })}

@@ -302,7 +302,7 @@ const PrivacyNotice = () => {
                 หากท่านมีความประสงค์ที่จะใช้สิทธิของท่านที่เกี่ยวข้องกับข้อมูลส่วนบุคคลของท่าน
                 หรือหากท่านมีข้อสงสัยเกี่ยวกับข้อมูลส่วนบุคคลของท่านภายใต้นโยบายความเป็นส่วนตัวฉบับนี้
                 โปรดติดต่อเราหรือเจ้าหน้าที่คุ้มครองข้อมูลส่วนบุคคลของเราที่ บริษัท มิเนอร์วา คอนซัลแตนท์  จำกัด เลขที่
-                1709-1710 ชั้น 17 อาคารพร้อมพันธุ์ 3 ลาดพร้าวซอย 3 แขวงจอมพล เขตจตุจักร กรุงเทพฯ 10900
+                1004-1005 ชั้น 10 อาคารพร้อมพันธุ์ 3 ลาดพร้าวซอย 3 แขวงจอมพล เขตจตุจักร กรุงเทพฯ 10900
               </Typography>
 
               <Typography variant='body1' mt={1}>
@@ -586,7 +586,7 @@ const PrivacyNotice = () => {
               <Typography variant='body1' mt={1}>
                 If you wish to contact us to exercise the rights relating to your Personal Data or if you have any
                 queries about your Personal Data under this Privacy Policy, please contact us or our Data Protection
-                Officer at: Minerva Consultant Co.,Ltd  1709-1710 17th Floor Phrom Phan 3, Ladprao Soi 3, Jomphol,
+                Officer at: Minerva Consultant Co.,Ltd  1004-1005 10th Floor Phrom Phan 3, Ladprao Soi 3, Jomphol,
                 Jatuchak, Bangkok 10900
               </Typography>
               <Typography variant='body1' mt={1}>

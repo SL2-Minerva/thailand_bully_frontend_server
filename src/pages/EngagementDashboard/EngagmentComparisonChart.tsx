@@ -133,7 +133,7 @@ const EngagmentComparisonChart = ({
     title: {
       text: ''
     },
-    colors: ['#c46627', '#ed7d31', '#f4b9a4' ,'#dc6a5b'],
+    colors: ['#c46628', '#ee7d30', '#ff9a56' ,'#f4baa3'],
     xaxis: {
       categories: chartLabels,
       labels: {
@@ -159,7 +159,7 @@ const EngagmentComparisonChart = ({
     },
     fill: {
       opacity: 1,
-      colors: ['#c46627', '#ed7d31', '#f4b9a4' , '#dc6a5b']
+      colors: ['#c46628', '#ee7d30', '#ff9a56' , '#f4baa3']
     },
     legend: {
       position: 'top',

@@ -36,6 +36,7 @@ const ContentAnnouncement = (props: Props) => {
                 padding: '30px',
                 display: 'flex', 
                 justifyContent: 'center',
+                minHeight: '800px'
                }}> 
               <img
 
@@ -50,7 +51,7 @@ const ContentAnnouncement = (props: Props) => {
                 }}
               />
 
-              <CardContent>
+              {/* <CardContent>
                 <Grid
                   container
 
@@ -58,7 +59,8 @@ const ContentAnnouncement = (props: Props) => {
                   style={{
                     display: 'flex',
                     width: '70%',
-                    paddingLeft: '100px'
+
+                    // paddingLeft: '100px'
                   }}
                 >
                   <Grid item xs={12} md={8} spacing={2} mt={40}>
@@ -66,18 +68,18 @@ const ContentAnnouncement = (props: Props) => {
                       <ReactQuill value={contents.title} readOnly={true} theme='bubble' />
                     </h1>
                     <Grid>
-                      {/* <ReactQuill value={contents.content_text} readOnly={true} theme='bubble' /> */}
+                      <ReactQuill value={contents.content_text} readOnly={true} theme='bubble' />
                       <div dangerouslySetInnerHTML={{ __html: contents.content_text || '-' }} />
 
                     </Grid>
                     <Typography>
-                      {/* <ReactQuill value={'Date:' + contents.date} readOnly={true} theme='bubble' /> */}
-                      {/* <div dangerouslySetInnerHTML={{ __html: t('Date') + ": " + contents.date || '-' }} /> */}
+                      <ReactQuill value={'Date:' + contents.date} readOnly={true} theme='bubble' />
+                      <div dangerouslySetInnerHTML={{ __html: t('Date') + ": " + contents.date || '-' }} />
 
                     </Typography>
                   </Grid>
                 </Grid>
-              </CardContent>
+              </CardContent> */}
             </Card>
           </Grid>
         )

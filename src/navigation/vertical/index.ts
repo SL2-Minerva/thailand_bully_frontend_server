@@ -5,7 +5,7 @@ import Pin from 'mdi-material-ui/Pin'
 import Finance from 'mdi-material-ui/Finance'
 
 // import { NewspaperVariantMultiple } from 'mdi-material-ui'
-import VectorArrangeBelow from 'mdi-material-ui/VectorArrangeBelow'
+// import VectorArrangeBelow from 'mdi-material-ui/VectorArrangeBelow'
 import { Security } from 'mdi-material-ui'
 
 // ** Type import
@@ -25,7 +25,8 @@ const navigation = (): VerticalNavItemsType => {
     showWordCloud,
     showSNA,
     showMonitoringDashboard,
-    showCorpus,
+
+    // showCorpus,
     showActivityLog,
     showSNAByBullyLevel,
     showSNAByBullyType,
@@ -277,15 +278,15 @@ const navigation = (): VerticalNavItemsType => {
       }
     : null
 
-  const LinkOut = {
-    title: 'Corpus',
-    icon: VectorArrangeBelow,
-    openInNewTab: true,
-    externalLink: true,
-    path: 'http://202.44.231.31:8080'
+  // const LinkOut = {
+  //   title: 'Corpus',
+  //   icon: VectorArrangeBelow,
+  //   openInNewTab: true,
+  //   externalLink: true,
+  //   path: 'http://202.44.231.31:8080'
 
-    // path: 'http://onlinecorpus.net'
-  }
+  //   // path: 'http://onlinecorpus.net'
+  // }
 
   const log = {
     title: 'Activity Log',
@@ -319,9 +320,9 @@ const navigation = (): VerticalNavItemsType => {
     sideMenuBar.push(log)
   }
 
-  if ((resultIsAdmin || showCorpus) && LinkOut) {
-    sideMenuBar.push(LinkOut)
-  }
+  // if ((resultIsAdmin || showCorpus) && LinkOut) {
+  //   sideMenuBar.push(LinkOut)
+  // }
 
   sideMenuBar.push(notice)
 

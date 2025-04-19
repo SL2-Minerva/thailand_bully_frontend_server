@@ -77,15 +77,15 @@ const EngagementMonitoring = ({
       flex: 1,
       headerAlign: 'center',
       minWidth: 200,
-      valueGetter: (params: GridValueGetterParams) => `${params.row.post_time + ', ' + moment(params.row.post_date, 'YYYY/MM/DD').format('DD/MM/YYYY')}`
+      valueGetter: (params: GridValueGetterParams) => `${moment(params.row.post_date, 'YYYY/MM/DD').format('DD/MM/YYYY') + ', ' + params.row.post_time}`
     },
     {
       field: 'scrape_time',
-      headerName: 'Scrrape Time',
+      headerName: 'Scraping Time',
       flex: 1,
       headerAlign: 'center',
       minWidth: 200,
-      valueGetter: (params: GridValueGetterParams) => `${params.row.scrape_time + ', ' + moment(params.row.scrape_date, 'YYYY/MM/DD').format('DD/MM/YYYY')}`
+      valueGetter: (params: GridValueGetterParams) => `${moment(params.row.scrape_date, 'YYYY/MM/DD').format('DD/MM/YYYY') + ', ' + params.row.scrape_time}`
     },
     {
       field: 'source_name',

@@ -15,7 +15,7 @@ import {
   googleIcon,
   tiktokIcon
 } from 'src/utils/const'
-import { CommentOutline, LinkVariant, ShareVariantOutline, ThumbUpOutline } from 'mdi-material-ui'
+import { CommentOutline, LinkVariant, ShareVariantOutline, ThumbUpOutline, EyeOutline } from 'mdi-material-ui'
 import SourceService from 'src/services/api/source/SourceApi'
 
 // import Button from '@mui/material/Button'
@@ -240,6 +240,12 @@ const TopManagementCard = (props: CardInfo) => {
               <ShareVariantOutline fontSize='medium' sx={{ paddingRight: '3px' }} />{' '}
               {' : ' + resultTopEngagement.number_of_shares}
             </Stack>
+
+            <Stack direction='row' spacing={2} sx={{ marginLeft: '12px' }}>
+              <EyeOutline fontSize='medium' sx={{ paddingRight: '3px' }} />{' '}
+              {' : ' + resultTopEngagement.number_of_views}
+            </Stack>
+
           </Grid>
           <Grid item md={2} xs={12} sx={{ display: 'flex', justifyContent: 'end', pr: 3 }}>
             Link:{' '}
@@ -267,6 +273,12 @@ const TopManagementCard = (props: CardInfo) => {
               {' '}
               <b>Bully Type: </b> {resultTopEngagement.bully_type}{' '}
             </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant='body1'>
+              {' '}
+              <b>Scraping Time: </b> {resultTopEngagement.scrape_date + ', ' + resultTopEngagement.scrape_time}{' '}
+            </Typography> 
           </Grid>
         </Grid>
       </CardContent>

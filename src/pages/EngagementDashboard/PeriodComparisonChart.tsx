@@ -379,6 +379,32 @@ const PeriodComparisonChart = (props: LineProps) => {
                       })}
                       {/* <TableCell align='center'>{resultSentimentComparisonByEngagement?.reaction || resultSentimentComparisonByEngagement?.negative || ""}</TableCell> */}
                     </TableRow>
+                    {/* <TableRow>
+                      <TableCell width='10'>Views</TableCell>
+                      {(resultSentimentComparisonByEngagement?.views || []).map((view: any, index: number) => {
+                        return (
+                          <TableCell align='center' key={index}>
+                            {view}%
+                          </TableCell>
+                        )
+                      })}
+                    </TableRow> */}
+                    
+                    {/* เพิ่มเงื่อนไขนี้เพื่อแสดง Views เฉพาะในกรณีที่มี Share/Comment/Reaction */}
+                    {(resultSentimentComparisonByEngagement?.share ||
+                      resultSentimentComparisonByEngagement?.comment ||
+                      resultSentimentComparisonByEngagement?.reaction) && (
+                      <TableRow>
+                        <TableCell width="10">Views</TableCell>
+                        {(resultSentimentComparisonByEngagement?.views || []).map((view: any, index: number) => {
+                          return (
+                            <TableCell align="center" key={index}>
+                              {view}%
+                            </TableCell>
+                          )
+                        })}
+                      </TableRow>
+                    )}
                   </TableHead>
                 </Table>
               </TableContainer>
