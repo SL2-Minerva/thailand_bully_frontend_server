@@ -109,17 +109,17 @@ const Contents = (props: Props) => {
             backgroundColor: 'transparent',
             marginBottom: '20px' // เพิ่มระยะห่างระหว่างการ์ด
           }}>
-            <h2 style={{ marginLeft: '2rem', marginBottom: '-2rem' }}>
+            <h3 style={{ marginLeft: '2rem', marginBottom: '-2rem' }}>
               {contents.title === '<p><strong class="ql-size-huge">FAQs</strong></p>' ? (
-                <h4>
+                <h6>
                   <Translations text='FAQs' />
-                </h4>
+                </h6>
               ) : (
                 <div>
                   {index + 1}. <span dangerouslySetInnerHTML={{ __html: contents.title }} />
                 </div>
               )}
-            </h2>
+            </h3>
             <CardContent style={{ padding: '16px' }}>
               <Typography style={{ marginTop: '20px', marginLeft: '20px' }}>
                 <strong>Ans:</strong>{' '}

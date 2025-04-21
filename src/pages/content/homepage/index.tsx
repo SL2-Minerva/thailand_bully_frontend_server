@@ -6,6 +6,7 @@ import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Contents from './Contents'
 import ContentAnnouncement from './ContentAnnouncement'
+import ContentNews from './ContentNews'
 import Translations from 'src/layouts/components/Translations'
 
 // import ContentAnnouncement from './ContentAnnouncement'
@@ -94,13 +95,25 @@ const ContentPage = () => {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           {resultContentList?.length > 0 ? (
-            <Contents resultContentList={resultContentList} />
+
+            <ContentNews resultContentList={resultContentList} />
+            
+            // <Contents resultContentList={resultContentList} />
           ) : (
             <Typography sx={{ display: 'flex', justifyContent: 'center', color: 'grey' }} variant='h6' mt={5}>
               There is no data.
             </Typography>
           )}
         </CustomTabPanel>
+        {/* <CustomTabPanel value={value} index={1}>
+          {resultContentList?.length > 0 ? (
+            <Contents resultContentList={resultContentList} />
+          ) : (
+            <Typography sx={{ display: 'flex', justifyContent: 'center', color: 'grey' }} variant='h6' mt={5}>
+              There is no data.
+            </Typography>
+          )}
+        </CustomTabPanel> */}
         <CustomTabPanel value={value} index={2}>
           {resultContentList?.length > 0 ? (
             <Contents resultContentList={resultContentList} />
