@@ -145,8 +145,8 @@ const processItem = (
       if (!uniqueEdgeKeys.has(edgeKey)) {
         uniqueEdgeKeys.add(edgeKey)
         edgeData.push({
-          from: parentId,
-          to: node.id,
+          from: node.id, 
+          to: parentId,
           width: 5,
           length: 300,
           color: node.color,
