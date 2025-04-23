@@ -82,7 +82,7 @@ const ShareOfChannelGraph = ({
     tooltip: {
       y: {
         formatter: function (val) {
-          return val + '%'
+          return val.toString()
         }
       },
       theme: settings.mode === 'dark' ? 'dark' : 'light'

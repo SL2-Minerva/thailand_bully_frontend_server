@@ -513,20 +513,32 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                       backgroundColor: messageDetail.parent ? '#00ff0038' : '#fff',
                       color: 'grey'
                     }}
+
+                    // onClick={() => {
+                    //   // setMessageId(messageDetail.message_id);
+                    //   setMessageId(messageDetail.id)
+                    //   setShowDetail(true)
+                    // }}
+                  >
+                    <StyledTableCell sx={{ color: 'grey' }}>
+                      <b>{index + 1 + (page - 1) * 10}</b>
+                    </StyledTableCell>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }}
                     onClick={() => {
                       // setMessageId(messageDetail.message_id);
                       setMessageId(messageDetail.id)
                       setShowDetail(true)
                     }}
-                  >
-                    <StyledTableCell sx={{ color: 'grey' }}>
-                      <b>{index + 1 + (page - 1) * 10}</b>
-                    </StyledTableCell>
-                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                    >
                       {messageDetail.keyword_name}
                     </StyledTableCell>
 
-                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }} onClick={() => {
+                      // setMessageId(messageDetail.message_id);
+                      setMessageId(messageDetail.id)
+                      setShowDetail(true)
+                    }}
+                    >
                       {messageDetail.account_name}
                     </StyledTableCell>
                     <StyledTableCell component='th' scope='row' width={200} sx={{ color: 'grey' }}>
@@ -535,21 +547,37 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                           overflow: 'hidden',
                           display: '-webkit-box',
                           WebkitBoxOrient: 'vertical',
-                          WebkitLineClamp: 3
+                          WebkitLineClamp: 3,
+                          maxWidth: 200
                         }}
                       >
                         {messageDetail.message_detail}
                       </span>
                     </StyledTableCell>
-                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }} onClick={() => {
+                      // setMessageId(messageDetail.message_id);
+                      setMessageId(messageDetail.id)
+                      setShowDetail(true)
+                    }}
+                    >
                       {messageDetail.message_type || '-'}
                     </StyledTableCell>
 
-                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }} onClick={() => {
+                      // setMessageId(messageDetail.message_id);
+                      setMessageId(messageDetail.id)
+                      setShowDetail(true)
+                    }}
+                    >
                       {moment(messageDetail.post_date)?.format('DD.MM.YYYY') + ', ' + messageDetail.post_time}
                     </StyledTableCell>
 
-                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }} onClick={() => {
+                      // setMessageId(messageDetail.message_id);
+                      setMessageId(messageDetail.id)
+                      setShowDetail(true)
+                    }}
+                    >
                       {moment(messageDetail.scrape_date)?.format('DD.MM.YYYY') + ', ' + messageDetail.scrape_time}
                       {/* {messageDetail.device === 'android' ? (
                         <img alt={'logo'} width={25} height={25} src={`/images/logos/android.png`} />
@@ -561,7 +589,12 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                         '-'
                       )} */}
                     </StyledTableCell>
-                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }} onClick={() => {
+                      // setMessageId(messageDetail.message_id);
+                      setMessageId(messageDetail.id)
+                      setShowDetail(true)
+                    }}
+                    >
                       {messageDetail?.source_name === 'facebook' ? (
                         <img alt={'logo'} width={28} height={28} src={`/images/logos/facebook-round.png`} />
                       ) : messageDetail?.source_name === 'x' ? (
@@ -580,20 +613,45 @@ const InfluencerDetail = (props: DialogInfoProps) => {
                         <span style={{ textTransform: 'uppercase' }}>{messageDetail?.channel}</span>
                       )}
                     </StyledTableCell>
-                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }} onClick={() => {
+                      // setMessageId(messageDetail.message_id);
+                      setMessageId(messageDetail.id)
+                      setShowDetail(true)
+                    }}
+                    >
                       {messageDetail.total_engagement || '-'}
                     </StyledTableCell>
-                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }} onClick={() => {
+                      // setMessageId(messageDetail.message_id);
+                      setMessageId(messageDetail.id)
+                      setShowDetail(true)
+                    }}
+                    >
                       {messageDetail.sentiment || '-'}
                     </StyledTableCell>
-                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }} onClick={() => {
+                      // setMessageId(messageDetail.message_id);
+                      setMessageId(messageDetail.id)
+                      setShowDetail(true)
+                    }}
+                    >
                       {messageDetail.bully_level}
                     </StyledTableCell>
-                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }} onClick={() => {
+                      // setMessageId(messageDetail.message_id);
+                      setMessageId(messageDetail.id)
+                      setShowDetail(true)
+                    }}
+                    >
                       {messageDetail.bully_type}
                     </StyledTableCell>
 
-                    <StyledTableCell align='center' sx={{ color: 'grey' }}>
+                    <StyledTableCell align='center' sx={{ color: 'grey' }} onClick={() => {
+                      // setMessageId(messageDetail.message_id);
+                      setMessageId(messageDetail.id)
+                      setShowDetail(true)
+                    }}
+                    >
                       {messageDetail.link_message ? (
                         <a
                           href={messageDetail.link_message}

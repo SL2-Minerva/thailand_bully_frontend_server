@@ -10,6 +10,7 @@ import { GetEngagementPostMonitoring } from 'src/services/api/dashboards/monitor
 import DetailPostEgagement from './DetailPostEngagement'
 import ExportExcel from '../VoiceDashboard/ExportExcel'
 import moment from 'moment'
+import ImagePopupDialog from '../dashboard/ImagePopupDialog'
 
 // import { Box, LinearProgress, Pagination, Typography, Paper } from '@mui/material'
 
@@ -171,20 +172,38 @@ const EngagementMonitoring = ({
     )
   }
 
-    function openPopup(params: any) {
+  const [showImagePopup, setShowImagePopup] = useState(false)
+  const [imageUrl, setImageUrl] = useState('')
+  
+  function openPopup(params: any) {
     return (
-      <a
-        href={params.value}
+      <span
         onClick={event => {
           event.stopPropagation()
+          setImageUrl(params.row.imageUrl)
+          setShowImagePopup(true)
         }}
-        target='_blank'
-        rel='noopener noreferrer'
+        style={{ cursor: 'pointer' }}
       >
         <ImageOutline fontSize='small' sx={{ color: 'blue' }} />
-      </a>
+      </span>
     )
   }
+  
+  //   function openPopup(params: any) {
+  //   return (
+  //     <a
+  //       href={params.value}
+  //       onClick={event => {
+  //         event.stopPropagation()
+  //       }}
+  //       target='_blank'
+  //       rel='noopener noreferrer'
+  //     >
+  //       <ImageOutline fontSize='small' sx={{ color: 'blue' }} />
+  //     </a>
+  //   )
+  // }
 
   const [pageCount, setPageCount] = useState<number>(0)
   const [page, setPage] = useState(1)
@@ -322,6 +341,12 @@ const EngagementMonitoring = ({
       ) : (
         ''
       )}      
+        <ImagePopupDialog
+          showDialog={showImagePopup}
+          setShowDialog={setShowImagePopup}
+          imageUrl={imageUrl}
+          title='Image'
+        />    
     </Paper>
   )
 }

@@ -15,7 +15,7 @@ import { PencilOutline } from 'mdi-material-ui'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import DialogSource from './dialogSource'
-import SourceService from 'src/services/api/source/SourceApi'
+import IndexSourceService from 'src/services/api/source/SourceApiAdmin' 
 import axios from 'axios'
 import authConfig from '../../../configs/auth'
 import { UserPermission } from 'src/services/api/users/role'
@@ -38,11 +38,11 @@ const SourceManagement = () => {
     setCurrent({})
   }
 
-  const { result_source_list, total } = SourceService(reload, page)
+  const { index_source_list, total } = IndexSourceService(reload, page)
 
   useEffect(() => {
     setReload(!reload)
-    setTableData(result_source_list)
+    setTableData(index_source_list)
   }, [showCreate, showEdit])
 
   function handleChange(index: number, i: number, event: any) {
@@ -56,7 +56,7 @@ const SourceManagement = () => {
       }
     )
 
-    const values = [...result_source_list]
+    const values = [...index_source_list]
     values[index].status = event.target.checked
     setTableData(values)
     setReload(!reload)
@@ -64,11 +64,11 @@ const SourceManagement = () => {
 
   function handleEdit(i: number) {
     setAction('edit')
-    setCurrent(result_source_list[i])
+    setCurrent(index_source_list[i])
     setShowEdit(true)
-    setTableData(result_source_list)
+    setTableData(index_source_list)
   }
-  const [tableData, setTableData] = useState(result_source_list)
+  const [tableData, setTableData] = useState(index_source_list)
   const { resultPermission, errorUserPermission } = UserPermission()
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -122,8 +122,8 @@ const SourceManagement = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {result_source_list &&
-                    result_source_list.map((row: any, index: number) => (
+                  {index_source_list &&
+                    index_source_list.map((row: any, index: number) => (
                       <TableRow
                         key={index}
                         sx={{

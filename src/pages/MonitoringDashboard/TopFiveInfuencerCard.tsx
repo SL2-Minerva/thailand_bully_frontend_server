@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography'
 import { Avatar, Grid } from '@mui/material'
 import SentimentLevelGraph from './SentimentLevelGraph'
 import { getSourceIcon } from './TopFiveInfluencers'
+import AccountIcon from 'mdi-material-ui/Account';
 
 interface CardInfo {
   influencer: any
@@ -19,8 +20,15 @@ const TopFiveInfluencerCard = (props: CardInfo) => {
   return (
     <Card sx={{ p: 3 }}>
       <Grid display='flex' justifyContent='center'>
-        <Avatar sx={{ width: 80, height: 80 }}>
+        {/* <Avatar sx={{ width: 80, height: 80 }}>
           <img src={influencer?.cover_image || '/images/default_image.png'} width={80} height={80} alt='' />
+        </Avatar> */}
+        <Avatar sx={{ width: 80, height: 80 }}>
+          {influencer?.cover_image ? (
+            <img src={influencer.cover_image} width={80} height={80} alt="profile" />
+          ) : (
+            <AccountIcon sx={{ fontSize: 50 }} />
+          )}
         </Avatar>
       </Grid>
       <Grid display='flex' justifyContent='center'>

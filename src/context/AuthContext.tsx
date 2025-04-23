@@ -100,6 +100,7 @@ const AuthProvider = ({ children }: Props) => {
             localStorage.setItem('id', data?.info?.id);
             localStorage.setItem('userName', data.info?.name)
             localStorage.setItem('isAdmin',data.isAdmin);
+            localStorage.setItem('role_name',data.role_name);
             localStorage.setItem('organizationName', data.organization?.name);
             localStorage.setItem('organizationGrpName', data.organization_group?.organization_group_name);
 

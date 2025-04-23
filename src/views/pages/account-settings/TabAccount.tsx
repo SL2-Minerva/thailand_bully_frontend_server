@@ -141,14 +141,14 @@ const TabAccount = () => {
               aria-readonly
               label={<Translations text='Role' />}
               placeholder='role'
-              value={localStorage.getItem('isAdmin') == '1' ? 'Admin' : 'User'}
+              value={localStorage.getItem('role_name')}
             />
           </Grid>
 
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              label={<Translations text='Oragnization' />}
+              label={<Translations text='Organization' />}
               placeholder='ABC Pvt. Ltd.'
               value={localStorage.getItem('organizationName')}
             />
@@ -157,7 +157,7 @@ const TabAccount = () => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              label={<Translations text='Oragnization Group' />}
+              label={<Translations text='Organization Group' />}
               placeholder='orgnization group name '
               value={localStorage.getItem('organizationGrpName')}
             />

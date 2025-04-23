@@ -264,12 +264,12 @@ const DialogEditUserInfo = (props: DialogInfoProps) => {
             </Grid>
             <Grid item sm={6} xs={12}>
               <FormControl fullWidth>
-                <InputLabel id='organization-select'>{<Translations text='Oragnization' />}</InputLabel>
+                <InputLabel id='organization-select'>{<Translations text='Organization' />}</InputLabel>
                 <Select
                   fullWidth
                   labelId='organization-select'
                   value={organization}
-                  label={<Translations text='Oragnization' />}
+                  label={<Translations text='Organization' />}
                   onChange={e => setOrganization(e.target.value)}
                 >
                   {list &&

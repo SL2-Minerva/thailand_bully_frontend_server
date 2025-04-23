@@ -614,7 +614,8 @@ const MessageDetail = (props: DialogInfoProps) => {
                           overflow: 'hidden',
                           display: '-webkit-box',
                           WebkitBoxOrient: 'vertical',
-                          WebkitLineClamp: 3
+                          WebkitLineClamp: 3,
+                          maxWidth: 200
                         }}
                       >
                         {messageDetail.message_detail}

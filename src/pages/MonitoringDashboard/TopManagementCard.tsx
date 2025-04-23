@@ -17,6 +17,7 @@ import {
 } from 'src/utils/const'
 import { CommentOutline, LinkVariant, ShareVariantOutline, ThumbUpOutline, EyeOutline } from 'mdi-material-ui'
 import SourceService from 'src/services/api/source/SourceApi'
+import AccountIcon from 'mdi-material-ui/Account';
 
 // import Button from '@mui/material/Button'
 
@@ -126,7 +127,14 @@ const TopManagementCard = (props: CardInfo) => {
       <CardContent>
         <Grid container spacing={1}>
           <Grid item xs={2.5}>
-            <Avatar sx={{ width: 50, height: 50 }}><img src={imgPath} width={50} height={50} alt='' /></Avatar> 
+            {/* <Avatar sx={{ width: 50, height: 50 }}><img src={imgPath} width={50} height={50} alt='' /></Avatar>  */}
+            <Avatar sx={{ width: 50, height: 50 }}>
+              {imgPath ? (
+                <img src={imgPath} width={50} height={50} alt="profile" />
+              ) : (
+                <AccountIcon sx={{ fontSize: 40 }}  />  // แสดงไอคอนโปรไฟล์เมื่อไม่มี imgPath
+              )}
+            </Avatar>
           </Grid>
 
           <Grid item xs={8.5}>
