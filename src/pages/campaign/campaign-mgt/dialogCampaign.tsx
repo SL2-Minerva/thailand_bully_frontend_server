@@ -509,8 +509,13 @@ const DialogCampaign = (props: DialogInfoProps) => {
                     value={frequency}
                     onChange={handleFrequency}
                     placeholder={t('frequencyPlaceHolder')}
+                    inputProps={{ min:240 }}
                   />
                   {showErrorFrequency ? <p style={{ color: 'red', fontSize: '14px' }}>{showErrorFrequency}</p> : ''}
+                  <p style={{ marginLeft: '10px', color: 'red' ,fontSize: '12px'}}>
+                          {' '}
+                          <Translations text='Please enter a value of at least 240 minutes' />
+                        </p>
                 </FormControl>
               </Grid>
 
