@@ -2,7 +2,8 @@ import { Grid } from '@mui/material'
 
 // import TopSiteList from './TopSiteList'
 import MainKeyWordTable from './MainKeywordTable'
-import TopHashtagList from './TopHastagList'
+
+// import TopHashtagList from './TopHastagList'
 import { GetTopKeywords } from 'src/services/api/dashboards/overall/overallDashboardApi'
 
 interface Props {
@@ -18,7 +19,7 @@ const TopKeywordsSummary = (props: Props) => {
   return (
     <>
       {resultReportPermission?.includes('7') ? (
-        <Grid id='chart7' item xs={12} md={6}>
+        <Grid id='chart7' item xs={12} md={12}>
           <MainKeyWordTable
             params={params}
             loadingTopKeywords={loadingTopKeywords}
@@ -43,7 +44,7 @@ const TopKeywordsSummary = (props: Props) => {
         ''
       )} */}
 
-      {resultReportPermission?.includes('9') ? (
+      {/* {resultReportPermission?.includes('9') ? (
         <Grid id='chart9' item xs={12} md={6}>
           <TopHashtagList
             params={params}
@@ -54,7 +55,7 @@ const TopKeywordsSummary = (props: Props) => {
         </Grid>
       ) : (
         ''
-      )}
+      )} */}
     </>
   )
 }

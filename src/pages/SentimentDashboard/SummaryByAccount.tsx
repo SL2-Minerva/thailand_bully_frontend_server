@@ -1,4 +1,5 @@
-import { Grid, Button, LinearProgress, Typography, Paper } from '@mui/material'
+// import { Grid, Button, LinearProgress, Typography, Paper } from '@mui/material'
+import { LinearProgress, Typography, Paper } from '@mui/material'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
@@ -13,8 +14,8 @@ const SummaryByAccount = ({
   total,
   loadingSummaryByAccount,
 
-  topAccount,
-  setTopAccount
+  // topAccount,
+  // setTopAccount
 }: {
   params: any
   chartId: string
@@ -28,9 +29,9 @@ const SummaryByAccount = ({
   // const [page, setPage] = useState(0);
   // const [pageCount, setPageCount] = useState<number>(0);
 
-  const handleTopAccounts = (data: string) => {
-    setTopAccount(data)
-  }
+  // const handleTopAccounts = (data: string) => {
+  //   setTopAccount(data)
+  // }
 
   // const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
   //     setPage(value-1);
@@ -85,7 +86,10 @@ const SummaryByAccount = ({
       {loadingSummaryByAccount && <LinearProgress style={{ width: '100%' }} />}
       <span style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <CardHeader
+        
           title={<Translations text='Summary Sentiment Score by Account' />}
+          
+          // title={<Translations text='Top 10 Sentiment Score by Account' />}
           titleTypographyProps={{ variant: 'h6' }}
         />
         <StyledTooltip
@@ -105,7 +109,7 @@ const SummaryByAccount = ({
         </StyledTooltip>
       </span>
       <CardContent>
-        <Grid container spacing={3} mt={2} mb={3}>
+        {/* <Grid container spacing={3} mt={2} mb={3}>
           <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
             <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
             <Button
@@ -164,12 +168,14 @@ const SummaryByAccount = ({
               <span style={{ color: topAccount === 'all' ? 'white' : '#626376' }}>ALL</span>{' '}
             </Button>
           </Grid>
-        </Grid>
+        </Grid> */}
 
         {resultSummaryByAccount ? (
           <DataGrid
             autoHeight
-            rows={resultSummaryByAccount}
+            
+            // rows={resultSummaryByAccount}
+            rows={resultSummaryByAccount.slice(0, 10)}
             columns={columns}
             pageSize={10}
             rowsPerPageOptions={[10]}

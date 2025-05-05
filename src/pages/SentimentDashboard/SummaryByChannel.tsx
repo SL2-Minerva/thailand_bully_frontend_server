@@ -1,4 +1,5 @@
-import { Grid, Button, LinearProgress, Typography, Paper } from '@mui/material'
+// import { Grid, Button, LinearProgress, Typography, Paper } from '@mui/material'
+import { LinearProgress, Typography, Paper } from '@mui/material'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
@@ -13,8 +14,8 @@ const SummaryByChannel = ({
   total,
   loadingSummaryByChannel,
 
-  topChannel,
-  setTopChannel
+  // topChannel,
+  // setTopChannel
 }: {
   params: any
   chartId: string
@@ -27,9 +28,9 @@ const SummaryByChannel = ({
 }) => {
   // const [page, setPage] = useState(0);
   // const [pageCount, setPageCount] = useState<number>(0);
-  const handleTopChannels = (data: string) => {
-    setTopChannel(data)
-  }
+  // const handleTopChannels = (data: string) => {
+  //   setTopChannel(data)
+  // }
 
   // const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
   //     setPage(value-1);
@@ -104,7 +105,7 @@ const SummaryByChannel = ({
         </StyledTooltip>
       </span>
       <CardContent>
-        <Grid container spacing={3} mt={2} mb={3}>
+        {/* <Grid container spacing={3} mt={2} mb={3}>
           <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
             <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
             <Button
@@ -163,7 +164,7 @@ const SummaryByChannel = ({
               <span style={{ color: topChannel === 'top10' ? 'white' : '#626376' }}>ALL</span>
             </Button>
           </Grid>
-        </Grid>
+        </Grid> */}
         {/* <TableContainer sx={{ maxHeight: 500 }}>
             <Table size="small" stickyHeader={true}>
                     <TableHead style={{ backgroundColor: "green"}}>

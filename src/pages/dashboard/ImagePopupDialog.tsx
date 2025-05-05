@@ -43,7 +43,7 @@ const ImagePopupDialog = ({ showDialog, setShowDialog, imageUrl, title }: ImageP
             </Typography>
           )}
 
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          {/* <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <img
 
               src={'https://cornea-ai.com/images/picture_post/' + imageUrl}
@@ -54,6 +54,24 @@ const ImagePopupDialog = ({ showDialog, setShowDialog, imageUrl, title }: ImageP
                 borderRadius: '8px' 
               }} 
             />
+          </Box> */}
+
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+            {imageUrl ? (
+              <img
+                src={'https://cornea-ai.com/images/picture_post/' + imageUrl}
+                alt={title || 'Image'}
+                style={{
+                  maxWidth: '100%',
+                  maxHeight: '80vh',
+                  borderRadius: '8px'
+                }}
+              />
+            ) : (
+              <Typography variant='body1' color='textSecondary'>
+                No Image
+              </Typography>
+            )}
           </Box>
         </DialogContent>
       </Dialog>

@@ -1,4 +1,5 @@
-import { Grid, Button, LinearProgress, Typography, Paper } from '@mui/material'
+// import { Grid, Button, LinearProgress, Typography, Paper } from '@mui/material'
+import { LinearProgress, Typography, Paper } from '@mui/material'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { StyledTooltip } from '../dashboard/overall'
@@ -95,8 +96,8 @@ const SummaryByKeywords = ({
   total,
   loadingSummaryByKeywords,
 
-  topKeyword,
-  setTopKeyword
+  // topKeyword,
+  // setTopKeyword
 }: {
   params: any
   chartId: string
@@ -110,9 +111,9 @@ const SummaryByKeywords = ({
   // const [page, setPage] = useState(0);
   // const [pageCount, setPageCount] = useState<number>(0);
 
-  const handleTopKeyword = (data: string) => {
-    setTopKeyword(data)
-  }
+  // const handleTopKeyword = (data: string) => {
+  //   setTopKeyword(data)
+  // }
 
   // const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
   //     setPage(value-1);
@@ -174,7 +175,7 @@ const SummaryByKeywords = ({
         </StyledTooltip>
       </span>
       <CardContent>
-        <Grid container spacing={3} mt={2} mb={3}>
+        {/* <Grid container spacing={3} mt={2} mb={3}>
           <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end' }}>
             <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
             <Button
@@ -233,7 +234,7 @@ const SummaryByKeywords = ({
               <span style={{ color: topKeyword === 'all' ? 'white' : '#626376' }}>ALL</span>
             </Button>
           </Grid>
-        </Grid>
+        </Grid> */}
 
         {resultSummaryByKeywords ? (
           <DataGrid

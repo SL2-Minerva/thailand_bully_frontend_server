@@ -1,4 +1,5 @@
-import { Backdrop, Button, CircularProgress, Grid } from '@mui/material'
+// import { Backdrop, Button, CircularProgress, Grid } from '@mui/material'
+import { Backdrop, CircularProgress, Grid } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { EngagementTransChartColor, EngagementTypeColors } from 'src/utils/const'
 
@@ -56,7 +57,9 @@ const EngagementGraphs = (data: Props) => {
 
   const [showQuickView, setShowQuickView] = useState<boolean>(false)
   const [highlight, setHighlight] = useState<string>('')
-  const [topKeyword, setTopKeyword] = useState<string>('all')
+  
+  // const [topKeyword, setTopKeyword] = useState<string>('all')
+  const [topKeyword] = useState<string>('all')
   const [apiParams, setApiParams] = useState<any>()
   const [isLoading, setIsLoading] = useState(false)
   const [page, setPage] = useState(1)
@@ -112,9 +115,9 @@ const EngagementGraphs = (data: Props) => {
     loadingEngagementType: loadingEngagementType
   }
 
-  const handleTopKeywords = (data: string) => {
-    setTopKeyword(data)
-  }
+  // const handleTopKeywords = (data: string) => {
+  //   setTopKeyword(data)
+  // }
 
   useEffect(() => {
     if (params?.period !== 'customrange') {
@@ -580,7 +583,7 @@ const EngagementGraphs = (data: Props) => {
         )}
         {resultReportPermission?.includes('75') ? (
           <>
-            <Grid container spacing={3} mt={2}>
+            {/* <Grid container spacing={3} mt={2}>
               <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'end', overflowX: 'auto' }}>
                 <span style={{ marginTop: '7px', marginRight: '20px', fontSize: '20px' }}> Select </span>
                 <Button
@@ -639,7 +642,7 @@ const EngagementGraphs = (data: Props) => {
                   <span style={{ color: topKeyword === 'all' ? 'white' : '#626376' }}>ALL</span>{' '}
                 </Button>
               </Grid>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} id='chart21'>
               {apiParams ? (
                 <EngagementSummary
