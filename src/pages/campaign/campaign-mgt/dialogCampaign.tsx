@@ -390,9 +390,15 @@ const DialogCampaign = (props: DialogInfoProps) => {
     }
   }, [current, action])
 
+  // useEffect(() => {
+  //   setRemainingKeywordCount(keywordLimit - keywordCount)
+  // }, [keywordCount])
+
   useEffect(() => {
-    setRemainingKeywordCount(keywordLimit - keywordCount)
-  }, [keywordCount])
+    if (keywordLimit !== undefined && keywordCount !== undefined) {
+      setRemainingKeywordCount(keywordLimit - keywordCount)
+    }
+  }, [keywordLimit, keywordCount])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value)
