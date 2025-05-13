@@ -51,30 +51,62 @@ interface LineProps {
   setIsLoading: any
 }
 
-const chartLabel = (data: any) => {
+// const chartLabel = (data: any) => {
+//   if (!data) return []
+
+//   let labels: any[] = []
+//   let labelsArrayLength
+//   const labelValue: any[] = []
+//   for (let i = 0; i < data?.length; i++) {
+//     const label = data[i]?.value
+//     if (data?.length - 1 !== i) {
+//       if (label?.length > data[i + 1].length) {
+//         labelsArrayLength = i
+//         labels = data[labelsArrayLength]?.value
+//       } else {
+//         labelsArrayLength = i + 1
+//         labels = data[labelsArrayLength]?.value
+//       }
+//     } else {
+//       labels = label
+//     }
+//   }
+
+//   if (labels?.length > 0) {
+//     for (let i = 0; i < labels?.length; i++) {
+//       labelValue.push(new Date(labels[i]?.date_m))
+//     }
+//     labelValue.sort((date1, date2) => date1 - date2)
+
+//     for (let i = 0; i < labelValue?.length; i++) {
+//       labelValue[i] = moment(labelValue[i]).format('DD/MM/YYYY')
+//     }
+//   }
+
+//   return labelValue
+// }
+
+export const chartLabel = (data: any) => {
   if (!data) return []
 
   let labels: any[] = []
-  let labelsArrayLength
   const labelValue: any[] = []
+
   for (let i = 0; i < data?.length; i++) {
-    const label = data[i]?.value
-    if (data?.length - 1 !== i) {
-      if (label?.length > data[i + 1].length) {
-        labelsArrayLength = i
-        labels = data[labelsArrayLength]?.value
-      } else {
-        labelsArrayLength = i + 1
-        labels = data[labelsArrayLength]?.value
-      }
-    } else {
-      labels = label
+    const dataValue = data[i]?.value
+    const label: any[] = []
+
+    for (let j = 0; j < dataValue?.length; j++) {
+      label.push(dataValue[j]?.date_m)
     }
+
+    labels = [...labels, ...label]
   }
 
-  if (labels?.length > 0) {
-    for (let i = 0; i < labels?.length; i++) {
-      labelValue.push(new Date(labels[i]?.date_m))
+  if (labels && labels?.length > 0) {
+    const filterArray = [...new Set(labels)]
+    for (let i = 0; i < filterArray?.length; i++) {
+      labelValue.push(new Date(filterArray[i]))
     }
     labelValue.sort((date1, date2) => date1 - date2)
 
@@ -85,6 +117,7 @@ const chartLabel = (data: any) => {
 
   return labelValue
 }
+
 
 const onCapture = () => {
   const pictureId = document.getElementById('savePNG')
